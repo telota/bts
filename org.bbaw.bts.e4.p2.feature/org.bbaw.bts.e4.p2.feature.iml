@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="org.osgi:org.osgi.framework:Latest" level="project" />
+    <orderEntry type="library" name="javax.inject:javax.inject:Latest" level="project" />
+    <orderEntry type="library" name="org.eclipse.core:org.eclipse.core.runtime:Latest" level="project" />
+    <orderEntry type="library" name="org.eclipse.platform:org.eclipse.e4.core.services:Latest" level="project" />
+    <orderEntry type="library" name="org.codehaus.jackson:jackson-mapper-asl:0.9.6" level="project" />
+  </component>
+</module>

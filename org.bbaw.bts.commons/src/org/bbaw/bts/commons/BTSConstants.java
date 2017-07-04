@@ -1,5 +1,7 @@
 package org.bbaw.bts.commons;
 
+import org.apache.commons.codec.binary.Base64;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,7 +9,7 @@ import java.util.UUID;
 
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.codec.binary.Base64;
+import static org.apache.commons.codec.binary.Base64.*;
 
 public class BTSConstants
 {
@@ -234,7 +236,7 @@ public class BTSConstants
 		
 		// encode Base64 to reduce size
 		byte[] array = DatatypeConverter.parseHexBinary(val);
-		val = Base64.encodeBase64URLSafeString(array);
+		val = encodeBase64URLSafeString(array);
 		val = val.replace("-", "Q");
 		val = val.replace("_", "W");
 		return val;

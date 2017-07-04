@@ -29,4 +29,6 @@ Import-Package: org.apache.lucene.util,
  org.eclipse.emf.ecore.resource,
  org.eclipselabs.emfjson,
  org.eclipselabs.emfjson.internal,
- org.osgi.framework
+ org.osgi.framework,
+ org.apache.commons.logging,
+ org.eclipse.core.runtime

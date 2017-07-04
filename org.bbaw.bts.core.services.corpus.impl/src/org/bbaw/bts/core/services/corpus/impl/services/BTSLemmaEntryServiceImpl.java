@@ -25,6 +25,7 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.di.extensions.Preference;
 import org.elasticsearch.index.query.QueryBuilders;
 
+
 public class BTSLemmaEntryServiceImpl 
 extends AbstractCorpusObjectServiceImpl<BTSLemmaEntry, String> 
 implements BTSLemmaEntryService, BTSObjectSearchService

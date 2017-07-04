@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.ramo.klevis.p2.core.service">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/org.ramo.klevis.p2.core.service/target/org.ramo.klevis.p2.core.service.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="jar://$PROJECT_DIR$/org.ramo.klevis.p2.core.service/target/org.ramo.klevis.p2.core.service.jar!/" recursive="false" />
+  </library>
+</component>

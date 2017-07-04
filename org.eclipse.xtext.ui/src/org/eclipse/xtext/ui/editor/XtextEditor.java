@@ -700,7 +700,7 @@ public class XtextEditor extends TextEditor {
 	}
 
 	/**
-	 * Copied from {@link org.eclipse.ui.texteditor.AbstractTextEditor#selectAndReveal(int, int)}  and removed selection
+	 * Copied from {@link org.eclipse.ui.texteditor.AbstractTextEditor#selectAndReveal(int, int)}? and removed selection
 	 * functionality.
 	 */
 	public void reveal(int offset, int length) {

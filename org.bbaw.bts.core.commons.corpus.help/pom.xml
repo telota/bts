@@ -3,7 +3,14 @@
   <groupId>org.bbaw.bts</groupId>
   <artifactId>org.bbaw.bts.core.commons.corpus.help</artifactId>
   <version>3.1.0-SNAPSHOT</version>
-  <name>BTS Help Resources Bundle</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.ui.commons</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <name>BTS Help Resources Bundle</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>

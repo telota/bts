@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jsesh-6.3.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/lib/jsesh-6.3.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

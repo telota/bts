@@ -38,7 +38,6 @@ import org.bbaw.bts.btsmodel.BTSUser;
 import org.bbaw.bts.core.commons.filter.BTSFilter;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Service Interface BTSUserService provides service layer access to BTSUser-objects.

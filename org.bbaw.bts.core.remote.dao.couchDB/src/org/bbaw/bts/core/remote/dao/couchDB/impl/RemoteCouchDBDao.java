@@ -1,22 +1,8 @@
 package org.bbaw.bts.core.remote.dao.couchDB.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.inject.Inject;
-
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
-import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.commons.exceptions.BTSRemoteDBException;
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
@@ -43,14 +29,21 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.search.SearchHit;
-import org.lightcouch.CouchDbClient;
-import org.lightcouch.DesignDocument;
-import org.lightcouch.NoDocumentException;
-import org.lightcouch.Params;
-import org.lightcouch.View;
+import org.lightcouch.*;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import javax.inject.Inject;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Creatable
 public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Serializable> implements

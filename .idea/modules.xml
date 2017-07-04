@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/aaew-bts.iml" filepath="$PROJECT_DIR$/aaew-bts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bts.transform.aux.model/bts.transform.aux.model.iml" filepath="$PROJECT_DIR$/bts.transform.aux.model/bts.transform.aux.model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bts.transform.aux.model.edit/bts.transform.aux.model.edit.iml" filepath="$PROJECT_DIR$/bts.transform.aux.model.edit/bts.transform.aux.model.edit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bts.transform.corpus.model/bts.transform.corpus.model.iml" filepath="$PROJECT_DIR$/bts.transform.corpus.model/bts.transform.corpus.model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bts.transform.corpus.model.edit/bts.transform.corpus.model.edit.iml" filepath="$PROJECT_DIR$/bts.transform.corpus.model.edit/bts.transform.corpus.model.edit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bts.transform.feature/bts.transform.feature.iml" filepath="$PROJECT_DIR$/bts.transform.feature/bts.transform.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bts.transform.ui/bts.transform.ui.iml" filepath="$PROJECT_DIR$/bts.transform.ui/bts.transform.ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.opcoach.e4.preferences/com.opcoach.e4.preferences.iml" filepath="$PROJECT_DIR$/com.opcoach.e4.preferences/com.opcoach.e4.preferences.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.app/org.bbaw.bts.app.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.app/org.bbaw.bts.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.app.feature/org.bbaw.bts.app.feature.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.app.feature/org.bbaw.bts.app.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.app.login/org.bbaw.bts.app.login.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.app.login/org.bbaw.bts.app.login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.app.product/org.bbaw.bts.app.product.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.app.product/org.bbaw.bts.app.product.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.commons/org.bbaw.bts.commons.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.commons/org.bbaw.bts.commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.commons.fsaccess/org.bbaw.bts.commons.fsaccess.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.commons.fsaccess/org.bbaw.bts.commons.fsaccess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.commons.libs.elasticsearch/org.bbaw.bts.commons.libs.elasticsearch.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.commons.libs.elasticsearch/org.bbaw.bts.commons.libs.elasticsearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core/org.bbaw.bts.core.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core/org.bbaw.bts.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.commons/org.bbaw.bts.core.commons.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.commons/org.bbaw.bts.core.commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.commons.corpus/org.bbaw.bts.core.commons.corpus.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.commons.corpus/org.bbaw.bts.core.commons.corpus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.commons.corpus.help/org.bbaw.bts.core.commons.corpus.help.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.commons.corpus.help/org.bbaw.bts.core.commons.corpus.help.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.controller/org.bbaw.bts.core.controller.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.controller/org.bbaw.bts.core.controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/org.bbaw.bts.core.controller.impl.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/org.bbaw.bts.core.controller.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/org.bbaw.bts.core.corpus.controller.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/org.bbaw.bts.core.corpus.controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/org.bbaw.bts.core.corpus.controller.impl.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/org.bbaw.bts.core.corpus.controller.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.dao/org.bbaw.bts.core.dao.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.dao/org.bbaw.bts.core.dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus/org.bbaw.bts.core.dao.corpus.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus/org.bbaw.bts.core.dao.corpus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/org.bbaw.bts.core.dao.corpus.couchDB.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/org.bbaw.bts.core.dao.corpus.couchDB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/org.bbaw.bts.core.dao.couchDB.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/org.bbaw.bts.core.dao.couchDB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.remote.dao/org.bbaw.bts.core.remote.dao.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao/org.bbaw.bts.core.remote.dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/org.bbaw.bts.core.remote.dao.couchDB.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/org.bbaw.bts.core.remote.dao.couchDB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.services/org.bbaw.bts.core.services.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.services/org.bbaw.bts.core.services.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus/org.bbaw.bts.core.services.corpus.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus/org.bbaw.bts.core.services.corpus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/org.bbaw.bts.core.services.corpus.impl.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/org.bbaw.bts.core.services.corpus.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core.services.impl/org.bbaw.bts.core.services.impl.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/org.bbaw.bts.core.services.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.corpus.egy.feature/org.bbaw.bts.corpus.egy.feature.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.corpus.egy.feature/org.bbaw.bts.corpus.egy.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/org.bbaw.bts.corpus.text.egy.egydsl.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/org.bbaw.bts.corpus.text.egy.egydsl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.sdk/org.bbaw.bts.corpus.text.egy.egydsl.sdk.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.sdk/org.bbaw.bts.corpus.text.egy.egydsl.sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/org.bbaw.bts.corpus.text.egy.egydsl.tests.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/org.bbaw.bts.corpus.text.egy.egydsl.tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/org.bbaw.bts.corpus.text.egy.egydsl.ui.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/org.bbaw.bts.corpus.text.egy.egydsl.ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.db/org.bbaw.bts.db.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.db/org.bbaw.bts.db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/org.bbaw.bts.db.couchdb.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb/org.bbaw.bts.db.couchdb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb.mac/org.bbaw.bts.db.couchdb.mac.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.mac/org.bbaw.bts.db.couchdb.mac.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win32/org.bbaw.bts.db.couchdb.win32.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win32/org.bbaw.bts.db.couchdb.win32.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win64/org.bbaw.bts.db.couchdb.win64.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win64/org.bbaw.bts.db.couchdb.win64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.e4.p2/org.bbaw.bts.e4.p2.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.e4.p2/org.bbaw.bts.e4.p2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.e4.p2.feature/org.bbaw.bts.e4.p2.feature.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.e4.p2.feature/org.bbaw.bts.e4.p2.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.eclipselabs.emfjson/org.bbaw.bts.eclipselabs.emfjson.iml" filepath="$PROJECT_DIR$/org.eclipselabs.emfjson/org.bbaw.bts.eclipselabs.emfjson.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb/org.bbaw.bts.eclipselabs.emfjson.couchdb.iml" filepath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb/org.bbaw.bts.eclipselabs.emfjson.couchdb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.feature/org.bbaw.bts.eclipselabs.emfjson.couchdb.feature.iml" filepath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.feature/org.bbaw.bts.eclipselabs.emfjson.couchdb.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/org.bbaw.bts.eclipselabs.emfjson.couchdb.ui.iml" filepath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/org.bbaw.bts.eclipselabs.emfjson.couchdb.ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.eclipselabs.emfjson.feature/org.bbaw.bts.eclipselabs.emfjson.feature.iml" filepath="$PROJECT_DIR$/org.eclipselabs.emfjson.feature/org.bbaw.bts.eclipselabs.emfjson.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.model/org.bbaw.bts.model.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.model/org.bbaw.bts.model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.model.corpus/org.bbaw.bts.model.corpus.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/org.bbaw.bts.model.corpus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/org.bbaw.bts.model.corpus.edit.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/org.bbaw.bts.model.corpus.edit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.model.edit/org.bbaw.bts.model.edit.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.model.edit/org.bbaw.bts.model.edit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.model.editor/org.bbaw.bts.model.editor.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.model.editor/org.bbaw.bts.model.editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.commons/org.bbaw.bts.ui.commons.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/org.bbaw.bts.ui.commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/org.bbaw.bts.ui.commons.corpus.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/org.bbaw.bts.ui.commons.corpus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus/org.bbaw.bts.ui.corpus.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/org.bbaw.bts.ui.corpus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/org.bbaw.bts.ui.corpus.egy.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/org.bbaw.bts.ui.corpus.egy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy.commons/org.bbaw.bts.ui.corpus.egy.commons.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy.commons/org.bbaw.bts.ui.corpus.egy.commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.font/org.bbaw.bts.ui.font.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.font/org.bbaw.bts.ui.font.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.font.academy/org.bbaw.bts.ui.font.academy.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.font.academy/org.bbaw.bts.ui.font.academy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.font.egyFont/org.bbaw.bts.ui.font.egyFont.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.font.egyFont/org.bbaw.bts.ui.font.egyFont.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/org.bbaw.bts.ui.main.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.main/org.bbaw.bts.ui.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.resources/org.bbaw.bts.ui.resources.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.resources/org.bbaw.bts.ui.resources.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/org.bbaw.bts.ui.resources.impl.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/org.bbaw.bts.ui.resources.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.updatesite/org.bbaw.bts.updatesite.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.updatesite/org.bbaw.bts.updatesite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/org.eclipse.e4.ui.workbench.perspectiveswitcher.iml" filepath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/org.eclipse.e4.ui.workbench.perspectiveswitcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.eclipse.xtext.ui/org.eclipse.xtext.ui.243.iml" filepath="$PROJECT_DIR$/org.eclipse.xtext.ui/org.eclipse.xtext.ui.243.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/org.fuberlin.bts.ui.corpus.egy.annotations.iml" filepath="$PROJECT_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/org.fuberlin.bts.ui.corpus.egy.annotations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.lightcouch/org.lightcouch.iml" filepath="$PROJECT_DIR$/org.lightcouch/org.lightcouch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.ramo.klevis.p2.core.service/org.ramo.klevis.p2.core.service.iml" filepath="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/org.ramo.klevis.p2.core.service.iml" />
+    </modules>
+  </component>
+</project>

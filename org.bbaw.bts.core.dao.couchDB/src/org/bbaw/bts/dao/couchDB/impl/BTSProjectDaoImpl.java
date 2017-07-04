@@ -24,7 +24,7 @@ import com.google.gson.JsonObject;
 public class BTSProjectDaoImpl extends CouchDBDao<BTSProject, String> implements BTSProjectDao
 {
 
-	@Inject
+    @Inject
 	protected DBConnectionProvider connectionProvider;
 
 	@Override

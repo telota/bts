@@ -1,0 +1,37 @@
+<component name="libraryTable">
+  <library name="org.eclipse.platform:org.eclipse.e4.core.services:Latest" type="repository">
+    <properties maven-id="org.eclipse.platform:org.eclipse.e4.core.services:LATEST" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.services/2.0.100/org.eclipse.e4.core.services-2.0.100.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.equinox.common/3.8.0/org.eclipse.equinox.common-3.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.equinox.preferences/3.6.1/org.eclipse.equinox.preferences-3.6.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.core.jobs/3.8.0/org.eclipse.core.jobs-3.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.di/1.6.1/org.eclipse.e4.core.di-1.6.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.di.annotations/1.5.0/org.eclipse.e4.core.di.annotations-1.5.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.contexts/1.5.1/org.eclipse.e4.core.contexts-1.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.services/2.0.100/org.eclipse.e4.core.services-2.0.100.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.equinox.common/3.8.0/org.eclipse.equinox.common-3.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.equinox.preferences/3.6.1/org.eclipse.equinox.preferences-3.6.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.core.jobs/3.8.0/org.eclipse.core.jobs-3.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.di/1.6.1/org.eclipse.e4.core.di-1.6.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.di.annotations/1.5.0/org.eclipse.e4.core.di.annotations-1.5.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.contexts/1.5.1/org.eclipse.e4.core.contexts-1.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.services/2.0.100/org.eclipse.e4.core.services-2.0.100.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.equinox.common/3.8.0/org.eclipse.equinox.common-3.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.equinox.preferences/3.6.1/org.eclipse.equinox.preferences-3.6.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.core.jobs/3.8.0/org.eclipse.core.jobs-3.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.di/1.6.1/org.eclipse.e4.core.di-1.6.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.di.annotations/1.5.0/org.eclipse.e4.core.di.annotations-1.5.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.contexts/1.5.1/org.eclipse.e4.core.contexts-1.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.services/2.0.100/org.eclipse.e4.core.services-2.0.100.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.equinox.common/3.8.0/org.eclipse.equinox.common-3.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.equinox.preferences/3.6.1/org.eclipse.equinox.preferences-3.6.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.core.jobs/3.8.0/org.eclipse.core.jobs-3.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.di/1.6.1/org.eclipse.e4.core.di-1.6.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.di.annotations/1.5.0/org.eclipse.e4.core.di.annotations-1.5.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/platform/org.eclipse.e4.core.contexts/1.5.1/org.eclipse.e4.core.contexts-1.5.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

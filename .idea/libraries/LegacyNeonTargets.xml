@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="LegacyNeonTargets">
+    <CLASSES>
+      <root url="file://$USER_HOME$/neon-targets/target-bts-neon/plugins" />
+      <root url="file://$USER_HOME$/neon-targets/target-bts-neon/plugins" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/neon-targets/target-bts-neon/plugins" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/neon-targets/target-bts-neon/plugins" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/neon-targets/target-bts-neon/plugins" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/neon-targets/target-bts-neon/plugins" recursive="false" type="SOURCES" />
+  </library>
+</component>

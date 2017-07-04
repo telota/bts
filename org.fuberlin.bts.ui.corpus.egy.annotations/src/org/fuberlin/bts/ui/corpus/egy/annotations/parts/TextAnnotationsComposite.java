@@ -1262,20 +1262,15 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
 		// read values from the instance scope
 		String colorString = null;
 		String expandedType = processExpandedObjectType(object);
-		try {
-			for (String childNode : annotationSettings.childrenNames())
-			{
-				Preferences typeNode = annotationSettings.node(childNode);
-				String settingsTypePath = AnnotationToolbarItemCreator.getAnnotationTypePath((EclipsePreferences) typeNode);
-				if (!settingsTypePath.equals(expandedType)) continue;
-				
-				colorString = typeNode.get(BTSCorpusConstants.PREF_COLOR, null);
-				
-				break;
-			}
-		} catch (BackingStoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (String childNode : annotationSettings.childrenNames())
+		{
+			Preferences typeNode = annotationSettings.node(childNode);
+			String settingsTypePath = AnnotationToolbarItemCreator.getAnnotationTypePath((EclipsePreferences) typeNode);
+			if (!settingsTypePath.equals(expandedType)) continue;
+
+			colorString = typeNode.get(BTSCorpusConstants.PREF_COLOR, null);
+
+			break;
 		}
 		Color color = null;
 		if (colorString != null)
@@ -1861,7 +1856,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
 	}
 
 	private ElementFigure makeSentenceStartFigure(BTSSenctence sentence) {
-		MarkerFigure fig = new MarkerFigure(" § ");
+		MarkerFigure fig = new MarkerFigure(" ï¿½ ");
 		fig.setModelObject(sentence);
 		fig.setType(ElementFigure.SENTENCE_START);
 		fig.setSize(15, 90);
@@ -1870,7 +1865,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
 	}
 
 	private ElementFigure makeSentenceEndFigure(BTSSenctence sentence) {
-		MarkerFigure fig = new MarkerFigure(" § ");
+		MarkerFigure fig = new MarkerFigure(" ï¿½ ");
 		fig.setModelObject(sentence);
 		fig.setType(ElementFigure.SENTENCE_END);
 		fig.setSize(15, 90);

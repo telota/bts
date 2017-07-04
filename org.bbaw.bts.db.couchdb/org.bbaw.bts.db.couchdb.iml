@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Osmorc" name="OSGi">
+      <configuration manifestGenerationMode="Manually" manifestLocation="META-INF/MANIFEST.MF" jarfileLocation="org.bbaw.bts.db.couchdb.jar" outputPathType="CompilerOutputPath" bndFileLocation="" bundlorFileLocation="" bundleActivator="" bundleSymbolicName="" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false" doNotSynchronizeWithMaven="false">
+        <additionalProperties />
+        <additionalJARContents />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" name="ECLIPSE" level="application" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="LegacyNeonTargets" level="project" />
+    <orderEntry type="library" name="javax.inject:javax.inject:Latest" level="project" />
+    <orderEntry type="library" name="org.osgi:org.osgi.framework:Latest" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../org.bbaw.bts.commons.libs.elasticsearch/libs/elasticsearch-1.7.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="org.lightcouch" />
+    <orderEntry type="module" module-name="org.bbaw.bts.commons" />
+    <orderEntry type="module" module-name="org.bbaw.bts.core.remote.dao" />
+    <orderEntry type="module" module-name="org.bbaw.bts.model" />
+    <orderEntry type="module" module-name="org.bbaw.bts.eclipselabs.emfjson" />
+    <orderEntry type="module" module-name="org.bbaw.bts.db" />
+    <orderEntry type="module" module-name="org.bbaw.bts.core.dao" />
+    <orderEntry type="module" module-name="org.bbaw.bts.commons.fsaccess" />
+    <orderEntry type="module" module-name="org.bbaw.bts.core.commons" />
+  </component>
+</module>

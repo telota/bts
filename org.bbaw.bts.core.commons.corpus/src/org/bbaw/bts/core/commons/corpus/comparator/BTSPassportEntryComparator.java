@@ -1,7 +1,6 @@
 package org.bbaw.bts.core.commons.corpus.comparator;
 
 import java.util.Comparator;
-
 import org.bbaw.bts.corpus.btsCorpusModel.BTSPassportEntry;
 
 public class BTSPassportEntryComparator implements Comparator<BTSPassportEntry>{

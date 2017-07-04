@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/com.opcoach.e4.preferences" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.app" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.app.feature" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.app.login" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.app.product" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.commons.fsaccess" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.commons.libs.elasticsearch" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.commons.corpus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.commons.corpus.help" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.controller" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.controller.impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.remote.dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.services" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.core.services.impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.corpus.egy.feature" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.db" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.model.corpus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.model.edit" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.model.editor" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy.commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.font" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.font.academy" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.main" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/XtextEditor.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/IRenameStrategy.java" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/org.eclipselabs.emfjson" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.feature" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.eclipselabs.emfjson.feature" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/org.ramo.klevis.p2.core.service" charset="UTF-8" />
+  </component>
+</project>
