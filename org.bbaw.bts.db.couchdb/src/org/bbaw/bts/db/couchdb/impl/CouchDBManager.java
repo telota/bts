@@ -1,18 +1,41 @@
 package org.bbaw.bts.db.couchdb.impl;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
+
 import org.bbaw.bts.btsmodel.BTSDBConnection;
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
+import org.bbaw.bts.btsmodel.BTSUser;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.btsviewmodel.DBCollectionStatusInformation;
 import org.bbaw.bts.commons.BTSConstants;
+import org.bbaw.bts.commons.fsaccess.BTSContstantsPlatformSpecific;
 import org.bbaw.bts.commons.BTSPluginIDs;
 import org.bbaw.bts.commons.CopyDirectory;
 import org.bbaw.bts.commons.OSValidator;
-import org.bbaw.bts.commons.fsaccess.BTSContstantsPlatformSpecific;
 import org.bbaw.bts.core.dao.BTSProjectDao;
 import org.bbaw.bts.core.dao.Backend2ClientUpdateDao;
 import org.bbaw.bts.core.dao.DBConnectionProvider;
@@ -20,7 +43,11 @@ import org.bbaw.bts.core.dao.util.DaoConstants;
 import org.bbaw.bts.core.remote.dao.RemoteDBManager;
 import org.bbaw.bts.db.DBManager;
 import org.bbaw.bts.modelUtils.EmfModelHelper;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
@@ -43,36 +70,35 @@ import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.settings.SettingsModule;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.indices.IndexMissingException;
-import org.lightcouch.*;
+import org.lightcouch.CouchDbClient;
+import org.lightcouch.CouchDbException;
+import org.lightcouch.CouchDbProperties;
+import org.lightcouch.NoDocumentException;
+import org.lightcouch.Page;
+import org.lightcouch.Replicator;
+import org.lightcouch.ReplicatorDocument;
+import org.lightcouch.Response;
 
-import javax.inject.Inject;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 public class CouchDBManager implements DBManager {
-	private static final String VALIDATE_DOC_READ;
-    private static final String VALIDATE_DOC_UPDATE;
-	static {
-        InputStream is;
-        is = CouchDBManager.class.getResourceAsStream("ValidateDocumentRead.js");
-        VALIDATE_DOC_READ = CharStreams.toString(new InputStreamReader(is));
-        is = CouchDBManager.class.getResourceAsStream("ValidateDocumentUpdate.js");
-        VALIDATE_DOC_UPDATE = CharStreams.toString(new InputStreamReader(is));
-	}
+	// FIXME javascript korrigieren
+	private static final String VALIDATE_DOC_READ = "function(doc,userCtx,secObj){if(!doc.visibility){return;}else{if(doc.visibility=='public'||doc.visibility=='repository'||doc.visibility=='project'){return;}} if(userCtx.roles.indexOf('_admin')!==-1||userCtx.roles.indexOf('admin')!==-1){return;}else if(secObj&&secObj.admins&&secObj.admins.roles){for(var i=0,l=secObj.admins.roles.length;i<l;i++){if(userCtx.roles.indexOf(secObj.admins.roles[i])!==-1){return;}}}else{if(userCtx.roles.indexOf('editors')!==-1){return;} if(secObj&&secObj.editors&&secObj.editors.roles){for(var i=0,l=secObj.editors.roles.length;i<l;i++){if(userCtx.roles.indexOf(secObj.editors[i])!==-1){return;}}} for(var i=0,l=doc.readers.length;i<l;i++){if(doc.readers[i]==userCtx.name){return;} if(userCtx.roles.indexOf(doc.readers[i])!==-1){return;}}} throw({forbidden:secObj.admins.names[0]+secObj.editors.names[0]+'name: '+userCtx.name+userCtx.roles[0]+' '+userCtx.roles[1]+' Only admins may edit the database. writers: '+doc.readers[0]});throw({forbidden:secObj.admins.names[0]+' hallo '+secObj.editors.names[0]+' name: '+userCtx.name+userCtx.roles[0]+' '+userCtx.roles[1]+' Only admins may edit the database. Writers: '+doc.writers[0]});}";
+	// FIXME javascript korrigieren
+	private static final String VALIDATE_DOC_UPDATE = "function(newDoc,oldDoc,userCtx,secObj){return;}";
+
 	// private static final String VALIDATE_DOC_UPDATE =
 	// "function(newDoc,oldDoc,userCtx,secObj){if(!oldDoc){return;}else{if(userCtx.roles.indexOf('_admin')!==-1||userCtx.roles.indexOf('admin')!==-1){return;}else if(secObj&&secObj.admins&&secObj.admins.roles){for(var i=0,l=secObj.admins.roles.length;i<l;i++){if(userCtx.roles.indexOf(secObj.admins.roles[i])!==-1){return;}}}else{if(userCtx.roles.indexOf('editors')!==-1){return;} if(secObj&&secObj.editors&&secObj.editors.roles){for(var i=0,l=secObj.editors.roles.length;i<l;i++){if(userCtx.roles.indexOf(secObj.editors[i])!==-1){return;}}} for(var i=0,l=oldDoc.writers.length;i<l;i++){if(oldDoc.writers[i]==userCtx.name){return;} if(userCtx.roles.indexOf(oldDoc.writers[i])!==-1){return;}}} throw({forbidden:secObj.admins.names[0]+secObj.editors.names[0]+'name: '+userCtx.name+userCtx.roles[0]+' '+userCtx.roles[1]+' Only admins may edit the database. Hallo Welt22. writers: '+oldDoc.writers[0]});} throw({forbidden:secObj.admins.names[0]+' hallo '+secObj.editors.names[0]+' name: '+userCtx.name+userCtx.roles[0]+' '+userCtx.roles[1]+' Only admins may edit the database. Hallo Welt22. writers: '+oldDoc.writers[0]});}";
 
