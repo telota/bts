@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="com.google.guava" />
+        <module name="guava" />
+        <module name="guava (2) (com.google.guava)" />
+        <module name="lightcouch-guide" />
+        <module name="maven-archiver" />
+        <module name="org.bbaw.bts.core" />
+        <module name="org.bbaw.bts.corpus.text.egy.egydsl.sdk" />
+        <module name="org.bbaw.bts.corpus.text.egy.egydsl.tests" />
+        <module name="org.bbaw.bts.db.couchdb.mac" />
+        <module name="org.bbaw.bts.db.couchdb.win32" />
+        <module name="org.bbaw.bts.db.couchdb.win64" />
+        <module name="org.bbaw.bts.e4.p2" />
+        <module name="org.bbaw.bts.e4.p2.feature" />
+        <module name="org.bbaw.bts.ui.font.egyFont" />
+        <module name="org.bbaw.bts.updatesite" />
+        <module name="org.eclipse.xtext.ui" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="aaew-bts" target="1.5" />
+      <module name="com.google.guava" target="1.5" />
+      <module name="com.opcoach.e4.preferences" target="1.5" />
+      <module name="guava" target="1.5" />
+      <module name="guava (1)" target="1.5" />
+      <module name="guava (2) (com.google.guava)" target="1.6" />
+      <module name="guava (com.google.guava)" target="1.6" />
+      <module name="lightcouch-guide" target="1.5" />
+      <module name="maven-archiver" target="1.5" />
+      <module name="org.bbaw.bts.app" target="1.5" />
+      <module name="org.bbaw.bts.app.feature" target="1.5" />
+      <module name="org.bbaw.bts.app.login" target="1.5" />
+      <module name="org.bbaw.bts.app.product" target="1.5" />
+      <module name="org.bbaw.bts.commons" target="1.5" />
+      <module name="org.bbaw.bts.commons.fsaccess" target="1.5" />
+      <module name="org.bbaw.bts.commons.libs.elasticsearch" target="1.5" />
+      <module name="org.bbaw.bts.core" target="1.5" />
+      <module name="org.bbaw.bts.core.commons" target="1.5" />
+      <module name="org.bbaw.bts.core.commons.corpus" target="1.5" />
+      <module name="org.bbaw.bts.core.commons.corpus.help" target="1.7" />
+      <module name="org.bbaw.bts.core.controller" target="1.5" />
+      <module name="org.bbaw.bts.core.controller.impl" target="1.5" />
+      <module name="org.bbaw.bts.core.corpus.controller" target="1.5" />
+      <module name="org.bbaw.bts.core.corpus.controller.impl" target="1.5" />
+      <module name="org.bbaw.bts.core.dao" target="1.5" />
+      <module name="org.bbaw.bts.core.dao.corpus" target="1.5" />
+      <module name="org.bbaw.bts.core.dao.corpus.couchDB" target="1.5" />
+      <module name="org.bbaw.bts.core.dao.couchDB" target="1.5" />
+      <module name="org.bbaw.bts.core.remote.dao" target="1.5" />
+      <module name="org.bbaw.bts.core.remote.dao.couchDB" target="1.5" />
+      <module name="org.bbaw.bts.core.services" target="1.5" />
+      <module name="org.bbaw.bts.core.services.corpus" target="1.5" />
+      <module name="org.bbaw.bts.core.services.corpus.impl" target="1.5" />
+      <module name="org.bbaw.bts.core.services.impl" target="1.5" />
+      <module name="org.bbaw.bts.corpus.egy.feature" target="1.5" />
+      <module name="org.bbaw.bts.corpus.text.egy.egydsl" target="1.5" />
+      <module name="org.bbaw.bts.corpus.text.egy.egydsl.sdk" target="1.5" />
+      <module name="org.bbaw.bts.corpus.text.egy.egydsl.tests" target="1.5" />
+      <module name="org.bbaw.bts.corpus.text.egy.egydsl.ui" target="1.5" />
+      <module name="org.bbaw.bts.db" target="1.5" />
+      <module name="org.bbaw.bts.db.couchdb" target="1.5" />
+      <module name="org.bbaw.bts.db.couchdb.mac" target="1.5" />
+      <module name="org.bbaw.bts.db.couchdb.win32" target="1.5" />
+      <module name="org.bbaw.bts.db.couchdb.win64" target="1.5" />
+      <module name="org.bbaw.bts.e4.p2" target="1.5" />
+      <module name="org.bbaw.bts.e4.p2.feature" target="1.5" />
+      <module name="org.bbaw.bts.eclipselabs.emfjson" target="1.5" />
+      <module name="org.bbaw.bts.eclipselabs.emfjson.couchdb" target="1.5" />
+      <module name="org.bbaw.bts.eclipselabs.emfjson.couchdb.feature" target="1.5" />
+      <module name="org.bbaw.bts.eclipselabs.emfjson.couchdb.ui" target="1.5" />
+      <module name="org.bbaw.bts.eclipselabs.emfjson.feature" target="1.5" />
+      <module name="org.bbaw.bts.model" target="1.5" />
+      <module name="org.bbaw.bts.model.corpus" target="1.5" />
+      <module name="org.bbaw.bts.model.corpus.edit" target="1.5" />
+      <module name="org.bbaw.bts.model.edit" target="1.5" />
+      <module name="org.bbaw.bts.model.editor" target="1.5" />
+      <module name="org.bbaw.bts.ui.commons" target="1.5" />
+      <module name="org.bbaw.bts.ui.commons.corpus" target="1.5" />
+      <module name="org.bbaw.bts.ui.corpus" target="1.5" />
+      <module name="org.bbaw.bts.ui.corpus.egy" target="1.5" />
+      <module name="org.bbaw.bts.ui.corpus.egy.commons" target="1.5" />
+      <module name="org.bbaw.bts.ui.font" target="1.5" />
+      <module name="org.bbaw.bts.ui.font.academy" target="1.5" />
+      <module name="org.bbaw.bts.ui.font.egyFont" target="1.5" />
+      <module name="org.bbaw.bts.ui.main" target="1.5" />
+      <module name="org.bbaw.bts.ui.resources" target="1.5" />
+      <module name="org.bbaw.bts.ui.resources.impl" target="1.5" />
+      <module name="org.bbaw.bts.updatesite" target="1.5" />
+      <module name="org.eclipse.e4.ui.workbench.perspectiveswitcher" target="1.5" />
+      <module name="org.eclipse.xtext.ui" target="1.5" />
+      <module name="org.lightcouch" target="1.5" />
+      <module name="org.ramo.klevis.p2.core.service" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

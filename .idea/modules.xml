@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/aaew-bts.iml" filepath="$PROJECT_DIR$/aaew-bts.iml" group="aaew-bts and modules" />
+      <module fileurl="file://$PROJECT_DIR$/com.google.guava/com.google.guava.iml" filepath="$PROJECT_DIR$/com.google.guava/com.google.guava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" filepath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.lightcouch/guide/lightcouch-guide.iml" filepath="$PROJECT_DIR$/org.lightcouch/guide/lightcouch-guide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/target/maven-archiver/maven-archiver.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/target/maven-archiver/maven-archiver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.core/org.bbaw.bts.core.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.core/org.bbaw.bts.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.sdk/org.bbaw.bts.corpus.text.egy.egydsl.sdk.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.sdk/org.bbaw.bts.corpus.text.egy.egydsl.sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/org.bbaw.bts.corpus.text.egy.egydsl.tests.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/org.bbaw.bts.corpus.text.egy.egydsl.tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb.mac/org.bbaw.bts.db.couchdb.mac.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.mac/org.bbaw.bts.db.couchdb.mac.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win32/org.bbaw.bts.db.couchdb.win32.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win32/org.bbaw.bts.db.couchdb.win32.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win64/org.bbaw.bts.db.couchdb.win64.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win64/org.bbaw.bts.db.couchdb.win64.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.e4.p2/org.bbaw.bts.e4.p2.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.e4.p2/org.bbaw.bts.e4.p2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.e4.p2.feature/org.bbaw.bts.e4.p2.feature.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.e4.p2.feature/org.bbaw.bts.e4.p2.feature.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.ui.font.egyFont/org.bbaw.bts.ui.font.egyFont.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.ui.font.egyFont/org.bbaw.bts.ui.font.egyFont.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.bbaw.bts.updatesite/org.bbaw.bts.updatesite.iml" filepath="$PROJECT_DIR$/org.bbaw.bts.updatesite/org.bbaw.bts.updatesite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.eclipse.xtext.ui/org.eclipse.xtext.ui.iml" filepath="$PROJECT_DIR$/org.eclipse.xtext.ui/org.eclipse.xtext.ui.iml" />
+    </modules>
+  </component>
+</project>
