@@ -7,21 +7,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/org.lightcouch/guide/pom.xml" />
-        <option value="$PROJECT_DIR$/com.google.guava/pom.xml" />
         <option value="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/pom.properties" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.e4.p2/pom.xml" />
-        <option value="$PROJECT_DIR$/org.eclipse.xtext.ui/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.updatesite/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.e4.p2.feature/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.mac/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.font.egyFont/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win32/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.db.couchdb.win64/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.sdk/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/target/maven-archiver/pom.properties" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -81,6 +67,10 @@
         <option value="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/pom.xml" />
       </set>
     </option>
+  </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/ValidateDocumentRead.js" />
+    <file url="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/ValidateDocumentUpdate.js" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
