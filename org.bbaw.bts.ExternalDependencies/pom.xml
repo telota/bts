@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	<groupId>org.bbaw.bts</groupId>
+	<artifactId>org.bbaw.bts.ExternalDependencies</artifactId>
+    <version>1.0.0</version>
+    <name>${project.artifactId}</name>
+    <description>A OSGi wrapper for non-OSGi external dependencies of the BTS</description>
+    <packaging>bundle</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.10</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.lookfirst</groupId>
+			<artifactId>sardine</artifactId>
+			<version>5.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+		<dependency>
+			<!--FIXME get this into this decade-->
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+		<!-- FIXME opal, rcptoolbox, antlr-runtime-->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcmail-jdk15on</artifactId>
+			<version>1.57</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.57</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bctsp-jdk16</artifactId>
+			<version>1.46</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jhlabs</groupId>
+			<artifactId>filters</artifactId>
+			<version>2.0.235-1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.11</version>
+		</dependency>
+		<!--dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.24</version>
+		</dependency-->
+		<!--dependency>
+            This package is broken. It includes classes in the default package (".") which causes
+            maven-bundle-plugin to barf
+            See: https://techotom.wordpress.com/2014/10/21/fixing-the-default-package-is-not-permitted-by-the-import-package-syntax-with-maven-bundle-plugin/
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1</version>
+		</dependency-->
+		<!--dependency>
+			<!-FIXME this actually has 0.8.7 listed and this maven package is broken.->
+			<groupId>jfree</groupId>
+			<artifactId>jfreereport</artifactId>
+			<version>0.8.6</version>
+		</dependency-->
+		<!--FIXME jhotdrawfw, jsesh, jseshGlyphs, jvectClipboard-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
+		</dependency>
+		<dependency>
+			<groupId>com.miglayout</groupId>
+			<artifactId>miglayout</artifactId>
+			<version>3.7.4</version>
+		</dependency>
+		<!--FIXME mysql-connector, qenherkhopeshefUtils, ramses-->
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>stringtemplate</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.swinglabs</groupId>
+			<artifactId>swing-worker</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<!--dependency>
+             This jar is broken and makes maven barf on invalid package names
+			<groupId>org.swinglabs</groupId>
+			<artifactId>swingx</artifactId>
+			<version>1.6.1</version>
+		</dependency-->
+		<dependency>
+			<groupId>net.sf.trove4j</groupId>
+			<artifactId>trove4j</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+                <version>2.3.2</version>
+            </plugin>
+            <!-- The Maven bundle plugin generates Meta-data required for OSGi -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.3.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <obrRepository>../build/obr</obrRepository>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Export-Package>
+                        </Export-Package>
+                        <Service-Component></Service-Component>
+                        <Embed-Dependency>
+                            *
+                        </Embed-Dependency>
+                        <Embed-Directory>target/dependency</Embed-Directory>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <_exportcontents>
+                            antlr*,
+                            ch.randelshofer.quaqua*,
+                            com.github.sardine*,
+                            com.google.gson*,
+                            com.itextpdf.awt*,
+                            com.itextpdf.awt.geom*,
+                            com.itextpdf.text*,
+                            com.itextpdf.xmp*,
+                            com.jhlabs*,
+                            gnu.trove*,
+                            junit*,
+                            jxl*,
+                            net.miginfocom*,
+                            org.antlr*,
+                            org.apache.commons*,
+                            org.apache.http*,
+                            org.apache.log4j*
+                            org.hamcrest*,
+                            org.jdesktop*,
+                            org.junit*,
+                            org.slf4j,
+                            org.slf4j.spi*,
+                        </_exportcontents>
+                        <Bundle-RequiredExecutionEnvironment>JavaSE-1.8</Bundle-RequiredExecutionEnvironment>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>${basedir}</directory>
+            </resource>
+            <!--This entry makes sure that resources, which lie in the same package as Java classes, are copied into
+                the target. Often external libraries require resources, which are loaded using Class.getResource or
+                Class.getResourceAsStream and which are in a subpackage of the class. For instance, the NetBeans
+                template for the Swing Application Framework does so. -->
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+            <!-- This entry makes sure component definitions for OSGi declarative 
+                 services are copied into the destination -->
+            <resource>
+                <targetPath>OSGI-INF</targetPath>
+                <filtering>false</filtering>
+                <directory>OSGI-INF</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+            </resource>
+            <!-- I really do not know why know a manual entry for src/main/resources 
+                 is necessary? It should be included following the Maven convention. -->
+            <resource>
+                <filtering>false</filtering>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+</project>

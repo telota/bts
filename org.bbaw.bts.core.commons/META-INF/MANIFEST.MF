@@ -28,6 +28,6 @@ Import-Package: javax.inject,
  org.eclipse.e4.ui.workbench,
  org.eclipse.emf.ecore
 Require-Bundle: org.eclipse.e4.core.di;bundle-version="1.3.0"
-Bundle-ClassPath: lib/commons-net-3.3.jar,
+Bundle-ClassPath: target/lib/commons-net.jar,
  .
 Bundle-Version: 3.1.0.qualifier

@@ -485,14 +485,9 @@ abstract class CouchDbClientBase {
 	 * @param json The JSON String to set.
 	 */
 	protected void setEntity(HttpEntityEnclosingRequestBase httpRequest, String json) {
-		try {
-			StringEntity entity = new StringEntity(json, "UTF-8");
-			entity.setContentType("application/json");
-			httpRequest.setEntity(entity);
-		} catch (UnsupportedEncodingException e) {
-			log.error("Error setting request data. " + e.getMessage());
-			throw new IllegalArgumentException(e);
-		}
+        StringEntity entity = new StringEntity(json, "UTF-8");
+        entity.setContentType("application/json");
+        httpRequest.setEntity(entity);
 	}
 	
 	/**
