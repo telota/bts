@@ -36,7 +36,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
 	public static final Pattern corpusPrefixPattern = Pattern
 			.compile(CORPUSPREFIX_PATTERN);
 
-	public static final String RELATION_PATTERN = "(\"relations\"\\s*:\\s*\\[\\s*)([^\\]]*)";
+	public static final String RELATION_PATTERN = "(\"relations\"\\s*:\\s*\\[\\s*)([^]]*)";
 	private static final Pattern relationsPattern = Pattern
 			.compile(RELATION_PATTERN);
 
@@ -52,14 +52,14 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
 	public static final Pattern relationObjectIdPattern = Pattern
 			.compile(RELATIONOBJECTID_PATTERN);
 
-	public static final String WORD_PATTERN = "(\"words\"\\s*:\\s*\\[\\s*)([^\\]]*)";
+	public static final String WORD_PATTERN = "(\"words\"\\s*:\\s*\\[\\s*)([^]]*)";
 	private static final Pattern wordsPattern = Pattern.compile(WORD_PATTERN);
 
 	public static final String WORD_WCHAR_PATTERN = "(\"wChar\":\\s*\")([^\"]*)\"";
 	public static final Pattern wordsWCharPattern = Pattern
 			.compile(WORD_WCHAR_PATTERN);
 
-	public static final String LEMMA_TRANSLATIONS_PATTERN = "(\"translations\"\\s*:\\s*\\[\\s*)([^\\]]*)";
+	public static final String LEMMA_TRANSLATIONS_PATTERN = "(\"translations\"\\s*:\\s*\\[\\s*)([^]]*)";
 	public static final Pattern lemmaTranslationsPattern = Pattern
 			.compile(LEMMA_TRANSLATIONS_PATTERN);
 
@@ -219,7 +219,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
 			String allTranslations = m.group(2);
 			if (allTranslations == null || allTranslations.trim().length() == 0)
 				return null;
-			String transStrings[] = allTranslations.split("\\}\\s*,\\s*\\{");
+			String transStrings[] = allTranslations.split("}\\s*,\\s*\\{");
 			for (String transString : transStrings) {
 				String eclass = extractEClassFromObjectString(transString);
 				if (eclass.endsWith("BTSTranslation")) {
@@ -263,7 +263,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
 			String allWords = m.group(2);
 			if (allWords == null || allWords.trim().length() == 0)
 				return null;
-			String relStrings[] = allWords.split("\\}\\s*,\\s*\\{");
+			String relStrings[] = allWords.split("}\\s*,\\s*\\{");
 			for (String wordString : relStrings) {
 				String eclass = extractEClassFromObjectString(wordString);
 				if (eclass.endsWith("BTSWord")) {
@@ -298,7 +298,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
 			String allRelations = m.group(2);
 			if (allRelations == null || allRelations.trim().length() == 0)
 				return null;
-			String relStrings[] = allRelations.split("\\}\\s*,\\s*\\{");
+			String relStrings[] = allRelations.split("}\\s*,\\s*\\{");
 			for (String relString : relStrings) {
 				String eclass = extractEClassFromObjectString(relString);
 				if (eclass.endsWith("BTSRelation")) {

@@ -1,11 +1,11 @@
-/*******************************************************************************
- * Copyright (c) 2008 itemis AG (http://www.itemis.eu) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *******************************************************************************/
+/******************************************************************************
+ Copyright (c) 2008 itemis AG (http://www.itemis.eu) and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+ */
 package org.eclipse.xtext.ui.editor.validation;
 
 import java.util.Collections;
@@ -28,7 +28,7 @@ import org.eclipse.xtext.validation.Issue;
 import com.google.common.collect.ImmutableMap;
 
 /**
- * @author Dennis Hübner - Initial contribution and API
+ * @author Dennis Hï¿½bner - Initial contribution and API
  * @author Sven Efftinge
  * @author Michael Clay
  */

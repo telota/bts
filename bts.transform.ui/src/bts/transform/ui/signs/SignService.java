@@ -18,8 +18,7 @@ public class SignService {
 	private static final String S010_REPLACE = ""; // line feed --> 
 
 	static {
-		
-		/** Properties laden. */
+		/* Properties laden. */
 		PROPERTIES = new Properties();
 		File file = new File(PROPERTIES_FILENAME);
 		if (!file.exists())

@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/aaew-bts.iml" filepath="$PROJECT_DIR$/aaew-bts.iml" group="aaew-bts and modules" />
       <module fileurl="file://$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" filepath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" />
-      <module fileurl="file://$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" filepath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" />
     </modules>
   </component>
 </project>

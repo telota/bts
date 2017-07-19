@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class LemmatizerTester {
 public static final String LEMMATIZER_DOUBLE_POINT_PATTERN = "(.+:)(.+)";
 	
-	public static final String LEMMATIZER_POINT_PATTERN = "([^\\.]+)(.+)";
+	public static final String LEMMATIZER_POINT_PATTERN = "([^.]+)(.+)";
 	
 	public static final String LEMMATIZER_TRIPLE_POINT = new String(new char[]{'\u22ee'});
 

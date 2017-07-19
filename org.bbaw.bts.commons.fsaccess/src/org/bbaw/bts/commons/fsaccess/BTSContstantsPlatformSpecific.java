@@ -1,32 +1,32 @@
-/**
- * This file is part of Thesaurus Linguae Aegyptiae, TLA.
- * 
- * The software TLA serves as a web interface for presenting and working with
- * text corpus data. See: aaew.bbaw.de
- * 
- * The software TLA was developed at Free University Berlin, www.fu-berlin.de together with 
- * the Berlin-Brandenburg Academy of Sciences and Humanities, 
- * Jägerstr. 22/23, D-10117 Berlin.
- * www.bbaw.de
- * 
- * Copyright (C) 2016  Free University of Berlin and Berlin-Brandenburg Academy
- * of Sciences and Humanities
- * 
- * The software TLA was developed by @author: Christoph Plutte.
- * 
- * TLA is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * TLA is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with TLA.  
- * If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>.
+/*
+  This file is part of Thesaurus Linguae Aegyptiae, TLA.
+
+  The software TLA serves as a web interface for presenting and working with
+  text corpus data. See: aaew.bbaw.de
+
+  The software TLA was developed at Free University Berlin, www.fu-berlin.de together with
+  the Berlin-Brandenburg Academy of Sciences and Humanities,
+  Jägerstr. 22/23, D-10117 Berlin.
+  www.bbaw.de
+
+  Copyright (C) 2016  Free University of Berlin and Berlin-Brandenburg Academy
+  of Sciences and Humanities
+
+  The software TLA was developed by @author: Christoph Plutte.
+
+  TLA is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  TLA is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public License
+  along with TLA.
+  If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
 package org.bbaw.bts.commons.fsaccess;
 
@@ -84,7 +84,7 @@ public class BTSContstantsPlatformSpecific {
 //				}
 //			}
 		}
-		/** Properties laden. */
+		/* Properties laden. */
 		PROPERTIES = new Properties();
 		File file = new File(BTSConstants.PROPERTIES_FILENAME);
 		// try {

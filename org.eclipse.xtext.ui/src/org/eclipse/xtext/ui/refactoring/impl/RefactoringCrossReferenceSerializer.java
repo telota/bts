@@ -1,10 +1,10 @@
-/*******************************************************************************
- * Copyright (c) 2012 itemis AG (http://www.itemis.eu) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+/******************************************************************************
+ Copyright (c) 2012 itemis AG (http://www.itemis.eu) and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.eclipse.xtext.ui.refactoring.impl;
 
 import static org.eclipse.ltk.core.refactoring.RefactoringStatus.*;
@@ -30,7 +30,7 @@ import com.google.inject.Inject;
 
 /**
  * Calculates the new text for a cross reference when the target is renamed. The functionality differs from the original
- * cross reference serializers {@link CrossReferenceSerializer} and
+ * cross reference serializers {@link CrossReferenceSerializer}ï¿½and
  * {@link org.eclipse.xtext.serializer.tokens.CrossReferenceSerializer} as we have to preserve the syntax of the
  * original cross-reference, e.g. short-cut syntax for a getter call.
  * 

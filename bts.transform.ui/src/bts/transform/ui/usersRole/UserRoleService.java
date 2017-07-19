@@ -15,7 +15,7 @@ public class UserRoleService {
 
 	static {
 		
-		/** Properties laden. */
+		/* Properties laden. */
 		PROPERTIES = new Properties();
 		File file = new File(PROPERTIES_FILENAME);
 		if (!file.exists())

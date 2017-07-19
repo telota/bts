@@ -30,10 +30,10 @@ public class TestTextModelElementDialog extends Dialog
 	private Label lblTransliteration;
 	private Label lblSpelling;
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parentShell
+	/*
+	  Create the dialog.
+
+	  @param parentShell
 	 */
 	// public TestTextModelElementDialog(Shell parentShell, LightSpelling
 	// spelling)

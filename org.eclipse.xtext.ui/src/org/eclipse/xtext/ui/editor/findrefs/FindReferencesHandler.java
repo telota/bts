@@ -1,10 +1,10 @@
-/*******************************************************************************
- * Copyright (c) 2010 itemis AG (http://www.itemis.eu) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+/******************************************************************************
+ Copyright (c) 2010 itemis AG (http://www.itemis.eu) and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.eclipse.xtext.ui.editor.findrefs;
 
 import org.apache.log4j.Logger;
@@ -27,7 +27,7 @@ import com.google.inject.Inject;
 /**
  * This class must neither be renamed nor moved.
  * 
- * @author Jan Köhnlein - Initial contribution and API
+ * @author Jan Kï¿½hnlein - Initial contribution and API
  * @author Peter Friese
  */
 public class FindReferencesHandler extends AbstractHandler {

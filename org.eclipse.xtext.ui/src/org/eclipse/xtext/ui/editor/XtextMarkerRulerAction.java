@@ -1,11 +1,11 @@
-/*******************************************************************************
- * Copyright (c) 2008 itemis AG (http://www.itemis.eu) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *******************************************************************************/
+/******************************************************************************
+ Copyright (c) 2008 itemis AG (http://www.itemis.eu) and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+ */
 package org.eclipse.xtext.ui.editor;
 
 import java.util.Iterator;
@@ -26,7 +26,7 @@ import org.eclipse.xtext.ui.editor.validation.XtextAnnotation;
 /**
  * Super class is marked as not extendable, but it should be extendable
  * 
- * @author Dennis Hübner - Initial contribution and API
+ * @author Dennis Hï¿½bner - Initial contribution and API
  * @author Holger Schill and Sebastian Zarnekow - https://bugs.eclipse.org/bugs/show_bug.cgi?id=310813
  */
 public final class XtextMarkerRulerAction extends SelectMarkerRulerAction {

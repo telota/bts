@@ -1,10 +1,10 @@
-/*******************************************************************************
- * Copyright (c) 2010 itemis AG (http://www.itemis.eu) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+/******************************************************************************
+ Copyright (c) 2010 itemis AG (http://www.itemis.eu) and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+ */
 package org.eclipse.xtext.ui.refactoring.impl;
 
 import static com.google.common.collect.Maps.*;
@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 /**
- * Finds all references to renamed elements and dispatches to the {@link IReferenceUpdater} of the referring languages
+ * Finds all references to renamed elements and dispatches to the {@link IReferenceUpdater}ï¿½of the referring languages
  * to calculate the updates.
  * 
  * @author Jan Koehnlein - Initial contribution and API

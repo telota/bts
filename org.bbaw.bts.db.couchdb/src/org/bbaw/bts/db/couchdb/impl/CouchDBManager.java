@@ -155,7 +155,7 @@ public class CouchDBManager implements DBManager {
 	private Client esClient;
 	private Process process;
 	private Pattern urlAuthorityRemovelPattern = Pattern
-			.compile("(https?:\\/\\/)([^@]+@)(.+)");
+			.compile("(https?://)([^@]+@)(.+)");
 
 	@Override
 	public boolean prepareDBSynchronization(BTSProject project)
@@ -675,8 +675,8 @@ public class CouchDBManager implements DBManager {
 		}
 		String url = dbConnection.getMasterServer();
 		if (url == null) return true;
-		url = url.replaceAll("\\/", "\\\\/");
-		Pattern pattern = Pattern.compile(url + "\\/*" + collectionName);
+		url = url.replaceAll("/", "\\\\/");
+		Pattern pattern = Pattern.compile(url + "/*" + collectionName);
 		Matcher m = pattern.matcher(target);
 		if (!m.matches()) {
 			return false;
@@ -697,8 +697,8 @@ public class CouchDBManager implements DBManager {
 		}
 		String url = dbConnection.getMasterServer();
 		if (url == null) return true;
-		url = url.replaceAll("\\/", "\\\\/");
-		Pattern pattern = Pattern.compile(url + "\\/*" + collectionName);
+		url = url.replaceAll("/", "\\\\/");
+		Pattern pattern = Pattern.compile(url + "/*" + collectionName);
 		Matcher m = pattern.matcher(source);
 		if (!m.matches()) {
 			return false;

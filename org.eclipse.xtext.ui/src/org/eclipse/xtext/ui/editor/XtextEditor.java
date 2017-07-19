@@ -1,11 +1,11 @@
-/*******************************************************************************
- * Copyright (c) 2008 itemis AG (http://www.itemis.eu) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *******************************************************************************/
+/******************************************************************************
+ Copyright (c) 2008 itemis AG (http://www.itemis.eu) and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+ */
 package org.eclipse.xtext.ui.editor;
 
 import java.text.BreakIterator;
@@ -700,7 +700,7 @@ public class XtextEditor extends TextEditor {
 	}
 
 	/**
-	 * Copied from {@link org.eclipse.ui.texteditor.AbstractTextEditor#selectAndReveal(int, int)}  and removed selection
+	 * Copied from {@link org.eclipse.ui.texteditor.AbstractTextEditor#selectAndReveal(int, int)}ï¿½ and removed selection
 	 * functionality.
 	 */
 	public void reveal(int offset, int length) {

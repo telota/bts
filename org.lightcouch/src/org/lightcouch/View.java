@@ -688,11 +688,7 @@ public class View
 
 	/**
 	 * Queries a view.
-	 * 
-	 * @param <T>
-	 *            Object type T
-	 * @param classOfT
-	 *            The class of type T
+	 *
 	 * @return The result of the view query as a {@code List<T> }
 	 */
 	public List<String> query()

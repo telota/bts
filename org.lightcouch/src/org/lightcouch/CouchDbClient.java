@@ -103,7 +103,7 @@ import com.google.gson.JsonObject;
  */
 public final class CouchDbClient extends CouchDbClientBase {
 
-	 Pattern conflictPattern = Pattern.compile("(\"_conflicts\":)(\\[(.*?)\\])");
+	 Pattern conflictPattern = Pattern.compile("(\"_conflicts\":)(\\[(.*?)])");
 	// -------------------------------------------------------------------------- Constructors
 	/**
 	 * Constructs a new instance of this class, expects a configuration file named 

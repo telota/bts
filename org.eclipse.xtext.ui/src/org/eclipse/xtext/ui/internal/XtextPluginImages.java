@@ -1,11 +1,11 @@
-/*******************************************************************************
- * Copyright (c) 2008 itemis AG (http://www.itemis.eu) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- *******************************************************************************/
+/******************************************************************************
+ Copyright (c) 2008 itemis AG (http://www.itemis.eu) and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+ */
 package org.eclipse.xtext.ui.internal;
 
 import java.io.File;
@@ -99,8 +99,8 @@ public class XtextPluginImages {
 	public static final ImageDescriptor DESC_OVR_ERROR = create(PATH_OVR, "error_co.gif"); //$NON-NLS-1$
 	public static final ImageDescriptor DESC_OVR_WARNING =create(PATH_OVR, "warning_co.gif"); //$NON-NLS-1$
 
-	/**
-	 * TOOL16
+	/*
+	  TOOL16
 	 */
 
 	/**
@@ -134,8 +134,8 @@ public static final String OBJ_DESC_ERROR = NAME_PREFIX + "ERROR";
 	
 	public static final String OBJ_DESC_EXCLAMATION = NAME_PREFIX + "EXCLAMATION";
 	public static final String OBJ_DESC_INFORMATION = NAME_PREFIX + "INFORMATION";
-	/**
-	 * WIZ
+	/*
+	  WIZ
 	 */
 
 	/**
