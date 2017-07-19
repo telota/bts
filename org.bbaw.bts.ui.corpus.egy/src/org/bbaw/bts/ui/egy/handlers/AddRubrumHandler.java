@@ -20,46 +20,42 @@ import org.eclipse.e4.ui.services.internal.events.EventBroker;
 import org.eclipse.swt.widgets.Shell;
 
 public class AddRubrumHandler {
-	@Execute
-	public void execute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event,
-			@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
-			EventBroker eventBroker,
-			CorpusNavigatorController corpusNavigatorController) {
-			BTSObject dbbaseObject = (BTSObject) event.data;
-		
-			if (dbbaseObject != null)
-			{
-				final BTSAnnotation object = corpusNavigatorController
-						.createNewAnnotation((BTSCorpusObject) dbbaseObject, BTSConstants.ANNOTATION +
-								CorpusUtils.TYPE_PATH_DELIMITER + CorpusUtils.ANNOTATION_RUBRUM_TYPE);
-				object.setName("Rubrum");
-				BTSRelation rel = null;
-				if (object.getRelations().isEmpty())
-				{
-					rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
-					object.getRelations().add(rel);
-				}
-				else
-				{
-					rel = object.getRelations().get(0);
-				}
-	
-				rel.setObjectId(dbbaseObject.get_id());
-				
-				BTSInterTextReference ref = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
-				ref.setBeginId(event.getStartId());
-				ref.setEndId(event.getEndId());
-				rel.getParts().add(ref);
-				corpusNavigatorController.save(object);
-			}
-			// FIXME eventBroker.post("model_add/BTSAnnotation", object);
-	}
+    @Execute
+    public void execute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event,
+            @Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
+            EventBroker eventBroker,
+            CorpusNavigatorController corpusNavigatorController) {
+        BTSObject dbbaseObject = (BTSObject) event.data;
 
-	@CanExecute
-	public boolean canExecute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event) {
-		return (!event.getSelectedItems().isEmpty());
-	}
+        if (dbbaseObject != null) {
+            final BTSAnnotation object = corpusNavigatorController
+                    .createNewAnnotation((BTSCorpusObject) dbbaseObject, BTSConstants.ANNOTATION +
+                            CorpusUtils.TYPE_PATH_DELIMITER + CorpusUtils.ANNOTATION_RUBRUM_TYPE);
+            object.setName("Rubrum");
+            BTSRelation rel = null;
+            if (object.getRelations().isEmpty()) {
+                rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
+                object.getRelations().add(rel);
+            } else {
+                rel = object.getRelations().get(0);
+            }
+
+            rel.setObjectId(dbbaseObject.get_id());
+
+            BTSInterTextReference ref = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
+            ref.setBeginId(event.getStartId());
+            ref.setEndId(event.getEndId());
+            rel.getParts().add(ref);
+            corpusNavigatorController.save(object);
+        }
+        // FIXME eventBroker.post("model_add/BTSAnnotation", object);
+    }
+
+    @CanExecute
+    public boolean canExecute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event) {
+        return (!event.getSelectedItems().isEmpty());
+    }
 
 }

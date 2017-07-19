@@ -4,8 +4,8 @@ import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 
 public interface CorpusCommandController {
 
-	boolean save(BTSDBBaseObject object);
+    boolean save(BTSDBBaseObject object);
 
-	boolean deleteFromDB(BTSDBBaseObject object);
+    boolean deleteFromDB(BTSDBBaseObject object);
 
 }

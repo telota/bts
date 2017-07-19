@@ -27,53 +27,52 @@ import com.google.inject.name.Named;
 
 /**
  * @author Sven Efftinge - Initial contribution and API
- * 
  */
 @Singleton
 public class XtextTemplateStore extends TemplateStore {
 
-	private final static Logger log = Logger.getLogger(XtextTemplateStore.class);
-	private final URL res;
+    private final static Logger log = Logger.getLogger(XtextTemplateStore.class);
+    private final URL res;
 
-	@Inject
-	public XtextTemplateStore(ContextTypeRegistry registry, IPreferenceStore store, @Named(Constants.LANGUAGE_NAME) String key,
-			AbstractUIPlugin plugin) {
-		super(registry, store, key + ".templates");
-		res = getTemplateFileURL(plugin);
-		try {
-			load();
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-		}
-	}
+    @Inject
+    public XtextTemplateStore(ContextTypeRegistry registry, IPreferenceStore store, @Named(Constants.LANGUAGE_NAME) String key,
+                              AbstractUIPlugin plugin) {
+        super(registry, store, key + ".templates");
+        res = getTemplateFileURL(plugin);
+        try {
+            load();
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
 
-	protected URL getTemplateFileURL(AbstractUIPlugin plugin) {
-		return plugin.getBundle().getEntry("templates/templates.xml");
-	}
+    protected URL getTemplateFileURL(AbstractUIPlugin plugin) {
+        return plugin.getBundle().getEntry("templates/templates.xml");
+    }
 
-	@Override
-	protected void loadContributedTemplates() throws IOException {
-		if (res==null)
-			return;
-		TemplateReaderWriter reader = new TemplateReaderWriter();
-		InputStream openStream = null;
-		try {
-			openStream = res.openStream();
-			try {
-				TemplatePersistenceData[] read = reader.read(openStream, null);
-				for (TemplatePersistenceData templatePersistenceData : read) {
-					internalAdd(templatePersistenceData);
-				}
-			} finally {
-				openStream.close();
-			}
-		} catch (IOException e) {
-			log.error(e);
-		}
-	}
+    @Override
+    protected void loadContributedTemplates() throws IOException {
+        if (res == null)
+            return;
+        TemplateReaderWriter reader = new TemplateReaderWriter();
+        InputStream openStream = null;
+        try {
+            openStream = res.openStream();
+            try {
+                TemplatePersistenceData[] read = reader.read(openStream, null);
+                for (TemplatePersistenceData templatePersistenceData : read) {
+                    internalAdd(templatePersistenceData);
+                }
+            } finally {
+                openStream.close();
+            }
+        } catch (IOException e) {
+            log.error(e);
+        }
+    }
 
-	@Override
-	protected void handleException(IOException x) {
-		log.error(x.getMessage(), x);
-	}
+    @Override
+    protected void handleException(IOException x) {
+        log.error(x.getMessage(), x);
+    }
 }

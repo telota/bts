@@ -17,24 +17,24 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
  */
 public class SemanticModificationWrapper implements IModification {
 
-	private URI uriToProblem;
+    private URI uriToProblem;
 
-	private ISemanticModification semanticModification;
-	
-	
-	public SemanticModificationWrapper(URI uriToProblem, ISemanticModification semanticModification) {
-		this.semanticModification = semanticModification;
-		this.uriToProblem = uriToProblem;
-	}
+    private ISemanticModification semanticModification;
 
-	public void apply(final IModificationContext context) {
-		context.getXtextDocument().modify(new IUnitOfWork.Void<XtextResource>() {
-			@Override
-			public void process(XtextResource state) throws Exception {
-				EObject eObject = state.getEObject(uriToProblem.fragment());
-				semanticModification.apply(eObject, context);
-			}
-		});
-	}
+
+    public SemanticModificationWrapper(URI uriToProblem, ISemanticModification semanticModification) {
+        this.semanticModification = semanticModification;
+        this.uriToProblem = uriToProblem;
+    }
+
+    public void apply(final IModificationContext context) {
+        context.getXtextDocument().modify(new IUnitOfWork.Void<XtextResource>() {
+            @Override
+            public void process(XtextResource state) throws Exception {
+                EObject eObject = state.getEObject(uriToProblem.fragment());
+                semanticModification.apply(eObject, context);
+            }
+        });
+    }
 
 }

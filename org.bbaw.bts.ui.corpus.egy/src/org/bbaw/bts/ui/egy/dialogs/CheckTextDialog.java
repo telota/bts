@@ -30,140 +30,145 @@ import org.eclipse.swt.widgets.Label;
 
 public class CheckTextDialog extends TitleAreaDialog {
 
-	@Inject
-	private IEclipseContext context;
+    @Inject
+    private IEclipseContext context;
 
-	@Inject
-	private BTSText text;
-	
-	@Inject
-	private UISynchronize sync;
-	
-	@Inject
-	private BTSTextEditorController textController;
+    @Inject
+    private BTSText text;
 
-	private Label lblLemmapercent;
+    @Inject
+    private UISynchronize sync;
 
-	private Label lblFlexcodepercent;
+    @Inject
+    private BTSTextEditorController textController;
 
-	private Label lblHieropercent;
+    private Label lblLemmapercent;
 
-	private Label lblWordtranspercent;
+    private Label lblFlexcodepercent;
 
-	private Label lblSentencetranspercent;
+    private Label lblHieropercent;
 
-	private Label lblPasportpercent;
-	/**
-	 * Create the dialog.
-	 * @param parentShell
-	 */
-	@Inject
-	public CheckTextDialog(Shell parentShell) {
-		super(parentShell);
-	}
-	/**
-	 * Create contents of the dialog.
-	 * @param parent
-	 */
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite area = (Composite) super.createDialogArea(parent);
-		Composite container = new Composite(area, SWT.NONE);
-		container.setLayout(new GridLayout(2, false));
-		container.setLayoutData(new GridData(GridData.FILL_BOTH));
-		
-		Label lblNewLabel = new Label(container, SWT.NONE);
-		lblNewLabel.setText("Lemmatizing completed");
-		
-		lblLemmapercent = new Label(container, SWT.NONE);
-		lblLemmapercent.setText("lemmaPercent");
-		
-		Label lblFlexcodeCompleted = new Label(container, SWT.NONE);
-		lblFlexcodeCompleted.setText("Flexcode completed");
-		
-		lblFlexcodepercent = new Label(container, SWT.NONE);
-		lblFlexcodepercent.setText("flexcodePercent");
-		
-		Label lblHieroglyphesCompleted = new Label(container, SWT.NONE);
-		lblHieroglyphesCompleted.setText("Hieroglyphes completed");
-		
-		lblHieropercent = new Label(container, SWT.NONE);
-		lblHieropercent.setText("hieroPercent");
-		
-		Label lblWordTranslationsCompleted = new Label(container, SWT.NONE);
-		lblWordTranslationsCompleted.setText("Word translations completed");
-		
-		lblWordtranspercent = new Label(container, SWT.NONE);
-		lblWordtranspercent.setText("wordTransPercent");
-		
-		Label lblSentenceTranslationsCompleted = new Label(container, SWT.NONE);
-		lblSentenceTranslationsCompleted.setText("Sentence translations completed");
-		
-		lblSentencetranspercent = new Label(container, SWT.NONE);
-		lblSentencetranspercent.setText("sentenceTransPercent");
-		
+    private Label lblWordtranspercent;
+
+    private Label lblSentencetranspercent;
+
+    private Label lblPasportpercent;
+
+    /**
+     * Create the dialog.
+     *
+     * @param parentShell
+     */
+    @Inject
+    public CheckTextDialog(Shell parentShell) {
+        super(parentShell);
+    }
+
+    /**
+     * Create contents of the dialog.
+     *
+     * @param parent
+     */
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        Composite area = (Composite) super.createDialogArea(parent);
+        Composite container = new Composite(area, SWT.NONE);
+        container.setLayout(new GridLayout(2, false));
+        container.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+        Label lblNewLabel = new Label(container, SWT.NONE);
+        lblNewLabel.setText("Lemmatizing completed");
+
+        lblLemmapercent = new Label(container, SWT.NONE);
+        lblLemmapercent.setText("lemmaPercent");
+
+        Label lblFlexcodeCompleted = new Label(container, SWT.NONE);
+        lblFlexcodeCompleted.setText("Flexcode completed");
+
+        lblFlexcodepercent = new Label(container, SWT.NONE);
+        lblFlexcodepercent.setText("flexcodePercent");
+
+        Label lblHieroglyphesCompleted = new Label(container, SWT.NONE);
+        lblHieroglyphesCompleted.setText("Hieroglyphes completed");
+
+        lblHieropercent = new Label(container, SWT.NONE);
+        lblHieropercent.setText("hieroPercent");
+
+        Label lblWordTranslationsCompleted = new Label(container, SWT.NONE);
+        lblWordTranslationsCompleted.setText("Word translations completed");
+
+        lblWordtranspercent = new Label(container, SWT.NONE);
+        lblWordtranspercent.setText("wordTransPercent");
+
+        Label lblSentenceTranslationsCompleted = new Label(container, SWT.NONE);
+        lblSentenceTranslationsCompleted.setText("Sentence translations completed");
+
+        lblSentencetranspercent = new Label(container, SWT.NONE);
+        lblSentencetranspercent.setText("sentenceTransPercent");
+
 //		Label lblPassportCompleted = new Label(container, SWT.NONE);
 //		lblPassportCompleted.setText("Passport completed");
 //		
 //		lblPasportpercent = new Label(container, SWT.NONE);
 //		lblPasportpercent.setText("pasportPercent");
 
-		loadPercentages();
-		return area;
-	}
+        loadPercentages();
+        return area;
+    }
 
-	private void loadPercentages() {
-		try {
-			IRunnableWithProgress op = new IRunnableWithProgress() {
+    private void loadPercentages() {
+        try {
+            IRunnableWithProgress op = new IRunnableWithProgress() {
 
-				@Override
-				public void run(IProgressMonitor monitor)
-						throws InvocationTargetException, InterruptedException {
-					final int[] percentages = textController
-							.checkTextCompleteness(text);
-					sync.asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							lblLemmapercent.setText(percentages[0] + "%");
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
+                    final int[] percentages = textController
+                            .checkTextCompleteness(text);
+                    sync.asyncExec(new Runnable() {
+                        @Override
+                        public void run() {
+                            lblLemmapercent.setText(percentages[0] + "%");
 
-							lblFlexcodepercent.setText(percentages[1] + "%");
+                            lblFlexcodepercent.setText(percentages[1] + "%");
 
-							lblHieropercent.setText(percentages[2] + "%");
+                            lblHieropercent.setText(percentages[2] + "%");
 
-							lblWordtranspercent.setText(percentages[3] + "%");
+                            lblWordtranspercent.setText(percentages[3] + "%");
 
-							lblSentencetranspercent.setText(percentages[4]
-									+ "%");
-						}
-					});
-				}
-			};
-			new ProgressMonitorDialog(getShell()).run(true, true, op);
-		} catch (InvocationTargetException e) {
-			// handle exception
-		} catch (InterruptedException e) {
-			// handle cancelation
-		}
+                            lblSentencetranspercent.setText(percentages[4]
+                                    + "%");
+                        }
+                    });
+                }
+            };
+            new ProgressMonitorDialog(getShell()).run(true, true, op);
+        } catch (InvocationTargetException e) {
+            // handle exception
+        } catch (InterruptedException e) {
+            // handle cancelation
+        }
 
-	}
+    }
 
-	/**
-	 * Create contents of the button bar.
-	 * @param parent
-	 */
-	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
-				true);
-		setTitle("Check Text Completeness Dialog");
-		setMessage("Percentage of completed Lemmatization, flexcode etc.");
-	}
+    /**
+     * Create contents of the button bar.
+     *
+     * @param parent
+     */
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+                true);
+        setTitle("Check Text Completeness Dialog");
+        setMessage("Percentage of completed Lemmatization, flexcode etc.");
+    }
 
-	/**
-	 * Return the initial size of the dialog.
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(550, 350);
-	}
+    /**
+     * Return the initial size of the dialog.
+     */
+    @Override
+    protected Point getInitialSize() {
+        return new Point(550, 350);
+    }
 }

@@ -16,21 +16,21 @@ import com.google.inject.name.Named;
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public class LanguageResourceHelper implements ILanguageResourceHelper {
-	
-	@Inject
-	@Named("file.extensions")
-	private String fileExtensions;
 
-	public String[] getFileExtensions() {
-		return fileExtensions.split(",");
-	}
-	
-	public boolean isLanguageResource(IResource resource) {
-		String fileExtension = resource.getFullPath().getFileExtension();
-		for (String ext : getFileExtensions()) {
-			if (ext.equals(fileExtension))
-				return true;
-		}
-		return false;
-	}
+    @Inject
+    @Named("file.extensions")
+    private String fileExtensions;
+
+    public String[] getFileExtensions() {
+        return fileExtensions.split(",");
+    }
+
+    public boolean isLanguageResource(IResource resource) {
+        String fileExtension = resource.getFullPath().getFileExtension();
+        for (String ext : getFileExtensions()) {
+            if (ext.equals(fileExtension))
+                return true;
+        }
+        return false;
+    }
 }

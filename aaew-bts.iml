@@ -262,6 +262,7 @@
       <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/designdocs" />
       <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/src/org/lightcouch/designdocs" />
       <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />

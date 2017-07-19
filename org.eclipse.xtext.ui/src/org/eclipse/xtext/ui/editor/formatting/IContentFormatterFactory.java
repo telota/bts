@@ -16,6 +16,6 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
  */
 public interface IContentFormatterFactory {
 
-	IContentFormatter createConfiguredFormatter(SourceViewerConfiguration configuration, ISourceViewer sourceViewer);
-	
+    IContentFormatter createConfiguredFormatter(SourceViewerConfiguration configuration, ISourceViewer sourceViewer);
+
 }

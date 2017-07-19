@@ -14,8 +14,8 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
  */
 public interface IContextInformationAcceptor {
 
-	void accept(IContextInformation information);
-	
-	boolean canAcceptMoreInformation();
-	
+    void accept(IContextInformation information);
+
+    boolean canAcceptMoreInformation();
+
 }

@@ -35,10 +35,9 @@ package org.bbaw.bts.corpus.btsCorpusModel;
  * A representation of the model object '<em><b>BTS Ths Entry</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSThsEntry()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSThsEntry()
  */
 public interface BTSThsEntry extends BTSCorpusObject {
 } // BTSThsEntry

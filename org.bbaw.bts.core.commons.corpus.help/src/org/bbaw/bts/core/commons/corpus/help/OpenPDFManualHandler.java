@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.core.commons.corpus.help;
 
 import java.io.File;
@@ -15,26 +14,26 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.osgi.framework.Bundle;
 
 public class OpenPDFManualHandler {
-	@Execute
-	public void execute() {
-		
-		Bundle b = Platform.getBundle("org.bbaw.bts.core.commons.corpus.help");
-		URL url = b.getEntry("resources/BTS.pdf");
-		File file = null;
-		try {
-			URL resolvedURL = FileLocator.toFileURL(url);
-			URI resolvedURI = new URI(resolvedURL.getProtocol(),
-					resolvedURL.getPath(), null); 
-			file = new File(resolvedURI);
-			OpenExternalBrowser.openURL(file.getAbsolutePath());
-		} catch (URISyntaxException | IOException e) {
-			e.printStackTrace();
-			String errMsg = "Could not open document. "+(file != null ? file.getAbsolutePath() : "");
-			MessageDialog md = new MessageDialog(null, "Error", null, errMsg + "\n" + e.toString(),
-					MessageDialog.ERROR, new String[]{"OK"}, 0);
-			md.open();
-		}
+    @Execute
+    public void execute() {
 
-	}
-		
+        Bundle b = Platform.getBundle("org.bbaw.bts.core.commons.corpus.help");
+        URL url = b.getEntry("resources/BTS.pdf");
+        File file = null;
+        try {
+            URL resolvedURL = FileLocator.toFileURL(url);
+            URI resolvedURI = new URI(resolvedURL.getProtocol(),
+                    resolvedURL.getPath(), null);
+            file = new File(resolvedURI);
+            OpenExternalBrowser.openURL(file.getAbsolutePath());
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+            String errMsg = "Could not open document. " + (file != null ? file.getAbsolutePath() : "");
+            MessageDialog md = new MessageDialog(null, "Error", null, errMsg + "\n" + e.toString(),
+                    MessageDialog.ERROR, new String[]{"OK"}, 0);
+            md.open();
+        }
+
+    }
+
 }

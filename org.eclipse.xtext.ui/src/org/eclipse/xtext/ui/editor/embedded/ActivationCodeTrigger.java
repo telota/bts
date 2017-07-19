@@ -19,45 +19,46 @@ import org.eclipse.ui.texteditor.IUpdate;
 /**
  * VerifyKeyListener that will trigger a matching action directly instead
  * of using the key binding API.
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public class ActivationCodeTrigger implements VerifyKeyListener {
 
-	private List<ActionActivationCode> activationCodes;
-	private Map<String, IAction> actions;
-	
-	public ActivationCodeTrigger(Map<String, IAction> actions, List<ActionActivationCode> activationCodes) {
-		this.actions = actions;
-		this.activationCodes = activationCodes;
-	}
+    private List<ActionActivationCode> activationCodes;
+    private Map<String, IAction> actions;
 
-	public void verifyKey(VerifyEvent event) {
+    public ActivationCodeTrigger(Map<String, IAction> actions, List<ActionActivationCode> activationCodes) {
+        this.actions = actions;
+        this.activationCodes = activationCodes;
+    }
 
-		ActionActivationCode code= null;
-		int size= activationCodes.size();
-		for (int i= 0; i < size; i++) {
-			code= activationCodes.get(i);
-			if (code.matches(event)) {
-				IAction action= actions.get(code.fActionId);
-				if (action != null) {
+    public void verifyKey(VerifyEvent event) {
 
-					if (action instanceof IUpdate)
-						((IUpdate) action).update();
+        ActionActivationCode code = null;
+        int size = activationCodes.size();
+        for (int i = 0; i < size; i++) {
+            code = activationCodes.get(i);
+            if (code.matches(event)) {
+                IAction action = actions.get(code.fActionId);
+                if (action != null) {
 
-					if (!action.isEnabled() && action instanceof IReadOnlyDependent) {
-						IReadOnlyDependent dependent= (IReadOnlyDependent) action;
-						boolean writable= dependent.isEnabled(true);
-						if (writable) {
-							event.doit= false;
-							return;
-						}
-					} else if (action.isEnabled()) {
-						event.doit= false;
-						action.run();
-						return;
-					}
-				}
-			}
-		}
-	}
+                    if (action instanceof IUpdate)
+                        ((IUpdate) action).update();
+
+                    if (!action.isEnabled() && action instanceof IReadOnlyDependent) {
+                        IReadOnlyDependent dependent = (IReadOnlyDependent) action;
+                        boolean writable = dependent.isEnabled(true);
+                        if (writable) {
+                            event.doit = false;
+                            return;
+                        }
+                    } else if (action.isEnabled()) {
+                        event.doit = false;
+                        action.run();
+                        return;
+                    }
+                }
+            }
+        }
+    }
 }

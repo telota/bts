@@ -18,20 +18,20 @@ import org.eclipse.xtext.resource.impl.ResourceDescriptionChangeEvent;
  */
 public class StateChangeEventBroker extends AbstractResourceDescriptionChangeEventSource implements IStateChangeEventBroker {
 
-	public static class StateChangeEventBrokerEvent extends ResourceDescriptionChangeEvent {
+    public void descriptionsChanged(IResourceDescription.Event event) {
+        notifyListeners(new StateChangeEventBrokerEvent(event.getDeltas(), this));
+    }
 
-		public StateChangeEventBrokerEvent(Collection<IResourceDescription.Delta> delta, IStateChangeEventBroker sender) {
-			super(delta, sender);
-		}
+    public static class StateChangeEventBrokerEvent extends ResourceDescriptionChangeEvent {
 
-		@Override
-		public IStateChangeEventBroker getSender() {
-			return (IStateChangeEventBroker) super.getSender();
-		}
-	}
-	
-	public void descriptionsChanged(IResourceDescription.Event event) {
-		notifyListeners(new StateChangeEventBrokerEvent(event.getDeltas(), this));
-	}
-	
+        public StateChangeEventBrokerEvent(Collection<IResourceDescription.Delta> delta, IStateChangeEventBroker sender) {
+            super(delta, sender);
+        }
+
+        @Override
+        public IStateChangeEventBroker getSender() {
+            return (IStateChangeEventBroker) super.getSender();
+        }
+    }
+
 }

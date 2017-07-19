@@ -33,29 +33,29 @@ import com.google.inject.Inject;
  * @author Peter Friese
  */
 public class ValidateActionHandler extends AbstractHandler {
-	@Inject
-	private IResourceValidator resourceValidator;
-	@Inject 
-	private MarkerCreator markerCreator;
-	@Inject
-	private MarkerTypeProvider markerTypeProvider;
-	@Inject
-	private IssueResolutionProvider issueResolutionProvider;
-	
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor(event);
-		if (xtextEditor != null) {
-			IValidationIssueProcessor issueProcessor;
-			IXtextDocument xtextDocument = xtextEditor.getDocument();
-			IResource resource = xtextEditor.getResource();
-			if(resource != null)
-				issueProcessor = new MarkerIssueProcessor(resource, markerCreator, markerTypeProvider);
-			else
-				issueProcessor = new AnnotationIssueProcessor(xtextDocument, xtextEditor.getInternalSourceViewer().getAnnotationModel(), issueResolutionProvider);
-			ValidationJob validationJob = new ValidationJob(resourceValidator, xtextDocument, issueProcessor,
-					CheckMode.ALL);
-			validationJob.schedule();
-		}
-		return this;
-	}
+    @Inject
+    private IResourceValidator resourceValidator;
+    @Inject
+    private MarkerCreator markerCreator;
+    @Inject
+    private MarkerTypeProvider markerTypeProvider;
+    @Inject
+    private IssueResolutionProvider issueResolutionProvider;
+
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor(event);
+        if (xtextEditor != null) {
+            IValidationIssueProcessor issueProcessor;
+            IXtextDocument xtextDocument = xtextEditor.getDocument();
+            IResource resource = xtextEditor.getResource();
+            if (resource != null)
+                issueProcessor = new MarkerIssueProcessor(resource, markerCreator, markerTypeProvider);
+            else
+                issueProcessor = new AnnotationIssueProcessor(xtextDocument, xtextEditor.getInternalSourceViewer().getAnnotationModel(), issueResolutionProvider);
+            ValidationJob validationJob = new ValidationJob(resourceValidator, xtextDocument, issueProcessor,
+                    CheckMode.ALL);
+            validationJob.schedule();
+        }
+        return this;
+    }
 }

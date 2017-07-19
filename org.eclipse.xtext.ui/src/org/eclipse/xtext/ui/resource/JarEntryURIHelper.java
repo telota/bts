@@ -16,13 +16,13 @@ import org.eclipse.jdt.core.IPackageFragmentRoot;
  */
 public class JarEntryURIHelper {
 
-	public static URI getUriForPackageFragmentRoot(IPackageFragmentRoot root) {
-		IResource underlyingResource = root.getResource();
-		if (underlyingResource == null) {
-			return URI.createFileURI(root.getPath().toString());
-		} else {
-			return URI.createPlatformResourceURI(underlyingResource.getFullPath().toString(), true);
-		}
-	}
-	
+    public static URI getUriForPackageFragmentRoot(IPackageFragmentRoot root) {
+        IResource underlyingResource = root.getResource();
+        if (underlyingResource == null) {
+            return URI.createFileURI(root.getPath().toString());
+        } else {
+            return URI.createPlatformResourceURI(underlyingResource.getFullPath().toString(), true);
+        }
+    }
+
 }

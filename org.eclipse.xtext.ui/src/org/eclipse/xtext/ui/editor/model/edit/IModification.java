@@ -12,10 +12,10 @@ package org.eclipse.xtext.ui.editor.model.edit;
  */
 public interface IModification {
 
-	void apply(IModificationContext context) throws Exception;
-	
-	IModification NULL = new IModification() {
-		public void apply(IModificationContext context) {
-		}
-	};
+    IModification NULL = new IModification() {
+        public void apply(IModificationContext context) {
+        }
+    };
+
+    void apply(IModificationContext context) throws Exception;
 }

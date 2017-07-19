@@ -40,190 +40,189 @@ import org.bbaw.bts.btsviewmodel.BTSObjectTypeTreeNode;
 
 /**
  * The Service Interface BTSConfigurationService provides service layer access to BTSConfiguration-objects.
- * 
- * Service-Implementations should incorporate as much as possible of business logic which 
+ * <p>
+ * Service-Implementations should incorporate as much as possible of business logic which
  * does not depend on UI specific implementation and should be implemented in the controller layer
  * nor database specific logic which should be implemented in the dao layer.
- * 
+ * <p>
  * Services should be implemented generically.
  */
-public interface BTSConfigurationService extends GenericObjectService<BTSConfiguration, String>
-{
+public interface BTSConfigurationService extends GenericObjectService<BTSConfiguration, String> {
 
-	/**
-	 * Creates the new config item.
-	 *
-	 * @return the BTS config item
-	 */
-	BTSConfigItem createNewConfigItem();
+    /**
+     * Creates the new config item.
+     *
+     * @return the BTS config item
+     */
+    BTSConfigItem createNewConfigItem();
 
-	/**
-	 * Gets the active passport config item which contains configuration details 
-	 * on the passport from the active configuration.
-	 *
-	 * @return the active passport config item
-	 */
-	BTSConfigItem getActivePassportConfigItem();
+    /**
+     * Gets the active passport config item which contains configuration details
+     * on the passport from the active configuration.
+     *
+     * @return the active passport config item
+     */
+    BTSConfigItem getActivePassportConfigItem();
 
-	/**
-	 * Gets the active configuration.
-	 *
-	 * @return the active configuration
-	 */
-	BTSConfiguration getActiveConfiguration();
+    /**
+     * Gets the active configuration.
+     *
+     * @return the active configuration
+     */
+    BTSConfiguration getActiveConfiguration();
 
-	/**
-	 * Gets the object types config item.
-	 *
-	 * @return the object types config item
-	 */
-	BTSConfigItem getObjectTypesConfigItem();
+    void setActiveConfiguration(BTSConfiguration configuration);
 
-	/**
-	 * Gets the config item of object type.
-	 *
-	 * @param object the object
-	 * @param strict the strict
-	 * @return the config item of object type
-	 */
-	BTSConfigItem getConfigItemOfObjectType(BTSObject object,
-			boolean strict);
+    /**
+     * Gets the object types config item.
+     *
+     * @return the object types config item
+     */
+    BTSConfigItem getObjectTypesConfigItem();
 
-	/**
-	 * Find object class name as string of given object.
-	 *
-	 * @param object the object
-	 * @return the string
-	 */
-	String findObjectClass(BTSObject object);
+    /**
+     * Gets the config item of object type.
+     *
+     * @param object the object
+     * @param strict the strict
+     * @return the config item of object type
+     */
+    BTSConfigItem getConfigItemOfObjectType(BTSObject object,
+                                            boolean strict);
 
-	/**
-	 * Gets the relations config item which contains configuration detials on the relations.
-	 *
-	 * @return the relations config item
-	 */
-	BTSConfigItem getRelationsConfigItem();
+    /**
+     * Find object class name as string of given object.
+     *
+     * @param object the object
+     * @return the string
+     */
+    String findObjectClass(BTSObject object);
 
-	/**
-	 * Object types paths contains objectype.
-	 *
-	 * @param ownerTypesMap the owner types map
-	 * @param object the object
-	 * @return true, if successful
-	 */
-	boolean objectTypesPathsContainsObjectype(
-			Map<String, List<String>> ownerTypesMap,
-			BTSObject object);
+    /**
+     * Gets the relations config item which contains configuration detials on the relations.
+     *
+     * @return the relations config item
+     */
+    BTSConfigItem getRelationsConfigItem();
 
-	/**
-	 * Gets the visibility config item.
-	 *
-	 * @return the visibility config item
-	 */
-	BTSConfigItem getVisibilityConfigItem();
+    /**
+     * Object types paths contains objectype.
+     *
+     * @param ownerTypesMap the owner types map
+     * @param object        the object
+     * @return true, if successful
+     */
+    boolean objectTypesPathsContainsObjectype(
+            Map<String, List<String>> ownerTypesMap,
+            BTSObject object);
 
-	/**
-	 * Gets the review status config item.
-	 *
-	 * @return the review status config item
-	 */
-	BTSConfigItem getReviewStatusConfigItem();
+    /**
+     * Gets the visibility config item.
+     *
+     * @return the visibility config item
+     */
+    BTSConfigItem getVisibilityConfigItem();
 
-	/**
-	 * Gets the review state config item processed clones.
-	 *
-	 * @param corpusObject the corpus object
-	 * @return the review state config item processed clones
-	 */
-	BTSConfigItem getReviewStateConfigItemProcessedClones(
-			BTSObject corpusObject);
+    /**
+     * Gets the review status config item.
+     *
+     * @return the review status config item
+     */
+    BTSConfigItem getReviewStatusConfigItem();
 
-	/**
-	 * Calculate children refernced objects recurcively.
-	 *
-	 * @param rootpath the rootpath
-	 * @param config the config
-	 * @param pathClonesList the path clones list
-	 * @param object the object
-	 */
-	void calculateChildrenReferncedObjectsRecurcively(
-			BTSObjectTypeTreeNode rootpath, BTSConfig config,
-			BTSConfigItem pathClonesList, BTSObject object);
-	
-	/**
-	 * Calculate children recurcively.
-	 *
-	 * @param rootpath the rootpath
-	 * @param config the config
-	 * @param pathClonesList the path clones list
-	 * @param object the object
-	 */
-	void calculateChildrenRecurcively(BTSObjectTypeTreeNode rootpath,
-			BTSConfig config, BTSConfigItem pathClonesList,
-			BTSObject object);
+    /**
+     * Gets the review state config item processed clones.
+     *
+     * @param corpusObject the corpus object
+     * @return the review state config item processed clones
+     */
+    BTSConfigItem getReviewStateConfigItemProcessedClones(
+            BTSObject corpusObject);
 
-	/**
-	 * Gets the object type config item processed clones.
-	 *
-	 * @param object the object
-	 * @return the object type config item processed clones
-	 */
-	BTSConfigItem getObjectTypeConfigItemProcessedClones(
-			BTSObject object);
-	
-	/**
-	 * Gets the object type config item processed clones.
-	 * if type is null it returns all config items for type.
-	 * if type is set it returns all config items for subtype.
-	 *
-	 * @param className of object
-	 * @param type type string of object
-	 * @param subtype subtype string of object
-	 * @return the object type config item processed clones
-	 */
-	BTSConfigItem getObjectTypeConfigItemProcessedClones(
-			String className, String type);
+    /**
+     * Calculate children refernced objects recurcively.
+     *
+     * @param rootpath       the rootpath
+     * @param config         the config
+     * @param pathClonesList the path clones list
+     * @param object         the object
+     */
+    void calculateChildrenReferncedObjectsRecurcively(
+            BTSObjectTypeTreeNode rootpath, BTSConfig config,
+            BTSConfigItem pathClonesList, BTSObject object);
 
-	/**
-	 * Gets the visibility config item processed clones.
-	 *
-	 * @param object the object
-	 * @return the visibility config item processed clones
-	 */
-	BTSConfigItem getVisibilityConfigItemProcessedClones(
-			BTSObject object);
+    /**
+     * Calculate children recurcively.
+     *
+     * @param rootpath       the rootpath
+     * @param config         the config
+     * @param pathClonesList the path clones list
+     * @param object         the object
+     */
+    void calculateChildrenRecurcively(BTSObjectTypeTreeNode rootpath,
+                                      BTSConfig config, BTSConfigItem pathClonesList,
+                                      BTSObject object);
 
-	/**
-	 * Gets the object subtype config item processed clones.
-	 *
-	 * @param object the object
-	 * @return the object subtype config item processed clones
-	 */
-	BTSConfigItem getObjectSubtypeConfigItemProcessedClones(
-			BTSObject object);
+    /**
+     * Gets the object type config item processed clones.
+     *
+     * @param object the object
+     * @return the object type config item processed clones
+     */
+    BTSConfigItem getObjectTypeConfigItemProcessedClones(
+            BTSObject object);
 
-	/**
-	 * Gets the passport categories.
-	 *
-	 * @param object the object
-	 * @return the passport categories
-	 */
-	List<BTSConfigItem> getPassportCategories(BTSObject object);
+    /**
+     * Gets the object type config item processed clones.
+     * if type is null it returns all config items for type.
+     * if type is set it returns all config items for subtype.
+     *
+     * @param className of object
+     * @param type      type string of object
+     * @param subtype   subtype string of object
+     * @return the object type config item processed clones
+     */
+    BTSConfigItem getObjectTypeConfigItemProcessedClones(
+            String className, String type);
 
-	BTSConfigItem getIdentifiersConfigItem();
+    /**
+     * Gets the visibility config item processed clones.
+     *
+     * @param object the object
+     * @return the visibility config item processed clones
+     */
+    BTSConfigItem getVisibilityConfigItemProcessedClones(
+            BTSObject object);
 
-	void setActiveConfiguration(BTSConfiguration configuration);
+    /**
+     * Gets the object subtype config item processed clones.
+     *
+     * @param object the object
+     * @return the object subtype config item processed clones
+     */
+    BTSConfigItem getObjectSubtypeConfigItemProcessedClones(
+            BTSObject object);
 
-	BTSConfiguration createNew(BTSConfiguration originalconfiguration);
+    /**
+     * Gets the passport categories.
+     *
+     * @param object the object
+     * @return the passport categories
+     */
+    List<BTSConfigItem> getPassportCategories(BTSObject object);
 
-	String getLabelOfTypeSubtypeString(BTSObject object, boolean prefereAbbreviation);
+    BTSConfigItem getIdentifiersConfigItem();
 
-	BTSConfigItem calculateReferencedConfigItemsProcessedClones(
-			BTSConfigItem itemConfig, BTSConfig configuration,
-			BTSObject object);
+    BTSConfiguration createNew(BTSConfiguration originalconfiguration);
 
-	List<String> getListOfReferencedObjectTypeSubtypesOfObject(
-			BTSObject object, BTSConfigItem itemConfig);
+    String getLabelOfTypeSubtypeString(BTSObject object, boolean prefereAbbreviation);
+
+    BTSConfigItem calculateReferencedConfigItemsProcessedClones(
+            BTSConfigItem itemConfig, BTSConfig configuration,
+            BTSObject object);
+
+    List<String> getListOfReferencedObjectTypeSubtypesOfObject(
+            BTSObject object, BTSConfigItem itemConfig);
 
 
 }

@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class MissingVersMarkerImpl extends VersMarkerImpl implements MissingVersMarker
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected MissingVersMarkerImpl()
-  {
-    super();
-  }
+public class MissingVersMarkerImpl extends VersMarkerImpl implements MissingVersMarker {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected MissingVersMarkerImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.MISSING_VERS_MARKER;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.MISSING_VERS_MARKER;
+    }
 
 } //MissingVersMarkerImpl

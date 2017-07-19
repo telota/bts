@@ -35,97 +35,103 @@ import org.bbaw.bts.btsmodel.BTSObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>BTS Corpus Object</b></em>'.
  * <!-- end-user-doc -->
- *
+ * <p>
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getPassport <em>Passport</em>}</li>
- *   <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getCorpusPrefix <em>Corpus Prefix</em>}</li>
- *   <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getWorkPhase <em>Work Phase</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getPassport <em>Passport</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getCorpusPrefix <em>Corpus Prefix</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getWorkPhase <em>Work Phase</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSCorpusObject()
  * @model abstract="true"
  * @generated
+ * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSCorpusObject()
  */
 public interface BTSCorpusObject extends BTSObject {
-	/**
-	 * Returns the value of the '<em><b>Passport</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Passport</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Passport</em>' containment reference.
-	 * @see #setPassport(BTSPassport)
-	 * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSCorpusObject_Passport()
-	 * @model containment="true"
-	 * @generated
-	 */
-	BTSPassport getPassport();
+    /**
+     * Returns the value of the '<em><b>Passport</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Passport</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Passport</em>' containment reference.
+     * @model containment="true"
+     * @generated
+     * @see #setPassport(BTSPassport)
+     * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSCorpusObject_Passport()
+     */
+    BTSPassport getPassport();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getPassport <em>Passport</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Passport</em>' containment reference.
-	 * @see #getPassport()
-	 * @generated
-	 */
-	void setPassport(BTSPassport value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getPassport <em>Passport</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Passport</em>' containment reference.
+     * @generated
+     * @see #getPassport()
+     */
+    void setPassport(BTSPassport value);
 
-	/**
-	 * Returns the value of the '<em><b>Corpus Prefix</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Corpus Prefix</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Corpus Prefix</em>' attribute.
-	 * @see #setCorpusPrefix(String)
-	 * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSCorpusObject_CorpusPrefix()
-	 * @model
-	 * @generated
-	 */
-	String getCorpusPrefix();
+    /**
+     * Returns the value of the '<em><b>Corpus Prefix</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Corpus Prefix</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Corpus Prefix</em>' attribute.
+     * @model
+     * @generated
+     * @see #setCorpusPrefix(String)
+     * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSCorpusObject_CorpusPrefix()
+     */
+    String getCorpusPrefix();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getCorpusPrefix <em>Corpus Prefix</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Corpus Prefix</em>' attribute.
-	 * @see #getCorpusPrefix()
-	 * @generated
-	 */
-	void setCorpusPrefix(String value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getCorpusPrefix <em>Corpus Prefix</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Corpus Prefix</em>' attribute.
+     * @generated
+     * @see #getCorpusPrefix()
+     */
+    void setCorpusPrefix(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Work Phase</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Work Phase</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Work Phase</em>' attribute.
-	 * @see #setWorkPhase(String)
-	 * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSCorpusObject_WorkPhase()
-	 * @model
-	 * @generated
-	 */
-	String getWorkPhase();
+    /**
+     * Returns the value of the '<em><b>Work Phase</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Work Phase</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Work Phase</em>' attribute.
+     * @model
+     * @generated
+     * @see #setWorkPhase(String)
+     * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSCorpusObject_WorkPhase()
+     */
+    String getWorkPhase();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getWorkPhase <em>Work Phase</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Work Phase</em>' attribute.
-	 * @see #getWorkPhase()
-	 * @generated
-	 */
-	void setWorkPhase(String value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject#getWorkPhase <em>Work Phase</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Work Phase</em>' attribute.
+     * @generated
+     * @see #getWorkPhase()
+     */
+    void setWorkPhase(String value);
 
 } // BTSCorpusObject

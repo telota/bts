@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.main.handlers;
 
 import javax.inject.Inject;
@@ -13,24 +12,30 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 public class UndoHandler {
-	
-	@Inject @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_CAN_UNDO) String canUndo;
-	@Inject @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) Boolean mayEdit;
-	
-	@Execute
-	public void execute(EditingDomainController editingDomainController,
-			@Named(IServiceConstants.ACTIVE_SELECTION) Object selection) {
-		EditingDomain ed = editingDomainController.getEditingDomain(selection);
-		if (ed != null) {
-			ed.getCommandStack().undo();
-		}
-	}
 
-	@CanExecute
-	public boolean canExecute() {
-		//boolean can = (canUndo != null && canUndo.equals("true") && mayEdit != null && mayEdit.booleanValue());
-		return true;
-	}
-	
-	
+    @Inject
+    @Optional
+    @Named(BTSCoreConstants.CORE_EXPRESSION_CAN_UNDO)
+    String canUndo;
+    @Inject
+    @Optional
+    @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
+    Boolean mayEdit;
+
+    @Execute
+    public void execute(EditingDomainController editingDomainController,
+                        @Named(IServiceConstants.ACTIVE_SELECTION) Object selection) {
+        EditingDomain ed = editingDomainController.getEditingDomain(selection);
+        if (ed != null) {
+            ed.getCommandStack().undo();
+        }
+    }
+
+    @CanExecute
+    public boolean canExecute() {
+        //boolean can = (canUndo != null && canUndo.equals("true") && mayEdit != null && mayEdit.booleanValue());
+        return true;
+    }
+
+
 }

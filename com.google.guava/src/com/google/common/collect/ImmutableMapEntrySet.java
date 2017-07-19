@@ -32,45 +32,48 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible(emulated = true)
 abstract class ImmutableMapEntrySet<K, V> extends ImmutableSet<Entry<K, V>> {
-  ImmutableMapEntrySet() {}
-
-  abstract ImmutableMap<K, V> map();
-
-  @Override
-  public int size() {
-    return map().size();
-  }
-
-  @Override
-  public boolean contains(@Nullable Object object) {
-    if (object instanceof Entry) {
-      Entry<?, ?> entry = (Entry<?, ?>) object;
-      V value = map().get(entry.getKey());
-      return value != null && value.equals(entry.getValue());
+    ImmutableMapEntrySet() {
     }
-    return false;
-  }
 
-  @Override
-  boolean isPartialView() {
-    return map().isPartialView();
-  }
+    abstract ImmutableMap<K, V> map();
 
-  @GwtIncompatible("serialization")
-  @Override
-  Object writeReplace() {
-    return new EntrySetSerializedForm<K, V>(map());
-  }
-
-  @GwtIncompatible("serialization")
-  private static class EntrySetSerializedForm<K, V> implements Serializable {
-    final ImmutableMap<K, V> map;
-    EntrySetSerializedForm(ImmutableMap<K, V> map) {
-      this.map = map;
+    @Override
+    public int size() {
+        return map().size();
     }
-    Object readResolve() {
-      return map.entrySet();
+
+    @Override
+    public boolean contains(@Nullable Object object) {
+        if (object instanceof Entry) {
+            Entry<?, ?> entry = (Entry<?, ?>) object;
+            V value = map().get(entry.getKey());
+            return value != null && value.equals(entry.getValue());
+        }
+        return false;
     }
-    private static final long serialVersionUID = 0;
-  }
+
+    @Override
+    boolean isPartialView() {
+        return map().isPartialView();
+    }
+
+    @GwtIncompatible("serialization")
+    @Override
+    Object writeReplace() {
+        return new EntrySetSerializedForm<K, V>(map());
+    }
+
+    @GwtIncompatible("serialization")
+    private static class EntrySetSerializedForm<K, V> implements Serializable {
+        private static final long serialVersionUID = 0;
+        final ImmutableMap<K, V> map;
+
+        EntrySetSerializedForm(ImmutableMap<K, V> map) {
+            this.map = map;
+        }
+
+        Object readResolve() {
+            return map.entrySet();
+        }
+    }
 }

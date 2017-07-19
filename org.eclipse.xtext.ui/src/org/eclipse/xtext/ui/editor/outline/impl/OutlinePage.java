@@ -51,238 +51,238 @@ import com.google.inject.Inject;
  */
 public class OutlinePage extends ContentOutlinePage implements ISourceViewerAware {
 
-	private static final String MENU_ID = "org.eclipse.xtext.ui.outline";
+    private static final String MENU_ID = "org.eclipse.xtext.ui.outline";
 
-	private static final Logger LOG = Logger.getLogger(OutlinePage.class);
+    private static final Logger LOG = Logger.getLogger(OutlinePage.class);
 
-	private static final String CONTEXT_MENU_ID = "OutlinePageContextMenu";
+    private static final String CONTEXT_MENU_ID = "OutlinePageContextMenu";
 
-	@Inject
-	private OutlineNodeLabelProvider labelProvider;
+    @Inject
+    private OutlineNodeLabelProvider labelProvider;
 
-	@Inject
-	private OutlineNodeContentProvider contentProvider;
+    @Inject
+    private OutlineNodeContentProvider contentProvider;
 
-	@Inject
-	private IOutlineTreeProvider treeProvider;
+    @Inject
+    private IOutlineTreeProvider treeProvider;
 
-	@Inject
-	private OutlineFilterAndSorter filterAndSorter;
+    @Inject
+    private OutlineFilterAndSorter filterAndSorter;
 
-	@Inject
-	private IOutlineContribution.Composite contribution;
+    @Inject
+    private IOutlineContribution.Composite contribution;
 
-	private IXtextModelListener modelListener;
+    private IXtextModelListener modelListener;
 
-	private ITextInputListener textInputListener;
+    private ITextInputListener textInputListener;
 
-	private IXtextDocument xtextDocument;
+    private IXtextDocument xtextDocument;
 
-	private ISourceViewer sourceViewer;
+    private ISourceViewer sourceViewer;
 
-	@Inject
-	private OutlineRefreshJob refreshJob;
+    @Inject
+    private OutlineRefreshJob refreshJob;
 
-	@Override
-	public void createControl(Composite parent) {
-		super.createControl(parent);
-		configureTree();
-		configureModelListener();
-		configureActions();
-		refreshJob.setOutlinePage(this);
-		configureContextMenu();
-	}
+    @Override
+    public void createControl(Composite parent) {
+        super.createControl(parent);
+        configureTree();
+        configureModelListener();
+        configureActions();
+        refreshJob.setOutlinePage(this);
+        configureContextMenu();
+    }
 
-	protected void configureTree() {
-		TreeViewer treeViewer = getTreeViewer();
-		treeViewer.setLabelProvider(labelProvider);
-		treeViewer.setContentProvider(contentProvider);
-		contentProvider.setFilterAndSorter(filterAndSorter);
-		treeViewer.setUseHashlookup(true);
-		// access EMF's image registry now, since it needs a UI-thread.
-		ExtendedImageRegistry.getInstance();
-		if(treeProvider instanceof BackgroundOutlineTreeProvider) {
-			new Job("Initializing outline") {
-				@Override
-				protected IStatus run(IProgressMonitor monitor) {
-					initializeTreeContent();
-					return Status.OK_STATUS;
-				}
-				
-			}.schedule();
-		} else {
-			initializeTreeContent();
-		}
-	}
+    protected void configureTree() {
+        TreeViewer treeViewer = getTreeViewer();
+        treeViewer.setLabelProvider(labelProvider);
+        treeViewer.setContentProvider(contentProvider);
+        contentProvider.setFilterAndSorter(filterAndSorter);
+        treeViewer.setUseHashlookup(true);
+        // access EMF's image registry now, since it needs a UI-thread.
+        ExtendedImageRegistry.getInstance();
+        if (treeProvider instanceof BackgroundOutlineTreeProvider) {
+            new Job("Initializing outline") {
+                @Override
+                protected IStatus run(IProgressMonitor monitor) {
+                    initializeTreeContent();
+                    return Status.OK_STATUS;
+                }
 
-	/**
-	 * @since 2.4
-	 */
-	protected void initializeTreeContent() {
-		List<IOutlineNode> initiallyExpandedNodes = xtextDocument
-				.readOnly(new IUnitOfWork<List<IOutlineNode>, XtextResource>() {
-					public List<IOutlineNode> exec(XtextResource resource) throws Exception {
-						return getInitiallyExpandedNodes();
-					}
-				});
-		refreshViewer(initiallyExpandedNodes.get(0), initiallyExpandedNodes, Collections.<IOutlineNode> emptySet());
-	}
+            }.schedule();
+        } else {
+            initializeTreeContent();
+        }
+    }
 
-	protected List<IOutlineNode> getInitiallyExpandedNodes() {
-		IOutlineNode rootNode = treeProvider.createRoot(xtextDocument);
-		List<IOutlineNode> result = newArrayList(rootNode);
-		addChildren(Collections.singletonList(rootNode), result, getDefaultExpansionLevel());
-		return result;
-	}
+    /**
+     * @since 2.4
+     */
+    protected void initializeTreeContent() {
+        List<IOutlineNode> initiallyExpandedNodes = xtextDocument
+                .readOnly(new IUnitOfWork<List<IOutlineNode>, XtextResource>() {
+                    public List<IOutlineNode> exec(XtextResource resource) throws Exception {
+                        return getInitiallyExpandedNodes();
+                    }
+                });
+        refreshViewer(initiallyExpandedNodes.get(0), initiallyExpandedNodes, Collections.<IOutlineNode>emptySet());
+    }
 
-	protected int getDefaultExpansionLevel() {
-		return 1;
-	}
+    protected List<IOutlineNode> getInitiallyExpandedNodes() {
+        IOutlineNode rootNode = treeProvider.createRoot(xtextDocument);
+        List<IOutlineNode> result = newArrayList(rootNode);
+        addChildren(Collections.singletonList(rootNode), result, getDefaultExpansionLevel());
+        return result;
+    }
 
-	protected void addChildren(List<IOutlineNode> nodes, List<IOutlineNode> allChildren, int depth) {
-		for (IOutlineNode node : nodes) {
-			List<IOutlineNode> children = node.getChildren();
-			if (depth > 1) {
-				allChildren.addAll(children);
-				addChildren(children, allChildren, depth - 1);
-			}
-		}
-	}
+    protected int getDefaultExpansionLevel() {
+        return 1;
+    }
 
-	protected void configureModelListener() {
-		modelListener = new IXtextModelListener() {
-			public void modelChanged(XtextResource resource) {
-				try {
-					scheduleRefresh();
-				} catch (Throwable t) {
-					LOG.error("Error refreshing outline", t);
-				}
-			}
+    protected void addChildren(List<IOutlineNode> nodes, List<IOutlineNode> allChildren, int depth) {
+        for (IOutlineNode node : nodes) {
+            List<IOutlineNode> children = node.getChildren();
+            if (depth > 1) {
+                allChildren.addAll(children);
+                addChildren(children, allChildren, depth - 1);
+            }
+        }
+    }
 
-		};
-		xtextDocument.addModelListener(modelListener);
-	}
+    protected void configureModelListener() {
+        modelListener = new IXtextModelListener() {
+            public void modelChanged(XtextResource resource) {
+                try {
+                    scheduleRefresh();
+                } catch (Throwable t) {
+                    LOG.error("Error refreshing outline", t);
+                }
+            }
 
-	protected void configureActions() {
-		contribution.register(this);
-	}
+        };
+        xtextDocument.addModelListener(modelListener);
+    }
 
-	/**
-	 * @since 2.4
-	 */
-	protected void configureContextMenu() {
-		MenuManager menuManager = new MenuManager(CONTEXT_MENU_ID, CONTEXT_MENU_ID);
-		menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		menuManager.setRemoveAllWhenShown(true);
-		
-		Menu contextMenu = menuManager.createContextMenu(getTreeViewer().getTree());
-		getTreeViewer().getTree().setMenu(contextMenu);
-		getSite().registerContextMenu(MENU_ID, menuManager, getTreeViewer());
-	}
-	
-	@Override
-	public void dispose() {
-		contribution.deregister(this);
-		sourceViewer.removeTextInputListener(textInputListener);
-		if (modelListener != null) {
-			xtextDocument.removeModelListener(modelListener);
-			modelListener = null;
-		}
-		contentProvider.dispose();
-		super.dispose();
-	}
+    protected void configureActions() {
+        contribution.register(this);
+    }
 
-	public void setSourceViewer(ISourceViewer sourceViewer) {
-		this.sourceViewer = sourceViewer;
-		IDocument document = sourceViewer.getDocument();
-		xtextDocument = XtextDocumentUtil.get(document);
-		Assert.isNotNull(xtextDocument);
-		configureTextInputListener();
-	}
+    /**
+     * @since 2.4
+     */
+    protected void configureContextMenu() {
+        MenuManager menuManager = new MenuManager(CONTEXT_MENU_ID, CONTEXT_MENU_ID);
+        menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+        menuManager.setRemoveAllWhenShown(true);
 
-	/**
-	 * @since 2.0
-	 */
-	protected void configureTextInputListener() {
-		textInputListener = new ITextInputListener() {
-			public void inputDocumentChanged(IDocument oldInput, IDocument newInput) {
-				try {
-					if (xtextDocument != null && modelListener != null)
-						xtextDocument.removeModelListener(modelListener);
-					xtextDocument = XtextDocumentUtil.get(newInput);
-					if (xtextDocument != null && modelListener != null) {
-						xtextDocument.addModelListener(modelListener);
-						scheduleRefresh();
-					}
-				} catch (Throwable t) {
-					LOG.error("Error refreshing outline", t);
-				}
-			}
+        Menu contextMenu = menuManager.createContextMenu(getTreeViewer().getTree());
+        getTreeViewer().getTree().setMenu(contextMenu);
+        getSite().registerContextMenu(MENU_ID, menuManager, getTreeViewer());
+    }
 
-			public void inputDocumentAboutToBeChanged(IDocument oldInput, IDocument newInput) {
-			}
-		};
-		sourceViewer.addTextInputListener(textInputListener);
-	}
+    @Override
+    public void dispose() {
+        contribution.deregister(this);
+        sourceViewer.removeTextInputListener(textInputListener);
+        if (modelListener != null) {
+            xtextDocument.removeModelListener(modelListener);
+            modelListener = null;
+        }
+        contentProvider.dispose();
+        super.dispose();
+    }
 
-	public ISourceViewer getSourceViewer() {
-		return sourceViewer;
-	}
+    /**
+     * @since 2.0
+     */
+    protected void configureTextInputListener() {
+        textInputListener = new ITextInputListener() {
+            public void inputDocumentChanged(IDocument oldInput, IDocument newInput) {
+                try {
+                    if (xtextDocument != null && modelListener != null)
+                        xtextDocument.removeModelListener(modelListener);
+                    xtextDocument = XtextDocumentUtil.get(newInput);
+                    if (xtextDocument != null && modelListener != null) {
+                        xtextDocument.addModelListener(modelListener);
+                        scheduleRefresh();
+                    }
+                } catch (Throwable t) {
+                    LOG.error("Error refreshing outline", t);
+                }
+            }
 
-	public IXtextDocument getXtextDocument() {
-		return xtextDocument;
-	}
+            public void inputDocumentAboutToBeChanged(IDocument oldInput, IDocument newInput) {
+            }
+        };
+        sourceViewer.addTextInputListener(textInputListener);
+    }
 
-	protected OutlineRefreshJob getRefreshJob() {
-		return refreshJob;
-	}
+    public ISourceViewer getSourceViewer() {
+        return sourceViewer;
+    }
 
-	public void scheduleRefresh() {
-		refreshJob.cancel();
-		refreshJob.schedule();
-	}
+    public void setSourceViewer(ISourceViewer sourceViewer) {
+        this.sourceViewer = sourceViewer;
+        IDocument document = sourceViewer.getDocument();
+        xtextDocument = XtextDocumentUtil.get(document);
+        Assert.isNotNull(xtextDocument);
+        configureTextInputListener();
+    }
 
-	@Override
-	public TreeViewer getTreeViewer() {
-		return super.getTreeViewer();
-	}
+    public IXtextDocument getXtextDocument() {
+        return xtextDocument;
+    }
 
-	public IOutlineTreeProvider getTreeProvider() {
-		return treeProvider;
-	}
+    protected OutlineRefreshJob getRefreshJob() {
+        return refreshJob;
+    }
 
-	/**
-	 * @since 2.2
-	 */
-	public OutlineFilterAndSorter getFilterAndSorter() {
-		return filterAndSorter;
-	}
+    public void scheduleRefresh() {
+        refreshJob.cancel();
+        refreshJob.schedule();
+    }
 
-	protected void refreshViewer(final IOutlineNode rootNode, final Collection<IOutlineNode> nodesToBeExpanded,
-			final Collection<IOutlineNode> selectedNodes) {
-		DisplayRunHelper.runAsyncInDisplayThread(new Runnable() {
-			public void run() {
-				try {
-					TreeViewer treeViewer = getTreeViewer();
-					if (!treeViewer.getTree().isDisposed()) {
-						treeViewer.setInput(rootNode);
-						treeViewer.expandToLevel(1);
-						treeViewer.setExpandedElements(Iterables.toArray(nodesToBeExpanded, IOutlineNode.class));
-						treeViewer.setSelection(new StructuredSelection(Iterables.toArray(selectedNodes,
-								IOutlineNode.class)));
-						treeUpdated();
-					}
-				} catch (Throwable t) {
-					LOG.error("Error refreshing outline", t);
-				}
-			}
-		});
-	}
+    @Override
+    public TreeViewer getTreeViewer() {
+        return super.getTreeViewer();
+    }
 
-	/**
-	 * For testing.
-	 */
-	protected void treeUpdated() {
-	}
+    public IOutlineTreeProvider getTreeProvider() {
+        return treeProvider;
+    }
+
+    /**
+     * @since 2.2
+     */
+    public OutlineFilterAndSorter getFilterAndSorter() {
+        return filterAndSorter;
+    }
+
+    protected void refreshViewer(final IOutlineNode rootNode, final Collection<IOutlineNode> nodesToBeExpanded,
+                                 final Collection<IOutlineNode> selectedNodes) {
+        DisplayRunHelper.runAsyncInDisplayThread(new Runnable() {
+            public void run() {
+                try {
+                    TreeViewer treeViewer = getTreeViewer();
+                    if (!treeViewer.getTree().isDisposed()) {
+                        treeViewer.setInput(rootNode);
+                        treeViewer.expandToLevel(1);
+                        treeViewer.setExpandedElements(Iterables.toArray(nodesToBeExpanded, IOutlineNode.class));
+                        treeViewer.setSelection(new StructuredSelection(Iterables.toArray(selectedNodes,
+                                IOutlineNode.class)));
+                        treeUpdated();
+                    }
+                } catch (Throwable t) {
+                    LOG.error("Error refreshing outline", t);
+                }
+            }
+        });
+    }
+
+    /**
+     * For testing.
+     */
+    protected void treeUpdated() {
+    }
 
 }

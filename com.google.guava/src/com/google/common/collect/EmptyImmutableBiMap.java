@@ -28,55 +28,57 @@ import javax.annotation.Nullable;
 @GwtCompatible(emulated = true)
 @SuppressWarnings("serial") // uses writeReplace(), not default serialization
 final class EmptyImmutableBiMap extends ImmutableBiMap<Object, Object> {
-  static final EmptyImmutableBiMap INSTANCE = new EmptyImmutableBiMap();
+    static final EmptyImmutableBiMap INSTANCE = new EmptyImmutableBiMap();
 
-  private EmptyImmutableBiMap() {}
-  
-  @Override public ImmutableBiMap<Object, Object> inverse() {
-    return this;
-  }
-  
-  @Override
-  public int size() {
-    return 0;
-  }
+    private EmptyImmutableBiMap() {
+    }
 
-  @Override
-  public boolean isEmpty() {
-    return true;
-  }
+    @Override
+    public ImmutableBiMap<Object, Object> inverse() {
+        return this;
+    }
 
-  @Override
-  public Object get(@Nullable Object key) {
-    return null;
-  }
+    @Override
+    public int size() {
+        return 0;
+    }
 
-  @Override
-  public ImmutableSet<Entry<Object, Object>> entrySet() {
-    return ImmutableSet.of();
-  }
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
 
-  @Override
-  ImmutableSet<Entry<Object, Object>> createEntrySet() {
-    throw new AssertionError("should never be called");
-  }
+    @Override
+    public Object get(@Nullable Object key) {
+        return null;
+    }
 
-  @Override
-  public ImmutableSetMultimap<Object, Object> asMultimap() {
-    return ImmutableSetMultimap.of();
-  }
+    @Override
+    public ImmutableSet<Entry<Object, Object>> entrySet() {
+        return ImmutableSet.of();
+    }
 
-  @Override
-  public ImmutableSet<Object> keySet() {
-    return ImmutableSet.of();
-  }
+    @Override
+    ImmutableSet<Entry<Object, Object>> createEntrySet() {
+        throw new AssertionError("should never be called");
+    }
 
-  @Override
-  boolean isPartialView() {
-    return false;
-  }
-  
-  Object readResolve() {
-    return INSTANCE; // preserve singleton property
-  }
+    @Override
+    public ImmutableSetMultimap<Object, Object> asMultimap() {
+        return ImmutableSetMultimap.of();
+    }
+
+    @Override
+    public ImmutableSet<Object> keySet() {
+        return ImmutableSet.of();
+    }
+
+    @Override
+    boolean isPartialView() {
+        return false;
+    }
+
+    Object readResolve() {
+        return INSTANCE; // preserve singleton property
+    }
 }

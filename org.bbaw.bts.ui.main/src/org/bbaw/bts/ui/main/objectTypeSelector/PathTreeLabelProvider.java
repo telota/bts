@@ -10,45 +10,45 @@ import org.eclipse.swt.graphics.Image;
 
 public class PathTreeLabelProvider implements ILabelProvider {
 
-	private List listeners = new Vector<>();
+    private List listeners = new Vector<>();
 
-	@Override
-	public void addListener(ILabelProviderListener listener) {
-		listeners.add(listener);
+    @Override
+    public void addListener(ILabelProviderListener listener) {
+        listeners.add(listener);
 
-	}
+    }
 
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
+    @Override
+    public void dispose() {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public boolean isLabelProperty(Object element, String property) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isLabelProperty(Object element, String property) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	@Override
-	public void removeListener(ILabelProviderListener listener) {
-		listeners.remove(listener);
+    @Override
+    public void removeListener(ILabelProviderListener listener) {
+        listeners.remove(listener);
 
-	}
+    }
 
-	@Override
-	public Image getImage(Object element) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Image getImage(Object element) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public String getText(Object element) {
-		if (element instanceof BTSObjectTypeTreeNode) {
-			return ((BTSObjectTypeTreeNode) element).getValue();
-		}
-		return element.toString();
-	}
+    @Override
+    public String getText(Object element) {
+        if (element instanceof BTSObjectTypeTreeNode) {
+            return ((BTSObjectTypeTreeNode) element).getValue();
+        }
+        return element.toString();
+    }
 
 
 }

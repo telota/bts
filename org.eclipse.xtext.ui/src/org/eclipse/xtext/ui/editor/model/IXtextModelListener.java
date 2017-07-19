@@ -14,7 +14,7 @@ import org.eclipse.xtext.resource.XtextResource;
  * @author Peter Friese - Initial contribution and API
  */
 public interface IXtextModelListener {
-	
-	void modelChanged(XtextResource resource);
+
+    void modelChanged(XtextResource resource);
 
 }

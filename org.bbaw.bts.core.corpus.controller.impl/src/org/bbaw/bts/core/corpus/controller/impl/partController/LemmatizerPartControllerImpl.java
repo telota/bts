@@ -14,32 +14,32 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public class LemmatizerPartControllerImpl implements LemmatizerPartController {
 
-	@Inject
-	private BTSLemmaEntryService lemmaService;
-	
-	@Override
-	public List<BTSLemmaEntry> findLemmaProposals(String word, IProgressMonitor monitor) {
-		List<BTSLemmaEntry> filtered =  lemmaService.findLemmaProposals(word, monitor);
-		Collections.sort(filtered, new BTSEgyLemmaEntryComparator(word));
-		return filtered;
-	}
+    @Inject
+    private BTSLemmaEntryService lemmaService;
 
-	@Override
-	public String processWordCharForLemmatizing(String wordChars) {
-		return lemmaService.processWordCharForLemmatizing(wordChars);
-	}
+    @Override
+    public List<BTSLemmaEntry> findLemmaProposals(String word, IProgressMonitor monitor) {
+        List<BTSLemmaEntry> filtered = lemmaService.findLemmaProposals(word, monitor);
+        Collections.sort(filtered, new BTSEgyLemmaEntryComparator(word));
+        return filtered;
+    }
 
-	@Override
-	public List<BTSLemmaEntry> filterAndSortLemmaProposals(
-			List<BTSLemmaEntry> obs, String searchString) {
-		List<BTSLemmaEntry> filtered = lemmaService.filterLemmaProposals(obs);
-		Collections.sort(filtered, new BTSEgyLemmaEntryComparator(searchString));
-		return filtered;
-	}
-	
-	@Override
-	public BTSQueryRequest getLemmaSearchQuery(String searchString) {
-		return lemmaService.createLemmaSearchQuery(searchString);
-	}
+    @Override
+    public String processWordCharForLemmatizing(String wordChars) {
+        return lemmaService.processWordCharForLemmatizing(wordChars);
+    }
+
+    @Override
+    public List<BTSLemmaEntry> filterAndSortLemmaProposals(
+            List<BTSLemmaEntry> obs, String searchString) {
+        List<BTSLemmaEntry> filtered = lemmaService.filterLemmaProposals(obs);
+        Collections.sort(filtered, new BTSEgyLemmaEntryComparator(searchString));
+        return filtered;
+    }
+
+    @Override
+    public BTSQueryRequest getLemmaSearchQuery(String searchString) {
+        return lemmaService.createLemmaSearchQuery(searchString);
+    }
 
 }

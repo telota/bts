@@ -50,73 +50,71 @@ import org.eclipse.swt.widgets.Display;
  * @author Christoph Plutte
  */
 public class BTSResourceProviderImpl extends BasicResourceProvider implements
-		BTSResourceProvider {
+        BTSResourceProvider {
 
-	private org.osgi.framework.Bundle b;
-	protected IEclipseContext eclipseContext = StaticAccessController
-			.getContext();
+    protected IEclipseContext eclipseContext = StaticAccessController
+            .getContext();
+    private org.osgi.framework.Bundle b;
 
-	public Image getImage(Display display, String key) {
-		URL url = FileLocator.find(context.getBundle(),
-				new Path(properties.get(key)), null);
+    public Image getImage(Display display, String key) {
+        URL url = FileLocator.find(context.getBundle(),
+                new Path(properties.get(key)), null);
 
-		if (url != null) {
-			Image image = null;
-			Map<URL, Image> map = null;
-			try {
-				map = getImageMap();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			if (map != null)
-			{
-				try {
-					image = map.get(url);
-					if (image != null)
-					return image;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+        if (url != null) {
+            Image image = null;
+            Map<URL, Image> map = null;
+            try {
+                map = getImageMap();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            if (map != null) {
+                try {
+                    image = map.get(url);
+                    if (image != null)
+                        return image;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
-			InputStream stream = null;
-			try {
-				stream = url.openStream();
-				image = new Image(display, stream);
-				if (map != null) map.put(url, image);
-				return image;
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				if (stream != null) {
-					try {
-						stream.close();
-					} catch (IOException e) {
-					}
-				}
-			}
-		}
+            InputStream stream = null;
+            try {
+                stream = url.openStream();
+                image = new Image(display, stream);
+                if (map != null) map.put(url, image);
+                return image;
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } finally {
+                if (stream != null) {
+                    try {
+                        stream.close();
+                    } catch (IOException e) {
+                    }
+                }
+            }
+        }
 
-		// TODO Auto-generated method stub
-		return null;
-	}
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	private Map<URL, Image> getImageMap() {
-		if (eclipseContext == null)
-		{
-			eclipseContext = StaticAccessController
-					.getContext();
-		}
-		if (eclipseContext == null) return null;
-		Object o = eclipseContext.get("url_image_map");
-		Map<URL, Image> map;
-		if (o == null || !(o instanceof Map<?, ?>)) {
-			map = new HashMap<URL, Image>();
-			eclipseContext.set("url_image_map", map);
-		} else {
-			map = (Map<URL, Image>) o;
-		}
-		return map;
-	}
+    private Map<URL, Image> getImageMap() {
+        if (eclipseContext == null) {
+            eclipseContext = StaticAccessController
+                    .getContext();
+        }
+        if (eclipseContext == null) return null;
+        Object o = eclipseContext.get("url_image_map");
+        Map<URL, Image> map;
+        if (o == null || !(o instanceof Map<?, ?>)) {
+            map = new HashMap<URL, Image>();
+            eclipseContext.set("url_image_map", map);
+        } else {
+            map = (Map<URL, Image>) o;
+        }
+        return map;
+    }
 }

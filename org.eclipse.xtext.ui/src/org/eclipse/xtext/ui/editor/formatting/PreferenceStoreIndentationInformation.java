@@ -23,36 +23,34 @@ import com.google.inject.Singleton;
 @Singleton
 public class PreferenceStoreIndentationInformation implements IIndentationInformation, IPropertyChangeListener {
 
-	private IPreferenceStoreAccess storeAccess;
+    // note: the maximum length allowed in the eclipse preferences dialog is 16
+    private final String WS = "                                     ";
+    private IPreferenceStoreAccess storeAccess;
+    private String indentString = null;
 
-	@Inject
-	public void setPreferenceStoreAccess(IPreferenceStoreAccess storeAccess) {
-		this.storeAccess = storeAccess;
-		storeAccess.getPreferenceStore().addPropertyChangeListener(this);
-	}
+    @Inject
+    public void setPreferenceStoreAccess(IPreferenceStoreAccess storeAccess) {
+        this.storeAccess = storeAccess;
+        storeAccess.getPreferenceStore().addPropertyChangeListener(this);
+    }
 
-	public int getTabWidth() {
-		return storeAccess.getPreferenceStore().getInt(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH);
-	}
+    public int getTabWidth() {
+        return storeAccess.getPreferenceStore().getInt(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_TAB_WIDTH);
+    }
 
-	public boolean isSpacesForTab() {
-		return storeAccess.getPreferenceStore().getBoolean(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS);
-	}
+    public boolean isSpacesForTab() {
+        return storeAccess.getPreferenceStore().getBoolean(AbstractDecoratedTextEditorPreferenceConstants.EDITOR_SPACES_FOR_TABS);
+    }
 
-	// note: the maximum length allowed in the eclipse preferences dialog is 16
-	private final String WS = "                                     ";
+    public synchronized String getIndentString() {
+        if (indentString == null) {
+            indentString = isSpacesForTab() ? WS.substring(0, Math.min(getTabWidth(), WS.length())) : "\t";
+        }
+        return indentString;
+    }
 
-	private String indentString = null;
-
-	public synchronized String getIndentString() {
-		if (indentString == null) {
-			indentString = isSpacesForTab() ? WS.substring(0, Math.min(getTabWidth(), WS.length())) : "\t";
-		}
-		return indentString;
-	}
-
-	public synchronized void propertyChange(PropertyChangeEvent event) {
-		indentString = null;
-	}
+    public synchronized void propertyChange(PropertyChangeEvent event) {
+        indentString = null;
+    }
 
 }

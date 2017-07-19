@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
@@ -14,25 +13,25 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
 public class AddAnnotationCorpusNavigatorHandler {
-	@Execute
-	public void execute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection,
-			@Optional @Named("annotationTypePath") String annotationTypePath,
-			EventBroker eventBroker,
-			CorpusNavigatorController corpusNavigatorController) {
-		if (selection instanceof BTSCorpusObject) {
-			final BTSAnnotation object = corpusNavigatorController
-					.createNewAnnotation((BTSCorpusObject) selection, annotationTypePath);
-			corpusNavigatorController.save(object);
-			eventBroker.post("model_add/BTSAnnotation", object);
-		}
-	}
-	
-	
-	@CanExecute
-	public boolean canExecute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
-		return (selection instanceof BTSCorpusObject && !(selection instanceof BTSAnnotation));
-	}
-		
+    @Execute
+    public void execute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection,
+            @Optional @Named("annotationTypePath") String annotationTypePath,
+            EventBroker eventBroker,
+            CorpusNavigatorController corpusNavigatorController) {
+        if (selection instanceof BTSCorpusObject) {
+            final BTSAnnotation object = corpusNavigatorController
+                    .createNewAnnotation((BTSCorpusObject) selection, annotationTypePath);
+            corpusNavigatorController.save(object);
+            eventBroker.post("model_add/BTSAnnotation", object);
+        }
+    }
+
+
+    @CanExecute
+    public boolean canExecute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
+        return (selection instanceof BTSCorpusObject && !(selection instanceof BTSAnnotation));
+    }
+
 }

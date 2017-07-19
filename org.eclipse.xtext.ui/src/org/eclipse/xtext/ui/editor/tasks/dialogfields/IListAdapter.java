@@ -16,19 +16,19 @@ package org.eclipse.xtext.ui.editor.tasks.dialogfields;
  */
 public interface IListAdapter {
 
-	/**
-	 * A button from the button bar has been pressed.
-	 */
-	void customButtonPressed(ListDialogField field, int index);
+    /**
+     * A button from the button bar has been pressed.
+     */
+    void customButtonPressed(ListDialogField field, int index);
 
-	/**
-	 * The selection of the list has changed.
-	 */
-	void selectionChanged(ListDialogField field);
+    /**
+     * The selection of the list has changed.
+     */
+    void selectionChanged(ListDialogField field);
 
-	/**
-	 * En entry in the list has been double clicked
-	 */
-	void doubleClicked(ListDialogField field);
+    /**
+     * En entry in the list has been double clicked
+     */
+    void doubleClicked(ListDialogField field);
 
 }

@@ -14,36 +14,36 @@ import org.eclipse.swt.widgets.Composite;
 
 public final class LabelFieldEditor extends FieldEditor {
 
-	public LabelFieldEditor(String labelText, Composite parent) {
-		super("label", labelText, parent);
-	}
+    public LabelFieldEditor(String labelText, Composite parent) {
+        super("label", labelText, parent);
+    }
 
-	@Override
-	public int getNumberOfControls() {
-		return 1;
-	}
+    @Override
+    public int getNumberOfControls() {
+        return 1;
+    }
 
-	@Override
-	protected void doStore() {
-	}
+    @Override
+    protected void doStore() {
+    }
 
-	@Override
-	protected void doLoadDefault() {
-	}
+    @Override
+    protected void doLoadDefault() {
+    }
 
-	@Override
-	protected void doLoad() {
-	}
+    @Override
+    protected void doLoad() {
+    }
 
-	@Override
-	protected void doFillIntoGrid(Composite parent, int numColumns) {
-		getLabelControl(parent).setLayoutData(new GridData());
-	}
+    @Override
+    protected void doFillIntoGrid(Composite parent, int numColumns) {
+        getLabelControl(parent).setLayoutData(new GridData());
+    }
 
-	@Override
-	protected void adjustForNumColumns(int numColumns) {
-		GridData gd = (GridData) getLabelControl().getLayoutData();
-		gd.horizontalSpan = numColumns;
+    @Override
+    protected void adjustForNumColumns(int numColumns) {
+        GridData gd = (GridData) getLabelControl().getLayoutData();
+        gd.horizontalSpan = numColumns;
 
-	}
+    }
 }

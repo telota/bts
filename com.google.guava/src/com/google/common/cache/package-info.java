@@ -16,16 +16,16 @@
 
 /**
  * This package contains caching utilities.
- *
+ * <p>
  * <p>The core interface used to represent caches is {@link com.google.common.cache.Cache}.
  * In-memory caches can be configured and created using
  * {@link com.google.common.cache.CacheBuilder}, with cache entries being loaded by
  * {@link com.google.common.cache.CacheLoader}. Statistics about cache performance are exposed using
  * {@link com.google.common.cache.CacheStats}.
- * 
+ * <p>
  * <p>See the Guava User Guide article on <a href=
  * "http://code.google.com/p/guava-libraries/wiki/CachesExplained">caches</a>.
- *
+ * <p>
  * <p>This package is a part of the open-source
  * <a href="http://guava-libraries.googlecode.com">Guava libraries</a>.
  *

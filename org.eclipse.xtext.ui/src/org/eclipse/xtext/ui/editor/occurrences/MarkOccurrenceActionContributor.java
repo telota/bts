@@ -28,61 +28,61 @@ import com.google.inject.Singleton;
 @Singleton
 public class MarkOccurrenceActionContributor extends AbstractToggleActionContributor implements IActionContributor {
 
-	public static final String EDITOR_MARK_OCCURRENCES = "markOccurrences"; //$NON-NLS-1$
+    public static final String EDITOR_MARK_OCCURRENCES = "markOccurrences"; //$NON-NLS-1$
 
-	@Inject
-	private Provider<OccurrenceMarker> occurrenceMarkerProvider;
+    @Inject
+    private Provider<OccurrenceMarker> occurrenceMarkerProvider;
 
-	private Map<XtextEditor, OccurrenceMarker> editor2marker = newHashMap();
-	
-	@Override
-	protected Action getAction() {
-		Action action = super.getAction();
-		return action;
-	}
-	
-	public void contributeActions(XtextEditor editor) {
-		OccurrenceMarker occurrenceMarker = editor2marker.get(editor);
-		if(occurrenceMarker == null) {
-			editor.setAction(getAction().getId(), getAction());
-			IToolBarManager toolBarManager = editor.getEditorSite().getActionBars().getToolBarManager();
-			if(toolBarManager.find(getAction().getId())==null) {
-				toolBarManager.add(getAction());				
-			}
-			occurrenceMarker = occurrenceMarkerProvider.get();
-			occurrenceMarker.connect(editor, isPropertySet());
-			editor2marker.put(editor, occurrenceMarker);
-		}
-	}
+    private Map<XtextEditor, OccurrenceMarker> editor2marker = newHashMap();
 
-	public void editorDisposed(XtextEditor editor) {
-		OccurrenceMarker occurrenceMarker = editor2marker.get(editor);
-		if(occurrenceMarker != null) {
-			occurrenceMarker.disconnect(editor);
-			editor2marker.remove(editor);
-		}
-	}
+    @Override
+    protected Action getAction() {
+        Action action = super.getAction();
+        return action;
+    }
 
-	@Override
-	public String getPreferenceKey() {
-		return EDITOR_MARK_OCCURRENCES;
-	}
+    public void contributeActions(XtextEditor editor) {
+        OccurrenceMarker occurrenceMarker = editor2marker.get(editor);
+        if (occurrenceMarker == null) {
+            editor.setAction(getAction().getId(), getAction());
+            IToolBarManager toolBarManager = editor.getEditorSite().getActionBars().getToolBarManager();
+            if (toolBarManager.find(getAction().getId()) == null) {
+                toolBarManager.add(getAction());
+            }
+            occurrenceMarker = occurrenceMarkerProvider.get();
+            occurrenceMarker.connect(editor, isPropertySet());
+            editor2marker.put(editor, occurrenceMarker);
+        }
+    }
 
-	@Override
-	protected void stateChanged(boolean newState) {
-		for(OccurrenceMarker occurrenceMarker: editor2marker.values()) {
-			occurrenceMarker.setMarkOccurrences(newState);
-		}
-	}
+    public void editorDisposed(XtextEditor editor) {
+        OccurrenceMarker occurrenceMarker = editor2marker.get(editor);
+        if (occurrenceMarker != null) {
+            occurrenceMarker.disconnect(editor);
+            editor2marker.remove(editor);
+        }
+    }
 
-	@Override
-	protected void configureAction(Action action) {
-		action.setText(Messages.MarkOccurrenceActionContributor_text);
-		action.setDescription(Messages.MarkOccurrenceActionContributor_description);
-		action.setToolTipText(Messages.MarkOccurrenceActionContributor_toolTipText);
-		action.setImageDescriptor(XtextPluginImages.DESC_MARK_OCCURRENCES);
-		action.setDisabledImageDescriptor(XtextPluginImages.DESC_MARK_OCCURRENCES_DISABLED);
-		addPropertyChangeListener();
-	}
+    @Override
+    public String getPreferenceKey() {
+        return EDITOR_MARK_OCCURRENCES;
+    }
+
+    @Override
+    protected void stateChanged(boolean newState) {
+        for (OccurrenceMarker occurrenceMarker : editor2marker.values()) {
+            occurrenceMarker.setMarkOccurrences(newState);
+        }
+    }
+
+    @Override
+    protected void configureAction(Action action) {
+        action.setText(Messages.MarkOccurrenceActionContributor_text);
+        action.setDescription(Messages.MarkOccurrenceActionContributor_description);
+        action.setToolTipText(Messages.MarkOccurrenceActionContributor_toolTipText);
+        action.setImageDescriptor(XtextPluginImages.DESC_MARK_OCCURRENCES);
+        action.setDisabledImageDescriptor(XtextPluginImages.DESC_MARK_OCCURRENCES_DISABLED);
+        addPropertyChangeListener();
+    }
 
 }

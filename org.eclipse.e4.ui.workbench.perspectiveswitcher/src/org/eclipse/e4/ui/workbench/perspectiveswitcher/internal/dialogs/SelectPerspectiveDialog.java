@@ -50,39 +50,30 @@ import org.eclipse.swt.widgets.Shell;
 public class SelectPerspectiveDialog extends Dialog implements
         ISelectionChangedListener {
 
-	@Inject
-	private IEclipseContext context;
-	
-	@Inject
-	private ECommandService commandService;
-	
-	@Inject
-	private EHandlerService handlerService;
-	
-	@Inject
-	private MWindow window;
-	
     final private static int LIST_HEIGHT = 300;
-
     final private static int LIST_WIDTH = 300;
-
-    private TableViewer viewer;
-
-    private Button okButton;
-    
     Object selection;
-
+    @Inject
+    private IEclipseContext context;
+    @Inject
+    private ECommandService commandService;
+    @Inject
+    private EHandlerService handlerService;
+    @Inject
+    private MWindow window;
+    private TableViewer viewer;
+    private Button okButton;
     private Button showAllButton;
 
     /**
      * PerspectiveDialog constructor comment.
-     * 
+     *
      * @param parentShell the parent shell
      */
     @Inject
     public SelectPerspectiveDialog(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell) {
         super(shell);
-		setShellStyle(getShellStyle() | SWT.SHEET);
+        setShellStyle(getShellStyle() | SWT.SHEET);
     }
 
     @Override
@@ -101,7 +92,7 @@ public class SelectPerspectiveDialog extends Dialog implements
     /**
      * Creates and returns the contents of the upper part of this dialog (above
      * the button bar).
-     * 
+     *
      * @param parent the parent composite to contain the dialog area
      * @return the dialog area control
      */
@@ -113,7 +104,7 @@ public class SelectPerspectiveDialog extends Dialog implements
 
         createViewer(composite);
         layoutTopControl(viewer.getControl());
-        
+
         // Not applicable in E4, unless there is a usecase for showing
         // perspective not in the current window.
         // if (needsShowAllButton()) {
@@ -126,34 +117,34 @@ public class SelectPerspectiveDialog extends Dialog implements
 
     /**
      * Create a new viewer in the parent.
-     * 
+     *
      * @param parent the parent <code>Composite</code>.
      */
     private void createViewer(Composite parent) {
         // Add perspective list.
         viewer = new TableViewer(parent, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
         viewer.getTable().setFont(parent.getFont());
-        
-		viewer.setLabelProvider(new DelegatingLabelProviderWithTooltip(
-				ContextInjectionFactory.make(PerspectiveLabelProvider.class, context),
-				ContextInjectionFactory.make(PerspectiveLabelDecorator.class, context)) {
-			
-			@Override
-			protected Object unwrapElement(Object element) {
-				// We do not need to unwrap the element
-				return element;
-			}
-		});
-        
-		viewer.setContentProvider(
-				ContextInjectionFactory.make(PerspectiveContentProvider.class, context));
+
+        viewer.setLabelProvider(new DelegatingLabelProviderWithTooltip(
+                ContextInjectionFactory.make(PerspectiveLabelProvider.class, context),
+                ContextInjectionFactory.make(PerspectiveLabelDecorator.class, context)) {
+
+            @Override
+            protected Object unwrapElement(Object element) {
+                // We do not need to unwrap the element
+                return element;
+            }
+        });
+
+        viewer.setContentProvider(
+                ContextInjectionFactory.make(PerspectiveContentProvider.class, context));
         // list.addFilter(activityViewerFilter);
         viewer.setComparator(new ViewerComparator());
         viewer.setInput(window);
         viewer.addSelectionChangedListener(this);
         viewer.addDoubleClickListener(new IDoubleClickListener() {
-        	
-        	@Override
+
+            @Override
             public void doubleClick(DoubleClickEvent event) {
                 handleDoubleClickEvent();
             }
@@ -169,7 +160,7 @@ public class SelectPerspectiveDialog extends Dialog implements
 
     /**
      * Layout the top control.
-     * 
+     *
      * @param control the control.
      */
     private void layoutTopControl(Control control) {
@@ -178,18 +169,18 @@ public class SelectPerspectiveDialog extends Dialog implements
         spec.heightHint = LIST_HEIGHT;
         control.setLayoutData(spec);
     }
-    
+
     protected void createButtonsForButtonBar(Composite parent) {
-		okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
-				true);
-		okButton.setEnabled(false);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
-	}
+        okButton = createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+                true);
+        okButton.setEnabled(false);
+        createButton(parent, IDialogConstants.CANCEL_ID,
+                IDialogConstants.CANCEL_LABEL, false);
+    }
 
     /**
      * Notifies that the selection has changed.
-     * 
+     *
      * @param event event object describing the change
      */
     @Override
@@ -197,7 +188,7 @@ public class SelectPerspectiveDialog extends Dialog implements
         updateSelection(event);
         updateButtons();
     }
-    
+
 
     /**
      * Update the button enablement state.
@@ -215,26 +206,26 @@ public class SelectPerspectiveDialog extends Dialog implements
         if (!_sel.isEmpty()) {
             Object obj = _sel.getFirstElement();
             if (obj instanceof MPerspective)
-				selection = obj;
+                selection = obj;
         }
     }
 
     @Override
     protected void okPressed() {
-    	HashMap<String,Object> parameters = new HashMap<String,Object>(2);
-    	parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID, 
-    			((MPerspective) selection).getElementId());
-    	parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW,
-    			"false");
-    	
-		ParameterizedCommand command = commandService
-				.createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE, parameters);
-		handlerService.executeHandler(command);
-		super.okPressed();
+        HashMap<String, Object> parameters = new HashMap<String, Object>(2);
+        parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID,
+                ((MPerspective) selection).getElementId());
+        parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW,
+                "false");
+
+        ParameterizedCommand command = commandService
+                .createCommand(E4WorkbenchCommandConstants.PERSPECTIVES_SHOW_PERSPECTIVE, parameters);
+        handlerService.executeHandler(command);
+        super.okPressed();
     }
-    
+
     @Override
     protected boolean isResizable() {
-    	return true;
+        return true;
     }
 }

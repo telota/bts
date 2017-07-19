@@ -36,158 +36,159 @@ import com.google.inject.Inject;
  */
 public class DefaultTextEditComposer extends EContentAdapter implements ITextEditComposer {
 
-	@Inject
-	private ISerializer serializer;
+    @Inject
+    private ISerializer serializer;
 
-	private Resource resource;
-	private int resourceSize;
-	private boolean resourceChanged;
+    private Resource resource;
+    private int resourceSize;
+    private boolean resourceChanged;
 
-	private Collection<EObject> modifiedObjects = new LinkedHashSet<EObject>();
+    private Collection<EObject> modifiedObjects = new LinkedHashSet<EObject>();
 
-	private boolean recording = false;
+    private boolean recording = false;
 
-	@Override
-	public void notifyChanged(Notification notification) {
-		super.notifyChanged(notification);
+    @Override
+    public void notifyChanged(Notification notification) {
+        super.notifyChanged(notification);
 
-		if (!doRecord(notification))
-			return;
+        if (!doRecord(notification))
+            return;
 
-		if (notification.getNotifier() instanceof EObject) {
-			recordObjectModification((EObject) notification.getNotifier());
-		} else if (notification.getNotifier() instanceof Resource) {
-			recordResourceModification((Resource) notification.getNotifier());
-		}
-	}
+        if (notification.getNotifier() instanceof EObject) {
+            recordObjectModification((EObject) notification.getNotifier());
+        } else if (notification.getNotifier() instanceof Resource) {
+            recordResourceModification((Resource) notification.getNotifier());
+        }
+    }
 
-	protected void recordObjectModification(EObject obj) {
-		if (obj.eResource() == null || obj.eResource() != resource)
-			getModifiedObjects().remove(obj);
-		else
-			getModifiedObjects().add(obj);
-	}
+    protected void recordObjectModification(EObject obj) {
+        if (obj.eResource() == null || obj.eResource() != resource)
+            getModifiedObjects().remove(obj);
+        else
+            getModifiedObjects().add(obj);
+    }
 
-	protected void recordResourceModification(Resource notifier) {
-		resourceChanged = true;
-	}
+    protected void recordResourceModification(Resource notifier) {
+        resourceChanged = true;
+    }
 
-	protected Collection<EObject> getModifiedObjects() {
-		return modifiedObjects;
-	}
+    protected Collection<EObject> getModifiedObjects() {
+        return modifiedObjects;
+    }
 
-	protected boolean doRecord(Notification notification) {
-		if (!recording || notification.isTouch())
-			return false;
+    protected boolean doRecord(Notification notification) {
+        if (!recording || notification.isTouch())
+            return false;
 
-		switch (notification.getEventType()) {
-			case Notification.ADD:
-			case Notification.ADD_MANY:
-			case Notification.MOVE:
-			case Notification.REMOVE:
-			case Notification.REMOVE_MANY:
-			case Notification.SET:
-			case Notification.UNSET:
-				return true;
-			default:
-				return false;
-		}
-	}
+        switch (notification.getEventType()) {
+            case Notification.ADD:
+            case Notification.ADD_MANY:
+            case Notification.MOVE:
+            case Notification.REMOVE:
+            case Notification.REMOVE_MANY:
+            case Notification.SET:
+            case Notification.UNSET:
+                return true;
+            default:
+                return false;
+        }
+    }
 
-	protected void reset() {
-		getModifiedObjects().clear();
-		resourceChanged = false;
-	}
+    protected void reset() {
+        getModifiedObjects().clear();
+        resourceChanged = false;
+    }
 
-	public void beginRecording(Resource newResource) {
-		reset();
+    public void beginRecording(Resource newResource) {
+        reset();
 
-		if (newResource != resource) {
-			if (resource != null)
-				resource.eAdapters().remove(this);
-			newResource.eAdapters().add(this);
-			resource = newResource;
-		}
-		if (resource.getContents().isEmpty()) {
-			resourceSize = 0;
-		} else {
-			final EObject root = resource.getContents().get(0);
-			ICompositeNode rootNode = NodeModelUtils.getNode(root);
-			if (rootNode == null) {
-				throw new IllegalStateException("Cannot find root node in resource " + resource.getURI());
-			}
-			resourceSize = rootNode.getTotalLength();
-		}
-		recording = true;
-	}
+        if (newResource != resource) {
+            if (resource != null)
+                resource.eAdapters().remove(this);
+            newResource.eAdapters().add(this);
+            resource = newResource;
+        }
+        if (resource.getContents().isEmpty()) {
+            resourceSize = 0;
+        } else {
+            final EObject root = resource.getContents().get(0);
+            ICompositeNode rootNode = NodeModelUtils.getNode(root);
+            if (rootNode == null) {
+                throw new IllegalStateException("Cannot find root node in resource " + resource.getURI());
+            }
+            resourceSize = rootNode.getTotalLength();
+        }
+        recording = true;
+    }
 
-	public TextEdit endRecording() {
-		recording = false;
-		TextEdit textEdit = getTextEdit();
+    public TextEdit endRecording() {
+        recording = false;
+        TextEdit textEdit = getTextEdit();
 
-		reset();
-		return textEdit;
-	}
+        reset();
+        return textEdit;
+    }
 
-	public TextEdit getTextEdit() {
-		TextEdit result = null;
+    public TextEdit getTextEdit() {
+        TextEdit result = null;
 
-		if (resourceChanged) {
-			String text = resource.getContents().isEmpty() ? "" : serializer.serialize(
-					resource.getContents().get(0));
-			result = new ReplaceEdit(0, resourceSize, text);
-		} else {
-			final Collection<EObject> modifiedObjects = getModifiedObjects();
-			if (!modifiedObjects.isEmpty()) {
-				List<TextEdit> edits = getObjectEdits();
-				if (edits.size() == 1)
-					result = edits.get(0);
-				else {
-					result = new MultiTextEdit();
-					for (TextEdit edit : edits) {
-						result.addChild(edit);
-					}
-				}
-			}
-		}
+        if (resourceChanged) {
+            String text = resource.getContents().isEmpty() ? "" : serializer.serialize(
+                    resource.getContents().get(0));
+            result = new ReplaceEdit(0, resourceSize, text);
+        } else {
+            final Collection<EObject> modifiedObjects = getModifiedObjects();
+            if (!modifiedObjects.isEmpty()) {
+                List<TextEdit> edits = getObjectEdits();
+                if (edits.size() == 1)
+                    result = edits.get(0);
+                else {
+                    result = new MultiTextEdit();
+                    for (TextEdit edit : edits) {
+                        result.addChild(edit);
+                    }
+                }
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	protected List<TextEdit> getObjectEdits() {
-		final Collection<EObject> modifiedObjects = getModifiedObjects();
-		Collection<EObject> topLevelObjects = EcoreUtil.filterDescendants(modifiedObjects);
-		Iterable<EObject> containedModifiedObjects = Iterables.filter(topLevelObjects, new Predicate<EObject>() {
-			public boolean apply(EObject input) {
-				return input.eResource() == resource;
-			}
-		});
-		List<TextEdit> edits = Lists.newArrayListWithExpectedSize(Iterables.size(containedModifiedObjects));
-		for (EObject modifiedObject : containedModifiedObjects) {
-			ReplaceRegion replaceRegion = serializer.serializeReplacement(modifiedObject, getSaveOptions());
-			TextEdit edit = new ReplaceEdit(replaceRegion.getOffset(), replaceRegion.getLength(), replaceRegion.getText());
-			edits.add(edit);
-		}
-		return edits;
-	}
+    protected List<TextEdit> getObjectEdits() {
+        final Collection<EObject> modifiedObjects = getModifiedObjects();
+        Collection<EObject> topLevelObjects = EcoreUtil.filterDescendants(modifiedObjects);
+        Iterable<EObject> containedModifiedObjects = Iterables.filter(topLevelObjects, new Predicate<EObject>() {
+            public boolean apply(EObject input) {
+                return input.eResource() == resource;
+            }
+        });
+        List<TextEdit> edits = Lists.newArrayListWithExpectedSize(Iterables.size(containedModifiedObjects));
+        for (EObject modifiedObject : containedModifiedObjects) {
+            ReplaceRegion replaceRegion = serializer.serializeReplacement(modifiedObject, getSaveOptions());
+            TextEdit edit = new ReplaceEdit(replaceRegion.getOffset(), replaceRegion.getLength(), replaceRegion.getText());
+            edits.add(edit);
+        }
+        return edits;
+    }
 
-	protected SaveOptions getSaveOptions() {
-		return SaveOptions.defaultOptions();
-	}
+    protected SaveOptions getSaveOptions() {
+        return SaveOptions.defaultOptions();
+    }
 
-	/**
-	 * @deprecated use {@link #setSerializer(ISerializer)} instead.
-	 */
-	@Deprecated
-	public void setSerializerUtil(ISerializer serializer) {
-		setSerializer(serializer);
-	}
-	
-	/**
-	 * If used in a non-Guice environment, we need to be able to set this.
-	 * @since 2.0
-	 */
-	public void setSerializer(ISerializer serializer) {
-		this.serializer = serializer;
-	}
+    /**
+     * @deprecated use {@link #setSerializer(ISerializer)} instead.
+     */
+    @Deprecated
+    public void setSerializerUtil(ISerializer serializer) {
+        setSerializer(serializer);
+    }
+
+    /**
+     * If used in a non-Guice environment, we need to be able to set this.
+     *
+     * @since 2.0
+     */
+    public void setSerializer(ISerializer serializer) {
+        this.serializer = serializer;
+    }
 }

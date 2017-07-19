@@ -16,6 +16,6 @@ import org.eclipse.swt.graphics.Image;
  */
 public interface ICompletionProposalFactory {
 
-	ICompletionProposal createCompletionProposal(String proposal, StyledString displayString, Image image, ContentAssistContext contentAssistContext);
+    ICompletionProposal createCompletionProposal(String proposal, StyledString displayString, Image image, ContentAssistContext contentAssistContext);
 
 }

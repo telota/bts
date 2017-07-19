@@ -1,4 +1,3 @@
- 
 package e4.handler;
 
 import java.util.ResourceBundle;
@@ -17,17 +16,17 @@ import org.osgi.framework.FrameworkUtil;
  * @since 2.4
  */
 public class Handler {
-	@Execute
-	public void execute() {
-		
-		TextViewerOperationAction action = null;
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-		BundleContext bundleContext = bundle.getBundleContext();
-		IEclipseContext context = EclipseContextFactory.getServiceContext(bundleContext);
-		action = (TextViewerOperationAction) context.get(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
-		
+    @Execute
+    public void execute() {
+
+        TextViewerOperationAction action = null;
+        Bundle bundle = FrameworkUtil.getBundle(getClass());
+        BundleContext bundleContext = bundle.getBundleContext();
+        IEclipseContext context = EclipseContextFactory.getServiceContext(bundleContext);
+        action = (TextViewerOperationAction) context.get(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS);
+
 //		TextViewerOperationAction action = new TextViewerOperationAction(bundle, prefix, viewer, operationCode);
-		action.run();
-	}
-		
+        action.run();
+    }
+
 }

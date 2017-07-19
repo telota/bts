@@ -38,41 +38,41 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * The CompareObjectsController manages comparision of objects.
  */
 public interface CompareObjectsController {
-	
-	/**
-	 * List conflicting versions of given object.
-	 *
-	 * @param object the object
-	 * @return the list
-	 */
-	List<BTSDBBaseObject> listConflictingVersions(BTSDBBaseObject object, IProgressMonitor monitor);
-	
-	/**
-	 * List available versions of given object and optionally fetch additional versions from remote database.
-	 *
-	 * @param object the object
-	 * @param fetchFromRemote the fetch from remote
-	 * @return the list
-	 */
-	List<BTSDBBaseObject> listAvailableVersions(BTSDBBaseObject object, boolean fetchFromRemote, IProgressMonitor monitor);
+
+    /**
+     * List conflicting versions of given object.
+     *
+     * @param object the object
+     * @return the list
+     */
+    List<BTSDBBaseObject> listConflictingVersions(BTSDBBaseObject object, IProgressMonitor monitor);
+
+    /**
+     * List available versions of given object and optionally fetch additional versions from remote database.
+     *
+     * @param object          the object
+     * @param fetchFromRemote the fetch from remote
+     * @return the list
+     */
+    List<BTSDBBaseObject> listAvailableVersions(BTSDBBaseObject object, boolean fetchFromRemote, IProgressMonitor monitor);
 
 
-	/**
-	 * Removes the revision.
-	 *
-	 * @param object the object
-	 * @param revision the revision
-	 * @return true, if successful
-	 */
-	boolean removeRevision(BTSDBBaseObject object, String revision);
-	
-	/**
-	 * Reload conflicts.
-	 *
-	 * @param object the object
-	 */
-	void reloadConflicts(BTSDBBaseObject object);
+    /**
+     * Removes the revision.
+     *
+     * @param object   the object
+     * @param revision the revision
+     * @return true, if successful
+     */
+    boolean removeRevision(BTSDBBaseObject object, String revision);
 
-	BTSDBBaseObject replaceCurrentWithRevision(BTSDBBaseObject selectedLeftVersion,
-			BTSDBBaseObject revision);
+    /**
+     * Reload conflicts.
+     *
+     * @param object the object
+     */
+    void reloadConflicts(BTSDBBaseObject object);
+
+    BTSDBBaseObject replaceCurrentWithRevision(BTSDBBaseObject selectedLeftVersion,
+                                               BTSDBBaseObject revision);
 }

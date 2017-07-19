@@ -38,43 +38,42 @@ import org.bbaw.bts.core.commons.Backend2ClientUpdateListener;
  *
  * @author Christoph Plutte
  */
-public interface Backend2ClientUpdateDao
-{
+public interface Backend2ClientUpdateDao {
 
-	/**
-	 * Adds the update listener.
-	 *
-	 * @param listener the listener
-	 */
-	void addUpdateListener(Backend2ClientUpdateListener listener);
+    /**
+     * Adds the update listener.
+     *
+     * @param listener the listener
+     */
+    void addUpdateListener(Backend2ClientUpdateListener listener);
 
-	/**
-	 * Run and listen to updates.
-	 *
-	 * @param generalPurposeDao the general purpose dao
-	 * @param dbCollection the db collection
-	 */
-	void runAndListenToUpdates(GeneralPurposeDao generalPurposeDao, String dbCollection);
+    /**
+     * Run and listen to updates.
+     *
+     * @param generalPurposeDao the general purpose dao
+     * @param dbCollection      the db collection
+     */
+    void runAndListenToUpdates(GeneralPurposeDao generalPurposeDao, String dbCollection);
 
-	/**
-	 * Removes the update listener.
-	 *
-	 * @param listener the listener
-	 */
-	void removeUpdateListener(Backend2ClientUpdateListener listener);
+    /**
+     * Removes the update listener.
+     *
+     * @param listener the listener
+     */
+    void removeUpdateListener(Backend2ClientUpdateListener listener);
 
-	/**
-	 * Stop listening.
-	 */
-	void stopListening();
+    /**
+     * Stop listening.
+     */
+    void stopListening();
 
-	/**
-	 * Find queries to which the given object matches and list the ids of these queries.
-	 *
-	 * @param object the object
-	 * @param id the id
-	 * @param dbCollection the db collection
-	 * @return the list of query-ids that find the given object
-	 */
-	List<String> fingQueryIds(Object object, String id, String dbCollection);
+    /**
+     * Find queries to which the given object matches and list the ids of these queries.
+     *
+     * @param object       the object
+     * @param id           the id
+     * @param dbCollection the db collection
+     * @return the list of query-ids that find the given object
+     */
+    List<String> fingQueryIds(Object object, String id, String dbCollection);
 }

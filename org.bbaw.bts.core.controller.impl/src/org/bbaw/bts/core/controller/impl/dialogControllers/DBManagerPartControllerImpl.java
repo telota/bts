@@ -11,21 +11,24 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public class DBManagerPartControllerImpl implements DBManagerPartController {
 
-	@Inject
-	private DBManager dbManager;
-	@Override
-	public List<DBCollectionStatusInformation> getDBCollectionStatusInformations(IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
-		return dbManager.getDBCollectionStatusInformations(monitor);
-	}
-	@Override
-	public boolean reIndex(String dbCollectionName, IProgressMonitor monitor) {
-		return dbManager.reindex(dbCollectionName, monitor);
-	}
-	@Override
-	public DBCollectionStatusInformation getDBCollectionStatusInformation(
-			String dbCollectionName, IProgressMonitor monitor) {
-		return dbManager.getDBCollectionStatusInformations(dbCollectionName, monitor);
-	}
+    @Inject
+    private DBManager dbManager;
+
+    @Override
+    public List<DBCollectionStatusInformation> getDBCollectionStatusInformations(IProgressMonitor monitor) {
+        // TODO Auto-generated method stub
+        return dbManager.getDBCollectionStatusInformations(monitor);
+    }
+
+    @Override
+    public boolean reIndex(String dbCollectionName, IProgressMonitor monitor) {
+        return dbManager.reindex(dbCollectionName, monitor);
+    }
+
+    @Override
+    public DBCollectionStatusInformation getDBCollectionStatusInformation(
+            String dbCollectionName, IProgressMonitor monitor) {
+        return dbManager.getDBCollectionStatusInformations(dbCollectionName, monitor);
+    }
 
 }

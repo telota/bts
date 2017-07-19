@@ -22,57 +22,53 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
 public class AddCommentHandler {
-	@Execute
-	public void execute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event,
-			@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
-			CommentController commentController, IEclipseContext context) {
-			BTSObject dbbaseObject = (BTSObject) event.data;
-		
-			if (dbbaseObject != null)
-			{
-				final BTSComment object = commentController
-						.createComment((BTSCorpusObject) dbbaseObject);
-	
-				BTSRelation rel = null;
-				if (object.getRelations().isEmpty())
-				{
-					rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
-					rel.setType(BTSCoreConstants.BASIC_RELATIONS_PARTOF);
-				}
-				else
-				{
-					rel = object.getRelations().get(0);
-				}
-	
-				rel.setObjectId(dbbaseObject.get_id());
-				object.getRelations().add(rel);
-				BTSInterTextReference ref = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
-				ref.setBeginId(event.getStartId());
-				ref.setEndId(event.getEndId());
-				rel.getParts().add(ref);
-				
-				IEclipseContext child = context.createChild();
-				child.set(BTSComment.class, object);
-				child.set(Shell.class, shell);
-				
-				CommentEditorDialog dialog = ContextInjectionFactory.make(
-						CommentEditorDialog.class, child);
+    @Execute
+    public void execute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event,
+            @Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
+            CommentController commentController, IEclipseContext context) {
+        BTSObject dbbaseObject = (BTSObject) event.data;
 
-				if (dialog.open() == SWT.OK) {
-					
-				}
+        if (dbbaseObject != null) {
+            final BTSComment object = commentController
+                    .createComment((BTSCorpusObject) dbbaseObject);
 
-				child.dispose();
+            BTSRelation rel = null;
+            if (object.getRelations().isEmpty()) {
+                rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
+                rel.setType(BTSCoreConstants.BASIC_RELATIONS_PARTOF);
+            } else {
+                rel = object.getRelations().get(0);
+            }
 
-			}
-			// FIXME eventBroker.post("model_add/BTSAnnotation", object);
-	}
+            rel.setObjectId(dbbaseObject.get_id());
+            object.getRelations().add(rel);
+            BTSInterTextReference ref = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
+            ref.setBeginId(event.getStartId());
+            ref.setEndId(event.getEndId());
+            rel.getParts().add(ref);
 
-	@CanExecute
-	public boolean canExecute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event) {
-		return (!event.getSelectedItems().isEmpty());
-	}
+            IEclipseContext child = context.createChild();
+            child.set(BTSComment.class, object);
+            child.set(Shell.class, shell);
+
+            CommentEditorDialog dialog = ContextInjectionFactory.make(
+                    CommentEditorDialog.class, child);
+
+            if (dialog.open() == SWT.OK) {
+
+            }
+
+            child.dispose();
+
+        }
+        // FIXME eventBroker.post("model_add/BTSAnnotation", object);
+    }
+
+    @CanExecute
+    public boolean canExecute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event) {
+        return (!event.getSelectedItems().isEmpty());
+    }
 
 }

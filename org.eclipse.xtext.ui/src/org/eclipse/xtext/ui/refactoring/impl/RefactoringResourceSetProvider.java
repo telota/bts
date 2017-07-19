@@ -21,35 +21,35 @@ import com.google.inject.Inject;
 
 /**
  * Provides the correctly configured {@link ResourceSet} that is used during refactoring.
- * 
+ * <p>
  * It's based on the dirty state, i.e. the content of unsaved editors can be accessed. Furthermore changed resources
- * inside the resource set shadow existing ones. 
- * 
+ * inside the resource set shadow existing ones.
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class RefactoringResourceSetProvider {
 
-	@Inject
-	private IExternalContentSupport externalContentSupport;
+    @Inject
+    private IExternalContentSupport externalContentSupport;
 
-	@Inject
-	private IDirtyStateManager dirtyStateManager;
+    @Inject
+    private IDirtyStateManager dirtyStateManager;
 
-	@Inject
-	private IResourceSetProvider delegate;
+    @Inject
+    private IResourceSetProvider delegate;
 
-	public ResourceSet get(IProject project) {
-		ResourceSet resourceSet = delegate.get(project);
-		configure(resourceSet);
-		return resourceSet;
-	}
+    public ResourceSet get(IProject project) {
+        ResourceSet resourceSet = delegate.get(project);
+        configure(resourceSet);
+        return resourceSet;
+    }
 
-	protected void configure(ResourceSet resourceSet) {
-		resourceSet.getLoadOptions().put(org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider.LIVE_SCOPE,
-				Boolean.TRUE);
-		if (resourceSet instanceof ResourceSetImpl) {
-			((ResourceSetImpl) resourceSet).setURIResourceMap(Maps.<URI, Resource>newHashMap());
-		}
-		externalContentSupport.configureResourceSet(resourceSet, dirtyStateManager.getActualContentProvider());
-	}
+    protected void configure(ResourceSet resourceSet) {
+        resourceSet.getLoadOptions().put(org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider.LIVE_SCOPE,
+                Boolean.TRUE);
+        if (resourceSet instanceof ResourceSetImpl) {
+            ((ResourceSetImpl) resourceSet).setURIResourceMap(Maps.<URI, Resource>newHashMap());
+        }
+        externalContentSupport.configureResourceSet(resourceSet, dirtyStateManager.getActualContentProvider());
+    }
 }

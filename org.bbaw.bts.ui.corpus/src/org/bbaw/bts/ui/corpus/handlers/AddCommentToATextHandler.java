@@ -19,50 +19,46 @@ import org.eclipse.e4.ui.services.internal.events.EventBroker;
 import org.eclipse.swt.widgets.Shell;
 
 public class AddCommentToATextHandler {
-	@Execute
-	public void execute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) BTSCorpusObject corpusObject,
-			@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
-			EventBroker eventBroker,
-			CommentController commentController, IEclipseContext context) {
-		
-			if (corpusObject != null)
-			{
-				final BTSComment object = commentController
-						.createComment((BTSCorpusObject) corpusObject);
-	
-				BTSRelation rel = null;
-				if (object.getRelations().isEmpty())
-				{
-					rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
-					rel.setType(BTSCoreConstants.BASIC_RELATIONS_PARTOF);
-				}
-				else
-				{
-					rel = object.getRelations().get(0);
-				}
-	
-				rel.setObjectId(corpusObject.get_id());
-				object.getRelations().add(rel);
-				
-				IEclipseContext child = context.createChild();
-				child.set(BTSComment.class, object);
-				child.set(Shell.class, shell);
-				
-				CommentEditorDialog dialog = ContextInjectionFactory.make(
-						CommentEditorDialog.class, child);
+    @Execute
+    public void execute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) BTSCorpusObject corpusObject,
+            @Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
+            EventBroker eventBroker,
+            CommentController commentController, IEclipseContext context) {
 
-				if (dialog.open() == CommentEditorDialog.OK) {
-					
-				}
-				
-			}
-	}
+        if (corpusObject != null) {
+            final BTSComment object = commentController
+                    .createComment((BTSCorpusObject) corpusObject);
 
-	@CanExecute
-	public boolean canExecute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) BTSCorpusObject corpusObject) {
-		return (corpusObject != null && !(corpusObject instanceof BTSAnnotation));
-	}
+            BTSRelation rel = null;
+            if (object.getRelations().isEmpty()) {
+                rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
+                rel.setType(BTSCoreConstants.BASIC_RELATIONS_PARTOF);
+            } else {
+                rel = object.getRelations().get(0);
+            }
+
+            rel.setObjectId(corpusObject.get_id());
+            object.getRelations().add(rel);
+
+            IEclipseContext child = context.createChild();
+            child.set(BTSComment.class, object);
+            child.set(Shell.class, shell);
+
+            CommentEditorDialog dialog = ContextInjectionFactory.make(
+                    CommentEditorDialog.class, child);
+
+            if (dialog.open() == CommentEditorDialog.OK) {
+
+            }
+
+        }
+    }
+
+    @CanExecute
+    public boolean canExecute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) BTSCorpusObject corpusObject) {
+        return (corpusObject != null && !(corpusObject instanceof BTSAnnotation));
+    }
 
 }

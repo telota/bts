@@ -38,50 +38,49 @@ import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
 
 /**
  * The Service Interface BTSProjectService provides service layer access to BTSProject-objects.
- * 
- * Service-Implementations should incorporate as much as possible of business logic which 
+ * <p>
+ * Service-Implementations should incorporate as much as possible of business logic which
  * does not depend on UI specific implementation and should be implemented in the controller layer
  * nor database specific logic which should be implemented in the dao layer.
- * 
+ * <p>
  * Services should be implemented generically.
  */
-public interface BTSProjectService extends GenericObjectService<BTSProject, String>
-{
+public interface BTSProjectService extends GenericObjectService<BTSProject, String> {
 
-	/**
-	 * List remote projects.
-	 * @param password 
-	 * @param username 
-	 *
-	 * @return the list
-	 */
-	List<BTSProject> listRemoteProjects(String username, String password);
+    /**
+     * List remote projects.
+     *
+     * @param password
+     * @param username
+     * @return the list
+     */
+    List<BTSProject> listRemoteProjects(String username, String password);
 
-	/**
-	 * Find project by project prefix.
-	 *
-	 * @param project the project
-	 * @return the BTS project
-	 */
-	BTSProject findByProjectPrefix(String project);
+    /**
+     * Find project by project prefix.
+     *
+     * @param project the project
+     * @return the BTS project
+     */
+    BTSProject findByProjectPrefix(String project);
 
-	/**
-	 * Check and add db collection.
-	 *
-	 * @param project the project
-	 * @param corpusPrefix the corpus prefix
-	 * @param b the b
-	 * @param synchronizeCorpus the synchronize corpus
-	 * @return the BTS project db collection
-	 */
-	BTSProjectDBCollection checkAndAddDBCollection(BTSProject project, String corpusPrefix,
-			boolean b, boolean synchronizeCorpus);
+    /**
+     * Check and add db collection.
+     *
+     * @param project           the project
+     * @param corpusPrefix      the corpus prefix
+     * @param b                 the b
+     * @param synchronizeCorpus the synchronize corpus
+     * @return the BTS project db collection
+     */
+    BTSProjectDBCollection checkAndAddDBCollection(BTSProject project, String corpusPrefix,
+                                                   boolean b, boolean synchronizeCorpus);
 
-	boolean removeUserUserGroupFromAuthorization(BTSObject object,
-			List<BTSProject> projects);
+    boolean removeUserUserGroupFromAuthorization(BTSObject object,
+                                                 List<BTSProject> projects);
 
-	BTSProjectDBCollection findProjectCollection(String dbCollectionName);
+    BTSProjectDBCollection findProjectCollection(String dbCollectionName);
 
-	Map<String, BTSProjectDBCollection> loadProjectDBCollectionMap();
+    Map<String, BTSProjectDBCollection> loadProjectDBCollectionMap();
 
 }

@@ -18,153 +18,153 @@ package org.lightcouch;
 
 /**
  * Represents configuration properties for connecting to CouchDB.
- * 
+ *
  * @author Ahmed Yehia
  * @author Daan van Berkel
  */
 public class CouchDbProperties {
 
-	// required
-	private String dbName;
-	private boolean createDbIfNotExist;
-	private String protocol;
-	private String host;
-	private int port;
-	private String username;
-	private String password;
+    // required
+    private String dbName;
+    private boolean createDbIfNotExist;
+    private String protocol;
+    private String host;
+    private int port;
+    private String username;
+    private String password;
 
-	// optional
-	private int socketTimeout;
-	private int connectionTimeout;
-	private int maxConnections;
-	private String proxyHost;
-	private int proxyPort;
+    // optional
+    private int socketTimeout;
+    private int connectionTimeout;
+    private int maxConnections;
+    private String proxyHost;
+    private int proxyPort;
 
-	public CouchDbProperties() {
-		// default constructor
-	}
+    public CouchDbProperties() {
+        // default constructor
+    }
 
-	public CouchDbProperties(String dbName, boolean createDbIfNotExist, String protocol,
-			String host, int port, String username, String password) {
-		this.dbName = dbName;
-		this.createDbIfNotExist = createDbIfNotExist;
-		this.protocol = protocol;
-		this.host = host;
-		this.port = port;
-		this.username = username;
-		this.password = password;
-	}
+    public CouchDbProperties(String dbName, boolean createDbIfNotExist, String protocol,
+                             String host, int port, String username, String password) {
+        this.dbName = dbName;
+        this.createDbIfNotExist = createDbIfNotExist;
+        this.protocol = protocol;
+        this.host = host;
+        this.port = port;
+        this.username = username;
+        this.password = password;
+    }
 
-	public String getDbName() {
-		return dbName;
-	}
+    public String getDbName() {
+        return dbName;
+    }
 
-	public boolean isCreateDbIfNotExist() {
-		return createDbIfNotExist;
-	}
+    public CouchDbProperties setDbName(String dbName) {
+        this.dbName = dbName;
+        return this;
+    }
 
-	public String getProtocol() {
-		return protocol;
-	}
+    public boolean isCreateDbIfNotExist() {
+        return createDbIfNotExist;
+    }
 
-	public String getHost() {
-		return host;
-	}
+    public CouchDbProperties setCreateDbIfNotExist(boolean createDbIfNotExist) {
+        this.createDbIfNotExist = createDbIfNotExist;
+        return this;
+    }
 
-	public int getPort() {
-		return port;
-	}
+    public String getProtocol() {
+        return protocol;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public CouchDbProperties setProtocol(String protocol) {
+        this.protocol = protocol;
+        return this;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getHost() {
+        return host;
+    }
 
-	public int getSocketTimeout() {
-		return socketTimeout;
-	}
+    public CouchDbProperties setHost(String host) {
+        this.host = host;
+        return this;
+    }
 
-	public int getConnectionTimeout() {
-		return connectionTimeout;
-	}
+    public int getPort() {
+        return port;
+    }
 
-	public int getMaxConnections() {
-		return maxConnections;
-	}
+    public CouchDbProperties setPort(int port) {
+        this.port = port;
+        return this;
+    }
 
-	public String getProxyHost() {
-		return proxyHost;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public int getProxyPort() {
-		return proxyPort;
-	}
+    public CouchDbProperties setUsername(String username) {
+        this.username = username;
+        return this;
+    }
 
-	public CouchDbProperties setDbName(String dbName) {
-		this.dbName = dbName;
-		return this;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public CouchDbProperties setCreateDbIfNotExist(boolean createDbIfNotExist) {
-		this.createDbIfNotExist = createDbIfNotExist;
-		return this;
-	}
+    public CouchDbProperties setPassword(String password) {
+        this.password = password;
+        return this;
+    }
 
-	public CouchDbProperties setProtocol(String protocol) {
-		this.protocol = protocol;
-		return this;
-	}
+    public int getSocketTimeout() {
+        return socketTimeout;
+    }
 
-	public CouchDbProperties setHost(String host) {
-		this.host = host;
-		return this;
-	}
+    public CouchDbProperties setSocketTimeout(int socketTimeout) {
+        this.socketTimeout = socketTimeout;
+        return this;
+    }
 
-	public CouchDbProperties setPort(int port) {
-		this.port = port;
-		return this;
-	}
+    public int getConnectionTimeout() {
+        return connectionTimeout;
+    }
 
-	public CouchDbProperties setUsername(String username) {
-		this.username = username;
-		return this;
-	}
+    public CouchDbProperties setConnectionTimeout(int connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+        return this;
+    }
 
-	public CouchDbProperties setPassword(String password) {
-		this.password = password;
-		return this;
-	}
+    public int getMaxConnections() {
+        return maxConnections;
+    }
 
-	public CouchDbProperties setSocketTimeout(int socketTimeout) {
-		this.socketTimeout = socketTimeout;
-		return this;
-	}
+    public CouchDbProperties setMaxConnections(int maxConnections) {
+        this.maxConnections = maxConnections;
+        return this;
+    }
 
-	public CouchDbProperties setConnectionTimeout(int connectionTimeout) {
-		this.connectionTimeout = connectionTimeout;
-		return this;
-	}
+    public String getProxyHost() {
+        return proxyHost;
+    }
 
-	public CouchDbProperties setMaxConnections(int maxConnections) {
-		this.maxConnections = maxConnections;
-		return this;
-	}
+    public CouchDbProperties setProxyHost(String proxyHost) {
+        this.proxyHost = proxyHost;
+        return this;
+    }
 
-	public CouchDbProperties setProxyHost(String proxyHost) {
-		this.proxyHost = proxyHost;
-		return this;
-	}
+    public int getProxyPort() {
+        return proxyPort;
+    }
 
-	public CouchDbProperties setProxyPort(int proxyPort) {
-		this.proxyPort = proxyPort;
-		return this;
-	}
+    public CouchDbProperties setProxyPort(int proxyPort) {
+        this.proxyPort = proxyPort;
+        return this;
+    }
 
-	public void clearPassword() {
-		setPassword("");
-		setPassword(null);
-	}
+    public void clearPassword() {
+        setPassword("");
+        setPassword(null);
+    }
 }

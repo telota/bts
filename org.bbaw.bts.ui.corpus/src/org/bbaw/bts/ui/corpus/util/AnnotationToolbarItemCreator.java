@@ -49,177 +49,150 @@ import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * @author plutte
- *
  */
 public class AnnotationToolbarItemCreator {
-	
-	private static final String ADD_ANNOTATION_COMMAND = "org.bbaw.bts.ui.corpus.command.addAnnotation";
 
-	private AnnotationToolbarItemCreator(){
-		
-	}
-	
-	public static void processAndUpateToolbarItemsAnnotationShortcut(MPart part, IEclipsePreferences annotationsPreferences)
-	{
-		IEclipsePreferences node;
-		Map<String, MHandledToolItem> toolbarCache = loadToolbarCache(part.getToolbar());
-		MCommand command = findCommand(part.getToolbar());
-		try {
-			for (String nodeName : annotationsPreferences.childrenNames())
-			{
-				node = (IEclipsePreferences) annotationsPreferences.node(nodeName);
-				MHandledToolItem toolItem = getCachedShortcutMHandledToolItem(toolbarCache, node);
-				if (toolItem != null)
-				{
-					if (node.getBoolean(BTSCorpusConstants.PREF_TOOLBAR_VISIBLE, false))
-					{
-						if (toolItem.isVisible() && toolItem.isToBeRendered()) continue;
-						if (!toolItem.isVisible())
-						{
-							toolItem.setVisible(true);
-						}
-						if (!toolItem.isToBeRendered())
-						{
-							toolItem.setToBeRendered(true);
-						}
-					}
-					else
-					{
-						if (!toolItem.isVisible() && !toolItem.isToBeRendered()) continue;
-						if (toolItem.isVisible())
-						{
-							toolItem.setVisible(false);
-						}
-						if (toolItem.isToBeRendered())
-						{
-							toolItem.setToBeRendered(false);
-						}
-					}
-				}
-				else if (node.getBoolean(BTSCorpusConstants.PREF_TOOLBAR_VISIBLE, false))
-				{
-					addToolbarShortcut(part.getToolbar(), node, command);
-				}
-			}
-		} catch (BackingStoreException e) {
-			e.printStackTrace();
-		}
-	}
+    private static final String ADD_ANNOTATION_COMMAND = "org.bbaw.bts.ui.corpus.command.addAnnotation";
 
-	/**
-	 * @param toolbar
-	 * @return
-	 */
-	private static MCommand findCommand(MToolBar toolbar) {
-		for (MToolBarElement el : toolbar.getChildren())
-		{
-			if (el instanceof MHandledToolItem)
-			{
-				if (ADD_ANNOTATION_COMMAND.equals(
-						((MHandledToolItem) el).getCommand().getElementId()))
-				{
-					return ((MHandledToolItem) el).getCommand();
-				}
-			}
-		}
-		return null;
-	}
+    private AnnotationToolbarItemCreator() {
 
-	/**
-	 * @param toolbar
-	 * @param commandService 
-	 * @param node
-	 */
-	private static void addToolbarShortcut(MToolBar toolbar, IEclipsePreferences node, MCommand command) {
-		MHandledToolItem toolitem = MMenuFactory.INSTANCE.createHandledToolItem();
-		toolitem.setCommand(command);
-		String annotationTypePath = getAnnotationTypePath(node);
+    }
 
-		String label = node.get(BTSCorpusConstants.PREF_TOOLBAR_SHORTCUT, "??");
-		if (label == null) label = "Add";
-		toolitem.setLabel(label);
-		String tooltip = node.get(BTSCorpusConstants.PREF_TOOLBAR_SHORTCUT_TIP, "Create and add a new annotation.");
-		if (tooltip != null && !"".equals(tooltip))
-		{
-			tooltip += "\n\n";
-		}
-		tooltip += "Annotation type to add: " + annotationTypePath;
-		toolitem.setTooltip(tooltip);
-		
-		toolitem.setElementId(ADD_ANNOTATION_COMMAND + ".toolbar." + ADD_ANNOTATION_COMMAND);
-		
-		MParameter param = MCommandsFactory.INSTANCE.createParameter();
-		param.setElementId(toolitem.getElementId() +  ".param");
-		param.setName("annotationTypePath");
-		param.setValue(annotationTypePath);
-		toolitem.getParameters().add(param);
-		toolbar.getChildren().add(toolitem);
-		
-	}
+    public static void processAndUpateToolbarItemsAnnotationShortcut(MPart part, IEclipsePreferences annotationsPreferences) {
+        IEclipsePreferences node;
+        Map<String, MHandledToolItem> toolbarCache = loadToolbarCache(part.getToolbar());
+        MCommand command = findCommand(part.getToolbar());
+        try {
+            for (String nodeName : annotationsPreferences.childrenNames()) {
+                node = (IEclipsePreferences) annotationsPreferences.node(nodeName);
+                MHandledToolItem toolItem = getCachedShortcutMHandledToolItem(toolbarCache, node);
+                if (toolItem != null) {
+                    if (node.getBoolean(BTSCorpusConstants.PREF_TOOLBAR_VISIBLE, false)) {
+                        if (toolItem.isVisible() && toolItem.isToBeRendered()) continue;
+                        if (!toolItem.isVisible()) {
+                            toolItem.setVisible(true);
+                        }
+                        if (!toolItem.isToBeRendered()) {
+                            toolItem.setToBeRendered(true);
+                        }
+                    } else {
+                        if (!toolItem.isVisible() && !toolItem.isToBeRendered()) continue;
+                        if (toolItem.isVisible()) {
+                            toolItem.setVisible(false);
+                        }
+                        if (toolItem.isToBeRendered()) {
+                            toolItem.setToBeRendered(false);
+                        }
+                    }
+                } else if (node.getBoolean(BTSCorpusConstants.PREF_TOOLBAR_VISIBLE, false)) {
+                    addToolbarShortcut(part.getToolbar(), node, command);
+                }
+            }
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * @param node
-	 * @return
-	 */
-	public static String getAnnotationTypePath(IEclipsePreferences node) {
-		String annotationTypePath = BTSConstants.ANNOTATION;
-		String type = node.get(BTSCorpusConstants.PREF_ANNOTATION_TYPE, null);
-		String subtype = node.get(BTSCorpusConstants.PREF_ANNOTATION_SUBTYPE, null);
-		if (type != null && !"".equals(type))
-		{
-			annotationTypePath += CorpusUtils.TYPE_PATH_DELIMITER + type;
-			if (subtype != null && !"".equals(subtype))
-			{
-				annotationTypePath += CorpusUtils.TYPE_PATH_DELIMITER + subtype;
-			}
-		}
-		return annotationTypePath;
-	}
+    /**
+     * @param toolbar
+     * @return
+     */
+    private static MCommand findCommand(MToolBar toolbar) {
+        for (MToolBarElement el : toolbar.getChildren()) {
+            if (el instanceof MHandledToolItem) {
+                if (ADD_ANNOTATION_COMMAND.equals(
+                        ((MHandledToolItem) el).getCommand().getElementId())) {
+                    return ((MHandledToolItem) el).getCommand();
+                }
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * @param toolbarCache
-	 * @param node
-	 * @return
-	 */
-	private static MHandledToolItem getCachedShortcutMHandledToolItem(Map<String, MHandledToolItem> toolbarCache, IEclipsePreferences node) {
-		String annotationTypePath = getAnnotationTypePath(node);
-		return (toolbarCache.get(annotationTypePath));
-	}
+    /**
+     * @param toolbar
+     * @param commandService
+     * @param node
+     */
+    private static void addToolbarShortcut(MToolBar toolbar, IEclipsePreferences node, MCommand command) {
+        MHandledToolItem toolitem = MMenuFactory.INSTANCE.createHandledToolItem();
+        toolitem.setCommand(command);
+        String annotationTypePath = getAnnotationTypePath(node);
 
-	/**
-	 * @param toolbar
-	 * @return
-	 */
-	private static Map<String, MHandledToolItem> loadToolbarCache(MToolBar toolbar) {
-		Map<String, MHandledToolItem> cache = new HashMap<>();
-		for (MToolBarElement el : toolbar.getChildren())
-		{
-			if (el instanceof MHandledToolItem)
-			{
-				MHandledToolItem toolitem = (MHandledToolItem) el;
-				if (ADD_ANNOTATION_COMMAND.equals(
-						toolitem.getCommand().getElementId()))
-				{
-					if (toolitem.getParameters().isEmpty())
-					{
-						cache.put(BTSConstants.ANNOTATION, toolitem);
-					}
-					else
-					{
-						for (MParameter param : toolitem.getParameters())
-						{
-							if (param.getName().equals("annotationTypePath") && param.getValue() != null)
-							{
-								
-								cache.put(param.getValue(), toolitem);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		return cache;
-	}
+        String label = node.get(BTSCorpusConstants.PREF_TOOLBAR_SHORTCUT, "??");
+        if (label == null) label = "Add";
+        toolitem.setLabel(label);
+        String tooltip = node.get(BTSCorpusConstants.PREF_TOOLBAR_SHORTCUT_TIP, "Create and add a new annotation.");
+        if (tooltip != null && !"".equals(tooltip)) {
+            tooltip += "\n\n";
+        }
+        tooltip += "Annotation type to add: " + annotationTypePath;
+        toolitem.setTooltip(tooltip);
+
+        toolitem.setElementId(ADD_ANNOTATION_COMMAND + ".toolbar." + ADD_ANNOTATION_COMMAND);
+
+        MParameter param = MCommandsFactory.INSTANCE.createParameter();
+        param.setElementId(toolitem.getElementId() + ".param");
+        param.setName("annotationTypePath");
+        param.setValue(annotationTypePath);
+        toolitem.getParameters().add(param);
+        toolbar.getChildren().add(toolitem);
+
+    }
+
+    /**
+     * @param node
+     * @return
+     */
+    public static String getAnnotationTypePath(IEclipsePreferences node) {
+        String annotationTypePath = BTSConstants.ANNOTATION;
+        String type = node.get(BTSCorpusConstants.PREF_ANNOTATION_TYPE, null);
+        String subtype = node.get(BTSCorpusConstants.PREF_ANNOTATION_SUBTYPE, null);
+        if (type != null && !"".equals(type)) {
+            annotationTypePath += CorpusUtils.TYPE_PATH_DELIMITER + type;
+            if (subtype != null && !"".equals(subtype)) {
+                annotationTypePath += CorpusUtils.TYPE_PATH_DELIMITER + subtype;
+            }
+        }
+        return annotationTypePath;
+    }
+
+    /**
+     * @param toolbarCache
+     * @param node
+     * @return
+     */
+    private static MHandledToolItem getCachedShortcutMHandledToolItem(Map<String, MHandledToolItem> toolbarCache, IEclipsePreferences node) {
+        String annotationTypePath = getAnnotationTypePath(node);
+        return (toolbarCache.get(annotationTypePath));
+    }
+
+    /**
+     * @param toolbar
+     * @return
+     */
+    private static Map<String, MHandledToolItem> loadToolbarCache(MToolBar toolbar) {
+        Map<String, MHandledToolItem> cache = new HashMap<>();
+        for (MToolBarElement el : toolbar.getChildren()) {
+            if (el instanceof MHandledToolItem) {
+                MHandledToolItem toolitem = (MHandledToolItem) el;
+                if (ADD_ANNOTATION_COMMAND.equals(
+                        toolitem.getCommand().getElementId())) {
+                    if (toolitem.getParameters().isEmpty()) {
+                        cache.put(BTSConstants.ANNOTATION, toolitem);
+                    } else {
+                        for (MParameter param : toolitem.getParameters()) {
+                            if (param.getName().equals("annotationTypePath") && param.getValue() != null) {
+
+                                cache.put(param.getValue(), toolitem);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return cache;
+    }
 
 }

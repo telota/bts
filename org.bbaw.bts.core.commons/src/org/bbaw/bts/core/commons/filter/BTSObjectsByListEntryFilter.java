@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface BTSObjectsByListEntryFilter extends BTSFilter {
 
-	List<Object> getObjects();
-	
-	void setObjects(List<Object> objects);
+    List<Object> getObjects();
+
+    void setObjects(List<Object> objects);
 }

@@ -13,6 +13,6 @@ import org.eclipse.jface.text.IRegion;
  * @author Sven Efftinge - Initial contribution and API
  */
 public interface ILexerTokenRegion extends IRegion {
-	int getLexerTokenType();
-	
+    int getLexerTokenType();
+
 }

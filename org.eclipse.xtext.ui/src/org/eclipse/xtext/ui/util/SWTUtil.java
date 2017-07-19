@@ -35,111 +35,105 @@ import org.eclipse.swt.widgets.Widget;
  */
 public class SWTUtil {
 
-	/**
-	 * Returns the standard display to be used. The method first checks, if the
-	 * thread calling this method has an associated disaply. If so, this display
-	 * is returned. Otherwise the method returns the default display.
-	 * 
-	 * @return returns the standard display to be used
-	 */
-	public static Display getStandardDisplay() {
-		Display display;
-		display = Display.getCurrent();
-		if (display == null)
-			display = Display.getDefault();
-		return display;
-	}
+    /**
+     * Returns the standard display to be used. The method first checks, if the
+     * thread calling this method has an associated disaply. If so, this display
+     * is returned. Otherwise the method returns the default display.
+     *
+     * @return returns the standard display to be used
+     */
+    public static Display getStandardDisplay() {
+        Display display;
+        display = Display.getCurrent();
+        if (display == null)
+            display = Display.getDefault();
+        return display;
+    }
 
-	/**
-	 * Returns the shell for the given widget. If the widget doesn't represent a
-	 * SWT object that manage a shell, <code>null</code> is returned.
-	 * 
-	 * @param widget
-	 *            the widget
-	 * 
-	 * @return the shell for the given widget
-	 */
-	public static Shell getShell(Widget widget) {
-		if (widget instanceof Control)
-			return ((Control) widget).getShell();
-		if (widget instanceof Caret)
-			return ((Caret) widget).getParent().getShell();
-		if (widget instanceof DragSource)
-			return ((DragSource) widget).getControl().getShell();
-		if (widget instanceof DropTarget)
-			return ((DropTarget) widget).getControl().getShell();
-		if (widget instanceof Menu)
-			return ((Menu) widget).getParent().getShell();
-		if (widget instanceof ScrollBar)
-			return ((ScrollBar) widget).getParent().getShell();
+    /**
+     * Returns the shell for the given widget. If the widget doesn't represent a
+     * SWT object that manage a shell, <code>null</code> is returned.
+     *
+     * @param widget the widget
+     * @return the shell for the given widget
+     */
+    public static Shell getShell(Widget widget) {
+        if (widget instanceof Control)
+            return ((Control) widget).getShell();
+        if (widget instanceof Caret)
+            return ((Caret) widget).getParent().getShell();
+        if (widget instanceof DragSource)
+            return ((DragSource) widget).getControl().getShell();
+        if (widget instanceof DropTarget)
+            return ((DropTarget) widget).getControl().getShell();
+        if (widget instanceof Menu)
+            return ((Menu) widget).getParent().getShell();
+        if (widget instanceof ScrollBar)
+            return ((ScrollBar) widget).getParent().getShell();
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * Returns a width hint for a button control.
-	 * 
-	 * @param button
-	 *            the button
-	 * @return the width hint
-	 */
-	public static int getButtonWidthHint(Button button) {
-		button.setFont(JFaceResources.getDialogFont());
-		PixelConverter converter = new PixelConverter(button);
-		int widthHint = converter
-				.convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-		return Math.max(widthHint, button.computeSize(SWT.DEFAULT, SWT.DEFAULT,
-				true).x);
-	}
+    /**
+     * Returns a width hint for a button control.
+     *
+     * @param button the button
+     * @return the width hint
+     */
+    public static int getButtonWidthHint(Button button) {
+        button.setFont(JFaceResources.getDialogFont());
+        PixelConverter converter = new PixelConverter(button);
+        int widthHint = converter
+                .convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
+        return Math.max(widthHint, button.computeSize(SWT.DEFAULT, SWT.DEFAULT,
+                true).x);
+    }
 
-	/**
-	 * Sets width and height hint for the button control. <b>Note:</b> This is a
-	 * NOP if the button's layout data is not an instance of
-	 * <code>GridData</code>.
-	 * 
-	 * @param button
-	 *            the button for which to set the dimension hint
-	 */
-	public static void setButtonDimensionHint(Button button) {
-		Assert.isNotNull(button);
-		Object gd = button.getLayoutData();
-		if (gd instanceof GridData) {
-			((GridData) gd).widthHint = getButtonWidthHint(button);
-			((GridData) gd).horizontalAlignment = GridData.FILL;
-		}
-	}
+    /**
+     * Sets width and height hint for the button control. <b>Note:</b> This is a
+     * NOP if the button's layout data is not an instance of
+     * <code>GridData</code>.
+     *
+     * @param button the button for which to set the dimension hint
+     */
+    public static void setButtonDimensionHint(Button button) {
+        Assert.isNotNull(button);
+        Object gd = button.getLayoutData();
+        if (gd instanceof GridData) {
+            ((GridData) gd).widthHint = getButtonWidthHint(button);
+            ((GridData) gd).horizontalAlignment = GridData.FILL;
+        }
+    }
 
-	public static int getTableHeightHint(Table table, int rows) {
-		if (table.getFont().equals(JFaceResources.getDefaultFont()))
-			table.setFont(JFaceResources.getDialogFont());
-		int result = table.getItemHeight() * rows + table.getHeaderHeight();
-		if (table.getLinesVisible())
-			result += table.getGridLineWidth() * (rows - 1);
-		return result;
-	}
+    public static int getTableHeightHint(Table table, int rows) {
+        if (table.getFont().equals(JFaceResources.getDefaultFont()))
+            table.setFont(JFaceResources.getDialogFont());
+        int result = table.getItemHeight() * rows + table.getHeaderHeight();
+        if (table.getLinesVisible())
+            result += table.getGridLineWidth() * (rows - 1);
+        return result;
+    }
 
-	/**
-	 * Adds an accessibility listener returning the given fixed name.
-	 * 
-	 * @param control
-	 *            the control to add the accessibility support to
-	 * @param text
-	 *            the name
-	 */
-	public static void setAccessibilityText(Control control, final String text) {
-		control.getAccessible().addAccessibleListener(new AccessibleAdapter() {
-			@Override
-			public void getName(AccessibleEvent e) {
-				e.result = text;
-			}
-		});
-	}
+    /**
+     * Adds an accessibility listener returning the given fixed name.
+     *
+     * @param control the control to add the accessibility support to
+     * @param text    the name
+     */
+    public static void setAccessibilityText(Control control, final String text) {
+        control.getAccessible().addAccessibleListener(new AccessibleAdapter() {
+            @Override
+            public void getName(AccessibleEvent e) {
+                e.result = text;
+            }
+        });
+    }
 
-	public static GridLayout newLayoutNoMargins(int columns) {
-		GridLayout layout = new GridLayout(columns, false);
-		layout.marginWidth = 0;
-		layout.marginHeight = 0;
-		return layout;
-	}
+    public static GridLayout newLayoutNoMargins(int columns) {
+        GridLayout layout = new GridLayout(columns, false);
+        layout.marginWidth = 0;
+        layout.marginHeight = 0;
+        return layout;
+    }
 
 }

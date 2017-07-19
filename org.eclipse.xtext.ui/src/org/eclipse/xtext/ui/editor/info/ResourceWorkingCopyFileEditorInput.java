@@ -21,63 +21,63 @@ import org.eclipse.xtext.ui.util.ResourceUtil;
  */
 public class ResourceWorkingCopyFileEditorInput extends FileEditorInput {
 
-	private Resource resource;
+    private Resource resource;
 
-	public ResourceWorkingCopyFileEditorInput(Resource resource) throws IllegalArgumentException, IOException {
-		super(createFileProxy(resource));
-		this.resource = resource;
-	}
+    public ResourceWorkingCopyFileEditorInput(Resource resource) throws IllegalArgumentException, IOException {
+        super(createFileProxy(resource));
+        this.resource = resource;
+    }
 
-	public Resource getResource() {
-		return resource;
-	}
+    static IFile createFileProxy(final Resource resource) throws IllegalArgumentException, IOException {
+        return (IFile) Proxy.newProxyInstance(ResourceWorkingCopyFileEditorInput.class.getClassLoader(), new Class<?>[]{IFile.class},
+                new ResourceWorkingCopyFileInvocationHandler(resource));
+    }
 
-	public String getEncoding() throws CoreException {
-		if(resource instanceof XtextResource) {
-			return ((XtextResource) resource).getEncoding();
-		}
-		return getFile().getCharset();
-	}
+    public Resource getResource() {
+        return resource;
+    }
 
-	static IFile createFileProxy(final Resource resource) throws IllegalArgumentException, IOException {
-		return (IFile) Proxy.newProxyInstance(ResourceWorkingCopyFileEditorInput.class.getClassLoader(), new Class<?>[] { IFile.class },
-				new ResourceWorkingCopyFileInvocationHandler(resource));
-	}	
+    public String getEncoding() throws CoreException {
+        if (resource instanceof XtextResource) {
+            return ((XtextResource) resource).getEncoding();
+        }
+        return getFile().getCharset();
+    }
 
-	static class ResourceWorkingCopyFileInvocationHandler implements InvocationHandler {
+    static class ResourceWorkingCopyFileInvocationHandler implements InvocationHandler {
 
-		private byte[] buffer;
-		private IFile file;
+        private byte[] buffer;
+        private IFile file;
 //		private String debug;
 
-		public ResourceWorkingCopyFileInvocationHandler(Resource resource) throws IOException {
-			file = ResourceUtil.getFile(resource);
-			boolean isModified = resource.isModified();
-			ByteArrayOutputStream outputBuffer = new ByteArrayOutputStream();
-			OutputStream outputStream = new BufferedOutputStream(outputBuffer);
-			try {
-				resource.save(outputStream, null);
-			} finally {
-				outputStream.close();
-				resource.setModified(isModified);
-			}
-			buffer = outputBuffer.toByteArray();
+        public ResourceWorkingCopyFileInvocationHandler(Resource resource) throws IOException {
+            file = ResourceUtil.getFile(resource);
+            boolean isModified = resource.isModified();
+            ByteArrayOutputStream outputBuffer = new ByteArrayOutputStream();
+            OutputStream outputStream = new BufferedOutputStream(outputBuffer);
+            try {
+                resource.save(outputStream, null);
+            } finally {
+                outputStream.close();
+                resource.setModified(isModified);
+            }
+            buffer = outputBuffer.toByteArray();
 //			debug = new String(buffer);
-		}
+        }
 
-		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 //			System.out.println(method.getName());
-			if(method.getName().equals("getContents")) { //$NON-NLS-1$
-				return new ByteArrayInputStream(buffer);
-			}
-			if(method.getName().equals("equals")) { //$NON-NLS-1$
-				return proxy == args[0] || file == args[0] || file.equals(args[0]);
-			}
-			if(method.getName().equals("isConflicting")) { //$NON-NLS-1$
-				return proxy == args[0] || file == args[0];
-			}
-			return method.invoke(file, args);
-		}
-		
-	}
+            if (method.getName().equals("getContents")) { //$NON-NLS-1$
+                return new ByteArrayInputStream(buffer);
+            }
+            if (method.getName().equals("equals")) { //$NON-NLS-1$
+                return proxy == args[0] || file == args[0] || file.equals(args[0]);
+            }
+            if (method.getName().equals("isConflicting")) { //$NON-NLS-1$
+                return proxy == args[0] || file == args[0];
+            }
+            return method.invoke(file, args);
+        }
+
+    }
 }

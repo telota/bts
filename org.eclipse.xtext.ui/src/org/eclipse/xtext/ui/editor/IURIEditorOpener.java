@@ -19,8 +19,8 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(GlobalURIEditorOpener.class)
 public interface IURIEditorOpener {
 
-	IEditorPart open(URI uri, boolean select);
+    IEditorPart open(URI uri, boolean select);
 
-	IEditorPart open(URI referenceOwnerURI, EReference reference, int indexInList, boolean select);
-	
+    IEditorPart open(URI referenceOwnerURI, EReference reference, int indexInList, boolean select);
+
 }

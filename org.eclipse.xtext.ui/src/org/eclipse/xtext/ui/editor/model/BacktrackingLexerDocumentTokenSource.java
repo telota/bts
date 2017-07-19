@@ -14,40 +14,40 @@ import org.eclipse.jface.text.DocumentEvent;
 
 /**
  * The old version of the {@link DocumentTokenSource}. It assumes that all tokens before the damaged region can change
- * with a {@link DocumentEvent} therefore the entire document is being lexed. 
- * 
+ * with a {@link DocumentEvent} therefore the entire document is being lexed.
+ *
  * @author koehnlein - Initial contribution and API
  * @since 2.4
  */
 public class BacktrackingLexerDocumentTokenSource extends DocumentTokenSource {
 
-	/**
-	 * @since 2.4
-	 */
-	@Override
-	protected RepairEntryData getRepairEntryData(DocumentEvent e) throws Exception {
-		int tokenStartsAt = 0;
-		int tokenInfoIdx = 0;
-		TokenSource source = createTokenSource(e.fDocument.get());
-		CommonToken token = (CommonToken) source.nextToken();
-		// find start idx
-		while (true) {
-			if (token == Token.EOF_TOKEN) {
-				break;
-			}
-			if (tokenInfoIdx >= getInternalModifyableTokenInfos().size())
-				break;
-			TokenInfo tokenInfo = getInternalModifyableTokenInfos().get(tokenInfoIdx);
-			if (tokenInfo.getAntlrTokenType() != token.getType()
-					|| token.getStopIndex() - token.getStartIndex() + 1 != tokenInfo.getLength())
-				break;
-			if (tokenStartsAt + tokenInfo.getLength() > e.fOffset)
-				break;
-			tokenStartsAt += tokenInfo.getLength();
-			tokenInfoIdx++;
-			token = (CommonToken) source.nextToken();
-		}
-		return new RepairEntryData(tokenStartsAt, tokenInfoIdx, token, source);
-	}
+    /**
+     * @since 2.4
+     */
+    @Override
+    protected RepairEntryData getRepairEntryData(DocumentEvent e) throws Exception {
+        int tokenStartsAt = 0;
+        int tokenInfoIdx = 0;
+        TokenSource source = createTokenSource(e.fDocument.get());
+        CommonToken token = (CommonToken) source.nextToken();
+        // find start idx
+        while (true) {
+            if (token == Token.EOF_TOKEN) {
+                break;
+            }
+            if (tokenInfoIdx >= getInternalModifyableTokenInfos().size())
+                break;
+            TokenInfo tokenInfo = getInternalModifyableTokenInfos().get(tokenInfoIdx);
+            if (tokenInfo.getAntlrTokenType() != token.getType()
+                    || token.getStopIndex() - token.getStartIndex() + 1 != tokenInfo.getLength())
+                break;
+            if (tokenStartsAt + tokenInfo.getLength() > e.fOffset)
+                break;
+            tokenStartsAt += tokenInfo.getLength();
+            tokenInfoIdx++;
+            token = (CommonToken) source.nextToken();
+        }
+        return new RepairEntryData(tokenStartsAt, tokenInfoIdx, token, source);
+    }
 
 }

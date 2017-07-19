@@ -18,54 +18,54 @@ import com.google.common.collect.Lists;
  */
 public class ReferenceSearchViewTreeNode {
 
-	private ReferenceSearchViewTreeNode parent;
+    private ReferenceSearchViewTreeNode parent;
 
-	private List<ReferenceSearchViewTreeNode> children;
+    private List<ReferenceSearchViewTreeNode> children;
 
-	private Object labelDescription;
+    private Object labelDescription;
 
-	private Object description;
-	
-	public ReferenceSearchViewTreeNode(ReferenceSearchViewTreeNode parent, Object description, Object labelDescription) {
-		super();
-		this.parent = parent;
-		this.description = description;
-		this.labelDescription = labelDescription;
-		if (parent != null) {
-			parent.addChild(this);
-		}
-	}
+    private Object description;
 
-	public ReferenceSearchViewTreeNode getParent() {
-		return parent;
-	}
+    public ReferenceSearchViewTreeNode(ReferenceSearchViewTreeNode parent, Object description, Object labelDescription) {
+        super();
+        this.parent = parent;
+        this.description = description;
+        this.labelDescription = labelDescription;
+        if (parent != null) {
+            parent.addChild(this);
+        }
+    }
 
-	public List<ReferenceSearchViewTreeNode> getChildren() {
-		if (children == null) {
-			return Collections.emptyList();
-		}
-		return Collections.unmodifiableList(children);
-	}
+    public ReferenceSearchViewTreeNode getParent() {
+        return parent;
+    }
 
-	public void addChild(ReferenceSearchViewTreeNode child) {
-		if (children == null) {
-			children = Lists.newArrayList();
-		}
-		children.add(child);
-	}
-	
-	public void removeChild(ReferenceSearchViewTreeNode child) {
-		if(children != null) {
-			children.remove(child);
-		}
-	}
+    public List<ReferenceSearchViewTreeNode> getChildren() {
+        if (children == null) {
+            return Collections.emptyList();
+        }
+        return Collections.unmodifiableList(children);
+    }
 
-	public Object getDescription() {
-		return description;
-	}
-	
-	public Object getLabelDescription() {
-		return labelDescription;
-	}
+    public void addChild(ReferenceSearchViewTreeNode child) {
+        if (children == null) {
+            children = Lists.newArrayList();
+        }
+        children.add(child);
+    }
+
+    public void removeChild(ReferenceSearchViewTreeNode child) {
+        if (children != null) {
+            children.remove(child);
+        }
+    }
+
+    public Object getDescription() {
+        return description;
+    }
+
+    public Object getLabelDescription() {
+        return labelDescription;
+    }
 
 }

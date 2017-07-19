@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
  * this class and implementing the {@link Multiset#entrySet()} method, plus
  * optionally overriding {@link #add(Object, int)} and
  * {@link #remove(Object, int)} to enable modifications to the multiset.
- *
+ * <p>
  * <p>The {@link #count} and {@link #size} implementations all iterate across
  * the set returned by {@link Multiset#entrySet()}, as do many methods acting on
  * the set returned by {@link #elementSet()}. Override those methods for better
@@ -45,177 +45,193 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 abstract class AbstractMultiset<E> extends AbstractCollection<E>
-    implements Multiset<E> {
-  // Query Operations
+        implements Multiset<E> {
+    // Query Operations
 
-  @Override public int size() {
-    return Multisets.sizeImpl(this);
-  }
+    private transient Set<E> elementSet;
+    private transient Set<Entry<E>> entrySet;
 
-  @Override public boolean isEmpty() {
-    return entrySet().isEmpty();
-  }
-
-  @Override public boolean contains(@Nullable Object element) {
-    return count(element) > 0;
-  }
-
-  @Override public Iterator<E> iterator() {
-    return Multisets.iteratorImpl(this);
-  }
-
-  @Override
-  public int count(@Nullable Object element) {
-    for (Entry<E> entry : entrySet()) {
-      if (Objects.equal(entry.getElement(), element)) {
-        return entry.getCount();
-      }
-    }
-    return 0;
-  }
-
-  // Modification Operations
-
-  @Override public boolean add(@Nullable E element) {
-    add(element, 1);
-    return true;
-  }
-
-  @Override
-  public int add(@Nullable E element, int occurrences) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override public boolean remove(@Nullable Object element) {
-    return remove(element, 1) > 0;
-  }
-
-  @Override
-  public int remove(@Nullable Object element, int occurrences) {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public int setCount(@Nullable E element, int count) {
-    return setCountImpl(this, element, count);
-  }
-
-  @Override
-  public boolean setCount(@Nullable E element, int oldCount, int newCount) {
-    return setCountImpl(this, element, oldCount, newCount);
-  }
-
-  // Bulk Operations
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>This implementation is highly efficient when {@code elementsToAdd}
-   * is itself a {@link Multiset}.
-   */
-  @Override public boolean addAll(Collection<? extends E> elementsToAdd) {
-    return Multisets.addAllImpl(this, elementsToAdd);
-  }
-
-  @Override public boolean removeAll(Collection<?> elementsToRemove) {
-    return Multisets.removeAllImpl(this, elementsToRemove);
-  }
-
-  @Override public boolean retainAll(Collection<?> elementsToRetain) {
-    return Multisets.retainAllImpl(this, elementsToRetain);
-  }
-
-  @Override public void clear() {
-    Iterators.clear(entryIterator());
-  }
-
-  // Views
-
-  private transient Set<E> elementSet;
-
-  @Override
-  public Set<E> elementSet() {
-    Set<E> result = elementSet;
-    if (result == null) {
-      elementSet = result = createElementSet();
-    }
-    return result;
-  }
-
-  /**
-   * Creates a new instance of this multiset's element set, which will be
-   * returned by {@link #elementSet()}.
-   */
-  Set<E> createElementSet() {
-    return new ElementSet();
-  }
-
-  class ElementSet extends Multisets.ElementSet<E> {
     @Override
-    Multiset<E> multiset() {
-      return AbstractMultiset.this;
-    }
-  }
-
-  abstract Iterator<Entry<E>> entryIterator();
-
-  abstract int distinctElements();
-
-  private transient Set<Entry<E>> entrySet;
-
-  @Override public Set<Entry<E>> entrySet() {
-    Set<Entry<E>> result = entrySet;
-    return (result == null) ? entrySet = createEntrySet() : result;
-  }
-
-  class EntrySet extends Multisets.EntrySet<E> {
-    @Override Multiset<E> multiset() {
-      return AbstractMultiset.this;
+    public int size() {
+        return Multisets.sizeImpl(this);
     }
 
-    @Override public Iterator<Entry<E>> iterator() {
-      return entryIterator();
+    @Override
+    public boolean isEmpty() {
+        return entrySet().isEmpty();
     }
 
-    @Override public int size() {
-      return distinctElements();
+    @Override
+    public boolean contains(@Nullable Object element) {
+        return count(element) > 0;
     }
-  }
 
-  Set<Entry<E>> createEntrySet() {
-    return new EntrySet();
-  }
+    // Modification Operations
 
-  // Object methods
+    @Override
+    public Iterator<E> iterator() {
+        return Multisets.iteratorImpl(this);
+    }
 
-  /**
-   * {@inheritDoc}
-   *
-   * <p>This implementation returns {@code true} if {@code object} is a multiset
-   * of the same size and if, for each element, the two multisets have the same
-   * count.
-   */
-  @Override public boolean equals(@Nullable Object object) {
-    return Multisets.equalsImpl(this, object);
-  }
+    @Override
+    public int count(@Nullable Object element) {
+        for (Entry<E> entry : entrySet()) {
+            if (Objects.equal(entry.getElement(), element)) {
+                return entry.getCount();
+            }
+        }
+        return 0;
+    }
 
-  /**
-   * {@inheritDoc}
-   *
-   * <p>This implementation returns the hash code of {@link
-   * Multiset#entrySet()}.
-   */
-  @Override public int hashCode() {
-    return entrySet().hashCode();
-  }
+    @Override
+    public boolean add(@Nullable E element) {
+        add(element, 1);
+        return true;
+    }
 
-  /**
-   * {@inheritDoc}
-   *
-   * <p>This implementation returns the result of invoking {@code toString} on
-   * {@link Multiset#entrySet()}.
-   */
-  @Override public String toString() {
-    return entrySet().toString();
-  }
+    @Override
+    public int add(@Nullable E element, int occurrences) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean remove(@Nullable Object element) {
+        return remove(element, 1) > 0;
+    }
+
+    @Override
+    public int remove(@Nullable Object element, int occurrences) {
+        throw new UnsupportedOperationException();
+    }
+
+    // Bulk Operations
+
+    @Override
+    public int setCount(@Nullable E element, int count) {
+        return setCountImpl(this, element, count);
+    }
+
+    @Override
+    public boolean setCount(@Nullable E element, int oldCount, int newCount) {
+        return setCountImpl(this, element, oldCount, newCount);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <p>This implementation is highly efficient when {@code elementsToAdd}
+     * is itself a {@link Multiset}.
+     */
+    @Override
+    public boolean addAll(Collection<? extends E> elementsToAdd) {
+        return Multisets.addAllImpl(this, elementsToAdd);
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> elementsToRemove) {
+        return Multisets.removeAllImpl(this, elementsToRemove);
+    }
+
+    // Views
+
+    @Override
+    public boolean retainAll(Collection<?> elementsToRetain) {
+        return Multisets.retainAllImpl(this, elementsToRetain);
+    }
+
+    @Override
+    public void clear() {
+        Iterators.clear(entryIterator());
+    }
+
+    @Override
+    public Set<E> elementSet() {
+        Set<E> result = elementSet;
+        if (result == null) {
+            elementSet = result = createElementSet();
+        }
+        return result;
+    }
+
+    /**
+     * Creates a new instance of this multiset's element set, which will be
+     * returned by {@link #elementSet()}.
+     */
+    Set<E> createElementSet() {
+        return new ElementSet();
+    }
+
+    abstract Iterator<Entry<E>> entryIterator();
+
+    abstract int distinctElements();
+
+    @Override
+    public Set<Entry<E>> entrySet() {
+        Set<Entry<E>> result = entrySet;
+        return (result == null) ? entrySet = createEntrySet() : result;
+    }
+
+    Set<Entry<E>> createEntrySet() {
+        return new EntrySet();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <p>This implementation returns {@code true} if {@code object} is a multiset
+     * of the same size and if, for each element, the two multisets have the same
+     * count.
+     */
+    @Override
+    public boolean equals(@Nullable Object object) {
+        return Multisets.equalsImpl(this, object);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <p>This implementation returns the hash code of {@link
+     * Multiset#entrySet()}.
+     */
+    @Override
+    public int hashCode() {
+        return entrySet().hashCode();
+    }
+
+    // Object methods
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <p>This implementation returns the result of invoking {@code toString} on
+     * {@link Multiset#entrySet()}.
+     */
+    @Override
+    public String toString() {
+        return entrySet().toString();
+    }
+
+    class ElementSet extends Multisets.ElementSet<E> {
+        @Override
+        Multiset<E> multiset() {
+            return AbstractMultiset.this;
+        }
+    }
+
+    class EntrySet extends Multisets.EntrySet<E> {
+        @Override
+        Multiset<E> multiset() {
+            return AbstractMultiset.this;
+        }
+
+        @Override
+        public Iterator<Entry<E>> iterator() {
+            return entryIterator();
+        }
+
+        @Override
+        public int size() {
+            return distinctElements();
+        }
+    }
 }

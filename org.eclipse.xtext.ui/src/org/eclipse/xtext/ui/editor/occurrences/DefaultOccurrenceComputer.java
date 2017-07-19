@@ -44,105 +44,103 @@ import com.google.inject.Inject;
  */
 public class DefaultOccurrenceComputer implements IOccurrenceComputer {
 
-	private static Logger LOG = Logger.getLogger(DefaultOccurrenceComputer.class);
+    public static final String OCCURRENCE_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.defaultOccurrenceAnnotation";
+    public static final String DECLARATION_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.declarationAnnotation";
+    private static Logger LOG = Logger.getLogger(DefaultOccurrenceComputer.class);
+    @Inject
+    private EObjectAtOffsetHelper eObjectAtOffsetHelper;
 
-	public static final String OCCURRENCE_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.defaultOccurrenceAnnotation";
-	public static final String DECLARATION_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.declarationAnnotation";
+    @Inject
+    private ILocationInFileProvider locationInFileProvider;
 
-	@Inject
-	private EObjectAtOffsetHelper eObjectAtOffsetHelper;
+    @Inject
+    private IReferenceFinder referenceFinder;
 
-	@Inject
-	private ILocationInFileProvider locationInFileProvider;
+    @Inject
+    private IQualifiedNameProvider qualifiedNameProvider;
 
-	@Inject
-	private IReferenceFinder referenceFinder;
-	
-	@Inject
-	private IQualifiedNameProvider qualifiedNameProvider;
-	
-	protected void addOccurrenceAnnotation(String type, IDocument document, ITextRegion textRegion,
-			Map<Annotation, Position> annotationMap) {
-		try {
-			if (textRegion != null && textRegion.getLength() > 0) {
-				Annotation annotation = new Annotation(type, false, document.get(textRegion.getOffset(),
-						textRegion.getLength()));
-				annotationMap.put(annotation, new Position(textRegion.getOffset(), textRegion.getLength()));
-			}
-		} catch (BadLocationException e) {
-			LOG.error("Error creating occurrence annotation", e);
-		}
-	}
+    protected void addOccurrenceAnnotation(String type, IDocument document, ITextRegion textRegion,
+                                           Map<Annotation, Position> annotationMap) {
+        try {
+            if (textRegion != null && textRegion.getLength() > 0) {
+                Annotation annotation = new Annotation(type, false, document.get(textRegion.getOffset(),
+                        textRegion.getLength()));
+                annotationMap.put(annotation, new Position(textRegion.getOffset(), textRegion.getLength()));
+            }
+        } catch (BadLocationException e) {
+            LOG.error("Error creating occurrence annotation", e);
+        }
+    }
 
-	public Map<Annotation, Position> createAnnotationMap(XtextEditor editor, final ITextSelection selection,
-			final SubMonitor monitor) {
-		final IXtextDocument document = editor.getDocument();
-		if(document != null) {
-			return document.readOnly(new IUnitOfWork<Map<Annotation, Position>, XtextResource>() {
-				public Map<Annotation, Position> exec(final XtextResource resource) throws Exception {
-					if(resource != null) {
-						EObject target = eObjectAtOffsetHelper.resolveElementAt(resource, (selection).getOffset());
-						if (target != null && ! target.eIsProxy()) {
-							monitor.setWorkRemaining(100);
-							final List<IReferenceDescription> references = newArrayList();
-							IAcceptor<IReferenceDescription> acceptor = new IAcceptor<IReferenceDescription>() {
-								public void accept(IReferenceDescription reference) {
-									references.add(reference);
-								}
-							};
-							SimpleLocalResourceAccess localResourceAccess = new SimpleLocalResourceAccess(resource.getResourceSet());
-							referenceFinder.findReferences(getTargetURIs(target), 
-									singleton(resource.getURI()), localResourceAccess, acceptor, monitor.newChild(40));
-							if (monitor.isCanceled())
-								return emptyMap();
-							Map<Annotation, Position> result = newHashMapWithExpectedSize(references.size() + 1);
-							if (target.eResource() == resource) {
-								if (!references.isEmpty() || canBeReferencedLocally(target)) {
-									ITextRegion declarationRegion = locationInFileProvider.getSignificantTextRegion(target);
-									addOccurrenceAnnotation(DECLARATION_ANNOTATION_TYPE, document, declarationRegion, result);
-								}
-							}
-							monitor.worked(5);
-							for (IReferenceDescription reference : references) {
-								try {
-									EObject source = resource.getEObject(reference.getSourceEObjectUri().fragment());
-									if (source != null && reference.getEReference() != null) { // prevent exception for outdated data
-										ITextRegion textRegion = locationInFileProvider.getSignificantTextRegion(source,
-												reference.getEReference(), reference.getIndexInList());
-										addOccurrenceAnnotation(OCCURRENCE_ANNOTATION_TYPE, document, textRegion, result);
-									}
-								} catch(Exception exc) {
-									// outdated index information. Ignore
-								}
-							}
-							monitor.worked(15);
-							return result;
-						}
-					}
-					return emptyMap();
-				}
-			});
-		} else {
-			return emptyMap();
-		}
-	}
+    public Map<Annotation, Position> createAnnotationMap(XtextEditor editor, final ITextSelection selection,
+                                                         final SubMonitor monitor) {
+        final IXtextDocument document = editor.getDocument();
+        if (document != null) {
+            return document.readOnly(new IUnitOfWork<Map<Annotation, Position>, XtextResource>() {
+                public Map<Annotation, Position> exec(final XtextResource resource) throws Exception {
+                    if (resource != null) {
+                        EObject target = eObjectAtOffsetHelper.resolveElementAt(resource, (selection).getOffset());
+                        if (target != null && !target.eIsProxy()) {
+                            monitor.setWorkRemaining(100);
+                            final List<IReferenceDescription> references = newArrayList();
+                            IAcceptor<IReferenceDescription> acceptor = new IAcceptor<IReferenceDescription>() {
+                                public void accept(IReferenceDescription reference) {
+                                    references.add(reference);
+                                }
+                            };
+                            SimpleLocalResourceAccess localResourceAccess = new SimpleLocalResourceAccess(resource.getResourceSet());
+                            referenceFinder.findReferences(getTargetURIs(target),
+                                    singleton(resource.getURI()), localResourceAccess, acceptor, monitor.newChild(40));
+                            if (monitor.isCanceled())
+                                return emptyMap();
+                            Map<Annotation, Position> result = newHashMapWithExpectedSize(references.size() + 1);
+                            if (target.eResource() == resource) {
+                                if (!references.isEmpty() || canBeReferencedLocally(target)) {
+                                    ITextRegion declarationRegion = locationInFileProvider.getSignificantTextRegion(target);
+                                    addOccurrenceAnnotation(DECLARATION_ANNOTATION_TYPE, document, declarationRegion, result);
+                                }
+                            }
+                            monitor.worked(5);
+                            for (IReferenceDescription reference : references) {
+                                try {
+                                    EObject source = resource.getEObject(reference.getSourceEObjectUri().fragment());
+                                    if (source != null && reference.getEReference() != null) { // prevent exception for outdated data
+                                        ITextRegion textRegion = locationInFileProvider.getSignificantTextRegion(source,
+                                                reference.getEReference(), reference.getIndexInList());
+                                        addOccurrenceAnnotation(OCCURRENCE_ANNOTATION_TYPE, document, textRegion, result);
+                                    }
+                                } catch (Exception exc) {
+                                    // outdated index information. Ignore
+                                }
+                            }
+                            monitor.worked(15);
+                            return result;
+                        }
+                    }
+                    return emptyMap();
+                }
+            });
+        } else {
+            return emptyMap();
+        }
+    }
 
-	/**
-	 * @since 2.3
-	 */
-	protected Iterable<URI> getTargetURIs(EObject target) {
-		return singleton(EcoreUtil2.getPlatformResourceOrNormalizedURI(target));
-	}
-	
-	/**
-	 * @since 2.1
-	 */
-	protected boolean canBeReferencedLocally(EObject object) {
-		boolean result = qualifiedNameProvider.getFullyQualifiedName(object) != null;
-		return result;
-	}
+    /**
+     * @since 2.3
+     */
+    protected Iterable<URI> getTargetURIs(EObject target) {
+        return singleton(EcoreUtil2.getPlatformResourceOrNormalizedURI(target));
+    }
 
-	public boolean hasAnnotationType(String annotationType) {
-		return DECLARATION_ANNOTATION_TYPE.equals(annotationType) || OCCURRENCE_ANNOTATION_TYPE.equals(annotationType);
-	}
+    /**
+     * @since 2.1
+     */
+    protected boolean canBeReferencedLocally(EObject object) {
+        boolean result = qualifiedNameProvider.getFullyQualifiedName(object) != null;
+        return result;
+    }
+
+    public boolean hasAnnotationType(String annotationType) {
+        return DECLARATION_ANNOTATION_TYPE.equals(annotationType) || OCCURRENCE_ANNOTATION_TYPE.equals(annotationType);
+    }
 }

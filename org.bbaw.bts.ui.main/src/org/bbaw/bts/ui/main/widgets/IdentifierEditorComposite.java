@@ -62,212 +62,194 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public class IdentifierEditorComposite extends Composite {
-	@Inject
-	@Optional
-	private BTSConfigItem itemConfig;
-	
-	@Inject
-	private IEclipseContext context;
+    @Inject
+    @Optional
+    @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
+    protected boolean userMayEdit;
+    @Inject
+    @Optional
+    private BTSConfigItem itemConfig;
+    @Inject
+    private IEclipseContext context;
+    @Inject
+    private EditingDomainController editingDomainController;
+    @Inject
+    private BTSExternalReference reference;
+    @Inject
+    private BTSConfigurationController configurationController;
+    @Inject
+    private BTSResourceProvider resourceProvider;
+    @Inject
+    @Optional
+    @Preference(value = "locale_lang", nodePath = "org.bbaw.bts.app")
+    private String lang;
+    @Inject
+    private BTSObject corpusObject;
+    // get UISynchronize injected as field
+    @Inject
+    private UISynchronize sync;
 
-	@Inject
-	private EditingDomainController editingDomainController;
+    private Text referenceText;
 
-	@Inject
-	private BTSExternalReference reference;
+    private Text typeText;
 
-	@Inject
-	private BTSConfigurationController configurationController;
+    private boolean loaded;
 
+    private ComboViewer selectComboViewer;
 
-	@Inject
-	private BTSResourceProvider resourceProvider;
-	
-	@Inject
-	@Optional
-	@Preference(value = "locale_lang", nodePath = "org.bbaw.bts.app")
-	private String lang;
-	
-	@Inject
-	private BTSObject corpusObject;
+    @Inject
+    private GeneralBTSObjectController generalObjectController;
 
+    /**
+     * Create the composite.
+     *
+     * @param parent
+     * @param style
+     */
+    @Inject
+    public IdentifierEditorComposite(Composite parent) {
+        super(parent, SWT.BORDER);
+        setLayout(new GridLayout(6, false));
+        this.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
+        ((GridLayout) this.getLayout()).marginWidth = 0;
+        ((GridLayout) this.getLayout()).marginHeight = 0;
 
-	@Inject
-	@Optional
-	@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
-	protected boolean userMayEdit;
-	
-	// get UISynchronize injected as field
-	@Inject
-	private UISynchronize sync;
-	
-	private Text referenceText;
-	
-	private Text typeText;
+        this.setBackground(parent.getBackground());
+    }
 
-	private boolean loaded;
+    @PostConstruct
+    public void postConstruct() {
 
-	private ComboViewer selectComboViewer;
+        loadInput(itemConfig);
 
-	@Inject
-	private GeneralBTSObjectController generalObjectController;
+    }
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	@Inject
-	public IdentifierEditorComposite(Composite parent) {
-		super(parent, SWT.BORDER);
-		setLayout(new GridLayout(6, false));
-		this.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
-		((GridLayout) this.getLayout()).marginWidth = 0;
-		((GridLayout) this.getLayout()).marginHeight = 0;
+    private void loadInput(BTSConfigItem itemConfig2) {
 
-		this.setBackground(parent.getBackground());
-	}
+        Label lblPredicate = new Label(this, SWT.NONE);
+        lblPredicate.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+                false, 1, 1));
+        lblPredicate.setText("Provider");
 
-	@PostConstruct
-	public void postConstruct() {
+        Combo combo = new Combo(this, SWT.READ_ONLY);
+        combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2,
+                1));
 
-		loadInput(itemConfig);
+        if (itemConfig2 != null && itemConfig2.getDescription() != null
+                && !itemConfig2.getDescription().getLanguages().isEmpty()) {
+            final ControlDecoration deco = new ControlDecoration(combo,
+                    SWT.BOTTOM | SWT.LEFT);
 
-	}
+            // re-use an existing image
+            Image image = FieldDecorationRegistry
+                    .getDefault()
+                    .getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)
+                    .getImage();
+            // set description and image
+            deco.setDescriptionText(itemConfig2.getDescription()
+                    .getTranslation(lang));
+            deco.setImage(image);
+        }
+        selectComboViewer = new ComboViewer(combo);
+        ComposedAdapterFactory factory = new ComposedAdapterFactory(
+                ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+        AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
+                factory);
+        AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
+                factory);
 
-	private void loadInput(BTSConfigItem itemConfig2) {
-
-		Label lblPredicate = new Label(this, SWT.NONE);
-		lblPredicate.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
-		lblPredicate.setText("Provider");
-
-		Combo combo = new Combo(this, SWT.READ_ONLY);
-		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2,
-				1));
-
-		if (itemConfig2 != null && itemConfig2.getDescription() != null
-				&& !itemConfig2.getDescription().getLanguages().isEmpty()) {
-			final ControlDecoration deco = new ControlDecoration(combo,
-					SWT.BOTTOM | SWT.LEFT);
-
-			// re-use an existing image
-			Image image = FieldDecorationRegistry
-					.getDefault()
-					.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)
-					.getImage();
-			// set description and image
-			deco.setDescriptionText(itemConfig2.getDescription()
-					.getTranslation(lang));
-			deco.setImage(image);
-		}
-		selectComboViewer = new ComboViewer(combo);
-		ComposedAdapterFactory factory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-				factory);
-		AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
-				factory);
-
-		selectComboViewer.setContentProvider(contentProvider);
-		selectComboViewer.setLabelProvider(labelProvider);
-		selectComboViewer.setInput(configurationController
-				.getIdentifiersProviderConfigItemProcessedClones(itemConfig2,
-						corpusObject));
-
-		
+        selectComboViewer.setContentProvider(contentProvider);
+        selectComboViewer.setLabelProvider(labelProvider);
+        selectComboViewer.setInput(configurationController
+                .getIdentifiersProviderConfigItemProcessedClones(itemConfig2,
+                        corpusObject));
 
 
-		Label lbltype = new Label(this, SWT.NONE);
-		lbltype.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
-		lbltype.setText("Type");
-		typeText = new Text(this, SWT.BORDER);
-		typeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+        Label lbltype = new Label(this, SWT.NONE);
+        lbltype.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+                false, 1, 1));
+        lbltype.setText("Type");
+        typeText = new Text(this, SWT.BORDER);
+        typeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-		Label lblObject = new Label(this, SWT.NONE);
-		lblObject.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
-		lblObject.setText("External ID");
-		referenceText = new Text(this, SWT.BORDER);
-		referenceText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
-		
+        Label lblObject = new Label(this, SWT.NONE);
+        lblObject.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+                false, 1, 1));
+        lblObject.setText("External ID");
+        referenceText = new Text(this, SWT.BORDER);
+        referenceText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
 
-		
-		
 
-		DataBindingContext bindingContext = new DataBindingContext();
+        DataBindingContext bindingContext = new DataBindingContext();
 
-		EMFUpdateValueStrategy targetToModel = new EMFUpdateValueStrategy();
-		targetToModel.setConverter(new BTSConfigItemToStringConverter());
-		// if (itemConfig.getPassportEditorConfig().isRequired()) {
-		// targetToModel.setBeforeSetValidator(new StringNotEmptyValidator());
-		// }
-		EMFUpdateValueStrategy modelToTarget = new EMFUpdateValueStrategy();
-		modelToTarget.setConverter(new BTSStringToConfigItemConverter(
-				selectComboViewer));
-		IObservableValue target_type_viewer = ViewersObservables
-				.observeSingleSelection(selectComboViewer);
-		Binding binding = bindingContext.bindValue(
-				target_type_viewer,
-				EMFEditProperties.value(getEditingDomain(),
-						BtsmodelPackage.Literals.BTS_EXTERNAL_REFERENCE__PROVIDER).observe(
-								reference), targetToModel, modelToTarget);
-		
-		Binding bindingType = bindingContext.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(BTSUIConstants.DELAY, typeText),
-				EMFEditProperties.value(getEditingDomain(),
-						BtsmodelPackage.Literals.BTS_EXTERNAL_REFERENCE__TYPE).observe(
-								reference), null, null);
-		
-		Binding binding2 = bindingContext.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(BTSUIConstants.DELAY, referenceText),
-				EMFEditProperties.value(getEditingDomain(),
-						BtsmodelPackage.Literals.BTS_EXTERNAL_REFERENCE__REFERENCE).observe(
-								reference), null, null);
+        EMFUpdateValueStrategy targetToModel = new EMFUpdateValueStrategy();
+        targetToModel.setConverter(new BTSConfigItemToStringConverter());
+        // if (itemConfig.getPassportEditorConfig().isRequired()) {
+        // targetToModel.setBeforeSetValidator(new StringNotEmptyValidator());
+        // }
+        EMFUpdateValueStrategy modelToTarget = new EMFUpdateValueStrategy();
+        modelToTarget.setConverter(new BTSStringToConfigItemConverter(
+                selectComboViewer));
+        IObservableValue target_type_viewer = ViewersObservables
+                .observeSingleSelection(selectComboViewer);
+        Binding binding = bindingContext.bindValue(
+                target_type_viewer,
+                EMFEditProperties.value(getEditingDomain(),
+                        BtsmodelPackage.Literals.BTS_EXTERNAL_REFERENCE__PROVIDER).observe(
+                        reference), targetToModel, modelToTarget);
 
-		// if (false) {
-		// bindingContext.addValidationStatusProvider(binding);
-		// BackgroundControlDecorationSupport.create(binding, SWT.TOP
-		// | SWT.LEFT);
-		// }
-		loaded = true;
-		setUserMayEditInteral(userMayEdit);
-	}
+        Binding bindingType = bindingContext.bindValue(
+                WidgetProperties.text(SWT.Modify).observeDelayed(BTSUIConstants.DELAY, typeText),
+                EMFEditProperties.value(getEditingDomain(),
+                        BtsmodelPackage.Literals.BTS_EXTERNAL_REFERENCE__TYPE).observe(
+                        reference), null, null);
 
-	private EditingDomain getEditingDomain() {
-		return editingDomainController.getEditingDomain(corpusObject);
-	}
+        Binding binding2 = bindingContext.bindValue(
+                WidgetProperties.text(SWT.Modify).observeDelayed(BTSUIConstants.DELAY, referenceText),
+                EMFEditProperties.value(getEditingDomain(),
+                        BtsmodelPackage.Literals.BTS_EXTERNAL_REFERENCE__REFERENCE).observe(
+                        reference), null, null);
 
-	
+        // if (false) {
+        // bindingContext.addValidationStatusProvider(binding);
+        // BackgroundControlDecorationSupport.create(binding, SWT.TOP
+        // | SWT.LEFT);
+        // }
+        loaded = true;
+        setUserMayEditInteral(userMayEdit);
+    }
 
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
-	}
-	@Inject
-	@Optional
-	public void setUserMayEdit(
-			@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) final boolean userMayEdit) {
-		if(userMayEdit != this.userMayEdit)
-		{
-			sync.asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					setUserMayEditInteral(userMayEdit);
-				}
-			});
-		}
-	}
+    private EditingDomain getEditingDomain() {
+        return editingDomainController.getEditingDomain(corpusObject);
+    }
 
-	private void setUserMayEditInteral(boolean mayEdit) {
-		this.userMayEdit = mayEdit;
-		if (loaded && !this.isDisposed())
-		{
-			referenceText.setEditable(mayEdit);
-			typeText.setEditable(mayEdit);
-			selectComboViewer.getCombo().setEnabled(mayEdit);
-		}
-		
-	}
+
+    @Override
+    protected void checkSubclass() {
+        // Disable the check that prevents subclassing of SWT components
+    }
+
+    @Inject
+    @Optional
+    public void setUserMayEdit(
+            @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) final boolean userMayEdit) {
+        if (userMayEdit != this.userMayEdit) {
+            sync.asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    setUserMayEditInteral(userMayEdit);
+                }
+            });
+        }
+    }
+
+    private void setUserMayEditInteral(boolean mayEdit) {
+        this.userMayEdit = mayEdit;
+        if (loaded && !this.isDisposed()) {
+            referenceText.setEditable(mayEdit);
+            typeText.setEditable(mayEdit);
+            selectComboViewer.getCombo().setEnabled(mayEdit);
+        }
+
+    }
 }

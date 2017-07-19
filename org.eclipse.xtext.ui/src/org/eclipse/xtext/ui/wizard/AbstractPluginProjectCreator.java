@@ -22,40 +22,40 @@ import com.google.inject.Provider;
  */
 public abstract class AbstractPluginProjectCreator extends AbstractProjectCreator {
 
-	@Inject
-	private Provider<PluginProjectFactory> projectFactoryProvider;
-	
-	@Override
-	protected ProjectFactory configureProjectFactory(ProjectFactory factory) {
-		PluginProjectFactory result = (PluginProjectFactory) super.configureProjectFactory(factory);
-		
-		result.addRequiredBundles(getRequiredBundles());
-		result.addExportedPackages(getExportedPackages());
-		result.addImportedPackages(getImportedPackages());
-		result.setActivatorClassName(getActivatorClassName());
-		
-		return result;
-	}
-	
-	@Override
-	protected PluginProjectFactory createProjectFactory() {
-		return projectFactoryProvider.get();
-	}
-	
-	/**
+    @Inject
+    private Provider<PluginProjectFactory> projectFactoryProvider;
+
+    @Override
+    protected ProjectFactory configureProjectFactory(ProjectFactory factory) {
+        PluginProjectFactory result = (PluginProjectFactory) super.configureProjectFactory(factory);
+
+        result.addRequiredBundles(getRequiredBundles());
+        result.addExportedPackages(getExportedPackages());
+        result.addImportedPackages(getImportedPackages());
+        result.setActivatorClassName(getActivatorClassName());
+
+        return result;
+    }
+
+    @Override
+    protected PluginProjectFactory createProjectFactory() {
+        return projectFactoryProvider.get();
+    }
+
+    /**
      * @return the names of the exported packages. May not be <code>null</code>
      */
-	protected List<String> getExportedPackages() {
+    protected List<String> getExportedPackages() {
         return Collections.emptyList();
     }
 
-	/**
+    /**
      * @return the names of the imported packages that a new project requires. May not be <code>null</code>
      */
     protected List<String> getImportedPackages() {
         return Lists.newArrayList(
-        		"org.apache.log4j", 
-        		"org.apache.commons.logging");
+                "org.apache.log4j",
+                "org.apache.commons.logging");
     }
 
     /**
@@ -64,19 +64,19 @@ public abstract class AbstractPluginProjectCreator extends AbstractProjectCreato
     protected String getActivatorClassName() {
         return null;
     }
-	
+
     /**
      * @return the names of the bundles that a new project requires. May not be <code>null</code>
      */
-	protected List<String> getRequiredBundles() {
-		return Lists.newArrayList(
-			"com.ibm.icu",
-			"org.eclipse.xtext", 
-			"org.eclipse.xtext.generator",
-			"org.eclipse.xtend",
-			"org.eclipse.xtend.typesystem.emf",
-			"org.eclipse.xpand", 
-			"de.itemis.xtext.antlr;resolution:=optional",
-			"org.eclipse.emf.mwe2.launch;resolution:=optional");
-	}
+    protected List<String> getRequiredBundles() {
+        return Lists.newArrayList(
+                "com.ibm.icu",
+                "org.eclipse.xtext",
+                "org.eclipse.xtext.generator",
+                "org.eclipse.xtend",
+                "org.eclipse.xtend.typesystem.emf",
+                "org.eclipse.xpand",
+                "de.itemis.xtext.antlr;resolution:=optional",
+                "org.eclipse.emf.mwe2.launch;resolution:=optional");
+    }
 }

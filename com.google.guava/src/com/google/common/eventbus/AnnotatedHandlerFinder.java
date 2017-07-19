@@ -44,125 +44,125 @@ import javax.annotation.Nullable;
  * @author Louis Wasserman
  */
 class AnnotatedHandlerFinder implements HandlerFindingStrategy {
-  /**
-   * A thread-safe cache that contains the mapping from each class to all methods in that class and
-   * all super-classes, that are annotated with {@code @Subscribe}. The cache is shared across all
-   * instances of this class; this greatly improves performance if multiple EventBus instances are
-   * created and objects of the same class are registered on all of them.
-   */
-  private static final LoadingCache<Class<?>, ImmutableList<Method>> handlerMethodsCache =
-      CacheBuilder.newBuilder()
-          .weakKeys()
-          .build(new CacheLoader<Class<?>, ImmutableList<Method>>() {
-            @Override
-            public ImmutableList<Method> load(Class<?> concreteClass) throws Exception {
-              return getAnnotatedMethodsInternal(concreteClass);
-            }
-          });
+    /**
+     * A thread-safe cache that contains the mapping from each class to all methods in that class and
+     * all super-classes, that are annotated with {@code @Subscribe}. The cache is shared across all
+     * instances of this class; this greatly improves performance if multiple EventBus instances are
+     * created and objects of the same class are registered on all of them.
+     */
+    private static final LoadingCache<Class<?>, ImmutableList<Method>> handlerMethodsCache =
+            CacheBuilder.newBuilder()
+                    .weakKeys()
+                    .build(new CacheLoader<Class<?>, ImmutableList<Method>>() {
+                        @Override
+                        public ImmutableList<Method> load(Class<?> concreteClass) throws Exception {
+                            return getAnnotatedMethodsInternal(concreteClass);
+                        }
+                    });
 
-  /**
-   * {@inheritDoc}
-   *
-   * This implementation finds all methods marked with a {@link Subscribe} annotation.
-   */
-  @Override
-  public Multimap<Class<?>, EventHandler> findAllHandlers(Object listener) {
-    Multimap<Class<?>, EventHandler> methodsInListener = HashMultimap.create();
-    Class<?> clazz = listener.getClass();
-    for (Method method : getAnnotatedMethods(clazz)) {
-      Class<?>[] parameterTypes = method.getParameterTypes();
-      Class<?> eventType = parameterTypes[0];
-      EventHandler handler = makeHandler(listener, method);
-      methodsInListener.put(eventType, handler);
-    }
-    return methodsInListener;
-  }
-
-  private static ImmutableList<Method> getAnnotatedMethods(Class<?> clazz) {
-    try {
-      return handlerMethodsCache.getUnchecked(clazz);
-    } catch (UncheckedExecutionException e) {
-      throw Throwables.propagate(e.getCause());
-    }
-  }
-  
-  private static final class MethodIdentifier {
-    private final String name;
-    private final List<Class<?>> parameterTypes;
-    
-    MethodIdentifier(Method method) {
-      this.name = method.getName();
-      this.parameterTypes = Arrays.asList(method.getParameterTypes());
-    }
-    
-    @Override
-    public int hashCode() {
-      return Objects.hashCode(name, parameterTypes);
-    }
-    
-    @Override
-    public boolean equals(@Nullable Object o) {
-      if (o instanceof MethodIdentifier) {
-        MethodIdentifier ident = (MethodIdentifier) o;
-        return name.equals(ident.name) && parameterTypes.equals(ident.parameterTypes);
-      }
-      return false;
-    }
-  }
-
-  private static ImmutableList<Method> getAnnotatedMethodsInternal(Class<?> clazz) {
-    Set<? extends Class<?>> supers = TypeToken.of(clazz).getTypes().rawTypes();
-    Map<MethodIdentifier, Method> identifiers = Maps.newHashMap();
-    for (Class<?> superClazz : supers) {
-      for (Method superClazzMethod : superClazz.getMethods()) {
-        if (superClazzMethod.isAnnotationPresent(Subscribe.class)) {
-          Class<?>[] parameterTypes = superClazzMethod.getParameterTypes();
-          if (parameterTypes.length != 1) {
-            throw new IllegalArgumentException("Method " + superClazzMethod
-                + " has @Subscribe annotation, but requires " + parameterTypes.length
-                + " arguments.  Event handler methods must require a single argument.");
-          }
-          
-          MethodIdentifier ident = new MethodIdentifier(superClazzMethod);
-          if (!identifiers.containsKey(ident)) {
-            identifiers.put(ident, superClazzMethod);
-          }
+    private static ImmutableList<Method> getAnnotatedMethods(Class<?> clazz) {
+        try {
+            return handlerMethodsCache.getUnchecked(clazz);
+        } catch (UncheckedExecutionException e) {
+            throw Throwables.propagate(e.getCause());
         }
-      }
     }
-    return ImmutableList.copyOf(identifiers.values());
-  }
 
-  /**
-   * Creates an {@code EventHandler} for subsequently calling {@code method} on
-   * {@code listener}.
-   * Selects an EventHandler implementation based on the annotations on
-   * {@code method}.
-   *
-   * @param listener  object bearing the event handler method.
-   * @param method  the event handler method to wrap in an EventHandler.
-   * @return an EventHandler that will call {@code method} on {@code listener}
-   *         when invoked.
-   */
-  private static EventHandler makeHandler(Object listener, Method method) {
-    EventHandler wrapper;
-    if (methodIsDeclaredThreadSafe(method)) {
-      wrapper = new EventHandler(listener, method);
-    } else {
-      wrapper = new SynchronizedEventHandler(listener, method);
+    private static ImmutableList<Method> getAnnotatedMethodsInternal(Class<?> clazz) {
+        Set<? extends Class<?>> supers = TypeToken.of(clazz).getTypes().rawTypes();
+        Map<MethodIdentifier, Method> identifiers = Maps.newHashMap();
+        for (Class<?> superClazz : supers) {
+            for (Method superClazzMethod : superClazz.getMethods()) {
+                if (superClazzMethod.isAnnotationPresent(Subscribe.class)) {
+                    Class<?>[] parameterTypes = superClazzMethod.getParameterTypes();
+                    if (parameterTypes.length != 1) {
+                        throw new IllegalArgumentException("Method " + superClazzMethod
+                                + " has @Subscribe annotation, but requires " + parameterTypes.length
+                                + " arguments.  Event handler methods must require a single argument.");
+                    }
+
+                    MethodIdentifier ident = new MethodIdentifier(superClazzMethod);
+                    if (!identifiers.containsKey(ident)) {
+                        identifiers.put(ident, superClazzMethod);
+                    }
+                }
+            }
+        }
+        return ImmutableList.copyOf(identifiers.values());
     }
-    return wrapper;
-  }
 
-  /**
-   * Checks whether {@code method} is thread-safe, as indicated by the
-   * {@link AllowConcurrentEvents} annotation.
-   *
-   * @param method  handler method to check.
-   * @return {@code true} if {@code handler} is marked as thread-safe,
-   *         {@code false} otherwise.
-   */
-  private static boolean methodIsDeclaredThreadSafe(Method method) {
-    return method.getAnnotation(AllowConcurrentEvents.class) != null;
-  }
+    /**
+     * Creates an {@code EventHandler} for subsequently calling {@code method} on
+     * {@code listener}.
+     * Selects an EventHandler implementation based on the annotations on
+     * {@code method}.
+     *
+     * @param listener object bearing the event handler method.
+     * @param method   the event handler method to wrap in an EventHandler.
+     * @return an EventHandler that will call {@code method} on {@code listener}
+     * when invoked.
+     */
+    private static EventHandler makeHandler(Object listener, Method method) {
+        EventHandler wrapper;
+        if (methodIsDeclaredThreadSafe(method)) {
+            wrapper = new EventHandler(listener, method);
+        } else {
+            wrapper = new SynchronizedEventHandler(listener, method);
+        }
+        return wrapper;
+    }
+
+    /**
+     * Checks whether {@code method} is thread-safe, as indicated by the
+     * {@link AllowConcurrentEvents} annotation.
+     *
+     * @param method handler method to check.
+     * @return {@code true} if {@code handler} is marked as thread-safe,
+     * {@code false} otherwise.
+     */
+    private static boolean methodIsDeclaredThreadSafe(Method method) {
+        return method.getAnnotation(AllowConcurrentEvents.class) != null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation finds all methods marked with a {@link Subscribe} annotation.
+     */
+    @Override
+    public Multimap<Class<?>, EventHandler> findAllHandlers(Object listener) {
+        Multimap<Class<?>, EventHandler> methodsInListener = HashMultimap.create();
+        Class<?> clazz = listener.getClass();
+        for (Method method : getAnnotatedMethods(clazz)) {
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            Class<?> eventType = parameterTypes[0];
+            EventHandler handler = makeHandler(listener, method);
+            methodsInListener.put(eventType, handler);
+        }
+        return methodsInListener;
+    }
+
+    private static final class MethodIdentifier {
+        private final String name;
+        private final List<Class<?>> parameterTypes;
+
+        MethodIdentifier(Method method) {
+            this.name = method.getName();
+            this.parameterTypes = Arrays.asList(method.getParameterTypes());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(name, parameterTypes);
+        }
+
+        @Override
+        public boolean equals(@Nullable Object o) {
+            if (o instanceof MethodIdentifier) {
+                MethodIdentifier ident = (MethodIdentifier) o;
+                return name.equals(ident.name) && parameterTypes.equals(ident.parameterTypes);
+            }
+            return false;
+        }
+    }
 }

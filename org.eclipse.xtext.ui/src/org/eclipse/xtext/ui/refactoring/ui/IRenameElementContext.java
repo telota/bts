@@ -17,76 +17,71 @@ import org.eclipse.xtext.ui.refactoring.IRenameRefactoringProvider;
 /**
  * The context information of a rename element refactoring. Based on this information a
  * {@link IRenameRefactoringProvider} chooses the implementation of the refactoring processor.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  * @author Holger Schill
  */
 public interface IRenameElementContext {
 
-	URI getTargetElementURI();
+    URI getTargetElementURI();
 
-	URI getContextResourceURI();
+    URI getContextResourceURI();
 
-	EClass getTargetElementEClass();
+    EClass getTargetElementEClass();
 
-	IEditorPart getTriggeringEditor();
+    IEditorPart getTriggeringEditor();
 
-	ISelection getTriggeringEditorSelection();
+    ISelection getTriggeringEditorSelection();
 
-	class Impl implements IRenameElementContext, IChangeRedirector.Aware {
+    class Impl implements IRenameElementContext, IChangeRedirector.Aware {
 
-		private URI targetElementURI;
+        private final ISelection triggeringEditorSelection;
+        private URI targetElementURI;
+        private URI contextResourceURI;
+        private EClass targetElementEClass;
+        private IEditorPart triggeringEditor;
+        private IChangeRedirector changeRedirector = IChangeRedirector.NULL;
 
-		private URI contextResourceURI;
+        public Impl(URI targetElementURI, EClass targetElementEClass) {
+            this(targetElementURI, targetElementEClass, null, null, null);
+        }
 
-		private EClass targetElementEClass;
+        public Impl(URI targetElementURI, EClass targetElementEClass, IEditorPart triggeringEditor,
+                    ISelection triggeringEditorSelection, URI contextResourceURI) {
+            this.targetElementURI = targetElementURI;
+            this.targetElementEClass = targetElementEClass;
+            this.triggeringEditor = triggeringEditor;
+            this.triggeringEditorSelection = triggeringEditorSelection;
+            this.contextResourceURI = contextResourceURI;
+        }
 
-		private IEditorPart triggeringEditor;
+        public URI getContextResourceURI() {
+            return contextResourceURI;
+        }
 
-		private final ISelection triggeringEditorSelection;
+        public URI getTargetElementURI() {
+            return targetElementURI;
+        }
 
-		private IChangeRedirector changeRedirector = IChangeRedirector.NULL;
+        public EClass getTargetElementEClass() {
+            return targetElementEClass;
+        }
 
-		public Impl(URI targetElementURI, EClass targetElementEClass) {
-			this(targetElementURI, targetElementEClass, null, null, null);
-		}
+        public IEditorPart getTriggeringEditor() {
+            return triggeringEditor;
+        }
 
-		public Impl(URI targetElementURI, EClass targetElementEClass, IEditorPart triggeringEditor,
-				ISelection triggeringEditorSelection, URI contextResourceURI) {
-			this.targetElementURI = targetElementURI;
-			this.targetElementEClass = targetElementEClass;
-			this.triggeringEditor = triggeringEditor;
-			this.triggeringEditorSelection = triggeringEditorSelection;
-			this.contextResourceURI = contextResourceURI;
-		}
+        public ISelection getTriggeringEditorSelection() {
+            return triggeringEditorSelection;
+        }
 
-		public URI getContextResourceURI() {
-			return contextResourceURI;
-		}
+        public IChangeRedirector getChangeRedirector() {
+            return changeRedirector;
+        }
 
-		public URI getTargetElementURI() {
-			return targetElementURI;
-		}
+        public void setChangeRedirector(IChangeRedirector changeRedirector) {
+            this.changeRedirector = changeRedirector;
+        }
 
-		public EClass getTargetElementEClass() {
-			return targetElementEClass;
-		}
-
-		public IEditorPart getTriggeringEditor() {
-			return triggeringEditor;
-		}
-
-		public ISelection getTriggeringEditorSelection() {
-			return triggeringEditorSelection;
-		}
-
-		public IChangeRedirector getChangeRedirector() {
-			return changeRedirector;
-		}
-
-		public void setChangeRedirector(IChangeRedirector changeRedirector) {
-			this.changeRedirector = changeRedirector;
-		}
-
-	}
+    }
 }

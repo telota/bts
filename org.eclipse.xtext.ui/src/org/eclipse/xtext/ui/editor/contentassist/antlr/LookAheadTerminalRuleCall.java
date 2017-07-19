@@ -13,45 +13,44 @@ import org.eclipse.xtext.TerminalRule;
 
 public class LookAheadTerminalRuleCall extends LookAheadTerminal {
 
-	private TerminalRule rule;
+    private TerminalRule rule;
 
-	public void setRule(TerminalRule rule) {
-		this.rule = rule;
-	}
+    public TerminalRule getRule() {
+        return rule;
+    }
 
-	public TerminalRule getRule() {
-		return rule;
-	}
-	
-	@Override
-	public boolean matches(AbstractElement element) {
-		return (element instanceof RuleCall) && getRule().equals(((RuleCall) element).getRule());
-	}
+    public void setRule(TerminalRule rule) {
+        this.rule = rule;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((rule == null) ? 0 : rule.hashCode());
-		return result;
-	}
+    @Override
+    public boolean matches(AbstractElement element) {
+        return (element instanceof RuleCall) && getRule().equals(((RuleCall) element).getRule());
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LookAheadTerminalRuleCall other = (LookAheadTerminalRuleCall) obj;
-		if (rule == null) {
-			if (other.rule != null)
-				return false;
-		}
-		else if (!rule.equals(other.rule))
-			return false;
-		return true;
-	}
-	
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((rule == null) ? 0 : rule.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        LookAheadTerminalRuleCall other = (LookAheadTerminalRuleCall) obj;
+        if (rule == null) {
+            if (other.rule != null)
+                return false;
+        } else if (!rule.equals(other.rule))
+            return false;
+        return true;
+    }
+
 }

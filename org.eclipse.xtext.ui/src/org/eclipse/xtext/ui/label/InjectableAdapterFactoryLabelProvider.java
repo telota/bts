@@ -19,16 +19,16 @@ import com.google.inject.Inject;
  */
 public class InjectableAdapterFactoryLabelProvider extends AdapterFactoryLabelProvider {
 
-	@Inject
-	public InjectableAdapterFactoryLabelProvider(AdapterFactory adapterFactory) {
-		super(adapterFactory);
-	}
+    @Inject
+    public InjectableAdapterFactoryLabelProvider(AdapterFactory adapterFactory) {
+        super(adapterFactory);
+    }
 
-	@Override
-	public String getText(Object object) {
-		IItemLabelProvider itemLabelProvider = (IItemLabelProvider) adapterFactory.adapt(object,
-				IItemLabelProvider.class);
-		return itemLabelProvider != null ? itemLabelProvider.getText(object) : null;
-	}
+    @Override
+    public String getText(Object object) {
+        IItemLabelProvider itemLabelProvider = (IItemLabelProvider) adapterFactory.adapt(object,
+                IItemLabelProvider.class);
+        return itemLabelProvider != null ? itemLabelProvider.getText(object) : null;
+    }
 
 }

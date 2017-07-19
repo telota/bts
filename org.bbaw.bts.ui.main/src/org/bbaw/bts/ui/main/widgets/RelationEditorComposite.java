@@ -66,372 +66,358 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public class RelationEditorComposite extends Composite {
-	@Inject
-	@Optional
-	private BTSConfigItem relationConfig;
-	
-	@Inject
-	private IEclipseContext context;
+    @Inject
+    @Optional
+    @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
+    protected boolean userMayEdit;
+    @Inject
+    @Optional
+    private BTSConfigItem relationConfig;
+    @Inject
+    private IEclipseContext context;
+    @Inject
+    private EditingDomainController editingDomainController;
+    @Inject
+    private BTSRelation relation;
+    @Inject
+    private BTSConfigurationController configurationController;
+    @Inject
+    private ECommandService commandService;
+    @Inject
+    private EHandlerService handlerService;
+    private ObjectSelectionProposalProvider itemProposalProvider;
+    @Inject
+    private BTSResourceProvider resourceProvider;
+    @Inject
+    @Optional
+    @Preference(value = "locale_lang", nodePath = "org.bbaw.bts.app")
+    private String lang;
+    @Inject
+    private BTSObject corpusObject;
+    // get UISynchronize injected as field
+    @Inject
+    private UISynchronize sync;
 
-	@Inject
-	private EditingDomainController editingDomainController;
+    private Text text;
 
-	@Inject
-	private BTSRelation relation;
+    private ContentProposalAdapter contentProposalAdapter;
 
-	@Inject
-	private BTSConfigurationController configurationController;
-	
-	@Inject
-	private ECommandService commandService;
-	
-	@Inject
-	private EHandlerService handlerService;
+    private ControlDecoration textFieldInfoDeco;
 
-	private ObjectSelectionProposalProvider itemProposalProvider;
-	
-	@Inject
-	private BTSResourceProvider resourceProvider;
-	
-	@Inject
-	@Optional
-	@Preference(value = "locale_lang", nodePath = "org.bbaw.bts.app")
-	private String lang;
-	
-	@Inject
-	private BTSObject corpusObject;
+    private boolean loaded;
 
+    private ComboViewer selectComboViewer;
 
-	@Inject
-	@Optional
-	@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
-	protected boolean userMayEdit;
-	
-	// get UISynchronize injected as field
-	@Inject
-	private UISynchronize sync;
-	
-	private Text text;
+    @Inject
+    private GeneralBTSObjectController generalObjectController;
 
-	private ContentProposalAdapter contentProposalAdapter;
+    /**
+     * Create the composite.
+     *
+     * @param parent
+     * @param style
+     */
+    @Inject
+    public RelationEditorComposite(Composite parent) {
+        super(parent, SWT.BORDER);
+        setLayout(new GridLayout(6, false));
+        this.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
+        ((GridLayout) this.getLayout()).marginWidth = 0;
+        ((GridLayout) this.getLayout()).marginHeight = 0;
 
-	private ControlDecoration textFieldInfoDeco;
+        this.setBackground(parent.getBackground());
+    }
 
-	private boolean loaded;
+    @PostConstruct
+    public void postContstruct() {
 
-	private ComboViewer selectComboViewer;
+        loadInput(relationConfig);
 
-	@Inject
-	private GeneralBTSObjectController generalObjectController;
+    }
 
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	@Inject
-	public RelationEditorComposite(Composite parent) {
-		super(parent, SWT.BORDER);
-		setLayout(new GridLayout(6, false));
-		this.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
-		((GridLayout) this.getLayout()).marginWidth = 0;
-		((GridLayout) this.getLayout()).marginHeight = 0;
+    private void loadInput(BTSConfigItem itemConfig2) {
 
-		this.setBackground(parent.getBackground());
-	}
+        Label lblPredicate = new Label(this, SWT.NONE);
+        lblPredicate.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+                false, 1, 1));
+        lblPredicate.setText("Relation");
 
-	@PostConstruct
-	public void postContstruct() {
+        Combo combo = new Combo(this, SWT.READ_ONLY);
+        combo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1,
+                1));
 
-		loadInput(relationConfig);
+        if (itemConfig2 != null && itemConfig2.getDescription() != null
+                && !itemConfig2.getDescription().getLanguages().isEmpty()) {
+            final ControlDecoration deco = new ControlDecoration(combo,
+                    SWT.BOTTOM | SWT.LEFT);
 
-	}
+            // re-use an existing image
+            Image image = FieldDecorationRegistry
+                    .getDefault()
+                    .getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)
+                    .getImage();
+            // set description and image
+            deco.setDescriptionText(itemConfig2.getDescription()
+                    .getTranslation(lang));
+            deco.setImage(image);
+        }
+        selectComboViewer = new ComboViewer(combo);
+        ComposedAdapterFactory factory = new ComposedAdapterFactory(
+                ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+        AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
+                factory);
+        AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
+                factory);
 
-	private void loadInput(BTSConfigItem itemConfig2) {
+        selectComboViewer.setContentProvider(contentProvider);
+        selectComboViewer.setLabelProvider(labelProvider);
+        selectComboViewer.setInput(configurationController
+                .getRelationPathConfigItemProcessedClones(itemConfig2,
+                        corpusObject));
 
-		Label lblPredicate = new Label(this, SWT.NONE);
-		lblPredicate.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
-		lblPredicate.setText("Relation");
+        DataBindingContext bindingContext = new DataBindingContext();
 
-		Combo combo = new Combo(this, SWT.READ_ONLY);
-		combo.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1,
-				1));
+        EMFUpdateValueStrategy targetToModel = new EMFUpdateValueStrategy();
+        targetToModel.setConverter(new BTSConfigItemToStringConverter());
+        // if (relationConfig.getPassportEditorConfig().isRequired()) {
+        // targetToModel.setBeforeSetValidator(new StringNotEmptyValidator());
+        // }
+        EMFUpdateValueStrategy modelToTarget = new EMFUpdateValueStrategy();
+        modelToTarget.setConverter(new BTSStringToConfigItemConverter(
+                selectComboViewer));
+        IObservableValue target_type_viewer = ViewersObservables
+                .observeSingleSelection(selectComboViewer);
+        bindingContext.bindValue(
+                target_type_viewer,
+                EMFEditProperties.value(getEditingDomain(),
+                        BtsmodelPackage.Literals.BTS_RELATION__TYPE).observe(
+                        relation), targetToModel, modelToTarget);
 
-		if (itemConfig2 != null && itemConfig2.getDescription() != null
-				&& !itemConfig2.getDescription().getLanguages().isEmpty()) {
-			final ControlDecoration deco = new ControlDecoration(combo,
-					SWT.BOTTOM | SWT.LEFT);
+        // if (false) {
+        // bindingContext.addValidationStatusProvider(binding);
+        // BackgroundControlDecorationSupport.create(binding, SWT.TOP
+        // | SWT.LEFT);
+        // }
 
-			// re-use an existing image
-			Image image = FieldDecorationRegistry
-					.getDefault()
-					.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)
-					.getImage();
-			// set description and image
-			deco.setDescriptionText(itemConfig2.getDescription()
-					.getTranslation(lang));
-			deco.setImage(image);
-		}
-		selectComboViewer = new ComboViewer(combo);
-		ComposedAdapterFactory factory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-				factory);
-		AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
-				factory);
+        Label lblObject = new Label(this, SWT.NONE);
+        lblObject.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+                false, 1, 1));
+        lblObject.setText("Object");
 
-		selectComboViewer.setContentProvider(contentProvider);
-		selectComboViewer.setLabelProvider(labelProvider);
-		selectComboViewer.setInput(configurationController
-				.getRelationPathConfigItemProcessedClones(itemConfig2,
-						corpusObject));
+        text = new Text(this, SWT.BORDER);
+        text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        text.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (RelationEditorComposite.this.userMayEdit) {
+                    // make sure we have content proposal adapter for object selection
+                    if (contentProposalAdapter == null) {
+                        createContentProposalAdapter();
+                    }
+                    if (textFieldInfoDeco != null) {
+                        if (text.getText().length() > 1) {
+                            textFieldInfoDeco.show();
+                        }
+                    }
+                }
+            }
 
-		DataBindingContext bindingContext = new DataBindingContext();
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                if (textFieldInfoDeco != null) {
+                    textFieldInfoDeco.hide();
+                }
+            }
+        });
+        text.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                if (textFieldInfoDeco != null) {
+                    if (text.getText().length() > 1) {
+                        textFieldInfoDeco.show();
+                    } else {
+                        textFieldInfoDeco.hide();
+                    }
+                }
+            }
+        });
 
-		EMFUpdateValueStrategy targetToModel = new EMFUpdateValueStrategy();
-		targetToModel.setConverter(new BTSConfigItemToStringConverter());
-		// if (relationConfig.getPassportEditorConfig().isRequired()) {
-		// targetToModel.setBeforeSetValidator(new StringNotEmptyValidator());
-		// }
-		EMFUpdateValueStrategy modelToTarget = new EMFUpdateValueStrategy();
-		modelToTarget.setConverter(new BTSStringToConfigItemConverter(
-				selectComboViewer));
-		IObservableValue target_type_viewer = ViewersObservables
-				.observeSingleSelection(selectComboViewer);
-		bindingContext.bindValue(
-				target_type_viewer,
-				EMFEditProperties.value(getEditingDomain(),
-						BtsmodelPackage.Literals.BTS_RELATION__TYPE).observe(
-						relation), targetToModel, modelToTarget);
+        if (relation.getObjectId() != null) {
+            text.setText(generalObjectController.getDisplayName(relation
+                    .getObjectId()));
+            text.setToolTipText(text.getText());
+        }
 
-		// if (false) {
-		// bindingContext.addValidationStatusProvider(binding);
-		// BackgroundControlDecorationSupport.create(binding, SWT.TOP
-		// | SWT.LEFT);
-		// }
+        Label lblSearch = new Label(this, SWT.NONE);
+        lblSearch.setImage(resourceProvider.getImage(Display.getDefault(),
+                BTSResourceProvider.IMG_SEARCH));
+        lblSearch.setToolTipText("Search Object");
+        lblSearch.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false,
+                1, 1));
+        ((GridData) lblSearch.getLayoutData()).verticalIndent = 3;
+        lblSearch.addMouseListener(new MouseAdapter() {
 
-		Label lblObject = new Label(this, SWT.NONE);
-		lblObject.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
-		lblObject.setText("Object");
+            @Override
+            public void mouseDown(MouseEvent e) {
+                if (RelationEditorComposite.this.userMayEdit) {
+                    Label l = (Label) e.getSource();
+                    l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+                }
+            }
 
-		text = new Text(this, SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		text.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (RelationEditorComposite.this.userMayEdit) {
-					// make sure we have content proposal adapter for object selection
-					if (contentProposalAdapter == null) {
-						createContentProposalAdapter();
-					}
-					if (textFieldInfoDeco != null) {
-						if (text.getText().length() > 1) {
-							textFieldInfoDeco.show();
-						}
-					}
-				}
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				super.focusLost(e);
-				if (textFieldInfoDeco != null) {
-					textFieldInfoDeco.hide();
-				}
-			}
-		});
-		text.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				if (textFieldInfoDeco != null) {
-					if (text.getText().length() > 1) {
-						textFieldInfoDeco.show();
-					} else {
-						textFieldInfoDeco.hide();
-					}
-				}
-			}
-		});
+            @Override
+            public void mouseUp(MouseEvent e) {
+                if (RelationEditorComposite.this.userMayEdit) {
+                    Label l = (Label) e.getSource();
+                    l.setBackground(l.getParent().getBackground());
+                    // open search dialog
+                    IEclipseContext child = context.createChild("searchselect");
+                    context.set(BTSConfigItem.class, relationConfig);
 
-		if (relation.getObjectId() != null) {
-			text.setText(generalObjectController.getDisplayName(relation
-					.getObjectId()));
-			text.setToolTipText(text.getText());
-		}
-
-		Label lblSearch = new Label(this, SWT.NONE);
-		lblSearch.setImage(resourceProvider.getImage(Display.getDefault(),
-				BTSResourceProvider.IMG_SEARCH));
-		lblSearch.setToolTipText("Search Object");
-		lblSearch.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false,
-				1, 1));
-		((GridData) lblSearch.getLayoutData()).verticalIndent = 3;
-		lblSearch.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (RelationEditorComposite.this.userMayEdit)
-				{
-				Label l = (Label) e.getSource();
-				l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-				}
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-				if (RelationEditorComposite.this.userMayEdit)
-				{
-				Label l = (Label) e.getSource();
-				l.setBackground(l.getParent().getBackground());
-				// open search dialog
-				IEclipseContext child = context.createChild("searchselect");
-				context.set(BTSConfigItem.class, relationConfig);
-
-				SearchSelectObjectDialog dialog = ContextInjectionFactory.make(
-						SearchSelectObjectDialog.class, child);
-				if (dialog.open() == SearchSelectObjectDialog.OK) {
-					BTSObject object = dialog.getObject();
-					System.out.println(object.get_id());
-					EditingDomain ed = getEditingDomain();
-					Command command = SetCommand.create(ed,
-							relation, BtsmodelPackage.eINSTANCE.getBTSRelation_ObjectId(),
-							object.get_id());
-					ed.getCommandStack().execute(command);
+                    SearchSelectObjectDialog dialog = ContextInjectionFactory.make(
+                            SearchSelectObjectDialog.class, child);
+                    if (dialog.open() == SearchSelectObjectDialog.OK) {
+                        BTSObject object = dialog.getObject();
+                        System.out.println(object.get_id());
+                        EditingDomain ed = getEditingDomain();
+                        Command command = SetCommand.create(ed,
+                                relation, BtsmodelPackage.eINSTANCE.getBTSRelation_ObjectId(),
+                                object.get_id());
+                        ed.getCommandStack().execute(command);
 //					System.out.println("Relation with object id "
 //							+ relation.getObjectId());
 //					relation.setObjectId(object.get_id());
 //					System.out.println("Relation with object id "
 //							+ relation.getObjectId());
-					text.setText(object.getName());
-					text.setToolTipText(text.getText());
+                        text.setText(object.getName());
+                        text.setToolTipText(text.getText());
 
-				}
-				}
-			}
-		});
-		
-		Label lblOpenInDialog = new Label(this, SWT.NONE);
-		lblOpenInDialog.setImage(resourceProvider.getImage(Display.getDefault(),
-				BTSResourceProvider.IMG_PASSPORT));
-		lblOpenInDialog.setToolTipText("Open Object in Passport Data Editor");
-		lblOpenInDialog.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false,
-				1, 1));
-		((GridData) lblOpenInDialog.getLayoutData()).verticalIndent = 3;
-		lblOpenInDialog.addMouseListener(new MouseAdapter() {
+                    }
+                }
+            }
+        });
 
-			@Override
-			public void mouseDown(MouseEvent e) {
-				
-				Label l = (Label) e.getSource();
-					l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-			}
+        Label lblOpenInDialog = new Label(this, SWT.NONE);
+        lblOpenInDialog.setImage(resourceProvider.getImage(Display.getDefault(),
+                BTSResourceProvider.IMG_PASSPORT));
+        lblOpenInDialog.setToolTipText("Open Object in Passport Data Editor");
+        lblOpenInDialog.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false,
+                1, 1));
+        ((GridData) lblOpenInDialog.getLayoutData()).verticalIndent = 3;
+        lblOpenInDialog.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mouseUp(MouseEvent e) {
-				
-				Label l = (Label) e.getSource();
-				l.setBackground(l.getParent().getBackground());
-				// open search dialog
-				Map<String, String> map = new HashMap<>(1);
-	              map.put("objectId", relation
-	  					.getObjectId());
-	
-	              org.eclipse.core.commands.Command cmd = commandService.getCommand(BTSPluginIDs.CMD_ID_OPEN_OBJECT_METADATA);
-	              ParameterizedCommand command = ParameterizedCommand.generateCommand(cmd, map);
-	
-	              handlerService.executeHandler(command); 
-				
-			}
-		});
-		
-		loaded = true;
-		setUserMayEditInteral(userMayEdit);
-		layout();
-	}
+            @Override
+            public void mouseDown(MouseEvent e) {
 
-	/**
-	 * Set up content proposal provider for object text field.
-	 */
-	private void createContentProposalAdapter() {
-		if (relationConfig != null) {
-			try {
-				KeyStroke keyStroke = KeyStroke.getInstance("Ctrl+Space");
-				contentProposalAdapter = new ContentProposalAdapter(
-						text,
-						new TextContentAdapter(),
-						new ObjectSelectionProposalProvider(
-								generalObjectController, relationConfig, corpusObject),
-						keyStroke,
-						null);
-				contentProposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
-				contentProposalAdapter.addContentProposalListener(new IContentProposalListener() {
-					@Override
-					public void proposalAccepted(IContentProposal proposal) {
-						Command command = SetCommand.create(
-								getEditingDomain(),
-								relation,
-								BtsmodelPackage.eINSTANCE.getBTSRelation_ObjectId(),
-								proposal.getContent());
-						getEditingDomain().getCommandStack().execute(
-								command);
-						text.setToolTipText(proposal.getLabel());
-						text.setText(proposal.getLabel());
-					}
-				});
-				// add decorator to textfield explaining all of this
-				textFieldInfoDeco = new ControlDecoration(text,
-						SWT.BOTTOM | SWT.LEFT);
-				// re-use an existing image
-				Image image = FieldDecorationRegistry
-						.getDefault()
-						.getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)
-						.getImage();
-				// set description and image
-				textFieldInfoDeco.setDescriptionText("Hit Ctrl+Space for content assist.");
-				textFieldInfoDeco.setImage(image);
-				textFieldInfoDeco.hide();
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
+                Label l = (Label) e.getSource();
+                l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+            }
 
-	/**
-	 * Have {@link EditingDomainController} determine the editing domain for the currently loaded {@link BTSObject}.
-	 * @return the {@link EditingDomain} for the current object.
-	 */
-	private EditingDomain getEditingDomain() {
-		return editingDomainController.getEditingDomain(corpusObject);
-	}
+            @Override
+            public void mouseUp(MouseEvent e) {
 
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
-	}
-	@Inject
-	@Optional
-	public void setUserMayEdit(
-			@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) final boolean userMayEdit) {
-		if(userMayEdit != this.userMayEdit)
-		{
-			sync.asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					setUserMayEditInteral(userMayEdit);
-				}
-			});
-		}
-	}
+                Label l = (Label) e.getSource();
+                l.setBackground(l.getParent().getBackground());
+                // open search dialog
+                Map<String, String> map = new HashMap<>(1);
+                map.put("objectId", relation
+                        .getObjectId());
 
-	private void setUserMayEditInteral(boolean mayEdit) {
-		this.userMayEdit = mayEdit;
-		if (loaded && !this.isDisposed())
-		{
-			text.setEditable(mayEdit);
-			selectComboViewer.getCombo().setEnabled(mayEdit);
-		}
-		
-	}
+                org.eclipse.core.commands.Command cmd = commandService.getCommand(BTSPluginIDs.CMD_ID_OPEN_OBJECT_METADATA);
+                ParameterizedCommand command = ParameterizedCommand.generateCommand(cmd, map);
+
+                handlerService.executeHandler(command);
+
+            }
+        });
+
+        loaded = true;
+        setUserMayEditInteral(userMayEdit);
+        layout();
+    }
+
+    /**
+     * Set up content proposal provider for object text field.
+     */
+    private void createContentProposalAdapter() {
+        if (relationConfig != null) {
+            try {
+                KeyStroke keyStroke = KeyStroke.getInstance("Ctrl+Space");
+                contentProposalAdapter = new ContentProposalAdapter(
+                        text,
+                        new TextContentAdapter(),
+                        new ObjectSelectionProposalProvider(
+                                generalObjectController, relationConfig, corpusObject),
+                        keyStroke,
+                        null);
+                contentProposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+                contentProposalAdapter.addContentProposalListener(new IContentProposalListener() {
+                    @Override
+                    public void proposalAccepted(IContentProposal proposal) {
+                        Command command = SetCommand.create(
+                                getEditingDomain(),
+                                relation,
+                                BtsmodelPackage.eINSTANCE.getBTSRelation_ObjectId(),
+                                proposal.getContent());
+                        getEditingDomain().getCommandStack().execute(
+                                command);
+                        text.setToolTipText(proposal.getLabel());
+                        text.setText(proposal.getLabel());
+                    }
+                });
+                // add decorator to textfield explaining all of this
+                textFieldInfoDeco = new ControlDecoration(text,
+                        SWT.BOTTOM | SWT.LEFT);
+                // re-use an existing image
+                Image image = FieldDecorationRegistry
+                        .getDefault()
+                        .getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION)
+                        .getImage();
+                // set description and image
+                textFieldInfoDeco.setDescriptionText("Hit Ctrl+Space for content assist.");
+                textFieldInfoDeco.setImage(image);
+                textFieldInfoDeco.hide();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Have {@link EditingDomainController} determine the editing domain for the currently loaded {@link BTSObject}.
+     *
+     * @return the {@link EditingDomain} for the current object.
+     */
+    private EditingDomain getEditingDomain() {
+        return editingDomainController.getEditingDomain(corpusObject);
+    }
+
+    @Override
+    protected void checkSubclass() {
+        // Disable the check that prevents subclassing of SWT components
+    }
+
+    @Inject
+    @Optional
+    public void setUserMayEdit(
+            @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) final boolean userMayEdit) {
+        if (userMayEdit != this.userMayEdit) {
+            sync.asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    setUserMayEditInteral(userMayEdit);
+                }
+            });
+        }
+    }
+
+    private void setUserMayEditInteral(boolean mayEdit) {
+        this.userMayEdit = mayEdit;
+        if (loaded && !this.isDisposed()) {
+            text.setEditable(mayEdit);
+            selectComboViewer.getCombo().setEnabled(mayEdit);
+        }
+
+    }
 }

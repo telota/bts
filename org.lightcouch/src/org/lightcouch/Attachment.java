@@ -18,66 +18,67 @@ package org.lightcouch;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * <p>Represents an in-line document attachment. 
- * <p>On saving, the fields 'data' holds the base64 encoded data, 
+ * <p>Represents an in-line document attachment.
+ * <p>On saving, the fields 'data' holds the base64 encoded data,
  * and 'contentType' holds the Content-Type of the attachment.
+ *
  * @author Ahmed Yehia
  */
 public class Attachment {
-	
-	private String data;
-	@SerializedName("content_type")
-	private String contentType;
-	private int revpos;
-	private String digest;
-	private long length;
-	private boolean stub;
 
-	public String getData() {
-		return data;
-	}
+    private String data;
+    @SerializedName("content_type")
+    private String contentType;
+    private int revpos;
+    private String digest;
+    private long length;
+    private boolean stub;
 
-	public String getContentType() {
-		return contentType;
-	}
+    public String getData() {
+        return data;
+    }
 
-	public int getRevpos() {
-		return revpos;
-	}
+    public void setData(String data) {
+        this.data = data;
+    }
 
-	public String getDigest() {
-		return digest;
-	}
+    public String getContentType() {
+        return contentType;
+    }
 
-	public long getLength() {
-		return length;
-	}
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 
-	public boolean isStub() {
-		return stub;
-	}
+    public int getRevpos() {
+        return revpos;
+    }
 
-	public void setData(String data) {
-		this.data = data;
-	}
+    public void setRevpos(int revpos) {
+        this.revpos = revpos;
+    }
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
+    public String getDigest() {
+        return digest;
+    }
 
-	public void setRevpos(int revpos) {
-		this.revpos = revpos;
-	}
+    public void setDigest(String digest) {
+        this.digest = digest;
+    }
 
-	public void setDigest(String digest) {
-		this.digest = digest;
-	}
+    public long getLength() {
+        return length;
+    }
 
-	public void setLength(long length) {
-		this.length = length;
-	}
+    public void setLength(long length) {
+        this.length = length;
+    }
 
-	public void setStub(boolean stub) {
-		this.stub = stub;
-	}
+    public boolean isStub() {
+        return stub;
+    }
+
+    public void setStub(boolean stub) {
+        this.stub = stub;
+    }
 }

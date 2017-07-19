@@ -41,18 +41,17 @@ import org.elasticsearch.search.SearchHit;
  *
  * @author Christoph Plutte
  */
-public interface GeneralPurposeDao extends GenericDao<BTSDBBaseObject, String>
-{
-	
-	/**
-	 * Query non bts objects.
-	 *
-	 * @param query the query
-	 * @param indexName the index name
-	 * @param indexType the index type
-	 * @return the list
-	 */
-	List<SearchHit> queryNonBTSObjects(BTSQueryRequest query, String indexName,
-			String indexType);
+public interface GeneralPurposeDao extends GenericDao<BTSDBBaseObject, String> {
+
+    /**
+     * Query non bts objects.
+     *
+     * @param query     the query
+     * @param indexName the index name
+     * @param indexType the index type
+     * @return the list
+     */
+    List<SearchHit> queryNonBTSObjects(BTSQueryRequest query, String indexName,
+                                       String indexType);
 
 }

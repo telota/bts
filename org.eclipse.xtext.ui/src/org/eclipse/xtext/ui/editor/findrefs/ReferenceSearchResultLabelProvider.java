@@ -14,22 +14,22 @@ import com.google.inject.Inject;
 
 public class ReferenceSearchResultLabelProvider extends org.eclipse.jface.viewers.LabelProvider {
 
-	@Inject
-	private GlobalDescriptionLabelProvider globalDescriptionProvider; 
-	
-	@Override
-	public String getText(Object element) {
-		if (element instanceof ReferenceSearchViewTreeNode) {
-			return globalDescriptionProvider.getText(((ReferenceSearchViewTreeNode) element).getLabelDescription());
-		}
-		return Messages.ReferenceSearchResultLabelProvider_invalid;
-	}
+    @Inject
+    private GlobalDescriptionLabelProvider globalDescriptionProvider;
 
-	@Override
-	public Image getImage(Object element) {
-		if (element instanceof ReferenceSearchViewTreeNode) {
-			return globalDescriptionProvider.getImage(((ReferenceSearchViewTreeNode) element).getLabelDescription());
-		}
-		return null;
-	}
+    @Override
+    public String getText(Object element) {
+        if (element instanceof ReferenceSearchViewTreeNode) {
+            return globalDescriptionProvider.getText(((ReferenceSearchViewTreeNode) element).getLabelDescription());
+        }
+        return Messages.ReferenceSearchResultLabelProvider_invalid;
+    }
+
+    @Override
+    public Image getImage(Object element) {
+        if (element instanceof ReferenceSearchViewTreeNode) {
+            return globalDescriptionProvider.getImage(((ReferenceSearchViewTreeNode) element).getLabelDescription());
+        }
+        return null;
+    }
 }

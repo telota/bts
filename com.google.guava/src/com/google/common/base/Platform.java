@@ -25,31 +25,36 @@ import com.google.common.annotations.GwtCompatible;
  */
 @GwtCompatible(emulated = true)
 final class Platform {
-  private Platform() {}
+    /**
+     * A thread-local destination buffer to keep us from creating new buffers.
+     * The starting size is 1024 characters.  If we grow past this we don't
+     * put it back in the threadlocal, we just keep going and grow as needed.
+     */
+    private static final ThreadLocal<char[]> DEST_TL = new ThreadLocal<char[]>() {
+        @Override
+        protected char[] initialValue() {
+            return new char[1024];
+        }
+    };
 
-  /** Returns a thread-local 1024-char array. */
-  static char[] charBufferFromThreadLocal() {
-    return DEST_TL.get();
-  }
-  
-  /** Calls {@link System#nanoTime()}. */
-  static long systemNanoTime() {
-    return System.nanoTime();
-  }
-
-  /**
-   * A thread-local destination buffer to keep us from creating new buffers.
-   * The starting size is 1024 characters.  If we grow past this we don't
-   * put it back in the threadlocal, we just keep going and grow as needed.
-   */
-  private static final ThreadLocal<char[]> DEST_TL = new ThreadLocal<char[]>() {
-    @Override
-    protected char[] initialValue() {
-      return new char[1024];
+    private Platform() {
     }
-  };
 
-  static CharMatcher precomputeCharMatcher(CharMatcher matcher) {
-    return matcher.precomputedInternal();
-  }
+    /**
+     * Returns a thread-local 1024-char array.
+     */
+    static char[] charBufferFromThreadLocal() {
+        return DEST_TL.get();
+    }
+
+    /**
+     * Calls {@link System#nanoTime()}.
+     */
+    static long systemNanoTime() {
+        return System.nanoTime();
+    }
+
+    static CharMatcher precomputeCharMatcher(CharMatcher matcher) {
+        return matcher.precomputedInternal();
+    }
 }

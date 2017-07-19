@@ -17,21 +17,21 @@ import org.eclipse.xtext.ui.editor.outline.IOutlineTreeProvider;
  */
 public abstract class ModeAwareOutlineTreeProvider extends DefaultOutlineTreeProvider implements IOutlineTreeProvider.ModeAware {
 
-	private int currentModeIndex = 0;
-	
-	public abstract List<OutlineMode> getOutlineModes();
-	
-	public OutlineMode getCurrentMode() {
-		return getOutlineModes().get(currentModeIndex);
-	}
-	
-	public OutlineMode getNextMode() {
-		return getOutlineModes().get((currentModeIndex + 1) % getOutlineModes().size());
-	}
-	
-	public void setCurrentMode(OutlineMode outlineMode) {
-		int newIndex = getOutlineModes().indexOf(outlineMode);
-		if(newIndex != -1)
-			currentModeIndex = newIndex;
-	}
+    private int currentModeIndex = 0;
+
+    public abstract List<OutlineMode> getOutlineModes();
+
+    public OutlineMode getCurrentMode() {
+        return getOutlineModes().get(currentModeIndex);
+    }
+
+    public void setCurrentMode(OutlineMode outlineMode) {
+        int newIndex = getOutlineModes().indexOf(outlineMode);
+        if (newIndex != -1)
+            currentModeIndex = newIndex;
+    }
+
+    public OutlineMode getNextMode() {
+        return getOutlineModes().get((currentModeIndex + 1) % getOutlineModes().size());
+    }
 }

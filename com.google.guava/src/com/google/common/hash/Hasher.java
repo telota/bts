@@ -22,24 +22,24 @@ import java.nio.charset.Charset;
  * A {@link PrimitiveSink} that can compute a hash code after reading the input. Each hasher should
  * translate all multibyte values ({@link #putInt(int)}, {@link #putLong(long)}, etc) to bytes
  * in little-endian order.
- *
+ * <p>
  * <p><b>Warning:</b> The result of calling any methods after calling {@link #hash} is undefined.
- *
+ * <p>
  * <p><b>Warning:</b> Using a specific character encoding when hashing a {@link CharSequence} with
  * {@link #putString(CharSequence, Charset)} is generally only useful for cross-language
  * compatibility (otherwise prefer {@link #putUnencodedChars}). However, the character encodings
  * must be identical across languages. Also beware that {@link Charset} definitions may occasionally
  * change between Java releases.
- *
+ * <p>
  * <p><b>Warning:</b> Chunks of data that are put into the {@link Hasher} are not delimited.
  * The resulting {@link HashCode} is dependent only on the bytes inserted, and the order in which
  * they were inserted, not how those bytes were chunked into discrete put() operations. For example,
  * the following three expressions all generate colliding hash codes: <pre>   {@code
- *
+ * <p>
  *   newHasher().putByte(b1).putByte(b2).putByte(b3).hash()
  *   newHasher().putByte(b1).putBytes(new byte[] { b2, b3 }).hash()
  *   newHasher().putBytes(new byte[] { b1, b2, b3 }).hash()}</pre>
- *
+ * <p>
  * <p>If you wish to avoid this, you should either prepend or append the size of each chunk. Keep in
  * mind that when dealing with char sequences, the encoded form of two concatenated char sequences
  * is not equivalent to the concatenation of their encoded form. Therefore,
@@ -51,60 +51,79 @@ import java.nio.charset.Charset;
  */
 @Beta
 public interface Hasher extends PrimitiveSink {
-  @Override Hasher putByte(byte b);
-  @Override Hasher putBytes(byte[] bytes);
-  @Override Hasher putBytes(byte[] bytes, int off, int len);
-  @Override Hasher putShort(short s);
-  @Override Hasher putInt(int i);
-  @Override Hasher putLong(long l);
+    @Override
+    Hasher putByte(byte b);
 
-  /**
-   * Equivalent to {@code putInt(Float.floatToRawIntBits(f))}.
-   */
-  @Override Hasher putFloat(float f);
+    @Override
+    Hasher putBytes(byte[] bytes);
 
-  /**
-   * Equivalent to {@code putLong(Double.doubleToRawLongBits(d))}.
-   */
-  @Override Hasher putDouble(double d);
+    @Override
+    Hasher putBytes(byte[] bytes, int off, int len);
 
-  /**
-   * Equivalent to {@code putByte(b ? (byte) 1 : (byte) 0)}.
-   */
-  @Override Hasher putBoolean(boolean b);
-  @Override Hasher putChar(char c);
+    @Override
+    Hasher putShort(short s);
 
-  /**
-   * Equivalent to processing each {@code char} value in the {@code CharSequence}, in order.
-   * The input must not be updated while this method is in progress.
-   *
-   * @since 15.0 (since 11.0 as putString(CharSequence)).
-   */
-  @Override Hasher putUnencodedChars(CharSequence charSequence);
+    @Override
+    Hasher putInt(int i);
 
-  /**
-   * Equivalent to processing each {@code char} value in the {@code CharSequence}, in order.
-   * The input must not be updated while this method is in progress.
-   *
-   * @deprecated Use {@link Hasher#putUnencodedChars} instead. This method is scheduled for
-   *     removal in Guava 16.0.
-   */
-  @Deprecated
-  @Override Hasher putString(CharSequence charSequence);
+    @Override
+    Hasher putLong(long l);
 
-  /**
-   * Equivalent to {@code putBytes(charSequence.toString().getBytes(charset))}.
-   */
-  @Override Hasher putString(CharSequence charSequence, Charset charset);
+    /**
+     * Equivalent to {@code putInt(Float.floatToRawIntBits(f))}.
+     */
+    @Override
+    Hasher putFloat(float f);
 
-  /**
-   * A simple convenience for {@code funnel.funnel(object, this)}.
-   */
-  <T> Hasher putObject(T instance, Funnel<? super T> funnel);
+    /**
+     * Equivalent to {@code putLong(Double.doubleToRawLongBits(d))}.
+     */
+    @Override
+    Hasher putDouble(double d);
 
-  /**
-   * Computes a hash code based on the data that have been provided to this hasher. The result is
-   * unspecified if this method is called more than once on the same instance.
-   */
-  HashCode hash();
+    /**
+     * Equivalent to {@code putByte(b ? (byte) 1 : (byte) 0)}.
+     */
+    @Override
+    Hasher putBoolean(boolean b);
+
+    @Override
+    Hasher putChar(char c);
+
+    /**
+     * Equivalent to processing each {@code char} value in the {@code CharSequence}, in order.
+     * The input must not be updated while this method is in progress.
+     *
+     * @since 15.0 (since 11.0 as putString(CharSequence)).
+     */
+    @Override
+    Hasher putUnencodedChars(CharSequence charSequence);
+
+    /**
+     * Equivalent to processing each {@code char} value in the {@code CharSequence}, in order.
+     * The input must not be updated while this method is in progress.
+     *
+     * @deprecated Use {@link Hasher#putUnencodedChars} instead. This method is scheduled for
+     * removal in Guava 16.0.
+     */
+    @Deprecated
+    @Override
+    Hasher putString(CharSequence charSequence);
+
+    /**
+     * Equivalent to {@code putBytes(charSequence.toString().getBytes(charset))}.
+     */
+    @Override
+    Hasher putString(CharSequence charSequence, Charset charset);
+
+    /**
+     * A simple convenience for {@code funnel.funnel(object, this)}.
+     */
+    <T> Hasher putObject(T instance, Funnel<? super T> funnel);
+
+    /**
+     * Computes a hash code based on the data that have been provided to this hasher. The result is
+     * unspecified if this method is called more than once on the same instance.
+     */
+    HashCode hash();
 }

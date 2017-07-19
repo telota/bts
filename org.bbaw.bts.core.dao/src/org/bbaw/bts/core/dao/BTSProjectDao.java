@@ -37,23 +37,22 @@ import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
  *
  * @author Christoph Plutte
  */
-public interface BTSProjectDao extends GenericDao<BTSProject, String>
-{
-	
-	/**
-	 * Removes the bts project.
-	 *
-	 * @param btsProject the bts project
-	 * @return true, if successful
-	 */
-	boolean removeBTSProject(BTSProject btsProject);
+public interface BTSProjectDao extends GenericDao<BTSProject, String> {
 
-	/**
-	 * Adds the authorisation to the given database collection.
-	 *
-	 * @param coll the coll
-	 * @param prefix the prefix
-	 */
-	void addAuthorisation(BTSProjectDBCollection coll, String prefix);
+    /**
+     * Removes the bts project.
+     *
+     * @param btsProject the bts project
+     * @return true, if successful
+     */
+    boolean removeBTSProject(BTSProject btsProject);
+
+    /**
+     * Adds the authorisation to the given database collection.
+     *
+     * @param coll   the coll
+     * @param prefix the prefix
+     */
+    void addAuthorisation(BTSProjectDBCollection coll, String prefix);
 
 }

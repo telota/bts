@@ -42,125 +42,125 @@ import com.google.inject.Singleton;
 @Singleton
 public class JavaProjectsStateHelper extends AbstractStorage2UriMapperClient {
 
-	private final static Logger log = Logger.getLogger(JavaProjectsStateHelper.class);
-	
-	@Inject
-	private IWorkspace workspace;
-	
-	public String initHandle(URI uri) {
-		IPackageFragmentRoot root = getPackageFragmentRoot(uri);
-		if (root != null)
-			return root.getHandleIdentifier();
-		return null;
-	}
-	
-	public List<String> initVisibleHandles(String handle) {
-		IJavaElement javaElement = JavaCore.create(handle);
-		if (javaElement != null) {
-			IJavaProject project = javaElement.getJavaProject();
-			if (isAccessibleXtextProject(project.getProject())) {
-				List<String> rootHandles = getPackageFragmentRootHandles(project);
-				return rootHandles;
-			} 
-			return Collections.emptyList();
-		}
-		return Collections.emptyList();
-	}
-	
-	public Collection<URI> initContainedURIs(String containerHandle) {
-		IJavaElement javaElement = JavaCore.create(containerHandle);
-		if (javaElement instanceof IPackageFragmentRoot) {
-			IPackageFragmentRoot root = (IPackageFragmentRoot) javaElement;
-			IJavaProject javaProject = root.getJavaProject();
-			if (!isAccessibleXtextProject(javaProject.getProject())) {
-				return Collections.emptyList();
-			}
-			Map<URI, IStorage> entries = ((IStorage2UriMapperJdtExtensions)super.getMapper()).getAllEntries(root);
-			return entries.keySet();
-		}
-		return Collections.emptyList();
-	}
-	
-	protected List<String> getPackageFragmentRootHandles(IJavaProject project) {
-		List<String> result = Lists.newArrayList();
-		try {
-			IPackageFragmentRoot[] roots = project.getAllPackageFragmentRoots();
-			for (IPackageFragmentRoot root : roots) {
-				if (root != null && !JavaRuntime.newDefaultJREContainerPath().isPrefixOf(root.getRawClasspathEntry().getPath())) {
-					result.add(root.getHandleIdentifier());
-				}
-			}
-		} catch (JavaModelException e) {
-			if (!e.isDoesNotExist()) {
-				log.error("Cannot find rootHandles in project " + project.getProject().getName(), e);
-			}
-		}
-		return result;
-	}
-	
-	protected IPackageFragmentRoot getPackageFragmentRoot(URI uri) {
-		if (uri.isArchive() || !uri.isPlatform()) {
-			return getJarWithEntry(uri);
-		}
-		final IFile file = getWorkspaceRoot().getFile(new Path(uri.toPlatformString(true)));
-		if (file == null) {
-			return getJarWithEntry(uri);
-		}
-		IPackageFragmentRoot root = getJavaElement(file);
-		if (root == null)
-			return getJarWithEntry(uri);
-		return root;
-	}
-	
-	protected IPackageFragmentRoot getJavaElement(final IFile file) {
-		IJavaProject jp = JavaCore.create(file.getProject());
-		if (!jp.exists())
-			return null;
-		IPackageFragmentRoot[] roots;
-		try {
-			roots = jp.getPackageFragmentRoots();
-			for (IPackageFragmentRoot root : roots) {
-				if (root.getKind() == IPackageFragmentRoot.K_SOURCE) {
-					IResource resource2 = root.getUnderlyingResource();
-					if (resource2.contains(file))
-						return root;
-				}
-			}
-		} catch (JavaModelException e) {
-			if (!e.isDoesNotExist())
-				log.error(e.getMessage(), e);
-		}
-		return null;
-	}
+    private final static Logger log = Logger.getLogger(JavaProjectsStateHelper.class);
 
-	protected IPackageFragmentRoot getJarWithEntry(URI uri) {
-		Iterable<Pair<IStorage, IProject>> storages = getStorages(uri);
-		IPackageFragmentRoot result = null;
-		for (Pair<IStorage, IProject> storage2Project : storages) {
-			IStorage storage = storage2Project.getFirst();
-			if (storage instanceof IJarEntryResource) {
-				IPackageFragmentRoot fragmentRoot = ((IJarEntryResource) storage).getPackageFragmentRoot();
-				if (fragmentRoot != null) {
-					IJavaProject javaProject = fragmentRoot.getJavaProject();
-					if (isAccessibleXtextProject(javaProject.getProject()))
-						return fragmentRoot;
-					if (result != null)
-						result = fragmentRoot;
-				}
-			}
-		}
-		return result;
-	}
-	
-	protected boolean isAccessibleXtextProject(IProject p) {
-		return p != null && XtextProjectHelper.hasNature(p) && XtextProjectHelper.hasBuilder(p);
-	}
-	
-	protected IWorkspaceRoot getWorkspaceRoot() {
-		return workspace.getRoot();
-	}
-	
-	public void setWorkspace(IWorkspace workspace) {
-		this.workspace = workspace;
-	}
+    @Inject
+    private IWorkspace workspace;
+
+    public String initHandle(URI uri) {
+        IPackageFragmentRoot root = getPackageFragmentRoot(uri);
+        if (root != null)
+            return root.getHandleIdentifier();
+        return null;
+    }
+
+    public List<String> initVisibleHandles(String handle) {
+        IJavaElement javaElement = JavaCore.create(handle);
+        if (javaElement != null) {
+            IJavaProject project = javaElement.getJavaProject();
+            if (isAccessibleXtextProject(project.getProject())) {
+                List<String> rootHandles = getPackageFragmentRootHandles(project);
+                return rootHandles;
+            }
+            return Collections.emptyList();
+        }
+        return Collections.emptyList();
+    }
+
+    public Collection<URI> initContainedURIs(String containerHandle) {
+        IJavaElement javaElement = JavaCore.create(containerHandle);
+        if (javaElement instanceof IPackageFragmentRoot) {
+            IPackageFragmentRoot root = (IPackageFragmentRoot) javaElement;
+            IJavaProject javaProject = root.getJavaProject();
+            if (!isAccessibleXtextProject(javaProject.getProject())) {
+                return Collections.emptyList();
+            }
+            Map<URI, IStorage> entries = ((IStorage2UriMapperJdtExtensions) super.getMapper()).getAllEntries(root);
+            return entries.keySet();
+        }
+        return Collections.emptyList();
+    }
+
+    protected List<String> getPackageFragmentRootHandles(IJavaProject project) {
+        List<String> result = Lists.newArrayList();
+        try {
+            IPackageFragmentRoot[] roots = project.getAllPackageFragmentRoots();
+            for (IPackageFragmentRoot root : roots) {
+                if (root != null && !JavaRuntime.newDefaultJREContainerPath().isPrefixOf(root.getRawClasspathEntry().getPath())) {
+                    result.add(root.getHandleIdentifier());
+                }
+            }
+        } catch (JavaModelException e) {
+            if (!e.isDoesNotExist()) {
+                log.error("Cannot find rootHandles in project " + project.getProject().getName(), e);
+            }
+        }
+        return result;
+    }
+
+    protected IPackageFragmentRoot getPackageFragmentRoot(URI uri) {
+        if (uri.isArchive() || !uri.isPlatform()) {
+            return getJarWithEntry(uri);
+        }
+        final IFile file = getWorkspaceRoot().getFile(new Path(uri.toPlatformString(true)));
+        if (file == null) {
+            return getJarWithEntry(uri);
+        }
+        IPackageFragmentRoot root = getJavaElement(file);
+        if (root == null)
+            return getJarWithEntry(uri);
+        return root;
+    }
+
+    protected IPackageFragmentRoot getJavaElement(final IFile file) {
+        IJavaProject jp = JavaCore.create(file.getProject());
+        if (!jp.exists())
+            return null;
+        IPackageFragmentRoot[] roots;
+        try {
+            roots = jp.getPackageFragmentRoots();
+            for (IPackageFragmentRoot root : roots) {
+                if (root.getKind() == IPackageFragmentRoot.K_SOURCE) {
+                    IResource resource2 = root.getUnderlyingResource();
+                    if (resource2.contains(file))
+                        return root;
+                }
+            }
+        } catch (JavaModelException e) {
+            if (!e.isDoesNotExist())
+                log.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    protected IPackageFragmentRoot getJarWithEntry(URI uri) {
+        Iterable<Pair<IStorage, IProject>> storages = getStorages(uri);
+        IPackageFragmentRoot result = null;
+        for (Pair<IStorage, IProject> storage2Project : storages) {
+            IStorage storage = storage2Project.getFirst();
+            if (storage instanceof IJarEntryResource) {
+                IPackageFragmentRoot fragmentRoot = ((IJarEntryResource) storage).getPackageFragmentRoot();
+                if (fragmentRoot != null) {
+                    IJavaProject javaProject = fragmentRoot.getJavaProject();
+                    if (isAccessibleXtextProject(javaProject.getProject()))
+                        return fragmentRoot;
+                    if (result != null)
+                        result = fragmentRoot;
+                }
+            }
+        }
+        return result;
+    }
+
+    protected boolean isAccessibleXtextProject(IProject p) {
+        return p != null && XtextProjectHelper.hasNature(p) && XtextProjectHelper.hasBuilder(p);
+    }
+
+    protected IWorkspaceRoot getWorkspaceRoot() {
+        return workspace.getRoot();
+    }
+
+    public void setWorkspace(IWorkspace workspace) {
+        this.workspace = workspace;
+    }
 }

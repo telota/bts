@@ -21,208 +21,211 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Represents a replication document in a replicator database.
- * @see Replicator
+ *
  * @author Ahmed Yehia
- * 
+ * @see Replicator
  */
 public class ReplicatorDocument extends Document {
 
-	@SerializedName("source")
-	private String source;
-	@SerializedName("target")
-	private String target;
-	@SerializedName("continuous")
-	private Boolean continuous;
-	@SerializedName("filter")
-	private String filter;
-	@SerializedName("query_params")
-	private JsonObject queryParams;
-	@SerializedName("doc_ids")
-	private String[] docIds;
-	@SerializedName("proxy")
-	private String proxy;
-	@SerializedName("create_target")
-	private Boolean createTarget;
-	@SerializedName("_replication_id")
-	private String replicationId;
-	@SerializedName("_replication_state")
-	private String replicationState;
-	@SerializedName("_replication_state_time")
-	private String replicationStateTime;
-	@SerializedName("worker_processes")
-	private Integer workerProcesses;
-	@SerializedName("worker_batch_size")
-	private Integer workerBatchSize;
-	@SerializedName("http_connections")
-	private Integer httpConnections;
-	@SerializedName("connection_timeout ")
-	private Long connectionTimeout;
-	@SerializedName("retries_per_request")
-	private Integer retriesPerRequest;
-	@SerializedName("user_ctx")
-	private UserCtx userCtx;
-	@SerializedName("since_seq")
-	private Integer sinceSeq;
+    @SerializedName("source")
+    private String source;
+    @SerializedName("target")
+    private String target;
+    @SerializedName("continuous")
+    private Boolean continuous;
+    @SerializedName("filter")
+    private String filter;
+    @SerializedName("query_params")
+    private JsonObject queryParams;
+    @SerializedName("doc_ids")
+    private String[] docIds;
+    @SerializedName("proxy")
+    private String proxy;
+    @SerializedName("create_target")
+    private Boolean createTarget;
+    @SerializedName("_replication_id")
+    private String replicationId;
+    @SerializedName("_replication_state")
+    private String replicationState;
+    @SerializedName("_replication_state_time")
+    private String replicationStateTime;
+    @SerializedName("worker_processes")
+    private Integer workerProcesses;
+    @SerializedName("worker_batch_size")
+    private Integer workerBatchSize;
+    @SerializedName("http_connections")
+    private Integer httpConnections;
+    @SerializedName("connection_timeout ")
+    private Long connectionTimeout;
+    @SerializedName("retries_per_request")
+    private Integer retriesPerRequest;
+    @SerializedName("user_ctx")
+    private UserCtx userCtx;
+    @SerializedName("since_seq")
+    private Integer sinceSeq;
 
-	public String getSource() {
-		return source;
-	}
+    public String getSource() {
+        return source;
+    }
 
-	public String getTarget() {
-		return target;
-	}
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-	public Boolean getContinuous() {
-		return continuous;
-	}
+    public String getTarget() {
+        return target;
+    }
 
-	public String getFilter() {
-		return filter;
-	}
+    public void setTarget(String target) {
+        this.target = target;
+    }
 
-	public JsonObject getQueryParams() {
-		return queryParams;
-	}
+    public Boolean getContinuous() {
+        return continuous;
+    }
 
-	public String[] getDocIds() {
-		return docIds;
-	}
+    public void setContinuous(Boolean continuous) {
+        this.continuous = continuous;
+    }
 
-	public String getProxy() {
-		return proxy;
-	}
+    public String getFilter() {
+        return filter;
+    }
 
-	public Boolean getCreateTarget() {
-		return createTarget;
-	}
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
 
-	public String getReplicationId() {
-		return replicationId;
-	}
+    public JsonObject getQueryParams() {
+        return queryParams;
+    }
 
-	public String getReplicationState() {
-		return replicationState;
-	}
+    public void setQueryParams(JsonObject queryParams) {
+        this.queryParams = queryParams;
+    }
 
-	public String getReplicationStateTime() {
-		return replicationStateTime;
-	}
+    public String[] getDocIds() {
+        return docIds;
+    }
 
-	public UserCtx getUserCtx() {
-		return userCtx;
-	}
-	
-	public Integer getWorkerProcesses() {
-		return workerProcesses;
-	}
+    public void setDocIds(String[] docIds) {
+        this.docIds = docIds;
+    }
 
-	public Integer getWorkerBatchSize() {
-		return workerBatchSize;
-	}
+    public String getProxy() {
+        return proxy;
+    }
 
-	public Integer getHttpConnections() {
-		return httpConnections;
-	}
+    public void setProxy(String proxy) {
+        this.proxy = proxy;
+    }
 
-	public Long getConnectionTimeout() {
-		return connectionTimeout;
-	}
+    public Boolean getCreateTarget() {
+        return createTarget;
+    }
 
-	public Integer getRetriesPerRequest() {
-		return retriesPerRequest;
-	}
+    public void setCreateTarget(Boolean createTarget) {
+        this.createTarget = createTarget;
+    }
 
-	public void setSource(String source) {
-		this.source = source;
-	}
+    public String getReplicationId() {
+        return replicationId;
+    }
 
-	public void setTarget(String target) {
-		this.target = target;
-	}
+    public void setReplicationId(String replicationId) {
+        this.replicationId = replicationId;
+    }
 
-	public void setContinuous(Boolean continuous) {
-		this.continuous = continuous;
-	}
+    public String getReplicationState() {
+        return replicationState;
+    }
 
-	public void setFilter(String filter) {
-		this.filter = filter;
-	}
+    public void setReplicationState(String replicationState) {
+        this.replicationState = replicationState;
+    }
 
-	public void setQueryParams(JsonObject queryParams) {
-		this.queryParams = queryParams;
-	}
+    public String getReplicationStateTime() {
+        return replicationStateTime;
+    }
 
-	public void setDocIds(String[] docIds) {
-		this.docIds = docIds;
-	}
+    public void setReplicationStateTime(String replicationStateTime) {
+        this.replicationStateTime = replicationStateTime;
+    }
 
-	public void setProxy(String proxy) {
-		this.proxy = proxy;
-	}
+    public UserCtx getUserCtx() {
+        return userCtx;
+    }
 
-	public void setCreateTarget(Boolean createTarget) {
-		this.createTarget = createTarget;
-	}
+    public void setUserCtx(UserCtx userCtx) {
+        this.userCtx = userCtx;
+    }
 
-	public void setReplicationId(String replicationId) {
-		this.replicationId = replicationId;
-	}
+    public Integer getWorkerProcesses() {
+        return workerProcesses;
+    }
 
-	public void setReplicationState(String replicationState) {
-		this.replicationState = replicationState;
-	}
+    public void setWorkerProcesses(Integer workerProcesses) {
+        this.workerProcesses = workerProcesses;
+    }
 
-	public void setReplicationStateTime(String replicationStateTime) {
-		this.replicationStateTime = replicationStateTime;
-	}
+    public Integer getWorkerBatchSize() {
+        return workerBatchSize;
+    }
 
-	public void setUserCtx(UserCtx userCtx) {
-		this.userCtx = userCtx;
-	}
+    public void setWorkerBatchSize(Integer workerBatchSize) {
+        this.workerBatchSize = workerBatchSize;
+    }
 
-	public void setWorkerProcesses(Integer workerProcesses) {
-		this.workerProcesses = workerProcesses;
-	}
+    public Integer getHttpConnections() {
+        return httpConnections;
+    }
 
-	public void setWorkerBatchSize(Integer workerBatchSize) {
-		this.workerBatchSize = workerBatchSize;
-	}
+    public void setHttpConnections(Integer httpConnections) {
+        this.httpConnections = httpConnections;
+    }
 
-	public void setHttpConnections(Integer httpConnections) {
-		this.httpConnections = httpConnections;
-	}
+    public Long getConnectionTimeout() {
+        return connectionTimeout;
+    }
 
-	public void setConnectionTimeout(Long connectionTimeout) {
-		this.connectionTimeout = connectionTimeout;
-	}
+    public void setConnectionTimeout(Long connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+    }
 
-	public void setRetriesPerRequest(Integer retriesPerRequest) {
-		this.retriesPerRequest = retriesPerRequest;
-	}
+    public Integer getRetriesPerRequest() {
+        return retriesPerRequest;
+    }
 
-	public Integer getSinceSeq() {
-		return sinceSeq;
-	}
+    public void setRetriesPerRequest(Integer retriesPerRequest) {
+        this.retriesPerRequest = retriesPerRequest;
+    }
 
-	public void setSinceSeq(Integer sinceSeq) {
-		this.sinceSeq = sinceSeq;
-	}
+    public Integer getSinceSeq() {
+        return sinceSeq;
+    }
 
-	public class UserCtx {
-		private String name;
-		private String[] roles;
-		
-		public String getName() {
-			return name;
-		}
-		public String[] getRoles() {
-			return roles;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-		public void setRoles(String[] roles) {
-			this.roles = roles;
-		}
-	} // /class UserCtx
+    public void setSinceSeq(Integer sinceSeq) {
+        this.sinceSeq = sinceSeq;
+    }
+
+    public class UserCtx {
+        private String name;
+        private String[] roles;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String[] getRoles() {
+            return roles;
+        }
+
+        public void setRoles(String[] roles) {
+            this.roles = roles;
+        }
+    } // /class UserCtx
 }

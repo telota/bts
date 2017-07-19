@@ -14,104 +14,101 @@ import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Event;
 
 public class BTSTextSelectionEvent extends Event {
-	
-	private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
-	private List<Annotation> textAnnotations = new Vector<Annotation>(4);
-	
-	private List<BTSInterTextReference> interTextReferences = new Vector<BTSInterTextReference>(4);
-	
-	private List<BTSIdentifiableItem> selectedItems = new Vector<BTSIdentifiableItem>(4);
-	
-	private String startId;
-	
-	private String endId;
-	private TypedEvent originalEvent;
-	
-	private BTSObject parentObject;
 
-	public BTSTextSelectionEvent(TypedEvent event, BTSObject parentObject) {
-		this.setOriginalEvent(event);
-		this.display = event.display;
-		this.widget = event.widget;
-		this.time = event.time;
-		if (event instanceof CaretEvent)
-		{
-			this.x = ((CaretEvent)event).caretOffset;
-			this.y = ((CaretEvent)event).caretOffset;
-		}
-		else if (event instanceof SelectionEvent)
-		{
-			this.x = ((SelectionEvent)event).x;
-			this.y = ((SelectionEvent)event).y;
-			this.text = ((SelectionEvent)event).text;
-			
-		}
-		this.setParentObject(parentObject);
-	}
+    private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
+    private List<Annotation> textAnnotations = new Vector<Annotation>(4);
 
-	public List<BTSObject> getRelatingObjects() {
-		return relatingObjects;
-	}
+    private List<BTSInterTextReference> interTextReferences = new Vector<BTSInterTextReference>(4);
 
-	public void setRelatingObjects(List<BTSObject> relatingObjects) {
-		this.relatingObjects = relatingObjects;
-	}
+    private List<BTSIdentifiableItem> selectedItems = new Vector<BTSIdentifiableItem>(4);
 
-	public List<Annotation> getTextAnnotations() {
-		return textAnnotations;
-	}
+    private String startId;
 
-	public void setTextAnnotations(List<Annotation> textAnnotations) {
-		this.textAnnotations = textAnnotations;
-	}
+    private String endId;
+    private TypedEvent originalEvent;
 
-	public List<BTSInterTextReference> getInterTextReferences() {
-		return interTextReferences;
-	}
+    private BTSObject parentObject;
 
-	public void setInterTextReferences(
-			List<BTSInterTextReference> interTextReferences) {
-		this.interTextReferences = interTextReferences;
-	}
+    public BTSTextSelectionEvent(TypedEvent event, BTSObject parentObject) {
+        this.setOriginalEvent(event);
+        this.display = event.display;
+        this.widget = event.widget;
+        this.time = event.time;
+        if (event instanceof CaretEvent) {
+            this.x = ((CaretEvent) event).caretOffset;
+            this.y = ((CaretEvent) event).caretOffset;
+        } else if (event instanceof SelectionEvent) {
+            this.x = ((SelectionEvent) event).x;
+            this.y = ((SelectionEvent) event).y;
+            this.text = ((SelectionEvent) event).text;
 
-	public List<BTSIdentifiableItem> getSelectedItems() {
-		return selectedItems;
-	}
+        }
+        this.setParentObject(parentObject);
+    }
 
-	public void setSelectedItems(List<BTSIdentifiableItem> selectedItems) {
-		this.selectedItems = selectedItems;
-	}
+    public List<BTSObject> getRelatingObjects() {
+        return relatingObjects;
+    }
 
-	public String getStartId() {
-		return startId;
-	}
+    public void setRelatingObjects(List<BTSObject> relatingObjects) {
+        this.relatingObjects = relatingObjects;
+    }
 
-	public void setStartId(String startId) {
-		this.startId = startId;
-	}
+    public List<Annotation> getTextAnnotations() {
+        return textAnnotations;
+    }
 
-	public String getEndId() {
-		return endId;
-	}
+    public void setTextAnnotations(List<Annotation> textAnnotations) {
+        this.textAnnotations = textAnnotations;
+    }
 
-	public void setEndId(String endId) {
-		this.endId = endId;
-	}
+    public List<BTSInterTextReference> getInterTextReferences() {
+        return interTextReferences;
+    }
 
-	public TypedEvent getOriginalEvent() {
-		return originalEvent;
-	}
+    public void setInterTextReferences(
+            List<BTSInterTextReference> interTextReferences) {
+        this.interTextReferences = interTextReferences;
+    }
 
-	public void setOriginalEvent(TypedEvent originalEvent) {
-		this.originalEvent = originalEvent;
-	}
+    public List<BTSIdentifiableItem> getSelectedItems() {
+        return selectedItems;
+    }
 
-	public BTSObject getParentObject() {
-		return parentObject;
-	}
+    public void setSelectedItems(List<BTSIdentifiableItem> selectedItems) {
+        this.selectedItems = selectedItems;
+    }
 
-	public void setParentObject(BTSObject parentObject) {
-		this.parentObject = parentObject;
-	}
-	
+    public String getStartId() {
+        return startId;
+    }
+
+    public void setStartId(String startId) {
+        this.startId = startId;
+    }
+
+    public String getEndId() {
+        return endId;
+    }
+
+    public void setEndId(String endId) {
+        this.endId = endId;
+    }
+
+    public TypedEvent getOriginalEvent() {
+        return originalEvent;
+    }
+
+    public void setOriginalEvent(TypedEvent originalEvent) {
+        this.originalEvent = originalEvent;
+    }
+
+    public BTSObject getParentObject() {
+        return parentObject;
+    }
+
+    public void setParentObject(BTSObject parentObject) {
+        this.parentObject = parentObject;
+    }
+
 }

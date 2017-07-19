@@ -14,29 +14,29 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  */
 public interface ICompletionProposalAcceptor {
 
-	void accept(ICompletionProposal proposal);
-	
-	boolean canAcceptMoreProposals();
-	
-	class Delegate implements ICompletionProposalAcceptor {
+    void accept(ICompletionProposal proposal);
 
-		private final ICompletionProposalAcceptor delegate;
-		
-		public Delegate(ICompletionProposalAcceptor delegate) {
-			this.delegate = delegate;
-		}
+    boolean canAcceptMoreProposals();
 
-		public ICompletionProposalAcceptor getDelegate() {
-			return delegate;
-		}
-		
-		public void accept(ICompletionProposal proposal) {
-			delegate.accept(proposal);
-		}
+    class Delegate implements ICompletionProposalAcceptor {
 
-		public boolean canAcceptMoreProposals() {
-			return delegate.canAcceptMoreProposals();
-		}
-		
-	}
+        private final ICompletionProposalAcceptor delegate;
+
+        public Delegate(ICompletionProposalAcceptor delegate) {
+            this.delegate = delegate;
+        }
+
+        public ICompletionProposalAcceptor getDelegate() {
+            return delegate;
+        }
+
+        public void accept(ICompletionProposal proposal) {
+            delegate.accept(proposal);
+        }
+
+        public boolean canAcceptMoreProposals() {
+            return delegate.canAcceptMoreProposals();
+        }
+
+    }
 }

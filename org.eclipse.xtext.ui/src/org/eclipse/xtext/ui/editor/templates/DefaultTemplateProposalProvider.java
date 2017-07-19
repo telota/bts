@@ -41,111 +41,111 @@ import com.google.inject.Singleton;
 @Singleton
 public class DefaultTemplateProposalProvider extends AbstractTemplateProposalProvider {
 
-	private TemplateStore templateStore;
-	private ContextTypeRegistry registry;
-	private ContextTypeIdHelper helper;
-	private Image image;
-	
-	@Inject
-	public DefaultTemplateProposalProvider(TemplateStore templateStore, ContextTypeRegistry registry, ContextTypeIdHelper helper) {
-		this.templateStore = templateStore;
-		this.registry = registry;
-		this.helper = helper;
-	}
+    private TemplateStore templateStore;
+    private ContextTypeRegistry registry;
+    private ContextTypeIdHelper helper;
+    private Image image;
 
-	@Override
-	protected void createTemplates(TemplateContext templateContext, ContentAssistContext context, ITemplateAcceptor acceptor) {
-		TemplateContextType contextType = templateContext.getContextType();
-		Template[] templates = templateStore.getTemplates(contextType.getId());
-		for (Template template : templates) {
-			if (!acceptor.canAcceptMoreTemplates())
-				return;
-			if (validate(template, templateContext)) {
-				acceptor.accept(createProposal(template, templateContext, context, getImage(template), getRelevance(template)));
-			}
-		}
-	}
+    @Inject
+    public DefaultTemplateProposalProvider(TemplateStore templateStore, ContextTypeRegistry registry, ContextTypeIdHelper helper) {
+        this.templateStore = templateStore;
+        this.registry = registry;
+        this.helper = helper;
+    }
 
-	@Override
-	protected TemplateContextType[] getContextTypes(final ContentAssistContext context) {
-		final Set<TemplateContextType> result = Sets.newLinkedHashSet();
-		IFollowElementAcceptor acceptor = createFollowElementAcceptor(result);
-		List<AbstractElement> grammarElements = context.getFirstSetGrammarElements();
-		for(AbstractElement element: grammarElements)
-			acceptor.accept(element);
-		return result.toArray(new TemplateContextType[result.size()]);
-	}
+    @Override
+    protected void createTemplates(TemplateContext templateContext, ContentAssistContext context, ITemplateAcceptor acceptor) {
+        TemplateContextType contextType = templateContext.getContextType();
+        Template[] templates = templateStore.getTemplates(contextType.getId());
+        for (Template template : templates) {
+            if (!acceptor.canAcceptMoreTemplates())
+                return;
+            if (validate(template, templateContext)) {
+                acceptor.accept(createProposal(template, templateContext, context, getImage(template), getRelevance(template)));
+            }
+        }
+    }
 
-	protected IFollowElementAcceptor createFollowElementAcceptor(final Collection<TemplateContextType> result) {
-		return new FollowElementAcceptor(result);
-	}
+    @Override
+    protected TemplateContextType[] getContextTypes(final ContentAssistContext context) {
+        final Set<TemplateContextType> result = Sets.newLinkedHashSet();
+        IFollowElementAcceptor acceptor = createFollowElementAcceptor(result);
+        List<AbstractElement> grammarElements = context.getFirstSetGrammarElements();
+        for (AbstractElement element : grammarElements)
+            acceptor.accept(element);
+        return result.toArray(new TemplateContextType[result.size()]);
+    }
 
-	public Image getImage(Template template) {
-		if (image == null) {
-			ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/defaultoutlinenode.gif"); //$NON-NLS-1$
-			image = imageDescriptor.createImage();
-		}
-		return image;
-	}
-	
-	public int getRelevance(Template template) {
-		return 90;
-	}
-	
-	public class FollowElementAcceptor extends XtextSwitch<Boolean> implements IFollowElementAcceptor {
+    protected IFollowElementAcceptor createFollowElementAcceptor(final Collection<TemplateContextType> result) {
+        return new FollowElementAcceptor(result);
+    }
 
-		private final Collection<TemplateContextType> result;
+    public Image getImage(Template template) {
+        if (image == null) {
+            ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/defaultoutlinenode.gif"); //$NON-NLS-1$
+            image = imageDescriptor.createImage();
+        }
+        return image;
+    }
 
-		public FollowElementAcceptor(Collection<TemplateContextType> result) {
-			this.result = result;
-		}
+    public int getRelevance(Template template) {
+        return 90;
+    }
 
-		@Override
-		public Boolean defaultCase(EObject object) {
-			return Boolean.TRUE;
-		}
+    public class FollowElementAcceptor extends XtextSwitch<Boolean> implements IFollowElementAcceptor {
 
-		@Override
-		public Boolean caseKeyword(Keyword object) {
-			addContextType(object);
-			return Boolean.TRUE;
-		}
+        private final Collection<TemplateContextType> result;
 
-		@Override
-		public Boolean caseRuleCall(RuleCall object) {
-			doSwitch(object.getRule());
-			return Boolean.TRUE;
-		}
-		
-		@Override
-		public Boolean caseParserRule(ParserRule object) {
-			addContextType(object);
-			return Boolean.TRUE;
-		}
+        public FollowElementAcceptor(Collection<TemplateContextType> result) {
+            this.result = result;
+        }
 
-		@Override
-		public Boolean caseAssignment(Assignment object) {
-			accept(object.getTerminal());
-			return Boolean.TRUE;
-		}
+        @Override
+        public Boolean defaultCase(EObject object) {
+            return Boolean.TRUE;
+        }
 
-		public void accept(AbstractElement element) {
-			doSwitch(element);
-		}
-		
-		protected void addContextType(ParserRule rule) {
-			addContextType(helper.getId(rule));
-		}
+        @Override
+        public Boolean caseKeyword(Keyword object) {
+            addContextType(object);
+            return Boolean.TRUE;
+        }
 
-		protected void addContextType(Keyword keyword) {
-			addContextType(helper.getId(keyword));
-		}
+        @Override
+        public Boolean caseRuleCall(RuleCall object) {
+            doSwitch(object.getRule());
+            return Boolean.TRUE;
+        }
 
-		protected void addContextType(String id) {
-			TemplateContextType contextType = registry.getContextType(id);
-			if (contextType != null)
-				result.add(contextType);
-		}
-	}
+        @Override
+        public Boolean caseParserRule(ParserRule object) {
+            addContextType(object);
+            return Boolean.TRUE;
+        }
+
+        @Override
+        public Boolean caseAssignment(Assignment object) {
+            accept(object.getTerminal());
+            return Boolean.TRUE;
+        }
+
+        public void accept(AbstractElement element) {
+            doSwitch(element);
+        }
+
+        protected void addContextType(ParserRule rule) {
+            addContextType(helper.getId(rule));
+        }
+
+        protected void addContextType(Keyword keyword) {
+            addContextType(helper.getId(keyword));
+        }
+
+        protected void addContextType(String id) {
+            TemplateContextType contextType = registry.getContextType(id);
+            if (contextType != null)
+                result.add(contextType);
+        }
+    }
 
 }

@@ -34,27 +34,35 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public abstract class ForwardingSortedSetMultimap<K, V>
-    extends ForwardingSetMultimap<K, V> implements SortedSetMultimap<K, V> {
+        extends ForwardingSetMultimap<K, V> implements SortedSetMultimap<K, V> {
 
-  /** Constructor for use by subclasses. */
-  protected ForwardingSortedSetMultimap() {}
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected ForwardingSortedSetMultimap() {
+    }
 
-  @Override protected abstract SortedSetMultimap<K, V> delegate();
+    @Override
+    protected abstract SortedSetMultimap<K, V> delegate();
 
-  @Override public SortedSet<V> get(@Nullable K key) {
-    return delegate().get(key);
-  }
+    @Override
+    public SortedSet<V> get(@Nullable K key) {
+        return delegate().get(key);
+    }
 
-  @Override public SortedSet<V> removeAll(@Nullable Object key) {
-    return delegate().removeAll(key);
-  }
+    @Override
+    public SortedSet<V> removeAll(@Nullable Object key) {
+        return delegate().removeAll(key);
+    }
 
-  @Override public SortedSet<V> replaceValues(
-      K key, Iterable<? extends V> values) {
-    return delegate().replaceValues(key, values);
-  }
+    @Override
+    public SortedSet<V> replaceValues(
+            K key, Iterable<? extends V> values) {
+        return delegate().replaceValues(key, values);
+    }
 
-  @Override public Comparator<? super V> valueComparator() {
-    return delegate().valueComparator();
-  }
+    @Override
+    public Comparator<? super V> valueComparator() {
+        return delegate().valueComparator();
+    }
 }

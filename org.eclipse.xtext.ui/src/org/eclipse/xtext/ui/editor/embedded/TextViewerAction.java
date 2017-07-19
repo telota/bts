@@ -24,120 +24,113 @@ import org.eclipse.ui.texteditor.ResourceAction;
  * Subclasses that may modify the editor content should use {@link #canModifyViewer()} in their <code>update</code> code
  * to check whether updating the viewer is possible.
  * </p>
- * 
- * @since 2.3
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
+ * @since 2.3
  */
 public abstract class TextViewerAction extends ResourceAction implements IUpdate {
 
-	/** The action's viewer */
-	private ITextViewer viewer;
+    /**
+     * The action's viewer
+     */
+    private ITextViewer viewer;
 
-	/**
-	 * Creates and initializes the action for the given text editor. The action configures its visual representation
-	 * from the given resource bundle.
-	 * 
-	 * @param bundle
-	 *            the resource bundle
-	 * @param prefix
-	 *            a prefix to be prepended to the various resource keys (described in <code>ResourceAction</code>
-	 *            constructor), or <code>null</code> if none
-	 * @param viewer
-	 *            the text viewer
-	 * @see ResourceAction#ResourceAction(ResourceBundle, String)
-	 */
-	protected TextViewerAction(ResourceBundle bundle, String prefix, ITextViewer viewer) {
-		this(bundle, prefix);
-		setViewer(viewer);
-		update();
-	}
+    /**
+     * Creates and initializes the action for the given text editor. The action configures its visual representation
+     * from the given resource bundle.
+     *
+     * @param bundle the resource bundle
+     * @param prefix a prefix to be prepended to the various resource keys (described in <code>ResourceAction</code>
+     *               constructor), or <code>null</code> if none
+     * @param viewer the text viewer
+     * @see ResourceAction#ResourceAction(ResourceBundle, String)
+     */
+    protected TextViewerAction(ResourceBundle bundle, String prefix, ITextViewer viewer) {
+        this(bundle, prefix);
+        setViewer(viewer);
+        update();
+    }
 
-	/**
-	 * Make sure the Viewer in set after calling this constructor and before calling {@link #update()}
-	 */
-	protected TextViewerAction(ResourceBundle bundle, String prefix) {
-		super(bundle, prefix);
-	}
+    /**
+     * Make sure the Viewer in set after calling this constructor and before calling {@link #update()}
+     */
+    protected TextViewerAction(ResourceBundle bundle, String prefix) {
+        super(bundle, prefix);
+    }
 
-	/**
-	 * Creates and initializes the action for the given text editor. The action configures its visual representation
-	 * from the given resource bundle.
-	 * 
-	 * @param bundle
-	 *            the resource bundle
-	 * @param prefix
-	 *            a prefix to be prepended to the various resource keys (described in <code>ResourceAction</code>
-	 *            constructor), or <code>null</code> if none
-	 * @param viewer
-	 *            the text editor
-	 * @param style
-	 *            the style of this action
-	 * @see ResourceAction#ResourceAction(ResourceBundle, String, int)
-	 */
-	protected TextViewerAction(ResourceBundle bundle, String prefix, ITextViewer viewer, int style) {
-		super(bundle, prefix, style);
-		setViewer(viewer);
-		update();
-	}
+    /**
+     * Creates and initializes the action for the given text editor. The action configures its visual representation
+     * from the given resource bundle.
+     *
+     * @param bundle the resource bundle
+     * @param prefix a prefix to be prepended to the various resource keys (described in <code>ResourceAction</code>
+     *               constructor), or <code>null</code> if none
+     * @param viewer the text editor
+     * @param style  the style of this action
+     * @see ResourceAction#ResourceAction(ResourceBundle, String, int)
+     */
+    protected TextViewerAction(ResourceBundle bundle, String prefix, ITextViewer viewer, int style) {
+        super(bundle, prefix, style);
+        setViewer(viewer);
+        update();
+    }
 
-	/**
-	 * Returns the action's text editor.
-	 * 
-	 * @return the action's text editor
-	 */
-	protected ITextViewer getTextViewer() {
-		return viewer;
-	}
+    /**
+     * Returns the action's text editor.
+     *
+     * @return the action's text editor
+     */
+    protected ITextViewer getTextViewer() {
+        return viewer;
+    }
 
-	/**
-	 * Retargets this action to the given editor.
-	 * 
-	 * @param viewer
-	 *            the new viewer, or <code>null</code> if none
-	 */
-	public void setViewer(ITextViewer viewer) {
-		this.viewer = viewer;
-	}
+    /**
+     * Retargets this action to the given editor.
+     *
+     * @param viewer the new viewer, or <code>null</code> if none
+     */
+    public void setViewer(ITextViewer viewer) {
+        this.viewer = viewer;
+    }
 
-	/**
-	 * Always enables this action if it is connected to a text editor. If the associated editor is <code>null</code>,
-	 * the action is disabled. Subclasses may override.
-	 */
-	public void update() {
-		setEnabled(getTextViewer() != null);
-	}
+    /**
+     * Always enables this action if it is connected to a text editor. If the associated editor is <code>null</code>,
+     * the action is disabled. Subclasses may override.
+     */
+    public void update() {
+        setEnabled(getTextViewer() != null);
+    }
 
-	/**
-	 * Checks the viewer's modifiable state. Returns <code>true</code> if the viewer can be modified
-	 * 
-	 * @return <code>true</code> if a modifying action should be enabled, <code>false</code> otherwise
-	 */
-	protected boolean canModifyViewer() {
-		ITextViewer viewer = getTextViewer();
-		if (viewer != null)
-			return viewer.isEditable();
-		else
-			return false;
-	}
+    /**
+     * Checks the viewer's modifiable state. Returns <code>true</code> if the viewer can be modified
+     *
+     * @return <code>true</code> if a modifying action should be enabled, <code>false</code> otherwise
+     */
+    protected boolean canModifyViewer() {
+        ITextViewer viewer = getTextViewer();
+        if (viewer != null)
+            return viewer.isEditable();
+        else
+            return false;
+    }
 
-	/**
-	 * Returns the viewer's selection.
-	 * 
-	 * @param viewer
-	 *            the viewer
-	 * @return the viewer's selection
-	 */
-	protected ITextSelection getSelection(ITextViewer viewer) {
+    /**
+     * Returns the viewer's selection.
+     *
+     * @param viewer the viewer
+     * @return the viewer's selection
+     */
+    protected ITextSelection getSelection(ITextViewer viewer) {
 
-		ISelectionProvider selectionProvider = viewer.getSelectionProvider();
-		if (selectionProvider == null)
-			return null;
+        ISelectionProvider selectionProvider = viewer.getSelectionProvider();
+        if (selectionProvider == null)
+            return null;
 
-		ISelection selection = selectionProvider.getSelection();
-		if (!(selection instanceof ITextSelection))
-			return null;
+        ISelection selection = selectionProvider.getSelection();
+        if (!(selection instanceof ITextSelection))
+            return null;
 
-		return (ITextSelection) selection;
-	}
+        return (ITextSelection) selection;
+    }
 
 }

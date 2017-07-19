@@ -35,29 +35,29 @@ import org.bbaw.bts.btsmodel.UserActionCounter;
 
 /**
  * The Service Interface UserActionCounterService provides service layer access to UserActionCounter-objects.
- * 
- * Service-Implementations should incorporate as much as possible of business logic which 
+ * <p>
+ * Service-Implementations should incorporate as much as possible of business logic which
  * does not depend on UI specific implementation and should be implemented in the controller layer
  * nor database specific logic which should be implemented in the dao layer.
- * 
+ * <p>
  * Services should be implemented generically.
  */
 public interface UserActionCounterService extends
-		GenericObjectService<UserActionCounter, String> {
+        GenericObjectService<UserActionCounter, String> {
 
-	/**
-	 * Gets the counters for prefix.
-	 *
-	 * @param code the code
-	 * @return the counters for prefix
-	 */
-	List<UserActionCounter> getCountersForPrefix(String code);
+    /**
+     * Gets the counters for prefix.
+     *
+     * @param code the code
+     * @return the counters for prefix
+     */
+    List<UserActionCounter> getCountersForPrefix(String code);
 
-	/**
-	 * Update counters.
-	 *
-	 * @param toAdd the to add
-	 */
-	void updateCounters(List<String> toAdd);
+    /**
+     * Update counters.
+     *
+     * @param toAdd the to add
+     */
+    void updateCounters(List<String> toAdd);
 
 }

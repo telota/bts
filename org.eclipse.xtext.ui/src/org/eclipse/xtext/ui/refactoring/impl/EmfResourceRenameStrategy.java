@@ -26,32 +26,32 @@ import com.google.inject.Inject;
 /**
  * Generic rename strategy for EMF resources. For {@link XtextResource}s you should rather use the
  * {@link DefaultRenameStrategy}.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  * @author Holger Schill
  */
 public class EmfResourceRenameStrategy extends AbstractRenameStrategy {
 
-	@Inject
-	private EmfResourceChangeUtil changeUtil;
-	
-	public void createDeclarationUpdates(String newName, ResourceSet resourceSet,
-			IRefactoringUpdateAcceptor updateAcceptor) {
-		Resource targetResource = resourceSet.getResource(getTargetElementOriginalURI().trimFragment(), false);
-		EcoreUtil.resolveAll(targetResource);
-		applyDeclarationChange(newName, resourceSet);
-		try {
-			changeUtil.addSaveAsUpdate(targetResource, updateAcceptor);
-		} catch (IOException exc) {
-			updateAcceptor.getRefactoringStatus().add(ERROR, exc.getMessage());
-		}
-	}
-	
-	@Override
-	protected EAttribute getNameAttribute(EObject targetElement) {
-		if (targetElement instanceof ENamedElement) {
-			return EcorePackage.Literals.ENAMED_ELEMENT__NAME;
-		}
-		return null;
-	}
+    @Inject
+    private EmfResourceChangeUtil changeUtil;
+
+    public void createDeclarationUpdates(String newName, ResourceSet resourceSet,
+                                         IRefactoringUpdateAcceptor updateAcceptor) {
+        Resource targetResource = resourceSet.getResource(getTargetElementOriginalURI().trimFragment(), false);
+        EcoreUtil.resolveAll(targetResource);
+        applyDeclarationChange(newName, resourceSet);
+        try {
+            changeUtil.addSaveAsUpdate(targetResource, updateAcceptor);
+        } catch (IOException exc) {
+            updateAcceptor.getRefactoringStatus().add(ERROR, exc.getMessage());
+        }
+    }
+
+    @Override
+    protected EAttribute getNameAttribute(EObject targetElement) {
+        if (targetElement instanceof ENamedElement) {
+            return EcorePackage.Literals.ENAMED_ELEMENT__NAME;
+        }
+        return null;
+    }
 }

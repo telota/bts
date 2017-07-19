@@ -18,6 +18,6 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultHoverDocumentationProvider.class)
 public interface IEObjectHoverDocumentationProvider {
 
-	public String getDocumentation(EObject object);
-	
+    public String getDocumentation(EObject object);
+
 }

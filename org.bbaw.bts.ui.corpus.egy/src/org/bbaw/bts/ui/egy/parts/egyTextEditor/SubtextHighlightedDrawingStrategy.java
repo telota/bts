@@ -11,34 +11,34 @@ import org.eclipse.swt.graphics.Rectangle;
 
 public class SubtextHighlightedDrawingStrategy implements IDrawingStrategy {
 
-	@Override
-	public void draw(Annotation annotation, GC gc, StyledText textWidget,
-			int offset, int length, Color color) {
-		if (gc != null) {
+    @Override
+    public void draw(Annotation annotation, GC gc, StyledText textWidget,
+                     int offset, int length, Color color) {
+        if (gc != null) {
 
-			Rectangle bounds;
-			if (length > 0)
-				bounds = textWidget.getTextBounds(offset, offset + length - 1);
-			else {
-				Point loc = textWidget.getLocationAtOffset(offset);
-				bounds = new Rectangle(loc.x, loc.y, 1,
-						textWidget.getLineHeight(offset));
-			}
-			int y = bounds.y + bounds.height + 1;
-			gc.setForeground(color);
-			gc.setLineWidth(3);
-			gc.setLineStyle(SWT.LINE_SOLID);
-			gc.drawLine(bounds.x + 1, y, bounds.x + bounds.width - 2, y);
-			
-			// draw connector to actual annotation presentation
-			gc.setLineWidth(1);
-			gc.setLineStyle(SWT.LINE_SOLID);
-			gc.drawLine(bounds.x + bounds.width - 3, y+2, bounds.x + bounds.width - 4, y+2);
+            Rectangle bounds;
+            if (length > 0)
+                bounds = textWidget.getTextBounds(offset, offset + length - 1);
+            else {
+                Point loc = textWidget.getLocationAtOffset(offset);
+                bounds = new Rectangle(loc.x, loc.y, 1,
+                        textWidget.getLineHeight(offset));
+            }
+            int y = bounds.y + bounds.height + 1;
+            gc.setForeground(color);
+            gc.setLineWidth(3);
+            gc.setLineStyle(SWT.LINE_SOLID);
+            gc.drawLine(bounds.x + 1, y, bounds.x + bounds.width - 2, y);
 
-		} else {
-			textWidget.redrawRange(offset, length, true);
-		}
+            // draw connector to actual annotation presentation
+            gc.setLineWidth(1);
+            gc.setLineStyle(SWT.LINE_SOLID);
+            gc.drawLine(bounds.x + bounds.width - 3, y + 2, bounds.x + bounds.width - 4, y + 2);
 
-	}
+        } else {
+            textWidget.redrawRange(offset, length, true);
+        }
+
+    }
 
 }

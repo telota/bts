@@ -20,42 +20,43 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
  */
 public final class ContextInformationComputer implements IUnitOfWork<IContextInformation[], XtextResource>, IContextInformationAcceptor {
 
-	public interface State {
-		ContentAssistContext.Factory getContextFactory();
-		IContextInformationProvider getContextInformationProvider();
-		IContextInformationAcceptor decorateAcceptor(IContextInformationAcceptor delegate);
-	}
+    private final int offset;
+    private final ITextViewer viewer;
+    private final State state;
+    private final Collection<IContextInformation> information;
+    public ContextInformationComputer(State state, ITextViewer viewer, int offset) {
+        super();
+        this.information = new LinkedHashSet<IContextInformation>();
+        this.state = state;
+        this.offset = offset;
+        this.viewer = viewer;
+    }
 
-	private final int offset;
-	private final ITextViewer viewer;
-	private final State state;
-	private final Collection<IContextInformation> information;
+    public IContextInformation[] exec(XtextResource resource) throws Exception {
+        IContextInformationAcceptor acceptor = state.decorateAcceptor(this);
+        ContentAssistContext[] contexts = state.getContextFactory().create(viewer, offset, resource);
+        for (ContentAssistContext context : contexts) {
+            if (acceptor.canAcceptMoreInformation())
+                state.getContextInformationProvider().getContextInformation(context, acceptor);
+        }
+        if (information.isEmpty())
+            return null;
+        return information.toArray(new IContextInformation[information.size()]);
+    }
 
-	public ContextInformationComputer(State state, ITextViewer viewer, int offset) {
-		super();
-		this.information = new LinkedHashSet<IContextInformation>();
-		this.state = state;
-		this.offset = offset;
-		this.viewer = viewer;
-	}
+    public void accept(IContextInformation information) {
+        this.information.add(information);
+    }
 
-	public IContextInformation[] exec(XtextResource resource) throws Exception {
-		IContextInformationAcceptor acceptor = state.decorateAcceptor(this);
-		ContentAssistContext[] contexts = state.getContextFactory().create(viewer, offset, resource);
-		for (ContentAssistContext context: contexts) {
-			if (acceptor.canAcceptMoreInformation())
-				state.getContextInformationProvider().getContextInformation(context, acceptor);
-		}
-		if (information.isEmpty())
-			return null;
-		return information.toArray(new IContextInformation[information.size()]);
-	}
+    public boolean canAcceptMoreInformation() {
+        return true;
+    }
 
-	public void accept(IContextInformation information) {
-		this.information.add(information);
-	}
+    public interface State {
+        ContentAssistContext.Factory getContextFactory();
 
-	public boolean canAcceptMoreInformation() {
-		return true;
-	}
+        IContextInformationProvider getContextInformationProvider();
+
+        IContextInformationAcceptor decorateAcceptor(IContextInformationAcceptor delegate);
+    }
 }

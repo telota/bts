@@ -18,6 +18,6 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(HyperlinkHelper.class)
 public interface IHyperlinkHelper {
 
-	IHyperlink[] createHyperlinksByOffset(XtextResource resource, int offset, boolean createMultipleHyperlinks);
+    IHyperlink[] createHyperlinksByOffset(XtextResource resource, int offset, boolean createMultipleHyperlinks);
 
 }

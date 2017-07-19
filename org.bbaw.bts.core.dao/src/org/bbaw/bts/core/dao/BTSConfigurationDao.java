@@ -36,16 +36,15 @@ import org.bbaw.bts.btsmodel.BTSConfiguration;
  *
  * @author Christoph Plutte
  */
-public interface BTSConfigurationDao extends GenericDao<BTSConfiguration, String>
-{
+public interface BTSConfigurationDao extends GenericDao<BTSConfiguration, String> {
 
-	/**
-	 * Removes the bts configuration.
-	 *
-	 * @param btsConfiguration the bts configuration
-	 * @param path the path
-	 * @return true, if successful
-	 */
-	boolean removeBTSConfiguration(BTSConfiguration btsConfiguration, String path);
+    /**
+     * Removes the bts configuration.
+     *
+     * @param btsConfiguration the bts configuration
+     * @param path             the path
+     * @return true, if successful
+     */
+    boolean removeBTSConfiguration(BTSConfiguration btsConfiguration, String path);
 
 }

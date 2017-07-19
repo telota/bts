@@ -36,30 +36,30 @@ import org.eclipse.core.databinding.conversion.IConverter;
  */
 public class BTSStringToBooleanConverter implements IConverter {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#getToType()
-	 */
-	@Override
-	public Object getToType() {
-		return Boolean.class;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#getToType()
+     */
+    @Override
+    public Object getToType() {
+        return Boolean.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#getFromType()
-	 */
-	@Override
-	public Object getFromType() {
-		return String.class;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#getFromType()
+     */
+    @Override
+    public Object getFromType() {
+        return String.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#convert(java.lang.Object)
-	 */
-	@Override
-	public Object convert(Object fromObject) {
-		if (fromObject instanceof String) {
-			return fromObject.equals("true");
-		}
-		return false;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#convert(java.lang.Object)
+     */
+    @Override
+    public Object convert(Object fromObject) {
+        if (fromObject instanceof String) {
+            return fromObject.equals("true");
+        }
+        return false;
+    }
 }

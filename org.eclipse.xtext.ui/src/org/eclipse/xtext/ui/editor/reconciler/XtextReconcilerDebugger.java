@@ -27,77 +27,77 @@ import com.google.inject.Inject;
 
 /**
  * @author koehnlein - Initial contribution and API
- * @since 2.4
  * @noextend
  * @noreference
+ * @since 2.4
  */
 public class XtextReconcilerDebugger {
-	
-	private static final Logger LOG = Logger.getLogger(XtextReconcilerDebugger.class);
-	
-	@Inject
-	private IParser parser;
-	
-	@Inject 
-	private EmfStructureComparator emfStructureComparator;
-	
-	public void assertModelInSyncWithDocument(IDocument document, XtextResource resource, final ReconcilerReplaceRegion region) {
-		if (document instanceof IDocumentExtension4 && resource != null) {
-			long beforeGet = ((IDocumentExtension4) document).getModificationStamp();
-			final String documentContent = document.get();
-			long afterGet = ((IDocumentExtension4) document).getModificationStamp();
-			if (beforeGet == afterGet && beforeGet == resource.getModificationStamp()) {
-				IParseResult parseResult = resource.getParseResult();
-				if (parseResult != null) {
-					ICompositeNode rootNode = parseResult.getRootNode();
-					final String resourceContent = rootNode.getText();
-					if (!resourceContent.equals(documentContent)) {
-						new DisplayRunnable() {
-							@Override
-							protected void run() throws Exception {
-								LOG.error("XtextDocument and XtextResource have run out of sync:\n" 
-												+ DiffUtil.diff(documentContent, resourceContent));
-								LOG.error("Events: \n\t" + Joiner.on("\n\t").join(region.getDocumentEvents()));
-								LOG.error("ReplaceRegion: \n\t'" + region + "'" );
-								MessageDialog.openError(
-										Display.getCurrent().getActiveShell(),
-										"XtextReconcilerDebugger",
-										"XtextDocument and XtextResource have run out of sync."
-												+ "\n\nSee log for details.");
-							}
-							
-						}.syncExec();
-					} else {
-						System.out.println("Model and document are in sync");
-					}
-				}
-			}
-		}
-	}
-	
-	public void assertResouceParsedCorrectly(XtextResource resource, final ReconcilerReplaceRegion region) {
-		IParseResult parseResult = resource.getParseResult();
-		if (parseResult != null) {
-			ICompositeNode rootNode = parseResult.getRootNode();
-			final String resourceContent = rootNode.getText();
-			IParseResult reparseResult = parser.parse(new StringReader(resourceContent));
-			if(!emfStructureComparator.isSameStructure(parseResult.getRootASTElement(), reparseResult.getRootASTElement())) {
-				new DisplayRunnable() {
-					@Override
-					protected void run() throws Exception {
-						LOG.error("PartialParsing produced wrong model");
-						LOG.error("Events: \n\t" + Joiner.on("\n\t").join(region.getDocumentEvents()));
-						LOG.error("ReplaceRegion: \n\t'" + region + "'" );
-						MessageDialog.openError(
-								Display.getCurrent().getActiveShell(),
-								"XtextReconcilerDebugger",
-								"PartialParsing produced wrong model."
-										+ "\n\nSee log for details.");
-					}
-					
-				};
-				
-			}
-		}
-	}
+
+    private static final Logger LOG = Logger.getLogger(XtextReconcilerDebugger.class);
+
+    @Inject
+    private IParser parser;
+
+    @Inject
+    private EmfStructureComparator emfStructureComparator;
+
+    public void assertModelInSyncWithDocument(IDocument document, XtextResource resource, final ReconcilerReplaceRegion region) {
+        if (document instanceof IDocumentExtension4 && resource != null) {
+            long beforeGet = ((IDocumentExtension4) document).getModificationStamp();
+            final String documentContent = document.get();
+            long afterGet = ((IDocumentExtension4) document).getModificationStamp();
+            if (beforeGet == afterGet && beforeGet == resource.getModificationStamp()) {
+                IParseResult parseResult = resource.getParseResult();
+                if (parseResult != null) {
+                    ICompositeNode rootNode = parseResult.getRootNode();
+                    final String resourceContent = rootNode.getText();
+                    if (!resourceContent.equals(documentContent)) {
+                        new DisplayRunnable() {
+                            @Override
+                            protected void run() throws Exception {
+                                LOG.error("XtextDocument and XtextResource have run out of sync:\n"
+                                        + DiffUtil.diff(documentContent, resourceContent));
+                                LOG.error("Events: \n\t" + Joiner.on("\n\t").join(region.getDocumentEvents()));
+                                LOG.error("ReplaceRegion: \n\t'" + region + "'");
+                                MessageDialog.openError(
+                                        Display.getCurrent().getActiveShell(),
+                                        "XtextReconcilerDebugger",
+                                        "XtextDocument and XtextResource have run out of sync."
+                                                + "\n\nSee log for details.");
+                            }
+
+                        }.syncExec();
+                    } else {
+                        System.out.println("Model and document are in sync");
+                    }
+                }
+            }
+        }
+    }
+
+    public void assertResouceParsedCorrectly(XtextResource resource, final ReconcilerReplaceRegion region) {
+        IParseResult parseResult = resource.getParseResult();
+        if (parseResult != null) {
+            ICompositeNode rootNode = parseResult.getRootNode();
+            final String resourceContent = rootNode.getText();
+            IParseResult reparseResult = parser.parse(new StringReader(resourceContent));
+            if (!emfStructureComparator.isSameStructure(parseResult.getRootASTElement(), reparseResult.getRootASTElement())) {
+                new DisplayRunnable() {
+                    @Override
+                    protected void run() throws Exception {
+                        LOG.error("PartialParsing produced wrong model");
+                        LOG.error("Events: \n\t" + Joiner.on("\n\t").join(region.getDocumentEvents()));
+                        LOG.error("ReplaceRegion: \n\t'" + region + "'");
+                        MessageDialog.openError(
+                                Display.getCurrent().getActiveShell(),
+                                "XtextReconcilerDebugger",
+                                "PartialParsing produced wrong model."
+                                        + "\n\nSee log for details.");
+                    }
+
+                };
+
+            }
+        }
+    }
 }

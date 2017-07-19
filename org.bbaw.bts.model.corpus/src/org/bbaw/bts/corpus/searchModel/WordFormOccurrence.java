@@ -40,111 +40,111 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
 
 /**
  * @author plutte
- *
  */
 public class WordFormOccurrence {
-	
-	private BTSText text;
-	
-	private List<BTSCorpusObject> path;
-	
-	private List<BTSWord> matchingWords;
-	
-	private BTSSenctence matchingSentence;
-	
-	private List<BTSSenctence> coTextBefore;
-	
-	private List<BTSSenctence> coTextAfter;
 
-	public WordFormOccurrence() {
-	}
-	/**
-	 * @param matchingWord
-	 * @param text2
-	 */
-	public WordFormOccurrence(BTSWord matchingWord, BTSText text) {
-		this.text = text;
-		this.matchingWords = new Vector<BTSWord>(1);
-		this.matchingWords.add(matchingWord);
-	}
+    private BTSText text;
 
-	/**
-	 * @return the text
-	 */
-	public BTSText getText() {
-		return text;
-	}
+    private List<BTSCorpusObject> path;
 
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(BTSText text) {
-		this.text = text;
-	}
+    private List<BTSWord> matchingWords;
 
-	/**
-	 * @return the path
-	 */
-	public List<BTSCorpusObject> getPath() {
-		return path;
-	}
+    private BTSSenctence matchingSentence;
 
-	/**
-	 * @param path the path to set
-	 */
-	public void setPath(List<BTSCorpusObject> path) {
-		this.path = path;
-	}
+    private List<BTSSenctence> coTextBefore;
 
-	/**
-	 * @return the matchingSentence
-	 */
-	public BTSSenctence getMatchingSentence() {
-		return matchingSentence;
-	}
+    private List<BTSSenctence> coTextAfter;
 
-	/**
-	 * @param matchingSentence the matchingSentence to set
-	 */
-	public void setMatchingSentence(BTSSenctence matchingSentence) {
-		this.matchingSentence = matchingSentence;
-	}
+    public WordFormOccurrence() {
+    }
+
+    /**
+     * @param matchingWord
+     * @param text2
+     */
+    public WordFormOccurrence(BTSWord matchingWord, BTSText text) {
+        this.text = text;
+        this.matchingWords = new Vector<BTSWord>(1);
+        this.matchingWords.add(matchingWord);
+    }
+
+    /**
+     * @return the text
+     */
+    public BTSText getText() {
+        return text;
+    }
+
+    /**
+     * @param text the text to set
+     */
+    public void setText(BTSText text) {
+        this.text = text;
+    }
+
+    /**
+     * @return the path
+     */
+    public List<BTSCorpusObject> getPath() {
+        return path;
+    }
+
+    /**
+     * @param path the path to set
+     */
+    public void setPath(List<BTSCorpusObject> path) {
+        this.path = path;
+    }
+
+    /**
+     * @return the matchingSentence
+     */
+    public BTSSenctence getMatchingSentence() {
+        return matchingSentence;
+    }
+
+    /**
+     * @param matchingSentence the matchingSentence to set
+     */
+    public void setMatchingSentence(BTSSenctence matchingSentence) {
+        this.matchingSentence = matchingSentence;
+    }
 
 
-	public List<BTSWord> getMatchingWords() {
-		return matchingWords;
-	}
+    public List<BTSWord> getMatchingWords() {
+        return matchingWords;
+    }
 
-	public void setMatchingWords(List<BTSWord> matchingWords) {
-		this.matchingWords = matchingWords;
-	}
+    public void setMatchingWords(List<BTSWord> matchingWords) {
+        this.matchingWords = matchingWords;
+    }
 
-	/**
-	 * @return the coTextBefore
-	 */
-	public List<BTSSenctence> getCoTextBefore() {
-		return coTextBefore;
-	}
+    /**
+     * @return the coTextBefore
+     */
+    public List<BTSSenctence> getCoTextBefore() {
+        return coTextBefore;
+    }
 
-	/**
-	 * @param coTextBefore the coTextBefore to set
-	 */
-	public void setCoTextBefore(List<BTSSenctence> coTextBefore) {
-		this.coTextBefore = coTextBefore;
-	}
+    /**
+     * @param coTextBefore the coTextBefore to set
+     */
+    public void setCoTextBefore(List<BTSSenctence> coTextBefore) {
+        this.coTextBefore = coTextBefore;
+    }
 
-	/**
-	 * @return the coTextAfter
-	 */
-	public List<BTSSenctence> getCoTextAfter() {
-		return coTextAfter;
-	}
+    /**
+     * @return the coTextAfter
+     */
+    public List<BTSSenctence> getCoTextAfter() {
+        return coTextAfter;
+    }
 
-	/**
-	 * @param coTextAfter the coTextAfter to set
-	 */
-	public void setCoTextAfter(List<BTSSenctence> coTextAfter) {
-		this.coTextAfter = coTextAfter;
-	}
+    /**
+     * @param coTextAfter the coTextAfter to set
+     */
+    public void setCoTextAfter(List<BTSSenctence> coTextAfter) {
+        this.coTextAfter = coTextAfter;
+    }
 
 }

@@ -20,44 +20,41 @@ import org.lightcouch.CouchDbClient;
 
 public class CouchDBIndexHelper {
 
-	private CouchDBIndexHelper(){}
-	
-	public static int fetchAndIndexChangesSeq(String collection, BulkProcessor bulkProcessor, Client esClient, CouchDbClient dbClient, int seq, IProgressMonitor monitor, Logger logger)
-	{
-		List<String> lines = fetchLine(collection, dbClient, seq);
-		Object returnSeq = processLines(lines, collection, bulkProcessor, monitor, logger);
-		if (returnSeq instanceof String)
-		{
-			seq = new Integer(((String) returnSeq)).intValue();
-		}
-		return seq;
-	}
-	
+    private CouchDBIndexHelper() {
+    }
 
-	
+    public static int fetchAndIndexChangesSeq(String collection, BulkProcessor bulkProcessor, Client esClient, CouchDbClient dbClient, int seq, IProgressMonitor monitor, Logger logger) {
+        List<String> lines = fetchLine(collection, dbClient, seq);
+        Object returnSeq = processLines(lines, collection, bulkProcessor, monitor, logger);
+        if (returnSeq instanceof String) {
+            seq = new Integer(((String) returnSeq)).intValue();
+        }
+        return seq;
+    }
 
-	private static List<String> fetchLine(String collection, CouchDbClient dbClient,
-			int seq) {
-		ChangesResult cr = dbClient.changes().includeDocs(true).since(new Integer(seq).toString()).getChanges();
-		List<Row> rows = cr.getResults();
-		List<String> lines = new Vector<String>(rows.size());
 
-		for (Row row : rows)
-		{
-			lines.add(row.getDoc().toString());
-		}
-		// TODO Auto-generated method stub
-		return lines;
-	}
-	private static Object processLines(List<String> lines, String indexName,
-			BulkProcessor bulkProcessor, IProgressMonitor monitor, Logger logger) {
-		for (String line : lines)
-		{
-			processLine(line, indexName, bulkProcessor, monitor, logger);
-		}
-		return null;
-	}
-	private static Object processLine(String s, String indexName, BulkProcessor bulkProcessor, IProgressMonitor monitor, Logger logger) {
+    private static List<String> fetchLine(String collection, CouchDbClient dbClient,
+                                          int seq) {
+        ChangesResult cr = dbClient.changes().includeDocs(true).since(new Integer(seq).toString()).getChanges();
+        List<Row> rows = cr.getResults();
+        List<String> lines = new Vector<String>(rows.size());
+
+        for (Row row : rows) {
+            lines.add(row.getDoc().toString());
+        }
+        // TODO Auto-generated method stub
+        return lines;
+    }
+
+    private static Object processLines(List<String> lines, String indexName,
+                                       BulkProcessor bulkProcessor, IProgressMonitor monitor, Logger logger) {
+        for (String line : lines) {
+            processLine(line, indexName, bulkProcessor, monitor, logger);
+        }
+        return null;
+    }
+
+    private static Object processLine(String s, String indexName, BulkProcessor bulkProcessor, IProgressMonitor monitor, Logger logger) {
         Map<String, Object> ctx;
         try {
             ctx = XContentFactory.xContent(XContentType.JSON).createParser(s).mapAndClose();
@@ -104,10 +101,10 @@ public class CouchDBIndexHelper {
             String index = extractIndex(ctx, indexName);
             String type = extractType(ctx, indexName);
             if (logger.isTraceEnabled()) {
-                logger.trace("processing [delete]: " + index +"/"+ type +"/"+ id);
+                logger.trace("processing [delete]: " + index + "/" + type + "/" + id);
             }
             if (monitor != null && monitor.isCanceled()) {
-                logger.warn("river was closing while trying to delete document " + index +"/"+ type +"/"+ id +". Operation skipped.");
+                logger.warn("river was closing while trying to delete document " + index + "/" + type + "/" + id + ". Operation skipped.");
                 return null;
             }
             bulkProcessor.add(new DeleteRequest(index, type, id).routing(extractRouting(ctx)).parent(extractParent(ctx)));
@@ -126,10 +123,10 @@ public class CouchDBIndexHelper {
 //            }
 
             if (logger.isTraceEnabled()) {
-                logger.trace("processing [index ]: " + index +"/"+ type +"/"+ id +", source "+ doc);
+                logger.trace("processing [index ]: " + index + "/" + type + "/" + id + ", source " + doc);
             }
             if (monitor != null && monitor.isCanceled()) {
-                logger.warn("river was closing while trying to index document [{}/{}/{}]. Operation skipped." + index +"/"+ type +"/"+ id);
+                logger.warn("river was closing while trying to index document [{}/{}/{}]. Operation skipped." + index + "/" + type + "/" + id);
                 return null;
             }
             bulkProcessor.add(new IndexRequest(index, type, id).source(doc).routing(extractRouting(ctx)).parent(extractParent(ctx)));
@@ -138,8 +135,8 @@ public class CouchDBIndexHelper {
         }
         return seq;
     }
-	
-	private static String extractParent(Map<String, Object> ctx) {
+
+    private static String extractParent(Map<String, Object> ctx) {
         return (String) ctx.get("_parent");
     }
 
@@ -163,15 +160,15 @@ public class CouchDBIndexHelper {
         return index;
     }
 
-	public static void indexDoc(String collection, BulkProcessor bulkProcessor,
-			Client esClient, String doc, IProgressMonitor monitor, Logger logger) {
-		processDocLine(doc, collection, esClient, bulkProcessor, monitor, logger);
-		
-	}
+    public static void indexDoc(String collection, BulkProcessor bulkProcessor,
+                                Client esClient, String doc, IProgressMonitor monitor, Logger logger) {
+        processDocLine(doc, collection, esClient, bulkProcessor, monitor, logger);
 
-	private static void processDocLine(String docString, String indexName,
-			Client esClient, BulkProcessor bulkProcessor, IProgressMonitor monitor, Logger logger) {
-		Map<String, Object> doc;
+    }
+
+    private static void processDocLine(String docString, String indexName,
+                                       Client esClient, BulkProcessor bulkProcessor, IProgressMonitor monitor, Logger logger) {
+        Map<String, Object> doc;
         try {
             doc = XContentFactory.xContent(XContentType.JSON).createParser(docString).mapAndClose();
         } catch (IOException e) {
@@ -182,17 +179,17 @@ public class CouchDBIndexHelper {
             logger.warn("received error {}", docString);
             return;
         }
-	        Object oId = doc.get("_id");
-	        if (oId == null) {
-	            return;
-	        }
+        Object oId = doc.get("_id");
+        if (oId == null) {
+            return;
+        }
 
-	        String id = oId.toString();
-	        IndexResponse response = esClient.prepareIndex(indexName, indexName, id)
-	                .setSource(docString)
-	                .execute()
-	                .actionGet();
-            if (monitor != null)
-                monitor.worked(1);
-	    }
+        String id = oId.toString();
+        IndexResponse response = esClient.prepareIndex(indexName, indexName, id)
+                .setSource(docString)
+                .execute()
+                .actionGet();
+        if (monitor != null)
+            monitor.worked(1);
+    }
 }

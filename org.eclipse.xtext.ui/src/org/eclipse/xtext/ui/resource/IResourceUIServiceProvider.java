@@ -23,28 +23,30 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultResourceUIServiceProvider.class)
 public interface IResourceUIServiceProvider extends IResourceServiceProvider {
 
-	/**
-	 * @return the EObject description label provider for this service manager.
-	 */
-	ILabelProvider getLabelProvider();
-	
-	/**
-	 * Tells whether the given URI together with the underlying {@link IStorage} can be handled by this {@link IResourceServiceProvider}
-	 * @param uri - might be null
-	 * @param storage - might be null
-	 * @return true if the URI and {@link IStorage} can be handled
-	 */
-	boolean canHandle(URI uri, IStorage storage);
-	
-	/**
-	 * The {@link IURIEditorOpener}�of the language
-	 */
-	IURIEditorOpener getURIEditorOpener();
-	
-	/**
-	 * The reference updater of the language.
-	 * @deprecated use {@link #get(Class) get(IReferenceUpdater.class)}  instead
-	 */
-	@Deprecated
-	IReferenceUpdater getReferenceUpdater();
+    /**
+     * @return the EObject description label provider for this service manager.
+     */
+    ILabelProvider getLabelProvider();
+
+    /**
+     * Tells whether the given URI together with the underlying {@link IStorage} can be handled by this {@link IResourceServiceProvider}
+     *
+     * @param uri     - might be null
+     * @param storage - might be null
+     * @return true if the URI and {@link IStorage} can be handled
+     */
+    boolean canHandle(URI uri, IStorage storage);
+
+    /**
+     * The {@link IURIEditorOpener}�of the language
+     */
+    IURIEditorOpener getURIEditorOpener();
+
+    /**
+     * The reference updater of the language.
+     *
+     * @deprecated use {@link #get(Class) get(IReferenceUpdater.class)}  instead
+     */
+    @Deprecated
+    IReferenceUpdater getReferenceUpdater();
 }

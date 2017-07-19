@@ -13,29 +13,27 @@ import org.eclipse.ui.texteditor.ResourceMarkerAnnotationModel;
  */
 public class JarFileMarkerAnnotationModel extends ResourceMarkerAnnotationModel {
 
-	private static final Logger log = Logger.getLogger(JarFileMarkerAnnotationModel.class);
+    public static final String MARKER_URI = JarFileMarkerAnnotationModel.class.getName() + ".URI";
+    private static final Logger log = Logger.getLogger(JarFileMarkerAnnotationModel.class);
+    final URI fullURI;
 
-	public static final String MARKER_URI = JarFileMarkerAnnotationModel.class.getName() + ".URI";
+    public JarFileMarkerAnnotationModel(IResource jarFile, URI fullURI) {
+        super(jarFile);
+        this.fullURI = fullURI;
+    }
 
-	final URI fullURI;
-
-	public JarFileMarkerAnnotationModel(IResource jarFile, URI fullURI) {
-		super(jarFile);
-		this.fullURI = fullURI;
-	}
-
-	@Override
-	protected boolean isAcceptable(IMarker marker) {
-		if (!super.isAcceptable(marker))
-			return false;
-		Object markerURI;
-		try {
-			markerURI = marker.getAttribute(MARKER_URI);
-			return markerURI != null && markerURI.equals(fullURI.toString());
-		} catch (CoreException e) {
-			log.error(e);
-			return false;
-		}
-	}
+    @Override
+    protected boolean isAcceptable(IMarker marker) {
+        if (!super.isAcceptable(marker))
+            return false;
+        Object markerURI;
+        try {
+            markerURI = marker.getAttribute(MARKER_URI);
+            return markerURI != null && markerURI.equals(fullURI.toString());
+        } catch (CoreException e) {
+            log.error(e);
+            return false;
+        }
+    }
 
 }

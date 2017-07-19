@@ -30,211 +30,207 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.bbaw.bts.corpus.text.egy.egyDsl.impl.CaseImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.bbaw.bts.corpus.text.egy.egyDsl.impl.CaseImpl#getItems <em>Items</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.text.egy.egyDsl.impl.CaseImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.text.egy.egyDsl.impl.CaseImpl#getItems <em>Items</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class CaseImpl extends MinimalEObjectImpl.Container implements Case
-{
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
+public class CaseImpl extends MinimalEObjectImpl.Container implements Case {
+    /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getName()
+     */
+    protected static final String NAME_EDEFAULT = null;
 
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getName()
+     */
+    protected String name = NAME_EDEFAULT;
 
-  /**
-   * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getItems()
-   * @generated
-   * @ordered
-   */
-  protected EList<SentenceItemNoAmbivalence> items;
+    /**
+     * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getItems()
+     */
+    protected EList<SentenceItemNoAmbivalence> items;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected CaseImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.CASE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EgyDslPackage.CASE__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<SentenceItemNoAmbivalence> getItems()
-  {
-    if (items == null)
-    {
-      items = new EObjectContainmentEList<SentenceItemNoAmbivalence>(SentenceItemNoAmbivalence.class, this, EgyDslPackage.CASE__ITEMS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected CaseImpl() {
+        super();
     }
-    return items;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.CASE__ITEMS:
-        return ((InternalEList<?>)getItems()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.CASE;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.CASE__NAME:
-        return getName();
-      case EgyDslPackage.CASE__ITEMS:
-        return getItems();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public String getName() {
+        return name;
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.CASE__NAME:
-        setName((String)newValue);
-        return;
-      case EgyDslPackage.CASE__ITEMS:
-        getItems().clear();
-        getItems().addAll((Collection<? extends SentenceItemNoAmbivalence>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EgyDslPackage.CASE__NAME, oldName, name));
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.CASE__NAME:
-        setName(NAME_EDEFAULT);
-        return;
-      case EgyDslPackage.CASE__ITEMS:
-        getItems().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public EList<SentenceItemNoAmbivalence> getItems() {
+        if (items == null) {
+            items = new EObjectContainmentEList<SentenceItemNoAmbivalence>(SentenceItemNoAmbivalence.class, this, EgyDslPackage.CASE__ITEMS);
+        }
+        return items;
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.CASE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case EgyDslPackage.CASE__ITEMS:
-        return items != null && !items.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EgyDslPackage.CASE__ITEMS:
+                return ((InternalEList<?>) getItems()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eIsSet(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EgyDslPackage.CASE__NAME:
+                return getName();
+            case EgyDslPackage.CASE__ITEMS:
+                return getItems();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EgyDslPackage.CASE__NAME:
+                setName((String) newValue);
+                return;
+            case EgyDslPackage.CASE__ITEMS:
+                getItems().clear();
+                getItems().addAll((Collection<? extends SentenceItemNoAmbivalence>) newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EgyDslPackage.CASE__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case EgyDslPackage.CASE__ITEMS:
+                getItems().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EgyDslPackage.CASE__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case EgyDslPackage.CASE__ITEMS:
+                return items != null && !items.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (name: ");
+        result.append(name);
+        result.append(')');
+        return result.toString();
+    }
 
 } //CaseImpl

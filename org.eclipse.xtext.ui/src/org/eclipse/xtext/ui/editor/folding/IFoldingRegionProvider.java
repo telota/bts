@@ -21,9 +21,9 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultFoldingRegionProvider.class)
 public interface IFoldingRegionProvider {
 
-	/**
-	 * @return the list of <code>FoldedPosition</code> for the given document
-	 */
-	Collection<FoldedPosition> getFoldingRegions(IXtextDocument xtextDocument);
+    /**
+     * @return the list of <code>FoldedPosition</code> for the given document
+     */
+    Collection<FoldedPosition> getFoldingRegions(IXtextDocument xtextDocument);
 
 }

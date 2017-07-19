@@ -8,11 +8,9 @@ package org.bbaw.bts.corpus.text.egy.egyDsl;
  * A representation of the model object '<em><b>Destroyed Vers Frontier Marker</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getDestroyedVersFrontierMarker()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getDestroyedVersFrontierMarker()
  */
-public interface DestroyedVersFrontierMarker extends VersMarker
-{
+public interface DestroyedVersFrontierMarker extends VersMarker {
 } // DestroyedVersFrontierMarker

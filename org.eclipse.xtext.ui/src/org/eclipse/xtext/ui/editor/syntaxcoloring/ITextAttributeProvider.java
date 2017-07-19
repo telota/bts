@@ -17,8 +17,8 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(TextAttributeProvider.class)
 public interface ITextAttributeProvider {
 
-	TextAttribute getAttribute(String id);
+    TextAttribute getAttribute(String id);
 
-	TextAttribute getMergedAttributes(String[] ids);
-	
+    TextAttribute getMergedAttributes(String[] ids);
+
 }

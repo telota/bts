@@ -9,16 +9,16 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface BTSLemmaEntryService extends
-GenericCorpusObjectService<BTSLemmaEntry, String> {
+        GenericCorpusObjectService<BTSLemmaEntry, String> {
 
-	List<BTSLemmaEntry> findLemmaProposals(String prefix, IProgressMonitor monitor);
+    List<BTSLemmaEntry> findLemmaProposals(String prefix, IProgressMonitor monitor);
 
-	BTSAnnotation createNewAnnotationRelationPartOf(
-			BTSCorpusObject annotatedObject);
+    BTSAnnotation createNewAnnotationRelationPartOf(
+            BTSCorpusObject annotatedObject);
 
-	String processWordCharForLemmatizing(String wordChars);
+    String processWordCharForLemmatizing(String wordChars);
 
-	List<BTSLemmaEntry> filterLemmaProposals(List<BTSLemmaEntry> obs);
+    List<BTSLemmaEntry> filterLemmaProposals(List<BTSLemmaEntry> obs);
 
-	BTSQueryRequest createLemmaSearchQuery(String chars);
+    BTSQueryRequest createLemmaSearchQuery(String chars);
 }

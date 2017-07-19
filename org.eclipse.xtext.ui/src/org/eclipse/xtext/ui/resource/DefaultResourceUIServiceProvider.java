@@ -27,109 +27,107 @@ import com.google.inject.Inject;
  */
 public class DefaultResourceUIServiceProvider implements IResourceUIServiceProvider, IResourceUIServiceProviderExtension {
 
-	private IResourceServiceProvider delegate;
-	
-	@Inject
-	private IJdtHelper jdtHelper;
+    private IResourceServiceProvider delegate;
 
-	@Inject
-	public DefaultResourceUIServiceProvider(IResourceServiceProvider delegate) {
-		this.delegate = delegate;
-	}
+    @Inject
+    private IJdtHelper jdtHelper;
+    @Inject
+    @ResourceServiceDescriptionLabelProvider
+    private ILabelProvider descriptionLabelProvider;
+    @Inject
+    private IEncodingProvider encodingProvider;
+    @Inject(optional = true)
+    @LanguageSpecific
+    private IURIEditorOpener uriEditorOpener;
 
-	public Manager getContainerManager() {
-		return delegate.getContainerManager();
-	}
+    @Inject
+    public DefaultResourceUIServiceProvider(IResourceServiceProvider delegate) {
+        this.delegate = delegate;
+    }
 
-	public org.eclipse.xtext.resource.IResourceDescription.Manager getResourceDescriptionManager() {
-		return delegate.getResourceDescriptionManager();
-	}
+    public Manager getContainerManager() {
+        return delegate.getContainerManager();
+    }
 
-	public IResourceValidator getResourceValidator() {
-		return delegate.getResourceValidator();
-	}
+    public org.eclipse.xtext.resource.IResourceDescription.Manager getResourceDescriptionManager() {
+        return delegate.getResourceDescriptionManager();
+    }
 
-	@Inject
-	@ResourceServiceDescriptionLabelProvider
-	private ILabelProvider descriptionLabelProvider;
+    public IResourceValidator getResourceValidator() {
+        return delegate.getResourceValidator();
+    }
 
-	public ILabelProvider getLabelProvider() {
-		return descriptionLabelProvider;
-	}
-	
-	public void setDescriptionLabelProvider(ILabelProvider descriptionLabelProvider) {
-		this.descriptionLabelProvider = descriptionLabelProvider;
-	}
+    public ILabelProvider getLabelProvider() {
+        return descriptionLabelProvider;
+    }
 
-	public boolean canHandle(URI uri) {
-		boolean result = delegate.canHandle(uri);
-		return result;
-	}
+    public void setDescriptionLabelProvider(ILabelProvider descriptionLabelProvider) {
+        this.descriptionLabelProvider = descriptionLabelProvider;
+    }
 
-	/**
-	 * Compute whether the given storage is interesting in the context of Xtext.
-	 * By default, it will delegate to {@link #canHandle(URI)} and perform a subsequent
-	 * check to filter storages from Java target folders.
-	 * @return <code>true</code> if the <code>uri / storage</code> pair should be processed.
-	 */
-	public boolean canHandle(URI uri, IStorage storage) {
-		if (delegate.canHandle(uri)) {
-			if (isJavaCoreAvailable()) {
-				return !isJavaTargetFolder(storage);
-			}
-			return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public boolean canBuild(URI uri, IStorage storage) {
-		return canHandle(uri, storage);
-	}
+    public boolean canHandle(URI uri) {
+        boolean result = delegate.canHandle(uri);
+        return result;
+    }
 
-	/**
-	 * @since 2.1
-	 */
-	protected boolean isJavaCoreAvailable() {
-		return jdtHelper.isJavaCoreAvailable();
-	}
+    /**
+     * Compute whether the given storage is interesting in the context of Xtext.
+     * By default, it will delegate to {@link #canHandle(URI)} and perform a subsequent
+     * check to filter storages from Java target folders.
+     *
+     * @return <code>true</code> if the <code>uri / storage</code> pair should be processed.
+     */
+    public boolean canHandle(URI uri, IStorage storage) {
+        if (delegate.canHandle(uri)) {
+            if (isJavaCoreAvailable()) {
+                return !isJavaTargetFolder(storage);
+            }
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * @since 2.1
-	 */
-	protected boolean isJavaTargetFolder(IStorage storage) {
-		if (storage instanceof IResource) {
-			return jdtHelper.isFromOutputPath((IResource) storage);
-		}
-		return false;
-	}
+    /**
+     * @since 2.4
+     */
+    public boolean canBuild(URI uri, IStorage storage) {
+        return canHandle(uri, storage);
+    }
 
-	@Inject 
-	private IEncodingProvider encodingProvider;
-	
-	public IEncodingProvider getEncodingProvider() {
-		return encodingProvider;
-	}
-	
-	@Inject(optional=true)
-	@LanguageSpecific
-	private IURIEditorOpener uriEditorOpener;
+    /**
+     * @since 2.1
+     */
+    protected boolean isJavaCoreAvailable() {
+        return jdtHelper.isJavaCoreAvailable();
+    }
 
-	public IURIEditorOpener getURIEditorOpener() {
-		return uriEditorOpener;
-	}
-	
-	/**
-	 * @deprecated use <code>get(IReferenceUpdater.class)</code> instead
-	 */
-	@Deprecated
-	public IReferenceUpdater getReferenceUpdater() {
-		return get(IReferenceUpdater.class);
-	}
-	
-	public <T> T get(Class<T> t) {
-		return delegate.get(t);
-	}
+    /**
+     * @since 2.1
+     */
+    protected boolean isJavaTargetFolder(IStorage storage) {
+        if (storage instanceof IResource) {
+            return jdtHelper.isFromOutputPath((IResource) storage);
+        }
+        return false;
+    }
+
+    public IEncodingProvider getEncodingProvider() {
+        return encodingProvider;
+    }
+
+    public IURIEditorOpener getURIEditorOpener() {
+        return uriEditorOpener;
+    }
+
+    /**
+     * @deprecated use <code>get(IReferenceUpdater.class)</code> instead
+     */
+    @Deprecated
+    public IReferenceUpdater getReferenceUpdater() {
+        return get(IReferenceUpdater.class);
+    }
+
+    public <T> T get(Class<T> t) {
+        return delegate.get(t);
+    }
 }

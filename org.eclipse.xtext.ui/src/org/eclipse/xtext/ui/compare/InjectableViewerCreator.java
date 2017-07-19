@@ -18,11 +18,11 @@ import com.google.inject.Inject;
  * @author Michael Clay - Initial contribution and API
  */
 public class InjectableViewerCreator implements IViewerCreator {
-	@Inject
-	protected IViewerCreator viewerCreator;
+    @Inject
+    protected IViewerCreator viewerCreator;
 
-	public Viewer createViewer(Composite parent, CompareConfiguration config) {
-		return viewerCreator.createViewer(parent, config);
-	}
+    public Viewer createViewer(Composite parent, CompareConfiguration config) {
+        return viewerCreator.createViewer(parent, config);
+    }
 
 }

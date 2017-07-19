@@ -13,22 +13,20 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
-public class CreateNewTCObjectHandler
-{
+public class CreateNewTCObjectHandler {
 
-	@Execute
-	public void execute(CorpusNavigatorController corpusNavigatorController, EventBroker eventBroker, 
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSCorpusObject selection)
-	{
-		BTSTCObject object = corpusNavigatorController.createNewTCObject(selection);
-		object.setName("Object1");
-		eventBroker.post("model_new/asyncEvent", object);
-	}
+    @Execute
+    public void execute(CorpusNavigatorController corpusNavigatorController, EventBroker eventBroker,
+                        @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSCorpusObject selection) {
+        BTSTCObject object = corpusNavigatorController.createNewTCObject(selection);
+        object.setName("Object1");
+        eventBroker.post("model_new/asyncEvent", object);
+    }
 
-	@CanExecute
-	public boolean canExecute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
-		return (selection instanceof BTSCorpusObject && !(selection instanceof BTSAnnotation));
-	}
+    @CanExecute
+    public boolean canExecute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
+        return (selection instanceof BTSCorpusObject && !(selection instanceof BTSAnnotation));
+    }
 
 }

@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 
 /**
  * This class provides a skeletal implementation of the {@link SortedMultiset} interface.
- *
+ * <p>
  * <p>The {@link #count} and {@link #size} implementations all iterate across the set returned by
  * {@link Multiset#entrySet()}, as do many methods acting on the set returned by
  * {@link #elementSet()}. Override those methods for better performance.
@@ -35,108 +35,108 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible(emulated = true)
 abstract class AbstractSortedMultiset<E> extends AbstractMultiset<E> implements SortedMultiset<E> {
-  @GwtTransient final Comparator<? super E> comparator;
+    @GwtTransient
+    final Comparator<? super E> comparator;
+    private transient SortedMultiset<E> descendingMultiset;
 
-  // needed for serialization
-  @SuppressWarnings("unchecked")
-  AbstractSortedMultiset() {
-    this((Comparator) Ordering.natural());
-  }
-
-  AbstractSortedMultiset(Comparator<? super E> comparator) {
-    this.comparator = checkNotNull(comparator);
-  }
-
-  @Override
-  public NavigableSet<E> elementSet() {
-    return (NavigableSet<E>) super.elementSet();
-  }
-
-  @Override
-  NavigableSet<E> createElementSet() {
-    return new SortedMultisets.NavigableElementSet<E>(this);
-  }
-
-  @Override
-  public Comparator<? super E> comparator() {
-    return comparator;
-  }
-
-  @Override
-  public Entry<E> firstEntry() {
-    Iterator<Entry<E>> entryIterator = entryIterator();
-    return entryIterator.hasNext() ? entryIterator.next() : null;
-  }
-
-  @Override
-  public Entry<E> lastEntry() {
-    Iterator<Entry<E>> entryIterator = descendingEntryIterator();
-    return entryIterator.hasNext() ? entryIterator.next() : null;
-  }
-
-  @Override
-  public Entry<E> pollFirstEntry() {
-    Iterator<Entry<E>> entryIterator = entryIterator();
-    if (entryIterator.hasNext()) {
-      Entry<E> result = entryIterator.next();
-      result = Multisets.immutableEntry(result.getElement(), result.getCount());
-      entryIterator.remove();
-      return result;
+    // needed for serialization
+    @SuppressWarnings("unchecked")
+    AbstractSortedMultiset() {
+        this((Comparator) Ordering.natural());
     }
-    return null;
-  }
 
-  @Override
-  public Entry<E> pollLastEntry() {
-    Iterator<Entry<E>> entryIterator = descendingEntryIterator();
-    if (entryIterator.hasNext()) {
-      Entry<E> result = entryIterator.next();
-      result = Multisets.immutableEntry(result.getElement(), result.getCount());
-      entryIterator.remove();
-      return result;
+    AbstractSortedMultiset(Comparator<? super E> comparator) {
+        this.comparator = checkNotNull(comparator);
     }
-    return null;
-  }
 
-  @Override
-  public SortedMultiset<E> subMultiset(@Nullable E fromElement, BoundType fromBoundType,
-      @Nullable E toElement, BoundType toBoundType) {
-    // These are checked elsewhere, but NullPointerTester wants them checked eagerly.
-    checkNotNull(fromBoundType);
-    checkNotNull(toBoundType);
-    return tailMultiset(fromElement, fromBoundType).headMultiset(toElement, toBoundType);
-  }
+    @Override
+    public NavigableSet<E> elementSet() {
+        return (NavigableSet<E>) super.elementSet();
+    }
 
-  abstract Iterator<Entry<E>> descendingEntryIterator();
+    @Override
+    NavigableSet<E> createElementSet() {
+        return new SortedMultisets.NavigableElementSet<E>(this);
+    }
 
-  Iterator<E> descendingIterator() {
-    return Multisets.iteratorImpl(descendingMultiset());
-  }
+    @Override
+    public Comparator<? super E> comparator() {
+        return comparator;
+    }
 
-  private transient SortedMultiset<E> descendingMultiset;
+    @Override
+    public Entry<E> firstEntry() {
+        Iterator<Entry<E>> entryIterator = entryIterator();
+        return entryIterator.hasNext() ? entryIterator.next() : null;
+    }
 
-  @Override
-  public SortedMultiset<E> descendingMultiset() {
-    SortedMultiset<E> result = descendingMultiset;
-    return (result == null) ? descendingMultiset = createDescendingMultiset() : result;
-  }
+    @Override
+    public Entry<E> lastEntry() {
+        Iterator<Entry<E>> entryIterator = descendingEntryIterator();
+        return entryIterator.hasNext() ? entryIterator.next() : null;
+    }
 
-  SortedMultiset<E> createDescendingMultiset() {
-    return new DescendingMultiset<E>() {
-      @Override
-      SortedMultiset<E> forwardMultiset() {
-        return AbstractSortedMultiset.this;
-      }
+    @Override
+    public Entry<E> pollFirstEntry() {
+        Iterator<Entry<E>> entryIterator = entryIterator();
+        if (entryIterator.hasNext()) {
+            Entry<E> result = entryIterator.next();
+            result = Multisets.immutableEntry(result.getElement(), result.getCount());
+            entryIterator.remove();
+            return result;
+        }
+        return null;
+    }
 
-      @Override
-      Iterator<Entry<E>> entryIterator() {
-        return descendingEntryIterator();
-      }
+    @Override
+    public Entry<E> pollLastEntry() {
+        Iterator<Entry<E>> entryIterator = descendingEntryIterator();
+        if (entryIterator.hasNext()) {
+            Entry<E> result = entryIterator.next();
+            result = Multisets.immutableEntry(result.getElement(), result.getCount());
+            entryIterator.remove();
+            return result;
+        }
+        return null;
+    }
 
-      @Override
-      public Iterator<E> iterator() {
-        return descendingIterator();
-      }
-    };
-  }
+    @Override
+    public SortedMultiset<E> subMultiset(@Nullable E fromElement, BoundType fromBoundType,
+                                         @Nullable E toElement, BoundType toBoundType) {
+        // These are checked elsewhere, but NullPointerTester wants them checked eagerly.
+        checkNotNull(fromBoundType);
+        checkNotNull(toBoundType);
+        return tailMultiset(fromElement, fromBoundType).headMultiset(toElement, toBoundType);
+    }
+
+    abstract Iterator<Entry<E>> descendingEntryIterator();
+
+    Iterator<E> descendingIterator() {
+        return Multisets.iteratorImpl(descendingMultiset());
+    }
+
+    @Override
+    public SortedMultiset<E> descendingMultiset() {
+        SortedMultiset<E> result = descendingMultiset;
+        return (result == null) ? descendingMultiset = createDescendingMultiset() : result;
+    }
+
+    SortedMultiset<E> createDescendingMultiset() {
+        return new DescendingMultiset<E>() {
+            @Override
+            SortedMultiset<E> forwardMultiset() {
+                return AbstractSortedMultiset.this;
+            }
+
+            @Override
+            Iterator<Entry<E>> entryIterator() {
+                return descendingEntryIterator();
+            }
+
+            @Override
+            public Iterator<E> iterator() {
+                return descendingIterator();
+            }
+        };
+    }
 }

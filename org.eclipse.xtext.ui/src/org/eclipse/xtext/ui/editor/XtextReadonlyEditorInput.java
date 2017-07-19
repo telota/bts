@@ -19,48 +19,48 @@ import org.eclipse.ui.IStorageEditorInput;
  */
 public class XtextReadonlyEditorInput extends PlatformObject implements IStorageEditorInput {
 
-	private final IStorage storage;
+    private final IStorage storage;
 
-	public XtextReadonlyEditorInput(IStorage storage) {
-		this.storage = storage;
-	}
+    public XtextReadonlyEditorInput(IStorage storage) {
+        this.storage = storage;
+    }
 
-	public IStorage getStorage() throws CoreException {
-		return storage;
-	}
+    public IStorage getStorage() throws CoreException {
+        return storage;
+    }
 
-	public boolean exists() {
-		return true;
-	}
+    public boolean exists() {
+        return true;
+    }
 
-	public ImageDescriptor getImageDescriptor() {
-		return null;
-	}
+    public ImageDescriptor getImageDescriptor() {
+        return null;
+    }
 
-	public String getName() {
-		return storage.getName();
-	}
+    public String getName() {
+        return storage.getName();
+    }
 
-	public IPersistableElement getPersistable() {
-		return null;
-	}
+    public IPersistableElement getPersistable() {
+        return null;
+    }
 
-	public String getToolTipText() {
-		return storage.getName();
-	}
+    public String getToolTipText() {
+        return storage.getName();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		try {
-			return (obj == this || obj != null && (obj instanceof IStorageEditorInput) &&
-					storage.equals(((IStorageEditorInput)obj).getStorage()));
-		} catch (CoreException e) {
-			return false;
-		}
-	}
+    @Override
+    public boolean equals(Object obj) {
+        try {
+            return (obj == this || obj != null && (obj instanceof IStorageEditorInput) &&
+                    storage.equals(((IStorageEditorInput) obj).getStorage()));
+        } catch (CoreException e) {
+            return false;
+        }
+    }
 
-	@Override
-	public int hashCode() {
-		return storage.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return storage.hashCode();
+    }
 }

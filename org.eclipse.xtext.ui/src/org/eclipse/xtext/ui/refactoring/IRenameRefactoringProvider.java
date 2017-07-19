@@ -13,14 +13,14 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameElementContext;
 
 /**
  * Provides the rename refactoring for a given element.
- * 
+ * <p>
  * Top-level hook for clients who want to provide a completely different rename refactoring implementation.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public interface IRenameRefactoringProvider {
 
-	ProcessorBasedRefactoring getRenameRefactoring(IRenameElementContext renameElementContext);
-	
-	RenameProcessor getRenameProcessor(IRenameElementContext renameElementContext);
+    ProcessorBasedRefactoring getRenameRefactoring(IRenameElementContext renameElementContext);
+
+    RenameProcessor getRenameProcessor(IRenameElementContext renameElementContext);
 }

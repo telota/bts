@@ -25,19 +25,20 @@ import javax.annotation.Nullable;
  * @since 1.0
  */
 public class UncheckedTimeoutException extends RuntimeException {
-  public UncheckedTimeoutException() {}
+    private static final long serialVersionUID = 0;
 
-  public UncheckedTimeoutException(@Nullable String message) {
-    super(message);
-  }
+    public UncheckedTimeoutException() {
+    }
 
-  public UncheckedTimeoutException(@Nullable Throwable cause) {
-    super(cause);
-  }
+    public UncheckedTimeoutException(@Nullable String message) {
+        super(message);
+    }
 
-  public UncheckedTimeoutException(@Nullable String message, @Nullable Throwable cause) {
-    super(message, cause);
-  }
+    public UncheckedTimeoutException(@Nullable Throwable cause) {
+        super(cause);
+    }
 
-  private static final long serialVersionUID = 0;
+    public UncheckedTimeoutException(@Nullable String message, @Nullable Throwable cause) {
+        super(message, cause);
+    }
 }

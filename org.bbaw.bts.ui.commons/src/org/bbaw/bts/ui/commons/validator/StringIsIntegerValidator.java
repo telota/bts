@@ -39,79 +39,74 @@ import org.eclipse.core.runtime.IStatus;
  *
  * @author Christoph Plutte
  */
-public class StringIsIntegerValidator implements IValidator
-{
-	
-	/** The Constant error. */
-	private static final String error = "This must be an integer value.";
-	
-	/** The error message. */
-	private String errorMessage = error;
-	
-	/** The nullable. */
-	private boolean nullable = false;;
+public class StringIsIntegerValidator implements IValidator {
 
-	/**
-	 * Instantiates a new string is integer validator.
-	 *
-	 * @param nullable the nullable
-	 */
-	public StringIsIntegerValidator(boolean nullable)
-	{
-		this.nullable = nullable;
-	}
+    /**
+     * The Constant error.
+     */
+    private static final String error = "This must be an integer value.";
 
-	/**
-	 * Instantiates a new string is integer validator.
-	 *
-	 * @param errorMessage the error message
-	 * @param nullable the nullable
-	 */
-	public StringIsIntegerValidator(String errorMessage, boolean nullable)
-	{
-		this.nullable = nullable;
-		if (errorMessage != null)
-		{
-			this.errorMessage = errorMessage;
-		}
-	}
+    /**
+     * The error message.
+     */
+    private String errorMessage = error;
 
-	/**
-	 * Instantiates a new string is integer validator.
-	 */
-	public StringIsIntegerValidator()
-	{
-	}
+    /**
+     * The nullable.
+     */
+    private boolean nullable = false;
+    ;
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
-	 */
-	@Override
-	public IStatus validate(Object value)
-	{
-		if (nullable && value == null)
-		{
-			return ValidationStatus.ok();
-		}
-		if (value instanceof String)
-		{
-			if (value.toString().trim().length() > 0)
-			{
-				try
-				{
-					@SuppressWarnings("unused")
-					Integer i = new Integer((String) value);
-					return ValidationStatus.ok();
-				} catch (NumberFormatException e)
-				{
-					return ValidationStatus.error(errorMessage);
-				}
-			} else if (nullable)
-			{
-				return ValidationStatus.ok();
-			}
-		}
-		return ValidationStatus.error(errorMessage);
-	}
+    /**
+     * Instantiates a new string is integer validator.
+     *
+     * @param nullable the nullable
+     */
+    public StringIsIntegerValidator(boolean nullable) {
+        this.nullable = nullable;
+    }
+
+    /**
+     * Instantiates a new string is integer validator.
+     *
+     * @param errorMessage the error message
+     * @param nullable     the nullable
+     */
+    public StringIsIntegerValidator(String errorMessage, boolean nullable) {
+        this.nullable = nullable;
+        if (errorMessage != null) {
+            this.errorMessage = errorMessage;
+        }
+    }
+
+    /**
+     * Instantiates a new string is integer validator.
+     */
+    public StringIsIntegerValidator() {
+    }
+
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
+     */
+    @Override
+    public IStatus validate(Object value) {
+        if (nullable && value == null) {
+            return ValidationStatus.ok();
+        }
+        if (value instanceof String) {
+            if (value.toString().trim().length() > 0) {
+                try {
+                    @SuppressWarnings("unused")
+                    Integer i = new Integer((String) value);
+                    return ValidationStatus.ok();
+                } catch (NumberFormatException e) {
+                    return ValidationStatus.error(errorMessage);
+                }
+            } else if (nullable) {
+                return ValidationStatus.ok();
+            }
+        }
+        return ValidationStatus.error(errorMessage);
+    }
 
 }

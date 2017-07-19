@@ -8,27 +8,23 @@ import org.bbaw.bts.core.remote.dao.util.RemoteDaoConstants;
 import org.eclipse.e4.core.di.annotations.Creatable;
 
 @Creatable
-public class RemoteBTSUserGroupDaoImpl extends RemoteCouchDBDao<BTSUserGroup, String> implements RemoteBTSUserGroupDao
-{
+public class RemoteBTSUserGroupDaoImpl extends RemoteCouchDBDao<BTSUserGroup, String> implements RemoteBTSUserGroupDao {
 
-	@Override
-	public boolean removeBTSUserGroup(BTSUserGroup userGroup, String path)
-	{
-		// TODO Auto-generated method stub
-		super.remove(userGroup, path);
-		return true;
-	}
+    @Override
+    public boolean removeBTSUserGroup(BTSUserGroup userGroup, String path) {
+        // TODO Auto-generated method stub
+        super.remove(userGroup, path);
+        return true;
+    }
 
-	@Override
-	public List<BTSUserGroup> list(String path)
-	{
-		List<String> allDocs = loadDocsFromView(RemoteDaoConstants.VIEW_ALL_BTSUSERGROUPS, path, path);
-		List<BTSUserGroup> results = loadObjectsFromStrings(allDocs, path);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(RemoteDaoConstants.VIEW_ALL_BTSUSERGROUPS, path);
-		}
-		return results;
+    @Override
+    public List<BTSUserGroup> list(String path) {
+        List<String> allDocs = loadDocsFromView(RemoteDaoConstants.VIEW_ALL_BTSUSERGROUPS, path, path);
+        List<BTSUserGroup> results = loadObjectsFromStrings(allDocs, path);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(RemoteDaoConstants.VIEW_ALL_BTSUSERGROUPS, path);
+        }
+        return results;
 //		List<JsonObject> allDocs = connectionProvider.getDBClient(CouchDbClient.class, path)
 //				.view(RemoteDaoConstants.VIEW_ALL_BTSUSERGROUPS).includeDocs(true).query(JsonObject.class);
 //		ArrayList<BTSUserGroup> results = new ArrayList<BTSUserGroup>();
@@ -53,5 +49,5 @@ public class RemoteBTSUserGroupDaoImpl extends RemoteCouchDBDao<BTSUserGroup, St
 //			registerQueryIdWithInternalRegistry(RemoteDaoConstants.VIEW_ALL_BTSUSERGROUPS, path);
 //		}
 //		return results;
-	}
+    }
 }

@@ -1,4 +1,3 @@
- 
 package bts.transform.ui.handlers;
 
 import java.io.File;
@@ -22,71 +21,69 @@ import bts.transform.ui.users.ThsImporter;
 import bts.transform.ui.users.UsersImporter;
 
 public class TransformHandler {
-	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, IEclipseContext context) {
-		System.out.println("transform");
-		String fileName;
-		
-	
-		try {
-			context.modify(BTSCoreConstants.LISTEN_TO_BACKEND_UPDATES, "false");
-		} catch (Exception e) {
-		}
+    @Execute
+    public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, IEclipseContext context) {
+        System.out.println("transform");
+        String fileName;
+
+
+        try {
+            context.modify(BTSCoreConstants.LISTEN_TO_BACKEND_UPDATES, "false");
+        } catch (Exception e) {
+        }
 //		
 //		FileDialog fd = new FileDialog(shell);
 //		fileName = fd.open();
-		
-		// users
+
+        // users
 //		UsersImporter ui = new UsersImporter();
 //		ui.importUsers(fileName);
 //		
-		// ths
+        // ths
 //		ThsImporter ths = new ThsImporter();
 //		ths.importUsers(fileName);
-		
-		// lemma
+
+        // lemma
 //		LemmaImporter lemma = new LemmaImporter();
 //		lemma.importLemmata(fileName);
-		
-		//corpus
+
+        //corpus
 //		CorpusImporter ci = new CorpusImporter();
 //		System.out.println(fileName);
 //		old ci.importFromInternalList(); 
-		
-		//new
+
+        //new
 //		ci.importCorpus(fileName, null);
-		
-		corpusDirImporter(shell);
-		
+
+        corpusDirImporter(shell);
+
 //		context.modify(BTSCoreConstants.LISTEN_TO_BACKEND_UPDATES, "true");
 
-	}
+    }
 
-	private void corpusDirImporter(Shell shell) {
-		
-		DirectoryDialog fd = new DirectoryDialog(shell);
+    private void corpusDirImporter(Shell shell) {
+
+        DirectoryDialog fd = new DirectoryDialog(shell);
 //		
-		String dirName = fd.open();
+        String dirName = fd.open();
 //		// TODO Auto-generated method stub
-		File dir = new File(dirName);
+        File dir = new File(dirName);
 //		FileEntityReplacer text = new FileEntityReplacer();
 //
-		FilenameFilter ff = new FilenameFilter() {
+        FilenameFilter ff = new FilenameFilter() {
 
-			@Override
-			public boolean accept(File arg0, String name) {
-				return (name.endsWith(".corpusdtdneu"));
-			}
-		};
-		CorpusImporter ci = new CorpusImporter();
+            @Override
+            public boolean accept(File arg0, String name) {
+                return (name.endsWith(".corpusdtdneu"));
+            }
+        };
+        CorpusImporter ci = new CorpusImporter();
 
-		if (dir.isDirectory())
-		{
-			for (String fname : dir.list(ff))
-			{
-				ci.importCorpus(dir.getAbsolutePath() + "/" + fname, null);
-			}
-		}
-	}
-		
+        if (dir.isDirectory()) {
+            for (String fname : dir.list(ff)) {
+                ci.importCorpus(dir.getAbsolutePath() + "/" + fname, null);
+            }
+        }
+    }
+
 }

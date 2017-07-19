@@ -21,28 +21,28 @@ import com.google.common.collect.Lists;
  */
 public abstract class AbstractEditStrategyProvider {
 
-	protected abstract void configure(IEditStrategyAcceptor iEditStrategyAcceptor);
-	
-	public List<IAutoEditStrategy> getStrategies(final ISourceViewer sourceViewer,final String contentType) {
-		final List<IAutoEditStrategy> strategies = Lists.newArrayList();
-		configure(new IEditStrategyAcceptor() {
-			public void accept(IAutoEditStrategy strategy, String type) {
-				if (type == null || contentType.equals(type)) {
-					if (strategy instanceof ISourceViewerAware) {
-						((ISourceViewerAware) strategy).setSourceViewer(sourceViewer);
-					}
-					if (strategy instanceof VerifyKeyListener) {
-						sourceViewer.getTextWidget().addVerifyKeyListener((VerifyKeyListener) strategy);
-					}
-					strategies.add(strategy);
-				}
-			}
-		});
-		return strategies;
-	}
+    protected abstract void configure(IEditStrategyAcceptor iEditStrategyAcceptor);
 
-	public interface IEditStrategyAcceptor {
-		public void accept(IAutoEditStrategy strategy, String contentType);
-	}
-	
+    public List<IAutoEditStrategy> getStrategies(final ISourceViewer sourceViewer, final String contentType) {
+        final List<IAutoEditStrategy> strategies = Lists.newArrayList();
+        configure(new IEditStrategyAcceptor() {
+            public void accept(IAutoEditStrategy strategy, String type) {
+                if (type == null || contentType.equals(type)) {
+                    if (strategy instanceof ISourceViewerAware) {
+                        ((ISourceViewerAware) strategy).setSourceViewer(sourceViewer);
+                    }
+                    if (strategy instanceof VerifyKeyListener) {
+                        sourceViewer.getTextWidget().addVerifyKeyListener((VerifyKeyListener) strategy);
+                    }
+                    strategies.add(strategy);
+                }
+            }
+        });
+        return strategies;
+    }
+
+    public interface IEditStrategyAcceptor {
+        public void accept(IAutoEditStrategy strategy, String contentType);
+    }
+
 }

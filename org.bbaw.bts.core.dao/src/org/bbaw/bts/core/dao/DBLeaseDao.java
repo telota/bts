@@ -36,19 +36,16 @@ import org.bbaw.bts.btsmodel.DBLease;
  *
  * @author Christoph Plutte
  */
-public interface DBLeaseDao extends GenericDao<DBLease, String>
-{
+public interface DBLeaseDao extends GenericDao<DBLease, String> {
 
-	/**
-	 * Removes the db lease.
-	 *
-	 * @param lease the lease
-	 * @param path the path
-	 * @return true, if successful
-	 */
-	boolean removeDBLease(DBLease lease, String path);
+    /**
+     * Removes the db lease.
+     *
+     * @param lease the lease
+     * @param path  the path
+     * @return true, if successful
+     */
+    boolean removeDBLease(DBLease lease, String path);
 
-
-	
 
 }

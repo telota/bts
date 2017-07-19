@@ -17,44 +17,44 @@ import org.eclipse.ui.forms.widgets.SharedScrolledComposite;
 
 /**
  * Initially copied from Jdt.
- * 
+ *
  * @author Michael Clay
  * @since 2.1
  */
 public class ScrolledPageContent extends SharedScrolledComposite {
-	private static FormToolkit toolkit;
+    private static FormToolkit toolkit;
 
-	public ScrolledPageContent(Composite parent) {
-		this(parent, SWT.V_SCROLL | SWT.H_SCROLL);
-	}
+    public ScrolledPageContent(Composite parent) {
+        this(parent, SWT.V_SCROLL | SWT.H_SCROLL);
+    }
 
-	public ScrolledPageContent(Composite parent, int style) {
-		super(parent, style);
-		setFont(parent.getFont());
-		toolkit = getFormToolkit();
-		setExpandHorizontal(true);
-		setExpandVertical(true);
-		Composite body = new Composite(this, SWT.NONE);
-		body.setFont(parent.getFont());
-		setContent(body);
-	}
+    public ScrolledPageContent(Composite parent, int style) {
+        super(parent, style);
+        setFont(parent.getFont());
+        toolkit = getFormToolkit();
+        setExpandHorizontal(true);
+        setExpandVertical(true);
+        Composite body = new Composite(this, SWT.NONE);
+        body.setFont(parent.getFont());
+        setContent(body);
+    }
 
-	private static FormToolkit getFormToolkit() {
-		if (toolkit == null) {
-			FormColors colors = new FormColors(Display.getCurrent());
-			colors.setBackground(null);
-			colors.setForeground(null);
-			toolkit = new FormToolkit(colors);
-		}
-		return toolkit;
-	}
+    private static FormToolkit getFormToolkit() {
+        if (toolkit == null) {
+            FormColors colors = new FormColors(Display.getCurrent());
+            colors.setBackground(null);
+            colors.setForeground(null);
+            toolkit = new FormToolkit(colors);
+        }
+        return toolkit;
+    }
 
-	public void adaptChild(Control childControl) {
-		toolkit.adapt(childControl, true, true);
-	}
+    public void adaptChild(Control childControl) {
+        toolkit.adapt(childControl, true, true);
+    }
 
-	public Composite getBody() {
-		return (Composite) getContent();
-	}
+    public Composite getBody() {
+        return (Composite) getContent();
+    }
 
 }

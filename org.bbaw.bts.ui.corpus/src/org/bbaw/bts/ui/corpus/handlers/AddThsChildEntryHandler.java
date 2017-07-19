@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
@@ -16,24 +15,24 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
 public class AddThsChildEntryHandler {
-	@Execute
-	public void execute(@Active MPart part,
-			ThsNavigatorController thsController, EventBroker eventBroker) {
-		BTSThsEntry entry = thsController.createNew();
-		entry.setName("Thesaurus Child");
-		eventBroker.post("model_ths_add/asyncEvent", entry);
+    @Execute
+    public void execute(@Active MPart part,
+                        ThsNavigatorController thsController, EventBroker eventBroker) {
+        BTSThsEntry entry = thsController.createNew();
+        entry.setName("Thesaurus Child");
+        eventBroker.post("model_ths_add/asyncEvent", entry);
 //		thsController.getRootEntries(null, null, null, null);
-	}
+    }
 
-	@CanExecute
-	public boolean canExecute(
-			@Active MPart part,
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
-		if (selection != null && selection instanceof BTSThsEntry) {
-			return part.getElementId().equals(
-					BTSPluginIDs.PART_ID_THS_NAVIGATOR);
-		}
-		return false;
-	}
-		
+    @CanExecute
+    public boolean canExecute(
+            @Active MPart part,
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
+        if (selection != null && selection instanceof BTSThsEntry) {
+            return part.getElementId().equals(
+                    BTSPluginIDs.PART_ID_THS_NAVIGATOR);
+        }
+        return false;
+    }
+
 }

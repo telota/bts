@@ -8,27 +8,23 @@ import org.bbaw.bts.core.remote.dao.util.RemoteDaoConstants;
 import org.eclipse.e4.core.di.annotations.Creatable;
 
 @Creatable
-public class RemoteBTSUserDaoImpl extends RemoteCouchDBDao<BTSUser, String> implements RemoteBTSUserDao
-{
+public class RemoteBTSUserDaoImpl extends RemoteCouchDBDao<BTSUser, String> implements RemoteBTSUserDao {
 
-	@Override
-	public boolean removeBTSUser(BTSUser btsUser, String path)
-	{
-		// TODO Auto-generated method stub
-		super.remove(btsUser, path);
-		return true;
-	}
+    @Override
+    public boolean removeBTSUser(BTSUser btsUser, String path) {
+        // TODO Auto-generated method stub
+        super.remove(btsUser, path);
+        return true;
+    }
 
-	@Override
-	public List<BTSUser> list(String path)
-	{
-		List<String> allDocs = loadDocsFromView(RemoteDaoConstants.VIEW_ALL_BTSUSERS, path, path);
-		List<BTSUser> results = loadObjectsFromStrings(allDocs, path);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(RemoteDaoConstants.VIEW_ALL_BTSUSERS, path);
-		}
-		return results;
+    @Override
+    public List<BTSUser> list(String path) {
+        List<String> allDocs = loadDocsFromView(RemoteDaoConstants.VIEW_ALL_BTSUSERS, path, path);
+        List<BTSUser> results = loadObjectsFromStrings(allDocs, path);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(RemoteDaoConstants.VIEW_ALL_BTSUSERS, path);
+        }
+        return results;
 //		List<JsonObject> allDocs = connectionProvider.getDBClient(CouchDbClient.class, path)
 //				.view(RemoteDaoConstants.VIEW_ALL_BTSUSERS).includeDocs(true).query(JsonObject.class);
 //		ArrayList<BTSUser> results = new ArrayList<BTSUser>();
@@ -53,5 +49,5 @@ public class RemoteBTSUserDaoImpl extends RemoteCouchDBDao<BTSUser, String> impl
 //			registerQueryIdWithInternalRegistry(RemoteDaoConstants.VIEW_ALL_BTSUSERS, path);
 //		}
 //		return results;
-	}
+    }
 }

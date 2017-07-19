@@ -17,9 +17,9 @@ import com.google.inject.Inject;
  */
 public class PresentationRepairer extends DefaultDamagerRepairer {
 
-	@Inject
-	public PresentationRepairer(ITokenScanner scanner) {
-		super(scanner);
-	}
+    @Inject
+    public PresentationRepairer(ITokenScanner scanner) {
+        super(scanner);
+    }
 
 }

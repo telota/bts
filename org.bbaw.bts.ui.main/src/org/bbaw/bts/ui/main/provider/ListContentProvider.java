@@ -14,35 +14,31 @@ import org.eclipse.jface.viewers.Viewer;
  * It can wrap existing objects in adapters or simply return objects as-is.
  * These objects may be sensitive to the current input of the view, or ignore it
  * and always show the same content (like Task List, for example).
- * 
+ *
  * @author Khabib Mustofa (Mar 21, 2007)
  */
-public class ListContentProvider implements IStructuredContentProvider
-{
+public class ListContentProvider implements IStructuredContentProvider {
 
-	/*
-	 * @see
-	 * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
-	 * .lang.Object)
-	 */
-	public Object[] getElements(Object parent)
-	{
-		return ((List) parent).toArray();
-	}
+    /*
+     * @see
+     * org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java
+     * .lang.Object)
+     */
+    public Object[] getElements(Object parent) {
+        return ((List) parent).toArray();
+    }
 
-	/*
-	 * @see
-	 * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
-	 * .viewers.Viewer, java.lang.Object, java.lang.Object)
-	 */
-	public void inputChanged(Viewer v, Object oldInput, Object newInput)
-	{
-	}
+    /*
+     * @see
+     * org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface
+     * .viewers.Viewer, java.lang.Object, java.lang.Object)
+     */
+    public void inputChanged(Viewer v, Object oldInput, Object newInput) {
+    }
 
-	/*
-	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
-	 */
-	public void dispose()
-	{
-	}
+    /*
+     * @see org.eclipse.jface.viewers.IContentProvider#dispose()
+     */
+    public void dispose() {
+    }
 }

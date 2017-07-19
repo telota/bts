@@ -18,40 +18,38 @@ import org.eclipse.swt.widgets.Display;
 
 public class SearchViewerFactoryAText implements SearchViewerFactory {
 
-	private SearchViewer searchViewer;
-	
-	protected BTSResourceProvider resourceProvider = StaticAccessController.getContext().get(BTSResourceProvider.class);
+    protected BTSResourceProvider resourceProvider = StaticAccessController.getContext().get(BTSResourceProvider.class);
+    private SearchViewer searchViewer;
 
-	@Override
-	public <T> boolean hasSearchViewerForObject(Class<T> clazz) {
-		return BTSAbstractText.class.isAssignableFrom(clazz);
-	}
+    @Override
+    public <T> boolean hasSearchViewerForObject(Class<T> clazz) {
+        return BTSAbstractText.class.isAssignableFrom(clazz);
+    }
 
-	@Override
-	public SearchViewer createSearchViewer(Composite parent, int style, BTSConfigItem relationConfig, IEclipseContext context) {
-		if (context == null)
-		{
-			context = StaticAccessController.getContext();
-		}
-		IEclipseContext child = context.createChild();
-		child.set(Composite.class, parent);
-		child.set(BTSConfigItem.class, relationConfig);
-		child.set(BTSUIConstants.SELECTION_TYPE,
-				BTSUIConstants.SELECTION_TYPE_SECONDARY);
-		searchViewer = ContextInjectionFactory.make(
-				ATextNavigatorPart.class, child);
-		return searchViewer;
-	}
+    @Override
+    public SearchViewer createSearchViewer(Composite parent, int style, BTSConfigItem relationConfig, IEclipseContext context) {
+        if (context == null) {
+            context = StaticAccessController.getContext();
+        }
+        IEclipseContext child = context.createChild();
+        child.set(Composite.class, parent);
+        child.set(BTSConfigItem.class, relationConfig);
+        child.set(BTSUIConstants.SELECTION_TYPE,
+                BTSUIConstants.SELECTION_TYPE_SECONDARY);
+        searchViewer = ContextInjectionFactory.make(
+                ATextNavigatorPart.class, child);
+        return searchViewer;
+    }
 
-	@Override
-	public String getSearchViewerName() {
-		return "Abstract Text Navigator";
-	}
+    @Override
+    public String getSearchViewerName() {
+        return "Abstract Text Navigator";
+    }
 
-	@Override
-	public Image getSearchViewerIcon() {
-		return resourceProvider.getImage(
-				Display.getDefault(), BTSResourceProvider.IMG_ABSTRACTTEXTS);
-	}
+    @Override
+    public Image getSearchViewerIcon() {
+        return resourceProvider.getImage(
+                Display.getDefault(), BTSResourceProvider.IMG_ABSTRACTTEXTS);
+    }
 
 }

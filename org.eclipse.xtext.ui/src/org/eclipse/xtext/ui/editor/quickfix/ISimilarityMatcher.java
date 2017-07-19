@@ -18,17 +18,17 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(ISimilarityMatcher.Default.class)
 public interface ISimilarityMatcher {
 
-	public boolean isSimilar(String s0, String s1);
-	
-	public static class Default implements ISimilarityMatcher {
+    public boolean isSimilar(String s0, String s1);
 
-		public boolean isSimilar(String s0, String s1) {
-			if(Strings.isEmpty(s0) || Strings.isEmpty(s1)) {
-				return false;
-			}
-			double levenshteinDistance = StringUtils.getLevenshteinDistance(s0, s1);
-			return levenshteinDistance <= 1;
-		}
+    public static class Default implements ISimilarityMatcher {
 
-	}
+        public boolean isSimilar(String s0, String s1) {
+            if (Strings.isEmpty(s0) || Strings.isEmpty(s1)) {
+                return false;
+            }
+            double levenshteinDistance = StringUtils.getLevenshteinDistance(s0, s1);
+            return levenshteinDistance <= 1;
+        }
+
+    }
 }

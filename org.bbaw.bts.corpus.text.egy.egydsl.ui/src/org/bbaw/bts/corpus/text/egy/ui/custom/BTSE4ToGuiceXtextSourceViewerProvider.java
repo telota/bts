@@ -7,16 +7,16 @@ import com.google.inject.Provider;
 
 public class BTSE4ToGuiceXtextSourceViewerProvider implements Provider<XtextSourceViewer> {
 
-	private static IEclipseContext context;
-	@Override
-	public XtextSourceViewer get() {
-		if (context == null) return null;
-		XtextSourceViewer viewer = context.get(XtextSourceViewer.class);
-		return viewer;
-	}
+    private static IEclipseContext context;
 
-	public static void setContext(IEclipseContext ctx)
-	{
-		context = ctx;
-	}
+    public static void setContext(IEclipseContext ctx) {
+        context = ctx;
+    }
+
+    @Override
+    public XtextSourceViewer get() {
+        if (context == null) return null;
+        XtextSourceViewer viewer = context.get(XtextSourceViewer.class);
+        return viewer;
+    }
 }

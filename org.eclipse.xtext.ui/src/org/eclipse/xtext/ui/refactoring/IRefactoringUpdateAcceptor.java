@@ -20,23 +20,23 @@ import com.google.inject.ImplementedBy;
 /**
  * Aggregates document updates as {@link Change Changes}�or {@link TextEdit}s. Clients can report issues to the
  * refactoring status.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 @ImplementedBy(RefactoringUpdateAcceptor.class)
 public interface IRefactoringUpdateAcceptor {
 
-	void accept(URI resourceURI, TextEdit textEdit);
+    void accept(URI resourceURI, TextEdit textEdit);
 
-	void accept(URI resourceURI, Change change);
+    void accept(URI resourceURI, Change change);
 
-	StatusWrapper getRefactoringStatus();
-	
-	IRefactoringDocument getDocument(URI resourceURI);
-	
-	/**
-	 * Returns a composite change of all accepted updates.
-	 */
-	Change createCompositeChange(String name, IProgressMonitor monitor);
+    StatusWrapper getRefactoringStatus();
+
+    IRefactoringDocument getDocument(URI resourceURI);
+
+    /**
+     * Returns a composite change of all accepted updates.
+     */
+    Change createCompositeChange(String name, IProgressMonitor monitor);
 
 }

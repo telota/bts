@@ -4,9 +4,9 @@ import java.util.Map;
 
 public interface HieroglyphTypeWriterController {
 
-	String getHieroglypheProposalsAsMdCString(String normalizedMdC,
-			Map counterCacheMap);
+    String getHieroglypheProposalsAsMdCString(String normalizedMdC,
+                                              Map counterCacheMap);
 
-	void updateGraphicSelectionCounter(String beforeImageMdC, String newMdC);
+    void updateGraphicSelectionCounter(String beforeImageMdC, String newMdC);
 
 }

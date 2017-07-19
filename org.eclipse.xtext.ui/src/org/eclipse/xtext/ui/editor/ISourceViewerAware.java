@@ -14,5 +14,5 @@ import org.eclipse.jface.text.source.ISourceViewer;
  * @author Peter Friese - Initial contribution and API
  */
 public interface ISourceViewerAware {
-	void setSourceViewer(ISourceViewer sourceViewer);
+    void setSourceViewer(ISourceViewer sourceViewer);
 }

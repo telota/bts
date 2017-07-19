@@ -19,54 +19,54 @@ import com.google.inject.Inject;
  *
  * @author Michael Clay - Initial contribution and API
  */
-public class XtextTemplateContextType extends TemplateContextType implements Comparable<TemplateContextType>{
+public class XtextTemplateContextType extends TemplateContextType implements Comparable<TemplateContextType> {
 
-	public XtextTemplateContextType() {
-		addDefaultTemplateVariables();
-	}
-	
-	@Inject
-	public void setCrossReferenceResolver(CrossReferenceTemplateVariableResolver resolver) {
-		addResolver(resolver);
-	}
-	
-	@Inject
-	public void setEnumResolver(EnumTemplateVariableResolver resolver) {
-		addResolver(resolver);
-	}
+    public XtextTemplateContextType() {
+        addDefaultTemplateVariables();
+    }
 
-	protected void addDefaultTemplateVariables() {
-		addResolver(new GlobalTemplateVariables.WordSelection());
-		addResolver(new GlobalTemplateVariables.LineSelection());
-		addResolver(new GlobalTemplateVariables.Date());
-		addResolver(new GlobalTemplateVariables.Year());
-		addResolver(new GlobalTemplateVariables.Time());
-		addResolver(new GlobalTemplateVariables.Dollar());
-		addResolver(new GlobalTemplateVariables.User());
-		addResolver(new GlobalTemplateVariables.Cursor());
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof TemplateContextType))
-			return false;
-		if (obj == this)
-			return true;
-		TemplateContextType contextType = (TemplateContextType) obj;
-		return getId().equals(contextType.getId());
-	}
-	
-	@Override
-	public int hashCode() {
-		return getId().hashCode();
-	}
+    @Inject
+    public void setCrossReferenceResolver(CrossReferenceTemplateVariableResolver resolver) {
+        addResolver(resolver);
+    }
 
-	public int compareTo(TemplateContextType templateContextType) {
-		int result = getName().compareTo(templateContextType.getName());
-		if (result == 0) {
-			return getId().compareTo(templateContextType.getId());
-		}
-		return result;
-	}
+    @Inject
+    public void setEnumResolver(EnumTemplateVariableResolver resolver) {
+        addResolver(resolver);
+    }
+
+    protected void addDefaultTemplateVariables() {
+        addResolver(new GlobalTemplateVariables.WordSelection());
+        addResolver(new GlobalTemplateVariables.LineSelection());
+        addResolver(new GlobalTemplateVariables.Date());
+        addResolver(new GlobalTemplateVariables.Year());
+        addResolver(new GlobalTemplateVariables.Time());
+        addResolver(new GlobalTemplateVariables.Dollar());
+        addResolver(new GlobalTemplateVariables.User());
+        addResolver(new GlobalTemplateVariables.Cursor());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof TemplateContextType))
+            return false;
+        if (obj == this)
+            return true;
+        TemplateContextType contextType = (TemplateContextType) obj;
+        return getId().equals(contextType.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
+    }
+
+    public int compareTo(TemplateContextType templateContextType) {
+        int result = getName().compareTo(templateContextType.getName());
+        if (result == 0) {
+            return getId().compareTo(templateContextType.getId());
+        }
+        return result;
+    }
 
 }

@@ -19,16 +19,16 @@ import com.google.inject.ImplementedBy;
 /**
  * Tracks the URIs of the elements whose names change in a rename refactoring. This is necessary as URIs could change if
  * the language implements a name dependent {@link org.eclipse.xtext.resource.IFragmentProvider}.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 @ImplementedBy(RenamedElementTracker.class)
 public interface IRenamedElementTracker {
 
-	/**
-	 * Applies the semantic change, relocates the renamedElements and returns a map of original to new {@link URI URIs}.
-	 */
-	Map<URI, URI> renameAndTrack(Iterable<URI> renamedElementURIs, String newName, ResourceSet resourceSet,
-			IRenameStrategy renameStrategy, IProgressMonitor monitor);
+    /**
+     * Applies the semantic change, relocates the renamedElements and returns a map of original to new {@link URI URIs}.
+     */
+    Map<URI, URI> renameAndTrack(Iterable<URI> renamedElementURIs, String newName, ResourceSet resourceSet,
+                                 IRenameStrategy renameStrategy, IProgressMonitor monitor);
 
 }

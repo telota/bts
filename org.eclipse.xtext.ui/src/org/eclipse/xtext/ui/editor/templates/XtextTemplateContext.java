@@ -24,101 +24,101 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
  * Represents an extended version of class {@link DocumentTemplateContext} to provide additional Xtext related
  * information and services for resolving a <code>Template</code>. Furthermore it fixes the indentation
  * of the applied template.
- * 
+ *
  * @author Michael Clay - Initial contribution and API
  * @author Sebastian Zarnekow
  */
 public class XtextTemplateContext extends DocumentTemplateContext {
 
-	private final ContentAssistContext contentAssistContext;
-	
-	private final IScopeProvider scopeProvider;
+    private final ContentAssistContext contentAssistContext;
 
-	public XtextTemplateContext(TemplateContextType type, IDocument document, Position position,
-			ContentAssistContext contentAssistContext, IScopeProvider scopeProvider) {
-		super(type, document, position);
-		this.contentAssistContext = contentAssistContext;
-		this.scopeProvider = scopeProvider;
-	}
+    private final IScopeProvider scopeProvider;
 
-	/**
-	 * @return the contentAssistContext
-	 */
-	public ContentAssistContext getContentAssistContext() {
-		return contentAssistContext;
-	}
+    public XtextTemplateContext(TemplateContextType type, IDocument document, Position position,
+                                ContentAssistContext contentAssistContext, IScopeProvider scopeProvider) {
+        super(type, document, position);
+        this.contentAssistContext = contentAssistContext;
+        this.scopeProvider = scopeProvider;
+    }
 
-	/**
-	 * @return the linkingCandidatesService
-	 */
-	public IScopeProvider getScopeProvider() {
-		return scopeProvider;
-	}
-	
-	@Override
-	public TemplateBuffer evaluate(Template template) throws BadLocationException, TemplateException {
-		if (!canEvaluate(template))
-			return null;
+    /**
+     * @return the contentAssistContext
+     */
+    public ContentAssistContext getContentAssistContext() {
+        return contentAssistContext;
+    }
 
-		TemplateTranslator translator= createTemplateTranslator();
-		TemplateBuffer buffer= translator.translate(template);
+    /**
+     * @return the linkingCandidatesService
+     */
+    public IScopeProvider getScopeProvider() {
+        return scopeProvider;
+    }
 
-		getContextType().resolve(buffer, this);
+    @Override
+    public TemplateBuffer evaluate(Template template) throws BadLocationException, TemplateException {
+        if (!canEvaluate(template))
+            return null;
 
-		return buffer;
-	}
-	
-	/**
-	 * @since 2.3
-	 */
-	public TemplateBuffer evaluateForDisplay(Template template) throws BadLocationException, TemplateException {
-		if (!canEvaluate(template))
-			return null;
-		
-		TemplateTranslator translator= new TemplateTranslator();
-		TemplateBuffer buffer= translator.translate(template);
-		
-		getContextType().resolve(buffer, this);
-		
-		return buffer;
-	}
+        TemplateTranslator translator = createTemplateTranslator();
+        TemplateBuffer buffer = translator.translate(template);
 
-	protected TemplateTranslator createTemplateTranslator() {
-		try {
-			int offset = getStart();
-			IRegion lineRegion = getDocument().getLineInformationOfOffset(offset);
-			String line = getDocument().get(lineRegion.getOffset(), lineRegion.getLength());
-			int i = 0;
-			while(i < line.length() && Character.isWhitespace(line.charAt(i))) {
-				i++;
-			}
-			if (i != 0)
-				return new IndentationAwareTemplateTranslator(line.substring(0, i));
-			return new TemplateTranslator();
-		} catch(BadLocationException ex) {
-			return new TemplateTranslator();
-		}
-	}
-	
-	public static class IndentationAwareTemplateTranslator extends TemplateTranslator {
-	
-		private final String indentation;
+        getContextType().resolve(buffer, this);
 
-		public IndentationAwareTemplateTranslator(String indentation) {
-			this.indentation = indentation;
-		}
+        return buffer;
+    }
 
-		@Override
-		public TemplateBuffer translate(Template template) throws TemplateException {
-			return translate(template.getPattern());
-		}
-		
-		@Override
-		public TemplateBuffer translate(String string) throws TemplateException {
-			String withIndentation = string.replaceAll("(\r\n?)|(\n)", "$0" + indentation);
-			return super.translate(withIndentation);
-		}
-	}
+    /**
+     * @since 2.3
+     */
+    public TemplateBuffer evaluateForDisplay(Template template) throws BadLocationException, TemplateException {
+        if (!canEvaluate(template))
+            return null;
+
+        TemplateTranslator translator = new TemplateTranslator();
+        TemplateBuffer buffer = translator.translate(template);
+
+        getContextType().resolve(buffer, this);
+
+        return buffer;
+    }
+
+    protected TemplateTranslator createTemplateTranslator() {
+        try {
+            int offset = getStart();
+            IRegion lineRegion = getDocument().getLineInformationOfOffset(offset);
+            String line = getDocument().get(lineRegion.getOffset(), lineRegion.getLength());
+            int i = 0;
+            while (i < line.length() && Character.isWhitespace(line.charAt(i))) {
+                i++;
+            }
+            if (i != 0)
+                return new IndentationAwareTemplateTranslator(line.substring(0, i));
+            return new TemplateTranslator();
+        } catch (BadLocationException ex) {
+            return new TemplateTranslator();
+        }
+    }
+
+    public static class IndentationAwareTemplateTranslator extends TemplateTranslator {
+
+        private final String indentation;
+
+        public IndentationAwareTemplateTranslator(String indentation) {
+            this.indentation = indentation;
+        }
+
+        @Override
+        public TemplateBuffer translate(Template template) throws TemplateException {
+            return translate(template.getPattern());
+        }
+
+        @Override
+        public TemplateBuffer translate(String string) throws TemplateException {
+            String withIndentation = string.replaceAll("(\r\n?)|(\n)", "$0" + indentation);
+            return super.translate(withIndentation);
+        }
+    }
 
 
 }

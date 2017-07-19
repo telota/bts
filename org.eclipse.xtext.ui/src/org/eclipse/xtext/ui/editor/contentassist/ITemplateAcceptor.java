@@ -14,29 +14,29 @@ import org.eclipse.jface.text.templates.TemplateProposal;
  */
 public interface ITemplateAcceptor {
 
-	void accept(TemplateProposal template);
-	
-	boolean canAcceptMoreTemplates();
-	
-	public class Delegate implements ITemplateAcceptor {
+    void accept(TemplateProposal template);
 
-		private ITemplateAcceptor delegate;
-		
-		public void accept(TemplateProposal template) {
-			delegate.accept(template);
-		}
+    boolean canAcceptMoreTemplates();
 
-		public boolean canAcceptMoreTemplates() {
-			return delegate.canAcceptMoreTemplates();
-		}
+    public class Delegate implements ITemplateAcceptor {
 
-		public void setDelegate(ITemplateAcceptor delegate) {
-			this.delegate = delegate;
-		}
+        private ITemplateAcceptor delegate;
 
-		public ITemplateAcceptor getDelegate() {
-			return delegate;
-		}
+        public void accept(TemplateProposal template) {
+            delegate.accept(template);
+        }
 
-	}
+        public boolean canAcceptMoreTemplates() {
+            return delegate.canAcceptMoreTemplates();
+        }
+
+        public ITemplateAcceptor getDelegate() {
+            return delegate;
+        }
+
+        public void setDelegate(ITemplateAcceptor delegate) {
+            this.delegate = delegate;
+        }
+
+    }
 }

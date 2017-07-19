@@ -19,25 +19,25 @@ import org.eclipselabs.emfjson.couchdb.ui.model.CouchDatabase;
 import org.eclipselabs.emfjson.couchdb.ui.model.CouchDocument;
 
 public class CouchDBLabelProvider extends LabelProvider {
-	
-	public CouchDBLabelProvider(Composite parent) {
-		
-	}
-	
-	@Override
-	public String getText(Object element) {
-		if (element instanceof CouchDatabase) {
-			return ((CouchDatabase) element).getName() + " (" + ((CouchDatabase) element).getDocuments().size() + ")";
-		}
-		return ((CouchDocument) element).getId();
-	}
-	
-	@Override
-	public Image getImage(Object element) {
-		if (element instanceof CouchDatabase) {
-			return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
-		}
-		return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
-	}
-	
+
+    public CouchDBLabelProvider(Composite parent) {
+
+    }
+
+    @Override
+    public String getText(Object element) {
+        if (element instanceof CouchDatabase) {
+            return ((CouchDatabase) element).getName() + " (" + ((CouchDatabase) element).getDocuments().size() + ")";
+        }
+        return ((CouchDocument) element).getId();
+    }
+
+    @Override
+    public Image getImage(Object element) {
+        if (element instanceof CouchDatabase) {
+            return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FOLDER);
+        }
+        return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_FILE);
+    }
+
 }

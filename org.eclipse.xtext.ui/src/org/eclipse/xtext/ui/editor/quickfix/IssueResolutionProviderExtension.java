@@ -15,8 +15,8 @@ import org.eclipse.xtext.validation.Issue;
  */
 public interface IssueResolutionProviderExtension {
 
-	/**
-	 * @return whether this resolution provider is able to provide resolutions for the given issue.
-	 */
-	boolean hasResolutionFor(Issue issue);
+    /**
+     * @return whether this resolution provider is able to provide resolutions for the given issue.
+     */
+    boolean hasResolutionFor(Issue issue);
 }

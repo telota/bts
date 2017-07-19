@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class PartialDestroyedVersMarkerImpl extends VersMarkerImpl implements PartialDestroyedVersMarker
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected PartialDestroyedVersMarkerImpl()
-  {
-    super();
-  }
+public class PartialDestroyedVersMarkerImpl extends VersMarkerImpl implements PartialDestroyedVersMarker {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected PartialDestroyedVersMarkerImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.PARTIAL_DESTROYED_VERS_MARKER;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.PARTIAL_DESTROYED_VERS_MARKER;
+    }
 
 } //PartialDestroyedVersMarkerImpl

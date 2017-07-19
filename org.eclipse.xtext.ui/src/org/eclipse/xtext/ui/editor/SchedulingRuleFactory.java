@@ -13,74 +13,73 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 /**
  * Scheduling rule factory for asynchronous operations. Mostly copied from
  * org.eclipse.debug.internal.ui.viewers.AsynchronousSchedulingRuleFactory.
- * 
+ *
  * @author Michael Clay - Initial contribution and API
  */
 public class SchedulingRuleFactory {
-	public static SchedulingRuleFactory INSTANCE = new SchedulingRuleFactory();
+    public static SchedulingRuleFactory INSTANCE = new SchedulingRuleFactory();
 
-	/**
-	 * All jobs that are configured with the same instance of this rule will run sequentially.
-	 * 
-	 * @author Sebastian Zarnekow - Initial contribution and API
-	 */
-	public static class Sequence implements ISchedulingRule {
+    private SchedulingRuleFactory() {
+    }
 
-		public boolean contains(ISchedulingRule rule) {
-			return rule == this;
-		}
+    /**
+     * Returns a scheduling rule that allows all jobs with an instance of the rule to run one at a time.
+     *
+     * @return scheduling rule
+     */
+    public ISchedulingRule newSequence() {
+        return new Sequence();
+    }
 
-		public boolean isConflicting(ISchedulingRule rule) {
-			return rule instanceof Sequence;
-		}
-	}
+    /**
+     * Returns a scheduling rule that allows all jobs with an instance of the rule on the same object to run one at a
+     * time.
+     *
+     * @param lock object to serialize one
+     * @return scheduling rule
+     */
+    public ISchedulingRule newSerialPerObjectRule(Object lock) {
+        return new SerialPerObjectRule(lock);
+    }
 
-	/**
-	 * Rule allows only one job for each given lock object to run at a time
-	 */
-	static class SerialPerObjectRule implements ISchedulingRule {
-		private Object lockObject = null;
+    /**
+     * All jobs that are configured with the same instance of this rule will run sequentially.
+     *
+     * @author Sebastian Zarnekow - Initial contribution and API
+     */
+    public static class Sequence implements ISchedulingRule {
 
-		public SerialPerObjectRule(Object lock) {
-			lockObject = lock;
-		}
+        public boolean contains(ISchedulingRule rule) {
+            return rule == this;
+        }
 
-		public boolean contains(ISchedulingRule rule) {
-			return rule == this;
-		}
+        public boolean isConflicting(ISchedulingRule rule) {
+            return rule instanceof Sequence;
+        }
+    }
 
-		public boolean isConflicting(ISchedulingRule rule) {
-			if (rule instanceof SerialPerObjectRule) {
-				SerialPerObjectRule serialPerObjectRule = (SerialPerObjectRule) rule;
-				return lockObject == serialPerObjectRule.lockObject;
-			}
-			return false;
-		}
+    /**
+     * Rule allows only one job for each given lock object to run at a time
+     */
+    static class SerialPerObjectRule implements ISchedulingRule {
+        private Object lockObject = null;
 
-	}
+        public SerialPerObjectRule(Object lock) {
+            lockObject = lock;
+        }
 
-	private SchedulingRuleFactory() {
-	}
+        public boolean contains(ISchedulingRule rule) {
+            return rule == this;
+        }
 
-	/**
-	 * Returns a scheduling rule that allows all jobs with an instance of the rule to run one at a time.
-	 * 
-	 * @return scheduling rule
-	 */
-	public ISchedulingRule newSequence() {
-		return new Sequence();
-	}
+        public boolean isConflicting(ISchedulingRule rule) {
+            if (rule instanceof SerialPerObjectRule) {
+                SerialPerObjectRule serialPerObjectRule = (SerialPerObjectRule) rule;
+                return lockObject == serialPerObjectRule.lockObject;
+            }
+            return false;
+        }
 
-	/**
-	 * Returns a scheduling rule that allows all jobs with an instance of the rule on the same object to run one at a
-	 * time.
-	 * 
-	 * @param lock
-	 *            object to serialize one
-	 * @return scheduling rule
-	 */
-	public ISchedulingRule newSerialPerObjectRule(Object lock) {
-		return new SerialPerObjectRule(lock);
-	}
+    }
 
 }

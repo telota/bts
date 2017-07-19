@@ -32,7 +32,6 @@ package org.bbaw.bts.core.controller.dialogControllers;
 /**
  * The Interface BTSConfigurationDialogController.
  */
-public interface BTSConfigurationDialogController
-{
+public interface BTSConfigurationDialogController {
 
 }

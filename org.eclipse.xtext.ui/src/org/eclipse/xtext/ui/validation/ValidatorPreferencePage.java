@@ -27,88 +27,92 @@ import com.google.inject.name.Named;
  */
 public class ValidatorPreferencePage extends PropertyAndPreferencePage {
 
-	@Inject protected PreferenceStoreAccessImpl preferenceStoreAccessImpl;
-	
-	@Inject private AbstractValidatorConfigurationBlock validatorConfigurationBlock;
-	
-	@Inject @Named(Constants.LANGUAGE_NAME) private String languageName;
+    @Inject
+    protected PreferenceStoreAccessImpl preferenceStoreAccessImpl;
 
-	@Override
-	public void createControl(Composite parent) {
-		IWorkbenchPreferenceContainer container = (IWorkbenchPreferenceContainer) getContainer();
-		IPreferenceStore preferenceStore = preferenceStoreAccessImpl.getWritablePreferenceStore(getProject());
-		validatorConfigurationBlock.setProject(getProject());
-		validatorConfigurationBlock.setPreferenceStore(preferenceStore);
-		validatorConfigurationBlock.setWorkbenchPreferenceContainer(container);
-		validatorConfigurationBlock.setStatusChangeListener(getNewStatusChangedListener());
-		super.createControl(parent);
-	}
-	
-	@Override
-	protected Control createPreferenceContent(Composite composite, IPreferencePageContainer preferencePageContainer) {
-		return validatorConfigurationBlock.createContents(composite);
-	}
+    @Inject
+    private AbstractValidatorConfigurationBlock validatorConfigurationBlock;
 
-	@Override
-	protected boolean hasProjectSpecificOptions(IProject project) {
-		return validatorConfigurationBlock.hasProjectSpecificOptions(project);
-	}
+    @Inject
+    @Named(Constants.LANGUAGE_NAME)
+    private String languageName;
 
-	@Override
-	protected String getPreferencePageID() {
-		return languageName + ".validator.preferencePage";
-	}
+    @Override
+    public void createControl(Composite parent) {
+        IWorkbenchPreferenceContainer container = (IWorkbenchPreferenceContainer) getContainer();
+        IPreferenceStore preferenceStore = preferenceStoreAccessImpl.getWritablePreferenceStore(getProject());
+        validatorConfigurationBlock.setProject(getProject());
+        validatorConfigurationBlock.setPreferenceStore(preferenceStore);
+        validatorConfigurationBlock.setWorkbenchPreferenceContainer(container);
+        validatorConfigurationBlock.setStatusChangeListener(getNewStatusChangedListener());
+        super.createControl(parent);
+    }
 
-	@Override
-	protected String getPropertyPageID() {
-		return languageName + ".validator.propertyPage";
-	}
+    @Override
+    protected Control createPreferenceContent(Composite composite, IPreferencePageContainer preferencePageContainer) {
+        return validatorConfigurationBlock.createContents(composite);
+    }
 
-	@Override
-	public void dispose() {
-		if (validatorConfigurationBlock != null) {
-			validatorConfigurationBlock.dispose();
-		}
-		super.dispose();
-	}
+    @Override
+    protected boolean hasProjectSpecificOptions(IProject project) {
+        return validatorConfigurationBlock.hasProjectSpecificOptions(project);
+    }
 
-	@Override
-	protected void enableProjectSpecificSettings(boolean useProjectSpecificSettings) {
-		super.enableProjectSpecificSettings(useProjectSpecificSettings);
-		if (validatorConfigurationBlock != null) {
-			validatorConfigurationBlock.useProjectSpecificSettings(useProjectSpecificSettings);
-		}
-	}
+    @Override
+    protected String getPreferencePageID() {
+        return languageName + ".validator.preferencePage";
+    }
 
-	@Override
-	protected void performDefaults() {
-		super.performDefaults();
-		if (validatorConfigurationBlock != null) {
-			validatorConfigurationBlock.performDefaults();
-		}
-	}
+    @Override
+    protected String getPropertyPageID() {
+        return languageName + ".validator.propertyPage";
+    }
 
-	@Override
-	public boolean performOk() {
-		if (validatorConfigurationBlock != null) {
-			if (!validatorConfigurationBlock.performOk()) {
-				return false;
-			}
-		}
-		return super.performOk();
-	}
+    @Override
+    public void dispose() {
+        if (validatorConfigurationBlock != null) {
+            validatorConfigurationBlock.dispose();
+        }
+        super.dispose();
+    }
 
-	@Override
-	public void performApply() {
-		if (validatorConfigurationBlock != null) {
-			validatorConfigurationBlock.performApply();
-		}
-	}
+    @Override
+    protected void enableProjectSpecificSettings(boolean useProjectSpecificSettings) {
+        super.enableProjectSpecificSettings(useProjectSpecificSettings);
+        if (validatorConfigurationBlock != null) {
+            validatorConfigurationBlock.useProjectSpecificSettings(useProjectSpecificSettings);
+        }
+    }
 
-	@Override
-	public void setElement(IAdaptable element) {
-		super.setElement(element);
-		setDescription(null); // no description for property page
-	}
+    @Override
+    protected void performDefaults() {
+        super.performDefaults();
+        if (validatorConfigurationBlock != null) {
+            validatorConfigurationBlock.performDefaults();
+        }
+    }
+
+    @Override
+    public boolean performOk() {
+        if (validatorConfigurationBlock != null) {
+            if (!validatorConfigurationBlock.performOk()) {
+                return false;
+            }
+        }
+        return super.performOk();
+    }
+
+    @Override
+    public void performApply() {
+        if (validatorConfigurationBlock != null) {
+            validatorConfigurationBlock.performApply();
+        }
+    }
+
+    @Override
+    public void setElement(IAdaptable element) {
+        super.setElement(element);
+        setDescription(null); // no description for property page
+    }
 
 }

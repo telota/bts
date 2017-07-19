@@ -22,64 +22,63 @@ import com.google.common.collect.Lists;
  */
 public class OutlineFilterAndSorter {
 
-	public static interface IComparator extends Comparator<IOutlineNode> {
-		boolean isEnabled();
-	}
+    private List<IFilter> filters = Lists.newArrayList();
+    private IComparator comparator;
 
-	public static interface IFilter extends Predicate<IOutlineNode> {
-		boolean isEnabled();
-	}
+    public IOutlineNode[] filterAndSort(Iterable<IOutlineNode> nodes) {
+        final Iterable<IFilter> enabledFilters = getEnabledFilters();
+        Iterable<IOutlineNode> filteredNodes = null;
+        if (Iterables.isEmpty(enabledFilters)) {
+            filteredNodes = nodes;
+        } else {
+            filteredNodes = Iterables.filter(nodes, new Predicate<IOutlineNode>() {
+                public boolean apply(final IOutlineNode node) {
+                    return Iterables.all(enabledFilters, new Predicate<IFilter>() {
+                        public boolean apply(IFilter filter) {
+                            return filter.apply(node);
+                        }
+                    });
+                }
+            });
+        }
+        IOutlineNode[] nodesAsArray = Iterables.toArray(filteredNodes, IOutlineNode.class);
+        if (comparator != null && isSortingEnabled())
+            Arrays.sort(nodesAsArray, comparator);
+        return nodesAsArray;
+    }
 
-	private List<IFilter> filters = Lists.newArrayList();
+    /**
+     * @since 2.2
+     */
+    protected boolean isSortingEnabled() {
+        return comparator.isEnabled();
+    }
 
-	private IComparator comparator;
+    protected Iterable<IFilter> getEnabledFilters() {
+        return Iterables.filter(filters, new Predicate<IFilter>() {
+            public boolean apply(IFilter filter) {
+                return filter.isEnabled();
+            }
+        });
+    }
 
-	public IOutlineNode[] filterAndSort(Iterable<IOutlineNode> nodes) {
-		final Iterable<IFilter> enabledFilters = getEnabledFilters();
-		Iterable<IOutlineNode> filteredNodes = null;
-		if (Iterables.isEmpty(enabledFilters)) {
-			filteredNodes = nodes;
-		} else {
-			filteredNodes = Iterables.filter(nodes, new Predicate<IOutlineNode>() {
-				public boolean apply(final IOutlineNode node) {
-					return Iterables.all(enabledFilters, new Predicate<IFilter>() {
-						public boolean apply(IFilter filter) {
-							return filter.apply(node);
-						}
-					});
-				}
-			});
-		}
-		IOutlineNode[] nodesAsArray = Iterables.toArray(filteredNodes, IOutlineNode.class);
-		if (comparator != null && isSortingEnabled())
-			Arrays.sort(nodesAsArray, comparator);
-		return nodesAsArray;
-	}
+    public void setComparator(IComparator comparator) {
+        this.comparator = comparator;
+    }
 
-	/**
-	 * @since 2.2
-	 */
-	protected boolean isSortingEnabled() {
-		return comparator.isEnabled();
-	}
+    public boolean addFilter(IFilter filter) {
+        return filters.add(filter);
+    }
 
-	protected Iterable<IFilter> getEnabledFilters() {
-		return Iterables.filter(filters, new Predicate<IFilter>() {
-			public boolean apply(IFilter filter) {
-				return filter.isEnabled();
-			}
-		});
-	}
+    public boolean removeFilter(IFilter filter) {
+        return filters.remove(filter);
+    }
 
-	public void setComparator(IComparator comparator) {
-		this.comparator = comparator;
-	}
-	
-	public boolean addFilter(IFilter filter) {
-		return filters.add(filter);
-	}
+    public static interface IComparator extends Comparator<IOutlineNode> {
+        boolean isEnabled();
+    }
 
-	public boolean removeFilter(IFilter filter) {
-		return filters.remove(filter);
-	}
+    public static interface IFilter extends Predicate<IOutlineNode> {
+        boolean isEnabled();
+    }
 }

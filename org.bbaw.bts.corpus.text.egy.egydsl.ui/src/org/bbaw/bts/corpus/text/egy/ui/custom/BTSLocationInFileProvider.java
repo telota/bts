@@ -7,33 +7,33 @@ import org.eclipse.xtext.resource.ILocationInFileProvider;
 import org.eclipse.xtext.util.ITextRegion;
 
 public class BTSLocationInFileProvider extends DefaultLocationInFileProvider
-		implements ILocationInFileProvider {
+        implements ILocationInFileProvider {
 
-	@Override
-	public ITextRegion getSignificantTextRegion(EObject obj) {
-		System.out.println(obj);
+    @Override
+    public ITextRegion getSignificantTextRegion(EObject obj) {
+        System.out.println(obj);
 
-		return super.getSignificantTextRegion(obj);
-	}
+        return super.getSignificantTextRegion(obj);
+    }
 
-	@Override
-	public ITextRegion getSignificantTextRegion(EObject owner,
-			EStructuralFeature feature, int indexInList) {
-		System.out.println(owner);
-		return super.getSignificantTextRegion(owner, feature, indexInList);
-	}
+    @Override
+    public ITextRegion getSignificantTextRegion(EObject owner,
+                                                EStructuralFeature feature, int indexInList) {
+        System.out.println(owner);
+        return super.getSignificantTextRegion(owner, feature, indexInList);
+    }
 
-	@Override
-	public ITextRegion getFullTextRegion(EObject obj) {
-		System.out.println(obj);
-		return super.getFullTextRegion(obj);
-	}
+    @Override
+    public ITextRegion getFullTextRegion(EObject obj) {
+        System.out.println(obj);
+        return super.getFullTextRegion(obj);
+    }
 
-	@Override
-	public ITextRegion getFullTextRegion(EObject owner,
-			EStructuralFeature feature, int indexInList) {
-		System.out.println(owner);
-		return super.getFullTextRegion(owner, feature, indexInList);
-	}
+    @Override
+    public ITextRegion getFullTextRegion(EObject owner,
+                                         EStructuralFeature feature, int indexInList) {
+        System.out.println(owner);
+        return super.getFullTextRegion(owner, feature, indexInList);
+    }
 
 }

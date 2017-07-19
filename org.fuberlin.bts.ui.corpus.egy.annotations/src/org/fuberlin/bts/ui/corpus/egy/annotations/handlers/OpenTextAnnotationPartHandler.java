@@ -31,34 +31,31 @@
 package org.fuberlin.bts.ui.corpus.egy.annotations.handlers;
 
 
-
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.fuberlin.bts.ui.corpus.egy.annotations.internal.Activator;
 import org.fuberlin.bts.ui.corpus.egy.annotations.parts.TextAnnotationsPart;
+
 /**
  * @author plutte
- *
  */
 public class OpenTextAnnotationPartHandler {
-	
 
-		@Execute
-		public void execute(EPartService partService) {
-			MPart part = partService.findPart(TextAnnotationsPart.PART_ID);
-			if (part == null)
-			{
-				part = partService.createPart(TextAnnotationsPart.PART_ID);
-			}
-			partService.activate(part);
-		}
-			
-		@CanExecute
-		public boolean canExecute()
-		{
-			System.out.println("llllaalalala");
-			return true;
-		}
+
+    @Execute
+    public void execute(EPartService partService) {
+        MPart part = partService.findPart(TextAnnotationsPart.PART_ID);
+        if (part == null) {
+            part = partService.createPart(TextAnnotationsPart.PART_ID);
+        }
+        partService.activate(part);
+    }
+
+    @CanExecute
+    public boolean canExecute() {
+        System.out.println("llllaalalala");
+        return true;
+    }
 }

@@ -13,14 +13,15 @@ import org.eclipse.osgi.util.NLS;
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.xtext.ui.editor.quickfix.messages"; //$NON-NLS-1$
-	public static String DefaultQuickfixProvider_1;
-	public static String DefaultQuickfixProvider_changeTo;
-	static {
-		// initialize resource bundle
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
-	}
+    private static final String BUNDLE_NAME = "org.eclipse.xtext.ui.editor.quickfix.messages"; //$NON-NLS-1$
+    public static String DefaultQuickfixProvider_1;
+    public static String DefaultQuickfixProvider_changeTo;
 
-	private Messages() {
-	}
+    static {
+        // initialize resource bundle
+        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+    }
+
+    private Messages() {
+    }
 }

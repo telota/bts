@@ -34,118 +34,118 @@ import com.ibm.icu.text.MessageFormat;
 
 /**
  * Convenience class to create refactoring issues with an {@link RefactoringStatusContext}.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class StatusWrapper {
 
-	@Inject
-	private RefactoringStatus status;
+    @Inject
+    private RefactoringStatus status;
 
-	@Inject
-	private ProjectUtil projectUtil;
+    @Inject
+    private ProjectUtil projectUtil;
 
-	@Inject
-	private ILocationInFileProvider locationInFileProvider;
+    @Inject
+    private ILocationInFileProvider locationInFileProvider;
 
-	private PolymorphicDispatcher<String> toString = PolymorphicDispatcher.createForSingleTarget("_toString", this);
+    private PolymorphicDispatcher<String> toString = PolymorphicDispatcher.createForSingleTarget("_toString", this);
 
-	protected RefactoringStatusContext createContext(EObject eObject) {
-		if (eObject != null) {
-			ITextRegion textRegion = locationInFileProvider.getSignificantTextRegion(eObject);
-			return createContext(eObject, textRegion);
-		}
-		return null;
-	}
+    protected RefactoringStatusContext createContext(EObject eObject) {
+        if (eObject != null) {
+            ITextRegion textRegion = locationInFileProvider.getSignificantTextRegion(eObject);
+            return createContext(eObject, textRegion);
+        }
+        return null;
+    }
 
-	protected RefactoringStatusContext createContext(EObject eObject, ITextRegion textRegion) {
-		IRegion region = null;
-		if (textRegion != null)
-			region = new Region(textRegion.getOffset(), textRegion.getLength());
-		IFile file = projectUtil.findFileStorage(EcoreUtil2.getPlatformResourceOrNormalizedURI(eObject), false);
-		if(file == null)
-			return null;
-		return new FileStatusContext(file, region);
-	}
+    protected RefactoringStatusContext createContext(EObject eObject, ITextRegion textRegion) {
+        IRegion region = null;
+        if (textRegion != null)
+            region = new Region(textRegion.getOffset(), textRegion.getLength());
+        IFile file = projectUtil.findFileStorage(EcoreUtil2.getPlatformResourceOrNormalizedURI(eObject), false);
+        if (file == null)
+            return null;
+        return new FileStatusContext(file, region);
+    }
 
-	protected RefactoringStatusContext createContext(URI uri, ResourceSet resourceSet) {
-		EObject eObject = null;
-		if (resourceSet != null && uri.hasFragment())
-			eObject = resourceSet.getEObject(uri, true);
-		if (eObject != null)
-			return createContext(eObject);
-		else
-			return createContext(projectUtil.findFileStorage(uri, false), null);
-	}
+    protected RefactoringStatusContext createContext(URI uri, ResourceSet resourceSet) {
+        EObject eObject = null;
+        if (resourceSet != null && uri.hasFragment())
+            eObject = resourceSet.getEObject(uri, true);
+        if (eObject != null)
+            return createContext(eObject);
+        else
+            return createContext(projectUtil.findFileStorage(uri, false), null);
+    }
 
-	protected RefactoringStatusContext createContext(IFile file, ITextRegion textRegion) {
-		if (file == null)
-			return null;
-		Region region = textRegion == null ? null : new Region(textRegion.getOffset(), textRegion.getLength());
-		return new FileStatusContext(file, region);
-	}
+    protected RefactoringStatusContext createContext(IFile file, ITextRegion textRegion) {
+        if (file == null)
+            return null;
+        Region region = textRegion == null ? null : new Region(textRegion.getOffset(), textRegion.getLength());
+        return new FileStatusContext(file, region);
+    }
 
-	protected String _toString(URI uri) {
-		IFile file = projectUtil.findFileStorage(uri, false);
-		return (file != null) ? file.getFullPath().toString() : uri.toString();
-	}
+    protected String _toString(URI uri) {
+        IFile file = projectUtil.findFileStorage(uri, false);
+        return (file != null) ? file.getFullPath().toString() : uri.toString();
+    }
 
-	protected String _toString(EObject element) {
-		return element.eClass().getName() + " '" + notNull(SimpleAttributeResolver.NAME_RESOLVER.apply(element)) + "' in " + _toString(element.eResource().getURI());
-	}
+    protected String _toString(EObject element) {
+        return element.eClass().getName() + " '" + notNull(SimpleAttributeResolver.NAME_RESOLVER.apply(element)) + "' in " + _toString(element.eResource().getURI());
+    }
 
-	protected String _toString(Exception exc) {
-		return notNull(exc.getMessage());
-	}
+    protected String _toString(Exception exc) {
+        return notNull(exc.getMessage());
+    }
 
-	protected String _toString(Object element) {
-		return notNull(element);
-	}
+    protected String _toString(Object element) {
+        return notNull(element);
+    }
 
-	public RefactoringStatus getRefactoringStatus() {
-		return status;
-	}
+    public RefactoringStatus getRefactoringStatus() {
+        return status;
+    }
 
-	protected String format(String message, Object... elements) {
-		Object[] strings = toArray(transform(newArrayList(elements), new Function<Object, String>() {
-			public String apply(Object from) {
-				return toString.invoke(from);
-			}
-		}), String.class);
-		return MessageFormat.format(message, strings);
-	}
+    protected String format(String message, Object... elements) {
+        Object[] strings = toArray(transform(newArrayList(elements), new Function<Object, String>() {
+            public String apply(Object from) {
+                return toString.invoke(from);
+            }
+        }), String.class);
+        return MessageFormat.format(message, strings);
+    }
 
-	public void add(int severity, String message, URI uri, ResourceSet resourceSet) {
-		status.addEntry(new RefactoringStatusEntry(severity, format(message, uri), createContext(uri, resourceSet)));
-	}
+    public void add(int severity, String message, URI uri, ResourceSet resourceSet) {
+        status.addEntry(new RefactoringStatusEntry(severity, format(message, uri), createContext(uri, resourceSet)));
+    }
 
-	public void add(int severity, String message, URI resourceUri) {
-		status.addEntry(new RefactoringStatusEntry(severity, format(message, resourceUri), createContext(resourceUri, null)));
-	}
+    public void add(int severity, String message, URI resourceUri) {
+        status.addEntry(new RefactoringStatusEntry(severity, format(message, resourceUri), createContext(resourceUri, null)));
+    }
 
-	public void add(int severity, String message, EObject element) {
-		status.addEntry(new RefactoringStatusEntry(severity, format(message, element), createContext(element)));
-	}
+    public void add(int severity, String message, EObject element) {
+        status.addEntry(new RefactoringStatusEntry(severity, format(message, element), createContext(element)));
+    }
 
-	public void add(int severity, String message, EObject element, ITextRegion region) {
-		status.addEntry(new RefactoringStatusEntry(severity, notNull(message), createContext(element, region)));
-	}
+    public void add(int severity, String message, EObject element, ITextRegion region) {
+        status.addEntry(new RefactoringStatusEntry(severity, notNull(message), createContext(element, region)));
+    }
 
-	public void add(int severity, String message, Exception exc, Logger log) {
-		String formatted = format(message, exc);
-		status.addEntry(new RefactoringStatusEntry(severity, formatted + ".\nSee log for details."));
-		log.error(formatted, exc);
-	}
+    public void add(int severity, String message, Exception exc, Logger log) {
+        String formatted = format(message, exc);
+        status.addEntry(new RefactoringStatusEntry(severity, formatted + ".\nSee log for details."));
+        log.error(formatted, exc);
+    }
 
-	public void add(int severity, String message, Object... params) {
-		status.addEntry(new RefactoringStatusEntry(severity, format(message, params)));
-	}
+    public void add(int severity, String message, Object... params) {
+        status.addEntry(new RefactoringStatusEntry(severity, format(message, params)));
+    }
 
-	public void merge(RefactoringStatus status) {
-		this.status.merge(status);
-	}
+    public void merge(RefactoringStatus status) {
+        this.status.merge(status);
+    }
 
-	public void merge(StatusWrapper status) {
-		this.status.merge(status.getRefactoringStatus());
-	}
+    public void merge(StatusWrapper status) {
+        this.status.merge(status.getRefactoringStatus());
+    }
 }

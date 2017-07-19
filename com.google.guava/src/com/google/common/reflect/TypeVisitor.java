@@ -32,7 +32,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * default, no recursion is done for type arguments or type bounds. But subclasses can opt to do
  * recursion by calling {@link #visit} for any {@code Type} while visitation is in progress. For
  * example, this can be used to reject wildcards or type variables contained in a type as in:
- *
+ * <p>
  * <pre>   {@code
  *   new TypeVisitor() {
  *     protected void visitParameterizedType(ParameterizedType t) {
@@ -49,10 +49,10 @@ import javax.annotation.concurrent.NotThreadSafe;
  *       throw new IllegalArgumentException("Cannot contain wildcard type.");
  *     }
  *   }.visit(type);}</pre>
- * 
+ * <p>
  * <p>One {@code Type} is visited at most once. The second time the same type is visited, it's
  * ignored by {@link #visit}. This avoids infinite recursion caused by recursive type bounds.
- *
+ * <p>
  * <p>This class is <em>not</em> thread safe.
  *
  * @author Ben Yu
@@ -60,45 +60,54 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 abstract class TypeVisitor {
 
-  private final Set<Type> visited = Sets.newHashSet();
+    private final Set<Type> visited = Sets.newHashSet();
 
-  /**
-   * Visits the given types. Null types are ignored. This allows subclasses to call
-   * {@code visit(parameterizedType.getOwnerType())} safely without having to check nulls.
-   */
-  public final void visit(Type... types) {
-    for (Type type : types) {
-      if (type == null || !visited.add(type)) {
-        // null owner type, or already visited;
-        continue;
-      }
-      boolean succeeded = false;
-      try {
-        if (type instanceof TypeVariable) {
-          visitTypeVariable((TypeVariable<?>) type);
-        } else if (type instanceof WildcardType) {
-          visitWildcardType((WildcardType) type);
-        } else if (type instanceof ParameterizedType) {
-          visitParameterizedType((ParameterizedType) type);
-        } else if (type instanceof Class) {
-          visitClass((Class<?>) type);
-        } else if (type instanceof GenericArrayType) {
-          visitGenericArrayType((GenericArrayType) type);
-        } else {
-          throw new AssertionError("Unknown type: " + type);
+    /**
+     * Visits the given types. Null types are ignored. This allows subclasses to call
+     * {@code visit(parameterizedType.getOwnerType())} safely without having to check nulls.
+     */
+    public final void visit(Type... types) {
+        for (Type type : types) {
+            if (type == null || !visited.add(type)) {
+                // null owner type, or already visited;
+                continue;
+            }
+            boolean succeeded = false;
+            try {
+                if (type instanceof TypeVariable) {
+                    visitTypeVariable((TypeVariable<?>) type);
+                } else if (type instanceof WildcardType) {
+                    visitWildcardType((WildcardType) type);
+                } else if (type instanceof ParameterizedType) {
+                    visitParameterizedType((ParameterizedType) type);
+                } else if (type instanceof Class) {
+                    visitClass((Class<?>) type);
+                } else if (type instanceof GenericArrayType) {
+                    visitGenericArrayType((GenericArrayType) type);
+                } else {
+                    throw new AssertionError("Unknown type: " + type);
+                }
+                succeeded = true;
+            } finally {
+                if (!succeeded) { // When the visitation failed, we don't want to ignore the second.
+                    visited.remove(type);
+                }
+            }
         }
-        succeeded = true;
-      } finally {
-        if (!succeeded) { // When the visitation failed, we don't want to ignore the second.
-          visited.remove(type);
-        }
-      }
     }
-  }
 
-  void visitClass(Class<?> t) {}
-  void visitGenericArrayType(GenericArrayType t) {}
-  void visitParameterizedType(ParameterizedType t) {}
-  void visitTypeVariable(TypeVariable<?> t) {}
-  void visitWildcardType(WildcardType t) {}
+    void visitClass(Class<?> t) {
+    }
+
+    void visitGenericArrayType(GenericArrayType t) {
+    }
+
+    void visitParameterizedType(ParameterizedType t) {
+    }
+
+    void visitTypeVariable(TypeVariable<?> t) {
+    }
+
+    void visitWildcardType(WildcardType t) {
+    }
 }

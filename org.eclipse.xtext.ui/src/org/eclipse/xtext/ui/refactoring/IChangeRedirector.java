@@ -13,27 +13,27 @@ import org.eclipse.core.runtime.IPath;
  * Implementations of this interface allow to redirect changes to files that have been moved by another
  * processor/participant within the same refactoring operation. This is extremely useful for participants of rename
  * resource and move resource refactorings, e.g. renaming package declarations after a file move.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public interface IChangeRedirector {
 
-	IPath getRedirectedPath(IPath source);
+    IChangeRedirector NULL = new IChangeRedirector() {
 
-	IChangeRedirector NULL = new IChangeRedirector() {
+        public IPath getRedirectedPath(IPath source) {
+            return source;
+        }
+    };
 
-		public IPath getRedirectedPath(IPath source) {
-			return source;
-		}
-	};
+    IPath getRedirectedPath(IPath source);
 
-	/**
-	 * Extension interface to hand an {@link IChangeRedirector} through to an
-	 * {@link org.eclipse.xtext.ui.refactoring.impl.IRefactoringDocument.Provider}.
-	 */
-	interface Aware {
-		IChangeRedirector getChangeRedirector();
+    /**
+     * Extension interface to hand an {@link IChangeRedirector} through to an
+     * {@link org.eclipse.xtext.ui.refactoring.impl.IRefactoringDocument.Provider}.
+     */
+    interface Aware {
+        IChangeRedirector getChangeRedirector();
 
-		void setChangeRedirector(IChangeRedirector changeRedirector);
-	}
+        void setChangeRedirector(IChangeRedirector changeRedirector);
+    }
 }

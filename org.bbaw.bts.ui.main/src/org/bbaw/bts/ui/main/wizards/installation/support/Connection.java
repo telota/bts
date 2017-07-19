@@ -1,45 +1,37 @@
 package org.bbaw.bts.ui.main.wizards.installation.support;
 
-public class Connection
-{
+public class Connection {
 
-	public Connection()
-	{
-	};
+    private String url;
 
-	public String getUrl()
-	{
-		return url;
-	}
+    ;
+    private String user;
+    private String password;
 
-	public void setUrl(String url)
-	{
-		this.url = url;
-	}
+    public Connection() {
+    }
 
-	public String getUser()
-	{
-		return user;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setUser(String user)
-	{
-		this.user = user;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public String getPassword()
-	{
-		return password;
-	}
+    public String getUser() {
+        return user;
+    }
 
-	public void setPassword(String password)
-	{
-		this.password = password;
-	}
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-	private String url;
+    public String getPassword() {
+        return password;
+    }
 
-	private String user;
-
-	private String password;
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

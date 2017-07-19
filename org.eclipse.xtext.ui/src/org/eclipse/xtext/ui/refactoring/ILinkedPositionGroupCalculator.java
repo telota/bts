@@ -15,15 +15,15 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameElementContext;
 import com.google.inject.ImplementedBy;
 
 /**
- * Calculates the positions that should be synchronously edited by the linked editing mode. 
- * 
+ * Calculates the positions that should be synchronously edited by the linked editing mode.
+ *
  * @author Holger Schill - Initial contribution and API
  * @author Jan Koehnlein
  */
 @ImplementedBy(DefaultLinkedPositionGroupCalculator.class)
 public interface ILinkedPositionGroupCalculator {
 
-	public LinkedPositionGroup getLinkedPositionGroup(IRenameElementContext renameElementContext,
-			IProgressMonitor monitor);
+    public LinkedPositionGroup getLinkedPositionGroup(IRenameElementContext renameElementContext,
+                                                      IProgressMonitor monitor);
 
 }

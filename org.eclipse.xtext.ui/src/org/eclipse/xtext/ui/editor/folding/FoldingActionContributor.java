@@ -13,19 +13,19 @@ import org.eclipse.xtext.ui.editor.actions.IActionContributor;
 
 /**
  * Contributes folding actions for the given <code>XtextEditor</code>.
- * 
+ *
  * @author Michael Clay - Initial contribution and API
  */
 public class FoldingActionContributor implements IActionContributor {
 
-	private FoldingActionGroup foldingActionGroup;
+    private FoldingActionGroup foldingActionGroup;
 
-	public void contributeActions(XtextEditor editor) {
-		foldingActionGroup = new FoldingActionGroup(editor, editor.getInternalSourceViewer());
-	}
+    public void contributeActions(XtextEditor editor) {
+        foldingActionGroup = new FoldingActionGroup(editor, editor.getInternalSourceViewer());
+    }
 
-	public void editorDisposed(XtextEditor editor) {
-		if(foldingActionGroup != null)
-			foldingActionGroup.dispose();
-	}
+    public void editorDisposed(XtextEditor editor) {
+        if (foldingActionGroup != null)
+            foldingActionGroup.dispose();
+    }
 }

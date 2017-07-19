@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import org.bbaw.bts.commons.BTSPluginIDs;
@@ -11,17 +10,17 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
 public class AddNewRootLemmaHandler {
-	@Execute
-	public void execute(@Active MPart part,
-			LemmaNavigatorController lemmaController, EventBroker eventBroker) {
-		BTSLemmaEntry entry = lemmaController.createNew();
-		entry.setName("Lemma Root");
-		eventBroker.post("model_lemma_new_root/asyncEvent", entry);
-	}
+    @Execute
+    public void execute(@Active MPart part,
+                        LemmaNavigatorController lemmaController, EventBroker eventBroker) {
+        BTSLemmaEntry entry = lemmaController.createNew();
+        entry.setName("Lemma Root");
+        eventBroker.post("model_lemma_new_root/asyncEvent", entry);
+    }
 
-	@CanExecute
-	public boolean canExecute(@Active MPart part) {
-		return part.getElementId().equals(BTSPluginIDs.PART_ID_LEMMA_NAVIGATOR);
-	}
-		
+    @CanExecute
+    public boolean canExecute(@Active MPart part) {
+        return part.getElementId().equals(BTSPluginIDs.PART_ID_LEMMA_NAVIGATOR);
+    }
+
 }

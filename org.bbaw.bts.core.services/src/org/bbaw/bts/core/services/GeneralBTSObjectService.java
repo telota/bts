@@ -39,108 +39,108 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * The Service Interface GeneralBTSObjectService provides service layer access to BTSObject-objects.
- * 
- * Service-Implementations should incorporate as much as possible of business logic which 
+ * <p>
+ * Service-Implementations should incorporate as much as possible of business logic which
  * does not depend on UI specific implementation and should be implemented in the controller layer
  * nor database specific logic which should be implemented in the dao layer.
- * 
+ * <p>
  * Services should be implemented generically.
  */
 public interface GeneralBTSObjectService {
-	
-	/**
-	 * Query objects.
-	 *
-	 * @param query the query
-	 * @param objectState the object state
-	 * @param registerQuery the register query
-	 * @param className the class name
-	 * @return the list of matching objects
-	 */
-	List<BTSObject> queryObjects(BTSQueryRequest query,
-			String objectState, boolean registerQuery, String className, IProgressMonitor monitor);
 
-	/**
-	 * Gets the display name of given object. Providing a classname is not required but betters performance.
-	 *
-	 * @param id the id
-	 * @param className the name of the class
-	 * @return the display name
-	 */
-	String getDisplayName(String id, String className);
-	
-	String getDisplayName(String id);
-	
-	/**
-	 * Find object by id.
-	 * 
-	 * Providing a classname is not required but betters performance.
-	 *
-	 * @param id the id
-	 * @param className the class name
-	 * @return the BTS object
-	 */
-	BTSObject findObject(String id, String className, IProgressMonitor monitor);
+    /**
+     * Query objects.
+     *
+     * @param query         the query
+     * @param objectState   the object state
+     * @param registerQuery the register query
+     * @param className     the class name
+     * @return the list of matching objects
+     */
+    List<BTSObject> queryObjects(BTSQueryRequest query,
+                                 String objectState, boolean registerQuery, String className, IProgressMonitor monitor);
 
-	/**
-	 * Save the given object whether new or modified.
-	 *
-	 * @param dbBaseObject the db base object
-	 * @return true, if successful
-	 */
-	boolean save(BTSDBBaseObject dbBaseObject);
+    /**
+     * Gets the display name of given object. Providing a classname is not required but betters performance.
+     *
+     * @param id        the id
+     * @param className the name of the class
+     * @return the display name
+     */
+    String getDisplayName(String id, String className);
 
-	/**
-	 * Find object by id and revision.
-	 *
-	 * @param id the id of requested object
-	 * @param dbCollectionKey the db collection key
-	 * @param object the object
-	 * @param rev the rev
-	 * @return the BTSDB base object
-	 */
-	BTSDBBaseObject find(String id, String dbCollectionKey,  BTSDBBaseObject object, String rev, IProgressMonitor monitor);
+    String getDisplayName(String id);
 
-	/**
-	 * Removes the revision of the given object.
-	 *
-	 * @param object the object
-	 * @param revision the revision
-	 * @return true, if successful
-	 */
-	boolean removeRevision(BTSDBBaseObject object, String revision);
+    /**
+     * Find object by id.
+     * <p>
+     * Providing a classname is not required but betters performance.
+     *
+     * @param id        the id
+     * @param className the class name
+     * @return the BTS object
+     */
+    BTSObject findObject(String id, String className, IProgressMonitor monitor);
 
-	/**
-	 * Reload conflicts of given object.
-	 *
-	 * @param object the object
-	 */
-	void reloadConflicts(BTSDBBaseObject object);
+    /**
+     * Save the given object whether new or modified.
+     *
+     * @param dbBaseObject the db base object
+     * @return true, if successful
+     */
+    boolean save(BTSDBBaseObject dbBaseObject);
 
-	/**
-	 * List available revisions of given object.
-	 *
-	 * @param object the object
-	 * @param fetchFromRemote true if it should fetch revisions from remote
-	 * @return the list of available revisions
-	 */
-	List<DBRevision> listAvailableRevisions(BTSDBBaseObject object,
-			boolean fetchFromRemote, IProgressMonitor monitor);
+    /**
+     * Find object by id and revision.
+     *
+     * @param id              the id of requested object
+     * @param dbCollectionKey the db collection key
+     * @param object          the object
+     * @param rev             the rev
+     * @return the BTSDB base object
+     */
+    BTSDBBaseObject find(String id, String dbCollectionKey, BTSDBBaseObject object, String rev, IProgressMonitor monitor);
 
-	/**
-	 * Find the given revision of the object by id.
-	 *
-	 * @param id the id of the requested object
-	 * @param dbCollectionKey the db collection key
-	 * @param rev the id of the revision
-	 * @param object the requested object
-	 * @param fromRemote true if it should fetch revision from remote database
-	 * @return the matching BTSDBbaseobject in the given revision
-	 */
-	BTSDBBaseObject find(String id, String dbCollectionKey,
-			String rev, BTSDBBaseObject object, boolean fromRemote, IProgressMonitor monitor);
+    /**
+     * Removes the revision of the given object.
+     *
+     * @param object   the object
+     * @param revision the revision
+     * @return true, if successful
+     */
+    boolean removeRevision(BTSDBBaseObject object, String revision);
 
-	BTSDBBaseObject replaceCurrentWithRevision(BTSDBBaseObject current,
-			BTSDBBaseObject revision);
+    /**
+     * Reload conflicts of given object.
+     *
+     * @param object the object
+     */
+    void reloadConflicts(BTSDBBaseObject object);
+
+    /**
+     * List available revisions of given object.
+     *
+     * @param object          the object
+     * @param fetchFromRemote true if it should fetch revisions from remote
+     * @return the list of available revisions
+     */
+    List<DBRevision> listAvailableRevisions(BTSDBBaseObject object,
+                                            boolean fetchFromRemote, IProgressMonitor monitor);
+
+    /**
+     * Find the given revision of the object by id.
+     *
+     * @param id              the id of the requested object
+     * @param dbCollectionKey the db collection key
+     * @param rev             the id of the revision
+     * @param object          the requested object
+     * @param fromRemote      true if it should fetch revision from remote database
+     * @return the matching BTSDBbaseobject in the given revision
+     */
+    BTSDBBaseObject find(String id, String dbCollectionKey,
+                         String rev, BTSDBBaseObject object, boolean fromRemote, IProgressMonitor monitor);
+
+    BTSDBBaseObject replaceCurrentWithRevision(BTSDBBaseObject current,
+                                               BTSDBBaseObject revision);
 
 }

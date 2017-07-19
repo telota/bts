@@ -10,11 +10,11 @@ package org.eclipse.xtext.ui.resource;
 
 /**
  * @author Jan Koehnlein - Initial contribution and API
- * @since 2.4
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 2.4
  */
 public interface IStorage2UriMapperExtension extends IStorage2UriMapper {
 
-	void initializeCache();
-	
+    void initializeCache();
+
 }

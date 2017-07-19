@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class RasurMarkerImpl extends VersMarkerImpl implements RasurMarker
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected RasurMarkerImpl()
-  {
-    super();
-  }
+public class RasurMarkerImpl extends VersMarkerImpl implements RasurMarker {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected RasurMarkerImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.RASUR_MARKER;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.RASUR_MARKER;
+    }
 
 } //RasurMarkerImpl

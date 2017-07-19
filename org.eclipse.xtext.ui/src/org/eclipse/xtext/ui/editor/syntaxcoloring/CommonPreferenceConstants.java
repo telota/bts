@@ -9,20 +9,18 @@
 package org.eclipse.xtext.ui.editor.syntaxcoloring;
 
 
-
 /**
  * @author Dennis H�bner - Initial contribution and API
- * 
  */
-public class CommonPreferenceConstants extends org.eclipse.xtext.ui.editor.preferences.PreferenceConstants{
+public class CommonPreferenceConstants extends org.eclipse.xtext.ui.editor.preferences.PreferenceConstants {
 
-	public static final String SYNTAX_COLORER_PREFERENCE_TAG = "syntaxColorer";
-	public static final String TOKEN_STYLES_PREFERENCE_TAG = "tokenStyles";
+    public static final String SYNTAX_COLORER_PREFERENCE_TAG = "syntaxColorer";
+    public static final String TOKEN_STYLES_PREFERENCE_TAG = "tokenStyles";
 
-	public static final String COLOR_SUFFIX = "color";
-	public static final String BACKGROUNDCOLOR_SUFFIX = "bgColor";
-	public static final String STYLE_SUFFIX = "style";
-	public static final String FONT_SUFFIX = "font";
+    public static final String COLOR_SUFFIX = "color";
+    public static final String BACKGROUNDCOLOR_SUFFIX = "bgColor";
+    public static final String STYLE_SUFFIX = "style";
+    public static final String FONT_SUFFIX = "font";
 //
 //	public static final String PREF_TASK_PRIORITIES = "xtext.taskTags"; //$NON-NLS-1$;
 //	public static final String PREF_TASK_TAGS = "xtext.taskPriorities"; //$NON-NLS-1$

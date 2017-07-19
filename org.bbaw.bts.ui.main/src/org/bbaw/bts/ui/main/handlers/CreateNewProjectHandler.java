@@ -8,21 +8,18 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
-public class CreateNewProjectHandler
-{
+public class CreateNewProjectHandler {
 
-	@Execute
-	public void execute(IEclipseContext context, BTSProjectService projectService)
-	{
+    @Execute
+    public void execute(IEclipseContext context, BTSProjectService projectService) {
 
-		BTSProject project = projectService.createNew();
-		NewProjectWizard wizard = new NewProjectWizard(project, projectService);
-		WizardDialog dialog = new WizardDialog(new Shell(), wizard);
-		if (dialog.open() == dialog.OK)
-		{
-			System.out.println("new project created.");
+        BTSProject project = projectService.createNew();
+        NewProjectWizard wizard = new NewProjectWizard(project, projectService);
+        WizardDialog dialog = new WizardDialog(new Shell(), wizard);
+        if (dialog.open() == dialog.OK) {
+            System.out.println("new project created.");
 
-		}
-	}
+        }
+    }
 
 }

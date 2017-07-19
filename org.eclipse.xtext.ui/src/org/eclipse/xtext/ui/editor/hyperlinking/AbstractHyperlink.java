@@ -15,32 +15,32 @@ import org.eclipse.jface.text.hyperlink.IHyperlink;
  */
 public abstract class AbstractHyperlink implements IHyperlink {
 
-	private String hyperlinkText;
-	private String typeLabel;
-	private Region hyperlinkRegion;
+    private String hyperlinkText;
+    private String typeLabel;
+    private Region hyperlinkRegion;
 
-	public String getHyperlinkText() {
-		return hyperlinkText;
-	}
+    public String getHyperlinkText() {
+        return hyperlinkText;
+    }
 
-	public void setHyperlinkText(String hyperlinkText) {
-		this.hyperlinkText = hyperlinkText;
-	}
+    public void setHyperlinkText(String hyperlinkText) {
+        this.hyperlinkText = hyperlinkText;
+    }
 
-	public String getTypeLabel() {
-		return typeLabel;
-	}
+    public String getTypeLabel() {
+        return typeLabel;
+    }
 
-	public void setTypeLabel(String typeLabel) {
-		this.typeLabel = typeLabel;
-	}
+    public void setTypeLabel(String typeLabel) {
+        this.typeLabel = typeLabel;
+    }
 
-	public Region getHyperlinkRegion() {
-		return hyperlinkRegion;
-	}
+    public Region getHyperlinkRegion() {
+        return hyperlinkRegion;
+    }
 
-	public void setHyperlinkRegion(Region hyperlinkRegion) {
-		this.hyperlinkRegion = hyperlinkRegion;
-	}
+    public void setHyperlinkRegion(Region hyperlinkRegion) {
+        this.hyperlinkRegion = hyperlinkRegion;
+    }
 
 }

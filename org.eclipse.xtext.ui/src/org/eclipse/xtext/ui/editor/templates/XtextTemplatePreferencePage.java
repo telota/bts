@@ -24,70 +24,67 @@ import e4.handler.E4TemplatePreferencePage;
  */
 public class XtextTemplatePreferencePage extends E4TemplatePreferencePage {
 
-	
-	
-	//XXX added cp
-	@javax.inject.Inject
-	public XtextTemplatePreferencePage(IPreferenceStore preferenceStore)
-	{
-		setPreferenceStore(preferenceStore);
-	}
-	@Inject
-	private ContextTypeRegistry registry;
-	
-	public ContextTypeRegistry getRegistry() {
-		return registry;
-	}
 
-	public void setRegistry(ContextTypeRegistry registry) {
-		this.registry = registry;
-		setContextTypeRegistry(registry);
-	}
+    @Inject
+    private ContextTypeRegistry registry;
+    @Inject
+    private TemplateStore templateStoreInternal;
 
-	@Inject
-	private TemplateStore templateStoreInternal;
-	public TemplateStore getTemplateStoreInternal() {
-		return templateStoreInternal;
-	}
+    //XXX added cp
+    @javax.inject.Inject
+    public XtextTemplatePreferencePage(IPreferenceStore preferenceStore) {
+        setPreferenceStore(preferenceStore);
+    }
 
-	public void setTemplateStoreInternal(TemplateStore templateStoreInternal) {
-		this.templateStoreInternal = templateStoreInternal;
-		setTemplateStore(templateStoreInternal);
-	}
+    @Inject
+    public XtextTemplatePreferencePage(IPreferenceStore preferenceStore, ContextTypeRegistry registry, TemplateStore templateStore) {
+        setPreferenceStore(preferenceStore);
+        setContextTypeRegistry(registry);
+        setTemplateStore(templateStore);
+    }
 
-	@Inject
-	public XtextTemplatePreferencePage(IPreferenceStore preferenceStore, ContextTypeRegistry registry, TemplateStore templateStore) {
-		setPreferenceStore(preferenceStore);
-		setContextTypeRegistry(registry);
-		setTemplateStore(templateStore);
-	}
+    public ContextTypeRegistry getRegistry() {
+        return registry;
+    }
 
-	@Override
-	protected boolean isShowFormatterSetting() {
-		return false;
-	}
-	
-	/**
-	 * @since 2.1
-	 */
-	@Override
-	protected Control createContents(Composite ancestor) {
-		Control result = super.createContents(ancestor);
-		ancestor.layout();
-		return result;
-	}
-	
-	/**
-	 * @since 2.1
-	 */
-	@Override
-	public void createControl(Composite parent) {
-		super.createControl(parent);
-		// set the with of the leftmost column ('name')
-		getTableViewer().getTable().getColumns()[0].pack();
-	}
+    public void setRegistry(ContextTypeRegistry registry) {
+        this.registry = registry;
+        setContextTypeRegistry(registry);
+    }
+
+    public TemplateStore getTemplateStoreInternal() {
+        return templateStoreInternal;
+    }
+
+    public void setTemplateStoreInternal(TemplateStore templateStoreInternal) {
+        this.templateStoreInternal = templateStoreInternal;
+        setTemplateStore(templateStoreInternal);
+    }
+
+    @Override
+    protected boolean isShowFormatterSetting() {
+        return false;
+    }
+
+    /**
+     * @since 2.1
+     */
+    @Override
+    protected Control createContents(Composite ancestor) {
+        Control result = super.createContents(ancestor);
+        ancestor.layout();
+        return result;
+    }
+
+    /**
+     * @since 2.1
+     */
+    @Override
+    public void createControl(Composite parent) {
+        super.createControl(parent);
+        // set the with of the leftmost column ('name')
+        getTableViewer().getTable().getColumns()[0].pack();
+    }
 
 
-	
-	
 }

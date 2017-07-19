@@ -21,21 +21,21 @@ import org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage;
  */
 public class RefactoringPreferencePage extends LanguageRootPreferencePage {
 
-	@Override
-	protected void createFieldEditors() {
-		super.createFieldEditors();
-		Composite parent = getFieldEditorParent();
-		Group refactoringGroup = new Group(parent, SWT.SHADOW_IN);
-		refactoringGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+    @Override
+    protected void createFieldEditors() {
+        super.createFieldEditors();
+        Composite parent = getFieldEditorParent();
+        Group refactoringGroup = new Group(parent, SWT.SHADOW_IN);
+        refactoringGroup.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
-		refactoringGroup.setText("Refactoring");
-		GridLayout layout = new GridLayout(1, false);
-		refactoringGroup.setLayout(layout);
-		Composite composite = new Composite(refactoringGroup, SWT.NONE);
-		addField(new BooleanFieldEditor(RefactoringPreferences.SAVE_ALL_BEFORE_REFACTORING,
-				"Save all modified resources automatically prior to refactoring", composite));
-		addField(new BooleanFieldEditor(RefactoringPreferences.USE_INLINE_REFACTORING,
-				"Rename in editor without dialog if possible", composite));
-		refactoringGroup.pack();
-	}
+        refactoringGroup.setText("Refactoring");
+        GridLayout layout = new GridLayout(1, false);
+        refactoringGroup.setLayout(layout);
+        Composite composite = new Composite(refactoringGroup, SWT.NONE);
+        addField(new BooleanFieldEditor(RefactoringPreferences.SAVE_ALL_BEFORE_REFACTORING,
+                "Save all modified resources automatically prior to refactoring", composite));
+        addField(new BooleanFieldEditor(RefactoringPreferences.USE_INLINE_REFACTORING,
+                "Rename in editor without dialog if possible", composite));
+        refactoringGroup.pack();
+    }
 }

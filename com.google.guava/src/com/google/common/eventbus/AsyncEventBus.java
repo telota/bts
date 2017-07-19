@@ -32,73 +32,75 @@ import java.util.concurrent.Executor;
  */
 @Beta
 public class AsyncEventBus extends EventBus {
-  private final Executor executor;
+    private final Executor executor;
 
-  /** the queue of events is shared across all threads */
-  private final ConcurrentLinkedQueue<EventWithHandler> eventsToDispatch =
-      new ConcurrentLinkedQueue<EventWithHandler>();
+    /**
+     * the queue of events is shared across all threads
+     */
+    private final ConcurrentLinkedQueue<EventWithHandler> eventsToDispatch =
+            new ConcurrentLinkedQueue<EventWithHandler>();
 
-  /**
-   * Creates a new AsyncEventBus that will use {@code executor} to dispatch
-   * events.  Assigns {@code identifier} as the bus's name for logging purposes.
-   *
-   * @param identifier short name for the bus, for logging purposes.
-   * @param executor   Executor to use to dispatch events. It is the caller's
-   *        responsibility to shut down the executor after the last event has
-   *        been posted to this event bus.
-   */
-  public AsyncEventBus(String identifier, Executor executor) {
-    super(identifier);
-    this.executor = checkNotNull(executor);
-  }
-
-  /**
-   * Creates a new AsyncEventBus that will use {@code executor} to dispatch
-   * events.
-   *
-   * @param executor Executor to use to dispatch events. It is the caller's
-   *        responsibility to shut down the executor after the last event has
-   *        been posted to this event bus.
-   */
-  public AsyncEventBus(Executor executor) {
-    this.executor = checkNotNull(executor);
-  }
-
-  @Override
-  void enqueueEvent(Object event, EventHandler handler) {
-    eventsToDispatch.offer(new EventWithHandler(event, handler));
-  }
-
-  /**
-   * Dispatch {@code events} in the order they were posted, regardless of
-   * the posting thread.
-   */
-  @SuppressWarnings("deprecation") // only deprecated for external subclasses
-  @Override
-  protected void dispatchQueuedEvents() {
-    while (true) {
-      EventWithHandler eventWithHandler = eventsToDispatch.poll();
-      if (eventWithHandler == null) {
-        break;
-      }
-
-      dispatch(eventWithHandler.event, eventWithHandler.handler);
+    /**
+     * Creates a new AsyncEventBus that will use {@code executor} to dispatch
+     * events.  Assigns {@code identifier} as the bus's name for logging purposes.
+     *
+     * @param identifier short name for the bus, for logging purposes.
+     * @param executor   Executor to use to dispatch events. It is the caller's
+     *                   responsibility to shut down the executor after the last event has
+     *                   been posted to this event bus.
+     */
+    public AsyncEventBus(String identifier, Executor executor) {
+        super(identifier);
+        this.executor = checkNotNull(executor);
     }
-  }
 
-  /**
-   * Calls the {@link #executor} to dispatch {@code event} to {@code handler}.
-   */
-  @Override
-  void dispatch(final Object event, final EventHandler handler) {
-    checkNotNull(event);
-    checkNotNull(handler);
-    executor.execute(
-        new Runnable() {
-          @Override
-          public void run() {
-            AsyncEventBus.super.dispatch(event, handler);
-          }
-        });
-  }
+    /**
+     * Creates a new AsyncEventBus that will use {@code executor} to dispatch
+     * events.
+     *
+     * @param executor Executor to use to dispatch events. It is the caller's
+     *                 responsibility to shut down the executor after the last event has
+     *                 been posted to this event bus.
+     */
+    public AsyncEventBus(Executor executor) {
+        this.executor = checkNotNull(executor);
+    }
+
+    @Override
+    void enqueueEvent(Object event, EventHandler handler) {
+        eventsToDispatch.offer(new EventWithHandler(event, handler));
+    }
+
+    /**
+     * Dispatch {@code events} in the order they were posted, regardless of
+     * the posting thread.
+     */
+    @SuppressWarnings("deprecation") // only deprecated for external subclasses
+    @Override
+    protected void dispatchQueuedEvents() {
+        while (true) {
+            EventWithHandler eventWithHandler = eventsToDispatch.poll();
+            if (eventWithHandler == null) {
+                break;
+            }
+
+            dispatch(eventWithHandler.event, eventWithHandler.handler);
+        }
+    }
+
+    /**
+     * Calls the {@link #executor} to dispatch {@code event} to {@code handler}.
+     */
+    @Override
+    void dispatch(final Object event, final EventHandler handler) {
+        checkNotNull(event);
+        checkNotNull(handler);
+        executor.execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        AsyncEventBus.super.dispatch(event, handler);
+                    }
+                });
+    }
 }

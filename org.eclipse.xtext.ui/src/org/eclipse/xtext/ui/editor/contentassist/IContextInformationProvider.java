@@ -12,6 +12,6 @@ package org.eclipse.xtext.ui.editor.contentassist;
  */
 public interface IContextInformationProvider {
 
-	void getContextInformation(ContentAssistContext context, IContextInformationAcceptor acceptor);
-	
+    void getContextInformation(ContentAssistContext context, IContextInformationAcceptor acceptor);
+
 }

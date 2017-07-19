@@ -32,93 +32,93 @@ import com.google.common.collect.Lists;
  * @author Michael Clay - Initial contribution and API
  */
 public class CompareInputResourceProvider implements IResourceProvider {
-	private ICompareInput compareInput;
-	private ITypedElement typedElement;
+    private ICompareInput compareInput;
+    private ITypedElement typedElement;
 
-	public CompareInputResourceProvider(ICompareInput compareInput, ITypedElement typedElement) {
-		Assert.isNotNull(compareInput, "parameter 'compareInput' must not be null");
-		Assert.isNotNull(typedElement, "parameter 'typedElement' must not be null");
-		this.compareInput = compareInput;
-		this.typedElement = typedElement;
-	}
+    public CompareInputResourceProvider(ICompareInput compareInput, ITypedElement typedElement) {
+        Assert.isNotNull(compareInput, "parameter 'compareInput' must not be null");
+        Assert.isNotNull(typedElement, "parameter 'typedElement' must not be null");
+        this.compareInput = compareInput;
+        this.typedElement = typedElement;
+    }
 
-	public IResource getResource() {
-		IResource resource = getResource(typedElement);
-		if (resource == null) {
-			if (typedElement == compareInput.getLeft()) {
-				resource = getResource(compareInput.getRight());
-			} else {
-				resource = getResource(compareInput.getLeft());
-			}
-		}
-		if (resource == null && compareInput instanceof ITypedElement) {
-			resource = getResource((ITypedElement) compareInput);
-		}
-		return resource;
-	}
+    public IResource getResource() {
+        IResource resource = getResource(typedElement);
+        if (resource == null) {
+            if (typedElement == compareInput.getLeft()) {
+                resource = getResource(compareInput.getRight());
+            } else {
+                resource = getResource(compareInput.getLeft());
+            }
+        }
+        if (resource == null && compareInput instanceof ITypedElement) {
+            resource = getResource((ITypedElement) compareInput);
+        }
+        return resource;
+    }
 
-	protected IResource getResource(ITypedElement typedElement) {
-		IResource result = null;
-		if (typedElement instanceof IResourceProvider) {
-			IResourceProvider resourceProvider = (IResourceProvider) typedElement;
-			result = resourceProvider.getResource();
-		} else if (typedElement instanceof org.eclipse.team.internal.ui.StorageTypedElement) {
-			org.eclipse.team.internal.ui.StorageTypedElement storageTypedElement = (org.eclipse.team.internal.ui.StorageTypedElement) typedElement;
-			IStorage bufferedStorage = storageTypedElement.getBufferedStorage();
-			result = getExistingFile(bufferedStorage != null ? bufferedStorage.getFullPath() : Path.EMPTY);
-		}
-		if (result == null) {
-			IProject projectFromInput = getProjectFromInput();
-			List<String> path = getPath(typedElement);
-			for (int i = 0; i < path.size() && result == null; i++) {
-				IProject project = getWorkspaceRoot().getProject(path.get(i));
-				String subPath = IPath.SEPARATOR + Joiner.on(IPath.SEPARATOR).join(path.subList(i, path.size()));
-				if (project.exists()) {
-					result = getExistingFile(new Path(subPath));
-				} else if (projectFromInput != null) {
-					String pathInProject = IPath.SEPARATOR + projectFromInput.getName() + subPath;
-					result = getExistingFile(new Path(pathInProject));
-				}
-			}
-		}
-		return result;
-	}
-	
-	private IProject getProjectFromInput() {
-		if(this.compareInput instanceof IResourceProvider) {
-			IResource res = ((IResourceProvider)this.compareInput).getResource();
-			if(res != null)
-				return res.getProject();
-		}
-		return null;
-	}
+    protected IResource getResource(ITypedElement typedElement) {
+        IResource result = null;
+        if (typedElement instanceof IResourceProvider) {
+            IResourceProvider resourceProvider = (IResourceProvider) typedElement;
+            result = resourceProvider.getResource();
+        } else if (typedElement instanceof org.eclipse.team.internal.ui.StorageTypedElement) {
+            org.eclipse.team.internal.ui.StorageTypedElement storageTypedElement = (org.eclipse.team.internal.ui.StorageTypedElement) typedElement;
+            IStorage bufferedStorage = storageTypedElement.getBufferedStorage();
+            result = getExistingFile(bufferedStorage != null ? bufferedStorage.getFullPath() : Path.EMPTY);
+        }
+        if (result == null) {
+            IProject projectFromInput = getProjectFromInput();
+            List<String> path = getPath(typedElement);
+            for (int i = 0; i < path.size() && result == null; i++) {
+                IProject project = getWorkspaceRoot().getProject(path.get(i));
+                String subPath = IPath.SEPARATOR + Joiner.on(IPath.SEPARATOR).join(path.subList(i, path.size()));
+                if (project.exists()) {
+                    result = getExistingFile(new Path(subPath));
+                } else if (projectFromInput != null) {
+                    String pathInProject = IPath.SEPARATOR + projectFromInput.getName() + subPath;
+                    result = getExistingFile(new Path(pathInProject));
+                }
+            }
+        }
+        return result;
+    }
 
-	private IResource getExistingFile(IPath fullPath) {
-		IFile file = getWorkspaceRoot().getFile(fullPath);
-		if (file.exists()) {
-			return file;
-		}
-		return null;
-	}
+    private IProject getProjectFromInput() {
+        if (this.compareInput instanceof IResourceProvider) {
+            IResource res = ((IResourceProvider) this.compareInput).getResource();
+            if (res != null)
+                return res.getProject();
+        }
+        return null;
+    }
 
-	private IWorkspaceRoot getWorkspaceRoot() {
-		return ResourcesPlugin.getWorkspace().getRoot();
-	}
-	
-	private List<String> getPath(ITypedElement typedElement) {
-		List<String> names = Lists.newArrayList(typedElement.getName());
-		ITypedElement current = typedElement;
-		while (current instanceof IDiffContainer) {
-			names.add(current.getName());
-			current = ((IDiffContainer) current).getParent();
-		}
-		Collections.reverse(names);
-		List<String> segments = Lists.newArrayList();
-		for (String name : names)
-			if (!Strings.isEmpty(name))
-				for (String seg : name.split("/"))
-					segments.add(seg);
-		return segments;
-	}
+    private IResource getExistingFile(IPath fullPath) {
+        IFile file = getWorkspaceRoot().getFile(fullPath);
+        if (file.exists()) {
+            return file;
+        }
+        return null;
+    }
+
+    private IWorkspaceRoot getWorkspaceRoot() {
+        return ResourcesPlugin.getWorkspace().getRoot();
+    }
+
+    private List<String> getPath(ITypedElement typedElement) {
+        List<String> names = Lists.newArrayList(typedElement.getName());
+        ITypedElement current = typedElement;
+        while (current instanceof IDiffContainer) {
+            names.add(current.getName());
+            current = ((IDiffContainer) current).getParent();
+        }
+        Collections.reverse(names);
+        List<String> segments = Lists.newArrayList();
+        for (String name : names)
+            if (!Strings.isEmpty(name))
+                for (String seg : name.split("/"))
+                    segments.add(seg);
+        return segments;
+    }
 
 }

@@ -36,24 +36,25 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 /**
  * EditingDomainController manages all access to the editingDomain of an object.
  * The editingDomain is part of the EMF-Edit framework.
- * 
+ *
  * @author Christoph Plutte
  */
 public interface EditingDomainController {
 
-	/**
-	 * Gets the editing domain  of the given object.
-	 * Editingdomains should be cached by controller implementation.
-	 *
-	 * @param object the object
-	 * @return the editing domain
-	 */
-	EditingDomain getEditingDomain(Object object);
+    /**
+     * Gets the editing domain  of the given object.
+     * Editingdomains should be cached by controller implementation.
+     *
+     * @param object the object
+     * @return the editing domain
+     */
+    EditingDomain getEditingDomain(Object object);
 
-	/**
-	 * Gets the last selected objects.
-	 * Controller Implementation should track selections and manage a list of last selected objects.
-	 * @return the last selected objects
-	 */
-	List<Object> getLastSelectedObjects();
+    /**
+     * Gets the last selected objects.
+     * Controller Implementation should track selections and manage a list of last selected objects.
+     *
+     * @return the last selected objects
+     */
+    List<Object> getLastSelectedObjects();
 }

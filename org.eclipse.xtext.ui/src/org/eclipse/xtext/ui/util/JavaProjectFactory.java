@@ -29,75 +29,75 @@ import org.eclipse.ui.IWorkingSet;
  */
 public class JavaProjectFactory extends ProjectFactory {
 
-	private static final Logger logger = Logger.getLogger(JavaProjectFactory.class);
+    private static final Logger logger = Logger.getLogger(JavaProjectFactory.class);
 
-	@Override
-	protected void enhanceProject(IProject project, SubMonitor monitor, Shell shell) throws CoreException {
-		super.enhanceProject(project, monitor, shell);
-		if (builderIds.contains(JavaCore.BUILDER_ID)) {
-			SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
-			try {
-				subMonitor.subTask(Messages.JavaProjectFactory_ConfigureJavaProject + projectName);
-				IJavaProject javaProject = JavaCore.create(project);
-				List<IClasspathEntry> classpathEntries = new ArrayList<IClasspathEntry>();
-				for (final IProject referencedProject : project.getReferencingProjects()) {
-					final IClasspathEntry referencedProjectClasspathEntry = JavaCore.newProjectEntry(referencedProject
-							.getFullPath());
-					classpathEntries.add(referencedProjectClasspathEntry);
-				}
-				for (final String folderName : folders) {
-					final IFolder sourceFolder = project.getFolder(folderName);
-					final IClasspathEntry srcClasspathEntry = JavaCore.newSourceEntry(sourceFolder.getFullPath());
-					classpathEntries.add(srcClasspathEntry);
-				}
+    @Override
+    protected void enhanceProject(IProject project, SubMonitor monitor, Shell shell) throws CoreException {
+        super.enhanceProject(project, monitor, shell);
+        if (builderIds.contains(JavaCore.BUILDER_ID)) {
+            SubMonitor subMonitor = SubMonitor.convert(monitor, 10);
+            try {
+                subMonitor.subTask(Messages.JavaProjectFactory_ConfigureJavaProject + projectName);
+                IJavaProject javaProject = JavaCore.create(project);
+                List<IClasspathEntry> classpathEntries = new ArrayList<IClasspathEntry>();
+                for (final IProject referencedProject : project.getReferencingProjects()) {
+                    final IClasspathEntry referencedProjectClasspathEntry = JavaCore.newProjectEntry(referencedProject
+                            .getFullPath());
+                    classpathEntries.add(referencedProjectClasspathEntry);
+                }
+                for (final String folderName : folders) {
+                    final IFolder sourceFolder = project.getFolder(folderName);
+                    final IClasspathEntry srcClasspathEntry = JavaCore.newSourceEntry(sourceFolder.getFullPath());
+                    classpathEntries.add(srcClasspathEntry);
+                }
 
-				classpathEntries.add(JavaCore.newContainerEntry(new Path("org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"))); //$NON-NLS-1$
-				addMoreClasspathEntriesTo(classpathEntries);
+                classpathEntries.add(JavaCore.newContainerEntry(new Path("org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"))); //$NON-NLS-1$
+                addMoreClasspathEntriesTo(classpathEntries);
 
-				javaProject.setRawClasspath(classpathEntries.toArray(new IClasspathEntry[classpathEntries.size()]),
-						subMonitor.newChild(1));
-				javaProject.setOutputLocation(new Path("/" + project.getName() + "/bin"), subMonitor.newChild(1)); //$NON-NLS-1$ //$NON-NLS-2$
-			} catch (JavaModelException e) {
-				logger.error(e.getMessage(), e);
-			}
-		}
-	}
+                javaProject.setRawClasspath(classpathEntries.toArray(new IClasspathEntry[classpathEntries.size()]),
+                        subMonitor.newChild(1));
+                javaProject.setOutputLocation(new Path("/" + project.getName() + "/bin"), subMonitor.newChild(1)); //$NON-NLS-1$ //$NON-NLS-2$
+            } catch (JavaModelException e) {
+                logger.error(e.getMessage(), e);
+            }
+        }
+    }
 
-	protected void addMoreClasspathEntriesTo(List<IClasspathEntry> classpathEntries) {
-	}
+    protected void addMoreClasspathEntriesTo(List<IClasspathEntry> classpathEntries) {
+    }
 
-	@Override
-	public JavaProjectFactory addBuilderIds(String... builderIds) {
-		return (JavaProjectFactory) super.addBuilderIds(builderIds);
-	}
+    @Override
+    public JavaProjectFactory addBuilderIds(String... builderIds) {
+        return (JavaProjectFactory) super.addBuilderIds(builderIds);
+    }
 
-	@Override
-	public JavaProjectFactory addFolders(List<String> folders) {
-		return (JavaProjectFactory) super.addFolders(folders);
-	}
+    @Override
+    public JavaProjectFactory addFolders(List<String> folders) {
+        return (JavaProjectFactory) super.addFolders(folders);
+    }
 
-	@Override
-	public JavaProjectFactory setProjectName(String projectName) {
-		return (JavaProjectFactory) super.setProjectName(projectName);
-	}
+    @Override
+    public JavaProjectFactory setProjectName(String projectName) {
+        return (JavaProjectFactory) super.setProjectName(projectName);
+    }
 
-	@Override
-	public JavaProjectFactory addProjectNatures(String... projectNatures) {
-		return (JavaProjectFactory) super.addProjectNatures(projectNatures);
-	}
+    @Override
+    public JavaProjectFactory addProjectNatures(String... projectNatures) {
+        return (JavaProjectFactory) super.addProjectNatures(projectNatures);
+    }
 
-	@Override
-	public JavaProjectFactory addReferencedProjects(List<IProject> referencedProjects) {
-		return (JavaProjectFactory) super.addReferencedProjects(referencedProjects);
-	}
+    @Override
+    public JavaProjectFactory addReferencedProjects(List<IProject> referencedProjects) {
+        return (JavaProjectFactory) super.addReferencedProjects(referencedProjects);
+    }
 
-	@Override
-	public JavaProjectFactory setLocation(IPath location) {
-		return (JavaProjectFactory) super.setLocation(location);
-	}
+    @Override
+    public JavaProjectFactory setLocation(IPath location) {
+        return (JavaProjectFactory) super.setLocation(location);
+    }
 
-	@Override
-	public JavaProjectFactory addWorkingSets(List<IWorkingSet> workingSets) {
-		return (JavaProjectFactory) super.addWorkingSets(workingSets);
-	}
+    @Override
+    public JavaProjectFactory addWorkingSets(List<IWorkingSet> workingSets) {
+        return (JavaProjectFactory) super.addWorkingSets(workingSets);
+    }
 }

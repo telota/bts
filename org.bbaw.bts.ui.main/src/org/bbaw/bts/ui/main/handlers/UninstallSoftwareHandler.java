@@ -9,15 +9,15 @@ import org.ramo.klevis.p2.core.iservice.IUninstallSoftwareService;
 import org.ramo.klevis.p4app.parts.SimpleUninstallPart;
 
 public class UninstallSoftwareHandler {
-	@Execute
-	public void execute(IProvisioningAgent agent,
-			IUninstallSoftwareService uninstallSoftwareService, Shell shell,IWorkbench workbench) {
-		// TODO Your code goes here
+    @Execute
+    public void execute(IProvisioningAgent agent,
+                        IUninstallSoftwareService uninstallSoftwareService, Shell shell, IWorkbench workbench) {
+        // TODO Your code goes here
 
-		Shell shell2 = new Shell(shell, SWT.DIALOG_TRIM);
-		new SimpleUninstallPart(uninstallSoftwareService, agent,workbench)
-				.createControls(shell2);
-		shell2.open();
-	}
+        Shell shell2 = new Shell(shell, SWT.DIALOG_TRIM);
+        new SimpleUninstallPart(uninstallSoftwareService, agent, workbench)
+                .createControls(shell2);
+        shell2.open();
+    }
 
 }

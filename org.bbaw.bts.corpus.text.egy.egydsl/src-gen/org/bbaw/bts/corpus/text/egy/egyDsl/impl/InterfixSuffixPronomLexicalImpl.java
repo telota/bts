@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InterfixSuffixPronomLexicalImpl extends InterfixImpl implements InterfixSuffixPronomLexical
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected InterfixSuffixPronomLexicalImpl()
-  {
-    super();
-  }
+public class InterfixSuffixPronomLexicalImpl extends InterfixImpl implements InterfixSuffixPronomLexical {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected InterfixSuffixPronomLexicalImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.INTERFIX_SUFFIX_PRONOM_LEXICAL;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.INTERFIX_SUFFIX_PRONOM_LEXICAL;
+    }
 
 } //InterfixSuffixPronomLexicalImpl

@@ -22,75 +22,75 @@ import org.eclipse.xtext.ui.resource.IResourceUIServiceProvider;
 
 /**
  * Delegates to the {@link DefaultDescriptionLabelProvider} looked up in the {@link org.eclipse.xtext.resource.IResourceServiceProvider.Registry}
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class GlobalDescriptionLabelProvider extends BaseLabelProvider implements ILabelProvider, IItemLabelProvider, IStyledLabelProvider {
 
-	public Image getImage(Object element) {
-		ILabelProvider descriptionLabelProvider = lookupDescriptionLabelProvider(element);
-		if (descriptionLabelProvider != null) {
-			return descriptionLabelProvider.getImage(element);
-		} else {
-			return null;
-		}
-	}
+    public Image getImage(Object element) {
+        ILabelProvider descriptionLabelProvider = lookupDescriptionLabelProvider(element);
+        if (descriptionLabelProvider != null) {
+            return descriptionLabelProvider.getImage(element);
+        } else {
+            return null;
+        }
+    }
 
-	public String getText(Object element) {
-		if (element == null) {
-			return Messages.GlobalDescriptionLabelProvider_0;
-		} else {
-			ILabelProvider descriptionLabelProvider = lookupDescriptionLabelProvider(element);
-			if (descriptionLabelProvider != null) {
-				return descriptionLabelProvider.getText(element);
-			} else {
-				return element.toString();
-			}
-		}
-	}
-	
-	public StyledString getStyledText(Object element) {
-		if (element == null) {
-			return new StyledString(Messages.GlobalDescriptionLabelProvider_0);
-		} else {
-			ILabelProvider descriptionLabelProvider = lookupDescriptionLabelProvider(element);
-			if (descriptionLabelProvider instanceof IStyledLabelProvider)
-				return ((IStyledLabelProvider) descriptionLabelProvider).getStyledText(element);
-			else if(descriptionLabelProvider != null) {
-				return new StyledString(descriptionLabelProvider.getText(element));
-			} else {
-				return new StyledString(element.toString());
-			}
-		}
-	}
+    public String getText(Object element) {
+        if (element == null) {
+            return Messages.GlobalDescriptionLabelProvider_0;
+        } else {
+            ILabelProvider descriptionLabelProvider = lookupDescriptionLabelProvider(element);
+            if (descriptionLabelProvider != null) {
+                return descriptionLabelProvider.getText(element);
+            } else {
+                return element.toString();
+            }
+        }
+    }
 
-	/**
-	 * @since 2.1 protected
-	 */
-	protected ILabelProvider lookupDescriptionLabelProvider(Object description) {
-		URI uri = uri(description);
-		if (uri != null) {
-			IResourceServiceProvider resourceServiceProvider = IResourceServiceProvider.Registry.INSTANCE
-					.getResourceServiceProvider(uri);
-			if (resourceServiceProvider instanceof IResourceUIServiceProvider)
-				return ((IResourceUIServiceProvider) resourceServiceProvider).getLabelProvider();
-		}
-		return null;
-	}
+    public StyledString getStyledText(Object element) {
+        if (element == null) {
+            return new StyledString(Messages.GlobalDescriptionLabelProvider_0);
+        } else {
+            ILabelProvider descriptionLabelProvider = lookupDescriptionLabelProvider(element);
+            if (descriptionLabelProvider instanceof IStyledLabelProvider)
+                return ((IStyledLabelProvider) descriptionLabelProvider).getStyledText(element);
+            else if (descriptionLabelProvider != null) {
+                return new StyledString(descriptionLabelProvider.getText(element));
+            } else {
+                return new StyledString(element.toString());
+            }
+        }
+    }
 
-	/**
-	 * @since 2.1 protected
-	 */
-	protected URI uri(Object description) {
-		if (description instanceof IEObjectDescription) {
-			return ((IEObjectDescription) description).getEObjectURI();
-		} else if (description instanceof IResourceDescription) {
-			return ((IResourceDescription) description).getURI();
-		} else if(description instanceof IReferenceDescription) {
-			URI containerEObjectURI = ((IReferenceDescription) description).getContainerEObjectURI();
-			return containerEObjectURI == null ? ((IReferenceDescription) description).getSourceEObjectUri() : null;
-		}
-		return null;
-	}
+    /**
+     * @since 2.1 protected
+     */
+    protected ILabelProvider lookupDescriptionLabelProvider(Object description) {
+        URI uri = uri(description);
+        if (uri != null) {
+            IResourceServiceProvider resourceServiceProvider = IResourceServiceProvider.Registry.INSTANCE
+                    .getResourceServiceProvider(uri);
+            if (resourceServiceProvider instanceof IResourceUIServiceProvider)
+                return ((IResourceUIServiceProvider) resourceServiceProvider).getLabelProvider();
+        }
+        return null;
+    }
+
+    /**
+     * @since 2.1 protected
+     */
+    protected URI uri(Object description) {
+        if (description instanceof IEObjectDescription) {
+            return ((IEObjectDescription) description).getEObjectURI();
+        } else if (description instanceof IResourceDescription) {
+            return ((IResourceDescription) description).getURI();
+        } else if (description instanceof IReferenceDescription) {
+            URI containerEObjectURI = ((IReferenceDescription) description).getContainerEObjectURI();
+            return containerEObjectURI == null ? ((IReferenceDescription) description).getSourceEObjectUri() : null;
+        }
+        return null;
+    }
 
 }

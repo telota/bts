@@ -45,117 +45,113 @@ import com.opcoach.e4.preferences.ScopedPreferenceStore;
 
 public class ConfigurationPage extends FieldEditorPreferencePage {
 
-	private Logger logger;
-	private boolean loaded;
-	private ComboViewer activeConfigcomboViewer;
-	private BTSConfigurationController configurationController;
-	private BTSConfiguration activeConfiguration;
-	private TreeNodeWrapper root;
-	private List<BTSConfiguration> configurations = new Vector<BTSConfiguration>();
-	/**
-	 * Create the preference page.
-	 */
-	public ConfigurationPage() {
-		super(FLAT);
-	}
+    private Logger logger;
+    private boolean loaded;
+    private ComboViewer activeConfigcomboViewer;
+    private BTSConfigurationController configurationController;
+    private BTSConfiguration activeConfiguration;
+    private TreeNodeWrapper root;
+    private List<BTSConfiguration> configurations = new Vector<BTSConfiguration>();
 
-	/**
-	 * Create contents of the preference page.
-	 */
-	@Override
-	protected void createFieldEditors() {
-		// Create the field editors
-		IPreferenceStore store = new ScopedPreferenceStore(InstanceScope.INSTANCE, "org.bbaw.bts.app");
-		Composite container = (Composite) this.getControl();
-		container.setLayout(new GridLayout(1, false));
+    /**
+     * Create the preference page.
+     */
+    public ConfigurationPage() {
+        super(FLAT);
+    }
 
-		Label activeConfigLB = new Label(container, SWT.NONE);
-		activeConfigLB.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
-				false, 1, 1));
-		activeConfigLB.setText("Currently active Configuration");
+    /**
+     * Create contents of the preference page.
+     */
+    @Override
+    protected void createFieldEditors() {
+        // Create the field editors
+        IPreferenceStore store = new ScopedPreferenceStore(InstanceScope.INSTANCE, "org.bbaw.bts.app");
+        Composite container = (Composite) this.getControl();
+        container.setLayout(new GridLayout(1, false));
 
-		activeConfigcomboViewer = new ComboViewer(container, SWT.READ_ONLY);
-		activeConfigcomboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				false, 1, 1));
-		ComposedAdapterFactory factory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(factory);
-		activeConfigcomboViewer.setContentProvider(new AdapterFactoryContentProvider(factory));
-		activeConfigcomboViewer.setLabelProvider(labelProvider);		
-		
-		
-		init(null);
-		loaded = true;
-	}
+        Label activeConfigLB = new Label(container, SWT.NONE);
+        activeConfigLB.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
+                false, 1, 1));
+        activeConfigLB.setText("Currently active Configuration");
 
-	/**
-	 * Initialize the preference page.
-	 */
-	public void init(IWorkbench workbench) {
+        activeConfigcomboViewer = new ComboViewer(container, SWT.READ_ONLY);
+        activeConfigcomboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+                false, 1, 1));
+        ComposedAdapterFactory factory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+        AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(factory);
+        activeConfigcomboViewer.setContentProvider(new AdapterFactoryContentProvider(factory));
+        activeConfigcomboViewer.setLabelProvider(labelProvider);
+
+
+        init(null);
+        loaded = true;
+    }
+
+    /**
+     * Initialize the preference page.
+     */
+    public void init(IWorkbench workbench) {
 //		BundleContext bundleContext = Platform.getBundle("org.bbaw.bts.ui.main").getBundleContext();
-		IEclipseContext context = StaticAccessController.getContext();
-		logger = context.get(Logger.class);
-		configurationController = context.get(BTSConfigurationController.class);
-		List<BTSConfiguration> list = configurationController
-				.listConfigurations(null);
-		
-		activeConfiguration = configurationController.getActiveConfiguration();
-		TreeNodeWrapper activeConfigurationTreeNode = null;
-		
-		
-		root = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-		if (list != null) {
-			for (BTSConfiguration o : list) {
-				TreeNodeWrapper child = BtsviewmodelFactory.eINSTANCE
-						.createTreeNodeWrapper();
-				child.setObject(o);
-				child.setChildrenLoaded(true);
-				
-				if (o.get_id().equals(activeConfiguration.get_id()))
-				{
-					activeConfigurationTreeNode = child;
-				}
-				root.getChildren().add(child);
-				root.setChildrenLoaded(true);
-				configurations.add(o);
-			}
-		}
-		activeConfigcomboViewer.setInput(root);
-		if (activeConfigurationTreeNode != null)
-		{
-			activeConfigcomboViewer.setSelection(new StructuredSelection(activeConfigurationTreeNode));
-		}
-		activeConfigcomboViewer.addSelectionChangedListener(new ISelectionChangedListener()
-		{
+        IEclipseContext context = StaticAccessController.getContext();
+        logger = context.get(Logger.class);
+        configurationController = context.get(BTSConfigurationController.class);
+        List<BTSConfiguration> list = configurationController
+                .listConfigurations(null);
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event)
-			{
-				Object o = event.getSelection();
-				IStructuredSelection sel = (IStructuredSelection) o;
-				TreeNodeWrapper tn = (TreeNodeWrapper) sel.getFirstElement();
-				BTSConfiguration configuration = (BTSConfiguration) tn.getObject();
-				if (activeConfiguration == null || !activeConfiguration.equals(configuration))
-				{
-					setActiveConfiguration(configuration);
-				}
-			}
-		});
-	}
-	protected void setActiveConfiguration(BTSConfiguration configuration) {
+        activeConfiguration = configurationController.getActiveConfiguration();
+        TreeNodeWrapper activeConfigurationTreeNode = null;
 
-		activeConfiguration = configuration;
 
-		
-	}
-	
-	@Override
-	public boolean performOk() {
-		if (loaded)
-		{
-			configurationController.setActiveConfiguration(activeConfiguration);
+        root = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+        if (list != null) {
+            for (BTSConfiguration o : list) {
+                TreeNodeWrapper child = BtsviewmodelFactory.eINSTANCE
+                        .createTreeNodeWrapper();
+                child.setObject(o);
+                child.setChildrenLoaded(true);
 
-			return super.performOk();
-		}
-		return super.performOk();
-	}
+                if (o.get_id().equals(activeConfiguration.get_id())) {
+                    activeConfigurationTreeNode = child;
+                }
+                root.getChildren().add(child);
+                root.setChildrenLoaded(true);
+                configurations.add(o);
+            }
+        }
+        activeConfigcomboViewer.setInput(root);
+        if (activeConfigurationTreeNode != null) {
+            activeConfigcomboViewer.setSelection(new StructuredSelection(activeConfigurationTreeNode));
+        }
+        activeConfigcomboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                Object o = event.getSelection();
+                IStructuredSelection sel = (IStructuredSelection) o;
+                TreeNodeWrapper tn = (TreeNodeWrapper) sel.getFirstElement();
+                BTSConfiguration configuration = (BTSConfiguration) tn.getObject();
+                if (activeConfiguration == null || !activeConfiguration.equals(configuration)) {
+                    setActiveConfiguration(configuration);
+                }
+            }
+        });
+    }
+
+    protected void setActiveConfiguration(BTSConfiguration configuration) {
+
+        activeConfiguration = configuration;
+
+
+    }
+
+    @Override
+    public boolean performOk() {
+        if (loaded) {
+            configurationController.setActiveConfiguration(activeConfiguration);
+
+            return super.performOk();
+        }
+        return super.performOk();
+    }
 }

@@ -33,14 +33,13 @@ import org.bbaw.bts.btsmodel.BTSUserGroup;
 
 /**
  * The Service Interface BTSUserGroupService provides service layer access to BTSUserGroup-objects.
- * 
- * Service-Implementations should incorporate as much as possible of business logic which 
+ * <p>
+ * Service-Implementations should incorporate as much as possible of business logic which
  * does not depend on UI specific implementation and should be implemented in the controller layer
  * nor database specific logic which should be implemented in the dao layer.
- * 
+ * <p>
  * Services should be implemented generically.
  */
-public interface BTSUserGroupService extends GenericObjectService<BTSUserGroup, String>
-{
+public interface BTSUserGroupService extends GenericObjectService<BTSUserGroup, String> {
 
 }

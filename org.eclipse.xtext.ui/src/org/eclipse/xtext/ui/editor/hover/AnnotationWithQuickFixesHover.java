@@ -71,9 +71,9 @@ import org.eclipse.xtext.ui.editor.quickfix.XtextQuickAssistProcessor;
 import com.google.inject.Inject;
 
 /**
- * Hover which shows annotation and quick fixes. 
- * 
- * Clone from JDTs  org.eclipse.jdt.internal.ui.text.java.hover.AbstractAnnotationHover. 
+ * Hover which shows annotation and quick fixes.
+ * <p>
+ * Clone from JDTs  org.eclipse.jdt.internal.ui.text.java.hover.AbstractAnnotationHover.
  *
  * @author Christoph Kulla
  */
@@ -96,507 +96,70 @@ import com.google.inject.Inject;
 // DIFF: AnnotationWithQuickFixesHover is is not abstract (8)
 
 public class AnnotationWithQuickFixesHover extends AbstractProblemHover {
-	
-	// DIFF: not part of AbstractAnnotationHover (3)
-	
-	@Inject
-	private XtextQuickAssistProcessor quickAssistProcessor;
 
-	// public to give access in tests
-	public static class AnnotationInfo {
-		public final Annotation annotation;
-		public final Position position;
-		public final ITextViewer viewer;
-		// DIFF: not part of AbstractAnnotationHover (1)
-		public final ICompletionProposal[] proposals;
-		
-		public AnnotationInfo(Annotation annotation, Position position, ITextViewer textViewer, ICompletionProposal[] proposals) {
-			this.annotation= annotation;
-			this.position= position;
-			this.viewer= textViewer;
-			// DIFF: not part of AbstractAnnotationHover(1)
-			this.proposals = proposals;
-		}
+    // DIFF: not part of AbstractAnnotationHover (3)
+
+    @Inject
+    private XtextQuickAssistProcessor quickAssistProcessor;
+    /**
+     * The hover control creator.
+     *
+     * @since 3.4
+     */
+    private IInformationControlCreator fHoverControlCreator;
+    /**
+     * The presentation control creator.
+     *
+     * @since 3.4
+     */
+    private IInformationControlCreator fPresenterControlCreator;
+    private volatile AnnotationInfo recentAnnotationInfo;
+
+    @Override
+    protected Region getHoverRegionInternal(final int lineNumber, final int offset) {
+        recentAnnotationInfo = null;
+        List<Annotation> annotations = getAnnotations(lineNumber, offset);
+        if (annotations != null) {
+            for (Annotation annotation : annotations) {
+                Position position = sourceViewer.getAnnotationModel().getPosition(annotation);
+                if (position != null) {
+                    final int start = position.getOffset();
+                    return new Region(start, position.getLength());
+                }
+            }
+        }
+        return null;
+    }
+
+    // DIFF: added this Runnable to execute quickAssistProposals to retrieve proposal list (3)
+
+    @Override
+    protected Object getHoverInfoInternal(ITextViewer textViewer, final int lineNumber, final int offset) {
+        AnnotationInfo result = recentAnnotationInfo;
+        if (result != null)
+            return result;
+        List<Annotation> annotations = getAnnotations(lineNumber, offset);
+        if (annotations != null) {
+            for (Annotation annotation : annotations) {
+                if (annotation.getText() != null) {
+                    Position position = getAnnotationModel().getPosition(annotation);
+                    final IQuickAssistInvocationContext invocationContext = new QuickAssistInvocationContext(sourceViewer, position.getOffset(), position.getLength(), true);
+                    CompletionProposalRunnable runnable = new CompletionProposalRunnable(invocationContext);
+                    // Note: the resolutions have to be retrieved from the UI thread, otherwise
+                    // workbench.getActiveWorkbenchWindow() will return null in LanguageSpecificURIEditorOpener and
+                    // cause an exception
+                    Display.getDefault().syncExec(runnable);
+                    result = new AnnotationInfo(annotation, position, sourceViewer, runnable.proposals);
+                    recentAnnotationInfo = result;
+                    return result;
+                }
+            }
+        }
+        return null;
+    }
+
+    // DIFF: outcommented, no configuration supported (3)
 
-		/**
-		 * Create completion proposals which can resolve the given annotation at
-		 * the given position. Returns an empty array if no such proposals exist.
-		 *
-		 * @return the proposals or an empty array
-		 */
-		public ICompletionProposal[] getCompletionProposals() {
-			// DIFF: return proposals directly, no subclassing (1)
-			return proposals;
-		}
-
-		/**
-		 * Adds actions to the given toolbar.
-		 *
-		 * @param manager the toolbar manager to add actions to
-		 * @param infoControl the information control
-		 */
-		public void fillToolBar(ToolBarManager manager, IInformationControl infoControl) {
-			// DIFF: disabled as configuration is not supported yet (2)
-//			ConfigureAnnotationsAction configureAnnotationsAction= new ConfigureAnnotationsAction(annotation, infoControl);
-//			manager.add(configureAnnotationsAction);
-		}
-	}
-
-	private static class AnnotationInformationControl extends AbstractInformationControl implements IInformationControlExtension2 {
-
-		private final DefaultMarkerAnnotationAccess fMarkerAnnotationAccess;
-		private Control fFocusControl;
-		private AnnotationInfo fInput;
-		private Composite fParent;
-
-		public AnnotationInformationControl(Shell parentShell, String statusFieldText) {
-			super(parentShell, statusFieldText);
-			fMarkerAnnotationAccess= new DefaultMarkerAnnotationAccess();
-			create();
-		}
-
-		public AnnotationInformationControl(Shell parentShell, ToolBarManager toolBarManager) {
-			super(parentShell, toolBarManager);
-			
-			fMarkerAnnotationAccess= new DefaultMarkerAnnotationAccess();
-			create();
-		}
-		
-		public AnnotationInformationControl(Shell parentShell, boolean resizeable) {
-			super(parentShell, resizeable);
-			
-			fMarkerAnnotationAccess= new DefaultMarkerAnnotationAccess();
-			create();
-		}		
-
-		/*
-		 * @see org.eclipse.jface.text.IInformationControl#setInformation(java.lang.String)
-		 */
-		@Override
-		public void setInformation(String information) {
-			//replaced by IInformationControlExtension2#setInput
-		}
-		
-		public void setInput(Object input) {
-			Assert.isLegal(input instanceof AnnotationInfo);
-			fInput= (AnnotationInfo)input;
-			disposeDeferredCreatedContent();
-			deferredCreateContent();
-		}
-
-		public boolean hasContents() {
-			return fInput != null;
-		}
-
-		private AnnotationInfo getAnnotationInfo() {
-			return fInput;
-		}
-
-		@Override
-		public void setFocus() {
-			super.setFocus();
-			if (fFocusControl != null)
-				fFocusControl.setFocus();
-		}
-
-		@Override
-		public final void setVisible(boolean visible) {
-			if (!visible)
-				disposeDeferredCreatedContent();
-			super.setVisible(visible);
-		}
-
-		protected void disposeDeferredCreatedContent() {
-			Control[] children= fParent.getChildren();
-			for (int i= 0; i < children.length; i++) {
-				children[i].dispose();
-			}
-			ToolBarManager toolBarManager= getToolBarManager();
-			if (toolBarManager != null)
-				toolBarManager.removeAll();
-		}
-
-		/*
-		 * @see org.eclipse.jface.text.AbstractInformationControl#createContent(org.eclipse.swt.widgets.Composite)
-		 */
-		@Override
-		protected void createContent(Composite parent) {
-			fParent= parent;
-			GridLayout layout= new GridLayout(1, false);
-			layout.verticalSpacing= 0;
-			layout.marginWidth= 0;
-			layout.marginHeight= 0;
-			fParent.setLayout(layout);
-		}
-
-		@Override
-		public Point computeSizeHint() {
-			Point preferedSize= getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-
-			Point constrains= getSizeConstraints();
-			if (constrains == null)
-				return preferedSize;
-
-			Point constrainedSize= getShell().computeSize(constrains.x, SWT.DEFAULT, true);
-
-			int width= Math.min(preferedSize.x, constrainedSize.x);
-			int height= Math.max(preferedSize.y, constrainedSize.y);
-
-			return new Point(width, height);
-		}
-
-		/**
-		 * Fills the toolbar actions, if a toolbar is available. This
-		 * is called after the input has been set.
-		 */
-		protected void fillToolbar() {
-			ToolBarManager toolBarManager= getToolBarManager();
-			if (toolBarManager == null)
-				return;
-			fInput.fillToolBar(toolBarManager, this);
-			toolBarManager.update(true);
-		}
-
-		/**
-		 * Create content of the hover. This is called after
-		 * the input has been set.
-		 */
-		protected void deferredCreateContent() {
-			fillToolbar();
-
-			createAnnotationInformation(fParent, getAnnotationInfo().annotation);
-			setColorAndFont(fParent, fParent.getForeground(), fParent.getBackground(), JFaceResources.getDialogFont());
-
-			ICompletionProposal[] proposals= getAnnotationInfo().getCompletionProposals();
-			if (proposals.length > 0)
-				createCompletionProposalsControl(fParent, proposals);
-
-			fParent.layout(true);
-		}
-
-		private void setColorAndFont(Control control, Color foreground, Color background, Font font) {
-			control.setForeground(foreground);
-			control.setBackground(background);
-			control.setFont(font);
-
-			if (control instanceof Composite) {
-				Control[] children= ((Composite) control).getChildren();
-				for (int i= 0; i < children.length; i++) {
-					setColorAndFont(children[i], foreground, background, font);
-				}
-			}
-		}
-
-		private void createAnnotationInformation(Composite parent, final Annotation annotation) {
-			Composite composite= new Composite(parent, SWT.NONE);
-			composite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-			GridLayout layout= new GridLayout(2, false);
-			layout.marginHeight= 2;
-			layout.marginWidth= 2;
-			layout.horizontalSpacing= 0;
-			composite.setLayout(layout);
-
-			final Canvas canvas= new Canvas(composite, SWT.NO_FOCUS);
-			GridData gridData= new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false);
-			gridData.widthHint= 17;
-			gridData.heightHint= 16;
-			canvas.setLayoutData(gridData);
-			canvas.addPaintListener(new PaintListener() {
-				public void paintControl(PaintEvent e) {
-					e.gc.setFont(null);
-					fMarkerAnnotationAccess.paint(annotation, e.gc, canvas, new Rectangle(0, 0, 16, 16));
-				}
-			});
-
-			StyledText text= new StyledText(composite, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-			GridData data= new GridData(SWT.FILL, SWT.FILL, true, true);
-			text.setLayoutData(data);
-			String annotationText= annotation.getText();
-			if (annotationText != null)
-				text.setText(annotationText);
-		}
-
-		private void createCompletionProposalsControl(Composite parent, ICompletionProposal[] proposals) {
-			Composite composite= new Composite(parent, SWT.NONE);
-			composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			GridLayout layout2= new GridLayout(1, false);
-			layout2.marginHeight= 0;
-			layout2.marginWidth= 0;
-			layout2.verticalSpacing= 2;
-			composite.setLayout(layout2);
-
-			Label separator= new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
-			GridData gridData= new GridData(SWT.FILL, SWT.CENTER, true, false);
-			separator.setLayoutData(gridData);
-
-			Label quickFixLabel= new Label(composite, SWT.NONE);
-			GridData layoutData= new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
-			layoutData.horizontalIndent= 4;
-			quickFixLabel.setLayoutData(layoutData);
-			String text;
-			if (proposals.length == 1) {
-				// DIFF: replaced JavaHoverMessages with XtextUIMessages (4)
-				text= XtextUIMessages.AnnotationWithQuickFixesHover_message_singleQuickFix;
-			} else {
-				// DIFF: replaced JavaHoverMessages with XtextUIMessages (4)
-				text= MessageFormat.format(XtextUIMessages.AnnotationWithQuickFixesHover_message_multipleQuickFix, new Object[] { String.valueOf(proposals.length) });
-			}
-			quickFixLabel.setText(text);
-
-			setColorAndFont(composite, parent.getForeground(), parent.getBackground(), JFaceResources.getDialogFont());
-			createCompletionProposalsList(composite, proposals);
-		}
-
-		private void createCompletionProposalsList(Composite parent, ICompletionProposal[] proposals) {
-			final ScrolledComposite scrolledComposite= new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
-			GridData gridData= new GridData(SWT.FILL, SWT.FILL, true, true);
-			scrolledComposite.setLayoutData(gridData);
-			scrolledComposite.setExpandVertical(false);
-			scrolledComposite.setExpandHorizontal(false);
-
-			Composite composite= new Composite(scrolledComposite, SWT.NONE);
-			composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			GridLayout layout= new GridLayout(2, false);
-			layout.marginLeft= 5;
-			layout.verticalSpacing= 2;
-			composite.setLayout(layout);
-			
-			List<Link> list= new ArrayList<Link>();
-			for (int i= 0; i < proposals.length; i++) {
-				list.add(createCompletionProposalLink(composite, proposals[i], 1));// Original link for single fix, hence pass 1 for count
-
-				// DIFF: outcommented, no support of FixCorrectionProposal and ICleanUp (5)
-//				if (proposals[i] instanceof FixCorrectionProposal) {
-//					FixCorrectionProposal proposal= (FixCorrectionProposal)proposals[i];
-//					int count= proposal.computeNumberOfFixesForCleanUp(proposal.getCleanUp());
-//					if (count > 1) {
-//						list.add(createCompletionProposalLink(composite, proposals[i], count));
-//					}
-//				}
-			}
-			final Link[] links= list.toArray(new Link[list.size()]);
-
-			scrolledComposite.setContent(composite);
-			setColorAndFont(scrolledComposite, parent.getForeground(), parent.getBackground(), JFaceResources.getDialogFont());
-
-			Point contentSize= composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-			composite.setSize(contentSize);
-
-			Point constraints= getSizeConstraints();
-			if (constraints != null && contentSize.x < constraints.x) {
-				ScrollBar horizontalBar= scrolledComposite.getHorizontalBar();
-
-				int scrollBarHeight;
-				if (horizontalBar == null) {
-					Point scrollSize= scrolledComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-					scrollBarHeight= scrollSize.y - contentSize.y;
-				} else {
-					scrollBarHeight= horizontalBar.getSize().y;
-				}
-				gridData.heightHint= contentSize.y - scrollBarHeight;
-			}
-
-			fFocusControl= links[0];
-			for (int i= 0; i < links.length; i++) {
-				final int index= i;
-				final Link link= links[index];
-				link.addKeyListener(new KeyListener() {
-					public void keyPressed(KeyEvent e) {
-						switch (e.keyCode) {
-							case SWT.ARROW_DOWN:
-								if (index + 1 < links.length) {
-									links[index + 1].setFocus();
-								}
-								break;
-							case SWT.ARROW_UP:
-								if (index > 0) {
-									links[index - 1].setFocus();
-								}
-								break;
-							default:
-								break;
-						}
-					}
-
-					public void keyReleased(KeyEvent e) {
-					}
-				});
-
-				link.addFocusListener(new FocusListener() {
-					public void focusGained(FocusEvent e) {
-						int currentPosition= scrolledComposite.getOrigin().y;
-						int hight= scrolledComposite.getSize().y;
-						int linkPosition= link.getLocation().y;
-
-						if (linkPosition < currentPosition) {
-							if (linkPosition < 10)
-								linkPosition= 0;
-
-							scrolledComposite.setOrigin(0, linkPosition);
-						} else if (linkPosition + 20 > currentPosition + hight) {
-							scrolledComposite.setOrigin(0, linkPosition - hight + link.getSize().y);
-						}
-					}
-
-					public void focusLost(FocusEvent e) {
-					}
-				});
-			}
-		}
-
-		private Link createCompletionProposalLink(Composite parent, final ICompletionProposal proposal, int count) {
-			final boolean isMultiFix= count > 1;
-			if (isMultiFix) {
-				new Label(parent, SWT.NONE); // spacer to fill image cell
-				parent= new Composite(parent, SWT.NONE); // indented composite for multi-fix
-				GridLayout layout= new GridLayout(2, false);
-				layout.marginWidth= 0;
-				layout.marginHeight= 0;
-				parent.setLayout(layout);
-			}
-			
-			Label proposalImage= new Label(parent, SWT.NONE);
-			proposalImage.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-			Image image= /*isMultiFix ? JavaPluginImages.get(JavaPluginImages.IMG_CORRECTION_MULTI_FIX) : */proposal.getImage();
-			if (image != null) {
-				proposalImage.setImage(image);
-
-				proposalImage.addMouseListener(new MouseListener() {
-
-					public void mouseDoubleClick(MouseEvent e) {
-					}
-
-					public void mouseDown(MouseEvent e) {
-					}
-
-					public void mouseUp(MouseEvent e) {
-						if (e.button == 1) {
-							apply(proposal, fInput.viewer, fInput.position.offset, isMultiFix);
-						}
-					}
-
-				});
-			}
-
-			Link proposalLink= new Link(parent, SWT.WRAP);
-			GridData layoutData= new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
-			String linkText;
-			if (isMultiFix) {
-				// DIFF: XtextUIMessages (4)
-				linkText= MessageFormat.format(XtextUIMessages.AnnotationWithQuickFixesHover_message_multipleQuickFix, new Object[] { String.valueOf(count) });
-			} else {
-				linkText= proposal.getDisplayString();
-			}
-			proposalLink.setText("<a>" + linkText + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
-			proposalLink.setLayoutData(layoutData);
-			proposalLink.addSelectionListener(new SelectionAdapter() {
-
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					apply(proposal, fInput.viewer, fInput.position.offset, isMultiFix);
-				}
-			});
-			return proposalLink;
-		}
-
-		private void apply(ICompletionProposal p, ITextViewer viewer, int offset, boolean isMultiFix) {
-			//Focus needs to be in the text viewer, otherwise linked mode does not work
-			dispose();
-
-			IRewriteTarget target= null;
-			try {
-				IDocument document= viewer.getDocument();
-
-				if (viewer instanceof ITextViewerExtension) {
-					ITextViewerExtension extension= (ITextViewerExtension) viewer;
-					target= extension.getRewriteTarget();
-				}
-
-				if (target != null)
-					target.beginCompoundChange();
-
-				if (p instanceof ICompletionProposalExtension2) {
-					ICompletionProposalExtension2 e= (ICompletionProposalExtension2) p;
-					e.apply(viewer, (char) 0, isMultiFix ? SWT.CONTROL : SWT.NONE, offset);
-				} else if (p instanceof ICompletionProposalExtension) {
-					ICompletionProposalExtension e= (ICompletionProposalExtension) p;
-					e.apply(document, (char) 0, offset);
-				} else {
-					p.apply(document);
-				}
-
-				Point selection= p.getSelection(document);
-				if (selection != null) {
-					viewer.setSelectedRange(selection.x, selection.y);
-					viewer.revealRange(selection.x, selection.y);
-				}
-			} finally {
-				if (target != null)
-					target.endCompoundChange();
-			}
-		}
-	}
-
-	private static final class PresenterControlCreator extends AbstractReusableInformationControlCreator {
-
-		@Override
-		public IInformationControl doCreateInformationControl(Shell parent) {
-			// DIFF: do not show toolbar in hover, no configuration supported (2)
-			// return new AnnotationInformationControl(parent, new ToolBarManager(SWT.FLAT));
-			return new AnnotationInformationControl(parent, true);
-		}
-	}
-
-	private static final class HoverControlCreator extends AbstractReusableInformationControlCreator {
-		private final IInformationControlCreator fPresenterControlCreator;
-
-		public HoverControlCreator(IInformationControlCreator presenterControlCreator) {
-			fPresenterControlCreator= presenterControlCreator;
-		}
-
-		@Override
-		public IInformationControl doCreateInformationControl(Shell parent) {
-//			String str = EditorsUI.getTooltipAffordanceString();
-//			System.out.println(str);
-			return new AnnotationInformationControl(parent, "Tooltip"){ //EditorsUI.getTooltipAffordanceString()) { // XXX cp uncommented
-
-				@Override
-				public IInformationControlCreator getInformationPresenterControlCreator() {
-					return fPresenterControlCreator;
-				}
-			};
-		}
-
-		@Override
-		public boolean canReuse(IInformationControl control) {
-			if (!super.canReuse(control))
-				return false;
-
-			if (control instanceof IInformationControlExtension4)
-				((IInformationControlExtension4) control).setStatusText("test");  //EditorsUI.getTooltipAffordanceString())  XXX cp uncommented
-
-			return true;
-		}
-	}
-
-	// DIFF: added this Runnable to execute quickAssistProposals to retrieve proposal list (3)
-	
-	private final class CompletionProposalRunnable implements Runnable {
-		
-		public ICompletionProposal[] proposals = null;
-		IQuickAssistInvocationContext invocationContext;
-		
-		public CompletionProposalRunnable(IQuickAssistInvocationContext invocationContext) {
-			this.invocationContext = invocationContext;
-		}
-
-		public void run() {
-			proposals = quickAssistProcessor.computeQuickAssistProposals(invocationContext);
-		}
-	}
-	
-	// DIFF: outcommented, no configuration supported (3)
-	
 //	/**
 //	 * Action to configure the annotation preferences.
 //	 *
@@ -634,89 +197,524 @@ public class AnnotationWithQuickFixesHover extends AbstractProblemHover {
 //	}
 
 //	private final IPreferenceStore fStore= JavaPlugin.getDefault().getCombinedPreferenceStore();
-	// DIFF: (6)
+    // DIFF: (6)
 //	private final DefaultMarkerAnnotationAccess fAnnotationAccess= new DefaultMarkerAnnotationAccess();
-	// DIFF: (7)
+    // DIFF: (7)
 //	private final boolean fAllAnnotations;
-	
-	/**
-	 * The hover control creator.
-	 *
-	 * @since 3.4
-	 */
-	private IInformationControlCreator fHoverControlCreator;
-	/**
-	 * The presentation control creator.
-	 *
-	 * @since 3.4
-	 */
-	private IInformationControlCreator fPresenterControlCreator;
 
-	private volatile AnnotationInfo recentAnnotationInfo;
-	
-	// DIFF: this code is entirely different, as the hover subclasses from AbstractProblemHover and 
-	// hooks different methods
-	
-	@Override
-	protected Region getHoverRegionInternal(final int lineNumber, final int offset) {
-		recentAnnotationInfo = null;
-		List<Annotation> annotations = getAnnotations(lineNumber, offset);
-		if (annotations != null) {
-			for (Annotation annotation : annotations) {
-				Position position = sourceViewer.getAnnotationModel().getPosition(annotation);
-				if (position != null) {
-					final int start = position.getOffset();
-					return new Region (start, position.getLength());	
-				}
-			}
-		}
-		return null;
-	}
+    @Override
+    public IInformationControlCreator getHoverControlCreator() {
+        if (fHoverControlCreator == null)
+            fHoverControlCreator = new HoverControlCreator(getInformationPresenterControlCreator());
+        return fHoverControlCreator;
+    }
 
-	// DIFF: this code is entirely different, as the hover subclasses from AbstractProblemHover and 
-	// hooks different methods
-	
-	@Override
-	protected Object getHoverInfoInternal(ITextViewer textViewer, final int lineNumber, final int offset) {
-		AnnotationInfo result = recentAnnotationInfo;
-		if (result != null)
-			return result;
-		List<Annotation> annotations = getAnnotations(lineNumber, offset);
-		if (annotations != null) {
-			for (Annotation annotation : annotations) {
-				if (annotation.getText() != null) {
-					Position position = getAnnotationModel().getPosition(annotation);
-					final IQuickAssistInvocationContext invocationContext = new QuickAssistInvocationContext(sourceViewer, position.getOffset(), position.getLength(), true);
-					CompletionProposalRunnable runnable = new CompletionProposalRunnable(invocationContext);	
-					// Note: the resolutions have to be retrieved from the UI thread, otherwise
-					// workbench.getActiveWorkbenchWindow() will return null in LanguageSpecificURIEditorOpener and
-					// cause an exception
-					Display.getDefault().syncExec(runnable);
-					result = new AnnotationInfo (annotation, position, sourceViewer, runnable.proposals);
-					recentAnnotationInfo = result;
-					return result;
-				}
-			}
-		}
-		return null;
-	}
+    public IInformationControlCreator getInformationPresenterControlCreator() {
+        if (fPresenterControlCreator == null)
+            fPresenterControlCreator = new PresenterControlCreator();
+        return fPresenterControlCreator;
+    }
 
-	@Override
-	public IInformationControlCreator getHoverControlCreator() {
-		if (fHoverControlCreator == null)
-			fHoverControlCreator= new HoverControlCreator(getInformationPresenterControlCreator());
-		return fHoverControlCreator;
-	}
+    // public to give access in tests
+    public static class AnnotationInfo {
+        public final Annotation annotation;
+        public final Position position;
+        public final ITextViewer viewer;
+        // DIFF: not part of AbstractAnnotationHover (1)
+        public final ICompletionProposal[] proposals;
 
-	public IInformationControlCreator getInformationPresenterControlCreator() {
-		if (fPresenterControlCreator == null)
-			fPresenterControlCreator= new PresenterControlCreator();
-		return fPresenterControlCreator;
-	}
+        public AnnotationInfo(Annotation annotation, Position position, ITextViewer textViewer, ICompletionProposal[] proposals) {
+            this.annotation = annotation;
+            this.position = position;
+            this.viewer = textViewer;
+            // DIFF: not part of AbstractAnnotationHover(1)
+            this.proposals = proposals;
+        }
 
-	// DIFF: not required, get AnnotationModel via getAnnotationModel and not from the 
-	// file buffer manager
-	
+        /**
+         * Create completion proposals which can resolve the given annotation at
+         * the given position. Returns an empty array if no such proposals exist.
+         *
+         * @return the proposals or an empty array
+         */
+        public ICompletionProposal[] getCompletionProposals() {
+            // DIFF: return proposals directly, no subclassing (1)
+            return proposals;
+        }
+
+        /**
+         * Adds actions to the given toolbar.
+         *
+         * @param manager     the toolbar manager to add actions to
+         * @param infoControl the information control
+         */
+        public void fillToolBar(ToolBarManager manager, IInformationControl infoControl) {
+            // DIFF: disabled as configuration is not supported yet (2)
+//			ConfigureAnnotationsAction configureAnnotationsAction= new ConfigureAnnotationsAction(annotation, infoControl);
+//			manager.add(configureAnnotationsAction);
+        }
+    }
+
+    // DIFF: this code is entirely different, as the hover subclasses from AbstractProblemHover and
+    // hooks different methods
+
+    private static class AnnotationInformationControl extends AbstractInformationControl implements IInformationControlExtension2 {
+
+        private final DefaultMarkerAnnotationAccess fMarkerAnnotationAccess;
+        private Control fFocusControl;
+        private AnnotationInfo fInput;
+        private Composite fParent;
+
+        public AnnotationInformationControl(Shell parentShell, String statusFieldText) {
+            super(parentShell, statusFieldText);
+            fMarkerAnnotationAccess = new DefaultMarkerAnnotationAccess();
+            create();
+        }
+
+        public AnnotationInformationControl(Shell parentShell, ToolBarManager toolBarManager) {
+            super(parentShell, toolBarManager);
+
+            fMarkerAnnotationAccess = new DefaultMarkerAnnotationAccess();
+            create();
+        }
+
+        public AnnotationInformationControl(Shell parentShell, boolean resizeable) {
+            super(parentShell, resizeable);
+
+            fMarkerAnnotationAccess = new DefaultMarkerAnnotationAccess();
+            create();
+        }
+
+        /*
+         * @see org.eclipse.jface.text.IInformationControl#setInformation(java.lang.String)
+         */
+        @Override
+        public void setInformation(String information) {
+            //replaced by IInformationControlExtension2#setInput
+        }
+
+        public void setInput(Object input) {
+            Assert.isLegal(input instanceof AnnotationInfo);
+            fInput = (AnnotationInfo) input;
+            disposeDeferredCreatedContent();
+            deferredCreateContent();
+        }
+
+        public boolean hasContents() {
+            return fInput != null;
+        }
+
+        private AnnotationInfo getAnnotationInfo() {
+            return fInput;
+        }
+
+        @Override
+        public void setFocus() {
+            super.setFocus();
+            if (fFocusControl != null)
+                fFocusControl.setFocus();
+        }
+
+        @Override
+        public final void setVisible(boolean visible) {
+            if (!visible)
+                disposeDeferredCreatedContent();
+            super.setVisible(visible);
+        }
+
+        protected void disposeDeferredCreatedContent() {
+            Control[] children = fParent.getChildren();
+            for (int i = 0; i < children.length; i++) {
+                children[i].dispose();
+            }
+            ToolBarManager toolBarManager = getToolBarManager();
+            if (toolBarManager != null)
+                toolBarManager.removeAll();
+        }
+
+        /*
+         * @see org.eclipse.jface.text.AbstractInformationControl#createContent(org.eclipse.swt.widgets.Composite)
+         */
+        @Override
+        protected void createContent(Composite parent) {
+            fParent = parent;
+            GridLayout layout = new GridLayout(1, false);
+            layout.verticalSpacing = 0;
+            layout.marginWidth = 0;
+            layout.marginHeight = 0;
+            fParent.setLayout(layout);
+        }
+
+        @Override
+        public Point computeSizeHint() {
+            Point preferedSize = getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+
+            Point constrains = getSizeConstraints();
+            if (constrains == null)
+                return preferedSize;
+
+            Point constrainedSize = getShell().computeSize(constrains.x, SWT.DEFAULT, true);
+
+            int width = Math.min(preferedSize.x, constrainedSize.x);
+            int height = Math.max(preferedSize.y, constrainedSize.y);
+
+            return new Point(width, height);
+        }
+
+        /**
+         * Fills the toolbar actions, if a toolbar is available. This
+         * is called after the input has been set.
+         */
+        protected void fillToolbar() {
+            ToolBarManager toolBarManager = getToolBarManager();
+            if (toolBarManager == null)
+                return;
+            fInput.fillToolBar(toolBarManager, this);
+            toolBarManager.update(true);
+        }
+
+        /**
+         * Create content of the hover. This is called after
+         * the input has been set.
+         */
+        protected void deferredCreateContent() {
+            fillToolbar();
+
+            createAnnotationInformation(fParent, getAnnotationInfo().annotation);
+            setColorAndFont(fParent, fParent.getForeground(), fParent.getBackground(), JFaceResources.getDialogFont());
+
+            ICompletionProposal[] proposals = getAnnotationInfo().getCompletionProposals();
+            if (proposals.length > 0)
+                createCompletionProposalsControl(fParent, proposals);
+
+            fParent.layout(true);
+        }
+
+        private void setColorAndFont(Control control, Color foreground, Color background, Font font) {
+            control.setForeground(foreground);
+            control.setBackground(background);
+            control.setFont(font);
+
+            if (control instanceof Composite) {
+                Control[] children = ((Composite) control).getChildren();
+                for (int i = 0; i < children.length; i++) {
+                    setColorAndFont(children[i], foreground, background, font);
+                }
+            }
+        }
+
+        private void createAnnotationInformation(Composite parent, final Annotation annotation) {
+            Composite composite = new Composite(parent, SWT.NONE);
+            composite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+            GridLayout layout = new GridLayout(2, false);
+            layout.marginHeight = 2;
+            layout.marginWidth = 2;
+            layout.horizontalSpacing = 0;
+            composite.setLayout(layout);
+
+            final Canvas canvas = new Canvas(composite, SWT.NO_FOCUS);
+            GridData gridData = new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false);
+            gridData.widthHint = 17;
+            gridData.heightHint = 16;
+            canvas.setLayoutData(gridData);
+            canvas.addPaintListener(new PaintListener() {
+                public void paintControl(PaintEvent e) {
+                    e.gc.setFont(null);
+                    fMarkerAnnotationAccess.paint(annotation, e.gc, canvas, new Rectangle(0, 0, 16, 16));
+                }
+            });
+
+            StyledText text = new StyledText(composite, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+            GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+            text.setLayoutData(data);
+            String annotationText = annotation.getText();
+            if (annotationText != null)
+                text.setText(annotationText);
+        }
+
+        private void createCompletionProposalsControl(Composite parent, ICompletionProposal[] proposals) {
+            Composite composite = new Composite(parent, SWT.NONE);
+            composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            GridLayout layout2 = new GridLayout(1, false);
+            layout2.marginHeight = 0;
+            layout2.marginWidth = 0;
+            layout2.verticalSpacing = 2;
+            composite.setLayout(layout2);
+
+            Label separator = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+            GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            separator.setLayoutData(gridData);
+
+            Label quickFixLabel = new Label(composite, SWT.NONE);
+            GridData layoutData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+            layoutData.horizontalIndent = 4;
+            quickFixLabel.setLayoutData(layoutData);
+            String text;
+            if (proposals.length == 1) {
+                // DIFF: replaced JavaHoverMessages with XtextUIMessages (4)
+                text = XtextUIMessages.AnnotationWithQuickFixesHover_message_singleQuickFix;
+            } else {
+                // DIFF: replaced JavaHoverMessages with XtextUIMessages (4)
+                text = MessageFormat.format(XtextUIMessages.AnnotationWithQuickFixesHover_message_multipleQuickFix, new Object[]{String.valueOf(proposals.length)});
+            }
+            quickFixLabel.setText(text);
+
+            setColorAndFont(composite, parent.getForeground(), parent.getBackground(), JFaceResources.getDialogFont());
+            createCompletionProposalsList(composite, proposals);
+        }
+
+        private void createCompletionProposalsList(Composite parent, ICompletionProposal[] proposals) {
+            final ScrolledComposite scrolledComposite = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
+            GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+            scrolledComposite.setLayoutData(gridData);
+            scrolledComposite.setExpandVertical(false);
+            scrolledComposite.setExpandHorizontal(false);
+
+            Composite composite = new Composite(scrolledComposite, SWT.NONE);
+            composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            GridLayout layout = new GridLayout(2, false);
+            layout.marginLeft = 5;
+            layout.verticalSpacing = 2;
+            composite.setLayout(layout);
+
+            List<Link> list = new ArrayList<Link>();
+            for (int i = 0; i < proposals.length; i++) {
+                list.add(createCompletionProposalLink(composite, proposals[i], 1));// Original link for single fix, hence pass 1 for count
+
+                // DIFF: outcommented, no support of FixCorrectionProposal and ICleanUp (5)
+//				if (proposals[i] instanceof FixCorrectionProposal) {
+//					FixCorrectionProposal proposal= (FixCorrectionProposal)proposals[i];
+//					int count= proposal.computeNumberOfFixesForCleanUp(proposal.getCleanUp());
+//					if (count > 1) {
+//						list.add(createCompletionProposalLink(composite, proposals[i], count));
+//					}
+//				}
+            }
+            final Link[] links = list.toArray(new Link[list.size()]);
+
+            scrolledComposite.setContent(composite);
+            setColorAndFont(scrolledComposite, parent.getForeground(), parent.getBackground(), JFaceResources.getDialogFont());
+
+            Point contentSize = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+            composite.setSize(contentSize);
+
+            Point constraints = getSizeConstraints();
+            if (constraints != null && contentSize.x < constraints.x) {
+                ScrollBar horizontalBar = scrolledComposite.getHorizontalBar();
+
+                int scrollBarHeight;
+                if (horizontalBar == null) {
+                    Point scrollSize = scrolledComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+                    scrollBarHeight = scrollSize.y - contentSize.y;
+                } else {
+                    scrollBarHeight = horizontalBar.getSize().y;
+                }
+                gridData.heightHint = contentSize.y - scrollBarHeight;
+            }
+
+            fFocusControl = links[0];
+            for (int i = 0; i < links.length; i++) {
+                final int index = i;
+                final Link link = links[index];
+                link.addKeyListener(new KeyListener() {
+                    public void keyPressed(KeyEvent e) {
+                        switch (e.keyCode) {
+                            case SWT.ARROW_DOWN:
+                                if (index + 1 < links.length) {
+                                    links[index + 1].setFocus();
+                                }
+                                break;
+                            case SWT.ARROW_UP:
+                                if (index > 0) {
+                                    links[index - 1].setFocus();
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+
+                link.addFocusListener(new FocusListener() {
+                    public void focusGained(FocusEvent e) {
+                        int currentPosition = scrolledComposite.getOrigin().y;
+                        int hight = scrolledComposite.getSize().y;
+                        int linkPosition = link.getLocation().y;
+
+                        if (linkPosition < currentPosition) {
+                            if (linkPosition < 10)
+                                linkPosition = 0;
+
+                            scrolledComposite.setOrigin(0, linkPosition);
+                        } else if (linkPosition + 20 > currentPosition + hight) {
+                            scrolledComposite.setOrigin(0, linkPosition - hight + link.getSize().y);
+                        }
+                    }
+
+                    public void focusLost(FocusEvent e) {
+                    }
+                });
+            }
+        }
+
+        private Link createCompletionProposalLink(Composite parent, final ICompletionProposal proposal, int count) {
+            final boolean isMultiFix = count > 1;
+            if (isMultiFix) {
+                new Label(parent, SWT.NONE); // spacer to fill image cell
+                parent = new Composite(parent, SWT.NONE); // indented composite for multi-fix
+                GridLayout layout = new GridLayout(2, false);
+                layout.marginWidth = 0;
+                layout.marginHeight = 0;
+                parent.setLayout(layout);
+            }
+
+            Label proposalImage = new Label(parent, SWT.NONE);
+            proposalImage.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+            Image image = /*isMultiFix ? JavaPluginImages.get(JavaPluginImages.IMG_CORRECTION_MULTI_FIX) : */proposal.getImage();
+            if (image != null) {
+                proposalImage.setImage(image);
+
+                proposalImage.addMouseListener(new MouseListener() {
+
+                    public void mouseDoubleClick(MouseEvent e) {
+                    }
+
+                    public void mouseDown(MouseEvent e) {
+                    }
+
+                    public void mouseUp(MouseEvent e) {
+                        if (e.button == 1) {
+                            apply(proposal, fInput.viewer, fInput.position.offset, isMultiFix);
+                        }
+                    }
+
+                });
+            }
+
+            Link proposalLink = new Link(parent, SWT.WRAP);
+            GridData layoutData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+            String linkText;
+            if (isMultiFix) {
+                // DIFF: XtextUIMessages (4)
+                linkText = MessageFormat.format(XtextUIMessages.AnnotationWithQuickFixesHover_message_multipleQuickFix, new Object[]{String.valueOf(count)});
+            } else {
+                linkText = proposal.getDisplayString();
+            }
+            proposalLink.setText("<a>" + linkText + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
+            proposalLink.setLayoutData(layoutData);
+            proposalLink.addSelectionListener(new SelectionAdapter() {
+
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    apply(proposal, fInput.viewer, fInput.position.offset, isMultiFix);
+                }
+            });
+            return proposalLink;
+        }
+
+        private void apply(ICompletionProposal p, ITextViewer viewer, int offset, boolean isMultiFix) {
+            //Focus needs to be in the text viewer, otherwise linked mode does not work
+            dispose();
+
+            IRewriteTarget target = null;
+            try {
+                IDocument document = viewer.getDocument();
+
+                if (viewer instanceof ITextViewerExtension) {
+                    ITextViewerExtension extension = (ITextViewerExtension) viewer;
+                    target = extension.getRewriteTarget();
+                }
+
+                if (target != null)
+                    target.beginCompoundChange();
+
+                if (p instanceof ICompletionProposalExtension2) {
+                    ICompletionProposalExtension2 e = (ICompletionProposalExtension2) p;
+                    e.apply(viewer, (char) 0, isMultiFix ? SWT.CONTROL : SWT.NONE, offset);
+                } else if (p instanceof ICompletionProposalExtension) {
+                    ICompletionProposalExtension e = (ICompletionProposalExtension) p;
+                    e.apply(document, (char) 0, offset);
+                } else {
+                    p.apply(document);
+                }
+
+                Point selection = p.getSelection(document);
+                if (selection != null) {
+                    viewer.setSelectedRange(selection.x, selection.y);
+                    viewer.revealRange(selection.x, selection.y);
+                }
+            } finally {
+                if (target != null)
+                    target.endCompoundChange();
+            }
+        }
+    }
+
+    // DIFF: this code is entirely different, as the hover subclasses from AbstractProblemHover and
+    // hooks different methods
+
+    private static final class PresenterControlCreator extends AbstractReusableInformationControlCreator {
+
+        @Override
+        public IInformationControl doCreateInformationControl(Shell parent) {
+            // DIFF: do not show toolbar in hover, no configuration supported (2)
+            // return new AnnotationInformationControl(parent, new ToolBarManager(SWT.FLAT));
+            return new AnnotationInformationControl(parent, true);
+        }
+    }
+
+    private static final class HoverControlCreator extends AbstractReusableInformationControlCreator {
+        private final IInformationControlCreator fPresenterControlCreator;
+
+        public HoverControlCreator(IInformationControlCreator presenterControlCreator) {
+            fPresenterControlCreator = presenterControlCreator;
+        }
+
+        @Override
+        public IInformationControl doCreateInformationControl(Shell parent) {
+//			String str = EditorsUI.getTooltipAffordanceString();
+//			System.out.println(str);
+            return new AnnotationInformationControl(parent, "Tooltip") { //EditorsUI.getTooltipAffordanceString()) { // XXX cp uncommented
+
+                @Override
+                public IInformationControlCreator getInformationPresenterControlCreator() {
+                    return fPresenterControlCreator;
+                }
+            };
+        }
+
+        @Override
+        public boolean canReuse(IInformationControl control) {
+            if (!super.canReuse(control))
+                return false;
+
+            if (control instanceof IInformationControlExtension4)
+                ((IInformationControlExtension4) control).setStatusText("test");  //EditorsUI.getTooltipAffordanceString())  XXX cp uncommented
+
+            return true;
+        }
+    }
+
+    private final class CompletionProposalRunnable implements Runnable {
+
+        public ICompletionProposal[] proposals = null;
+        IQuickAssistInvocationContext invocationContext;
+
+        public CompletionProposalRunnable(IQuickAssistInvocationContext invocationContext) {
+            this.invocationContext = invocationContext;
+        }
+
+        public void run() {
+            proposals = quickAssistProcessor.computeQuickAssistProposals(invocationContext);
+        }
+    }
+
+    // DIFF: not required, get AnnotationModel via getAnnotationModel and not from the
+    // file buffer manager
+
 //	private IPath getEditorInputPath() {
 //		if (getEditor() == null)
 //			return null;
@@ -757,8 +755,8 @@ public class AnnotationWithQuickFixesHover extends AbstractProblemHover {
 //			}
 //		}
 //	}
-	
-	// DIFF: not required, as preferences are not supported (2)
+
+    // DIFF: not required, as preferences are not supported (2)
 //	/**
 //	 * Returns the annotation preference for the given annotation.
 //	 *

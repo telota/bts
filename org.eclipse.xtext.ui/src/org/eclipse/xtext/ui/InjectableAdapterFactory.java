@@ -17,9 +17,9 @@ import com.google.inject.Inject;
  */
 public class InjectableAdapterFactory extends ComposedAdapterFactory {
 
-	@Inject
-	public InjectableAdapterFactory(Registry adapterFactoryDescriptorRegistry) {
-		super(adapterFactoryDescriptorRegistry);
-	}
+    @Inject
+    public InjectableAdapterFactory(Registry adapterFactoryDescriptorRegistry) {
+        super(adapterFactoryDescriptorRegistry);
+    }
 
 }

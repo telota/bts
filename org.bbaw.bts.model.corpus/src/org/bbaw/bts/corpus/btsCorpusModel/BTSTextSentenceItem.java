@@ -35,10 +35,9 @@ package org.bbaw.bts.corpus.btsCorpusModel;
  * A representation of the model object '<em><b>BTS Text Sentence Item</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSTextSentenceItem()
  * @model abstract="true"
  * @generated
+ * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSTextSentenceItem()
  */
 public interface BTSTextSentenceItem extends BTSSentenceItem, BTSTextItems {
 } // BTSTextSentenceItem

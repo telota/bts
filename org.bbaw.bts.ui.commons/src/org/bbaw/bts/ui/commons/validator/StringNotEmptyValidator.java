@@ -34,55 +34,53 @@ import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
 
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class StringNotEmptyValidator implements the EMF Validator interface and validates
  * if the given String-object is not empty.
  *
  * @author Christoph Plutte
  */
-public class StringNotEmptyValidator implements IValidator
-{
+public class StringNotEmptyValidator implements IValidator {
 
-	/** The Constant error. */
-	private static final String error = "String may not be empty";
-	
-	/** The error message. */
-	private String errorMessage = error;
+    /**
+     * The Constant error.
+     */
+    private static final String error = "String may not be empty";
 
-	/**
-	 * Instantiates a new string not empty validator.
-	 *
-	 * @param errorMessage the error message
-	 */
-	public StringNotEmptyValidator(String errorMessage)
-	{
-		if (errorMessage != null)
-		{
-			this.errorMessage = errorMessage;
-		}
-	}
+    /**
+     * The error message.
+     */
+    private String errorMessage = error;
 
-	/**
-	 * Instantiates a new string not empty validator.
-	 */
-	public StringNotEmptyValidator()
-	{
-	}
+    /**
+     * Instantiates a new string not empty validator.
+     *
+     * @param errorMessage the error message
+     */
+    public StringNotEmptyValidator(String errorMessage) {
+        if (errorMessage != null) {
+            this.errorMessage = errorMessage;
+        }
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
-	 */
-	@Override
-	public IStatus validate(Object value)
-	{
-		if (value instanceof String)
-		{
-			if (value.toString().trim().length() > 0)
-			{
-				return ValidationStatus.ok();
-			}
-		}
-		return ValidationStatus.error(errorMessage);
-	}
+    /**
+     * Instantiates a new string not empty validator.
+     */
+    public StringNotEmptyValidator() {
+    }
+
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
+     */
+    @Override
+    public IStatus validate(Object value) {
+        if (value instanceof String) {
+            if (value.toString().trim().length() > 0) {
+                return ValidationStatus.ok();
+            }
+        }
+        return ValidationStatus.error(errorMessage);
+    }
 
 }

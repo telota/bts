@@ -25,43 +25,43 @@ import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 
 /**
  * This is a clone from JDT's JavadocHover class
- * 
+ *
  * @author Christoph Kulla - Initial contribution and API
  */
 public class OpenBrowserUtil {
 
-	public static void open(final URL url, Display display) {
-		display.syncExec(new Runnable() {
-			public void run() {
-				internalOpen(url, false);
-			}
-		});
-	}
+    public static void open(final URL url, Display display) {
+        display.syncExec(new Runnable() {
+            public void run() {
+                internalOpen(url, false);
+            }
+        });
+    }
 
-	public static void openExternal(final URL url, Display display) {
-		display.syncExec(new Runnable() {
-			public void run() {
-				internalOpen(url, true);
-			}
-		});
-	}
+    public static void openExternal(final URL url, Display display) {
+        display.syncExec(new Runnable() {
+            public void run() {
+                internalOpen(url, true);
+            }
+        });
+    }
 
-	private static void internalOpen(final URL url, final boolean useExternalBrowser) {
-		BusyIndicator.showWhile(null, new Runnable() {
-			public void run() {
-				URL helpSystemUrl= PlatformUI.getWorkbench().getHelpSystem().resolve(url.toExternalForm(), true);
-				try {
-					IWorkbenchBrowserSupport browserSupport = PlatformUI.getWorkbench().getBrowserSupport();
-					IWebBrowser browser;
-					if (useExternalBrowser)
-						browser= browserSupport.getExternalBrowser();
-					else
-						browser= browserSupport.createBrowser(null);
-					browser.openURL(helpSystemUrl);
-				} catch (PartInitException ex) {
-				}
-			}
-		});
-	}
+    private static void internalOpen(final URL url, final boolean useExternalBrowser) {
+        BusyIndicator.showWhile(null, new Runnable() {
+            public void run() {
+                URL helpSystemUrl = PlatformUI.getWorkbench().getHelpSystem().resolve(url.toExternalForm(), true);
+                try {
+                    IWorkbenchBrowserSupport browserSupport = PlatformUI.getWorkbench().getBrowserSupport();
+                    IWebBrowser browser;
+                    if (useExternalBrowser)
+                        browser = browserSupport.getExternalBrowser();
+                    else
+                        browser = browserSupport.createBrowser(null);
+                    browser.openURL(helpSystemUrl);
+                } catch (PartInitException ex) {
+                }
+            }
+        });
+    }
 
 }

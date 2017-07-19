@@ -41,71 +41,73 @@ import org.eclipse.jface.viewers.Viewer;
 
 /**
  * The Class BTSStringToProjectConverter implements Converter and converts String-objects to Project-objects.
- * 
- *  In the constructor this converter expects a reference to the viewer which holds the BTSProjects amongst which the target BTSProject
+ * <p>
+ * In the constructor this converter expects a reference to the viewer which holds the BTSProjects amongst which the target BTSProject
  * should be selected.
  */
 public class BTSStringToProjectConverter implements IConverter {
 
-	/** The viewer. */
-	private Viewer viewer;
+    /**
+     * The viewer.
+     */
+    private Viewer viewer;
 
-	/**
-	 * Instantiates a new BTS string to project converter.
-	 *
-	 * @param viewer the viewer
-	 */
-	public BTSStringToProjectConverter(Viewer viewer) {
-		Assert.isNotNull(viewer);
-		this.viewer = viewer;
-	}
+    /**
+     * Instantiates a new BTS string to project converter.
+     *
+     * @param viewer the viewer
+     */
+    public BTSStringToProjectConverter(Viewer viewer) {
+        Assert.isNotNull(viewer);
+        this.viewer = viewer;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#getFromType()
-	 */
-	@Override
-	public Object getFromType() {
-		return String.class;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#getFromType()
+     */
+    @Override
+    public Object getFromType() {
+        return String.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#getToType()
-	 */
-	@Override
-	public Object getToType() {
-		return TreeNodeWrapper.class;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#getToType()
+     */
+    @Override
+    public Object getToType() {
+        return TreeNodeWrapper.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#convert(java.lang.Object)
-	 */
-	@Override
-	public Object convert(Object fromObject) {
-		if (fromObject instanceof String) {
-			Object input = viewer.getInput();
-			if (input instanceof TreeNodeWrapper) {
-				for (Object i : ((TreeNodeWrapper) input).getChildren()) {
-					if (i instanceof TreeNodeWrapper
-							&& ((TreeNodeWrapper) i).getObject() instanceof BTSProject
-							&& fromObject
-									.equals(((BTSProject) ((TreeNodeWrapper) i).getObject()).getPrefix())) {
-						return i;
-					}
-				}
-				BTSProject pro = BtsmodelFactory.eINSTANCE
-						.createBTSProject();
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#convert(java.lang.Object)
+     */
+    @Override
+    public Object convert(Object fromObject) {
+        if (fromObject instanceof String) {
+            Object input = viewer.getInput();
+            if (input instanceof TreeNodeWrapper) {
+                for (Object i : ((TreeNodeWrapper) input).getChildren()) {
+                    if (i instanceof TreeNodeWrapper
+                            && ((TreeNodeWrapper) i).getObject() instanceof BTSProject
+                            && fromObject
+                            .equals(((BTSProject) ((TreeNodeWrapper) i).getObject()).getPrefix())) {
+                        return i;
+                    }
+                }
+                BTSProject pro = BtsmodelFactory.eINSTANCE
+                        .createBTSProject();
 
-				pro.setPrefix((String) fromObject);
-				pro.setName((String) fromObject);
-				TreeNodeWrapper child = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-				child.setObject(pro);
-				child.setLabel(pro.getName());
-				child.setParent(((TreeNodeWrapper) viewer.getInput()));
-				((TreeNodeWrapper) viewer.getInput()).getChildren().add(child);
-				return child;
-			}
+                pro.setPrefix((String) fromObject);
+                pro.setName((String) fromObject);
+                TreeNodeWrapper child = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+                child.setObject(pro);
+                child.setLabel(pro.getName());
+                child.setParent(((TreeNodeWrapper) viewer.getInput()));
+                ((TreeNodeWrapper) viewer.getInput()).getChildren().add(child);
+                return child;
+            }
 
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 }

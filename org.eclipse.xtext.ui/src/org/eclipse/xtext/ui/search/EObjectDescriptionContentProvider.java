@@ -19,45 +19,45 @@ import org.eclipse.xtext.resource.IEObjectDescription;
  */
 public class EObjectDescriptionContentProvider implements ILazyContentProvider {
 
-	private Iterable<IEObjectDescription> matches;
+    private Iterable<IEObjectDescription> matches;
 
-	private int currentCount;
+    private int currentCount;
 
-	private Iterator<IEObjectDescription> currentIterator;
+    private Iterator<IEObjectDescription> currentIterator;
 
-	private TableViewer viewer;
+    private TableViewer viewer;
 
-	public void dispose() {
-		viewer = null;
-		matches = null;
-	}
+    public void dispose() {
+        viewer = null;
+        matches = null;
+    }
 
-	@SuppressWarnings("unchecked")
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		this.viewer = (TableViewer) viewer;
-		if (newInput instanceof Iterable<?>) {
-			matches = (Iterable<IEObjectDescription>) newInput;
-			reset();
-			viewer.refresh();
-		}
-	}
+    @SuppressWarnings("unchecked")
+    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+        this.viewer = (TableViewer) viewer;
+        if (newInput instanceof Iterable<?>) {
+            matches = (Iterable<IEObjectDescription>) newInput;
+            reset();
+            viewer.refresh();
+        }
+    }
 
-	public void updateElement(int index) {
-		if (index < currentCount) {
-			reset();
-		}
-		for (; index > currentCount && currentIterator.hasNext(); ++currentCount) {
-			currentIterator.next();
-		}
-		if (currentIterator.hasNext()) {
-			++currentCount;
-			viewer.replace(currentIterator.next(), index);
-		}
-	}
+    public void updateElement(int index) {
+        if (index < currentCount) {
+            reset();
+        }
+        for (; index > currentCount && currentIterator.hasNext(); ++currentCount) {
+            currentIterator.next();
+        }
+        if (currentIterator.hasNext()) {
+            ++currentCount;
+            viewer.replace(currentIterator.next(), index);
+        }
+    }
 
-	private void reset() {
-		currentCount = 0;
-		currentIterator = matches.iterator();
-	}
+    private void reset() {
+        currentCount = 0;
+        currentIterator = matches.iterator();
+    }
 
 }

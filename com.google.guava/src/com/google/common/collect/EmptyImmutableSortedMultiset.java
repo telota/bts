@@ -28,87 +28,87 @@ import javax.annotation.Nullable;
  */
 @SuppressWarnings("serial") // Uses writeReplace, not default serialization
 final class EmptyImmutableSortedMultiset<E> extends ImmutableSortedMultiset<E> {
-  private final ImmutableSortedSet<E> elementSet;
+    private final ImmutableSortedSet<E> elementSet;
 
-  EmptyImmutableSortedMultiset(Comparator<? super E> comparator) {
-    this.elementSet = ImmutableSortedSet.emptySet(comparator);
-  }
-
-  @Override
-  public Entry<E> firstEntry() {
-    return null;
-  }
-
-  @Override
-  public Entry<E> lastEntry() {
-    return null;
-  }
-
-  @Override
-  public int count(@Nullable Object element) {
-    return 0;
-  }
-
-  @Override
-  public boolean containsAll(Collection<?> targets) {
-    return targets.isEmpty();
-  }
-
-  @Override
-  public int size() {
-    return 0;
-  }
-
-  @Override
-  public ImmutableSortedSet<E> elementSet() {
-    return elementSet;
-  }
-
-  @Override
-  Entry<E> getEntry(int index) {
-    throw new AssertionError("should never be called");
-  }
-
-  @Override
-  public ImmutableSortedMultiset<E> headMultiset(E upperBound, BoundType boundType) {
-    checkNotNull(upperBound);
-    checkNotNull(boundType);
-    return this;
-  }
-
-  @Override
-  public ImmutableSortedMultiset<E> tailMultiset(E lowerBound, BoundType boundType) {
-    checkNotNull(lowerBound);
-    checkNotNull(boundType);
-    return this;
-  }
-
-  @Override
-  public UnmodifiableIterator<E> iterator() {
-    return Iterators.emptyIterator();
-  }
-
-  @Override
-  public boolean equals(@Nullable Object object) {
-    if (object instanceof Multiset) {
-      Multiset<?> other = (Multiset<?>) object;
-      return other.isEmpty();
+    EmptyImmutableSortedMultiset(Comparator<? super E> comparator) {
+        this.elementSet = ImmutableSortedSet.emptySet(comparator);
     }
-    return false;
-  }
 
-  @Override
-  boolean isPartialView() {
-    return false;
-  }
+    @Override
+    public Entry<E> firstEntry() {
+        return null;
+    }
 
-  @Override
-  int copyIntoArray(Object[] dst, int offset) {
-    return offset;
-  }
+    @Override
+    public Entry<E> lastEntry() {
+        return null;
+    }
 
-  @Override
-  public ImmutableList<E> asList() {
-    return ImmutableList.of();
-  }
+    @Override
+    public int count(@Nullable Object element) {
+        return 0;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> targets) {
+        return targets.isEmpty();
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public ImmutableSortedSet<E> elementSet() {
+        return elementSet;
+    }
+
+    @Override
+    Entry<E> getEntry(int index) {
+        throw new AssertionError("should never be called");
+    }
+
+    @Override
+    public ImmutableSortedMultiset<E> headMultiset(E upperBound, BoundType boundType) {
+        checkNotNull(upperBound);
+        checkNotNull(boundType);
+        return this;
+    }
+
+    @Override
+    public ImmutableSortedMultiset<E> tailMultiset(E lowerBound, BoundType boundType) {
+        checkNotNull(lowerBound);
+        checkNotNull(boundType);
+        return this;
+    }
+
+    @Override
+    public UnmodifiableIterator<E> iterator() {
+        return Iterators.emptyIterator();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object object) {
+        if (object instanceof Multiset) {
+            Multiset<?> other = (Multiset<?>) object;
+            return other.isEmpty();
+        }
+        return false;
+    }
+
+    @Override
+    boolean isPartialView() {
+        return false;
+    }
+
+    @Override
+    int copyIntoArray(Object[] dst, int offset) {
+        return offset;
+    }
+
+    @Override
+    public ImmutableList<E> asList() {
+        return ImmutableList.of();
+    }
 }

@@ -25,38 +25,36 @@ import org.eclipselabs.emfjson.EMFJs;
 import org.eclipselabs.emfjson.common.ModelUtil;
 
 /**
- * 
  * @author ghillairet
- *
  */
 public abstract class JsInputStream extends InputStream implements URIConverter.Loadable {
-	
-	protected URI uri;
-	protected Map<?, ?> options;
-	
-	public JsInputStream(URI uri, Map<?, ?> options) {
-		this.uri = uri;
-		this.options = options;
-	}
-	
-	@Override
-	public void loadResource(Resource resource) throws IOException {
-		URL url = null;
-		try {
-			url = ModelUtil.getURL(resource.getURI(), options.get(EMFJs.OPTION_URL_PARAMETERS));
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		
-		final JSONLoad loader = new JSONLoad(url, options, resource.getResourceSet());
-		final Collection<EObject> roots = loader.fillResource(resource);
-		
-		resource.getContents().addAll(roots);
-	}
-	
-	@Override
-	public int read() throws IOException {
-		return 0;
-	}
+
+    protected URI uri;
+    protected Map<?, ?> options;
+
+    public JsInputStream(URI uri, Map<?, ?> options) {
+        this.uri = uri;
+        this.options = options;
+    }
+
+    @Override
+    public void loadResource(Resource resource) throws IOException {
+        URL url = null;
+        try {
+            url = ModelUtil.getURL(resource.getURI(), options.get(EMFJs.OPTION_URL_PARAMETERS));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        final JSONLoad loader = new JSONLoad(url, options, resource.getResourceSet());
+        final Collection<EObject> roots = loader.fillResource(resource);
+
+        resource.getContents().addAll(roots);
+    }
+
+    @Override
+    public int read() throws IOException {
+        return 0;
+    }
 
 }

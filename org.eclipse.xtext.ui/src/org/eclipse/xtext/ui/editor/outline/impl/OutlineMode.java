@@ -13,21 +13,21 @@ package org.eclipse.xtext.ui.editor.outline.impl;
  */
 public class OutlineMode {
 
-	private String id;
+    private String id;
 
-	private String description;
+    private String description;
 
-	public OutlineMode(String id, String description) {
-		super();
-		this.description = description;
-		this.id = id;
-	}
+    public OutlineMode(String id, String description) {
+        super();
+        this.description = description;
+        this.id = id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
-	
-	public String getId() {
-		return id;
-	}
+    public String getDescription() {
+        return description;
+    }
+
+    public String getId() {
+        return id;
+    }
 }

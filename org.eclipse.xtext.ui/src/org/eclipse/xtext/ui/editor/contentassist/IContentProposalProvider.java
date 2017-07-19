@@ -12,6 +12,6 @@ package org.eclipse.xtext.ui.editor.contentassist;
  */
 public interface IContentProposalProvider {
 
-	void createProposals(ContentAssistContext context, ICompletionProposalAcceptor acceptor);
+    void createProposals(ContentAssistContext context, ICompletionProposalAcceptor acceptor);
 
 }

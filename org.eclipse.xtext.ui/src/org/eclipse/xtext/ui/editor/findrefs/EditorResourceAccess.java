@@ -21,26 +21,26 @@ import com.google.inject.Inject;
  */
 public class EditorResourceAccess implements IReferenceFinder.ILocalResourceAccess {
 
-	@Inject
-	private LoadingResourceAccess delegate;
+    @Inject
+    private LoadingResourceAccess delegate;
 
-	@Inject
-	private OpenDocumentTracker openDocumentTracker;
-	
-	public <R> R readOnly(final URI targetURI, final IUnitOfWork<R, ResourceSet> work) {
-		IXtextDocument document = openDocumentTracker.getOpenDocument(targetURI.trimFragment());
-		if (document != null) {
-			return document.readOnly(new IUnitOfWork<R, XtextResource>() {
-				public R exec(XtextResource state) throws Exception {
-					ResourceSet localContext = state.getResourceSet();
-					if (localContext != null)
-						return work.exec(localContext);
-					return null;
-				}
-			});
-		} else {
-			return delegate.readOnly(targetURI, work);
-		}
-	}
+    @Inject
+    private OpenDocumentTracker openDocumentTracker;
+
+    public <R> R readOnly(final URI targetURI, final IUnitOfWork<R, ResourceSet> work) {
+        IXtextDocument document = openDocumentTracker.getOpenDocument(targetURI.trimFragment());
+        if (document != null) {
+            return document.readOnly(new IUnitOfWork<R, XtextResource>() {
+                public R exec(XtextResource state) throws Exception {
+                    ResourceSet localContext = state.getResourceSet();
+                    if (localContext != null)
+                        return work.exec(localContext);
+                    return null;
+                }
+            });
+        } else {
+            return delegate.readOnly(targetURI, work);
+        }
+    }
 
 }

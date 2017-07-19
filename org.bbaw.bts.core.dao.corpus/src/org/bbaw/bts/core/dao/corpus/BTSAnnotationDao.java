@@ -4,9 +4,8 @@ import org.bbaw.bts.core.dao.GenericDao;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
 
 
-public interface BTSAnnotationDao extends GenericDao<BTSAnnotation, String>
-{
+public interface BTSAnnotationDao extends GenericDao<BTSAnnotation, String> {
 
-	boolean removeBTSAnnotation(BTSAnnotation annotation, String path);
+    boolean removeBTSAnnotation(BTSAnnotation annotation, String path);
 
 }

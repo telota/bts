@@ -35,12 +35,12 @@ import java.util.List;
  * A factory for creating BTSObjectSearchService objects.
  */
 public interface BTSObjectSearchServiceFactory {
-	
-	/**
-	 * Gets the search services.
-	 *
-	 * @return the search services
-	 */
-	List<BTSObjectSearchService> getSearchServices();
+
+    /**
+     * Gets the search services.
+     *
+     * @return the search services
+     */
+    List<BTSObjectSearchService> getSearchServices();
 
 }

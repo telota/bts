@@ -15,6 +15,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface IResourceSetProvider {
 
-	ResourceSet get(IProject project);
-	
+    ResourceSet get(IProject project);
+
 }

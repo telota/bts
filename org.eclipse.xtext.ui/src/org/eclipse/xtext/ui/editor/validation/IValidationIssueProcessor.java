@@ -17,5 +17,5 @@ import org.eclipse.xtext.validation.Issue;
  * @author Michael Clay - Initial contribution and API
  */
 public interface IValidationIssueProcessor {
-	void processIssues(List<Issue> issues, IProgressMonitor monitor);
+    void processIssues(List<Issue> issues, IProgressMonitor monitor);
 }

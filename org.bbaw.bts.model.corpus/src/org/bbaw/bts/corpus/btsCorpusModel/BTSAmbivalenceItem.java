@@ -36,10 +36,9 @@ import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
  * A representation of the model object '<em><b>BTS Ambivalence Item</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSAmbivalenceItem()
  * @model interface="true" abstract="true"
  * @generated
+ * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSAmbivalenceItem()
  */
 public interface BTSAmbivalenceItem extends BTSIdentifiableItem {
 } // BTSAmbivalenceItem

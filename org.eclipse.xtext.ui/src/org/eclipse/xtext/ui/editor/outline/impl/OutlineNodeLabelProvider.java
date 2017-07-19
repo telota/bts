@@ -23,62 +23,62 @@ import com.google.inject.Inject;
  */
 public class OutlineNodeLabelProvider extends DelegatingStyledCellLabelProvider implements ILabelProvider {
 
-	@Inject
-	public OutlineNodeLabelProvider(Delegate delegate) {
-		super(delegate);
-	}
+    @Inject
+    public OutlineNodeLabelProvider(Delegate delegate) {
+        super(delegate);
+    }
 
-	public static class Delegate extends AbstractLabelProvider {
+    public String getText(Object element) {
+        final StyledString styledText = getStyledText(element);
+        return styledText != null ? styledText.toString() : null;
+    }
 
-		@Inject
-		private IImageHelper imageHelper;
+    public static class Delegate extends AbstractLabelProvider {
 
-		@Override
-		protected Object doGetText(Object element) {
-			if (element instanceof IOutlineNode) {
-				return ((IOutlineNode) element).getText();
-			}
-			return super.doGetText(element);
-		}
+        @Inject
+        private IImageHelper imageHelper;
 
-		@Override
-		protected Object doGetImage(Object element) {
-			if (element instanceof IOutlineNode.Extension) {
-				ImageDescriptor imageDescriptor = ((IOutlineNode.Extension) element).getImageDescriptor();
-				if (imageDescriptor != null)
-					return imageDescriptor;
-			}
-			if (element instanceof IOutlineNode) {
-				Image image = ((IOutlineNode) element).getImage();
-				if (image != null) 
-					return image;
-			}
-			return super.doGetImage(element);
-		}
+        @Override
+        protected Object doGetText(Object element) {
+            if (element instanceof IOutlineNode) {
+                return ((IOutlineNode) element).getText();
+            }
+            return super.doGetText(element);
+        }
 
-		@Override
-		protected Object getDefaultImage() {
-			return imageHelper.getImage("defaultoutlinenode.gif");
-		}
+        @Override
+        protected Object doGetImage(Object element) {
+            if (element instanceof IOutlineNode.Extension) {
+                ImageDescriptor imageDescriptor = ((IOutlineNode.Extension) element).getImageDescriptor();
+                if (imageDescriptor != null)
+                    return imageDescriptor;
+            }
+            if (element instanceof IOutlineNode) {
+                Image image = ((IOutlineNode) element).getImage();
+                if (image != null)
+                    return image;
+            }
+            return super.doGetImage(element);
+        }
 
-		@Override
-		protected String getDefaultText() {
-			return "<null>";
-		}
+        @Override
+        protected Object getDefaultImage() {
+            return imageHelper.getImage("defaultoutlinenode.gif");
+        }
 
-		@Override
-		public Image getImage(Object element) {
-			return super.getImage(element);
-		}
+        @Override
+        protected String getDefaultText() {
+            return "<null>";
+        }
 
-		@Override
-		public String getText(Object element) {
-			return super.getText(element);
-		}
-	}
+        @Override
+        public Image getImage(Object element) {
+            return super.getImage(element);
+        }
 
-	public String getText(Object element) {
-		final StyledString styledText = getStyledText(element);
-		return styledText != null? styledText.toString() : null;
-	}
+        @Override
+        public String getText(Object element) {
+            return super.getText(element);
+        }
+    }
 }

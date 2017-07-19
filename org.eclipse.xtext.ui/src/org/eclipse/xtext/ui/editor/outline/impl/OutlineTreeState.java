@@ -22,82 +22,82 @@ import com.google.common.collect.Sets;
 
 /**
  * Either stores the expansion/selection of a tree viewer or aggregates the new expansion/selection state.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class OutlineTreeState {
 
-	private static final Logger LOG = Logger.getLogger(OutlineTreeState.class);
+    private static final Logger LOG = Logger.getLogger(OutlineTreeState.class);
 
-	private Set<IOutlineNode> expandedNodes;
-	private Set<IOutlineNode> selectedNodes;
+    private Set<IOutlineNode> expandedNodes;
+    private Set<IOutlineNode> selectedNodes;
 
-	public OutlineTreeState(TreeViewer treeViewer) {
-		expandedNodes = Collections.unmodifiableSet(getExpandedNodes(treeViewer));
-		selectedNodes = Collections.unmodifiableSet(getSelectedNodes(treeViewer));
-	}
+    public OutlineTreeState(TreeViewer treeViewer) {
+        expandedNodes = Collections.unmodifiableSet(getExpandedNodes(treeViewer));
+        selectedNodes = Collections.unmodifiableSet(getSelectedNodes(treeViewer));
+    }
 
-	public OutlineTreeState() {
-		expandedNodes = Sets.newHashSet();
-		selectedNodes = Sets.newHashSet();
-	}
+    public OutlineTreeState() {
+        expandedNodes = Sets.newHashSet();
+        selectedNodes = Sets.newHashSet();
+    }
 
-	protected Set<IOutlineNode> getExpandedNodes(final TreeViewer treeViewer) {
-		final Set<IOutlineNode> expandedNodes = Sets.newHashSet();
-		DisplayRunHelper.runSyncInDisplayThread(new Runnable() {
-			public void run() {
-				if (!treeViewer.getTree().isDisposed()) {
-					Object[] expandedElements = treeViewer.getExpandedElements();
-					for (Object expandedElement : expandedElements) {
-						if (!(expandedElement instanceof IOutlineNode))
-							LOG.error("Content outline contains illegal node " + expandedElement);
-						else
-							expandedNodes.add((IOutlineNode) expandedElement);
-					}
-				}
-			}
-		});
-		return expandedNodes;
-	}
+    protected Set<IOutlineNode> getExpandedNodes(final TreeViewer treeViewer) {
+        final Set<IOutlineNode> expandedNodes = Sets.newHashSet();
+        DisplayRunHelper.runSyncInDisplayThread(new Runnable() {
+            public void run() {
+                if (!treeViewer.getTree().isDisposed()) {
+                    Object[] expandedElements = treeViewer.getExpandedElements();
+                    for (Object expandedElement : expandedElements) {
+                        if (!(expandedElement instanceof IOutlineNode))
+                            LOG.error("Content outline contains illegal node " + expandedElement);
+                        else
+                            expandedNodes.add((IOutlineNode) expandedElement);
+                    }
+                }
+            }
+        });
+        return expandedNodes;
+    }
 
-	protected Set<IOutlineNode> getSelectedNodes(final TreeViewer treeViewer) {
-		DisplayRunHelper.runSyncInDisplayThread(new Runnable() {
-			public void run() {
-				selectedNodes = Sets.newHashSet();
-				ISelection selection = treeViewer.getSelection();
-				if (selection instanceof IStructuredSelection) {
-					for (Iterator<?> selectionIter = ((IStructuredSelection) selection).iterator(); selectionIter
-							.hasNext();) {
-						Object selectedElement = selectionIter.next();
-						if (!(selectedElement instanceof IOutlineNode))
-							LOG.error("Content outline contains illegal node " + selectedElement);
-						else
-							selectedNodes.add((IOutlineNode) selectedElement);
-					}
-				}
-			}
-		});
-		return selectedNodes;
-	}
+    protected Set<IOutlineNode> getSelectedNodes(final TreeViewer treeViewer) {
+        DisplayRunHelper.runSyncInDisplayThread(new Runnable() {
+            public void run() {
+                selectedNodes = Sets.newHashSet();
+                ISelection selection = treeViewer.getSelection();
+                if (selection instanceof IStructuredSelection) {
+                    for (Iterator<?> selectionIter = ((IStructuredSelection) selection).iterator(); selectionIter
+                            .hasNext(); ) {
+                        Object selectedElement = selectionIter.next();
+                        if (!(selectedElement instanceof IOutlineNode))
+                            LOG.error("Content outline contains illegal node " + selectedElement);
+                        else
+                            selectedNodes.add((IOutlineNode) selectedElement);
+                    }
+                }
+            }
+        });
+        return selectedNodes;
+    }
 
-	public Set<IOutlineNode> getSelectedNodes() {
-		return selectedNodes;
-	}
+    public Set<IOutlineNode> getSelectedNodes() {
+        return selectedNodes;
+    }
 
-	public Set<IOutlineNode> getExpandedNodes() {
-		return expandedNodes;
-	}
+    public Set<IOutlineNode> getExpandedNodes() {
+        return expandedNodes;
+    }
 
-	public boolean addExpandedNode(IOutlineNode node) {
-		if (expandedNodes.contains(node))
-			return false;
-		return expandedNodes.add(node);
-	}
+    public boolean addExpandedNode(IOutlineNode node) {
+        if (expandedNodes.contains(node))
+            return false;
+        return expandedNodes.add(node);
+    }
 
-	public boolean addSelectedNode(IOutlineNode node) {
-		if (selectedNodes.contains(node))
-			return false;
-		return selectedNodes.add(node);
-	}
+    public boolean addSelectedNode(IOutlineNode node) {
+        if (selectedNodes.contains(node))
+            return false;
+        return selectedNodes.add(node);
+    }
 
 }

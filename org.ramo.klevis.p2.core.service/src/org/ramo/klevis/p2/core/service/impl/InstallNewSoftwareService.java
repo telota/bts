@@ -27,6 +27,7 @@ import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.IRepositoryManager;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepository;
 import org.ramo.klevis.p2.core.iservice.IInstallNewSoftwareService;
+
 /*******************************************************************************
  * Copyright (c) 2012 Klevis Ramo and others.
  * All rights reserved. This program and the accompanying materials
@@ -38,285 +39,285 @@ import org.ramo.klevis.p2.core.iservice.IInstallNewSoftwareService;
  *     Klevis Ramo - initial API and implementation
  *******************************************************************************/
 public class InstallNewSoftwareService implements IInstallNewSoftwareService {
-	
 
-	NullProgressMonitor nullProgressMonitor;
 
-	URI uri;
+    NullProgressMonitor nullProgressMonitor;
 
-	IProvisioningAgent agent;
-	IMetadataRepository loadRepository = null;
+    URI uri;
 
-	public static boolean containsString(String original, String tobeChecked,
-			boolean caseSensitive) {
-		if (caseSensitive) {
-			return original.contains(tobeChecked);
+    IProvisioningAgent agent;
+    IMetadataRepository loadRepository = null;
 
-		} else {
-			return original.toLowerCase().contains(tobeChecked.toLowerCase());
-		}
+    public static boolean containsString(String original, String tobeChecked,
+                                         boolean caseSensitive) {
+        if (caseSensitive) {
+            return original.contains(tobeChecked);
 
-	}
+        } else {
+            return original.toLowerCase().contains(tobeChecked.toLowerCase());
+        }
 
-	@Override
-	public synchronized List<IInstallableUnit> loadRepository(String uriString,
-			IProvisioningAgent agent) {
+    }
 
-		uri = null;
-		nullProgressMonitor = new NullProgressMonitor();
-		this.agent = agent;
+    @Override
+    public synchronized List<IInstallableUnit> loadRepository(String uriString,
+                                                              IProvisioningAgent agent) {
 
-		if (!containsString(uriString, "http", false)
-				
-				&& !(uriString.contains(".jar") || uriString.contains(".zip"))) {
+        uri = null;
+        nullProgressMonitor = new NullProgressMonitor();
+        this.agent = agent;
 
-			uri = new File(uriString).toURI();
-		}
+        if (!containsString(uriString, "http", false)
 
-		if (uri == null)
-			System.out.println("InstallNewSoftwareService uri " + uriString);
-			try {
-				uri = new URI(uriString);
-			} catch (URISyntaxException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+                && !(uriString.contains(".jar") || uriString.contains(".zip"))) {
 
-		MetadataRepositoryManager metadataRepositoryManager = new MetadataRepositoryManager(
-				agent);
+            uri = new File(uriString).toURI();
+        }
 
-		try {
-			loadRepository = metadataRepositoryManager.loadRepository(uri,
-					IRepositoryManager.REPOSITORIES_ALL, nullProgressMonitor);
-		} catch (ProvisionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException(e.getMessage());
-		}
+        if (uri == null)
+            System.out.println("InstallNewSoftwareService uri " + uriString);
+        try {
+            uri = new URI(uriString);
+        } catch (URISyntaxException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
-		IQuery<IInstallableUnit> createQuery = QueryUtil
-				.createIUAnyQuery();
+        MetadataRepositoryManager metadataRepositoryManager = new MetadataRepositoryManager(
+                agent);
+
+        try {
+            loadRepository = metadataRepositoryManager.loadRepository(uri,
+                    IRepositoryManager.REPOSITORIES_ALL, nullProgressMonitor);
+        } catch (ProvisionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+
+        IQuery<IInstallableUnit> createQuery = QueryUtil
+                .createIUAnyQuery();
 //		createIUCategoryQuery();
 
-		IQueryResult<IInstallableUnit> query = loadRepository.query(
-				createQuery, nullProgressMonitor);
-		List<IInstallableUnit> list = toList(query);
+        IQueryResult<IInstallableUnit> query = loadRepository.query(
+                createQuery, nullProgressMonitor);
+        List<IInstallableUnit> list = toList(query);
 
-		return list;
+        return list;
 
-	}
+    }
 
-	private List<IInstallableUnit> toList(IQueryResult<IInstallableUnit> query) {
-		List<IInstallableUnit> list = new ArrayList<IInstallableUnit>();
-		for (IInstallableUnit iInstallableUnit : query) {
+    private List<IInstallableUnit> toList(IQueryResult<IInstallableUnit> query) {
+        List<IInstallableUnit> list = new ArrayList<IInstallableUnit>();
+        for (IInstallableUnit iInstallableUnit : query) {
 
-			System.out.println(iInstallableUnit);
-			list.add(iInstallableUnit);
+            System.out.println(iInstallableUnit);
+            list.add(iInstallableUnit);
 
-		}
-		return list;
-	}
+        }
+        return list;
+    }
 
-	@Override
-	public boolean isCategory(IInstallableUnit installableUnit) {
+    @Override
+    public boolean isCategory(IInstallableUnit installableUnit) {
 
-		return QueryUtil.isCategory(installableUnit);
-	}
+        return QueryUtil.isCategory(installableUnit);
+    }
 
-	@Override
-	public List<IInstallableUnit> extractFromCategory(IInstallableUnit category) {
+    @Override
+    public List<IInstallableUnit> extractFromCategory(IInstallableUnit category) {
 
-		IQuery<IInstallableUnit> createIUCategoryMemberQuery = QueryUtil
-				.createIUCategoryMemberQuery(category);
+        IQuery<IInstallableUnit> createIUCategoryMemberQuery = QueryUtil
+                .createIUCategoryMemberQuery(category);
 
-		IQueryResult<IInstallableUnit> query = loadRepository.query(
-				createIUCategoryMemberQuery, nullProgressMonitor);
+        IQueryResult<IInstallableUnit> query = loadRepository.query(
+                createIUCategoryMemberQuery, nullProgressMonitor);
 
-		return toList(query);
-	}
+        return toList(query);
+    }
 
-	@Override
-	public synchronized String validate(
-			List<IInstallableUnit> listIInstallableUnits) {
-		if (uri == null || agent == null || nullProgressMonitor == null) {
+    @Override
+    public synchronized String validate(
+            List<IInstallableUnit> listIInstallableUnits) {
+        if (uri == null || agent == null || nullProgressMonitor == null) {
 
-			throw new IllegalArgumentException(
-					"Must first call method laod repository");
-		}
+            throw new IllegalArgumentException(
+                    "Must first call method laod repository");
+        }
 
-		try {
+        try {
 
-			
-			final ProvisioningSession session = new ProvisioningSession(agent);
-			InstallOperation installOperation = new InstallOperation(session,
-					listIInstallableUnits);
-			
-			installOperation.setProvisioningContext(new ProvisioningContext(agent));
+
+            final ProvisioningSession session = new ProvisioningSession(agent);
+            InstallOperation installOperation = new InstallOperation(session,
+                    listIInstallableUnits);
+
+            installOperation.setProvisioningContext(new ProvisioningContext(agent));
 
 			/*installOperation.getProvisioningContext().setArtifactRepositories(
-					new URI[] { uri });
+                    new URI[] { uri });
 			installOperation.getProvisioningContext().setMetadataRepositories(
 					new URI[] { uri });*/
 
-			IStatus resolveModal = installOperation
-					.resolveModal(nullProgressMonitor);
+            IStatus resolveModal = installOperation
+                    .resolveModal(nullProgressMonitor);
 
-			String resolutionDetails = installOperation.getResolutionDetails();
+            String resolutionDetails = installOperation.getResolutionDetails();
 
-			if (!resolveModal.isOK()) {
-				return resolutionDetails;
-			}
-			if (resolveModal.getSeverity() == IStatus.ERROR) {
-				return resolutionDetails;
-			}
+            if (!resolveModal.isOK()) {
+                return resolutionDetails;
+            }
+            if (resolveModal.getSeverity() == IStatus.ERROR) {
+                return resolutionDetails;
+            }
 
-			if (resolveModal.getCode() == IStatus.ERROR) {
+            if (resolveModal.getCode() == IStatus.ERROR) {
 
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.WARNING) {
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.CANCEL) {
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.INFO) {
-				return resolutionDetails;
-			}
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.WARNING) {
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.CANCEL) {
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.INFO) {
+                return resolutionDetails;
+            }
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
 
-			throw new RuntimeException(ex);
-		}
-		return null;
+            throw new RuntimeException(ex);
+        }
+        return null;
 
-	}
+    }
 
-	@Override
-	public synchronized String installNewSoftware(
-			List<IInstallableUnit> listIInstallableUnits) {
+    @Override
+    public synchronized String installNewSoftware(
+            List<IInstallableUnit> listIInstallableUnits) {
 
-		if (uri == null || agent == null || nullProgressMonitor == null) {
+        if (uri == null || agent == null || nullProgressMonitor == null) {
 
-			throw new IllegalArgumentException(
-					"Must first call method load repository");
-		}
+            throw new IllegalArgumentException(
+                    "Must first call method load repository");
+        }
 
-		try {
+        try {
 
-			final ProvisioningSession session = new ProvisioningSession(agent);
-			InstallOperation installOperation = new InstallOperation(session,
-					listIInstallableUnits);
+            final ProvisioningSession session = new ProvisioningSession(agent);
+            InstallOperation installOperation = new InstallOperation(session,
+                    listIInstallableUnits);
 
-			installOperation.getProvisioningContext().setArtifactRepositories(
-					new URI[] { uri });
-			installOperation.getProvisioningContext().setMetadataRepositories(
-					new URI[] { uri });
+            installOperation.getProvisioningContext().setArtifactRepositories(
+                    new URI[]{uri});
+            installOperation.getProvisioningContext().setMetadataRepositories(
+                    new URI[]{uri});
 
-			IStatus resolveModal = installOperation
-					.resolveModal(nullProgressMonitor);
+            IStatus resolveModal = installOperation
+                    .resolveModal(nullProgressMonitor);
 
-			String resolutionDetails = installOperation.getResolutionDetails();
+            String resolutionDetails = installOperation.getResolutionDetails();
 
-			if (!resolveModal.isOK()) {
-				return resolutionDetails;
-			}
-			if (resolveModal.getSeverity() == IStatus.ERROR) {
-				return resolutionDetails;
-			}
+            if (!resolveModal.isOK()) {
+                return resolutionDetails;
+            }
+            if (resolveModal.getSeverity() == IStatus.ERROR) {
+                return resolutionDetails;
+            }
 
-			if (resolveModal.getCode() == IStatus.ERROR) {
+            if (resolveModal.getCode() == IStatus.ERROR) {
 
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.WARNING) {
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.CANCEL) {
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.INFO) {
-				return resolutionDetails;
-			}
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.WARNING) {
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.CANCEL) {
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.INFO) {
+                return resolutionDetails;
+            }
 
-			ProvisioningJob provisioningJob = installOperation
-					.getProvisioningJob(null);
+            ProvisioningJob provisioningJob = installOperation
+                    .getProvisioningJob(null);
 
-			provisioningJob.addJobChangeListener(new JobChangeAdapter() {
+            provisioningJob.addJobChangeListener(new JobChangeAdapter() {
 
-				@Override
-				public void scheduled(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void scheduled(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.scheduled(event);
-				}
+                    super.scheduled(event);
+                }
 
-				@Override
-				public void sleeping(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void sleeping(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.sleeping(event);
-				}
+                    super.sleeping(event);
+                }
 
-				@Override
-				public void aboutToRun(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void aboutToRun(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.aboutToRun(event);
+                    super.aboutToRun(event);
 
-				}
+                }
 
-				@Override
-				public void running(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void running(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.running(event);
-				}
+                    super.running(event);
+                }
 
-				@Override
-				public void done(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void done(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.done(event);
-				}
+                    super.done(event);
+                }
 
-			});
+            });
 
-			IStatus run = provisioningJob.runModal(nullProgressMonitor);
+            IStatus run = provisioningJob.runModal(nullProgressMonitor);
 
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
 
-			throw new RuntimeException(e);
-		}
+            throw new RuntimeException(e);
+        }
 
-		return SUCESS_INSTALL;
-	}
+        return SUCESS_INSTALL;
+    }
 
-	private List<IInstallableUnit> getUpdatedGroups() {
-		nullProgressMonitor = new NullProgressMonitor();
-		this.agent = agent;
+    private List<IInstallableUnit> getUpdatedGroups() {
+        nullProgressMonitor = new NullProgressMonitor();
+        this.agent = agent;
 
-		MetadataRepositoryManager metadataRepositoryManager = new MetadataRepositoryManager(
-				agent);
+        MetadataRepositoryManager metadataRepositoryManager = new MetadataRepositoryManager(
+                agent);
 
-		try {
-			loadRepository = metadataRepositoryManager.loadRepository(uri, 0,
-					nullProgressMonitor);
-		} catch (ProvisionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        try {
+            loadRepository = metadataRepositoryManager.loadRepository(uri, 0,
+                    nullProgressMonitor);
+        } catch (ProvisionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		IQuery<IInstallableUnit> createQuery = QueryUtil.createIUGroupQuery();
+        IQuery<IInstallableUnit> createQuery = QueryUtil.createIUGroupQuery();
 
-		IQueryResult<IInstallableUnit> query = loadRepository.query(
-				createQuery, nullProgressMonitor);
-		List<IInstallableUnit> list = toList(query);
-		return list;
-	}
+        IQueryResult<IInstallableUnit> query = loadRepository.query(
+                createQuery, nullProgressMonitor);
+        List<IInstallableUnit> list = toList(query);
+        return list;
+    }
 
-	@Override
-	public String loadAndInstallNewSoftware(String uriString,
-			IProvisioningAgent agent) {
+    @Override
+    public String loadAndInstallNewSoftware(String uriString,
+                                            IProvisioningAgent agent) {
 
-		return installNewSoftware(loadRepository(uriString, agent));
-	}
+        return installNewSoftware(loadRepository(uriString, agent));
+    }
 
 }

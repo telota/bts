@@ -24,101 +24,97 @@ import com.google.inject.Inject;
  */
 public abstract class AbstractToggleActionContributor {
 
-	protected static class InternalToggleAction extends Action {
+    private static final Logger logger = Logger.getLogger(AbstractToggleActionContributor.class);
+    @Inject
+    private IPreferenceStoreAccess preferenceStoreAccess;
+    private IPropertyChangeListener propertyChangeListener;
+    private Action action;
+    private IPreferenceStore preferenceStore;
 
-		private final AbstractToggleActionContributor contribution;
+    public abstract String getPreferenceKey();
 
-		protected InternalToggleAction(AbstractToggleActionContributor contribution) {
-			this.contribution = contribution;
-			setId(contribution.getPreferenceKey());
-			setChecked(contribution.isPropertySet());
-		}
+    protected abstract void stateChanged(boolean newState);
 
-		@Override
-		public void run() {
-			boolean newState = !contribution.isPropertySet();
-			setChecked(newState);
-			contribution.toggle();
-		}
-	}
+    protected boolean isPropertySet() {
+        return preferenceStoreAccess.getPreferenceStore().getBoolean(getPreferenceKey());
+    }
 
-	private static final Logger logger = Logger.getLogger(AbstractToggleActionContributor.class);
-	
-	@Inject
-	private IPreferenceStoreAccess preferenceStoreAccess;
+    protected IPreferenceStoreAccess getPreferenceStoreAccess() {
+        return preferenceStoreAccess;
+    }
 
-	private IPropertyChangeListener propertyChangeListener;
+    protected void toggle() {
+        boolean newState = !isPropertySet();
+        IPreferenceStore store = preferenceStoreAccess.getWritablePreferenceStore();
+        store.setValue(getPreferenceKey(), newState);
+        if (store instanceof IPersistentPreferenceStore)
+            try {
+                ((IPersistentPreferenceStore) store).save();
+            } catch (IOException e) {
+                // log and ignore
+                logger.debug(e.getMessage(), e);
+            }
+        stateChanged(newState);
+    }
 
-	private Action action;
+    /**
+     * Subclasses must set text, image, description, tooltip etc. here.
+     */
+    protected abstract void configureAction(Action action);
 
-	private IPreferenceStore preferenceStore;
+    protected Action getAction() {
+        if (action == null) {
+            action = new InternalToggleAction(this);
+            configureAction(action);
+        }
+        return action;
+    }
 
-	public abstract String getPreferenceKey();
+    public void initialize(IPreferenceStoreAccess preferenceStoreAccess) {
+        preferenceStoreAccess.getWritablePreferenceStore().setDefault(getPreferenceKey(), getPreferenceDefaultValue());
+    }
 
-	protected abstract void stateChanged(boolean newState);
+    /**
+     * @since 2.2
+     */
+    protected boolean getPreferenceDefaultValue() {
+        return false;
+    }
 
-	protected boolean isPropertySet() {
-		return preferenceStoreAccess.getPreferenceStore().getBoolean(getPreferenceKey());
-	}
-	
-	protected IPreferenceStoreAccess getPreferenceStoreAccess() {
-		return preferenceStoreAccess;
-	}
-	
-	protected void toggle() {
-		boolean newState = !isPropertySet();
-		IPreferenceStore store = preferenceStoreAccess.getWritablePreferenceStore();
-		store.setValue(getPreferenceKey(), newState);
-		if (store instanceof IPersistentPreferenceStore)
-			try {
-				((IPersistentPreferenceStore) store).save();
-			} catch (IOException e) {
-				// log and ignore
-				logger.debug(e.getMessage(), e);
-			}
-		stateChanged(newState);
-	}
+    protected void addPropertyChangeListener() {
+        propertyChangeListener = new IPropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent event) {
+                if (getPreferenceKey().equals(event.getProperty()) && event.getOldValue() != event.getNewValue()) {
+                    boolean newValue = Boolean.parseBoolean(event.getNewValue().toString());
+                    stateChanged(newValue);
+                    getAction().setChecked(newValue);
+                }
+            }
+        };
+        preferenceStore = preferenceStoreAccess.getPreferenceStore();
+        preferenceStore.addPropertyChangeListener(propertyChangeListener);
+    }
 
-	/**
-	 * Subclasses must set text, image, description, tooltip etc. here.
-	 */
-	protected abstract void configureAction(Action action);
+    protected void removePropertyChangeListener() {
+        preferenceStore.removePropertyChangeListener(propertyChangeListener);
+    }
 
-	protected Action getAction() {
-		if (action == null) {
-			action = new InternalToggleAction(this);
-			configureAction(action);
-		}
-		return action;
-	}
+    protected static class InternalToggleAction extends Action {
 
-	public void initialize(IPreferenceStoreAccess preferenceStoreAccess) {
-		preferenceStoreAccess.getWritablePreferenceStore().setDefault(getPreferenceKey(), getPreferenceDefaultValue());
-	}
+        private final AbstractToggleActionContributor contribution;
 
-	/**
-	 * @since 2.2
-	 */
-	protected boolean getPreferenceDefaultValue() {
-		return false;
-	}
+        protected InternalToggleAction(AbstractToggleActionContributor contribution) {
+            this.contribution = contribution;
+            setId(contribution.getPreferenceKey());
+            setChecked(contribution.isPropertySet());
+        }
 
-	protected void addPropertyChangeListener() {
-		propertyChangeListener = new IPropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent event) {
-				if (getPreferenceKey().equals(event.getProperty()) && event.getOldValue() != event.getNewValue()) {
-					boolean newValue = Boolean.parseBoolean(event.getNewValue().toString());
-					stateChanged(newValue);
-					getAction().setChecked(newValue);
-				}
-			}
-		};
-		preferenceStore = preferenceStoreAccess.getPreferenceStore();
-		preferenceStore.addPropertyChangeListener(propertyChangeListener);
-	}
-	
-	protected void removePropertyChangeListener() {
-		preferenceStore.removePropertyChangeListener(propertyChangeListener);
-	}
-	
+        @Override
+        public void run() {
+            boolean newState = !contribution.isPropertySet();
+            setChecked(newState);
+            contribution.toggle();
+        }
+    }
+
 }

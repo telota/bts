@@ -22,46 +22,46 @@ import com.google.inject.Inject;
  * @author Michael Clay - Initial contribution and API
  */
 public class DefaultContentViewer extends AbstractContentViewer {
-	@Inject
-	protected XtextSourceViewerConfiguration sourceViewerConfiguration;
-	@Inject
-	protected StreamContentDocumentProvider documentProvider;
+    @Inject
+    protected XtextSourceViewerConfiguration sourceViewerConfiguration;
+    @Inject
+    protected StreamContentDocumentProvider documentProvider;
 
-	@Override
-	protected ISourceViewer createSourceViewer() {
-		return new SourceViewer(getParent(), null, SWT.LEFT_TO_RIGHT | SWT.H_SCROLL | SWT.V_SCROLL);
-	}
+    @Override
+    protected ISourceViewer createSourceViewer() {
+        return new SourceViewer(getParent(), null, SWT.LEFT_TO_RIGHT | SWT.H_SCROLL | SWT.V_SCROLL);
+    }
 
-	@Override
-	protected void configureSourceViewer(ISourceViewer sourceViewer) {
-		sourceViewer.setEditable(false);
-		sourceViewer.configure(sourceViewerConfiguration);
-		if (sourceViewer instanceof ITextViewerExtension6) {
-			ITextViewerExtension6 textViewerExtension6 = (ITextViewerExtension6) sourceViewer;
-			textViewerExtension6.setHyperlinkDetectors(null,
-					sourceViewerConfiguration.getHyperlinkStateMask(sourceViewer));
-		}
-		if (sourceViewer instanceof ITextViewerExtension2) {
-			ITextViewerExtension2 textViewerExtension2 = (ITextViewerExtension2) sourceViewer;
-			String[] configuredContentTypes = sourceViewerConfiguration.getConfiguredContentTypes(sourceViewer);
-			for (String contentType : configuredContentTypes) {
-				textViewerExtension2.removeTextHovers(contentType);
-			}
-		}
-	}
+    @Override
+    protected void configureSourceViewer(ISourceViewer sourceViewer) {
+        sourceViewer.setEditable(false);
+        sourceViewer.configure(sourceViewerConfiguration);
+        if (sourceViewer instanceof ITextViewerExtension6) {
+            ITextViewerExtension6 textViewerExtension6 = (ITextViewerExtension6) sourceViewer;
+            textViewerExtension6.setHyperlinkDetectors(null,
+                    sourceViewerConfiguration.getHyperlinkStateMask(sourceViewer));
+        }
+        if (sourceViewer instanceof ITextViewerExtension2) {
+            ITextViewerExtension2 textViewerExtension2 = (ITextViewerExtension2) sourceViewer;
+            String[] configuredContentTypes = sourceViewerConfiguration.getConfiguredContentTypes(sourceViewer);
+            for (String contentType : configuredContentTypes) {
+                textViewerExtension2.removeTextHovers(contentType);
+            }
+        }
+    }
 
-	@Override
-	public void setInput(Object input) {
-		documentProvider.disconnect(getInput());
-		super.setInput(input);
-		if (input != null) {
-			try {
-				documentProvider.connect(input);
-				sourceViewer.setDocument(documentProvider.getDocument(input));
-			} catch (CoreException coreException) {
-				throw new WrappedException(coreException);
-			}
-		}
-	}
+    @Override
+    public void setInput(Object input) {
+        documentProvider.disconnect(getInput());
+        super.setInput(input);
+        if (input != null) {
+            try {
+                documentProvider.connect(input);
+                sourceViewer.setDocument(documentProvider.getDocument(input));
+            } catch (CoreException coreException) {
+                throw new WrappedException(coreException);
+            }
+        }
+    }
 
 }

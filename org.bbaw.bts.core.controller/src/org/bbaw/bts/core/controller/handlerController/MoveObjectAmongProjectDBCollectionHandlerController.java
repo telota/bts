@@ -6,10 +6,10 @@ import org.bbaw.bts.core.commons.filter.BTSFilter;
 
 public interface MoveObjectAmongProjectDBCollectionHandlerController {
 
-	TreeNodeWrapper getMoveOptionsRootNode(Object selection);
+    TreeNodeWrapper getMoveOptionsRootNode(Object selection);
 
-	boolean move(BTSDBBaseObject selection, String targetDBCollectionPath, String sourceDBCollectionPath);
+    boolean move(BTSDBBaseObject selection, String targetDBCollectionPath, String sourceDBCollectionPath);
 
-	BTSFilter getMoveDBCollectionFilter(BTSDBBaseObject selection);
+    BTSFilter getMoveDBCollectionFilter(BTSDBBaseObject selection);
 
 }

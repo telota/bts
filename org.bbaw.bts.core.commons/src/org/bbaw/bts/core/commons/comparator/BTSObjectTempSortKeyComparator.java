@@ -38,19 +38,18 @@ import org.bbaw.bts.btsmodel.BTSObject;
  *
  * @author Christoph Plutte
  */
-public class BTSObjectTempSortKeyComparator  implements Comparator<BTSObject> {
+public class BTSObjectTempSortKeyComparator implements Comparator<BTSObject> {
 
-	/* (non-Javadoc)
-	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-	 */
-	@Override
-	public int compare(BTSObject o0, BTSObject o1) {
+    /* (non-Javadoc)
+     * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+     */
+    @Override
+    public int compare(BTSObject o0, BTSObject o1) {
 
-		if (o0 != null && o1 != null)
-		{
-			return o0.getTempSortKey() - o1.getTempSortKey();
-		}
-		return 0;
-	}
+        if (o0 != null && o1 != null) {
+            return o0.getTempSortKey() - o1.getTempSortKey();
+        }
+        return 0;
+    }
 
 }

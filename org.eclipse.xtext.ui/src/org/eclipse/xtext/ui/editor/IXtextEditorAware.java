@@ -13,6 +13,6 @@ package org.eclipse.xtext.ui.editor;
  */
 public interface IXtextEditorAware {
 
-	void setEditor(XtextEditor editor);
+    void setEditor(XtextEditor editor);
 
 }

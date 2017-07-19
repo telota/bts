@@ -38,56 +38,62 @@ import java.io.File;
  */
 public class ResoucePropertiesProcessor {
 
-	/** The folder. */
-	public static File folder = new File(
-			"E:/GIT/aaew/bts-git/aaew-bts/org.bbaw.bts.ui.resources/icons/full/obj16");
-	
-	/** The temp. */
-	static String temp = "";
-	
-	/** The interfix. */
-	private static String interfix = "/icons/full/obj16/";
+    /**
+     * The folder.
+     */
+    public static File folder = new File(
+            "E:/GIT/aaew/bts-git/aaew-bts/org.bbaw.bts.ui.resources/icons/full/obj16");
 
-	/**
-	 * The main method.
-	 *
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Reading files under the folder "
-				+ folder.getAbsolutePath());
-		listFilesForFolder(folder);
-	}
+    /**
+     * The temp.
+     */
+    static String temp = "";
 
-	/**
-	 * List files for folder.
-	 *
-	 * @param folder the folder
-	 */
-	public static void listFilesForFolder(final File folder) {
+    /**
+     * The interfix.
+     */
+    private static String interfix = "/icons/full/obj16/";
 
-		for (final File fileEntry : folder.listFiles()) {
-			if (fileEntry.isDirectory()) {
-				// System.out.println("Reading files under the folder "+folder.getAbsolutePath());
-				listFilesForFolder(fileEntry);
-			} else {
-				if (fileEntry.isFile()) {
-					temp = fileEntry.getName();
-					String key = temp.substring(0, temp.length() - 4);
-					key = key.replace("-", "_");
-					key = key.toUpperCase();
-					key = "IMG_" + key;
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        System.out.println("Reading files under the folder "
+                + folder.getAbsolutePath());
+        listFilesForFolder(folder);
+    }
 
-					// System.out.println(key + "=" + interfix + temp);
-					System.out.println();
+    /**
+     * List files for folder.
+     *
+     * @param folder the folder
+     */
+    public static void listFilesForFolder(final File folder) {
 
-					System.out.println("public final static String " + key
-							+ " = \"" + key + "\"; //$NON-NLS-1$");
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                // System.out.println("Reading files under the folder "+folder.getAbsolutePath());
+                listFilesForFolder(fileEntry);
+            } else {
+                if (fileEntry.isFile()) {
+                    temp = fileEntry.getName();
+                    String key = temp.substring(0, temp.length() - 4);
+                    key = key.replace("-", "_");
+                    key = key.toUpperCase();
+                    key = "IMG_" + key;
 
-				}
+                    // System.out.println(key + "=" + interfix + temp);
+                    System.out.println();
 
-			}
-		}
-	}
+                    System.out.println("public final static String " + key
+                            + " = \"" + key + "\"; //$NON-NLS-1$");
+
+                }
+
+            }
+        }
+    }
 }

@@ -11,6 +11,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.ramo.klevis.p2.core.iservice.IInstallNewSoftwareService;
 import org.ramo.klevis.p4app.parts.SimpleInstallPart;
+
 /*******************************************************************************
  * Copyright (c) 2012 Klevis Ramo and others.
  * All rights reserved. This program and the accompanying materials
@@ -22,22 +23,21 @@ import org.ramo.klevis.p4app.parts.SimpleInstallPart;
  *     Klevis Ramo - initial API and implementation
  *******************************************************************************/
 public class InstallNewSoftwareHandler {
-	
-	@Execute
-	public void execute(@Optional @Named(IServiceConstants.ACTIVE_SHELL) Shell shell,IProvisioningAgent agem,IInstallNewSoftwareService installNewSoftwareService,IWorkbench workbench) {
-		// TODO Your code goes here
 
-		System.err.println("Ok");
-		
-		Shell shell2 = new Shell(shell,SWT.DIALOG_TRIM);
-		
-		new SimpleInstallPart(installNewSoftwareService, agem,workbench).createControls(shell2);
-		
-		shell2.open();
-		;
+    @Execute
+    public void execute(@Optional @Named(IServiceConstants.ACTIVE_SHELL) Shell shell, IProvisioningAgent agem, IInstallNewSoftwareService installNewSoftwareService, IWorkbench workbench) {
+        // TODO Your code goes here
 
-		
-		
-	}
+        System.err.println("Ok");
+
+        Shell shell2 = new Shell(shell, SWT.DIALOG_TRIM);
+
+        new SimpleInstallPart(installNewSoftwareService, agem, workbench).createControls(shell2);
+
+        shell2.open();
+        ;
+
+
+    }
 
 }

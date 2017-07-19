@@ -4,13 +4,14 @@
 package org.bbaw.bts.corpus.text.egy.parser.antlr;
 
 import java.io.InputStream;
+
 import org.eclipse.xtext.parser.antlr.IAntlrTokenFileProvider;
 
 public class EgyDslAntlrTokenFileProvider implements IAntlrTokenFileProvider {
-	
-	@Override
-	public InputStream getAntlrTokenFile() {
-		ClassLoader classLoader = getClass().getClassLoader();
-    	return classLoader.getResourceAsStream("org/bbaw/bts/corpus/text/egy/parser/antlr/internal/InternalEgyDsl.tokens");
-	}
+
+    @Override
+    public InputStream getAntlrTokenFile() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        return classLoader.getResourceAsStream("org/bbaw/bts/corpus/text/egy/parser/antlr/internal/InternalEgyDsl.tokens");
+    }
 }

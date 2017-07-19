@@ -21,27 +21,26 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 
 /**
  * @author Dennis H�bner - Initial contribution and API
- * 
  */
 public class ContentAssistHandler extends AbstractHandler {
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		// Due to an Handler ExtensionPoint declaration, we have an XtextEditor as Active
-		// Editor so can just cast to an ITextEditor
-		new ContentAssistAction(XtextUIMessages.getResourceBundle(), "ContentAssistProposal.",
-				(ITextEditor) HandlerUtil.getActiveEditor(event)).run();
-		return this;
-	}
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        // Due to an Handler ExtensionPoint declaration, we have an XtextEditor as Active
+        // Editor so can just cast to an ITextEditor
+        new ContentAssistAction(XtextUIMessages.getResourceBundle(), "ContentAssistProposal.",
+                (ITextEditor) HandlerUtil.getActiveEditor(event)).run();
+        return this;
+    }
 
-	@Override
-	public void setEnabled(Object evaluationContext) {
-		boolean contentAssistAvailable = false;
-		if (evaluationContext instanceof IEvaluationContext) {
-			Object var = ((IEvaluationContext) evaluationContext).getVariable(ISources.ACTIVE_EDITOR_NAME);
-			if (var instanceof XtextEditor) {
-				contentAssistAvailable = ((XtextEditor) var).isContentAssistAvailable();
-			}
-		}
-		super.setBaseEnabled(isEnabled() & contentAssistAvailable);
-	}
+    @Override
+    public void setEnabled(Object evaluationContext) {
+        boolean contentAssistAvailable = false;
+        if (evaluationContext instanceof IEvaluationContext) {
+            Object var = ((IEvaluationContext) evaluationContext).getVariable(ISources.ACTIVE_EDITOR_NAME);
+            if (var instanceof XtextEditor) {
+                contentAssistAvailable = ((XtextEditor) var).isContentAssistAvailable();
+            }
+        }
+        super.setBaseEnabled(isEnabled() & contentAssistAvailable);
+    }
 }

@@ -24,57 +24,57 @@ import com.google.inject.Provider;
  */
 public class LinkWithEditorOutlineContribution extends AbstractToggleOutlineContribution {
 
-	public static final String PREFERENCE_KEY = "ui.outline.linkWithEditor";
+    public static final String PREFERENCE_KEY = "ui.outline.linkWithEditor";
 
-	@Inject
-	private Provider<OutlineWithEditorLinker> outlineWithEditorLinkerProvider;
+    @Inject
+    private Provider<OutlineWithEditorLinker> outlineWithEditorLinkerProvider;
 
-	private Map<OutlinePage, OutlineWithEditorLinker> page2linker = Maps.newHashMap();
+    private Map<OutlinePage, OutlineWithEditorLinker> page2linker = Maps.newHashMap();
 
-	private IPreferenceStore preferenceStore;
+    private IPreferenceStore preferenceStore;
 
-	@Override
-	public String getPreferenceKey() {
-		return PREFERENCE_KEY;
-	}
+    @Override
+    public String getPreferenceKey() {
+        return PREFERENCE_KEY;
+    }
 
-	@Override
-	protected boolean getPreferenceDefaultValue() {
-		return true;
-	}
+    @Override
+    protected boolean getPreferenceDefaultValue() {
+        return true;
+    }
 
-	@Override
-	protected void stateChanged(boolean newState) {
-	}
+    @Override
+    protected void stateChanged(boolean newState) {
+    }
 
-	@Override
-	protected void configureAction(Action action) {
-		action.setText(XtextUIMessages.ToggleLinkWithEditorAction_label);
-		action.setToolTipText(XtextUIMessages.ToggleLinkWithEditorAction_toolTip);
-		action.setDescription(XtextUIMessages.ToggleLinkWithEditorAction_description);
-		action.setImageDescriptor(XtextPluginImages.DESC_LINK_WITH_EDITOR);
-		action.setDisabledImageDescriptor(XtextPluginImages.DESC_LINK_WITH_EDITOR_DISABLED);
-	}
+    @Override
+    protected void configureAction(Action action) {
+        action.setText(XtextUIMessages.ToggleLinkWithEditorAction_label);
+        action.setToolTipText(XtextUIMessages.ToggleLinkWithEditorAction_toolTip);
+        action.setDescription(XtextUIMessages.ToggleLinkWithEditorAction_description);
+        action.setImageDescriptor(XtextPluginImages.DESC_LINK_WITH_EDITOR);
+        action.setDisabledImageDescriptor(XtextPluginImages.DESC_LINK_WITH_EDITOR_DISABLED);
+    }
 
-	@Override
-	public void register(OutlinePage outlinePage) {
-		super.register(outlinePage);
-		OutlineWithEditorLinker outlineWithEditorLinker = outlineWithEditorLinkerProvider.get();
-		outlineWithEditorLinker.activate(outlinePage);
-		outlineWithEditorLinker.setLinkingEnabled(isPropertySet());
-		preferenceStore = getPreferenceStoreAccess().getPreferenceStore();
-		preferenceStore.addPropertyChangeListener(outlineWithEditorLinker);
-		page2linker.put(outlinePage, outlineWithEditorLinker);
-	}
+    @Override
+    public void register(OutlinePage outlinePage) {
+        super.register(outlinePage);
+        OutlineWithEditorLinker outlineWithEditorLinker = outlineWithEditorLinkerProvider.get();
+        outlineWithEditorLinker.activate(outlinePage);
+        outlineWithEditorLinker.setLinkingEnabled(isPropertySet());
+        preferenceStore = getPreferenceStoreAccess().getPreferenceStore();
+        preferenceStore.addPropertyChangeListener(outlineWithEditorLinker);
+        page2linker.put(outlinePage, outlineWithEditorLinker);
+    }
 
-	@Override
-	public void deregister(OutlinePage outlinePage) {
-		super.deregister(outlinePage);
-		OutlineWithEditorLinker outlineWithEditorLinker = page2linker.remove(outlinePage);
-		if (outlineWithEditorLinker != null) {
-			outlineWithEditorLinker.deactivate();
-			preferenceStore.removePropertyChangeListener(outlineWithEditorLinker);
-		}
-	}
+    @Override
+    public void deregister(OutlinePage outlinePage) {
+        super.deregister(outlinePage);
+        OutlineWithEditorLinker outlineWithEditorLinker = page2linker.remove(outlinePage);
+        if (outlineWithEditorLinker != null) {
+            outlineWithEditorLinker.deactivate();
+            preferenceStore.removePropertyChangeListener(outlineWithEditorLinker);
+        }
+    }
 
 }

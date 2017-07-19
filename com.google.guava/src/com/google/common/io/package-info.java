@@ -17,7 +17,7 @@
 /**
  * This package contains utility methods and classes for working with Java I/O,
  * for example input streams, output streams, readers, writers, and files.
- *
+ * <p>
  * <p>Many of the methods are based on the
  * {@link com.google.common.io.InputSupplier} and
  * {@link com.google.common.io.OutputSupplier} interfaces. They are used as
@@ -28,7 +28,7 @@
  * {@link com.google.common.io.CharStreams}, and
  * {@link com.google.common.io.Files} classes all have static helper methods to
  * create new factories and to work with them.
- *
+ * <p>
  * <p>This package is a part of the open-source
  * <a href="http://guava-libraries.googlecode.com">Guava libraries</a>.
  *

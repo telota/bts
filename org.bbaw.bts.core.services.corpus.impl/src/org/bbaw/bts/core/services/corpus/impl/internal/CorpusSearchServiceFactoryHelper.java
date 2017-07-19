@@ -12,59 +12,59 @@ import org.bbaw.bts.core.services.corpus.BTSThsEntryService;
 import org.bbaw.bts.core.services.corpus.CorpusObjectService;
 
 public class CorpusSearchServiceFactoryHelper {
-	@Inject
-	private BTSTextCorpusService textCorpusService;
+    @Inject
+    private BTSTextCorpusService textCorpusService;
 
-	@Inject
-	private BTSTCObjectService tcObjectService;
+    @Inject
+    private BTSTCObjectService tcObjectService;
 
-	@Inject
-	private CorpusObjectService corpusObjectService;
+    @Inject
+    private CorpusObjectService corpusObjectService;
 
-	@Inject
-	private BTSTextService textService;
+    @Inject
+    private BTSTextService textService;
 
-	@Inject
-	private BTSAnnotationService annotationService;
+    @Inject
+    private BTSAnnotationService annotationService;
 
-	@Inject
-	private BTSThsEntryService thsService;
+    @Inject
+    private BTSThsEntryService thsService;
 
-	@Inject
-	private BTSLemmaEntryService wlistService;
-	
-	@Inject
-	private BTSImageService imageService;
+    @Inject
+    private BTSLemmaEntryService wlistService;
 
-	public BTSTextCorpusService getTextCorpusService() {
-		return textCorpusService;
-	}
+    @Inject
+    private BTSImageService imageService;
 
-	public BTSTCObjectService getTcObjectService() {
-		return tcObjectService;
-	}
+    public BTSTextCorpusService getTextCorpusService() {
+        return textCorpusService;
+    }
 
-	public CorpusObjectService getCorpusObjectService() {
-		return corpusObjectService;
-	}
+    public BTSTCObjectService getTcObjectService() {
+        return tcObjectService;
+    }
 
-	public BTSTextService getTextService() {
-		return textService;
-	}
+    public CorpusObjectService getCorpusObjectService() {
+        return corpusObjectService;
+    }
 
-	public BTSAnnotationService getAnnotationService() {
-		return annotationService;
-	}
+    public BTSTextService getTextService() {
+        return textService;
+    }
 
-	public BTSThsEntryService getThsService() {
-		return thsService;
-	}
+    public BTSAnnotationService getAnnotationService() {
+        return annotationService;
+    }
 
-	public BTSLemmaEntryService getWlistService() {
-		return wlistService;
-	}
+    public BTSThsEntryService getThsService() {
+        return thsService;
+    }
 
-	public BTSImageService getImageService() {
-		return imageService;
-	}
+    public BTSLemmaEntryService getWlistService() {
+        return wlistService;
+    }
+
+    public BTSImageService getImageService() {
+        return imageService;
+    }
 }

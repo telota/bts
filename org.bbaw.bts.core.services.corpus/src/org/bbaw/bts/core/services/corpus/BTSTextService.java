@@ -11,21 +11,20 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
 import org.bbaw.bts.corpus.searchModel.WordFormOccurrenceGroup;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public interface BTSTextService extends GenericCorpusObjectService<BTSText, String>
-{
+public interface BTSTextService extends GenericCorpusObjectService<BTSText, String> {
 
-	BTSSenctence createNewSentence();
+    BTSSenctence createNewSentence();
 
-	BTSWord createNewWord();
+    BTSWord createNewWord();
 
-	BTSGraphic createNewGraphic();
+    BTSGraphic createNewGraphic();
 
-	BTSSentenceItem copySentenceItem(BTSSentenceItem copyItem);
+    BTSSentenceItem copySentenceItem(BTSSentenceItem copyItem);
 
-	BTSSenctence copySentence(BTSSenctence copyItem);
+    BTSSenctence copySentence(BTSSenctence copyItem);
 
-	List<WordFormOccurrenceGroup> queryForWordFormOccurrenceGroups(BTSQueryRequest query, IProgressMonitor monitor);
-	
-	BTSText findReturnOnlyMetadata(String key);
+    List<WordFormOccurrenceGroup> queryForWordFormOccurrenceGroups(BTSQueryRequest query, IProgressMonitor monitor);
+
+    BTSText findReturnOnlyMetadata(String key);
 
 }

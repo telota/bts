@@ -8,11 +8,9 @@ package org.bbaw.bts.corpus.text.egy.egyDsl;
  * A representation of the model object '<em><b>Missing Vers Marker</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getMissingVersMarker()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getMissingVersMarker()
  */
-public interface MissingVersMarker extends VersMarker
-{
+public interface MissingVersMarker extends VersMarker {
 } // MissingVersMarker

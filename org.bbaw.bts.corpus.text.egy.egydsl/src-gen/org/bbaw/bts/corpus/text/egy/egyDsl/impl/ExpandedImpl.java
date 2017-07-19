@@ -26,140 +26,134 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.bbaw.bts.corpus.text.egy.egyDsl.impl.ExpandedImpl#getWChar <em>WChar</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.text.egy.egyDsl.impl.ExpandedImpl#getWChar <em>WChar</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ExpandedImpl extends BracketsImpl implements Expanded
-{
-  /**
-   * The cached value of the '{@link #getWChar() <em>WChar</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getWChar()
-   * @generated
-   * @ordered
-   */
-  protected EList<EObject> wChar;
+public class ExpandedImpl extends BracketsImpl implements Expanded {
+    /**
+     * The cached value of the '{@link #getWChar() <em>WChar</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getWChar()
+     */
+    protected EList<EObject> wChar;
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ExpandedImpl()
-  {
-    super();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.EXPANDED;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<EObject> getWChar()
-  {
-    if (wChar == null)
-    {
-      wChar = new EObjectContainmentEList<EObject>(EObject.class, this, EgyDslPackage.EXPANDED__WCHAR);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected ExpandedImpl() {
+        super();
     }
-    return wChar;
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.EXPANDED__WCHAR:
-        return ((InternalEList<?>)getWChar()).basicRemove(otherEnd, msgs);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.EXPANDED;
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.EXPANDED__WCHAR:
-        return getWChar();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public EList<EObject> getWChar() {
+        if (wChar == null) {
+            wChar = new EObjectContainmentEList<EObject>(EObject.class, this, EgyDslPackage.EXPANDED__WCHAR);
+        }
+        return wChar;
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.EXPANDED__WCHAR:
-        getWChar().clear();
-        getWChar().addAll((Collection<? extends EObject>)newValue);
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case EgyDslPackage.EXPANDED__WCHAR:
+                return ((InternalEList<?>) getWChar()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    super.eSet(featureID, newValue);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.EXPANDED__WCHAR:
-        getWChar().clear();
-        return;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case EgyDslPackage.EXPANDED__WCHAR:
+                return getWChar();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    super.eUnset(featureID);
-  }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-      case EgyDslPackage.EXPANDED__WCHAR:
-        return wChar != null && !wChar.isEmpty();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case EgyDslPackage.EXPANDED__WCHAR:
+                getWChar().clear();
+                getWChar().addAll((Collection<? extends EObject>) newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    return super.eIsSet(featureID);
-  }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case EgyDslPackage.EXPANDED__WCHAR:
+                getWChar().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case EgyDslPackage.EXPANDED__WCHAR:
+                return wChar != null && !wChar.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //ExpandedImpl

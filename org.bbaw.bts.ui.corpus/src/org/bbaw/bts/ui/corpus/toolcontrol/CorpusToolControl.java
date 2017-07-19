@@ -40,50 +40,49 @@ import com.opcoach.e4.preferences.handlers.E4PreferencesHandler;
 
 public class CorpusToolControl {
 
-	@Inject
-	private BTSResourceProvider resourceProvider;
+    @Inject
+    private BTSResourceProvider resourceProvider;
 
-	@Inject
-	private ECommandService commandService;
+    @Inject
+    private ECommandService commandService;
 
-	@Inject
-	private EHandlerService handlerService;
-	@Inject 
-	private IStylingEngine engine;
-	
-	private ComposedAdapterFactory factory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-	private AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-			factory);
-	private Label corpusLabel;
+    @Inject
+    private EHandlerService handlerService;
+    @Inject
+    private IStylingEngine engine;
 
-	private Composite composite;
+    private ComposedAdapterFactory factory = new ComposedAdapterFactory(
+            ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+    private AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
+            factory);
+    private Label corpusLabel;
 
-	private BTSTextCorpus mainCorpus;
+    private Composite composite;
 
-	@PostConstruct
-	public void postConstruct(@Optional Composite composite, @Optional
-			@Named(BTSPluginIDs.PREF_MAIN_CORPUS) BTSTextCorpus corpus) {
-		this.composite = composite;
-		this.mainCorpus = corpus;
-		composite.setLayout(new GridLayout(6, false));
-		engine.setClassname(composite, "MToolBar");
+    private BTSTextCorpus mainCorpus;
 
-		Label l = new Label(composite, SWT.None);
-		l.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_CORPUS));
-		l.setLayoutData(new GridData());
-		l.pack();
+    @PostConstruct
+    public void postConstruct(@Optional Composite composite, @Optional
+    @Named(BTSPluginIDs.PREF_MAIN_CORPUS) BTSTextCorpus corpus) {
+        this.composite = composite;
+        this.mainCorpus = corpus;
+        composite.setLayout(new GridLayout(6, false));
+        engine.setClassname(composite, "MToolBar");
 
-		corpusLabel = new Label(composite, SWT.None);
-		corpusLabel.setLayoutData(new GridData());
-		((GridData) corpusLabel.getLayoutData()).horizontalSpan = 2;
-		if (mainCorpus != null) {
-			corpusLabel.setText(labelProvider.getText(mainCorpus));
-		}
-		else {
-			corpusLabel.setText("No Corpus");
-		}
-		corpusLabel.pack();
+        Label l = new Label(composite, SWT.None);
+        l.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_CORPUS));
+        l.setLayoutData(new GridData());
+        l.pack();
+
+        corpusLabel = new Label(composite, SWT.None);
+        corpusLabel.setLayoutData(new GridData());
+        ((GridData) corpusLabel.getLayoutData()).horizontalSpan = 2;
+        if (mainCorpus != null) {
+            corpusLabel.setText(labelProvider.getText(mainCorpus));
+        } else {
+            corpusLabel.setText("No Corpus");
+        }
+        corpusLabel.pack();
 
 //		Label editPrefs = new Label(composite, SWT.PUSH);
 //		editPrefs.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_PREFERENCES));
@@ -119,26 +118,26 @@ public class CorpusToolControl {
 //			}
 //		});
 
-		composite.layout();
-		composite.pack();
-	}
-	
-	@Inject
-	@Optional
-	public void setMainCorpus(
-			@Named(BTSPluginIDs.PREF_MAIN_CORPUS) Object corpus) {
-		
-		if (corpus instanceof BTSTextCorpus && corpus != null
-				&& (this.mainCorpus == null || !corpus.equals(this.mainCorpus))) {
-			this.mainCorpus = (BTSTextCorpus) corpus;
-			if (corpusLabel != null) {
-				if (mainCorpus != null) {
-					corpusLabel.setText(labelProvider.getText(mainCorpus));
-				}
-				corpusLabel.pack();
-				composite.layout();
-				composite.pack();
-			}
-		}
-	}
+        composite.layout();
+        composite.pack();
+    }
+
+    @Inject
+    @Optional
+    public void setMainCorpus(
+            @Named(BTSPluginIDs.PREF_MAIN_CORPUS) Object corpus) {
+
+        if (corpus instanceof BTSTextCorpus && corpus != null
+                && (this.mainCorpus == null || !corpus.equals(this.mainCorpus))) {
+            this.mainCorpus = (BTSTextCorpus) corpus;
+            if (corpusLabel != null) {
+                if (mainCorpus != null) {
+                    corpusLabel.setText(labelProvider.getText(mainCorpus));
+                }
+                corpusLabel.pack();
+                composite.layout();
+                composite.pack();
+            }
+        }
+    }
 }

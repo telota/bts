@@ -23,47 +23,47 @@ import com.google.inject.Provider;
  */
 public class IssueModificationContext implements IModificationContext {
 
-	@Inject
-	private IURIEditorOpener editorOpener;
+    @Inject
+    private IURIEditorOpener editorOpener;
 
-	private Issue issue;
+    private Issue issue;
 
-	public void setIssue(Issue issue) {
-		this.issue = issue;
-	}
-	
-	public Issue getIssue() {
-		return issue;
-	}
+    public Issue getIssue() {
+        return issue;
+    }
 
-	public IXtextDocument getXtextDocument() {
-		return getXtextDocument(issue.getUriToProblem());
-	}
+    public void setIssue(Issue issue) {
+        this.issue = issue;
+    }
 
-	public IXtextDocument getXtextDocument(URI uri) {
-		IEditorPart editor = editorOpener.open(uri, false);
-		if (editor instanceof XtextEditor) {
-			XtextEditor xtextEditor = (XtextEditor) editor;
-			return xtextEditor.getDocument();
-		}
-		return null;
-	}
+    public IXtextDocument getXtextDocument() {
+        return getXtextDocument(issue.getUriToProblem());
+    }
 
-	@ImplementedBy(Factory.Default.class)
-	public static interface Factory {
-		IModificationContext createModificationContext(Issue issue);
-		
-		public static class Default implements Factory {
-			
-			@Inject
-			private Provider<IssueModificationContext> provider;
-			
-			public IModificationContext createModificationContext(Issue issue) {
-				IssueModificationContext modificationContext = provider.get();
-				modificationContext.setIssue(issue);
-				return modificationContext;
-			}
+    public IXtextDocument getXtextDocument(URI uri) {
+        IEditorPart editor = editorOpener.open(uri, false);
+        if (editor instanceof XtextEditor) {
+            XtextEditor xtextEditor = (XtextEditor) editor;
+            return xtextEditor.getDocument();
+        }
+        return null;
+    }
 
-		}
-	}
+    @ImplementedBy(Factory.Default.class)
+    public static interface Factory {
+        IModificationContext createModificationContext(Issue issue);
+
+        public static class Default implements Factory {
+
+            @Inject
+            private Provider<IssueModificationContext> provider;
+
+            public IModificationContext createModificationContext(Issue issue) {
+                IssueModificationContext modificationContext = provider.get();
+                modificationContext.setIssue(issue);
+                return modificationContext;
+            }
+
+        }
+    }
 }

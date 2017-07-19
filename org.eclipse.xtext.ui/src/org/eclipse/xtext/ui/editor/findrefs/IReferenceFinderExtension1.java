@@ -21,6 +21,6 @@ import org.eclipse.xtext.util.IAcceptor;
  */
 public interface IReferenceFinderExtension1 {
 
-	void findReferences(Set<URI> targetURIs, IResourceDescription resourceDescription, IAcceptor<IReferenceDescription> acceptor, IProgressMonitor monitor, ILocalResourceAccess localResourceAccess);
-	
+    void findReferences(Set<URI> targetURIs, IResourceDescription resourceDescription, IAcceptor<IReferenceDescription> acceptor, IProgressMonitor monitor, ILocalResourceAccess localResourceAccess);
+
 }

@@ -16,7 +16,7 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(LanguageResourceHelper.class)
 public interface ILanguageResourceHelper {
-	
-	boolean isLanguageResource(IResource resource);
-	
+
+    boolean isLanguageResource(IResource resource);
+
 }

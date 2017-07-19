@@ -32,73 +32,72 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
  */
 public class EditorUtils {
 
-	private static final Logger log = Logger.getLogger(EditorUtils.class);
+    private static final Logger log = Logger.getLogger(EditorUtils.class);
 
-	public static Font fontFromFontData(FontData[] fontDataArray) {
-		if (fontDataArray != null && fontDataArray.length > 0) {
-			String fontData = PreferenceConverter.getStoredRepresentation(fontDataArray);
-			if (!JFaceResources.getFontRegistry().hasValueFor(fontData)) {
-				FontData[] fData = PreferenceConverter.basicGetFontData(fontData);
-				JFaceResources.getFontRegistry().put(fontData, fData);
-			}
-			Font font = JFaceResources.getFontRegistry().get(fontData);
-			return font;
-		}
-		return null;
-	}
+    public static Font fontFromFontData(FontData[] fontDataArray) {
+        if (fontDataArray != null && fontDataArray.length > 0) {
+            String fontData = PreferenceConverter.getStoredRepresentation(fontDataArray);
+            if (!JFaceResources.getFontRegistry().hasValueFor(fontData)) {
+                FontData[] fData = PreferenceConverter.basicGetFontData(fontData);
+                JFaceResources.getFontRegistry().put(fontData, fData);
+            }
+            Font font = JFaceResources.getFontRegistry().get(fontData);
+            return font;
+        }
+        return null;
+    }
 
-	public static Color colorFromString(String rgbString) {
-		if (rgbString != null && rgbString.trim().length() > 0) {
-			Color col = JFaceResources.getColorRegistry().get(rgbString);
-			try {
-				if (col == null) {
-					RGB rgb = StringConverter.asRGB(rgbString);
-					JFaceResources.getColorRegistry().put(rgbString, rgb);
-					col = JFaceResources.getColorRegistry().get(rgbString);
-				}
-			}
-			catch (DataFormatException e) {
-				log.error("Corrupt color value: " + rgbString, e);
-			}
-			return col;
-		}
-		return null;
-	}
+    public static Color colorFromString(String rgbString) {
+        if (rgbString != null && rgbString.trim().length() > 0) {
+            Color col = JFaceResources.getColorRegistry().get(rgbString);
+            try {
+                if (col == null) {
+                    RGB rgb = StringConverter.asRGB(rgbString);
+                    JFaceResources.getColorRegistry().put(rgbString, rgb);
+                    col = JFaceResources.getColorRegistry().get(rgbString);
+                }
+            } catch (DataFormatException e) {
+                log.error("Corrupt color value: " + rgbString, e);
+            }
+            return col;
+        }
+        return null;
+    }
 
-	public static Color colorFromRGB(RGB rgb) {
-		if (rgb == null)
-			return null;
-		return colorFromString(StringConverter.asString(rgb));
-	}
-	
-	public static XtextEditor getActiveXtextEditor(ExecutionEvent event) {
-		IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
-		if (activeEditor == null)
-			return null;
-		XtextEditor xtextEditor = (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
-		return xtextEditor;
-	}
+    public static Color colorFromRGB(RGB rgb) {
+        if (rgb == null)
+            return null;
+        return colorFromString(StringConverter.asString(rgb));
+    }
 
-	public static XtextEditor getActiveXtextEditor() {
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
-		if (workbenchWindow == null) 
-			return null;
-		IWorkbenchPage activePage = workbenchWindow.getActivePage();
-		if (activePage == null) 
-			return null;
-		IEditorPart activeEditor = activePage.getActiveEditor();
-		if (activeEditor == null)
-			return null;
-		XtextEditor xtextEditor = (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
-		return xtextEditor;
-	}
+    public static XtextEditor getActiveXtextEditor(ExecutionEvent event) {
+        IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
+        if (activeEditor == null)
+            return null;
+        XtextEditor xtextEditor = (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
+        return xtextEditor;
+    }
 
-	public static XtextEditor getXtextEditor(IEditorPart openEditor) {
-		if (openEditor != null) {
-			return (XtextEditor) openEditor.getAdapter(XtextEditor.class);
-		}
-		return null;
-	}
-	
+    public static XtextEditor getActiveXtextEditor() {
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+        if (workbenchWindow == null)
+            return null;
+        IWorkbenchPage activePage = workbenchWindow.getActivePage();
+        if (activePage == null)
+            return null;
+        IEditorPart activeEditor = activePage.getActiveEditor();
+        if (activeEditor == null)
+            return null;
+        XtextEditor xtextEditor = (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
+        return xtextEditor;
+    }
+
+    public static XtextEditor getXtextEditor(IEditorPart openEditor) {
+        if (openEditor != null) {
+            return (XtextEditor) openEditor.getAdapter(XtextEditor.class);
+        }
+        return null;
+    }
+
 }

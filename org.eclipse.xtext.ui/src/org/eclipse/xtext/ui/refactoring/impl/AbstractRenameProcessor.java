@@ -15,21 +15,21 @@ import com.google.inject.ImplementedBy;
 
 /**
  * Unfortunately LTK only defines abstract classes so this is an abstract class instead of an interface only.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  * @author Holger Schill
  */
 @ImplementedBy(RenameElementProcessor.class)
 public abstract class AbstractRenameProcessor extends RenameProcessor {
 
-	public abstract boolean initialize(IRenameElementContext renameElementContext);
+    public abstract boolean initialize(IRenameElementContext renameElementContext);
 
-	public abstract String getOriginalName();
+    public abstract String getOriginalName();
 
-	public abstract String getNewName();
+    public abstract String getNewName();
 
-	public abstract void setNewName(String newName);
-	
-	public abstract RefactoringStatus validateNewName(String newName);
-	
+    public abstract void setNewName(String newName);
+
+    public abstract RefactoringStatus validateNewName(String newName);
+
 }

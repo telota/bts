@@ -44,61 +44,65 @@ import org.eclipse.core.runtime.IStatus;
  */
 public class StringRegexValidator implements IValidator {
 
-	/** The Constant errorMessage. */
-	private static final String errorMessage = "Input String is not valid against the required regex pattern: ";
-	
-	/** The pattern. */
-	private Pattern pattern;
-	
-	/** The pattern string. */
-	private String patternString;
+    /**
+     * The Constant errorMessage.
+     */
+    private static final String errorMessage = "Input String is not valid against the required regex pattern: ";
 
-	private boolean force;
+    /**
+     * The pattern.
+     */
+    private Pattern pattern;
 
-	/**
-	 * Instantiates a new string regex validator.
-	 *
-	 * @param patternString the pattern string
-	 */
-	public StringRegexValidator(String patternString, boolean force) {
-		this.patternString = patternString;
-		this.force = force;
-		try {
-			this.pattern = Pattern.compile(patternString);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public StringRegexValidator(String patternString) {
-		this.patternString = patternString;
-		this.force = true;
-		try {
-			this.pattern = Pattern.compile(patternString);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * The pattern string.
+     */
+    private String patternString;
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
-	 */
-	@Override
-	public IStatus validate(Object value) {
-		if (value instanceof String && !"".equals(value)) {
-			Matcher m = pattern.matcher((CharSequence) value);
-			if (m.find()) {
-				return ValidationStatus.ok();
-			}
-			else {
-				return ValidationStatus.error(errorMessage + patternString);
-			}
-		}
-		if (force)
-		{
-			return ValidationStatus.error(errorMessage + patternString);
-		}
-			return ValidationStatus.ok();
-	}
+    private boolean force;
+
+    /**
+     * Instantiates a new string regex validator.
+     *
+     * @param patternString the pattern string
+     */
+    public StringRegexValidator(String patternString, boolean force) {
+        this.patternString = patternString;
+        this.force = force;
+        try {
+            this.pattern = Pattern.compile(patternString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public StringRegexValidator(String patternString) {
+        this.patternString = patternString;
+        this.force = true;
+        try {
+            this.pattern = Pattern.compile(patternString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
+     */
+    @Override
+    public IStatus validate(Object value) {
+        if (value instanceof String && !"".equals(value)) {
+            Matcher m = pattern.matcher((CharSequence) value);
+            if (m.find()) {
+                return ValidationStatus.ok();
+            } else {
+                return ValidationStatus.error(errorMessage + patternString);
+            }
+        }
+        if (force) {
+            return ValidationStatus.error(errorMessage + patternString);
+        }
+        return ValidationStatus.ok();
+    }
 
 }

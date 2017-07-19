@@ -22,172 +22,149 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * A simple TreeViewer to demonstrate usage of an ILazyContentProvider.
- * 
  */
-public class Snippet047VirtualLazyTreeViewer
-{
-	private class MyContentProvider implements ILazyTreeContentProvider
-	{
-		private TreeViewer viewer;
-		private IntermediateNode[] elements;
+public class Snippet047VirtualLazyTreeViewer {
+    public Snippet047VirtualLazyTreeViewer(Shell shell) {
+        final TreeViewer v = new TreeViewer(shell, SWT.VIRTUAL | SWT.BORDER);
+        v.setLabelProvider(new LabelProvider());
+        v.setContentProvider(new MyContentProvider(v));
+        v.setUseHashlookup(true);
+        IntermediateNode[] model = createModel();
+        v.setInput(model);
+        v.getTree().setItemCount(model.length);
 
-		public MyContentProvider(TreeViewer viewer)
-		{
-			this.viewer = viewer;
-		}
+    }
 
-		public void dispose()
-		{
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        Display display = new Display();
+        Shell shell = new Shell(display);
+        shell.setLayout(new FillLayout());
+        new Snippet047VirtualLazyTreeViewer(shell);
+        shell.open();
 
-		}
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) display.sleep();
+        }
 
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-		{
-			this.elements = (IntermediateNode[]) newInput;
-		}
+        display.dispose();
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.ILazyTreeContentProvider#getParent(java
-		 * .lang.Object)
-		 */
-		public Object getParent(Object element)
-		{
-			if (element instanceof LeafNode) return ((LeafNode) element).parent;
-			return elements;
-		}
+    }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.ILazyTreeContentProvider#updateChildCount
-		 * (java.lang.Object, int)
-		 */
-		public void updateChildCount(Object element, int currentChildCount)
-		{
+    private IntermediateNode[] createModel() {
+        IntermediateNode[] elements = new IntermediateNode[10];
 
-			int length = 0;
-			if (element instanceof IntermediateNode)
-			{
-				IntermediateNode node = (IntermediateNode) element;
-				length = node.children.length;
-			}
-			if (element == elements) length = elements.length;
-			viewer.setChildCount(element, length);
+        for (int i = 0; i < 10; i++) {
+            elements[i] = new IntermediateNode(i);
+            elements[i].generateChildren(10000);
+        }
 
-		}
+        return elements;
+    }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * org.eclipse.jface.viewers.ILazyTreeContentProvider#updateElement(
-		 * java.lang.Object, int)
-		 */
-		public void updateElement(Object parent, int index)
-		{
+    private class MyContentProvider implements ILazyTreeContentProvider {
+        private TreeViewer viewer;
+        private IntermediateNode[] elements;
 
-			Object element;
-			if (parent instanceof IntermediateNode) element = ((IntermediateNode) parent).children[index];
+        public MyContentProvider(TreeViewer viewer) {
+            this.viewer = viewer;
+        }
 
-			else
-				element = elements[index];
-			viewer.replace(parent, index, element);
-			updateChildCount(element, -1);
+        public void dispose() {
 
-		}
+        }
 
-	}
+        public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+            this.elements = (IntermediateNode[]) newInput;
+        }
 
-	public class LeafNode
-	{
-		public int counter;
-		public IntermediateNode parent;
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * org.eclipse.jface.viewers.ILazyTreeContentProvider#getParent(java
+         * .lang.Object)
+         */
+        public Object getParent(Object element) {
+            if (element instanceof LeafNode) return ((LeafNode) element).parent;
+            return elements;
+        }
 
-		public LeafNode(int counter, IntermediateNode parent)
-		{
-			this.counter = counter;
-			this.parent = parent;
-		}
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * org.eclipse.jface.viewers.ILazyTreeContentProvider#updateChildCount
+         * (java.lang.Object, int)
+         */
+        public void updateChildCount(Object element, int currentChildCount) {
 
-		public String toString()
-		{
-			return "Leaf " + this.counter;
-		}
-	}
+            int length = 0;
+            if (element instanceof IntermediateNode) {
+                IntermediateNode node = (IntermediateNode) element;
+                length = node.children.length;
+            }
+            if (element == elements) length = elements.length;
+            viewer.setChildCount(element, length);
 
-	public class IntermediateNode
-	{
-		public int counter;
-		public LeafNode[] children = new LeafNode[0];
+        }
 
-		public IntermediateNode(int counter)
-		{
-			this.counter = counter;
-		}
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * org.eclipse.jface.viewers.ILazyTreeContentProvider#updateElement(
+         * java.lang.Object, int)
+         */
+        public void updateElement(Object parent, int index) {
 
-		public String toString()
-		{
-			return "Node " + this.counter;
-		}
+            Object element;
+            if (parent instanceof IntermediateNode) element = ((IntermediateNode) parent).children[index];
 
-		public void generateChildren(int i)
-		{
-			children = new LeafNode[i];
-			for (int j = 0; j < i; j++)
-			{
-				children[j] = new LeafNode(j, this);
-			}
+            else
+                element = elements[index];
+            viewer.replace(parent, index, element);
+            updateChildCount(element, -1);
 
-		}
-	}
+        }
 
-	public Snippet047VirtualLazyTreeViewer(Shell shell)
-	{
-		final TreeViewer v = new TreeViewer(shell, SWT.VIRTUAL | SWT.BORDER);
-		v.setLabelProvider(new LabelProvider());
-		v.setContentProvider(new MyContentProvider(v));
-		v.setUseHashlookup(true);
-		IntermediateNode[] model = createModel();
-		v.setInput(model);
-		v.getTree().setItemCount(model.length);
+    }
 
-	}
+    public class LeafNode {
+        public int counter;
+        public IntermediateNode parent;
 
-	private IntermediateNode[] createModel()
-	{
-		IntermediateNode[] elements = new IntermediateNode[10];
+        public LeafNode(int counter, IntermediateNode parent) {
+            this.counter = counter;
+            this.parent = parent;
+        }
 
-		for (int i = 0; i < 10; i++)
-		{
-			elements[i] = new IntermediateNode(i);
-			elements[i].generateChildren(10000);
-		}
+        public String toString() {
+            return "Leaf " + this.counter;
+        }
+    }
 
-		return elements;
-	}
+    public class IntermediateNode {
+        public int counter;
+        public LeafNode[] children = new LeafNode[0];
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
-		Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setLayout(new FillLayout());
-		new Snippet047VirtualLazyTreeViewer(shell);
-		shell.open();
+        public IntermediateNode(int counter) {
+            this.counter = counter;
+        }
 
-		while (!shell.isDisposed())
-		{
-			if (!display.readAndDispatch()) display.sleep();
-		}
+        public String toString() {
+            return "Node " + this.counter;
+        }
 
-		display.dispose();
+        public void generateChildren(int i) {
+            children = new LeafNode[i];
+            for (int j = 0; j < i; j++) {
+                children[j] = new LeafNode(j, this);
+            }
 
-	}
+        }
+    }
 
 }

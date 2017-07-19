@@ -14,22 +14,21 @@ import com.google.inject.Inject;
 
 /**
  * @author Dennis H�bner - Initial contribution and API
- * 
  */
 public class LanguageRootPreferencePage extends AbstractPreferencePage {
 
-	@Inject
-	private IPreferenceStoreAccess preferenceStoreAccess;
-	
-	@Override
-	protected void createFieldEditors() {
-	}
+    @Inject
+    private IPreferenceStoreAccess preferenceStoreAccess;
 
-	/**
-	 * @since 2.1
-	 */
-	@Override
-	protected IPreferenceStore doGetPreferenceStore() {
-		return preferenceStoreAccess.getWritablePreferenceStore();
-	}
+    @Override
+    protected void createFieldEditors() {
+    }
+
+    /**
+     * @since 2.1
+     */
+    @Override
+    protected IPreferenceStore doGetPreferenceStore() {
+        return preferenceStoreAccess.getWritablePreferenceStore();
+    }
 }

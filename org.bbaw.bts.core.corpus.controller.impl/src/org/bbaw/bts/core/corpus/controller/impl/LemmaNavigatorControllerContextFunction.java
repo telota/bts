@@ -7,20 +7,20 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.MApplication;
 
-public class LemmaNavigatorControllerContextFunction extends ContextFunction{
+public class LemmaNavigatorControllerContextFunction extends ContextFunction {
 
-	@Override
-	public Object compute(IEclipseContext context) {
-		System.out.println("Intitialize LemmaNavigatorController");
+    @Override
+    public Object compute(IEclipseContext context) {
+        System.out.println("Intitialize LemmaNavigatorController");
 
-		// Add the new object to the application context
-		MApplication application = context.get(MApplication.class);
-		IEclipseContext ctx = application.getContext();
+        // Add the new object to the application context
+        MApplication application = context.get(MApplication.class);
+        IEclipseContext ctx = application.getContext();
 
-		LemmaNavigatorController controller = ContextInjectionFactory.make(
-				LemmaNavigatorControllerImpl.class, context);
-		ctx.set(LemmaNavigatorController.class, controller);
+        LemmaNavigatorController controller = ContextInjectionFactory.make(
+                LemmaNavigatorControllerImpl.class, context);
+        ctx.set(LemmaNavigatorController.class, controller);
 
-		return controller;
-	}
+        return controller;
+    }
 }

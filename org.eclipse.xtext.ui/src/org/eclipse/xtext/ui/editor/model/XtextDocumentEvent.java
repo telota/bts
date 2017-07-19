@@ -13,23 +13,23 @@ import org.eclipse.jface.text.Region;
 /**
  * @author Sven Efftinge - Initial contribution and API
  */
-public class XtextDocumentEvent extends DocumentEvent{
-	
-	private DocumentEvent original;
-	private Region damagedRegion;
-	
-	public XtextDocumentEvent(DocumentEvent original, Region damagedRegion) {
-		super(original.fDocument,original.fOffset,original.fLength,original.fText);
-		this.original = original;
-		this.damagedRegion = damagedRegion;
-	}
-	
-	public Region getDamagedRegion() {
-		return damagedRegion;
-	}
-	
-	public DocumentEvent getOriginalDocumentEvent() {
-		return original;
-	}
-	
+public class XtextDocumentEvent extends DocumentEvent {
+
+    private DocumentEvent original;
+    private Region damagedRegion;
+
+    public XtextDocumentEvent(DocumentEvent original, Region damagedRegion) {
+        super(original.fDocument, original.fOffset, original.fLength, original.fText);
+        this.original = original;
+        this.damagedRegion = damagedRegion;
+    }
+
+    public Region getDamagedRegion() {
+        return damagedRegion;
+    }
+
+    public DocumentEvent getOriginalDocumentEvent() {
+        return original;
+    }
+
 }

@@ -71,425 +71,424 @@ import com.ibm.icu.text.MessageFormat;
  * @since 2.4
  */
 public class XtextDocumentProvider extends FileDocumentProvider {
-	
-	/**
-	 * Bundle of all required information to allow {@link java.net.URI} as underlying document content provider.
-	 * @since 2.3
-	 */
-	protected class URIInfo extends ElementInfo {
 
-		/** The flag representing the cached state whether the storage is modifiable. */
-		public boolean isModifiable= false;
-		/** The flag representing the cached state whether the storage is read-only. */
-		public boolean isReadOnly= true;
-		/** The flag representing the need to update the cached flag.  */
-		public boolean updateCache= true;
+    @Inject
+    private Provider<XtextDocument> documentProvider;
+    @Inject
+    private Provider<IDocumentPartitioner> documentPartitioner;
+    @Inject
+    private IResourceValidator resourceValidator;
+    @Inject
+    private IssueResolutionProvider issueResolutionProvider;
+    @Inject
+    private IssueUtil issueUtil;
+    @Inject
+    private IResourceForEditorInputFactory resourceForEditorInputFactory;
+    @Inject
+    private IStorage2UriMapper storage2UriMapper;
+    @Inject
+    private IEncodingProvider encodingProvider;
+    private UnchangedElementListener listener;
 
-		public URIInfo(IDocument document, IAnnotationModel model) {
-			super(document, model);
-		}
-	}
-	
-	@Inject
-	private Provider<XtextDocument> documentProvider;
+    /**
+     * @since 2.4
+     */
+    protected IStorage2UriMapper getStorage2UriMapper() {
+        return storage2UriMapper;
+    }
 
-	@Inject
-	private Provider<IDocumentPartitioner> documentPartitioner;
+    @Override
+    protected XtextDocument createEmptyDocument() {
+        XtextDocument xtextDocument = documentProvider.get();
+        return xtextDocument;
+    }
 
-	@Inject
-	private IResourceValidator resourceValidator;
+    @Override
+    protected IDocument createDocument(Object element) throws CoreException {
+        IDocument document = null;
+        if (isWorkspaceExternalEditorInput(element)) {
+            document = createEmptyDocument();
+            if (setDocumentContent(document, (IEditorInput) element, Charset.defaultCharset().name())) {
+                setupDocument(element, document);
+            }
+        } else {
+            document = super.createDocument(element);
+        }
+        if (document != null) {
+            IDocumentPartitioner partitioner = documentPartitioner.get();
+            partitioner.connect(document);
+            document.setDocumentPartitioner(partitioner);
+        }
+        return document;
+    }
 
-	@Inject
-	private IssueResolutionProvider issueResolutionProvider;
+    @Override
+    public boolean isDeleted(Object element) {
+        if (isWorkspaceExternalEditorInput(element)) {
+            final IURIEditorInput input = (IURIEditorInput) element;
+            boolean result = !input.exists();
+            return result;
+        }
+        if (element instanceof IFileEditorInput) {
+            final IFileEditorInput input = (IFileEditorInput) element;
 
-	@Inject
-	private IssueUtil issueUtil;
+            final IPath path = input.getFile().getLocation();
+            if (path == null) {
+                // return true;
+                return !input.getFile().exists(); // fixed for EFS compatibility
+            }
+            return !path.toFile().exists();
+        }
+        return super.isDeleted(element);
+    }
 
-	@Inject
-	private IResourceForEditorInputFactory resourceForEditorInputFactory;
+    @Override
+    protected boolean setDocumentContent(IDocument document, IEditorInput editorInput, String encoding)
+            throws CoreException {
+        boolean result;
+        if (isWorkspaceExternalEditorInput(editorInput)) {
+            java.net.URI uri = ((IURIEditorInput) editorInput).getURI();
+            try {
+                InputStream contentStream = null;
+                try {
+                    contentStream = uri.toURL().openStream();
+                    setDocumentContent(document, contentStream, encoding);
+                } finally {
+                    try {
+                        if (contentStream != null)
+                            contentStream.close();
+                    } catch (IOException e1) {
+                    }
+                }
+            } catch (IOException ex) {
+                String message = (ex.getMessage() != null ? ex.getMessage() : ""); //$NON-NLS-1$
+                IStatus s = new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, IStatus.OK, message, ex);
+                throw new CoreException(s);
+            }
+            result = true;
+        } else {
+            result = super.setDocumentContent(document, editorInput, encoding);
+        }
+        if (result)
+            setDocumentResource((XtextDocument) document, editorInput, encoding);
+        return result;
+    }
 
-	@Inject
-	private IStorage2UriMapper storage2UriMapper;
+    /**
+     * @since 2.4
+     */
+    protected void setDocumentResource(XtextDocument xtextDocument, IEditorInput editorInput, String encoding) throws CoreException {
+        XtextResource xtextResource = (XtextResource) resourceForEditorInputFactory.createResource(editorInput);
+        loadResource(xtextResource, xtextDocument.get(), encoding);
+        xtextDocument.setInput(xtextResource);
+    }
 
-	@Inject
-	private IEncodingProvider encodingProvider;
-	
-	/**
-	 * @since 2.4
-	 */
-	protected IStorage2UriMapper getStorage2UriMapper() {
-		return storage2UriMapper;
-	}
+    @Override
+    protected void disposeElementInfo(Object element, ElementInfo info) {
+        if (info.fDocument instanceof XtextDocument) {
+            XtextDocument document = (XtextDocument) info.fDocument;
+            ValidationJob job = (ValidationJob) document.getValidationJob();
+            if (job != null) {
+                job.cancel();
+            }
+            document.disposeInput();
+        }
+        super.disposeElementInfo(element, info);
+    }
 
-	@Override
-	protected XtextDocument createEmptyDocument() {
-		XtextDocument xtextDocument = documentProvider.get();
-		return xtextDocument;
-	}
+    protected void loadResource(XtextResource resource, String document, String encoding) throws CoreException {
+        try {
+            // encoding can be null for FileRevisionEditorInput
+            byte[] bytes = encoding != null ? document.getBytes(encoding) : document.getBytes();
+            resource.load(new ByteArrayInputStream(bytes),
+                    Collections.singletonMap(XtextResource.OPTION_ENCODING, encoding));
+        } catch (IOException ex) {
+            String message = (ex.getMessage() != null ? ex.getMessage() : ex.toString());
+            IStatus s = new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, message, ex);
+            throw new CoreException(s);
+        }
+    }
 
-	@Override
-	protected IDocument createDocument(Object element) throws CoreException {
-		IDocument document = null;
-		if (isWorkspaceExternalEditorInput(element)) {
-			document= createEmptyDocument();
-			if (setDocumentContent(document, (IEditorInput) element, Charset.defaultCharset().name())) {
-				setupDocument(element, document);
-			}
-		} else {
-			document = super.createDocument(element);
-		}
-		if (document != null) {
-			IDocumentPartitioner partitioner = documentPartitioner.get();
-			partitioner.connect(document);
-			document.setDocumentPartitioner(partitioner);
-		}
-		return document;
-	}
+    @Override
+    protected ElementInfo createElementInfo(Object element) throws CoreException {
+        ElementInfo info;
+        if (isWorkspaceExternalEditorInput(element)) {
+            IDocument document = null;
+            IStatus status = null;
+            try {
+                document = createDocument(element);
+            } catch (CoreException x) {
+                status = x.getStatus();
+                document = createEmptyDocument();
+            }
 
-	@Override
-	public boolean isDeleted(Object element) {
-		if (isWorkspaceExternalEditorInput(element)) {
-			final IURIEditorInput input = (IURIEditorInput) element;
-			boolean result = !input.exists();
-			return result;
-		}
-		if (element instanceof IFileEditorInput) {
-			final IFileEditorInput input = (IFileEditorInput) element;
+            info = new URIInfo(document, createAnnotationModel(element));
+            info.fStatus = status;
+        } else {
+            info = super.createElementInfo(element);
+        }
+        registerAnnotationInfoProcessor(info);
+        return info;
+    }
 
-			final IPath path = input.getFile().getLocation();
-			if (path == null) {
-				// return true;
-				return !input.getFile().exists(); // fixed for EFS compatibility
-			}
-			return !path.toFile().exists();
-		}
-		return super.isDeleted(element);
-	}
+    /**
+     * @since 2.4
+     */
+    protected void registerAnnotationInfoProcessor(ElementInfo info) {
+        XtextDocument doc = (XtextDocument) info.fDocument;
+        if (info.fModel != null) {
+            AnnotationIssueProcessor annotationIssueProcessor = new AnnotationIssueProcessor(doc, info.fModel,
+                    issueResolutionProvider);
+            ValidationJob job = new ValidationJob(resourceValidator, doc, annotationIssueProcessor, CheckMode.FAST_ONLY);
+            doc.setValidationJob(job);
+        }
+    }
 
-	@Override
-	protected boolean setDocumentContent(IDocument document, IEditorInput editorInput, String encoding)
-			throws CoreException {
-		boolean result;
-		if (isWorkspaceExternalEditorInput(editorInput)) {
-			java.net.URI uri= ((IURIEditorInput) editorInput).getURI();
-			try {
-				InputStream contentStream = null;
-				try {
-					contentStream = uri.toURL().openStream();
-					setDocumentContent(document, contentStream, encoding);
-				} finally {
-					try {
-						if (contentStream != null)
-							contentStream.close();
-					} catch (IOException e1) {
-					}
-				}
-			} catch (IOException ex) {
-				String message= (ex.getMessage() != null ? ex.getMessage() : ""); //$NON-NLS-1$
-				IStatus s= new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, IStatus.OK, message, ex);
-				throw new CoreException(s);
-			} 
-			result = true;
-		} else {
-			result = super.setDocumentContent(document, editorInput, encoding);
-		}
-		if (result) 
-			setDocumentResource((XtextDocument) document, editorInput, encoding);
-		return result;
-	}
+    @Override
+    protected void addUnchangedElementListeners(Object element, ElementInfo info) {
+        if (info.fDocument != null) {
+            if (listener != null)
+                info.fDocument.removeDocumentListener(listener);
+            listener = new UnchangedElementListener(info);
+            info.fDocument.addDocumentListener(listener);
+        }
+    }
 
-	/**
-	 * @since 2.4
-	 */
-	protected void setDocumentResource(XtextDocument xtextDocument, IEditorInput editorInput, String encoding) throws CoreException {
-		XtextResource xtextResource = (XtextResource) resourceForEditorInputFactory.createResource(editorInput);
-		loadResource(xtextResource, xtextDocument.get(), encoding);
-		xtextDocument.setInput(xtextResource);
-	}
+    @Override
+    protected void removeUnchangedElementListeners(Object element, ElementInfo info) {
+        if (listener != null) {
+            info.fDocument.removeDocumentListener(listener);
+            listener = null;
+        }
+    }
 
-	@Override
-	protected void disposeElementInfo(Object element, ElementInfo info) {
-		if (info.fDocument instanceof XtextDocument) {
-			XtextDocument document = (XtextDocument) info.fDocument;
-			ValidationJob job = (ValidationJob) document.getValidationJob();
-			if (job != null) {
-				job.cancel();
-			}
-			document.disposeInput();
-		}
-		super.disposeElementInfo(element, info);
-	}
+    @Override
+    protected IAnnotationModel createAnnotationModel(Object element) throws CoreException {
+        if (element instanceof IFileEditorInput) {
+            IFileEditorInput input = (IFileEditorInput) element;
+            return new XtextResourceMarkerAnnotationModel(input.getFile(), issueResolutionProvider, issueUtil);
+        } else if (element instanceof IURIEditorInput) {
+            return new AnnotationModel();
+        }
+        return super.createAnnotationModel(element);
+    }
 
-	protected void loadResource(XtextResource resource, String document, String encoding) throws CoreException {
-		try {
-			// encoding can be null for FileRevisionEditorInput
-			byte[] bytes = encoding != null ? document.getBytes(encoding) : document.getBytes();
-			resource.load(new ByteArrayInputStream(bytes),
-					Collections.singletonMap(XtextResource.OPTION_ENCODING, encoding));
-		} catch (IOException ex) {
-			String message = (ex.getMessage() != null ? ex.getMessage() : ex.toString());
-			IStatus s = new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.OK, message, ex);
-			throw new CoreException(s);
-		}
-	}
+    public IResourceForEditorInputFactory getResourceForEditorInputFactory() {
+        return resourceForEditorInputFactory;
+    }
 
-	@Override
-	protected ElementInfo createElementInfo(Object element) throws CoreException {
-		ElementInfo info;
-		if (isWorkspaceExternalEditorInput(element)) {
-			IDocument document= null;
-			IStatus status= null;
-			try {
-				document= createDocument(element);
-			} catch (CoreException x) {
-				status= x.getStatus();
-				document= createEmptyDocument();
-			}
+    public void setResourceForEditorInputFactory(IResourceForEditorInputFactory resourceForEditorInputFactory) {
+        this.resourceForEditorInputFactory = resourceForEditorInputFactory;
+    }
 
-			info= new URIInfo(document, createAnnotationModel(element));
-			info.fStatus= status;
-		} else {
-			info = super.createElementInfo(element);
-		}
-		registerAnnotationInfoProcessor(info);
-		return info;
-	}
+    @Override
+    public String getEncoding(Object element) {
+        String encoding = super.getEncoding(element);
+        if (encoding == null && element instanceof IStorageEditorInput) {
+            try {
+                IStorage storage = ((IStorageEditorInput) element).getStorage();
+                URI uri = storage2UriMapper.getUri(storage);
+                if (uri != null) {
+                    encoding = encodingProvider.getEncoding(uri);
+                } else if (storage instanceof IEncodedStorage) {
+                    encoding = ((IEncodedStorage) storage).getCharset();
+                }
+            } catch (CoreException e) {
+                throw new WrappedException(e);
+            }
+        }
+        return encoding;
+    }
 
-	/**
-	 * @since 2.4
-	 */
-	protected void registerAnnotationInfoProcessor(ElementInfo info) {
-		XtextDocument doc = (XtextDocument) info.fDocument;
-		if(info.fModel != null) {
-			AnnotationIssueProcessor annotationIssueProcessor = new AnnotationIssueProcessor(doc, info.fModel,
-				issueResolutionProvider);
-			ValidationJob job = new ValidationJob(resourceValidator, doc, annotationIssueProcessor, CheckMode.FAST_ONLY);
-			doc.setValidationJob(job);
-		}
-	}
-	
-	private UnchangedElementListener listener;
+    @Override
+    public boolean isSynchronized(Object element) {
+        ElementInfo info = getElementInfo(element);
+        if (info instanceof FileInfo) {
+            FileInfo fileInfo = (FileInfo) getElementInfo(element);
+            long modificationStamp = getModificationStamp(element);
+            if (fileInfo.fModificationStamp != modificationStamp) {
+                return false;
+            }
+        }
+        return super.isSynchronized(element);
+    }
 
-	public class UnchangedElementListener implements IDocumentListener {
+    @Override
+    public boolean isModifiable(Object element) {
+        if (isWorkspaceExternalEditorInput(element)) {
+            URIInfo info = (URIInfo) getElementInfo(element);
+            if (info != null) {
+                if (info.updateCache) {
+                    try {
+                        updateCache((IURIEditorInput) element);
+                    } catch (CoreException x) {
+                        handleCoreException(x, "XtextDocumentProvider.isModifiable");
+                    }
+                }
+                return info.isModifiable;
+            }
+        }
+        return super.isModifiable(element);
+    }
 
-		private final ElementInfo element;
-		private long modificationStamp;
+    @Override
+    public boolean isReadOnly(Object element) {
+        if (isWorkspaceExternalEditorInput(element)) {
+            URIInfo info = (URIInfo) getElementInfo(element);
+            if (info != null) {
+                if (info.updateCache) {
+                    try {
+                        updateCache((IURIEditorInput) element);
+                    } catch (CoreException x) {
+                        handleCoreException(x, "XtextDocumentProvider.isReadOnly");
+                    }
+                }
+                return info.isReadOnly;
+            }
+        }
+        return super.isReadOnly(element);
+    }
 
-		public UnchangedElementListener(ElementInfo element) {
-			this.element = element;
-			if (element.fDocument instanceof IDocumentExtension4) {
-				modificationStamp = ((IDocumentExtension4) element.fDocument).getModificationStamp();
-			} else {
-				modificationStamp = IDocumentExtension4.UNKNOWN_MODIFICATION_STAMP;
-			}
+    /**
+     * @since 2.3
+     */
+    protected boolean isWorkspaceExternalEditorInput(Object element) {
+        return element instanceof IURIEditorInput && !(element instanceof IFileEditorInput);
+    }
 
-		}
+    /**
+     * @since 2.3
+     */
+    protected void updateCache(IURIEditorInput input) throws CoreException {
+        URIInfo info = (URIInfo) getElementInfo(input);
+        if (info != null) {
+            java.net.URI uri = input.getURI();
+            if (uri != null) {
+                boolean readOnly = true;
+                String uriAsString = uri.toString();
+                URI emfURI = URI.createURI(uriAsString);
+                if (emfURI.isFile() && !emfURI.isArchive()) {
+                    // TODO: Should we use the resource set somehow to obtain the URIConverter for the file protocol?
+                    // see also todo below, but don't run into a stackoverflow ;-)
+                    Map<String, ?> attributes = URIConverter.INSTANCE.getAttributes(emfURI, null);
+                    readOnly = Boolean.TRUE.equals(attributes.get(URIConverter.ATTRIBUTE_READ_ONLY));
+                }
+                info.isReadOnly = readOnly;
+                info.isModifiable = !readOnly;
+            }
+            info.updateCache = false;
+        }
+    }
 
-		public void documentAboutToBeChanged(DocumentEvent event) {
-		}
+    @Override
+    protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
+            throws CoreException {
+        if (isWorkspaceExternalEditorInput(element)) {
+            CharsetEncoder encoder = Charset.defaultCharset().newEncoder();
+            encoder.onMalformedInput(CodingErrorAction.REPLACE);
+            encoder.onUnmappableCharacter(CodingErrorAction.REPORT);
 
-		public void documentChanged(DocumentEvent event) {
-			if (element.fCanBeSaved && modificationStamp == event.getModificationStamp()) {
-				element.fCanBeSaved = false;
-				fireElementDirtyStateChanged(element.fElement, element.fCanBeSaved);
-			} else if (!element.fCanBeSaved) {
-				element.fCanBeSaved = true;
-				fireElementDirtyStateChanged(element.fElement, element.fCanBeSaved);
-			}
-		}
+            OutputStream stream = null;
+            try {
+                try {
+                    monitor.beginTask("Saving", 2000);
+                    byte[] bytes;
+                    ByteBuffer byteBuffer = encoder.encode(CharBuffer.wrap(document.get()));
+                    if (byteBuffer.hasArray())
+                        bytes = byteBuffer.array();
+                    else {
+                        bytes = new byte[byteBuffer.limit()];
+                        byteBuffer.get(bytes);
+                    }
+                    String uriAsString = ((IURIEditorInput) element).getURI().toString();
+                    URI emfURI = URI.createURI(uriAsString);
+                    // TODO: see todo above
+                    stream = URIConverter.INSTANCE.createOutputStream(emfURI);
+                    stream.write(bytes, 0, byteBuffer.limit());
+                } finally {
+                    monitor.done();
+                }
+            } catch (CharacterCodingException ex) {
+                String message = MessageFormat.format("Some characters cannot be mapped using \"{0}\" character encoding.\n" +
+                        "Either change the encoding or remove the characters which are not supported by the \"{0}\" character encoding.", new Object[]{Charset.defaultCharset().name()});
+                IStatus s = new Status(IStatus.ERROR, Activator.PLUGIN_ID, 1 /* EditorsUI.CHARSET_MAPPING_FAILED */, message, null);
+                throw new CoreException(s);
+            } catch (IOException e) {
+                String message = "Could not save file.";
+                IStatus s = new Status(IStatus.ERROR, Activator.PLUGIN_ID, IResourceStatus.FAILED_WRITE_LOCAL, message, null);
+                throw new CoreException(s);
+            } finally {
+                Closeables.closeQuietly(stream);
+            }
+            return;
+        }
+        super.doSaveDocument(monitor, element, document, overwrite);
+    }
 
-	}
+    @Override
+    protected void doUpdateStateCache(Object element) throws CoreException {
+        if (isWorkspaceExternalEditorInput(element)) {
+            URIInfo info = (URIInfo) getElementInfo(element);
+            if (info != null) {
+                info.updateCache = true;
+                return;
+            }
+        }
+        super.doUpdateStateCache(element);
+    }
 
-	@Override
-	protected void addUnchangedElementListeners(Object element, ElementInfo info) {
-		if (info.fDocument != null) {
-			if (listener != null)
-				info.fDocument.removeDocumentListener(listener);
-			listener = new UnchangedElementListener(info);
-			info.fDocument.addDocumentListener(listener);
-		}
-	}
+    /**
+     * Bundle of all required information to allow {@link java.net.URI} as underlying document content provider.
+     *
+     * @since 2.3
+     */
+    protected class URIInfo extends ElementInfo {
 
-	@Override
-	protected void removeUnchangedElementListeners(Object element, ElementInfo info) {
-		if (listener != null) {
-			info.fDocument.removeDocumentListener(listener);
-			listener = null;
-		}
-	}
+        /**
+         * The flag representing the cached state whether the storage is modifiable.
+         */
+        public boolean isModifiable = false;
+        /**
+         * The flag representing the cached state whether the storage is read-only.
+         */
+        public boolean isReadOnly = true;
+        /**
+         * The flag representing the need to update the cached flag.
+         */
+        public boolean updateCache = true;
 
-	@Override
-	protected IAnnotationModel createAnnotationModel(Object element) throws CoreException {
-		if (element instanceof IFileEditorInput) {
-			IFileEditorInput input = (IFileEditorInput) element;
-			return new XtextResourceMarkerAnnotationModel(input.getFile(), issueResolutionProvider, issueUtil);
-		} else if (element instanceof IURIEditorInput) {
-			return new AnnotationModel();
-		}
-		return super.createAnnotationModel(element);
-	}
+        public URIInfo(IDocument document, IAnnotationModel model) {
+            super(document, model);
+        }
+    }
 
-	public void setResourceForEditorInputFactory(IResourceForEditorInputFactory resourceForEditorInputFactory) {
-		this.resourceForEditorInputFactory = resourceForEditorInputFactory;
-	}
+    public class UnchangedElementListener implements IDocumentListener {
 
-	public IResourceForEditorInputFactory getResourceForEditorInputFactory() {
-		return resourceForEditorInputFactory;
-	}
+        private final ElementInfo element;
+        private long modificationStamp;
 
-	@Override
-	public String getEncoding(Object element) {
-		String encoding = super.getEncoding(element);
-		if (encoding == null && element instanceof IStorageEditorInput) {
-			try {
-				IStorage storage = ((IStorageEditorInput) element).getStorage();
-				URI uri = storage2UriMapper.getUri(storage);
-				if (uri != null) {
-					encoding = encodingProvider.getEncoding(uri);
-				} else if (storage instanceof IEncodedStorage) {
-					encoding = ((IEncodedStorage)storage).getCharset();
-				}
-			} catch (CoreException e) {
-				throw new WrappedException(e);
-			}
-		}
-		return encoding;
-	}
-	
-	@Override
-	public boolean isSynchronized(Object element) {
-		ElementInfo info = getElementInfo(element);
-		if (info instanceof FileInfo) {
-			FileInfo fileInfo = (FileInfo) getElementInfo(element);
-			long modificationStamp = getModificationStamp(element);
-			if (fileInfo.fModificationStamp != modificationStamp) {
-				return false;
-			}
-		}
-		return super.isSynchronized(element);
-	}
-	
-	@Override
-	public boolean isModifiable(Object element) {
-		if (isWorkspaceExternalEditorInput(element)) {
-			URIInfo info= (URIInfo) getElementInfo(element);
-			if (info != null) {
-				if (info.updateCache) {
-					try {
-						updateCache((IURIEditorInput) element);
-					} catch (CoreException x) {
-						handleCoreException(x, "XtextDocumentProvider.isModifiable");
-					}
-				}
-				return info.isModifiable;
-			}
-		}
-		return super.isModifiable(element);
-	}
-	
-	@Override
-	public boolean isReadOnly(Object element) {
-		if (isWorkspaceExternalEditorInput(element)) {
-			URIInfo info= (URIInfo) getElementInfo(element);
-			if (info != null) {
-				if (info.updateCache) {
-					try {
-						updateCache((IURIEditorInput) element);
-					} catch (CoreException x) {
-						handleCoreException(x, "XtextDocumentProvider.isReadOnly");
-					}
-				}
-				return info.isReadOnly;
-			}
-		}
-		return super.isReadOnly(element);
-	}
+        public UnchangedElementListener(ElementInfo element) {
+            this.element = element;
+            if (element.fDocument instanceof IDocumentExtension4) {
+                modificationStamp = ((IDocumentExtension4) element.fDocument).getModificationStamp();
+            } else {
+                modificationStamp = IDocumentExtension4.UNKNOWN_MODIFICATION_STAMP;
+            }
 
-	/**
-	 * @since 2.3
-	 */
-	protected boolean isWorkspaceExternalEditorInput(Object element) {
-		return element instanceof IURIEditorInput && !(element instanceof IFileEditorInput);
-	}
-	
-	/**
-	 * @since 2.3
-	 */
-	protected void updateCache(IURIEditorInput input) throws CoreException {
-		URIInfo info= (URIInfo) getElementInfo(input);
-		if (info != null) {
-			java.net.URI uri= input.getURI();
-			if (uri != null) {
-				boolean readOnly = true;
-				String uriAsString = uri.toString();
-				URI emfURI = URI.createURI(uriAsString);
-				if (emfURI.isFile() && !emfURI.isArchive()) {
-					// TODO: Should we use the resource set somehow to obtain the URIConverter for the file protocol?
-					// see also todo below, but don't run into a stackoverflow ;-)
-					Map<String, ?> attributes = URIConverter.INSTANCE.getAttributes(emfURI, null);
-					readOnly = Boolean.TRUE.equals(attributes.get(URIConverter.ATTRIBUTE_READ_ONLY));
-				}
-				info.isReadOnly=  readOnly;
-				info.isModifiable= !readOnly;
-			}
-			info.updateCache= false;
-		}
-	}
-	
-	@Override
-	protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
-			throws CoreException {
-		if (isWorkspaceExternalEditorInput(element)) {
-			CharsetEncoder encoder= Charset.defaultCharset().newEncoder();
-			encoder.onMalformedInput(CodingErrorAction.REPLACE);
-			encoder.onUnmappableCharacter(CodingErrorAction.REPORT);
+        }
 
-			OutputStream stream = null;
-			try {
-				try {
-					monitor.beginTask("Saving", 2000);
-					byte[] bytes;
-					ByteBuffer byteBuffer= encoder.encode(CharBuffer.wrap(document.get()));
-					if (byteBuffer.hasArray())
-						bytes= byteBuffer.array();
-					else {
-						bytes= new byte[byteBuffer.limit()];
-						byteBuffer.get(bytes);
-					}
-					String uriAsString = ((IURIEditorInput) element).getURI().toString();
-					URI emfURI = URI.createURI(uriAsString);
-					// TODO: see todo above
-					stream = URIConverter.INSTANCE.createOutputStream(emfURI);
-					stream.write(bytes, 0, byteBuffer.limit());
-				} finally {
-					monitor.done();
-				}
-			} catch (CharacterCodingException ex) {
-				String message= MessageFormat.format("Some characters cannot be mapped using \"{0}\" character encoding.\n" +
-						"Either change the encoding or remove the characters which are not supported by the \"{0}\" character encoding.", new Object[]{ Charset.defaultCharset().name() });
-				IStatus s= new Status(IStatus.ERROR, Activator.PLUGIN_ID, 1 /* EditorsUI.CHARSET_MAPPING_FAILED */, message, null);
-				throw new CoreException(s);
-			} catch (IOException e) {
-				String message= "Could not save file.";
-				IStatus s= new Status(IStatus.ERROR, Activator.PLUGIN_ID, IResourceStatus.FAILED_WRITE_LOCAL, message, null);
-				throw new CoreException(s);
-			} finally {
-				Closeables.closeQuietly(stream);
-			}
-			return;
-		}
-		super.doSaveDocument(monitor, element, document, overwrite);
-	}
+        public void documentAboutToBeChanged(DocumentEvent event) {
+        }
 
-	@Override
-	protected void doUpdateStateCache(Object element) throws CoreException {
-		if (isWorkspaceExternalEditorInput(element)) {
-			URIInfo info= (URIInfo) getElementInfo(element);
-			if (info != null) {
-				info.updateCache= true;
-				return;
-			}
-		}
-		super.doUpdateStateCache(element);
-	}
+        public void documentChanged(DocumentEvent event) {
+            if (element.fCanBeSaved && modificationStamp == event.getModificationStamp()) {
+                element.fCanBeSaved = false;
+                fireElementDirtyStateChanged(element.fElement, element.fCanBeSaved);
+            } else if (!element.fCanBeSaved) {
+                element.fCanBeSaved = true;
+                fireElementDirtyStateChanged(element.fElement, element.fCanBeSaved);
+            }
+        }
+
+    }
 }

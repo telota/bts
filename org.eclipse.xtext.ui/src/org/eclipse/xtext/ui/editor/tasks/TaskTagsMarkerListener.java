@@ -13,18 +13,18 @@ import org.eclipse.jface.text.IDocumentListener;
 
 /**
  * Used to * handle the creation of <i>Task Tags</i> to be displayed in eclipse <i>Tasks</i> View.
- * 
+ *
  * @deprecated Unused and will be removed in a future Xtext versions
  */
 @Deprecated
 public class TaskTagsMarkerListener implements IDocumentListener {
 
-	public void documentAboutToBeChanged(DocumentEvent event) {
+    public void documentAboutToBeChanged(DocumentEvent event) {
 
-	}
+    }
 
-	public void documentChanged(DocumentEvent event) {
+    public void documentChanged(DocumentEvent event) {
 
-	}
+    }
 
 }

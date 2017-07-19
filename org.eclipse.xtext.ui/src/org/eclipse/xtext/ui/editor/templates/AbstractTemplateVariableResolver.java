@@ -18,68 +18,68 @@ import com.google.inject.Inject;
 
 /**
  * Provides a common base class for xtext <code>TemplateVariableResolver</code>.
- * 
+ *
  * @author Michael Clay - Initial contribution and API
  */
 public abstract class AbstractTemplateVariableResolver extends
-		TemplateVariableResolver {
+        TemplateVariableResolver {
 
-	@Inject(optional = true)
-	private IGrammarAccess grammarAccess;
-	
-	public AbstractTemplateVariableResolver() {
-		super();
-	}
+    @Inject(optional = true)
+    private IGrammarAccess grammarAccess;
 
-	public AbstractTemplateVariableResolver(String type, String description) {
-		super(type, description);
-	}
+    public AbstractTemplateVariableResolver() {
+        super();
+    }
 
-	@Override
-	public void resolve(TemplateVariable variable, TemplateContext templateContext) {
-		XtextTemplateContext castedContext = (XtextTemplateContext) templateContext;
-		List<String> names = resolveValues(variable, castedContext);
-		String[] bindings = names.toArray(new String[names.size()]);
-		if (bindings.length != 0)
-			variable.setValues(bindings);
-		if (bindings.length > 1)
-			variable.setUnambiguous(false);
-		else
-			variable.setUnambiguous(isUnambiguous(castedContext));
-		variable.setResolved(true);
-	}
+    public AbstractTemplateVariableResolver(String type, String description) {
+        super(type, description);
+    }
 
-	protected EClassifier getEClassifierForGrammar(String fqnClassName,
-			Grammar grammar) {
-		int dotIndex = fqnClassName.indexOf('.');
-		String packageName = null;
-		String className = fqnClassName;
-		if (dotIndex > 0) {
-			packageName = fqnClassName.substring(0, dotIndex);
-			className = fqnClassName.substring(dotIndex + 1);
-		}
-		List<AbstractMetamodelDeclaration> allMetamodelDeclarations = GrammarUtil
-				.allMetamodelDeclarations(grammar);
-		for (AbstractMetamodelDeclaration decl : allMetamodelDeclarations) {
-			EPackage pack = decl.getEPackage();
-			if (packageName == null || pack.getName().equals(packageName)) {
-				EClassifier eClassifier = pack.getEClassifier(className);
-				if (eClassifier != null) {
-					return eClassifier;
-				}
-			}
-		}
-		return null;
-	}
+    @Override
+    public void resolve(TemplateVariable variable, TemplateContext templateContext) {
+        XtextTemplateContext castedContext = (XtextTemplateContext) templateContext;
+        List<String> names = resolveValues(variable, castedContext);
+        String[] bindings = names.toArray(new String[names.size()]);
+        if (bindings.length != 0)
+            variable.setValues(bindings);
+        if (bindings.length > 1)
+            variable.setUnambiguous(false);
+        else
+            variable.setUnambiguous(isUnambiguous(castedContext));
+        variable.setResolved(true);
+    }
 
-	protected Grammar getGrammar(XtextTemplateContext xtextTemplateContext) {
-		EObject grammarElement = xtextTemplateContext.getContentAssistContext()
-				.getRootNode().getGrammarElement();
-		if (grammarElement == null && grammarAccess != null)
-			return grammarAccess.getGrammar();
-		return (Grammar) EcoreUtil.getRootContainer(grammarElement);
-	}
+    protected EClassifier getEClassifierForGrammar(String fqnClassName,
+                                                   Grammar grammar) {
+        int dotIndex = fqnClassName.indexOf('.');
+        String packageName = null;
+        String className = fqnClassName;
+        if (dotIndex > 0) {
+            packageName = fqnClassName.substring(0, dotIndex);
+            className = fqnClassName.substring(dotIndex + 1);
+        }
+        List<AbstractMetamodelDeclaration> allMetamodelDeclarations = GrammarUtil
+                .allMetamodelDeclarations(grammar);
+        for (AbstractMetamodelDeclaration decl : allMetamodelDeclarations) {
+            EPackage pack = decl.getEPackage();
+            if (packageName == null || pack.getName().equals(packageName)) {
+                EClassifier eClassifier = pack.getEClassifier(className);
+                if (eClassifier != null) {
+                    return eClassifier;
+                }
+            }
+        }
+        return null;
+    }
 
-	public abstract List<String> resolveValues(TemplateVariable variable,
-			XtextTemplateContext xtextTemplateContext);
+    protected Grammar getGrammar(XtextTemplateContext xtextTemplateContext) {
+        EObject grammarElement = xtextTemplateContext.getContentAssistContext()
+                .getRootNode().getGrammarElement();
+        if (grammarElement == null && grammarAccess != null)
+            return grammarAccess.getGrammar();
+        return (Grammar) EcoreUtil.getRootContainer(grammarElement);
+    }
+
+    public abstract List<String> resolveValues(TemplateVariable variable,
+                                               XtextTemplateContext xtextTemplateContext);
 }

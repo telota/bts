@@ -18,27 +18,27 @@ import com.google.inject.ImplementedBy;
 /**
  * Creates outline nodes. Only called from within {@link org.eclipse.xtext.util.concurrent.IUnitOfWork}s where the
  * {@link IXtextDocument}�can be read safely.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 @ImplementedBy(DefaultOutlineTreeProvider.class)
 public interface IOutlineTreeProvider {
 
-	IOutlineNode createRoot(IXtextDocument document);
+    IOutlineNode createRoot(IXtextDocument document);
 
-	/**
-	 * For outline tree providers that support multimple modes, e.g. show elements from superclasses or not.
-	 * 
-	 * @author Jan Koehnlein - Initial contribution and API
-	 * @since 2.4
-	 */
-	interface ModeAware {
-		List<OutlineMode> getOutlineModes();
-		
-		OutlineMode getCurrentMode();
+    /**
+     * For outline tree providers that support multimple modes, e.g. show elements from superclasses or not.
+     *
+     * @author Jan Koehnlein - Initial contribution and API
+     * @since 2.4
+     */
+    interface ModeAware {
+        List<OutlineMode> getOutlineModes();
 
-		OutlineMode getNextMode();
+        OutlineMode getCurrentMode();
 
-		void setCurrentMode(OutlineMode outlineMode);
-	}
+        void setCurrentMode(OutlineMode outlineMode);
+
+        OutlineMode getNextMode();
+    }
 }

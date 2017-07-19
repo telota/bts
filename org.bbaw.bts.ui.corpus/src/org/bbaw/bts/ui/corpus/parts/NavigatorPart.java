@@ -6,10 +6,10 @@ import org.eclipse.jface.viewers.ViewerFilter;
 
 public class NavigatorPart {
 
-	private BTSObjectStateViewerFilter suppressDeletedFilter = new BTSObjectStateViewerFilter(BTSConstants.OBJECT_STATE_TERMINATED, true);
-	private BTSObjectStateViewerFilter suppressNondeletedFilter = new BTSObjectStateViewerFilter(BTSConstants.OBJECT_STATE_TERMINATED);
+    private BTSObjectStateViewerFilter suppressDeletedFilter = new BTSObjectStateViewerFilter(BTSConstants.OBJECT_STATE_TERMINATED, true);
+    private BTSObjectStateViewerFilter suppressNondeletedFilter = new BTSObjectStateViewerFilter(BTSConstants.OBJECT_STATE_TERMINATED);
 
-	protected ViewerFilter getDeletedFilter(boolean showdeleted) {
-		return showdeleted ? suppressNondeletedFilter : suppressDeletedFilter;
-	}
+    protected ViewerFilter getDeletedFilter(boolean showdeleted) {
+        return showdeleted ? suppressNondeletedFilter : suppressDeletedFilter;
+    }
 }

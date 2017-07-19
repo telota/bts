@@ -33,73 +33,60 @@ import com.google.inject.Inject;
  */
 public class XtextSpellingReconcileStrategy extends SpellingReconcileStrategy {
 
-	public static class Factory {
-		
-		@Inject
-		private ITokenTypeToPartitionTypeMapperExtension partitionMapperExtension;
-		
-		public XtextSpellingReconcileStrategy create(ISourceViewer sourceViewer) {
-			XtextSpellingReconcileStrategy result = new XtextSpellingReconcileStrategy(sourceViewer);
-			result.setPartitionMapperExtension(partitionMapperExtension);
-			return result;
-		}
-	}
-	
-	private ISpellingProblemCollector spellingProblemCollector;
-	private SpellingService spellingService = EditorsUI.getSpellingService();
-	private SpellingContext spellingContext = new SpellingContext();
-	private NullProgressMonitor progressMonitor = new NullProgressMonitor();
-	private ITokenTypeToPartitionTypeMapperExtension partitionMapperExtension;
+    private ISpellingProblemCollector spellingProblemCollector;
+    private SpellingService spellingService = EditorsUI.getSpellingService();
+    private SpellingContext spellingContext = new SpellingContext();
+    private NullProgressMonitor progressMonitor = new NullProgressMonitor();
+    private ITokenTypeToPartitionTypeMapperExtension partitionMapperExtension;
+    protected XtextSpellingReconcileStrategy(ISourceViewer viewer) {
+        super(viewer, EditorsUI.getSpellingService());
+        spellingContext.setContentType(getContentType());
+    }
 
-	protected XtextSpellingReconcileStrategy(ISourceViewer viewer) {
-		super(viewer, EditorsUI.getSpellingService());
-		spellingContext.setContentType(getContentType());
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	protected void setPartitionMapperExtension(ITokenTypeToPartitionTypeMapperExtension partitionMapperExtension) {
-		this.partitionMapperExtension = partitionMapperExtension;
-	}
+    /**
+     * @since 2.4
+     */
+    protected void setPartitionMapperExtension(ITokenTypeToPartitionTypeMapperExtension partitionMapperExtension) {
+        this.partitionMapperExtension = partitionMapperExtension;
+    }
 
-	@Override
-	public void setDocument(IDocument document) {
-		super.setDocument(document);
-		spellingProblemCollector = createSpellingProblemCollector();
-	}
+    @Override
+    public void setDocument(IDocument document) {
+        super.setDocument(document);
+        spellingProblemCollector = createSpellingProblemCollector();
+    }
 
-	@Override
-	public void reconcile(IRegion region) {
-		if (!isSpellingEnabled()) {
-			return;
-		}
-		ITypedRegion[] regions = computePartitioning(0, getDocument().getLength(), DEFAULT_PARTITIONING);
-		spellingService.check(getDocument(), regions, spellingContext, spellingProblemCollector, progressMonitor);
-	}
+    @Override
+    public void reconcile(IRegion region) {
+        if (!isSpellingEnabled()) {
+            return;
+        }
+        ITypedRegion[] regions = computePartitioning(0, getDocument().getLength(), DEFAULT_PARTITIONING);
+        spellingService.check(getDocument(), regions, spellingContext, spellingProblemCollector, progressMonitor);
+    }
 
-	protected ITypedRegion[] computePartitioning(int offset, int length, String partitionType) {
-		ITypedRegion[] result = new ITypedRegion[0];
-		ITypedRegion[] allRegions = new ITypedRegion[0];
-		try {
-			allRegions = TextUtilities.computePartitioning(getDocument(), partitionType, offset, length, false);
-		} catch (BadLocationException x) {
-		}
-		for (int i = 0; i < allRegions.length; i++) {
-			if (shouldProcess(allRegions[i])) {
-				result = concat(result, allRegions[i]);
-			}
+    protected ITypedRegion[] computePartitioning(int offset, int length, String partitionType) {
+        ITypedRegion[] result = new ITypedRegion[0];
+        ITypedRegion[] allRegions = new ITypedRegion[0];
+        try {
+            allRegions = TextUtilities.computePartitioning(getDocument(), partitionType, offset, length, false);
+        } catch (BadLocationException x) {
+        }
+        for (int i = 0; i < allRegions.length; i++) {
+            if (shouldProcess(allRegions[i])) {
+                result = concat(result, allRegions[i]);
+            }
 
-		}
-		return result;
-	}
+        }
+        return result;
+    }
 
-	protected boolean shouldProcess(ITypedRegion typedRegion) {
-		String type = typedRegion.getType();
-		if (partitionMapperExtension != null) {
-			if (partitionMapperExtension.isMultiLineComment(type) || partitionMapperExtension.isSingleLineComment(type)) {
-				return true;
-			}
+    protected boolean shouldProcess(ITypedRegion typedRegion) {
+        String type = typedRegion.getType();
+        if (partitionMapperExtension != null) {
+            if (partitionMapperExtension.isMultiLineComment(type) || partitionMapperExtension.isSingleLineComment(type)) {
+                return true;
+            }
             return STRING_LITERAL_PARTITION.equals(type);
         }
         return STRING_LITERAL_PARTITION.equals(type)
@@ -107,8 +94,20 @@ public class XtextSpellingReconcileStrategy extends SpellingReconcileStrategy {
                 || COMMENT_PARTITION.equals(type);
     }
 
-	protected boolean isSpellingEnabled() {
-		return spellingProblemCollector != null && EditorsUI.getPreferenceStore().getBoolean(SpellingService.PREFERENCE_SPELLING_ENABLED);
-	}
+    protected boolean isSpellingEnabled() {
+        return spellingProblemCollector != null && EditorsUI.getPreferenceStore().getBoolean(SpellingService.PREFERENCE_SPELLING_ENABLED);
+    }
+
+    public static class Factory {
+
+        @Inject
+        private ITokenTypeToPartitionTypeMapperExtension partitionMapperExtension;
+
+        public XtextSpellingReconcileStrategy create(ISourceViewer sourceViewer) {
+            XtextSpellingReconcileStrategy result = new XtextSpellingReconcileStrategy(sourceViewer);
+            result.setPartitionMapperExtension(partitionMapperExtension);
+            return result;
+        }
+    }
 
 }

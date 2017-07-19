@@ -16,32 +16,27 @@ import org.eclipse.swt.graphics.RGB;
 
 import com.opcoach.e4.preferences.ScopedPreferenceStore;
 
-public class DefaultValuesInitializer extends AbstractPreferenceInitializer
-{
+public class DefaultValuesInitializer extends AbstractPreferenceInitializer {
 
-	public DefaultValuesInitializer()
-	{
-		// TODO Auto-generated constructor stub
-	}
+    public DefaultValuesInitializer() {
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public void initializeDefaultPreferences()
-	{
-		IPreferenceStore store = new ScopedPreferenceStore(ConfigurationScope.INSTANCE, "org.bbaw.bts.app");	
-		
-		System.out.println("Enter in default Preference Initializer");
-		IEclipsePreferences defaultPrefs = DefaultScope.INSTANCE.getNode("org.bbaw.bts.app");
-		IEclipsePreferences prefs = DefaultScope.INSTANCE.getNode("org.bbaw.bts.app");
-	
-		store.setDefault(BTSPluginIDs.PREF_ACTIVE_CORPORA, defaultPrefs.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, null));
-		prefs.put(BTSPluginIDs.PREF_ACTIVE_CORPORA, defaultPrefs.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, null));
-	
-		store.setDefault(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, defaultPrefs.get(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, null));
-		prefs.put(BTSPluginIDs.PREF_ACTIVE_CORPORA, defaultPrefs.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, null));
+    @Override
+    public void initializeDefaultPreferences() {
+        IPreferenceStore store = new ScopedPreferenceStore(ConfigurationScope.INSTANCE, "org.bbaw.bts.app");
+
+        System.out.println("Enter in default Preference Initializer");
+        IEclipsePreferences defaultPrefs = DefaultScope.INSTANCE.getNode("org.bbaw.bts.app");
+        IEclipsePreferences prefs = DefaultScope.INSTANCE.getNode("org.bbaw.bts.app");
+
+        store.setDefault(BTSPluginIDs.PREF_ACTIVE_CORPORA, defaultPrefs.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, null));
+        prefs.put(BTSPluginIDs.PREF_ACTIVE_CORPORA, defaultPrefs.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, null));
+
+        store.setDefault(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, defaultPrefs.get(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, null));
+        prefs.put(BTSPluginIDs.PREF_ACTIVE_CORPORA, defaultPrefs.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, null));
 
 
-		
-		
-	}
+    }
 
 }

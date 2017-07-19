@@ -16,12 +16,12 @@ import org.eclipse.xtext.ui.editor.contentassist.ConfigurableCompletionProposal.
  */
 public abstract class ReplacementTextApplier implements IReplacementTextApplier {
 
-	public void apply(IDocument document, ConfigurableCompletionProposal proposal) throws BadLocationException {
-		String replacementString = getActualReplacementString(proposal);
-		proposal.setCursorPosition(replacementString.length());
-		document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(), replacementString);
-	}
+    public void apply(IDocument document, ConfigurableCompletionProposal proposal) throws BadLocationException {
+        String replacementString = getActualReplacementString(proposal);
+        proposal.setCursorPosition(replacementString.length());
+        document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(), replacementString);
+    }
 
-	public abstract String getActualReplacementString(ConfigurableCompletionProposal proposal);
+    public abstract String getActualReplacementString(ConfigurableCompletionProposal proposal);
 
 }

@@ -17,21 +17,21 @@ import org.eclipse.xtext.Constants;
  */
 public class XtextEditorPropertyTester extends PropertyTester {
 
-	public XtextEditorPropertyTester() {
-		super();
-	}
+    public XtextEditorPropertyTester() {
+        super();
+    }
 
-	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		if (receiver instanceof IAdaptable) {
-			IAdaptable adaptable = (IAdaptable) receiver;
-			XtextEditor xtextEditor = (XtextEditor) adaptable.getAdapter(XtextEditor.class);
-			if (xtextEditor != null) {
-				if (Constants.LANGUAGE_NAME.equals(property)) {
-					return xtextEditor.getLanguageName().equals(expectedValue);
-				}
-			}
-		}
-		return false;
-	}
+    public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
+        if (receiver instanceof IAdaptable) {
+            IAdaptable adaptable = (IAdaptable) receiver;
+            XtextEditor xtextEditor = (XtextEditor) adaptable.getAdapter(XtextEditor.class);
+            if (xtextEditor != null) {
+                if (Constants.LANGUAGE_NAME.equals(property)) {
+                    return xtextEditor.getLanguageName().equals(expectedValue);
+                }
+            }
+        }
+        return false;
+    }
 
 }

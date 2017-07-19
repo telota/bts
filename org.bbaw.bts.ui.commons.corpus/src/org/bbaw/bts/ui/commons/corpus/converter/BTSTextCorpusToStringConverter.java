@@ -6,21 +6,21 @@ import org.eclipse.core.databinding.conversion.IConverter;
 
 public class BTSTextCorpusToStringConverter implements IConverter {
 
-	@Override
-	public Object getToType() {
-		return String.class;
-	}
+    @Override
+    public Object getToType() {
+        return String.class;
+    }
 
-	@Override
-	public Object getFromType() {
-		return TreeNodeWrapper.class;
-	}
+    @Override
+    public Object getFromType() {
+        return TreeNodeWrapper.class;
+    }
 
-	@Override
-	public Object convert(Object fromObject) {
-		if (fromObject instanceof TreeNodeWrapper) {
-			return ((BTSCorpusObject) ((TreeNodeWrapper) fromObject).getObject()).getCorpusPrefix();
-		}
-		return null;
-	}
+    @Override
+    public Object convert(Object fromObject) {
+        if (fromObject instanceof TreeNodeWrapper) {
+            return ((BTSCorpusObject) ((TreeNodeWrapper) fromObject).getObject()).getCorpusPrefix();
+        }
+        return null;
+    }
 }

@@ -8,19 +8,19 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.embedded.IEditedResourceProvider;
 
 public class BTSTextXtextEditedResourceProvider implements
-		IEditedResourceProvider {
-	private static final String VIRTUAL_FILE_NAME = "file://E:/AAEW/test/runtime-EclipseXtext/tt/btstest.egydsl";
+        IEditedResourceProvider {
+    private static final String VIRTUAL_FILE_NAME = "file://E:/AAEW/test/runtime-EclipseXtext/tt/btstest.egydsl";
 
-	@Override
-	public XtextResource createResource() {
-		try {
-			ResourceSet resourceSet = new ResourceSetImpl();
-			Resource resource = resourceSet.createResource(URI
-					.createURI(VIRTUAL_FILE_NAME));
+    @Override
+    public XtextResource createResource() {
+        try {
+            ResourceSet resourceSet = new ResourceSetImpl();
+            Resource resource = resourceSet.createResource(URI
+                    .createURI(VIRTUAL_FILE_NAME));
 
-			return (XtextResource) resource;
-		} catch (Exception e) {
-			return null;
-		}
-	}
+            return (XtextResource) resource;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

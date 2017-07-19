@@ -10,5 +10,6 @@ package org.eclipse.xtext.ui.editor.contentassist.antlr.internal;
 /**
  * @since 2.1
  */
-@SuppressWarnings("serial") 
-public class InfiniteRecursion extends RuntimeException {}
+@SuppressWarnings("serial")
+public class InfiniteRecursion extends RuntimeException {
+}

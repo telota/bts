@@ -17,12 +17,12 @@ import com.google.inject.ImplementedBy;
 /**
  * Calculates elements whose name changes with the rename of a <code>baseElement</code>. Cross-references to these
  * elements will have to be updated, too.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 @ImplementedBy(DefaultDependentElementsCalculator.class)
 public interface IDependentElementsCalculator {
 
-	Iterable<URI> getDependentElementURIs(EObject baseElement, IProgressMonitor monitor);
+    Iterable<URI> getDependentElementURIs(EObject baseElement, IProgressMonitor monitor);
 
 }

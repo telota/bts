@@ -44,366 +44,358 @@ import org.eclipselabs.emfjson.EMFJs;
 import org.eclipselabs.emfjson.common.ModelUtil;
 
 /**
- * 
  * @author ghillairet
  */
 public class JSONLoad {
-	
-	private JsonNode rootNode;
-	private final Map<String, String> nsMap = new HashMap<String, String>();
-	private EClass rootClass;
-	private ResourceSet resourceSet;
 
-	public JSONLoad(InputStream inStream, Map<?,?> options, ResourceSet resourceSet) {
-		init(JSONUtil.getJsonParser(inStream), options, resourceSet);
-	}
+    private final Map<String, String> nsMap = new HashMap<String, String>();
+    private JsonNode rootNode;
+    private EClass rootClass;
+    private ResourceSet resourceSet;
 
-	public JSONLoad(URL url, Map<?,?> options, ResourceSet resourceSet) {
-		init(JSONUtil.getJsonParser(url), options, resourceSet);
-	}
+    public JSONLoad(InputStream inStream, Map<?, ?> options, ResourceSet resourceSet) {
+        init(JSONUtil.getJsonParser(inStream), options, resourceSet);
+    }
 
-	@SuppressWarnings("deprecation")
-	private void init(JsonParser parser, Map<?,?> options, ResourceSet resourceSet) {
-		this.resourceSet = resourceSet;
-		JsonNode root = JSONUtil.getRootNode(parser);
+    public JSONLoad(URL url, Map<?, ?> options, ResourceSet resourceSet) {
+        init(JSONUtil.getJsonParser(url), options, resourceSet);
+    }
 
-		checkNotNull(root, "root node should not be null.");
-		checkNotNull(options, "load options parameters should not be null");
-		// FIXME cplutte assume, string comes from couchdb view, then use the value of value
-		if (!root.isArray() && root.get("value") != null && root.get("key") != null)
-		{
-			// parse value...
-			root = root.get("value");
-		}
-		if (!root.isArray()) {
-			
-			
-			if (root.has(EJS_TYPE_KEYWORD)) {
-				this.rootClass = getEClass(URI.createURI(root.get(EJS_TYPE_KEYWORD).getValueAsText()));
-				
-				//FIXME rename eClass uri, added cplutte
-				if (this.rootClass == null)
-				{
-					String ur = root.get(EJS_TYPE_KEYWORD).asText();
-					ur = ur.replace("btsmodel", "btsCorpusModel");
-					this.rootClass = getEClass(URI.createURI(ur));
+    private static void checkNotNull(Object object) {
+        checkNotNull(object, null);
+    }
 
-				}
-			}
-		}
+    private static void checkNotNull(Object object, String message) throws IllegalArgumentException {
+        if (object == null) {
+            throw new IllegalArgumentException(message);
+        }
+    }
 
-		if (rootClass == null) {
-			this.rootClass = (EClass) options.get(EMFJs.OPTION_ROOT_ELEMENT);
-		}
+    private static JsonNode findNode(URI nodeURI, EClass eClass, JsonNode root) {
+        EAttribute eID = eClass.getEIDAttribute();
+        if (eID == null) {
+            final EStructuralFeature featureName = eClass.getEStructuralFeature("name");
+            if (featureName != null && featureName instanceof EAttribute) {
+                eID = (EAttribute) featureName;
+            } else {
+                return null;
+            }
+        }
 
-		final String path = ModelUtil.getRootNode(this.rootClass);
+        String fragment = nodeURI.fragment().startsWith("//") ? nodeURI.fragment().substring(2) : nodeURI.fragment();
 
-		if (path == null) {
-			this.rootNode = root;
-		} else {
-			this.rootNode = root.findPath(path);
-		}
+        for (JsonNode node : root.findParents(eID.getName())) {
+            String value = node.get(eID.getName()).getTextValue();
+            if (value.equals(fragment)) {
+                return node;
+            }
+        }
+        return null;
+    }
 
-		checkNotNull(rootNode);
-		fillNamespaces(root);
-	}
-	
-	private EClass getEClass(URI uri) {
-		if (resourceSet == null) {
-			return (EClass) new ResourceSetImpl().getEObject(uri, false);	
-		}
-		return (EClass) resourceSet.getEObject(uri, false);
-	}
+    @SuppressWarnings("deprecation")
+    private void init(JsonParser parser, Map<?, ?> options, ResourceSet resourceSet) {
+        this.resourceSet = resourceSet;
+        JsonNode root = JSONUtil.getRootNode(parser);
 
-	@SuppressWarnings("deprecation")
-	private EClass getEClass(JsonNode node, boolean isRoot) throws IllegalArgumentException {
-		if (isRoot && rootClass != null) {
-			return rootClass;
-		} else {
-			if (node.has(EJS_TYPE_KEYWORD)) {
-				return getEClass(URI.createURI(node.get(EJS_TYPE_KEYWORD).getValueAsText()));
-			} else {
-				throw new IllegalArgumentException("Cannot find EClass for node "+node);
-			}
-		}
-	}
+        checkNotNull(root, "root node should not be null.");
+        checkNotNull(options, "load options parameters should not be null");
+        // FIXME cplutte assume, string comes from couchdb view, then use the value of value
+        if (!root.isArray() && root.get("value") != null && root.get("key") != null) {
+            // parse value...
+            root = root.get("value");
+        }
+        if (!root.isArray()) {
 
-	@SuppressWarnings("deprecation")
-	private void fillNamespaces(JsonNode node) {
-		if (node.has(EJS_NS_KEYWORD)) {
-			ObjectNode nsNode = (ObjectNode) node.findPath(EJS_NS_KEYWORD);
 
-			for(Iterator<Entry<String, JsonNode>> it = nsNode.getFields(); it.hasNext();) {
-				Entry<String, JsonNode> entry = it.next();
-				nsMap.put(entry.getKey(), entry.getValue().getValueAsText());
-			}
-		}
-	}
+            if (root.has(EJS_TYPE_KEYWORD)) {
+                this.rootClass = getEClass(URI.createURI(root.get(EJS_TYPE_KEYWORD).getValueAsText()));
 
-	private static void checkNotNull(Object object) {
-		checkNotNull(object, null);
-	}
+                //FIXME rename eClass uri, added cplutte
+                if (this.rootClass == null) {
+                    String ur = root.get(EJS_TYPE_KEYWORD).asText();
+                    ur = ur.replace("btsmodel", "btsCorpusModel");
+                    this.rootClass = getEClass(URI.createURI(ur));
 
-	private static void checkNotNull(Object object, String message) throws IllegalArgumentException {
-		if (object == null) {
-			throw new IllegalArgumentException(message);
-		}
-	}
+                }
+            }
+        }
 
-	public Collection<EObject> fillResource(Resource resource) { 
-		this.resourceSet = resource.getResourceSet() != null ? resource.getResourceSet() : new ResourceSetImpl();
-		final Collection<EObject> result = resource.getContents();
+        if (rootClass == null) {
+            this.rootClass = (EClass) options.get(EMFJs.OPTION_ROOT_ELEMENT);
+        }
 
-		if (this.rootNode.isArray()) {
+        final String path = ModelUtil.getRootNode(this.rootClass);
 
-			for (Iterator<JsonNode> it = this.rootNode.getElements(); it.hasNext();) {
-				JsonNode node = it.next();
-				EClass eClass = null;
-				try {
-					eClass = getEClass(node, true);
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				}
+        if (path == null) {
+            this.rootNode = root;
+        } else {
+            this.rootNode = root.findPath(path);
+        }
 
-				if (eClass != null) {
-					final EObject rootObject = EcoreUtil.create(eClass);
-					resource.getContents().add(rootObject);
+        checkNotNull(rootNode);
+        fillNamespaces(root);
+    }
 
-					fillEAttribute(rootObject, eClass, node);
-					fillEReference(rootObject, eClass, node, resource);
+    private EClass getEClass(URI uri) {
+        if (resourceSet == null) {
+            return (EClass) new ResourceSetImpl().getEObject(uri, false);
+        }
+        return (EClass) resourceSet.getEObject(uri, false);
+    }
 
-					result.add(rootObject);
-				}
-			}
+    @SuppressWarnings("deprecation")
+    private EClass getEClass(JsonNode node, boolean isRoot) throws IllegalArgumentException {
+        if (isRoot && rootClass != null) {
+            return rootClass;
+        } else {
+            if (node.has(EJS_TYPE_KEYWORD)) {
+                return getEClass(URI.createURI(node.get(EJS_TYPE_KEYWORD).getValueAsText()));
+            } else {
+                throw new IllegalArgumentException("Cannot find EClass for node " + node);
+            }
+        }
+    }
 
-		} else {
-			if (rootClass != null) {
-				final EObject rootObject = EcoreUtil.create(rootClass);
-				result.add(rootObject);
+    @SuppressWarnings("deprecation")
+    private void fillNamespaces(JsonNode node) {
+        if (node.has(EJS_NS_KEYWORD)) {
+            ObjectNode nsNode = (ObjectNode) node.findPath(EJS_NS_KEYWORD);
 
-				fillEAttribute(rootObject, rootClass, this.rootNode);
-				fillEReference(rootObject, rootClass, this.rootNode, resource);
-			}
-		}
+            for (Iterator<Entry<String, JsonNode>> it = nsNode.getFields(); it.hasNext(); ) {
+                Entry<String, JsonNode> entry = it.next();
+                nsMap.put(entry.getKey(), entry.getValue().getValueAsText());
+            }
+        }
+    }
 
-		return result;
-	}
+    public Collection<EObject> fillResource(Resource resource) {
+        this.resourceSet = resource.getResourceSet() != null ? resource.getResourceSet() : new ResourceSetImpl();
+        final Collection<EObject> result = resource.getContents();
 
-	private void fillEReference(EObject rootObject, EClass rootClass, JsonNode root, Resource resource) {
-		for (EReference reference: rootClass.getEAllReferences()) {
-			final JsonNode node = root.get(getElementName(reference));
+        if (this.rootNode.isArray()) {
 
-			if (node != null) {
+            for (Iterator<JsonNode> it = this.rootNode.getElements(); it.hasNext(); ) {
+                JsonNode node = it.next();
+                EClass eClass = null;
+                try {
+                    eClass = getEClass(node, true);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
 
-				if (reference.isMany()) {
-					@SuppressWarnings("unchecked")
-					EList<EObject> values = (EList<EObject>) rootObject.eGet(reference);
+                if (eClass != null) {
+                    final EObject rootObject = EcoreUtil.create(eClass);
+                    resource.getContents().add(rootObject);
 
-					if (node.isArray()) {
-						for (Iterator<JsonNode> it = node.getElements(); it.hasNext();) {
-							JsonNode current = it.next();
-							EClass eClass = findEClass(reference.getEReferenceType(), current, root, resource);
-							EObject obj = createEObject(resource, eClass, current);
+                    fillEAttribute(rootObject, eClass, node);
+                    fillEReference(rootObject, eClass, node, resource);
 
-							if (obj != null) values.add(obj);
-						}
-					} else {
-						EClass eClass = findEClass(reference.getEReferenceType(), node, root, resource);
-						EObject obj = createEObject(resource, eClass, node);
-						if (obj != null) values.add(obj);
-					}
-				} else {
+                    result.add(rootObject);
+                }
+            }
 
-					EClass eClass = findEClass(reference.getEReferenceType(), node, root, resource);
-					EObject obj = createEObject(resource, eClass, node);
+        } else {
+            if (rootClass != null) {
+                final EObject rootObject = EcoreUtil.create(rootClass);
+                result.add(rootObject);
 
-					if (obj != null) rootObject.eSet(reference, obj);
-				}
-			}
-		}
-	}
+                fillEAttribute(rootObject, rootClass, this.rootNode);
+                fillEReference(rootObject, rootClass, this.rootNode, resource);
+            }
+        }
 
-	private EObject createEObject(Resource resource, EClass eClass, JsonNode node) {
-		if (node.isObject()) {
+        return result;
+    }
 
-			if (node.get(EJS_REF_KEYWORD) != null) {
+    private void fillEReference(EObject rootObject, EClass rootClass, JsonNode root, Resource resource) {
+        for (EReference reference : rootClass.getEAllReferences()) {
+            final JsonNode node = root.get(getElementName(reference));
 
-				final URI objectURI = getEObjectURI(node.get(EJS_REF_KEYWORD), resource);
-				EObject object = resourceSet.getEObject(objectURI, false);
+            if (node != null) {
 
-				if (object == null) {
-					object = EcoreUtil.create(eClass);
-					((InternalEObject)object).eSetProxyURI(objectURI);
-				}
+                if (reference.isMany()) {
+                    @SuppressWarnings("unchecked")
+                    EList<EObject> values = (EList<EObject>) rootObject.eGet(reference);
 
-				return object;
-			} else {
+                    if (node.isArray()) {
+                        for (Iterator<JsonNode> it = node.getElements(); it.hasNext(); ) {
+                            JsonNode current = it.next();
+                            EClass eClass = findEClass(reference.getEReferenceType(), current, root, resource);
+                            EObject obj = createEObject(resource, eClass, current);
 
-				final EObject obj = EcoreUtil.create(eClass);
+                            if (obj != null) values.add(obj);
+                        }
+                    } else {
+                        EClass eClass = findEClass(reference.getEReferenceType(), node, root, resource);
+                        EObject obj = createEObject(resource, eClass, node);
+                        if (obj != null) values.add(obj);
+                    }
+                } else {
 
-				fillEAttribute(obj, eClass, node);
-				fillEReference(obj, eClass, node, resource);
+                    EClass eClass = findEClass(reference.getEReferenceType(), node, root, resource);
+                    EObject obj = createEObject(resource, eClass, node);
 
-				return obj;
-			}
-		}
-		return null;
-	}
+                    if (obj != null) rootObject.eSet(reference, obj);
+                }
+            }
+        }
+    }
 
-	private URI getEObjectURI(JsonNode jsonNode, Resource resource) {
-		final String value = jsonNode.getTextValue();
-		if (value.startsWith("#//")) { // is fragment
-			return URI.createURI(resource.getURI()+value);
-		} else if (value.contains("#//") && nsMap.keySet().contains(value.split("#//")[0])) {
-			String[] split = value.split("#//");
-			String nsURI = nsMap.get(split[0]);
-			return URI.createURI(nsURI+"#//"+split[1]);
-		} else if (value.contains(":")) {
-			return URI.createURI(value);
-		} else { // is ID
-			return resource.getURI().appendFragment(value);
-		}
-	}
+    private EObject createEObject(Resource resource, EClass eClass, JsonNode node) {
+        if (node.isObject()) {
 
-	private void fillEAttribute(EObject obj, EClass eClass, JsonNode root) {
-		for (EAttribute attribute: eClass.getEAllAttributes()) {
-			JsonNode node = root.get(getElementName(attribute));
-			if (node != null) {
-				if (node.isArray()) {
-					for (Iterator<JsonNode> it = node.getElements(); it.hasNext();) {
-						setEAttributeValue(obj, attribute, it.next());
-					}
-				} else {
-					setEAttributeValue(obj, attribute, node);
-				}
-			}
-		}
-	}
+            if (node.get(EJS_REF_KEYWORD) != null) {
 
-	protected void setEAttributeValue(EObject obj, EAttribute attribute, JsonNode value) {
-		@SuppressWarnings("deprecation")
-		final String stringValue = value.getValueAsText();
-		if (stringValue != null && !stringValue.trim().isEmpty()) {
-			Object newValue;
-			if (attribute.getEAttributeType().getInstanceClass().isEnum()) {
-				newValue = EcoreUtil.createFromString(attribute.getEAttributeType(), stringValue.toUpperCase());
-			} else {
-				newValue = EcoreUtil.createFromString(attribute.getEAttributeType(), stringValue);
-			}
-			if (!attribute.isMany()) {
-				obj.eSet(attribute, newValue);
-			} else {
-				@SuppressWarnings("unchecked")
-				Collection<Object> values = (Collection<Object>) obj.eGet(attribute);
-				values.add(newValue);
-			}
-		}
-	}
+                final URI objectURI = getEObjectURI(node.get(EJS_REF_KEYWORD), resource);
+                EObject object = resourceSet.getEObject(objectURI, false);
 
-	private static JsonNode findNode(URI nodeURI, EClass eClass, JsonNode root) {
-		EAttribute eID = eClass.getEIDAttribute();
-		if (eID == null) {
-			final EStructuralFeature featureName = eClass.getEStructuralFeature("name");
-			if (featureName != null && featureName instanceof EAttribute) {
-				eID = (EAttribute) featureName;
-			} else {
-				return null;
-			}
-		}
+                if (object == null) {
+                    object = EcoreUtil.create(eClass);
+                    ((InternalEObject) object).eSetProxyURI(objectURI);
+                }
 
-		String fragment = nodeURI.fragment().startsWith("//") ? nodeURI.fragment().substring(2) : nodeURI.fragment();
+                return object;
+            } else {
 
-		for (JsonNode node: root.findParents(eID.getName())) {
-			String value = node.get(eID.getName()).getTextValue();
-			if (value.equals(fragment)){
-				return node;
-			}
-		}
-		return null;
-	}
+                final EObject obj = EcoreUtil.create(eClass);
 
-	private EClass findEClass(EClass eReferenceType, JsonNode node, JsonNode root, Resource resource) {
-		if (eReferenceType.isAbstract() || node.get(EJS_TYPE_KEYWORD) != null) {
+                fillEAttribute(obj, eClass, node);
+                fillEReference(obj, eClass, node, resource);
 
-			if (node.has(EJS_REF_KEYWORD)) {
+                return obj;
+            }
+        }
+        return null;
+    }
 
-				URI refURI = getEObjectURI(node.get(EJS_REF_KEYWORD), resource);
-				if (resourceSet.getEObject(refURI, false) != null) {
-					return resourceSet.getEObject(refURI, false).eClass();
-				}
+    private URI getEObjectURI(JsonNode jsonNode, Resource resource) {
+        final String value = jsonNode.getTextValue();
+        if (value.startsWith("#//")) { // is fragment
+            return URI.createURI(resource.getURI() + value);
+        } else if (value.contains("#//") && nsMap.keySet().contains(value.split("#//")[0])) {
+            String[] split = value.split("#//");
+            String nsURI = nsMap.get(split[0]);
+            return URI.createURI(nsURI + "#//" + split[1]);
+        } else if (value.contains(":")) {
+            return URI.createURI(value);
+        } else { // is ID
+            return resource.getURI().appendFragment(value);
+        }
+    }
 
-				JsonNode refNode = findNode(refURI, eReferenceType, rootNode);
-				if (refNode != null) {
-					return findEClass(eReferenceType, refNode, root, resource);
-				}
-			} 
-			else if (node.has(EJS_TYPE_KEYWORD)) {
-				final URI typeURI = getEObjectURI(node.get(EJS_TYPE_KEYWORD), eReferenceType.eResource());
-				if (typeURI.fragment().equals(eReferenceType.getName())) {
-					return eReferenceType;
-				}
-				else {
-					final EObject o = this.resourceSet.getEObject(typeURI, false);
-					EClass found = o != null && o instanceof EClass ? (EClass)o : null;
-					//FIXME rename eClass uri, added cplutte
-					if (found == null)
-					{
-						String ur = node.get(EJS_TYPE_KEYWORD).asText();
-						ur = ur.replace("btsmodel", "btsCorpusModel");
-						found = getEClass(URI.createURI(ur));
+    private void fillEAttribute(EObject obj, EClass eClass, JsonNode root) {
+        for (EAttribute attribute : eClass.getEAllAttributes()) {
+            JsonNode node = root.get(getElementName(attribute));
+            if (node != null) {
+                if (node.isArray()) {
+                    for (Iterator<JsonNode> it = node.getElements(); it.hasNext(); ) {
+                        setEAttributeValue(obj, attribute, it.next());
+                    }
+                } else {
+                    setEAttributeValue(obj, attribute, node);
+                }
+            }
+        }
+    }
 
-					}
-					if (found != null) {
-						return found;
-					} else {
-						throw new IllegalArgumentException("Cannot find EClass from type "+typeURI);
-					}
-				}
-			}
-		}
-		return eReferenceType;
-	}
-	
-	// cplutte added
-	public Collection<EObject> loadObjects(ResourceSet resourceSet) {
-		if (this.resourceSet == null)
-		{
-			this.resourceSet = resourceSet;
-		}
-		final Collection<EObject> result = new Vector<EObject>();
+    protected void setEAttributeValue(EObject obj, EAttribute attribute, JsonNode value) {
+        @SuppressWarnings("deprecation") final String stringValue = value.getValueAsText();
+        if (stringValue != null && !stringValue.trim().isEmpty()) {
+            Object newValue;
+            if (attribute.getEAttributeType().getInstanceClass().isEnum()) {
+                newValue = EcoreUtil.createFromString(attribute.getEAttributeType(), stringValue.toUpperCase());
+            } else {
+                newValue = EcoreUtil.createFromString(attribute.getEAttributeType(), stringValue);
+            }
+            if (!attribute.isMany()) {
+                obj.eSet(attribute, newValue);
+            } else {
+                @SuppressWarnings("unchecked")
+                Collection<Object> values = (Collection<Object>) obj.eGet(attribute);
+                values.add(newValue);
+            }
+        }
+    }
 
-		if (this.rootNode.isArray()) {
+    private EClass findEClass(EClass eReferenceType, JsonNode node, JsonNode root, Resource resource) {
+        if (eReferenceType.isAbstract() || node.get(EJS_TYPE_KEYWORD) != null) {
 
-			for (Iterator<JsonNode> it = this.rootNode.getElements(); it.hasNext();) {
-				JsonNode node = it.next();
-				EClass eClass = null;
-				try {
-					eClass = getEClass(node, true);
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				}
+            if (node.has(EJS_REF_KEYWORD)) {
 
-				if (eClass != null) {
-					final EObject rootObject = EcoreUtil.create(eClass);
-					result.add(rootObject);
+                URI refURI = getEObjectURI(node.get(EJS_REF_KEYWORD), resource);
+                if (resourceSet.getEObject(refURI, false) != null) {
+                    return resourceSet.getEObject(refURI, false).eClass();
+                }
 
-					fillEAttribute(rootObject, eClass, node);
-					fillEReference(rootObject, eClass, node, null);
+                JsonNode refNode = findNode(refURI, eReferenceType, rootNode);
+                if (refNode != null) {
+                    return findEClass(eReferenceType, refNode, root, resource);
+                }
+            } else if (node.has(EJS_TYPE_KEYWORD)) {
+                final URI typeURI = getEObjectURI(node.get(EJS_TYPE_KEYWORD), eReferenceType.eResource());
+                if (typeURI.fragment().equals(eReferenceType.getName())) {
+                    return eReferenceType;
+                } else {
+                    final EObject o = this.resourceSet.getEObject(typeURI, false);
+                    EClass found = o != null && o instanceof EClass ? (EClass) o : null;
+                    //FIXME rename eClass uri, added cplutte
+                    if (found == null) {
+                        String ur = node.get(EJS_TYPE_KEYWORD).asText();
+                        ur = ur.replace("btsmodel", "btsCorpusModel");
+                        found = getEClass(URI.createURI(ur));
 
-					result.add(rootObject);
-				}
-			}
+                    }
+                    if (found != null) {
+                        return found;
+                    } else {
+                        throw new IllegalArgumentException("Cannot find EClass from type " + typeURI);
+                    }
+                }
+            }
+        }
+        return eReferenceType;
+    }
 
-		} else {
-			if (rootClass != null) {
-				final EObject rootObject = EcoreUtil.create(rootClass);
-				result.add(rootObject);
+    // cplutte added
+    public Collection<EObject> loadObjects(ResourceSet resourceSet) {
+        if (this.resourceSet == null) {
+            this.resourceSet = resourceSet;
+        }
+        final Collection<EObject> result = new Vector<EObject>();
 
-				fillEAttribute(rootObject, rootClass, this.rootNode);
-				fillEReference(rootObject, rootClass, this.rootNode, null);
-			}
-		}
+        if (this.rootNode.isArray()) {
 
-		return result;
-	}
+            for (Iterator<JsonNode> it = this.rootNode.getElements(); it.hasNext(); ) {
+                JsonNode node = it.next();
+                EClass eClass = null;
+                try {
+                    eClass = getEClass(node, true);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
+
+                if (eClass != null) {
+                    final EObject rootObject = EcoreUtil.create(eClass);
+                    result.add(rootObject);
+
+                    fillEAttribute(rootObject, eClass, node);
+                    fillEReference(rootObject, eClass, node, null);
+
+                    result.add(rootObject);
+                }
+            }
+
+        } else {
+            if (rootClass != null) {
+                final EObject rootObject = EcoreUtil.create(rootClass);
+                result.add(rootObject);
+
+                fillEAttribute(rootObject, rootClass, this.rootNode);
+                fillEReference(rootObject, rootClass, this.rootNode, null);
+            }
+        }
+
+        return result;
+    }
 }

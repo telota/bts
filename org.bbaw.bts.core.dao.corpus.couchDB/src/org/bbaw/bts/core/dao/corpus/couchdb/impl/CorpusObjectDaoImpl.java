@@ -21,18 +21,17 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
 
 public class CorpusObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSCorpusObject, String>
-		implements CorpusObjectDao {
+        implements CorpusObjectDao {
 
-	@Override
-	public List<BTSCorpusObject> getRootBTSCorpusObjects(String path) {
-		List<String> allDocs = loadDocsFromView(BTSConstants.VIEW_ALL_DOCS, path, path);
-		List<BTSCorpusObject> results = loadObjectsFromStrings(allDocs, path);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(BTSConstants.VIEW_ALL_DOCS, path);
-		}
-		return results;
-		
+    @Override
+    public List<BTSCorpusObject> getRootBTSCorpusObjects(String path) {
+        List<String> allDocs = loadDocsFromView(BTSConstants.VIEW_ALL_DOCS, path, path);
+        List<BTSCorpusObject> results = loadObjectsFromStrings(allDocs, path);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(BTSConstants.VIEW_ALL_DOCS, path);
+        }
+        return results;
+
 //		List<JsonObject> allDocs = connectionProvider
 //				.getDBClient(CouchDbClient.class, path)
 //				.view(DaoConstants.VIEW_ALL_DOCS).includeDocs(true)
@@ -65,25 +64,24 @@ public class CorpusObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSCorpusOb
 //					path);
 //		}
 //		return results;
-	}
+    }
 
-	@Override
-	public List<BTSCorpusObject> list(String path, String objectState) {
-		String viewId = DaoConstants.VIEW_ALL_CORPUS_OBJECTS;
-		if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
-			viewId = DaoConstants.VIEW_ALL_ACTIVE_CORPUS_OBJECTS;
-		} else if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_TERMINATED)) {
-			viewId = DaoConstants.VIEW_ALL_TERMINATED_CORPUS_OBJECTS;
-		}
-		List<String> allDocs = loadDocsFromView(viewId, path, "project_corpus");
-		List<BTSCorpusObject> results = loadObjectsFromStrings(allDocs, path);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(viewId, path);
-		}
-		return results;
+    @Override
+    public List<BTSCorpusObject> list(String path, String objectState) {
+        String viewId = DaoConstants.VIEW_ALL_CORPUS_OBJECTS;
+        if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
+            viewId = DaoConstants.VIEW_ALL_ACTIVE_CORPUS_OBJECTS;
+        } else if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_TERMINATED)) {
+            viewId = DaoConstants.VIEW_ALL_TERMINATED_CORPUS_OBJECTS;
+        }
+        List<String> allDocs = loadDocsFromView(viewId, path, "project_corpus");
+        List<BTSCorpusObject> results = loadObjectsFromStrings(allDocs, path);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(viewId, path);
+        }
+        return results;
 //		List<String> allDocs = new ArrayList<String>(0);
 //		View view;
 //		try {
@@ -122,25 +120,24 @@ public class CorpusObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSCorpusOb
 //		}
 //		return results;
 
-	}
+    }
 
-	@Override
-	public List<BTSCorpusObject> findByQueryId(String searchId, String path,
-			String objectState) {
-		if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
-			searchId = getActiveSearchId(searchId);
-		} else if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_TERMINATED)) {
-			searchId = getTerminatedSearchId(searchId);
-		}
-		List<String> allDocs = loadDocsFromView(searchId, path, DaoConstants.PROJECT_CORPUS);
-		List<BTSCorpusObject> results = loadObjectsFromStrings(allDocs, path);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(searchId, path);
-		}
-		return results;
+    @Override
+    public List<BTSCorpusObject> findByQueryId(String searchId, String path,
+                                               String objectState) {
+        if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
+            searchId = getActiveSearchId(searchId);
+        } else if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_TERMINATED)) {
+            searchId = getTerminatedSearchId(searchId);
+        }
+        List<String> allDocs = loadDocsFromView(searchId, path, DaoConstants.PROJECT_CORPUS);
+        List<BTSCorpusObject> results = loadObjectsFromStrings(allDocs, path);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(searchId, path);
+        }
+        return results;
 //		List<String> allDocs = new ArrayList<String>(0);
 //		View view;
 //		CouchDbClient dbClient = connectionProvider.getDBClient(
@@ -177,102 +174,96 @@ public class CorpusObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSCorpusOb
 //			registerQueryIdWithInternalRegistry(searchId, path);
 //		}
 //		return results;
-	}
+    }
 
-	@Override
-	public List<BTSPassportEntry> getPassportEntryProposals(
-			BTSQueryRequest query, String indexName, String indexType) {
-		if (query.getSearchRequestBuilder() == null) {
-			SearchResponse response = connectionProvider
-					.getSearchClient(Client.class)
-					.prepareSearch(indexName)
-					.setTypes(indexType)
-					.setSearchType(SearchType.QUERY_AND_FETCH)
-					.setQuery(query.getQueryBuilder())
-					// Query
-					// .setFilter(FilterBuilders.rangeFilter("age").from(12).to(18))
-					// // Filter
-					.setFrom(0).setSize(60).setExplain(true).execute()
-					.actionGet();
-			List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
-			for (SearchHit hit : response.getHits()) {
-				result.addAll(transformHitToPassportEntry(hit, query));
-			}
+    @Override
+    public List<BTSPassportEntry> getPassportEntryProposals(
+            BTSQueryRequest query, String indexName, String indexType) {
+        if (query.getSearchRequestBuilder() == null) {
+            SearchResponse response = connectionProvider
+                    .getSearchClient(Client.class)
+                    .prepareSearch(indexName)
+                    .setTypes(indexType)
+                    .setSearchType(SearchType.QUERY_AND_FETCH)
+                    .setQuery(query.getQueryBuilder())
+                    // Query
+                    // .setFilter(FilterBuilders.rangeFilter("age").from(12).to(18))
+                    // // Filter
+                    .setFrom(0).setSize(60).setExplain(true).execute()
+                    .actionGet();
+            List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
+            for (SearchHit hit : response.getHits()) {
+                result.addAll(transformHitToPassportEntry(hit, query));
+            }
 
-			return result;
-		} else {
-			SearchResponse response = query.getSearchRequestBuilder()
-					.setIndices(indexName).setTypes(indexType)
-					.setSearchType(SearchType.QUERY_AND_FETCH).execute()
-					.actionGet();
-			List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
-			for (SearchHit hit : response.getHits()) {
-				result.addAll(transformHitToPassportEntry(hit, query));
-			}
+            return result;
+        } else {
+            SearchResponse response = query.getSearchRequestBuilder()
+                    .setIndices(indexName).setTypes(indexType)
+                    .setSearchType(SearchType.QUERY_AND_FETCH).execute()
+                    .actionGet();
+            List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
+            for (SearchHit hit : response.getHits()) {
+                result.addAll(transformHitToPassportEntry(hit, query));
+            }
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 
-	private List<BTSPassportEntry> transformHitToPassportEntry(SearchHit hit,
-			BTSQueryRequest query) {
-		List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
-		Map source = hit.getSource();
-		Map pp = (Map) source.get("passport");
-		
-		result.addAll(transfromFromPPEntryMap(pp, query));
-		return result;
+    private List<BTSPassportEntry> transformHitToPassportEntry(SearchHit hit,
+                                                               BTSQueryRequest query) {
+        List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
+        Map source = hit.getSource();
+        Map pp = (Map) source.get("passport");
 
-	}
+        result.addAll(transfromFromPPEntryMap(pp, query));
+        return result;
 
-	private Collection<? extends BTSPassportEntry> transfromFromPPEntryMap(
-			Map map, BTSQueryRequest query) {
-		List<BTSPassportEntry> result = new Vector<BTSPassportEntry>(1);
+    }
 
-		if (map.containsKey(DaoConstants.ID_STRING))
-		{
-			BTSPassportEntryItem item = BtsCorpusModelFactory.eINSTANCE.createBTSPassportEntryItem();
-			item.set_id((String) map.get(DaoConstants.ID_STRING));
-			item.setValue((String) map.get("value"));
-			item.setType((String) map.get("type"));
-			if (item.getValue() != null && item.getValue().startsWith(query.getAutocompletePrefix()))
-			{
-				result.add(item);
-			}
-		}
-		if (!map.containsKey("children"))
-		{
-			return result;
-		}
+    private Collection<? extends BTSPassportEntry> transfromFromPPEntryMap(
+            Map map, BTSQueryRequest query) {
+        List<BTSPassportEntry> result = new Vector<BTSPassportEntry>(1);
 
-		List children = (List) map.get("children");
-		for (Object o : children)
-		{
-			if (o instanceof Map)
-			{
-				result.addAll(transfromFromPPEntryMap((Map) o, query));
-			}
-		}
-		
-		return result;
-	}
+        if (map.containsKey(DaoConstants.ID_STRING)) {
+            BTSPassportEntryItem item = BtsCorpusModelFactory.eINSTANCE.createBTSPassportEntryItem();
+            item.set_id((String) map.get(DaoConstants.ID_STRING));
+            item.setValue((String) map.get("value"));
+            item.setType((String) map.get("type"));
+            if (item.getValue() != null && item.getValue().startsWith(query.getAutocompletePrefix())) {
+                result.add(item);
+            }
+        }
+        if (!map.containsKey("children")) {
+            return result;
+        }
 
-	@Override
-	public List<BTSCorpusObject> list(String dbPath, String staticQueryId,
-			String objectState) {
-		List<String> allDocs = loadDocsFromView(staticQueryId, dbPath, "corpus");
-		List<BTSCorpusObject> results = loadObjectsFromStrings(allDocs, dbPath);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(staticQueryId, dbPath);
-		}
-		return results;
-	}
+        List children = (List) map.get("children");
+        for (Object o : children) {
+            if (o instanceof Map) {
+                result.addAll(transfromFromPPEntryMap((Map) o, query));
+            }
+        }
 
-	@Override
-	protected BTSCorpusObject createObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return result;
+    }
+
+    @Override
+    public List<BTSCorpusObject> list(String dbPath, String staticQueryId,
+                                      String objectState) {
+        List<String> allDocs = loadDocsFromView(staticQueryId, dbPath, "corpus");
+        List<BTSCorpusObject> results = loadObjectsFromStrings(allDocs, dbPath);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(staticQueryId, dbPath);
+        }
+        return results;
+    }
+
+    @Override
+    protected BTSCorpusObject createObject() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

@@ -12,80 +12,62 @@ import org.bbaw.bts.core.controller.generalController.BTSConfigurationController
 
 public class BTSObjectTypeSubtypeViewerFilter extends AbstractObjectByListEntryFilter {
 
-	private HashSet<String> stringFilterSet;
-	private BTSConfigurationController configurationController;
+    private HashSet<String> stringFilterSet;
+    private BTSConfigurationController configurationController;
 
-	@Override
-	public boolean select(Object object) {
-		if (object instanceof TreeNodeWrapper)
-		{
-			if (((TreeNodeWrapper) object).getObject() != null)
-			{
-				object = ((TreeNodeWrapper) object).getObject();
-			}
-			else
-			{
-				return true;
-			}
-		}
-		if (object instanceof BTSObject)
-		{
-			if (getStringFilterSet().isEmpty())
-			{
-				return true;
-			}
-			else
-			{
-				String className = findClassName((BTSObject) object).toLowerCase();
-				if (getStringFilterSet().contains(className))
-				{
-					return true;
-				}
-				else if (((BTSObject) object).getType() != null)
-				{
-					String type = ((BTSObject) object).getType().toLowerCase();
-					if (getStringFilterSet().contains(className + BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR +type))
-					{
-						return true;
-					}
-					if (((BTSObject) object).getSubtype() != null)
-					{
-						String subtype = ((BTSObject) object).getSubtype().toLowerCase();
-						if (getStringFilterSet().contains(className + BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR 
-								+type + BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR + subtype))
-						{
-							return true;
-						}
-					}
-				}
-			}
-			return false;
-		}
-		return false;
-	}
+    @Override
+    public boolean select(Object object) {
+        if (object instanceof TreeNodeWrapper) {
+            if (((TreeNodeWrapper) object).getObject() != null) {
+                object = ((TreeNodeWrapper) object).getObject();
+            } else {
+                return true;
+            }
+        }
+        if (object instanceof BTSObject) {
+            if (getStringFilterSet().isEmpty()) {
+                return true;
+            } else {
+                String className = findClassName((BTSObject) object).toLowerCase();
+                if (getStringFilterSet().contains(className)) {
+                    return true;
+                } else if (((BTSObject) object).getType() != null) {
+                    String type = ((BTSObject) object).getType().toLowerCase();
+                    if (getStringFilterSet().contains(className + BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR + type)) {
+                        return true;
+                    }
+                    if (((BTSObject) object).getSubtype() != null) {
+                        String subtype = ((BTSObject) object).getSubtype().toLowerCase();
+                        if (getStringFilterSet().contains(className + BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR
+                                + type + BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR + subtype)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
+    }
 
-	private String findClassName(BTSObject object) {
-		if (configurationController == null)
-		{
-			configurationController = StaticAccessController.getContext().get(BTSConfigurationController.class);
-		}
-		return configurationController.findObjectClass(object);
-	}
+    private String findClassName(BTSObject object) {
+        if (configurationController == null) {
+            configurationController = StaticAccessController.getContext().get(BTSConfigurationController.class);
+        }
+        return configurationController.findObjectClass(object);
+    }
 
-	private Set<String> getStringFilterSet() {
-		if (stringFilterSet == null)
-		{
-			stringFilterSet = new HashSet<String>();
-			List<?> obs = getObjects();
-			for (Object o : obs)
-			{
-				if (o instanceof String)
-				{
-					stringFilterSet.add(((String) o).toLowerCase());
-				}
-			}
-		}
-		return stringFilterSet;
-	}
+    private Set<String> getStringFilterSet() {
+        if (stringFilterSet == null) {
+            stringFilterSet = new HashSet<String>();
+            List<?> obs = getObjects();
+            for (Object o : obs) {
+                if (o instanceof String) {
+                    stringFilterSet.add(((String) o).toLowerCase());
+                }
+            }
+        }
+        return stringFilterSet;
+    }
 
 }

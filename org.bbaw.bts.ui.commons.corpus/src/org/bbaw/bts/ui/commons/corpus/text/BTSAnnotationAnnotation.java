@@ -9,22 +9,22 @@ import org.eclipse.xtext.validation.Issue;
 
 public class BTSAnnotationAnnotation extends BTSModelAnnotation {
 
-	
-	public BTSAnnotationAnnotation(IXtextDocument document, Issue issue,
-			BTSIdentifiableItem modelObject, BTSAnnotation btsAnnotation) {
-		super(CorpusUtils.getTypeIdentifier(btsAnnotation), document, issue, modelObject);
-		this.setRelatingObject(btsAnnotation);
-	}
 
-	public BTSAnnotationAnnotation(BTSIdentifiableItem item,
-			BTSInterTextReference interTextReference, BTSAnnotation relatingObject) {
-		super(item, interTextReference, relatingObject);
-	}
-	
-	@Override
-	public String getType() {
-		return super.getType();
-	}
-	
-	
+    public BTSAnnotationAnnotation(IXtextDocument document, Issue issue,
+                                   BTSIdentifiableItem modelObject, BTSAnnotation btsAnnotation) {
+        super(CorpusUtils.getTypeIdentifier(btsAnnotation), document, issue, modelObject);
+        this.setRelatingObject(btsAnnotation);
+    }
+
+    public BTSAnnotationAnnotation(BTSIdentifiableItem item,
+                                   BTSInterTextReference interTextReference, BTSAnnotation relatingObject) {
+        super(item, interTextReference, relatingObject);
+    }
+
+    @Override
+    public String getType() {
+        return super.getType();
+    }
+
+
 }

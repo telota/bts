@@ -34,14 +34,14 @@ import org.bbaw.bts.btsmodel.BTSComment;
 
 /**
  * The Service Interface BTSCommentService provides service layer access to BTSComment-objects.
- * 
- * Service-Implementations should incorporate as much as possible of business logic which 
+ * <p>
+ * Service-Implementations should incorporate as much as possible of business logic which
  * does not depend on UI specific implementation and should be implemented in the controller layer
  * nor database specific logic which should be implemented in the dao layer.
- * 
+ * <p>
  * Services should be implemented generically.
  */
 public interface BTSCommentService extends
-GenericObjectService<BTSComment, String>{
+        GenericObjectService<BTSComment, String> {
 
 }

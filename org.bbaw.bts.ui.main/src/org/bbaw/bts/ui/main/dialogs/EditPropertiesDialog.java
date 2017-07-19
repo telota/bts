@@ -38,314 +38,299 @@ import org.eclipse.swt.widgets.TableColumn;
 
 public class EditPropertiesDialog extends TitleAreaDialog {
 
-	private static final String KEY = "Key";
-	private static final String VALUE = "Value";
-	public static final String[] PROPS = { KEY, VALUE };
-	private static final String[] PROPERTY_PROPOSALS = new String[]{
-		BTSConstants.DB_COLLECTION_PROP_RESERVE_ID,
-		BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_PREFIX,
-		BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_MIN,
-		BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_MAX,
-		BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_STEP,
-		BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_BEGIN,
-		BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_FORCE_SERVER};
-	private List<List<String>> properties;
-	
-	/**
-	 * Create the dialog.
-	 * @param parentShell
-	 */
-	public EditPropertiesDialog(Shell parentShell, Map<String, String> inputPorperties) {
-		super(parentShell);
-		loadProperties(inputPorperties);
-	}
+    private static final String KEY = "Key";
+    private static final String VALUE = "Value";
+    public static final String[] PROPS = {KEY, VALUE};
+    private static final String[] PROPERTY_PROPOSALS = new String[]{
+            BTSConstants.DB_COLLECTION_PROP_RESERVE_ID,
+            BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_PREFIX,
+            BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_MIN,
+            BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_MAX,
+            BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_STEP,
+            BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_BEGIN,
+            BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_FORCE_SERVER};
+    private List<List<String>> properties;
 
-	private void loadProperties(Map<String, String> inputPorperties) {
-		properties = new ArrayList<List<String>>(inputPorperties.size());
-		for (String k : inputPorperties.keySet())
-		{
-			List<String> prop = new ArrayList<String>(2);
-	        prop.add(k);
-	        if (inputPorperties.get(k) != null)
-	        {
-	        	prop.add(inputPorperties.get(k));
-	        }
-	        else
-	        {
-	        	prop.add("");
-	        }
-	        properties.add(prop);
-		}
-		
-	}
+    /**
+     * Create the dialog.
+     *
+     * @param parentShell
+     */
+    public EditPropertiesDialog(Shell parentShell, Map<String, String> inputPorperties) {
+        super(parentShell);
+        loadProperties(inputPorperties);
+    }
 
-	/**
-	 * Create contents of the dialog.
-	 * @param parent
-	 */
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NONE);
-	    composite.setLayout(new GridLayout(1, false));
-	    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	    // Add a button to create the new person
-	    Button newProperty = new Button(composite, SWT.PUSH);
-	    newProperty.setText("Create New Property");
+    private void loadProperties(Map<String, String> inputPorperties) {
+        properties = new ArrayList<List<String>>(inputPorperties.size());
+        for (String k : inputPorperties.keySet()) {
+            List<String> prop = new ArrayList<String>(2);
+            prop.add(k);
+            if (inputPorperties.get(k) != null) {
+                prop.add(inputPorperties.get(k));
+            } else {
+                prop.add("");
+            }
+            properties.add(prop);
+        }
 
-	    // Add the TableViewer
-	    final TableViewer tv = new TableViewer(composite, SWT.FULL_SELECTION | SWT.BORDER);
-	    tv.setContentProvider(new PropertiesContentProvider());
-	    tv.setLabelProvider(new PropertiesLabelProvider());
-	    tv.setInput(properties);
+    }
 
-	    // Set up the table
-	    Table table = tv.getTable();
-	    table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    /**
+     * Create contents of the dialog.
+     *
+     * @param parent
+     */
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        Composite composite = new Composite(parent, SWT.NONE);
+        composite.setLayout(new GridLayout(1, false));
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        // Add a button to create the new person
+        Button newProperty = new Button(composite, SWT.PUSH);
+        newProperty.setText("Create New Property");
 
-	    TableColumn kc = new TableColumn(table, SWT.CENTER);
-	    kc.setText(KEY);
-	    kc.setWidth( 150);
-	    TableColumn kv = new TableColumn(table, SWT.CENTER);
-	    kv.setText(VALUE);
-	    kv.setWidth(250);
+        // Add the TableViewer
+        final TableViewer tv = new TableViewer(composite, SWT.FULL_SELECTION | SWT.BORDER);
+        tv.setContentProvider(new PropertiesContentProvider());
+        tv.setLabelProvider(new PropertiesLabelProvider());
+        tv.setInput(properties);
+
+        // Set up the table
+        Table table = tv.getTable();
+        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        TableColumn kc = new TableColumn(table, SWT.CENTER);
+        kc.setText(KEY);
+        kc.setWidth(150);
+        TableColumn kv = new TableColumn(table, SWT.CENTER);
+        kv.setText(VALUE);
+        kv.setWidth(250);
 //
 //	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 //	      table.getColumn(i).pack();
 //	    }
 
-	    table.setHeaderVisible(true);
-	    table.setLinesVisible(true);
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
 
-	    // Add a new person when the user clicks button
-	    newProperty.addSelectionListener(new SelectionAdapter() {
-	      public void widgetSelected(SelectionEvent event) {
-	        List<String> prop = new ArrayList<String>(2);
-	        prop.add("key");
-	        prop.add("value");
-	        properties.add(prop);
-	        tv.refresh();
-	      }
-	    });
+        // Add a new person when the user clicks button
+        newProperty.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent event) {
+                List<String> prop = new ArrayList<String>(2);
+                prop.add("key");
+                prop.add("value");
+                properties.add(prop);
+                tv.refresh();
+            }
+        });
 
-	    // Create the cell editors
-	    CellEditor[] editors = new CellEditor[2];
-	    ComboBoxViewerCellEditor comboEditor = new ComboBoxViewerCellEditor(table);
-	    comboEditor.setContentProvider(new ArrayContentProvider());
-	    comboEditor.setLabelProvider(new LabelProvider ());
-	    comboEditor.setInput(PROPERTY_PROPOSALS);
+        // Create the cell editors
+        CellEditor[] editors = new CellEditor[2];
+        ComboBoxViewerCellEditor comboEditor = new ComboBoxViewerCellEditor(table);
+        comboEditor.setContentProvider(new ArrayContentProvider());
+        comboEditor.setLabelProvider(new LabelProvider());
+        comboEditor.setInput(PROPERTY_PROPOSALS);
 
-	    editors[0] = comboEditor;
-	    editors[1] = new TextCellEditor(table);
-	    
+        editors[0] = comboEditor;
+        editors[1] = new TextCellEditor(table);
 
-	    // Set the editors, cell modifier, and column properties
-	    tv.setColumnProperties(PROPS);
-	    tv.setCellModifier(new PropertyCellModifier(tv));
-	    tv.setCellEditors(editors);
 
-	    tv.refresh();
-	    return composite;
+        // Set the editors, cell modifier, and column properties
+        tv.setColumnProperties(PROPS);
+        tv.setCellModifier(new PropertyCellModifier(tv));
+        tv.setCellEditors(editors);
 
-	}
-	class PropertiesContentProvider implements IStructuredContentProvider {
-		  /**
-		   * Returns the Person objects
-		   */
-		  public Object[] getElements(Object inputElement) {
-		    return ((List) inputElement).toArray();
-		  }
+        tv.refresh();
+        return composite;
 
-		  /**
-		   * Disposes any created resources
-		   */
-		  public void dispose() {
-		    // Do nothing
-		  }
+    }
 
-		  /**
-		   * Called when the input changes
-		   */
-		  public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		    // Ignore
-		  }
-		}
-	/**
-	 * This class provides the labels for the person table
-	 */
+    /**
+     * Create contents of the button bar.
+     *
+     * @param parent
+     */
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+                true);
+        createButton(parent, IDialogConstants.CANCEL_ID,
+                IDialogConstants.CANCEL_LABEL, false);
+    }
 
-	class PropertiesLabelProvider implements ITableLabelProvider {
-	  /**
-	   * Returns the image
-	   * 
-	   * @param element
-	   *            the element
-	   * @param columnIndex
-	   *            the column index
-	   * @return Image
-	   */
-	  public Image getColumnImage(Object element, int columnIndex) {
-	    return null;
-	  }
+    /**
+     * Return the initial size of the dialog.
+     */
+    @Override
+    protected Point getInitialSize() {
+        return new Point(500, 400);
+    }
 
-	  /**
-	   * Returns the column text
-	   * 
-	   * @param element
-	   *            the element
-	   * @param columnIndex
-	   *            the column index
-	   * @return String
-	   */
-	  public String getColumnText(Object element, int columnIndex) {
-	    List<String> p = (List<String>) element;
-	    switch (columnIndex) {
-	    case 0:
-	      return p.get(columnIndex);
-	    case 1:
-	      return p.get(columnIndex);
-	    }
-	    return null;
-	  }
+    public Map<String, String> getProperties() {
+        Map<String, String> props = new HashMap<String, String>(properties.size());
+        for (List<String> prop : properties) {
+            if (prop.get(0) != null && !"".equals(prop.get(0).trim())
+                    && prop.get(1) != null && !"".equals(prop.get(1).trim())) {
+                props.put(prop.get(0), prop.get(1));
+            }
+        }
+        return props;
+    }
 
-	  /**
-	   * Adds a listener
-	   * 
-	   * @param listener
-	   *            the listener
-	   */
-	  public void addListener(ILabelProviderListener listener) {
-	    // Ignore it
-	  }
+    class PropertiesContentProvider implements IStructuredContentProvider {
+        /**
+         * Returns the Person objects
+         */
+        public Object[] getElements(Object inputElement) {
+            return ((List) inputElement).toArray();
+        }
 
-	  /**
-	   * Disposes any created resources
-	   */
-	  public void dispose() {
-	    // Nothing to dispose
-	  }
+        /**
+         * Disposes any created resources
+         */
+        public void dispose() {
+            // Do nothing
+        }
 
-	  /**
-	   * Returns whether altering this property on this element will affect the
-	   * label
-	   * 
-	   * @param element
-	   *            the element
-	   * @param property
-	   *            the property
-	   * @return boolean
-	   */
-	  public boolean isLabelProperty(Object element, String property) {
-	    return false;
-	  }
+        /**
+         * Called when the input changes
+         */
+        public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+            // Ignore
+        }
+    }
 
-	  /**
-	   * Removes a listener
-	   * 
-	   * @param listener
-	   *            the listener
-	   */
-	  public void removeListener(ILabelProviderListener listener) {
-	    // Ignore
-	  }
-	}
+    /**
+     * This class provides the labels for the person table
+     */
 
-	/**
-	 * Create contents of the button bar.
-	 * @param parent
-	 */
-	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
-				true);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
-	}
+    class PropertiesLabelProvider implements ITableLabelProvider {
+        /**
+         * Returns the image
+         *
+         * @param element     the element
+         * @param columnIndex the column index
+         * @return Image
+         */
+        public Image getColumnImage(Object element, int columnIndex) {
+            return null;
+        }
 
-	/**
-	 * Return the initial size of the dialog.
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(500, 400);
-	}
-	/**
-	 * This class represents the cell modifier for the PersonEditor program
-	 */
+        /**
+         * Returns the column text
+         *
+         * @param element     the element
+         * @param columnIndex the column index
+         * @return String
+         */
+        public String getColumnText(Object element, int columnIndex) {
+            List<String> p = (List<String>) element;
+            switch (columnIndex) {
+                case 0:
+                    return p.get(columnIndex);
+                case 1:
+                    return p.get(columnIndex);
+            }
+            return null;
+        }
 
-	class PropertyCellModifier implements ICellModifier {
-	  private Viewer viewer;
+        /**
+         * Adds a listener
+         *
+         * @param listener the listener
+         */
+        public void addListener(ILabelProviderListener listener) {
+            // Ignore it
+        }
 
-	  public PropertyCellModifier(Viewer viewer) {
-	    this.viewer = viewer;
-	  }
+        /**
+         * Disposes any created resources
+         */
+        public void dispose() {
+            // Nothing to dispose
+        }
 
-	  /**
-	   * Returns whether the property can be modified
-	   * 
-	   * @param element
-	   *            the element
-	   * @param property
-	   *            the property
-	   * @return boolean
-	   */
-	  public boolean canModify(Object element, String property) {
-	    // Allow editing of all values
-	    return true;
-	  }
+        /**
+         * Returns whether altering this property on this element will affect the
+         * label
+         *
+         * @param element  the element
+         * @param property the property
+         * @return boolean
+         */
+        public boolean isLabelProperty(Object element, String property) {
+            return false;
+        }
 
-	  /**
-	   * Returns the value for the property
-	   * 
-	   * @param element
-	   *            the element
-	   * @param property
-	   *            the property
-	   * @return Object
-	   */
-	  public Object getValue(Object element, String property) {
-		  List<String> p = (List<String>) element;
-	    if (EditPropertiesDialog.KEY.equals(property))
-	      return p.get(0);
-	    else if (EditPropertiesDialog.VALUE.equals(property))
-	      return p.get(1);
-	    else
-	      return null;
-	  }
+        /**
+         * Removes a listener
+         *
+         * @param listener the listener
+         */
+        public void removeListener(ILabelProviderListener listener) {
+            // Ignore
+        }
+    }
 
-	  /**
-	   * Modifies the element
-	   * 
-	   * @param element
-	   *            the element
-	   * @param property
-	   *            the property
-	   * @param value
-	   *            the value
-	   */
-	  public void modify(Object element, String property, Object value) {
-	    if (element instanceof Item)
-	      element = ((Item) element).getData();
-	    List<String> p = (List<String>) element;
-	    if (EditPropertiesDialog.KEY.equals(property))
-	    p.set(0, (String) value);
-	    else if (EditPropertiesDialog.VALUE.equals(property))
-		    p.set(1, (String) value);
+    /**
+     * This class represents the cell modifier for the PersonEditor program
+     */
 
-	    // Force the viewer to refresh
-	    viewer.refresh();
-	  }
-	}
+    class PropertyCellModifier implements ICellModifier {
+        private Viewer viewer;
 
-	public Map<String, String> getProperties() {
-		Map<String, String> props = new HashMap<String, String>(properties.size());
-		for (List<String> prop : properties)
-		{
-			if (prop.get(0) != null && !"".equals(prop.get(0).trim())
-					&& prop.get(1) != null && !"".equals(prop.get(1).trim()))
-			{
-				props.put(prop.get(0), prop.get(1));
-			}
-		}
-		return props;
-	}
+        public PropertyCellModifier(Viewer viewer) {
+            this.viewer = viewer;
+        }
+
+        /**
+         * Returns whether the property can be modified
+         *
+         * @param element  the element
+         * @param property the property
+         * @return boolean
+         */
+        public boolean canModify(Object element, String property) {
+            // Allow editing of all values
+            return true;
+        }
+
+        /**
+         * Returns the value for the property
+         *
+         * @param element  the element
+         * @param property the property
+         * @return Object
+         */
+        public Object getValue(Object element, String property) {
+            List<String> p = (List<String>) element;
+            if (EditPropertiesDialog.KEY.equals(property))
+                return p.get(0);
+            else if (EditPropertiesDialog.VALUE.equals(property))
+                return p.get(1);
+            else
+                return null;
+        }
+
+        /**
+         * Modifies the element
+         *
+         * @param element  the element
+         * @param property the property
+         * @param value    the value
+         */
+        public void modify(Object element, String property, Object value) {
+            if (element instanceof Item)
+                element = ((Item) element).getData();
+            List<String> p = (List<String>) element;
+            if (EditPropertiesDialog.KEY.equals(property))
+                p.set(0, (String) value);
+            else if (EditPropertiesDialog.VALUE.equals(property))
+                p.set(1, (String) value);
+
+            // Force the viewer to refresh
+            viewer.refresh();
+        }
+    }
 }

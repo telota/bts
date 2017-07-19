@@ -16,20 +16,20 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
 public class E4PerspectiveSwitcherPreferences {
 
-	public static final String ROOT_PREFERENCES_NODE = "org.eclipse.e4.ui.workbench.perspectiveswitcher"; //$NON-NLS-1$
-	
-	public static final String LAST_ACTIVE_CONTEXT_NODE = "org.eclipse.e4.ui.workbench.perspectiveswitcher.lastActive"; //$NON-NLS-1$
-	
-	public static final String SHOW_TEXT = "perspective_switcher_show_text"; //$NON-NLS-1$
-	
-	public static final String LAST_ACTIVE = "last_active_perspective"; //$NON-NLS-1$
-	
-	public static void initialize() {
-		IEclipsePreferences defaultNode = DefaultScope.INSTANCE.getNode(ROOT_PREFERENCES_NODE);
-		defaultNode.putBoolean(SHOW_TEXT, true);
-		
-		IEclipsePreferences lastActiveNode = DefaultScope.INSTANCE.getNode(LAST_ACTIVE_CONTEXT_NODE);
-		lastActiveNode.put(LAST_ACTIVE, ""); //$NON-NLS-1$
-	}
-	
+    public static final String ROOT_PREFERENCES_NODE = "org.eclipse.e4.ui.workbench.perspectiveswitcher"; //$NON-NLS-1$
+
+    public static final String LAST_ACTIVE_CONTEXT_NODE = "org.eclipse.e4.ui.workbench.perspectiveswitcher.lastActive"; //$NON-NLS-1$
+
+    public static final String SHOW_TEXT = "perspective_switcher_show_text"; //$NON-NLS-1$
+
+    public static final String LAST_ACTIVE = "last_active_perspective"; //$NON-NLS-1$
+
+    public static void initialize() {
+        IEclipsePreferences defaultNode = DefaultScope.INSTANCE.getNode(ROOT_PREFERENCES_NODE);
+        defaultNode.putBoolean(SHOW_TEXT, true);
+
+        IEclipsePreferences lastActiveNode = DefaultScope.INSTANCE.getNode(LAST_ACTIVE_CONTEXT_NODE);
+        lastActiveNode.put(LAST_ACTIVE, ""); //$NON-NLS-1$
+    }
+
 }

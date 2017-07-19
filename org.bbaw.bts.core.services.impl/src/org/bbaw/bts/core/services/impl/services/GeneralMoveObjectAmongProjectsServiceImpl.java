@@ -15,93 +15,81 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.MApplication;
 
 public class GeneralMoveObjectAmongProjectsServiceImpl implements
-		GeneralMoveObjectAmongProjectsService {
-	
-	@Inject
-	private IEclipseContext context;
+        GeneralMoveObjectAmongProjectsService {
 
-	@Override
-	public BTSFilter getMoveDBCollectionFilter(Object object) {
-		
-		MoveObjectsAmongProjectDBCollectionsServiceFactory moveServiceFactory = getMoveServiceFactoryForObject(object);
-		if (moveServiceFactory != null)
-		{
-			return moveServiceFactory.getMoveObjectAmongProjectDBCollectionsFilter(object);
-		}
-		return null;
-	}
+    @Inject
+    private IEclipseContext context;
 
-	private MoveObjectsAmongProjectDBCollectionsServiceFactory getMoveServiceFactoryForObject(
-			Object object) {
-		MApplication application = context.get(MApplication.class);
-		IEclipseContext ctx = null;
-		if (application != null)
-		{
-			ctx = application.getContext();
-		}
-		if (ctx == null)
-		{
-			ctx = context;
-		}
-		IConfigurationElement[] config = ((IExtensionRegistry) ctx.get(IExtensionRegistry.class.getName()))
-				.getConfigurationElementsFor(BTSCoreConstants.EXTENSION_POINT_MOVE_OBJECT_SERVICE_FACTORY);
-		for (IConfigurationElement e : config)
-		{
-			Object o = null;
-			try {
-				o = e.createExecutableExtension("class");
-			} catch (CoreException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			if (o != null && o instanceof MoveObjectsAmongProjectDBCollectionsServiceFactory)
-			{
-				if (((MoveObjectsAmongProjectDBCollectionsServiceFactory) o).providesServiceForObject(object))
-				{
-					return (MoveObjectsAmongProjectDBCollectionsServiceFactory) o;
-				}
-			}
-		}
-		return null;
-	}
+    @Override
+    public BTSFilter getMoveDBCollectionFilter(Object object) {
 
-	@Override
-	public boolean move(BTSDBBaseObject object, String targetDBCollectionPath, String sourceDBCollectionPath) {
-		MoveObjectAmongProjectDBCollectionsService service = getMoveService(object);
-		String projectPrefix = targetDBCollectionPath;
-		if (targetDBCollectionPath.contains("_"))
-		{
-			projectPrefix = targetDBCollectionPath.split("_")[0];
-		}
-		if (!object.getProject().equals(projectPrefix))
-		{
-			object.setProject(projectPrefix);
-		}
-		if (service != null)
-		{
-			return service.move(object, targetDBCollectionPath, sourceDBCollectionPath);
-		}
-		else
-		{
-			return generalMove(object, targetDBCollectionPath, sourceDBCollectionPath);
-		}
-	}
+        MoveObjectsAmongProjectDBCollectionsServiceFactory moveServiceFactory = getMoveServiceFactoryForObject(object);
+        if (moveServiceFactory != null) {
+            return moveServiceFactory.getMoveObjectAmongProjectDBCollectionsFilter(object);
+        }
+        return null;
+    }
 
-	private boolean generalMove(BTSDBBaseObject object,
-			String targetDBCollectionPath, String sourceDBCollectionPath) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    private MoveObjectsAmongProjectDBCollectionsServiceFactory getMoveServiceFactoryForObject(
+            Object object) {
+        MApplication application = context.get(MApplication.class);
+        IEclipseContext ctx = null;
+        if (application != null) {
+            ctx = application.getContext();
+        }
+        if (ctx == null) {
+            ctx = context;
+        }
+        IConfigurationElement[] config = ((IExtensionRegistry) ctx.get(IExtensionRegistry.class.getName()))
+                .getConfigurationElementsFor(BTSCoreConstants.EXTENSION_POINT_MOVE_OBJECT_SERVICE_FACTORY);
+        for (IConfigurationElement e : config) {
+            Object o = null;
+            try {
+                o = e.createExecutableExtension("class");
+            } catch (CoreException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            if (o != null && o instanceof MoveObjectsAmongProjectDBCollectionsServiceFactory) {
+                if (((MoveObjectsAmongProjectDBCollectionsServiceFactory) o).providesServiceForObject(object)) {
+                    return (MoveObjectsAmongProjectDBCollectionsServiceFactory) o;
+                }
+            }
+        }
+        return null;
+    }
 
-	private MoveObjectAmongProjectDBCollectionsService getMoveService(
-			BTSDBBaseObject object) {
-		MoveObjectsAmongProjectDBCollectionsServiceFactory moveServiceFactory = getMoveServiceFactoryForObject(object);
-		if (moveServiceFactory != null)
-		{
-			return moveServiceFactory.getMoveObjectAmongProjectDBCollectionsService(object);
-		}
-		return null;
-	}
+    @Override
+    public boolean move(BTSDBBaseObject object, String targetDBCollectionPath, String sourceDBCollectionPath) {
+        MoveObjectAmongProjectDBCollectionsService service = getMoveService(object);
+        String projectPrefix = targetDBCollectionPath;
+        if (targetDBCollectionPath.contains("_")) {
+            projectPrefix = targetDBCollectionPath.split("_")[0];
+        }
+        if (!object.getProject().equals(projectPrefix)) {
+            object.setProject(projectPrefix);
+        }
+        if (service != null) {
+            return service.move(object, targetDBCollectionPath, sourceDBCollectionPath);
+        } else {
+            return generalMove(object, targetDBCollectionPath, sourceDBCollectionPath);
+        }
+    }
 
-	
+    private boolean generalMove(BTSDBBaseObject object,
+                                String targetDBCollectionPath, String sourceDBCollectionPath) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    private MoveObjectAmongProjectDBCollectionsService getMoveService(
+            BTSDBBaseObject object) {
+        MoveObjectsAmongProjectDBCollectionsServiceFactory moveServiceFactory = getMoveServiceFactoryForObject(object);
+        if (moveServiceFactory != null) {
+            return moveServiceFactory.getMoveObjectAmongProjectDBCollectionsService(object);
+        }
+        return null;
+    }
+
+
 }

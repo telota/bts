@@ -25,44 +25,44 @@ import com.google.inject.Inject;
 
 /**
  * A generic reference updater for EMF resources referring to Xtext elements.
- * 
+ * <p>
  * Uses the resources default serialization mechanism to update resources. This only works if the resource does not have
  * errors. For Xtext-based languages it is far more fault tolerant to use a {@link DefaultReferenceUpdater} that only
  * serializes the sections of the document that actually represent cross-references.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  * @author Holger Schill
  */
 public class EmfResourceReferenceUpdater extends AbstractReferenceUpdater {
 
-	@Inject
-	private EmfResourceChangeUtil changeUtil;
+    @Inject
+    private EmfResourceChangeUtil changeUtil;
 
-	@Override
-	protected void createReferenceUpdates(ElementRenameArguments elementRenameArguments,
-			Multimap<URI, IReferenceDescription> resource2references, ResourceSet resourceSet,
-			IRefactoringUpdateAcceptor updateAcceptor, IProgressMonitor monitor) {
-		SubMonitor progress = SubMonitor.convert(monitor, "Updating EMF References", resource2references.keySet()
-				.size());
-		for (URI referringResourceURI : resource2references.keySet()) {
-			try {
-				if (progress.isCanceled())
-					break;
-				Resource referringResource = resourceSet.getResource(referringResourceURI, false);
-				EObject refactoredElement = resourceSet.getEObject(elementRenameArguments.getNewElementURI(elementRenameArguments.getTargetElementURI()), true);
-				if(refactoredElement != null && refactoredElement instanceof EClassifier){
-					for(IReferenceDescription reference : resource2references.get(referringResourceURI)){
-						EObject referringEReference = referringResource.getEObject(reference.getSourceEObjectUri().fragment()).eContainer();
-						if(referringEReference != null && referringEReference instanceof EReference)
-						((EReference)referringEReference).setEType((EClassifier)refactoredElement);
-					}
-				}
-				changeUtil.addSaveAsUpdate(referringResource, updateAcceptor);
-				progress.worked(1);
-			} catch (Exception exc) {
-				throw new WrappedException(exc);
-			}
-		}
-	}
+    @Override
+    protected void createReferenceUpdates(ElementRenameArguments elementRenameArguments,
+                                          Multimap<URI, IReferenceDescription> resource2references, ResourceSet resourceSet,
+                                          IRefactoringUpdateAcceptor updateAcceptor, IProgressMonitor monitor) {
+        SubMonitor progress = SubMonitor.convert(monitor, "Updating EMF References", resource2references.keySet()
+                .size());
+        for (URI referringResourceURI : resource2references.keySet()) {
+            try {
+                if (progress.isCanceled())
+                    break;
+                Resource referringResource = resourceSet.getResource(referringResourceURI, false);
+                EObject refactoredElement = resourceSet.getEObject(elementRenameArguments.getNewElementURI(elementRenameArguments.getTargetElementURI()), true);
+                if (refactoredElement != null && refactoredElement instanceof EClassifier) {
+                    for (IReferenceDescription reference : resource2references.get(referringResourceURI)) {
+                        EObject referringEReference = referringResource.getEObject(reference.getSourceEObjectUri().fragment()).eContainer();
+                        if (referringEReference != null && referringEReference instanceof EReference)
+                            ((EReference) referringEReference).setEType((EClassifier) refactoredElement);
+                    }
+                }
+                changeUtil.addSaveAsUpdate(referringResource, updateAcceptor);
+                progress.worked(1);
+            } catch (Exception exc) {
+                throw new WrappedException(exc);
+            }
+        }
+    }
 
 }

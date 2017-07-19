@@ -29,84 +29,82 @@ import com.google.inject.name.Named;
 @Singleton
 public class PreferenceStoreAccessImpl implements IPreferenceStoreAccess {
 
-	public IPreferenceStore getPreferenceStore() {
-		lazyInitialize();
-		Activator activator = Activator.getDefault();
-		if (activator != null)
-			return new ChainedPreferenceStore(new IPreferenceStore[] {
-					getWritablePreferenceStore(),
-					activator.getPreferenceStore(), 
-					EditorsUI.getPreferenceStore() });
-		return new ChainedPreferenceStore(new IPreferenceStore[] {
-				getWritablePreferenceStore(),
-				EditorsUI.getPreferenceStore() });
-	}
+    private String qualifier;
+    private boolean initialized = false;
+    @Inject
+    private IPreferenceStoreInitializer.CompositeImpl initializer;
 
-	public IPreferenceStore getContextPreferenceStore(Object context) {
-		lazyInitialize();
-		// may be null on shutdown
-		Activator activator = Activator.getDefault();
-		if (activator != null)
-			return new ChainedPreferenceStore(new IPreferenceStore[] { 
-					getWritablePreferenceStore(context),
-					activator.getPreferenceStore(),
-					EditorsUI.getPreferenceStore()});
-		return new ChainedPreferenceStore(new IPreferenceStore[] { 
-				getWritablePreferenceStore(context),
-				EditorsUI.getPreferenceStore()});
-	}
+    public IPreferenceStore getPreferenceStore() {
+        lazyInitialize();
+        Activator activator = Activator.getDefault();
+        if (activator != null)
+            return new ChainedPreferenceStore(new IPreferenceStore[]{
+                    getWritablePreferenceStore(),
+                    activator.getPreferenceStore(),
+                    EditorsUI.getPreferenceStore()});
+        return new ChainedPreferenceStore(new IPreferenceStore[]{
+                getWritablePreferenceStore(),
+                EditorsUI.getPreferenceStore()});
+    }
 
-	@SuppressWarnings("deprecation")
-	public IPreferenceStore getWritablePreferenceStore() {
-		lazyInitialize();
-		FixedScopedPreferenceStore result = new FixedScopedPreferenceStore(new InstanceScope(), getQualifier());
-		result.setSearchContexts(new IScopeContext[] {
-			new InstanceScope(),
-			new ConfigurationScope()
-		});
-		return result;
-	}
+    public IPreferenceStore getContextPreferenceStore(Object context) {
+        lazyInitialize();
+        // may be null on shutdown
+        Activator activator = Activator.getDefault();
+        if (activator != null)
+            return new ChainedPreferenceStore(new IPreferenceStore[]{
+                    getWritablePreferenceStore(context),
+                    activator.getPreferenceStore(),
+                    EditorsUI.getPreferenceStore()});
+        return new ChainedPreferenceStore(new IPreferenceStore[]{
+                getWritablePreferenceStore(context),
+                EditorsUI.getPreferenceStore()});
+    }
 
-	@SuppressWarnings("deprecation")
-	public IPreferenceStore getWritablePreferenceStore(Object context) {
-		lazyInitialize();
-		if (context instanceof IFileEditorInput) {
-			context = ((IFileEditorInput) context).getFile().getProject();
-		}
-		if (context instanceof IProject) {
-			ProjectScope projectScope = new ProjectScope((IProject) context);
-			FixedScopedPreferenceStore result = new FixedScopedPreferenceStore(projectScope, getQualifier());
-			result.setSearchContexts(new IScopeContext[] {
-				projectScope,
-				new InstanceScope(),
-				new ConfigurationScope()
-			});
-			return result;
-		}
-		return getWritablePreferenceStore();
-	}
+    @SuppressWarnings("deprecation")
+    public IPreferenceStore getWritablePreferenceStore() {
+        lazyInitialize();
+        FixedScopedPreferenceStore result = new FixedScopedPreferenceStore(new InstanceScope(), getQualifier());
+        result.setSearchContexts(new IScopeContext[]{
+                new InstanceScope(),
+                new ConfigurationScope()
+        });
+        return result;
+    }
 
-	private String qualifier;
+    @SuppressWarnings("deprecation")
+    public IPreferenceStore getWritablePreferenceStore(Object context) {
+        lazyInitialize();
+        if (context instanceof IFileEditorInput) {
+            context = ((IFileEditorInput) context).getFile().getProject();
+        }
+        if (context instanceof IProject) {
+            ProjectScope projectScope = new ProjectScope((IProject) context);
+            FixedScopedPreferenceStore result = new FixedScopedPreferenceStore(projectScope, getQualifier());
+            result.setSearchContexts(new IScopeContext[]{
+                    projectScope,
+                    new InstanceScope(),
+                    new ConfigurationScope()
+            });
+            return result;
+        }
+        return getWritablePreferenceStore();
+    }
 
-	@Inject
-	public void setLanguageNameAsQualifier(@Named(Constants.LANGUAGE_NAME) String languageName) {
-		this.qualifier = languageName;
-	}
+    @Inject
+    public void setLanguageNameAsQualifier(@Named(Constants.LANGUAGE_NAME) String languageName) {
+        this.qualifier = languageName;
+    }
 
-	protected String getQualifier() {
-		return qualifier;
-	}
+    protected String getQualifier() {
+        return qualifier;
+    }
 
-	private boolean initialized = false;
-	
-	@Inject
-	private IPreferenceStoreInitializer.CompositeImpl initializer;
-
-	protected void lazyInitialize() {
-		if (!initialized) {
-			initialized = true;
-			initializer.initialize(this);
-		}
-	}
+    protected void lazyInitialize() {
+        if (!initialized) {
+            initialized = true;
+            initializer.initialize(this);
+        }
+    }
 
 }

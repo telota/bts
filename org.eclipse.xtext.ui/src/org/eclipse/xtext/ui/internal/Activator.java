@@ -18,35 +18,35 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-	public static final String PLUGIN_ID = "org.eclipse.xtext.ui";
+    public static final String PLUGIN_ID = "org.eclipse.xtext.ui";
 
-	private static Logger log = Logger.getLogger(Activator.class);
+    private static Logger log = Logger.getLogger(Activator.class);
 
-	private static Activator plugin;
+    private static Activator plugin;
 
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
+    public static Activator getDefault() {
+        return plugin;
+    }
 
-		if (log.isDebugEnabled())
-			log.debug("Starting Xtext UI Core bundle.");
-	}
-	
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		if (log.isDebugEnabled())
-			log.debug("Stopping Xtext UI bundle.");
+    public static ImageDescriptor getImageDescriptor(String path) {
+        return imageDescriptorFromPlugin(PLUGIN_ID, path);
+    }
 
-		plugin = null;
-		super.stop(context);
-	}
+    @Override
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
 
-	public static Activator getDefault() {
-		return plugin;
-	}
+        if (log.isDebugEnabled())
+            log.debug("Starting Xtext UI Core bundle.");
+    }
 
-	public static ImageDescriptor getImageDescriptor(String path) {
-		return imageDescriptorFromPlugin(PLUGIN_ID, path);
-	}
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        if (log.isDebugEnabled())
+            log.debug("Stopping Xtext UI bundle.");
+
+        plugin = null;
+        super.stop(context);
+    }
 }

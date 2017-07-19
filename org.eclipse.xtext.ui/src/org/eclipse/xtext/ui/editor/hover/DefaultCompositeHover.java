@@ -18,29 +18,29 @@ import org.eclipse.jface.text.ITextHover;
 import com.google.inject.Inject;
 
 /**
- * The default implementation of a composite hover. Configured with the 
+ * The default implementation of a composite hover. Configured with the
  * AnnotationWithQuickFixesHover and XtextHtmlHover.
- * 
+ *
  * @author Christoph Kulla - Initial contribution and API
  */
-public class DefaultCompositeHover extends AbstractCompositeHover  {
+public class DefaultCompositeHover extends AbstractCompositeHover {
 
-	@Inject 
-	protected AnnotationWithQuickFixesHover annotationHover;
+    @Inject
+    protected AnnotationWithQuickFixesHover annotationHover;
 
-	/**
-	 * @noreference This field is not intended to be referenced by clients.
-	 */
-	@Inject
-	protected IEObjectHover htmlHover;
-	
-	@Override
-	protected List<ITextHover> createHovers() {
-		List<ITextHover> list = new ArrayList<ITextHover>();
-		list.add (annotationHover);
-		if(htmlHover instanceof ITextHover)
-			list.add ((ITextHover) htmlHover);
-		return list;
-	}
+    /**
+     * @noreference This field is not intended to be referenced by clients.
+     */
+    @Inject
+    protected IEObjectHover htmlHover;
+
+    @Override
+    protected List<ITextHover> createHovers() {
+        List<ITextHover> list = new ArrayList<ITextHover>();
+        list.add(annotationHover);
+        if (htmlHover instanceof ITextHover)
+            list.add((ITextHover) htmlHover);
+        return list;
+    }
 
 }

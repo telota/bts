@@ -24,73 +24,72 @@ import com.google.inject.MembersInjector;
  * @since 2.0
  */
 public class CompoundMultiLineTerminalsEditStrategy extends AbstractEditStrategy {
-	
-	public static class Factory {
-		@Inject
-		private MembersInjector<CompoundMultiLineTerminalsEditStrategy> injector;
-		
-		public CompoundMultiLineTerminalsEditStrategy newInstanceFor(String leftTerminal, String rightTerminal) {
-			return newInstanceFor(leftTerminal, null, rightTerminal);
-		}
-				
-		public CompoundMultiLineTerminalsEditStrategy newInstanceFor(
-				String leftTerminal, String indentationString, String rightTerminal) {
-			CompoundMultiLineTerminalsEditStrategy strategy = new CompoundMultiLineTerminalsEditStrategy();
-			injector.injectMembers(strategy);
-			return strategy.and(leftTerminal, indentationString, rightTerminal);
-		}
-	}
-	
-	@Inject
-	private MultiLineTerminalsEditStrategy.Factory multiLineTerminalsStrategyFactory;
-	
-	private List<MultiLineTerminalsEditStrategy> strategies;
-	
-	protected CompoundMultiLineTerminalsEditStrategy() {
-		this.strategies = Lists.newArrayList();
-	}
-	
-	public CompoundMultiLineTerminalsEditStrategy and(String leftTerminal, String indentationString, String rightTerminal) {
-		strategies.add(multiLineTerminalsStrategyFactory.newInstance(leftTerminal, indentationString, rightTerminal));
-		return this;
-	}
-	
-	public CompoundMultiLineTerminalsEditStrategy and(String leftTerminal, String rightTerminal) {
-		return and(leftTerminal, null, rightTerminal);
-	}
 
-	/**
-	 * @since 2.3
-	 */
-	public CompoundMultiLineTerminalsEditStrategy and(MultiLineTerminalsEditStrategy strategy) {
-		strategies.add(strategy);
-		return this;
-	}
+    @Inject
+    private MultiLineTerminalsEditStrategy.Factory multiLineTerminalsStrategyFactory;
+    private List<MultiLineTerminalsEditStrategy> strategies;
 
-	@Override
-	protected void internalCustomizeDocumentCommand(IDocument document, DocumentCommand command)
-			throws BadLocationException {
-		if (command.length != 0)
-			return;
-		String[] lineDelimiters = document.getLegalLineDelimiters();
-		int delimiterIndex = TextUtilities.startsWith(lineDelimiters, command.text);
-		if (delimiterIndex != -1) {
-			MultiLineTerminalsEditStrategy bestStrategy = null;
-			IRegion bestStart = null;
-			for(MultiLineTerminalsEditStrategy strategy: strategies) {
-				IRegion candidate = strategy.findStartTerminal(document, command.offset);
-				if (candidate != null) {
-					if (bestStart == null || bestStart.getOffset() < candidate.getOffset()) {
-						bestStrategy = strategy;
-						bestStart = candidate;
-					}
-				}
-			}
-			if (bestStrategy != null) {
-				bestStrategy.internalCustomizeDocumentCommand(document, command);
-			}
-		}
-	}
+    protected CompoundMultiLineTerminalsEditStrategy() {
+        this.strategies = Lists.newArrayList();
+    }
+
+    public CompoundMultiLineTerminalsEditStrategy and(String leftTerminal, String indentationString, String rightTerminal) {
+        strategies.add(multiLineTerminalsStrategyFactory.newInstance(leftTerminal, indentationString, rightTerminal));
+        return this;
+    }
+
+    public CompoundMultiLineTerminalsEditStrategy and(String leftTerminal, String rightTerminal) {
+        return and(leftTerminal, null, rightTerminal);
+    }
+
+    /**
+     * @since 2.3
+     */
+    public CompoundMultiLineTerminalsEditStrategy and(MultiLineTerminalsEditStrategy strategy) {
+        strategies.add(strategy);
+        return this;
+    }
+
+    @Override
+    protected void internalCustomizeDocumentCommand(IDocument document, DocumentCommand command)
+            throws BadLocationException {
+        if (command.length != 0)
+            return;
+        String[] lineDelimiters = document.getLegalLineDelimiters();
+        int delimiterIndex = TextUtilities.startsWith(lineDelimiters, command.text);
+        if (delimiterIndex != -1) {
+            MultiLineTerminalsEditStrategy bestStrategy = null;
+            IRegion bestStart = null;
+            for (MultiLineTerminalsEditStrategy strategy : strategies) {
+                IRegion candidate = strategy.findStartTerminal(document, command.offset);
+                if (candidate != null) {
+                    if (bestStart == null || bestStart.getOffset() < candidate.getOffset()) {
+                        bestStrategy = strategy;
+                        bestStart = candidate;
+                    }
+                }
+            }
+            if (bestStrategy != null) {
+                bestStrategy.internalCustomizeDocumentCommand(document, command);
+            }
+        }
+    }
+
+    public static class Factory {
+        @Inject
+        private MembersInjector<CompoundMultiLineTerminalsEditStrategy> injector;
+
+        public CompoundMultiLineTerminalsEditStrategy newInstanceFor(String leftTerminal, String rightTerminal) {
+            return newInstanceFor(leftTerminal, null, rightTerminal);
+        }
+
+        public CompoundMultiLineTerminalsEditStrategy newInstanceFor(
+                String leftTerminal, String indentationString, String rightTerminal) {
+            CompoundMultiLineTerminalsEditStrategy strategy = new CompoundMultiLineTerminalsEditStrategy();
+            injector.injectMembers(strategy);
+            return strategy.and(leftTerminal, indentationString, rightTerminal);
+        }
+    }
 
 
 }

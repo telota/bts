@@ -4,6 +4,6 @@ import org.bbaw.bts.core.services.GenericObjectService;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
 
 public interface BTSAnnotationService extends
-		GenericObjectService<BTSAnnotation, String> {
+        GenericObjectService<BTSAnnotation, String> {
 
 }

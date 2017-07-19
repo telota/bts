@@ -19,50 +19,50 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
  */
 public class DocumentRootNode extends AbstractOutlineNode {
 
-	private IXtextDocument document;
-	
-	private IOutlineTreeStructureProvider treeProvider;
+    private IXtextDocument document;
 
-	/**
-	 * A {@link BackgroundOutlineTreeProvider} must use
-	 * {@link #DocumentRootNode(ImageDescriptor, Object, IXtextDocument, IOutlineTreeStructureProvider)} instead.
-	 */
-	public DocumentRootNode(Image image, Object text, IXtextDocument document,
-			IOutlineTreeStructureProvider treeProvider) {
-		super(null, image, text, false);
-		this.document = document;
-		this.treeProvider = treeProvider;
-	}
+    private IOutlineTreeStructureProvider treeProvider;
 
-	/**
-	 * @since 2.4
-	 */
-	public DocumentRootNode(ImageDescriptor imageDescriptor, Object text, IXtextDocument document,
-			IOutlineTreeStructureProvider treeProvider) {
-		super(null, imageDescriptor, text, false);
-		this.document = document;
-		this.treeProvider = treeProvider;
-	}
+    /**
+     * A {@link BackgroundOutlineTreeProvider} must use
+     * {@link #DocumentRootNode(ImageDescriptor, Object, IXtextDocument, IOutlineTreeStructureProvider)} instead.
+     */
+    public DocumentRootNode(Image image, Object text, IXtextDocument document,
+                            IOutlineTreeStructureProvider treeProvider) {
+        super(null, image, text, false);
+        this.document = document;
+        this.treeProvider = treeProvider;
+    }
 
-	@Override
-	public IXtextDocument getDocument() {
-		return document;
-	}
+    /**
+     * @since 2.4
+     */
+    public DocumentRootNode(ImageDescriptor imageDescriptor, Object text, IXtextDocument document,
+                            IOutlineTreeStructureProvider treeProvider) {
+        super(null, imageDescriptor, text, false);
+        this.document = document;
+        this.treeProvider = treeProvider;
+    }
 
-	@Override
-	public IOutlineTreeStructureProvider getTreeProvider() {
-		return treeProvider;
-	}
+    @Override
+    public IXtextDocument getDocument() {
+        return document;
+    }
 
-	@Override
-	public <T> T readOnly(final IUnitOfWork<T, EObject> work) {
-		return document.readOnly(new IUnitOfWork<T, XtextResource>() {
-			public T exec(XtextResource resource) throws Exception {
-				if(resource != null && !resource.getContents().isEmpty()) {
-					work.exec(resource.getContents().get(0));
-				}
-				return null;
-			}
-		});
-	}
+    @Override
+    public IOutlineTreeStructureProvider getTreeProvider() {
+        return treeProvider;
+    }
+
+    @Override
+    public <T> T readOnly(final IUnitOfWork<T, EObject> work) {
+        return document.readOnly(new IUnitOfWork<T, XtextResource>() {
+            public T exec(XtextResource resource) throws Exception {
+                if (resource != null && !resource.getContents().isEmpty()) {
+                    work.exec(resource.getContents().get(0));
+                }
+                return null;
+            }
+        });
+    }
 }

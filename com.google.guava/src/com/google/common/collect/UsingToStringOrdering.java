@@ -26,23 +26,25 @@ import java.io.Serializable;
  */
 @GwtCompatible(serializable = true)
 final class UsingToStringOrdering
-    extends Ordering<Object> implements Serializable {
-  static final UsingToStringOrdering INSTANCE = new UsingToStringOrdering();
+        extends Ordering<Object> implements Serializable {
+    static final UsingToStringOrdering INSTANCE = new UsingToStringOrdering();
+    private static final long serialVersionUID = 0;
 
-  @Override public int compare(Object left, Object right) {
-    return left.toString().compareTo(right.toString());
-  }
+    private UsingToStringOrdering() {
+    }
 
-  // preserve singleton-ness, so equals() and hashCode() work correctly
-  private Object readResolve() {
-    return INSTANCE;
-  }
+    @Override
+    public int compare(Object left, Object right) {
+        return left.toString().compareTo(right.toString());
+    }
 
-  @Override public String toString() {
-    return "Ordering.usingToString()";
-  }
+    // preserve singleton-ness, so equals() and hashCode() work correctly
+    private Object readResolve() {
+        return INSTANCE;
+    }
 
-  private UsingToStringOrdering() {}
-
-  private static final long serialVersionUID = 0;
+    @Override
+    public String toString() {
+        return "Ordering.usingToString()";
+    }
 }

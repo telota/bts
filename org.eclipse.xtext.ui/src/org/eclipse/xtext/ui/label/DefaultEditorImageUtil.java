@@ -17,20 +17,20 @@ import com.google.inject.Inject;
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class DefaultEditorImageUtil {
-	
-	@Inject(optional=true)
+
+    @Inject(optional = true)
 //	@Nullable
-	private IWorkbench workbench;
-	
-	public ImageDescriptor getDefaultEditorImageDescriptor(String fileName) {
-		if (fileName != null && workbench != null) {
-			IEditorDescriptor defaultEditor = workbench.getEditorRegistry().getDefaultEditor(fileName);
-			if (defaultEditor != null) {
-				return defaultEditor.getImageDescriptor();
-			} else {
-				return workbench.getEditorRegistry().getSystemExternalEditorImageDescriptor(fileName);
-			}
-		}
-		return null;
-	}
+    private IWorkbench workbench;
+
+    public ImageDescriptor getDefaultEditorImageDescriptor(String fileName) {
+        if (fileName != null && workbench != null) {
+            IEditorDescriptor defaultEditor = workbench.getEditorRegistry().getDefaultEditor(fileName);
+            if (defaultEditor != null) {
+                return defaultEditor.getImageDescriptor();
+            } else {
+                return workbench.getEditorRegistry().getSystemExternalEditorImageDescriptor(fileName);
+            }
+        }
+        return null;
+    }
 }

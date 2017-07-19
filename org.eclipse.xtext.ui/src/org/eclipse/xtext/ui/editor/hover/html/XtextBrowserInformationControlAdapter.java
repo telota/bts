@@ -23,97 +23,97 @@ import org.eclipse.swt.graphics.Point;
  * @since 2.3
  */
 public class XtextBrowserInformationControlAdapter implements IXtextBrowserInformationControl {
-	private final BrowserInformationControl control;
+    private final BrowserInformationControl control;
 
-	XtextBrowserInformationControlAdapter(BrowserInformationControl control) {
-		this.control = control;
-	}
+    XtextBrowserInformationControlAdapter(BrowserInformationControl control) {
+        this.control = control;
+    }
 
-	public void setVisible(boolean visible) {
-		control.setVisible(visible);
-	}
+    public void setVisible(boolean visible) {
+        control.setVisible(visible);
+    }
 
-	public void setSizeConstraints(int maxWidth, int maxHeight) {
-		control.setSizeConstraints(maxWidth, maxHeight);
-	}
+    public void setSizeConstraints(int maxWidth, int maxHeight) {
+        control.setSizeConstraints(maxWidth, maxHeight);
+    }
 
-	public void setSize(int width, int height) {
-		control.setSize(width, height);
-	}
+    public void setSize(int width, int height) {
+        control.setSize(width, height);
+    }
 
-	public void setLocation(Point location) {
-		control.setLocation(location);
-	}
+    public void setLocation(Point location) {
+        control.setLocation(location);
+    }
 
-	@Deprecated
-	public void setInformation(String information) {
-		control.setInformation(information);
-	}
+    @Deprecated
+    public void setInformation(String information) {
+        control.setInformation(information);
+    }
 
-	public void setForegroundColor(Color foreground) {
-		control.setForegroundColor(foreground);
-	}
+    public void setForegroundColor(Color foreground) {
+        control.setForegroundColor(foreground);
+    }
 
-	public void setFocus() {
-		control.setFocus();
-	}
+    public void setFocus() {
+        control.setFocus();
+    }
 
-	public void setBackgroundColor(Color background) {
-		control.setBackgroundColor(background);
-	}
+    public void setBackgroundColor(Color background) {
+        control.setBackgroundColor(background);
+    }
 
-	public void removeFocusListener(FocusListener listener) {
-		control.removeFocusListener(listener);
-	}
+    public void removeFocusListener(FocusListener listener) {
+        control.removeFocusListener(listener);
+    }
 
-	public void removeDisposeListener(DisposeListener listener) {
-		control.removeDisposeListener(listener);
-	}
+    public void removeDisposeListener(DisposeListener listener) {
+        control.removeDisposeListener(listener);
+    }
 
-	public boolean isFocusControl() {
-		return control.isFocusControl();
-	}
+    public boolean isFocusControl() {
+        return control.isFocusControl();
+    }
 
-	public Point computeSizeHint() {
-		return control.computeSizeHint();
-	}
+    public Point computeSizeHint() {
+        return control.computeSizeHint();
+    }
 
-	public void addFocusListener(FocusListener listener) {
-		control.addFocusListener(listener);
-	}
+    public void addFocusListener(FocusListener listener) {
+        control.addFocusListener(listener);
+    }
 
-	public void addDisposeListener(DisposeListener listener) {
-		control.addDisposeListener(listener);
-	}
+    public void addDisposeListener(DisposeListener listener) {
+        control.addDisposeListener(listener);
+    }
 
-	public void setInput(Object input) {
-		control.setInput(input);
-	}
+    public void notifyDelayedInputChange(Object object) {
+        control.notifyDelayedInputChange(object);
+    }
 
-	public void notifyDelayedInputChange(Object object) {
-		control.notifyDelayedInputChange(object);
-	}
+    public boolean hasDelayedInputChangeListener() {
+        return control.hasDelayedInputChangeListener();
+    }
 
-	public boolean hasDelayedInputChangeListener() {
-		return control.hasDelayedInputChangeListener();
-	}
+    /**
+     * @noreference This method is not intended to be referenced by clients.
+     */
+    public BrowserInformationControlInput getInput() {
+        return control.getInput();
+    }
 
-	/**
-	 * @noreference This method is not intended to be referenced by clients.
-	 */
-	public BrowserInformationControlInput getInput() {
-		return control.getInput();
-	}
+    public void setInput(Object input) {
+        control.setInput(input);
+    }
 
-	public void dispose() {
-		control.dispose();
-	}
+    public void dispose() {
+        control.dispose();
+    }
 
-	public void addLocationListener(LocationListener createLocationListener) {
-		control.addLocationListener(createLocationListener);
-	}
+    public void addLocationListener(LocationListener createLocationListener) {
+        control.addLocationListener(createLocationListener);
+    }
 
-	public void addInputChangeListener(IInputChangedListener inputChangeListener) {
-		control.addInputChangeListener(inputChangeListener);
-	}
+    public void addInputChangeListener(IInputChangedListener inputChangeListener) {
+        control.addInputChangeListener(inputChangeListener);
+    }
 }

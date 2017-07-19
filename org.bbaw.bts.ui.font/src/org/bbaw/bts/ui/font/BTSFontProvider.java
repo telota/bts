@@ -36,35 +36,34 @@ import org.eclipse.swt.graphics.Font;
  *
  * @author Christoph Plutte
  */
-public interface BTSFontProvider
-{
+public interface BTSFontProvider {
 
-	/**
-	 * Gets the font name.
-	 *
-	 * @return the font name
-	 */
-	String getFontName();
+    /**
+     * Gets the font name.
+     *
+     * @return the font name
+     */
+    String getFontName();
 
-	/**
-	 * Gets the font styles.
-	 *
-	 * @return the font styles
-	 */
-	String[] getFontStyles();
+    /**
+     * Gets the font styles.
+     *
+     * @return the font styles
+     */
+    String[] getFontStyles();
 
-	/**
-	 * Gets the font.
-	 *
-	 * @return the font
-	 */
-	Font getFont();
+    /**
+     * Gets the font.
+     *
+     * @return the font
+     */
+    Font getFont();
 
-	/**
-	 * Gets the font.
-	 *
-	 * @param style the style
-	 * @return the font
-	 */
-	Font getFont(String style);
+    /**
+     * Gets the font.
+     *
+     * @param style the style
+     * @return the font
+     */
+    Font getFont(String style);
 }

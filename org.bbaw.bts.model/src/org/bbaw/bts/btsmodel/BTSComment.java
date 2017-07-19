@@ -35,67 +35,70 @@ import org.eclipse.emf.common.util.EList;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>BTS Comment</b></em>'.
  * <!-- end-user-doc -->
- *
+ * <p>
  * <!-- begin-model-doc -->
  * BTSComment is used for user comments of objects in the BTS.
  * Users should be able to comment other objects that extend BTSObject.
- * 
+ * <p>
  * References to BTSComment-objects to commented BTSObject-objects are described as relations -> see BTSObject.
  * <!-- end-model-doc -->
- *
+ * <p>
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.bbaw.bts.btsmodel.BTSComment#getComment <em>Comment</em>}</li>
- *   <li>{@link org.bbaw.bts.btsmodel.BTSComment#getTags <em>Tags</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSComment#getComment <em>Comment</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSComment#getTags <em>Tags</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSComment()
  * @model
  * @generated
+ * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSComment()
  */
 public interface BTSComment extends BTSObject {
-	/**
-	 * Returns the value of the '<em><b>Comment</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Comment</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Comment</em>' attribute.
-	 * @see #setComment(String)
-	 * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSComment_Comment()
-	 * @model
-	 * @generated
-	 */
-	String getComment();
+    /**
+     * Returns the value of the '<em><b>Comment</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Comment</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Comment</em>' attribute.
+     * @model
+     * @generated
+     * @see #setComment(String)
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSComment_Comment()
+     */
+    String getComment();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSComment#getComment <em>Comment</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Comment</em>' attribute.
-	 * @see #getComment()
-	 * @generated
-	 */
-	void setComment(String value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSComment#getComment <em>Comment</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Comment</em>' attribute.
+     * @generated
+     * @see #getComment()
+     */
+    void setComment(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Tags</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Tags</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Tags</em>' attribute list.
-	 * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSComment_Tags()
-	 * @model
-	 * @generated
-	 */
-	EList<String> getTags();
+    /**
+     * Returns the value of the '<em><b>Tags</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Tags</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Tags</em>' attribute list.
+     * @model
+     * @generated
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSComment_Tags()
+     */
+    EList<String> getTags();
 
 } // BTSComment

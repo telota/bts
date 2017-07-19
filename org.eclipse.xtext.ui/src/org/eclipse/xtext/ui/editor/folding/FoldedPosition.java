@@ -12,12 +12,13 @@ import org.eclipse.jface.text.source.projection.IProjectionPosition;
 
 /**
  * Abstract base class for positions that implement the {@link IProjectionPosition} interface.
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public abstract class FoldedPosition extends Position implements IProjectionPosition {
 
-	protected FoldedPosition(int offset, int length) {
-		super(offset, length);
-	}
-	
+    protected FoldedPosition(int offset, int length) {
+        super(offset, length);
+    }
+
 }

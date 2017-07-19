@@ -37,154 +37,154 @@ import com.google.inject.name.Named;
  * @author Heiko Behrens - Initial contribution and API
  */
 public class MarkerResolutionGenerator extends AbstractIssueResolutionProviderAdapter implements IMarkerResolutionGenerator2 {
-	
-	@Inject
-	@Named(Constants.LANGUAGE_NAME)
-	private String editorId;
-	
-	@Inject
-	private IssueUtil issueUtil;
-	
-	@Inject
-	private ILanguageResourceHelper languageResourceHelper;
 
-	@Inject 
-	private IWorkbench workbench;
-	
-	public IssueUtil getIssueUtil() {
-		return issueUtil;
-	}
+    @Inject
+    @Named(Constants.LANGUAGE_NAME)
+    private String editorId;
 
-	public void setIssueUtil(IssueUtil issueUtil) {
-		this.issueUtil = issueUtil;
-	}
+    @Inject
+    private IssueUtil issueUtil;
 
-	public void setEditorId(String editorId) {
-		this.editorId = editorId;
-	}
+    @Inject
+    private ILanguageResourceHelper languageResourceHelper;
 
-	public String getEditorId() {
-		return editorId;
-	}
+    @Inject
+    private IWorkbench workbench;
 
-	public boolean hasResolutions(IMarker marker) {
-		return getResolutionProvider().hasResolutionFor(getIssueUtil().getCode(marker));
-	}
+    public IssueUtil getIssueUtil() {
+        return issueUtil;
+    }
 
-	public IMarkerResolution[] getResolutions(IMarker marker) {
-		final IMarkerResolution[] emptyResult = new IMarkerResolution[0];
-		try {
-			if(!marker.isSubtypeOf(MarkerTypes.ANY_VALIDATION))
-				return emptyResult;
-		} catch (CoreException e) {
-			return emptyResult;
-		}
-		if(!languageResourceHelper.isLanguageResource(marker.getResource())) {
-			return emptyResult;
-		}
-		XtextEditor editor = getEditor(marker.getResource());
-		if(editor == null)
-			return emptyResult;
-		
-		IAnnotationModel annotationModel = editor.getDocumentProvider().getAnnotationModel(editor.getEditorInput());
-		if(annotationModel != null && !isMarkerStillValid(marker, annotationModel))
-			return emptyResult;
-		
-		final Iterable<IssueResolution> resolutions = getResolutions(getIssueUtil().createIssue(marker), editor.getDocument());
-		return getAdaptedResolutions(Lists.newArrayList(resolutions));
-	}
+    public void setIssueUtil(IssueUtil issueUtil) {
+        this.issueUtil = issueUtil;
+    }
 
-	@SuppressWarnings("unchecked")
-	public boolean isMarkerStillValid(final IMarker marker, final IAnnotationModel annotationModel) {
-		Iterator<Annotation> iterator = annotationModel.getAnnotationIterator();
-		return Iterators.any(iterator, new Predicate<Annotation>() {
+    public String getEditorId() {
+        return editorId;
+    }
 
-			public boolean apply(Annotation annotation) {
-				if (annotation.isMarkedDeleted())
-					return false;
-				return referringToSameIssue(annotation, marker);
-			}
+    public void setEditorId(String editorId) {
+        this.editorId = editorId;
+    }
 
-			private boolean referringToSameIssue(Annotation annotation, IMarker marker) {
+    public boolean hasResolutions(IMarker marker) {
+        return getResolutionProvider().hasResolutionFor(getIssueUtil().getCode(marker));
+    }
+
+    public IMarkerResolution[] getResolutions(IMarker marker) {
+        final IMarkerResolution[] emptyResult = new IMarkerResolution[0];
+        try {
+            if (!marker.isSubtypeOf(MarkerTypes.ANY_VALIDATION))
+                return emptyResult;
+        } catch (CoreException e) {
+            return emptyResult;
+        }
+        if (!languageResourceHelper.isLanguageResource(marker.getResource())) {
+            return emptyResult;
+        }
+        XtextEditor editor = getEditor(marker.getResource());
+        if (editor == null)
+            return emptyResult;
+
+        IAnnotationModel annotationModel = editor.getDocumentProvider().getAnnotationModel(editor.getEditorInput());
+        if (annotationModel != null && !isMarkerStillValid(marker, annotationModel))
+            return emptyResult;
+
+        final Iterable<IssueResolution> resolutions = getResolutions(getIssueUtil().createIssue(marker), editor.getDocument());
+        return getAdaptedResolutions(Lists.newArrayList(resolutions));
+    }
+
+    @SuppressWarnings("unchecked")
+    public boolean isMarkerStillValid(final IMarker marker, final IAnnotationModel annotationModel) {
+        Iterator<Annotation> iterator = annotationModel.getAnnotationIterator();
+        return Iterators.any(iterator, new Predicate<Annotation>() {
+
+            public boolean apply(Annotation annotation) {
+                if (annotation.isMarkedDeleted())
+                    return false;
+                return referringToSameIssue(annotation, marker);
+            }
+
+            private boolean referringToSameIssue(Annotation annotation, IMarker marker) {
                 return getIssueUtil().refersToSameIssue(marker, annotation);
             }
-		});
-	}
+        });
+    }
 
-	public IXtextDocument getXtextDocument(IResource resource) {
-		IXtextDocument result = XtextDocumentUtil.get(resource);
-		if(result == null) {
-			IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
-			try {
-				IFile file = ResourceUtil.getFile(resource);
-				IEditorInput input = new FileEditorInput(file);
-				page.openEditor(input, getEditorId());
-			} catch (PartInitException e) {
-				return null;
-			}
-		}
-		return XtextDocumentUtil.get(resource);
-	}
-	
-	public XtextEditor getEditor(IResource resource) {
-		XtextEditor result = findEditor(resource);
-		if(result == null) {
-			IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
-			try {
-				IFile file = ResourceUtil.getFile(resource);
-				IEditorInput input = new FileEditorInput(file);
-				result = (XtextEditor) page.openEditor(input, getEditorId());
-			} catch (PartInitException e) {
-				return null;
-			}
-		}
-			
-		return result;
-	}
-	
-	public XtextEditor findEditor(IResource resource) {
-		if(resource instanceof IFile) {
-			IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
-			IEditorPart editor = activePage.findEditor(new FileEditorInput((IFile) resource));
-			if(editor instanceof XtextEditor)
-				return (XtextEditor)editor;
-		}
-		return null;
+    public IXtextDocument getXtextDocument(IResource resource) {
+        IXtextDocument result = XtextDocumentUtil.get(resource);
+        if (result == null) {
+            IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
+            try {
+                IFile file = ResourceUtil.getFile(resource);
+                IEditorInput input = new FileEditorInput(file);
+                page.openEditor(input, getEditorId());
+            } catch (PartInitException e) {
+                return null;
+            }
+        }
+        return XtextDocumentUtil.get(resource);
+    }
 
-	}
+    public XtextEditor getEditor(IResource resource) {
+        XtextEditor result = findEditor(resource);
+        if (result == null) {
+            IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
+            try {
+                IFile file = ResourceUtil.getFile(resource);
+                IEditorInput input = new FileEditorInput(file);
+                result = (XtextEditor) page.openEditor(input, getEditorId());
+            } catch (PartInitException e) {
+                return null;
+            }
+        }
 
-	public class ResolutionAdapter implements IMarkerResolution2 {
+        return result;
+    }
 
-		private final IssueResolution resolution;
+    public XtextEditor findEditor(IResource resource) {
+        if (resource instanceof IFile) {
+            IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
+            IEditorPart editor = activePage.findEditor(new FileEditorInput((IFile) resource));
+            if (editor instanceof XtextEditor)
+                return (XtextEditor) editor;
+        }
+        return null;
 
-		public ResolutionAdapter(IssueResolution resolution) {
-			this.resolution = resolution;
-		}
+    }
 
-		public String getLabel() {
-			return resolution.getLabel();
-		}
+    protected IMarkerResolution[] getAdaptedResolutions(List<IssueResolution> resolutions) {
+        IMarkerResolution[] result = new IMarkerResolution[resolutions.size()];
+        for (int i = 0; i < resolutions.size(); i++)
+            result[i] = new ResolutionAdapter(resolutions.get(i));
 
-		public void run(IMarker marker) {
-			resolution.apply();
-		}
+        return result;
+    }
 
-		public String getDescription() {
-			return resolution.getDescription();
-		}
+    public class ResolutionAdapter implements IMarkerResolution2 {
 
-		public Image getImage() {
-			return MarkerResolutionGenerator.this.getImage(resolution);
-		}
+        private final IssueResolution resolution;
 
-	}
+        public ResolutionAdapter(IssueResolution resolution) {
+            this.resolution = resolution;
+        }
 
-	protected IMarkerResolution[] getAdaptedResolutions(List<IssueResolution> resolutions) {
-		IMarkerResolution[] result = new IMarkerResolution[resolutions.size()];
-		for(int i=0; i<resolutions.size(); i++)
-			result[i] = new ResolutionAdapter(resolutions.get(i));
-		
-		return result;
-	}
+        public String getLabel() {
+            return resolution.getLabel();
+        }
+
+        public void run(IMarker marker) {
+            resolution.apply();
+        }
+
+        public String getDescription() {
+            return resolution.getDescription();
+        }
+
+        public Image getImage() {
+            return MarkerResolutionGenerator.this.getImage(resolution);
+        }
+
+    }
 
 }

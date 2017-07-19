@@ -22,140 +22,152 @@ import com.google.inject.Provider;
 /**
  * Highlighting helper.
  * Initially copied from org.eclipse.jdt.internal.ui.javaeditor.SemanticHighlightingManager
- * 
+ *
  * @author Sebastian Zarnekow
  */
 public class HighlightingHelper implements IHighlightingHelper, IPropertyChangeListener {
 
-	@Inject
-	private Provider<HighlightingReconciler> reconcilerProvider;
-	
-	@Inject
-	private Provider<HighlightingPresenter> presenterProvider;
-	
-	@Inject
-	private IPreferenceStoreAccess preferenceStoreAccessor;
-	
-	@Inject
-	private TextAttributeProvider textAttributeProvider;
-	
-	/** Highlighting presenter */
-	private HighlightingPresenter fPresenter;
-	/** Highlighting reconciler */
-	private HighlightingReconciler fReconciler;
+    @Inject
+    private Provider<HighlightingReconciler> reconcilerProvider;
 
-	/** The editor */
-	private XtextEditor fEditor;
-	/** The source viewer */
-	private XtextSourceViewer fSourceViewer;
-	/** The source viewer configuration */
-	private XtextSourceViewerConfiguration fConfiguration;
-	/** The presentation reconciler */
-	private XtextPresentationReconciler fPresentationReconciler;
+    @Inject
+    private Provider<HighlightingPresenter> presenterProvider;
 
-	private IPreferenceStore preferenceStore;
+    @Inject
+    private IPreferenceStoreAccess preferenceStoreAccessor;
 
-	public void install(XtextEditor editor, XtextSourceViewer sourceViewer) {
-		fEditor= editor;
-		if (fEditor != null) {
-			install(editor.getXtextSourceViewerConfiguration(), sourceViewer) ;
-		}
-	}
+    @Inject
+    private TextAttributeProvider textAttributeProvider;
 
-	/**
-	 * @since 2.3
-	 */
-	public void install(XtextSourceViewerConfiguration configuration, XtextSourceViewer sourceViewer) {
-		fSourceViewer= sourceViewer;
-		fConfiguration= configuration;
-		if(sourceViewer != null && configuration != null){
-			fPresentationReconciler= (XtextPresentationReconciler) fConfiguration.getPresentationReconciler(sourceViewer);
-		} else {
-			fPresentationReconciler = null;
-			fConfiguration = null;
-		}
-		preferenceStore = getPreferenceStoreAccessor().getPreferenceStore();
-		preferenceStore.addPropertyChangeListener(this);
-		enable();
-	}
+    /**
+     * Highlighting presenter
+     */
+    private HighlightingPresenter fPresenter;
+    /**
+     * Highlighting reconciler
+     */
+    private HighlightingReconciler fReconciler;
 
-	/**
-	 * Enable advanced highlighting.
-	 */
-	private void enable() {
-		fPresenter= getPresenterProvider().get();
-		fPresenter.install(fSourceViewer, fPresentationReconciler);
+    /**
+     * The editor
+     */
+    private XtextEditor fEditor;
+    /**
+     * The source viewer
+     */
+    private XtextSourceViewer fSourceViewer;
+    /**
+     * The source viewer configuration
+     */
+    private XtextSourceViewerConfiguration fConfiguration;
+    /**
+     * The presentation reconciler
+     */
+    private XtextPresentationReconciler fPresentationReconciler;
 
-		if (fSourceViewer.getDocument() != null) {
-			fReconciler= reconcilerProvider.get();
-			fReconciler.install(fEditor, fSourceViewer, fPresenter);
-		}
-	}
+    private IPreferenceStore preferenceStore;
 
-	public void uninstall() {
-		disable();
-		if (preferenceStore != null) {
-			preferenceStore.removePropertyChangeListener(this);
-		}
-		fEditor= null;
-		fSourceViewer= null;
-		fConfiguration= null;
-		fPresentationReconciler= null;
-	}
+    public void install(XtextEditor editor, XtextSourceViewer sourceViewer) {
+        fEditor = editor;
+        if (fEditor != null) {
+            install(editor.getXtextSourceViewerConfiguration(), sourceViewer);
+        }
+    }
 
-	/**
-	 * Disable advanced highlighting.
-	 */
-	private void disable() {
-		if (fReconciler != null) {
-			fReconciler.uninstall();
-			fReconciler= null;
-		}
+    /**
+     * @since 2.3
+     */
+    public void install(XtextSourceViewerConfiguration configuration, XtextSourceViewer sourceViewer) {
+        fSourceViewer = sourceViewer;
+        fConfiguration = configuration;
+        if (sourceViewer != null && configuration != null) {
+            fPresentationReconciler = (XtextPresentationReconciler) fConfiguration.getPresentationReconciler(sourceViewer);
+        } else {
+            fPresentationReconciler = null;
+            fConfiguration = null;
+        }
+        preferenceStore = getPreferenceStoreAccessor().getPreferenceStore();
+        preferenceStore.addPropertyChangeListener(this);
+        enable();
+    }
 
-		if (fPresenter != null) {
-			fPresenter.uninstall();
-			fPresenter= null;
-		}
-	}
+    /**
+     * Enable advanced highlighting.
+     */
+    private void enable() {
+        fPresenter = getPresenterProvider().get();
+        fPresenter.install(fSourceViewer, fPresentationReconciler);
 
-	/**
-	 * Returns this hightlighter's reconciler.
-	 *
-	 * @return the highlighter reconciler or <code>null</code> if none
-	 */
-	public HighlightingReconciler getReconciler() {
-		return fReconciler;
-	}
+        if (fSourceViewer.getDocument() != null) {
+            fReconciler = reconcilerProvider.get();
+            fReconciler.install(fEditor, fSourceViewer, fPresenter);
+        }
+    }
 
-	public void setReconcilerProvider(Provider<HighlightingReconciler> reconcilerProvider) {
-		this.reconcilerProvider = reconcilerProvider;
-	}
+    public void uninstall() {
+        disable();
+        if (preferenceStore != null) {
+            preferenceStore.removePropertyChangeListener(this);
+        }
+        fEditor = null;
+        fSourceViewer = null;
+        fConfiguration = null;
+        fPresentationReconciler = null;
+    }
 
-	public Provider<HighlightingReconciler> getReconcilerProvider() {
-		return reconcilerProvider;
-	}
+    /**
+     * Disable advanced highlighting.
+     */
+    private void disable() {
+        if (fReconciler != null) {
+            fReconciler.uninstall();
+            fReconciler = null;
+        }
 
-	public void setPresenterProvider(Provider<HighlightingPresenter> presenterProvider) {
-		this.presenterProvider = presenterProvider;
-	}
+        if (fPresenter != null) {
+            fPresenter.uninstall();
+            fPresenter = null;
+        }
+    }
 
-	public Provider<HighlightingPresenter> getPresenterProvider() {
-		return presenterProvider;
-	}
+    /**
+     * Returns this hightlighter's reconciler.
+     *
+     * @return the highlighter reconciler or <code>null</code> if none
+     */
+    public HighlightingReconciler getReconciler() {
+        return fReconciler;
+    }
 
-	public void setPreferenceStoreAccessor(IPreferenceStoreAccess preferenceStoreAccessor) {
-		this.preferenceStoreAccessor = preferenceStoreAccessor;
-	}
+    public Provider<HighlightingReconciler> getReconcilerProvider() {
+        return reconcilerProvider;
+    }
 
-	public IPreferenceStoreAccess getPreferenceStoreAccessor() {
-		return preferenceStoreAccessor;
-	}
+    public void setReconcilerProvider(Provider<HighlightingReconciler> reconcilerProvider) {
+        this.reconcilerProvider = reconcilerProvider;
+    }
 
-	public void propertyChange(PropertyChangeEvent event) {
-		if (fReconciler != null && event.getProperty().contains(".syntaxColorer.tokenStyles")) {
-			textAttributeProvider.propertyChange(event);
-			fReconciler.refresh();
-		}
-	}
+    public Provider<HighlightingPresenter> getPresenterProvider() {
+        return presenterProvider;
+    }
+
+    public void setPresenterProvider(Provider<HighlightingPresenter> presenterProvider) {
+        this.presenterProvider = presenterProvider;
+    }
+
+    public IPreferenceStoreAccess getPreferenceStoreAccessor() {
+        return preferenceStoreAccessor;
+    }
+
+    public void setPreferenceStoreAccessor(IPreferenceStoreAccess preferenceStoreAccessor) {
+        this.preferenceStoreAccessor = preferenceStoreAccessor;
+    }
+
+    public void propertyChange(PropertyChangeEvent event) {
+        if (fReconciler != null && event.getProperty().contains(".syntaxColorer.tokenStyles")) {
+            textAttributeProvider.propertyChange(event);
+            fReconciler.refresh();
+        }
+    }
 
 }

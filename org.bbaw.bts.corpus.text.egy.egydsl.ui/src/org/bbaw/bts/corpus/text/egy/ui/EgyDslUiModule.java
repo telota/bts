@@ -31,60 +31,59 @@ import com.google.inject.Provider;
  * Use this class to register components to be used within the IDE.
  */
 public class EgyDslUiModule extends org.bbaw.bts.corpus.text.egy.ui.AbstractEgyDslUiModule {
-	public EgyDslUiModule(AbstractUIPlugin plugin) {
-		super(plugin);
-	}
+    public EgyDslUiModule(AbstractUIPlugin plugin) {
+        super(plugin);
+    }
 
-	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
-		return BTSEObjectHover.class;
-	}
+    public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
+        return BTSEObjectHover.class;
+    }
 
-	@Override
-	public void configure(Binder binder) {
-		// TODO Auto-generated method stub
-		super.configure(binder);
-		binder.bind(XtextSourceViewer.class).toProvider((Class<? extends Provider<? extends XtextSourceViewer>>) BTSE4ToGuiceXtextSourceViewerProvider.class);
-	}
-	
+    @Override
+    public void configure(Binder binder) {
+        // TODO Auto-generated method stub
+        super.configure(binder);
+        binder.bind(XtextSourceViewer.class).toProvider((Class<? extends Provider<? extends XtextSourceViewer>>) BTSE4ToGuiceXtextSourceViewerProvider.class);
+    }
+
 //	 public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider()
 //	 {
 //	 return (Class<? extends IEObjectHoverProvider>) BTSEObjectHover.class;
 //	 }
 
-	public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProviderr() {
-		return BTSEObjectDocumentationProvider.class;
-	}
+    public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProviderr() {
+        return BTSEObjectDocumentationProvider.class;
+    }
 
-	public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
-		return BTSHighlightingConfiguration.class;
-	}
+    public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
+        return BTSHighlightingConfiguration.class;
+    }
 
-	public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
-		return BTSSemanticHighlightingCalculator.class;
-	}
+    public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+        return BTSSemanticHighlightingCalculator.class;
+    }
 
-	public Class<? extends ILocationInFileProvider> bindILocationInFileProvider() {
-		return BTSLocationInFileProvider.class;
-	}
+    public Class<? extends ILocationInFileProvider> bindILocationInFileProvider() {
+        return BTSLocationInFileProvider.class;
+    }
 
-	public Class<? extends IEncodingProvider> bindIEncodingProvider() {
-		return BTSEncodingProvider.class;
-	}
+    public Class<? extends IEncodingProvider> bindIEncodingProvider() {
+        return BTSEncodingProvider.class;
+    }
 
 //	public Class<? extends TerminalsProposalProvider> bindProposalProvider() {
 //		return EgyDslProposalProvider.class;
 //	}
 
-	public Class<? extends AbstractDeclarativeFormatter> createFormatter() {
-		return EgyDslFormatter.class;
-	}
-	
-    
+    public Class<? extends AbstractDeclarativeFormatter> createFormatter() {
+        return EgyDslFormatter.class;
+    }
+
 
     public Class<? extends AbstractEgyDslProposalProvider> bindContentProposalProvider() {
-    	// TODO Auto-generated method stub
-    	return EgyDslProposalProvider.class;
+        // TODO Auto-generated method stub
+        return EgyDslProposalProvider.class;
     }
-	
+
 
 }

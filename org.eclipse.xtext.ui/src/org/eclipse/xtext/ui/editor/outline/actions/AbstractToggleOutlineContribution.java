@@ -16,14 +16,14 @@ import org.eclipse.xtext.ui.editor.outline.impl.OutlinePage;
  */
 public abstract class AbstractToggleOutlineContribution extends AbstractToggleActionContributor implements IOutlineContribution {
 
-	public void register(OutlinePage outlinePage) {
-		IToolBarManager toolBarManager = outlinePage.getSite().getActionBars().getToolBarManager();
-		toolBarManager.add(getAction());
-		addPropertyChangeListener();
-	}
+    public void register(OutlinePage outlinePage) {
+        IToolBarManager toolBarManager = outlinePage.getSite().getActionBars().getToolBarManager();
+        toolBarManager.add(getAction());
+        addPropertyChangeListener();
+    }
 
-	public void deregister(OutlinePage outlinePage) {
-		removePropertyChangeListener();
-	}
+    public void deregister(OutlinePage outlinePage) {
+        removePropertyChangeListener();
+    }
 
 }

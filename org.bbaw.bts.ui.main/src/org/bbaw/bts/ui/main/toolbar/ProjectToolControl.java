@@ -35,49 +35,48 @@ import org.eclipse.swt.widgets.Label;
 
 public class ProjectToolControl {
 
-	@Inject
-	private BTSResourceProvider resourceProvider;
+    @Inject
+    private BTSResourceProvider resourceProvider;
 
-	@Inject
-	private ECommandService commandService;
+    @Inject
+    private ECommandService commandService;
 
-	@Inject
-	private EHandlerService handlerService;
-	
-	@Inject 
-	private IStylingEngine engine;
-	
-	private ComposedAdapterFactory factory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-	private AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-			factory);
-	private Label projectLabel;
+    @Inject
+    private EHandlerService handlerService;
 
-	private Composite composite;
+    @Inject
+    private IStylingEngine engine;
 
-	private BTSProject mainProject;
+    private ComposedAdapterFactory factory = new ComposedAdapterFactory(
+            ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+    private AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
+            factory);
+    private Label projectLabel;
 
-	@PostConstruct
-	public void postConstruct(Composite composite) {
-		this.composite = composite;
-		composite.setLayout(new GridLayout(6, false));
-		engine.setClassname(composite, "MToolBar");
+    private Composite composite;
 
-		Label l = new Label(composite, SWT.None);
-		l.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_PROJECT));
-		l.setLayoutData(new GridData());
-		l.pack();
+    private BTSProject mainProject;
 
-		projectLabel = new Label(composite, SWT.None);
-		projectLabel.setLayoutData(new GridData());
-		((GridData) projectLabel.getLayoutData()).horizontalSpan = 2;
-		if (mainProject != null) {
-			projectLabel.setText(labelProvider.getText(mainProject));
-		}
-		else {
-			projectLabel.setText("ERROR: No Project");
-		}
-		projectLabel.pack();
+    @PostConstruct
+    public void postConstruct(Composite composite) {
+        this.composite = composite;
+        composite.setLayout(new GridLayout(6, false));
+        engine.setClassname(composite, "MToolBar");
+
+        Label l = new Label(composite, SWT.None);
+        l.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_PROJECT));
+        l.setLayoutData(new GridData());
+        l.pack();
+
+        projectLabel = new Label(composite, SWT.None);
+        projectLabel.setLayoutData(new GridData());
+        ((GridData) projectLabel.getLayoutData()).horizontalSpan = 2;
+        if (mainProject != null) {
+            projectLabel.setText(labelProvider.getText(mainProject));
+        } else {
+            projectLabel.setText("ERROR: No Project");
+        }
+        projectLabel.pack();
 
 //		Label editPrefs = new Label(composite, SWT.PUSH);
 //		editPrefs.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_PREFERENCES));
@@ -113,25 +112,25 @@ public class ProjectToolControl {
 //			}
 //		});
 
-		composite.layout();
-		composite.pack();
-	}
-	
-	@Inject
-	@Optional
-	public void setMainProject(
-			@Named(BTSCoreConstants.MAIN_PROJECT) BTSProject project) {
-		if (project != null
-				&& !project.equals(this.mainProject)) {
-			this.mainProject = project;
-			if (projectLabel != null) {
-				if (mainProject != null) {
-					projectLabel.setText(labelProvider.getText(mainProject));
-				}
-				projectLabel.pack();
-				composite.layout();
-				composite.pack();
-			}
-		}
-	}
+        composite.layout();
+        composite.pack();
+    }
+
+    @Inject
+    @Optional
+    public void setMainProject(
+            @Named(BTSCoreConstants.MAIN_PROJECT) BTSProject project) {
+        if (project != null
+                && !project.equals(this.mainProject)) {
+            this.mainProject = project;
+            if (projectLabel != null) {
+                if (mainProject != null) {
+                    projectLabel.setText(labelProvider.getText(mainProject));
+                }
+                projectLabel.pack();
+                composite.layout();
+                composite.pack();
+            }
+        }
+    }
 }

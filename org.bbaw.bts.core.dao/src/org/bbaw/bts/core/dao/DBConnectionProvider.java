@@ -39,68 +39,67 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  *
  * @author Christoph Plutte
  */
-public interface DBConnectionProvider
-{
+public interface DBConnectionProvider {
 
-	/**
-	 * Gets the DB client.
-	 *
-	 * @param <T> the generic type
-	 * @param clazz the clazz
-	 * @param path the path
-	 * @return the DB client
-	 */
-	<T> T getDBClient(Class<T> clazz, String path);
+    /**
+     * Gets the DB client.
+     *
+     * @param <T>   the generic type
+     * @param clazz the clazz
+     * @param path  the path
+     * @return the DB client
+     */
+    <T> T getDBClient(Class<T> clazz, String path);
 
-	/**
-	 * Gets the DB client.
-	 *
-	 * @param <T> the generic type
-	 * @param clazz the clazz
-	 * @param path the path
-	 * @param userName the user name
-	 * @param password the password
-	 * @return the DB client
-	 */
-	<T> T getDBClient(Class<T> clazz, String path, String userName, String password);
+    /**
+     * Gets the DB client.
+     *
+     * @param <T>      the generic type
+     * @param clazz    the clazz
+     * @param path     the path
+     * @param userName the user name
+     * @param password the password
+     * @return the DB client
+     */
+    <T> T getDBClient(Class<T> clazz, String path, String userName, String password);
 
-	/**
-	 * Gets the search client.
-	 *
-	 * @param <T> the generic type
-	 * @param clazz the clazz
-	 * @return the search client
-	 */
-	<T> T getSearchClient(Class<T> clazz);
+    /**
+     * Gets the search client.
+     *
+     * @param <T>   the generic type
+     * @param clazz the clazz
+     * @return the search client
+     */
+    <T> T getSearchClient(Class<T> clazz);
 
-	/**
-	 * Gets the emf resource set.
-	 *
-	 * @return the emf resource set
-	 */
-	ResourceSet getEmfResourceSet();
+    /**
+     * Gets the emf resource set.
+     *
+     * @return the emf resource set
+     */
+    ResourceSet getEmfResourceSet();
 
-	/**
-	 * Gets the local dburl.
-	 *
-	 * @return the local dburl
-	 */
-	String getLocalDBURL();
+    /**
+     * Gets the local dburl.
+     *
+     * @return the local dburl
+     */
+    String getLocalDBURL();
 
-	/**
-	 * Gets the DB client.
-	 *
-	 * @param <T> the generic type
-	 * @param clazz the clazz
-	 * @param localDBUrl the local db url
-	 * @param collectionName the collection name
-	 * @return the DB client
-	 * @throws MalformedURLException the malformed url exception
-	 */
-	<T> T getDBClient(Class<T> clazz, String localDBUrl,
-			String collectionName) throws MalformedURLException;
+    /**
+     * Gets the DB client.
+     *
+     * @param <T>            the generic type
+     * @param clazz          the clazz
+     * @param localDBUrl     the local db url
+     * @param collectionName the collection name
+     * @return the DB client
+     * @throws MalformedURLException the malformed url exception
+     */
+    <T> T getDBClient(Class<T> clazz, String localDBUrl,
+                      String collectionName) throws MalformedURLException;
 
-	void purgeDBConnectionPool();
+    void purgeDBConnectionPool();
 
 
 }

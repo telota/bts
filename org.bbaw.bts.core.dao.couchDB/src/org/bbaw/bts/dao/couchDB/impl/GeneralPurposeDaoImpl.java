@@ -20,39 +20,38 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.search.SearchHit;
 import org.lightcouch.CouchDbClient;
 
-public class GeneralPurposeDaoImpl extends CouchDBDao<BTSDBBaseObject, String> implements GeneralPurposeDao
-{
+public class GeneralPurposeDaoImpl extends CouchDBDao<BTSDBBaseObject, String> implements GeneralPurposeDao {
 
-	@Override
-	public List<SearchHit> queryNonBTSObjects(BTSQueryRequest query,
-			String indexName, String indexType) {
-		if (query.getSearchRequestBuilder() == null) {
-			SearchResponse response = connectionProvider
-					.getSearchClient(Client.class)
-					.prepareSearch(indexName)
-					.setTypes(indexType)
-					.setSearchType(SearchType.QUERY_AND_FETCH)
-					.setQuery(query.getQueryBuilder())
-					.setFrom(0).setSize(60).setExplain(true).execute()
-					.actionGet();
-			List<SearchHit> result = new Vector<SearchHit>();
-			for (SearchHit hit : response.getHits()) {
-				result.add(hit);
-			}
+    @Override
+    public List<SearchHit> queryNonBTSObjects(BTSQueryRequest query,
+                                              String indexName, String indexType) {
+        if (query.getSearchRequestBuilder() == null) {
+            SearchResponse response = connectionProvider
+                    .getSearchClient(Client.class)
+                    .prepareSearch(indexName)
+                    .setTypes(indexType)
+                    .setSearchType(SearchType.QUERY_AND_FETCH)
+                    .setQuery(query.getQueryBuilder())
+                    .setFrom(0).setSize(60).setExplain(true).execute()
+                    .actionGet();
+            List<SearchHit> result = new Vector<SearchHit>();
+            for (SearchHit hit : response.getHits()) {
+                result.add(hit);
+            }
 
-			return result;
-		} else {
-			SearchResponse response = query.getSearchRequestBuilder()
-					.setIndices(indexName).setTypes(indexType)
-					.setSearchType(SearchType.QUERY_AND_FETCH).execute()
-					.actionGet();
-			List<SearchHit> result = new Vector<SearchHit>();
-			for (SearchHit hit : response.getHits()) {
-				result.add(hit);
-			}
+            return result;
+        } else {
+            SearchResponse response = query.getSearchRequestBuilder()
+                    .setIndices(indexName).setTypes(indexType)
+                    .setSearchType(SearchType.QUERY_AND_FETCH).execute()
+                    .actionGet();
+            List<SearchHit> result = new Vector<SearchHit>();
+            for (SearchHit hit : response.getHits()) {
+                result.add(hit);
+            }
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 
 }

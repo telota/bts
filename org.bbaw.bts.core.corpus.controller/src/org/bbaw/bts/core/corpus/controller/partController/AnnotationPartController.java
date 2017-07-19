@@ -9,25 +9,27 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface AnnotationPartController {
-	
-	void save(BTSObject object);
 
-	List<BTSObject> findRelatingObjects(BTSObject object, IProgressMonitor monitor);
-	
-	boolean checkAndFullyLoad(BTSCorpusObject object, boolean checkForConflicts);
+    void save(BTSObject object);
 
-	/**
-	 * Retrieve {@link BTSConfigItem} holding subtype definitions for the {@link BTSAnnotation}
-	 * type specified by given parameter.
-	 * @param objectTypesConfigItem
-	 * @return
-	 */
-	public BTSConfigItem getAnnoSubtypesConfigItem(BTSConfigItem objectTypesConfigItem);
-	
-	/**
-	 * Retrieve {@link BTSConfigItem} holding type definitions for {@link BTSAnnotation} objects
-	 * available in configuration.
-	 * @return
-	 */
-	public BTSConfigItem getAnnoTypesConfigItem();
+    List<BTSObject> findRelatingObjects(BTSObject object, IProgressMonitor monitor);
+
+    boolean checkAndFullyLoad(BTSCorpusObject object, boolean checkForConflicts);
+
+    /**
+     * Retrieve {@link BTSConfigItem} holding subtype definitions for the {@link BTSAnnotation}
+     * type specified by given parameter.
+     *
+     * @param objectTypesConfigItem
+     * @return
+     */
+    public BTSConfigItem getAnnoSubtypesConfigItem(BTSConfigItem objectTypesConfigItem);
+
+    /**
+     * Retrieve {@link BTSConfigItem} holding type definitions for {@link BTSAnnotation} objects
+     * available in configuration.
+     *
+     * @return
+     */
+    public BTSConfigItem getAnnoTypesConfigItem();
 }

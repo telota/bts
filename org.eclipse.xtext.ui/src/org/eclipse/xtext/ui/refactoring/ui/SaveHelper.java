@@ -28,59 +28,59 @@ import com.google.inject.Inject;
  */
 public class SaveHelper {
 
-	@Inject
-	private ProjectUtil projectUtil;
+    @Inject
+    private ProjectUtil projectUtil;
 
-	@Inject
-	private RefactoringPreferences prefs;
+    @Inject
+    private RefactoringPreferences prefs;
 
-	@Inject(optional = true)
-	private IWorkbench workbench;
-	
-	@Inject(optional = true)
-	private IWorkspace workspace;
-	
-	@Inject  
-	private SyncUtil syncUtil;
+    @Inject(optional = true)
+    private IWorkbench workbench;
 
-	public void saveEditors(final IRenameElementContext context) {
-		new DisplayRunnable() {
-			@Override
-			protected void run() throws Exception {
-				workspace.run(new IWorkspaceRunnable() {
-					public void run(IProgressMonitor monitor) throws CoreException {
-						IWorkbenchPage workbenchPage = getWorkbenchPage(context);
-						if (prefs.isSaveAllBeforeRefactoring()) 
-							workbenchPage.saveAllEditors(false);
-						else
-							saveDeclaringEditor(context, workbenchPage);
-					}
-				}, new NullProgressMonitor());
-			}
-		}.syncExec();
-		syncUtil.waitForBuild(null);
-	}
+    @Inject(optional = true)
+    private IWorkspace workspace;
 
-	protected IWorkbenchPage getWorkbenchPage(IRenameElementContext context) {
-		IEditorPart triggeringEditor = context.getTriggeringEditor();
-		return (triggeringEditor == null) ? workbench.getActiveWorkbenchWindow().getActivePage() : triggeringEditor
-				.getEditorSite().getPage();
-	}
+    @Inject
+    private SyncUtil syncUtil;
 
-	protected void saveDeclaringEditor(IRenameElementContext context, IWorkbenchPage workbenchPage) {
-		IEditorPart declaringEditor = getOpenEditor(context.getTargetElementURI(), workbenchPage);
-		if (declaringEditor != null && declaringEditor.isDirty())
-			declaringEditor.doSave(new NullProgressMonitor());
-	}
+    public void saveEditors(final IRenameElementContext context) {
+        new DisplayRunnable() {
+            @Override
+            protected void run() throws Exception {
+                workspace.run(new IWorkspaceRunnable() {
+                    public void run(IProgressMonitor monitor) throws CoreException {
+                        IWorkbenchPage workbenchPage = getWorkbenchPage(context);
+                        if (prefs.isSaveAllBeforeRefactoring())
+                            workbenchPage.saveAllEditors(false);
+                        else
+                            saveDeclaringEditor(context, workbenchPage);
+                    }
+                }, new NullProgressMonitor());
+            }
+        }.syncExec();
+        syncUtil.waitForBuild(null);
+    }
 
-	protected IEditorPart getOpenEditor(URI uri, IWorkbenchPage page) {
-		IFile file = projectUtil.findFileStorage(uri.trimFragment(), true);
-		if (file != null) {
-			FileEditorInput fileEditorInput = new FileEditorInput(file);
-			return page.findEditor(fileEditorInput);
-		}
-		return null;
-	}
-	
-	
+    protected IWorkbenchPage getWorkbenchPage(IRenameElementContext context) {
+        IEditorPart triggeringEditor = context.getTriggeringEditor();
+        return (triggeringEditor == null) ? workbench.getActiveWorkbenchWindow().getActivePage() : triggeringEditor
+                .getEditorSite().getPage();
+    }
+
+    protected void saveDeclaringEditor(IRenameElementContext context, IWorkbenchPage workbenchPage) {
+        IEditorPart declaringEditor = getOpenEditor(context.getTargetElementURI(), workbenchPage);
+        if (declaringEditor != null && declaringEditor.isDirty())
+            declaringEditor.doSave(new NullProgressMonitor());
+    }
+
+    protected IEditorPart getOpenEditor(URI uri, IWorkbenchPage page) {
+        IFile file = projectUtil.findFileStorage(uri.trimFragment(), true);
+        if (file != null) {
+            FileEditorInput fileEditorInput = new FileEditorInput(file);
+            return page.findEditor(fileEditorInput);
+        }
+        return null;
+    }
+
+
 }

@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * even though its type is annotated as {@link GwtCompatible} and accessible in
  * GWT.  They can cause GWT compilation errors or simply unexpected exceptions
  * when used in GWT.
- *
+ * <p>
  * <p>Note that this annotation should only be applied to methods, fields, or
  * inner classes of types which are annotated as {@link GwtCompatible}.
  *
@@ -37,16 +37,16 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.CLASS)
 @Target({
-    ElementType.TYPE, ElementType.METHOD,
-    ElementType.CONSTRUCTOR, ElementType.FIELD })
+        ElementType.TYPE, ElementType.METHOD,
+        ElementType.CONSTRUCTOR, ElementType.FIELD})
 @Documented
 @GwtCompatible
 public @interface GwtIncompatible {
-  /**
-   * Describes why the annotated element is incompatible with GWT. Since this is
-   * generally due to a dependence on a type/method which GWT doesn't support,
-   * it is sufficient to simply reference the unsupported type/method. E.g.
-   * "Class.isInstance".
-   */
-  String value();
+    /**
+     * Describes why the annotated element is incompatible with GWT. Since this is
+     * generally due to a dependence on a type/method which GWT doesn't support,
+     * it is sufficient to simply reference the unsupported type/method. E.g.
+     * "Class.isInstance".
+     */
+    String value();
 }

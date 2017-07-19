@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
@@ -17,36 +16,34 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
 public class DeletePermanentlyHandler {
-	@Execute
-	public void execute(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
-			CorpusCommandController commandController, @Optional @Active MPart activePart,
-			final Shell shell) {
-		if (selection instanceof BTSDBBaseObject) {
-			if (MessageDialog.openConfirm(shell,
-					"Confirm deletion",
-					"Object will not be recoverable after deletion. Proceed?")) {
-				commandController.deleteFromDB((BTSDBBaseObject) selection);
-				if (activePart != null)
-				{
-					Object o = activePart.getObject();
-					if (o instanceof StructuredViewerProvider)
-					{
-						StructuredViewerProvider viewerProvider = (StructuredViewerProvider) o;
-						viewerProvider.getActiveStructuredViewer().refresh();
-					}
-				}
-			}
-		}
-	}
-	@CanExecute
-	public boolean canExecute(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection,
-			@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
-		if (mayDelete != null && mayDelete.booleanValue())
-		{
-			return selection != null;
-		}
-		return false;
-	}	
+    @Execute
+    public void execute(
+            @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
+            CorpusCommandController commandController, @Optional @Active MPart activePart,
+            final Shell shell) {
+        if (selection instanceof BTSDBBaseObject) {
+            if (MessageDialog.openConfirm(shell,
+                    "Confirm deletion",
+                    "Object will not be recoverable after deletion. Proceed?")) {
+                commandController.deleteFromDB((BTSDBBaseObject) selection);
+                if (activePart != null) {
+                    Object o = activePart.getObject();
+                    if (o instanceof StructuredViewerProvider) {
+                        StructuredViewerProvider viewerProvider = (StructuredViewerProvider) o;
+                        viewerProvider.getActiveStructuredViewer().refresh();
+                    }
+                }
+            }
+        }
+    }
+
+    @CanExecute
+    public boolean canExecute(
+            @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection,
+            @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
+        if (mayDelete != null && mayDelete.booleanValue()) {
+            return selection != null;
+        }
+        return false;
+    }
 }

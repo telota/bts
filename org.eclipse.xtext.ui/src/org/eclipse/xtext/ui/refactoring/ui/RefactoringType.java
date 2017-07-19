@@ -11,8 +11,8 @@ package org.eclipse.xtext.ui.refactoring.ui;
  * @author Holger Schill - Initial contribution and API
  */
 public enum RefactoringType {
-	REFACTORING_DIALOG,
-	REFACTORING_DIRECT,
-	REFACTORING_PREVIEW,
-	LINKED_EDITING
+    REFACTORING_DIALOG,
+    REFACTORING_DIRECT,
+    REFACTORING_PREVIEW,
+    LINKED_EDITING
 }

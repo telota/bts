@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.main.toolbar;
 
 import javax.inject.Inject;
@@ -10,26 +9,24 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 public class EmptyToolControl {
-	private Composite composite;
+    private Composite composite;
 
-	@Inject
-	public EmptyToolControl() {
-		//TODO Your code here
-	}
-	
-	@PostConstruct
-	public void postConstruct(Composite parent) {
-		this.composite = parent;
-		composite.setLayout(new GridLayout(6, false));
-		new Label(composite, SWT.None);
-		new Label(composite, SWT.None);
-		new Label(composite, SWT.None);
-		new Label(composite, SWT.None);
-		new Label(composite, SWT.None);
-		new Label(composite, SWT.None);
-	}
-	
-	
-	
-	
+    @Inject
+    public EmptyToolControl() {
+        //TODO Your code here
+    }
+
+    @PostConstruct
+    public void postConstruct(Composite parent) {
+        this.composite = parent;
+        composite.setLayout(new GridLayout(6, false));
+        new Label(composite, SWT.None);
+        new Label(composite, SWT.None);
+        new Label(composite, SWT.None);
+        new Label(composite, SWT.None);
+        new Label(composite, SWT.None);
+        new Label(composite, SWT.None);
+    }
+
+
 }

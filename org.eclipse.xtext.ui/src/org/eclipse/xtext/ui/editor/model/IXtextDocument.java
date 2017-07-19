@@ -21,14 +21,14 @@ import org.eclipse.xtext.util.concurrent.IWriteAccess;
  */
 public interface IXtextDocument extends IDocument, IDocumentExtension3, IReadAccess<XtextResource>, IWriteAccess<XtextResource> {
 
-	public <T> T getAdapter(Class<T> adapterType);
-	
-	public void addModelListener(IXtextModelListener listener);
+    public <T> T getAdapter(Class<T> adapterType);
 
-	public void removeModelListener(IXtextModelListener listener);
-	
-	void addXtextDocumentContentObserver(IXtextDocumentContentObserver listener);
-	
-	void removeXtextDocumentContentObserver(IXtextDocumentContentObserver listener);
+    public void addModelListener(IXtextModelListener listener);
+
+    public void removeModelListener(IXtextModelListener listener);
+
+    void addXtextDocumentContentObserver(IXtextDocumentContentObserver listener);
+
+    void removeXtextDocumentContentObserver(IXtextDocumentContentObserver listener);
 
 }

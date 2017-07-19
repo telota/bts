@@ -18,15 +18,17 @@ import org.eclipse.jface.text.presentation.PresentationReconciler;
  */
 public class XtextPresentationReconciler extends PresentationReconciler {
 
-	/** Last used document */
-	private IDocument fLastDocument;
-	
-	public TextPresentation createRepairDescription(IRegion damage, IDocument document) {
-		if (document != fLastDocument) {
-			setDocumentToDamagers(document);
-			setDocumentToRepairers(document);
-			fLastDocument= document;
-		}
-		return super.createPresentation(new Region(0, document.getLength()), document);
-	}
+    /**
+     * Last used document
+     */
+    private IDocument fLastDocument;
+
+    public TextPresentation createRepairDescription(IRegion damage, IDocument document) {
+        if (document != fLastDocument) {
+            setDocumentToDamagers(document);
+            setDocumentToRepairers(document);
+            fLastDocument = document;
+        }
+        return super.createPresentation(new Region(0, document.getLength()), document);
+    }
 }

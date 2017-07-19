@@ -12,19 +12,19 @@ import com.google.inject.ImplementedBy;
 /**
  * Clients should implement this interface to provide the set of highlighting styles.
  * Implementors have to provide an <code>id</code>, <code>name</code> and default <code>style</code>.
- * 
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 @ImplementedBy(DefaultHighlightingConfiguration.class)
 public interface IHighlightingConfiguration {
 
-	/**
-	 * This method is called by the framework and allows clients to register the default styles for
-	 * the semantic highlighting stage.
-	 * 
-	 * @param acceptor the acceptor is used to announce the various default styles. It is never <code>null</code>.
-	 * @see IHighlightingConfigurationAcceptor#acceptDefaultHighlighting(String, String, org.eclipse.xtext.ui.editor.utils.TextStyle)
-	 */
-	void configure(IHighlightingConfigurationAcceptor acceptor);
+    /**
+     * This method is called by the framework and allows clients to register the default styles for
+     * the semantic highlighting stage.
+     *
+     * @param acceptor the acceptor is used to announce the various default styles. It is never <code>null</code>.
+     * @see IHighlightingConfigurationAcceptor#acceptDefaultHighlighting(String, String, org.eclipse.xtext.ui.editor.utils.TextStyle)
+     */
+    void configure(IHighlightingConfigurationAcceptor acceptor);
 
 }

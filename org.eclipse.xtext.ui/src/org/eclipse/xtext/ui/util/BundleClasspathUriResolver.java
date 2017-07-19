@@ -33,9 +33,9 @@ public class BundleClasspathUriResolver implements IClasspathUriResolver {
         try {
             if (ClasspathUriUtil.isClasspathUri(classpathUri)) {
                 URI result = findResourceInBundle(bundle, classpathUri);
- 				if (classpathUri.fragment() != null)
- 					result = result.appendFragment(classpathUri.fragment());
- 				return result;
+                if (classpathUri.fragment() != null)
+                    result = result.appendFragment(classpathUri.fragment());
+                return result;
             }
         } catch (Exception exc) {
             throw new ClasspathUriResolutionException(exc);
@@ -51,7 +51,7 @@ public class BundleClasspathUriResolver implements IClasspathUriResolver {
             String projectRelativePath = "/" + fullPath;
             URL resourceUrl = bundle.getResource(projectRelativePath);
             if (resourceUrl != null) {
-            	URL resolvedUrl = FileLocator.resolve(resourceUrl);
+                URL resolvedUrl = FileLocator.resolve(resourceUrl);
                 URI normalizedURI = URI.createURI(
                         resolvedUrl.toString(), true);
                 return normalizedURI;

@@ -34,94 +34,79 @@ import javax.swing.tree.TreePath;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
-public class BTSQueryResultAbstract
-{
+public class BTSQueryResultAbstract {
 
-	private String queryId;
+    private String queryId;
 
-	private TreePath treePath;
+    private TreePath treePath;
 
-	private EObject parentEObject;
+    private EObject parentEObject;
 
-	private EReference referenceName;
+    private EReference referenceName;
 
-	private Object viewer;
+    private Object viewer;
 
-	/**
-	 * @return the queryId
-	 */
-	public String getQueryId()
-	{
-		return queryId;
-	}
+    /**
+     * @return the queryId
+     */
+    public String getQueryId() {
+        return queryId;
+    }
 
-	/**
-	 * @param queryId
-	 *            the queryId to set
-	 */
-	public void setQueryId(String queryId)
-	{
-		this.queryId = queryId;
-	}
+    /**
+     * @param queryId the queryId to set
+     */
+    public void setQueryId(String queryId) {
+        this.queryId = queryId;
+    }
 
-	/**
-	 * @return the treePath
-	 */
-	public TreePath getTreePath()
-	{
-		return treePath;
-	}
+    /**
+     * @return the treePath
+     */
+    public TreePath getTreePath() {
+        return treePath;
+    }
 
-	/**
-	 * @param treePath
-	 *            the treePath to set
-	 */
-	public void setTreePath(TreePath treePath)
-	{
-		this.treePath = treePath;
-	}
+    /**
+     * @param treePath the treePath to set
+     */
+    public void setTreePath(TreePath treePath) {
+        this.treePath = treePath;
+    }
 
-	/**
-	 * @return the parentEObject
-	 */
-	public EObject getParentEObject()
-	{
-		return parentEObject;
-	}
+    /**
+     * @return the parentEObject
+     */
+    public EObject getParentEObject() {
+        return parentEObject;
+    }
 
-	/**
-	 * @param parentEObject
-	 *            the parentEObject to set
-	 */
-	public void setParentEObject(EObject parentEObject)
-	{
-		this.parentEObject = parentEObject;
-	}
+    /**
+     * @param parentEObject the parentEObject to set
+     */
+    public void setParentEObject(EObject parentEObject) {
+        this.parentEObject = parentEObject;
+    }
 
-	/**
-	 * @return the referenceName
-	 */
-	public EReference getReferenceName()
-	{
-		return referenceName;
-	}
+    /**
+     * @return the referenceName
+     */
+    public EReference getReferenceName() {
+        return referenceName;
+    }
 
-	/**
-	 * @param referenceName
-	 *            the referenceName to set
-	 */
-	public void setReferenceName(EReference referenceName)
-	{
-		this.referenceName = referenceName;
-	}
+    /**
+     * @param referenceName the referenceName to set
+     */
+    public void setReferenceName(EReference referenceName) {
+        this.referenceName = referenceName;
+    }
 
-	public Object getViewer()
-	{
-		return viewer;
-	}
+    public Object getViewer() {
+        return viewer;
+    }
 
-	public void setViewer(Object viewer)
-	{
-		this.viewer = viewer;
-	}
+    public void setViewer(Object viewer) {
+        this.viewer = viewer;
+    }
 }

@@ -43,340 +43,311 @@ import org.eclipse.swt.widgets.Widget;
  * {@link ValidationStatusProvider} with {@link ControlDecoration}s mirroring
  * the current validation status. Only those target observables which implement
  * {@link ISWTObservable} or {@link IViewerObservable} are decorated.
- * 
+ * <p>
  * This add coloring the widgets background according to validation status.
  * Invalid = red background
  * valid = white background
- * 
+ *
  * @since 1.4
  */
-public class BackgroundControlDecorationSupport
-{
-	/**
-	 * Creates a ControlDecorationSupport which observes the validation status
-	 * of the specified {@link ValidationStatusProvider}, and displays a
-	 * {@link ControlDecoration} over the underlying SWT control of all target
-	 * observables that implement {@link ISWTObservable} or
-	 * {@link IViewerObservable}.
-	 * 
-	 * @param validationStatusProvider
-	 *            the {@link ValidationStatusProvider} to monitor.
-	 * @param position
-	 *            SWT alignment constant (e.g. SWT.LEFT | SWT.TOP) to use when
-	 *            constructing {@link BackgroundControlDecorationSupport}
-	 * @return a ControlDecorationSupport which observes the validation status
-	 *         of the specified {@link ValidationStatusProvider}, and displays a
-	 *         {@link ControlDecoration} over the underlying SWT control of all
-	 *         target observables that implement {@link ISWTObservable} or
-	 *         {@link IViewerObservable}.
-	 */
-	public static BackgroundControlDecorationSupport create(ValidationStatusProvider validationStatusProvider,
-			int position)
-	{
-		return create(validationStatusProvider, position, null, new BackgroundControlDecorationUpdater());
-	}
+public class BackgroundControlDecorationSupport {
+    /**
+     * The position.
+     */
+    private final int position;
+    /**
+     * The composite.
+     */
+    private final Composite composite;
+    /**
+     * The updater.
+     */
+    private final BackgroundControlDecorationUpdater updater;
+    /**
+     * The validation status.
+     */
+    private IObservableValue validationStatus;
+    /**
+     * The targets.
+     */
+    private IObservableList targets;
+    /**
+     * The target decorations.
+     */
+    private List targetDecorations;
+    /**
+     * The status change listener.
+     */
+    private IValueChangeListener statusChangeListener = new IValueChangeListener() {
+        public void handleValueChange(ValueChangeEvent event) {
+            statusChanged((IStatus) validationStatus.getValue());
+        }
+    };
+    /**
+     * The targets change listener.
+     */
+    private IListChangeListener targetsChangeListener = new IListChangeListener() {
+        public void handleListChange(ListChangeEvent event) {
+            event.diff.accept(new ListDiffVisitor() {
+                public void handleAdd(int index, Object element) {
+                    targetAdded((IObservable) element);
+                }
 
-	/**
-	 * Creates a ControlDecorationSupport which observes the validation status
-	 * of the specified {@link ValidationStatusProvider}, and displays a
-	 * {@link ControlDecoration} over the underlying SWT control of all target
-	 * observables that implement {@link ISWTObservable} or
-	 * {@link IViewerObservable}.
-	 * 
-	 * @param validationStatusProvider
-	 *            the {@link ValidationStatusProvider} to monitor.
-	 * @param position
-	 *            SWT alignment constant (e.g. SWT.LEFT | SWT.TOP) to use when
-	 *            constructing {@link ControlDecoration} instances.
-	 * @param composite
-	 *            the composite to use when constructing
-	 *            {@link ControlDecoration} instances.
-	 * @return a ControlDecorationSupport which observes the validation status
-	 *         of the specified {@link ValidationStatusProvider}, and displays a
-	 *         {@link ControlDecoration} over the underlying SWT control of all
-	 *         target observables that implement {@link ISWTObservable} or
-	 *         {@link IViewerObservable}.
-	 */
-	public static BackgroundControlDecorationSupport create(ValidationStatusProvider validationStatusProvider,
-			int position, Composite composite)
-	{
-		return create(validationStatusProvider, position, composite, new BackgroundControlDecorationUpdater());
-	}
+                public void handleRemove(int index, Object element) {
+                    targetRemoved((IObservable) element);
+                }
+            });
+            statusChanged((IStatus) validationStatus.getValue());
+        }
+    };
+    /**
+     * The dispose listener.
+     */
+    private IDisposeListener disposeListener = new IDisposeListener() {
+        public void handleDispose(DisposeEvent staleEvent) {
+            dispose();
+        }
+    };
 
-	/**
-	 * Creates a ControlDecorationSupport which observes the validation status
-	 * of the specified {@link ValidationStatusProvider}, and displays a
-	 * {@link ControlDecoration} over the underlying SWT control of all target
-	 * observables that implement {@link ISWTObservable} or
-	 * {@link IViewerObservable}.
-	 * 
-	 * @param validationStatusProvider
-	 *            the {@link ValidationStatusProvider} to monitor.
-	 * @param position
-	 *            SWT alignment constant (e.g. SWT.LEFT | SWT.TOP) to use when
-	 *            constructing {@link ControlDecoration} instances.
-	 * @param composite
-	 *            the composite to use when constructing
-	 *            {@link ControlDecoration} instances.
-	 * @param updater
-	 *            custom strategy for updating the {@link ControlDecoration}(s)
-	 *            whenever the validation status changes.
-	 * @return a ControlDecorationSupport which observes the validation status
-	 *         of the specified {@link ValidationStatusProvider}, and displays a
-	 *         {@link ControlDecoration} over the underlying SWT control of all
-	 *         target observables that implement {@link ISWTObservable} or
-	 *         {@link IViewerObservable}.
-	 */
-	public static BackgroundControlDecorationSupport create(ValidationStatusProvider validationStatusProvider,
-			int position, Composite composite, BackgroundControlDecorationUpdater updater)
-	{
-		return new BackgroundControlDecorationSupport(validationStatusProvider, position, composite, updater);
-	}
+    /**
+     * Instantiates a new background control decoration support.
+     *
+     * @param validationStatusProvider the validation status provider
+     * @param position                 the position
+     * @param composite                the composite
+     * @param updater                  the updater
+     */
+    private BackgroundControlDecorationSupport(ValidationStatusProvider validationStatusProvider, int position,
+                                               Composite composite, BackgroundControlDecorationUpdater updater) {
+        this.position = position;
+        this.composite = composite;
+        this.updater = updater;
 
-	/** The position. */
-	private final int position;
-	
-	/** The composite. */
-	private final Composite composite;
-	
-	/** The updater. */
-	private final BackgroundControlDecorationUpdater updater;
+        this.validationStatus = validationStatusProvider.getValidationStatus();
+        Assert.isTrue(!this.validationStatus.isDisposed());
 
-	/** The validation status. */
-	private IObservableValue validationStatus;
-	
-	/** The targets. */
-	private IObservableList targets;
+        this.targets = validationStatusProvider.getTargets();
+        Assert.isTrue(!this.targets.isDisposed());
 
-	/** The dispose listener. */
-	private IDisposeListener disposeListener = new IDisposeListener()
-	{
-		public void handleDispose(DisposeEvent staleEvent)
-		{
-			dispose();
-		}
-	};
+        this.targetDecorations = new ArrayList();
 
-	/** The status change listener. */
-	private IValueChangeListener statusChangeListener = new IValueChangeListener()
-	{
-		public void handleValueChange(ValueChangeEvent event)
-		{
-			statusChanged((IStatus) validationStatus.getValue());
-		}
-	};
+        validationStatus.addDisposeListener(disposeListener);
+        validationStatus.addValueChangeListener(statusChangeListener);
 
-	/** The targets change listener. */
-	private IListChangeListener targetsChangeListener = new IListChangeListener()
-	{
-		public void handleListChange(ListChangeEvent event)
-		{
-			event.diff.accept(new ListDiffVisitor()
-			{
-				public void handleAdd(int index, Object element)
-				{
-					targetAdded((IObservable) element);
-				}
+        targets.addDisposeListener(disposeListener);
+        targets.addListChangeListener(targetsChangeListener);
 
-				public void handleRemove(int index, Object element)
-				{
-					targetRemoved((IObservable) element);
-				}
-			});
-			statusChanged((IStatus) validationStatus.getValue());
-		}
-	};
+        for (Iterator it = targets.iterator(); it.hasNext(); )
+            targetAdded((IObservable) it.next());
 
-	/**
-	 * The Class TargetDecoration.
-	 *
-	 * @author Christoph Plutte
-	 */
-	private static class TargetDecoration
-	{
-		
-		/** The target. */
-		public final IObservable target;
-		
-		/** The decoration. */
-		public final ControlDecoration decoration;
+        statusChanged((IStatus) validationStatus.getValue());
+    }
 
-		/**
-		 * Instantiates a new target decoration.
-		 *
-		 * @param target the target
-		 * @param decoration the decoration
-		 */
-		TargetDecoration(IObservable target, ControlDecoration decoration)
-		{
-			this.target = target;
-			this.decoration = decoration;
-		}
-	}
+    /**
+     * Creates a ControlDecorationSupport which observes the validation status
+     * of the specified {@link ValidationStatusProvider}, and displays a
+     * {@link ControlDecoration} over the underlying SWT control of all target
+     * observables that implement {@link ISWTObservable} or
+     * {@link IViewerObservable}.
+     *
+     * @param validationStatusProvider the {@link ValidationStatusProvider} to monitor.
+     * @param position                 SWT alignment constant (e.g. SWT.LEFT | SWT.TOP) to use when
+     *                                 constructing {@link BackgroundControlDecorationSupport}
+     * @return a ControlDecorationSupport which observes the validation status
+     * of the specified {@link ValidationStatusProvider}, and displays a
+     * {@link ControlDecoration} over the underlying SWT control of all
+     * target observables that implement {@link ISWTObservable} or
+     * {@link IViewerObservable}.
+     */
+    public static BackgroundControlDecorationSupport create(ValidationStatusProvider validationStatusProvider,
+                                                            int position) {
+        return create(validationStatusProvider, position, null, new BackgroundControlDecorationUpdater());
+    }
 
-	/** The target decorations. */
-	private List targetDecorations;
+    /**
+     * Creates a ControlDecorationSupport which observes the validation status
+     * of the specified {@link ValidationStatusProvider}, and displays a
+     * {@link ControlDecoration} over the underlying SWT control of all target
+     * observables that implement {@link ISWTObservable} or
+     * {@link IViewerObservable}.
+     *
+     * @param validationStatusProvider the {@link ValidationStatusProvider} to monitor.
+     * @param position                 SWT alignment constant (e.g. SWT.LEFT | SWT.TOP) to use when
+     *                                 constructing {@link ControlDecoration} instances.
+     * @param composite                the composite to use when constructing
+     *                                 {@link ControlDecoration} instances.
+     * @return a ControlDecorationSupport which observes the validation status
+     * of the specified {@link ValidationStatusProvider}, and displays a
+     * {@link ControlDecoration} over the underlying SWT control of all
+     * target observables that implement {@link ISWTObservable} or
+     * {@link IViewerObservable}.
+     */
+    public static BackgroundControlDecorationSupport create(ValidationStatusProvider validationStatusProvider,
+                                                            int position, Composite composite) {
+        return create(validationStatusProvider, position, composite, new BackgroundControlDecorationUpdater());
+    }
 
-	/**
-	 * Instantiates a new background control decoration support.
-	 *
-	 * @param validationStatusProvider the validation status provider
-	 * @param position the position
-	 * @param composite the composite
-	 * @param updater the updater
-	 */
-	private BackgroundControlDecorationSupport(ValidationStatusProvider validationStatusProvider, int position,
-			Composite composite, BackgroundControlDecorationUpdater updater)
-	{
-		this.position = position;
-		this.composite = composite;
-		this.updater = updater;
+    /**
+     * Creates a ControlDecorationSupport which observes the validation status
+     * of the specified {@link ValidationStatusProvider}, and displays a
+     * {@link ControlDecoration} over the underlying SWT control of all target
+     * observables that implement {@link ISWTObservable} or
+     * {@link IViewerObservable}.
+     *
+     * @param validationStatusProvider the {@link ValidationStatusProvider} to monitor.
+     * @param position                 SWT alignment constant (e.g. SWT.LEFT | SWT.TOP) to use when
+     *                                 constructing {@link ControlDecoration} instances.
+     * @param composite                the composite to use when constructing
+     *                                 {@link ControlDecoration} instances.
+     * @param updater                  custom strategy for updating the {@link ControlDecoration}(s)
+     *                                 whenever the validation status changes.
+     * @return a ControlDecorationSupport which observes the validation status
+     * of the specified {@link ValidationStatusProvider}, and displays a
+     * {@link ControlDecoration} over the underlying SWT control of all
+     * target observables that implement {@link ISWTObservable} or
+     * {@link IViewerObservable}.
+     */
+    public static BackgroundControlDecorationSupport create(ValidationStatusProvider validationStatusProvider,
+                                                            int position, Composite composite, BackgroundControlDecorationUpdater updater) {
+        return new BackgroundControlDecorationSupport(validationStatusProvider, position, composite, updater);
+    }
 
-		this.validationStatus = validationStatusProvider.getValidationStatus();
-		Assert.isTrue(!this.validationStatus.isDisposed());
+    /**
+     * Target added.
+     *
+     * @param target the target
+     */
+    private void targetAdded(IObservable target) {
+        Control control = findControl(target);
+        if (control != null) {
+            targetDecorations.add(new TargetDecoration(target, new ControlDecoration(control, position, composite)));
 
-		this.targets = validationStatusProvider.getTargets();
-		Assert.isTrue(!this.targets.isDisposed());
+        }
+    }
 
-		this.targetDecorations = new ArrayList();
+    /**
+     * Target removed.
+     *
+     * @param target the target
+     */
+    private void targetRemoved(IObservable target) {
+        for (Iterator it = targetDecorations.iterator(); it.hasNext(); ) {
+            TargetDecoration targetDecoration = (TargetDecoration) it.next();
+            if (targetDecoration.target == target) {
+                targetDecoration.decoration.dispose();
+                it.remove();
+            }
+        }
+    }
 
-		validationStatus.addDisposeListener(disposeListener);
-		validationStatus.addValueChangeListener(statusChangeListener);
+    /**
+     * Find control.
+     *
+     * @param target the target
+     * @return the control
+     */
+    private Control findControl(IObservable target) {
+        if (target instanceof ISWTObservable) {
+            Widget widget = ((ISWTObservable) target).getWidget();
+            if (widget instanceof Control) return (Control) widget;
+        }
 
-		targets.addDisposeListener(disposeListener);
-		targets.addListChangeListener(targetsChangeListener);
+        if (target instanceof IViewerObservable) {
+            Viewer viewer = ((IViewerObservable) target).getViewer();
+            return viewer.getControl();
+        }
 
-		for (Iterator it = targets.iterator(); it.hasNext();)
-			targetAdded((IObservable) it.next());
+        if (target instanceof IDecoratingObservable) {
+            IObservable decorated = ((IDecoratingObservable) target).getDecorated();
+            Control control = findControl(decorated);
+            if (control != null) return control;
+        }
 
-		statusChanged((IStatus) validationStatus.getValue());
-	}
+        if (target instanceof IObserving) {
+            Object observed = ((IObserving) target).getObserved();
+            if (observed instanceof IObservable) return findControl((IObservable) observed);
+        }
 
-	/**
-	 * Target added.
-	 *
-	 * @param target the target
-	 */
-	private void targetAdded(IObservable target)
-	{
-		Control control = findControl(target);
-		if (control != null)
-		{
-			targetDecorations.add(new TargetDecoration(target, new ControlDecoration(control, position, composite)));
+        return null;
+    }
 
-		}
-	}
+    /**
+     * Status changed.
+     *
+     * @param status the status
+     */
+    private void statusChanged(IStatus status) {
+        for (Iterator it = targets.iterator(); it.hasNext(); ) {
+            IObservable observable = (IObservable) it.next();
+            updater.updateBackground(findControl(observable), status);
+        }
+        for (Iterator it = targetDecorations.iterator(); it.hasNext(); ) {
+            TargetDecoration targetDecoration = (TargetDecoration) it.next();
+            ControlDecoration decoration = targetDecoration.decoration;
+            updater.update(decoration, status);
+            updater.updateBackground(findControl(targetDecoration.target), status);
 
-	/**
-	 * Target removed.
-	 *
-	 * @param target the target
-	 */
-	private void targetRemoved(IObservable target)
-	{
-		for (Iterator it = targetDecorations.iterator(); it.hasNext();)
-		{
-			TargetDecoration targetDecoration = (TargetDecoration) it.next();
-			if (targetDecoration.target == target)
-			{
-				targetDecoration.decoration.dispose();
-				it.remove();
-			}
-		}
-	}
+        }
+    }
 
-	/**
-	 * Find control.
-	 *
-	 * @param target the target
-	 * @return the control
-	 */
-	private Control findControl(IObservable target)
-	{
-		if (target instanceof ISWTObservable)
-		{
-			Widget widget = ((ISWTObservable) target).getWidget();
-			if (widget instanceof Control) return (Control) widget;
-		}
+    /**
+     * Disposes this ControlDecorationSupport, including all control decorations
+     * managed by it. A ControlDecorationSupport is automatically disposed when
+     * its target ValidationStatusProvider is disposed.
+     */
+    public void dispose() {
+        if (validationStatus != null) {
+            validationStatus.removeDisposeListener(disposeListener);
+            validationStatus.removeValueChangeListener(statusChangeListener);
+            validationStatus = null;
+        }
 
-		if (target instanceof IViewerObservable)
-		{
-			Viewer viewer = ((IViewerObservable) target).getViewer();
-			return viewer.getControl();
-		}
+        if (targets != null) {
+            targets.removeDisposeListener(disposeListener);
+            targets.removeListChangeListener(targetsChangeListener);
+            targets = null;
+        }
 
-		if (target instanceof IDecoratingObservable)
-		{
-			IObservable decorated = ((IDecoratingObservable) target).getDecorated();
-			Control control = findControl(decorated);
-			if (control != null) return control;
-		}
+        disposeListener = null;
+        statusChangeListener = null;
+        targetsChangeListener = null;
 
-		if (target instanceof IObserving)
-		{
-			Object observed = ((IObserving) target).getObserved();
-			if (observed instanceof IObservable) return findControl((IObservable) observed);
-		}
+        if (targetDecorations != null) {
+            for (Iterator it = targetDecorations.iterator(); it.hasNext(); ) {
+                TargetDecoration targetDecoration = (TargetDecoration) it.next();
+                targetDecoration.decoration.dispose();
+            }
+            targetDecorations.clear();
+            targetDecorations = null;
+        }
+    }
 
-		return null;
-	}
+    /**
+     * The Class TargetDecoration.
+     *
+     * @author Christoph Plutte
+     */
+    private static class TargetDecoration {
 
-	/**
-	 * Status changed.
-	 *
-	 * @param status the status
-	 */
-	private void statusChanged(IStatus status)
-	{
-		for (Iterator it = targets.iterator(); it.hasNext();)
-		{
-			IObservable observable = (IObservable) it.next();
-			updater.updateBackground(findControl(observable), status);
-		}
-		for (Iterator it = targetDecorations.iterator(); it.hasNext();)
-		{
-			TargetDecoration targetDecoration = (TargetDecoration) it.next();
-			ControlDecoration decoration = targetDecoration.decoration;
-			updater.update(decoration, status);
-			updater.updateBackground(findControl(targetDecoration.target), status);
+        /**
+         * The target.
+         */
+        public final IObservable target;
 
-		}
-	}
+        /**
+         * The decoration.
+         */
+        public final ControlDecoration decoration;
 
-	/**
-	 * Disposes this ControlDecorationSupport, including all control decorations
-	 * managed by it. A ControlDecorationSupport is automatically disposed when
-	 * its target ValidationStatusProvider is disposed.
-	 */
-	public void dispose()
-	{
-		if (validationStatus != null)
-		{
-			validationStatus.removeDisposeListener(disposeListener);
-			validationStatus.removeValueChangeListener(statusChangeListener);
-			validationStatus = null;
-		}
-
-		if (targets != null)
-		{
-			targets.removeDisposeListener(disposeListener);
-			targets.removeListChangeListener(targetsChangeListener);
-			targets = null;
-		}
-
-		disposeListener = null;
-		statusChangeListener = null;
-		targetsChangeListener = null;
-
-		if (targetDecorations != null)
-		{
-			for (Iterator it = targetDecorations.iterator(); it.hasNext();)
-			{
-				TargetDecoration targetDecoration = (TargetDecoration) it.next();
-				targetDecoration.decoration.dispose();
-			}
-			targetDecorations.clear();
-			targetDecorations = null;
-		}
-	}
+        /**
+         * Instantiates a new target decoration.
+         *
+         * @param target     the target
+         * @param decoration the decoration
+         */
+        TargetDecoration(IObservable target, ControlDecoration decoration) {
+            this.target = target;
+            this.decoration = decoration;
+        }
+    }
 }

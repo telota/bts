@@ -22,48 +22,48 @@ import com.ibm.icu.text.BreakIterator;
  * of a plain {@link com.ibm.icu.text.BreakIterator break iterator} to tokenize the document
  * content. It is based on the plain text content of the document, e.g. terminal tokens are
  * not taken into account.</p>
- *  
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public class AbstractWordAwareDoubleClickStrategy extends DefaultTextDoubleClickStrategy {
 
-	@Override
-	protected IRegion findWord(IDocument document, int offset) {
-		try {
-			IRegion line = document.getLineInformationOfOffset(offset);
+    @Override
+    protected IRegion findWord(IDocument document, int offset) {
+        try {
+            IRegion line = document.getLineInformationOfOffset(offset);
 
-			if (offset == line.getOffset() + line.getLength())
-				return null;
+            if (offset == line.getOffset() + line.getLength())
+                return null;
 
-			com.ibm.icu.text.BreakIterator breakIter = createBreakIterator();
-			breakIter.setText(new DocumentCharacterIterator(document));
-			int start = breakIter.preceding(offset);
-			if (start == BreakIterator.DONE)
-				start = line.getOffset();
+            com.ibm.icu.text.BreakIterator breakIter = createBreakIterator();
+            breakIter.setText(new DocumentCharacterIterator(document));
+            int start = breakIter.preceding(offset);
+            if (start == BreakIterator.DONE)
+                start = line.getOffset();
 
-			int end = breakIter.following(offset);
-			if (end == BreakIterator.DONE)
-				end = line.getOffset() + line.getLength();
+            int end = breakIter.following(offset);
+            if (end == BreakIterator.DONE)
+                end = line.getOffset() + line.getLength();
 
-			if (breakIter.isBoundary(offset)) {
-				if (end - offset > offset - start)
-					start = offset;
-				else
-					end = offset;
-			}
+            if (breakIter.isBoundary(offset)) {
+                if (end - offset > offset - start)
+                    start = offset;
+                else
+                    end = offset;
+            }
 
-			if (end == start)
-				return null;
-			return new Region(start, end - start);
-		} catch (BadLocationException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * @return a new break iterator. Defaults to an instance that does not take camel humps into account.
-	 */
-	protected CommonBreakIterator createBreakIterator() {
-		return new CommonBreakIterator(false);
-	}
+            if (end == start)
+                return null;
+            return new Region(start, end - start);
+        } catch (BadLocationException e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return a new break iterator. Defaults to an instance that does not take camel humps into account.
+     */
+    protected CommonBreakIterator createBreakIterator() {
+        return new CommonBreakIterator(false);
+    }
 }

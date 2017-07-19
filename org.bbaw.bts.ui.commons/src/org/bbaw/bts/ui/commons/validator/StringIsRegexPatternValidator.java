@@ -44,24 +44,26 @@ import org.eclipse.core.runtime.IStatus;
  */
 public class StringIsRegexPatternValidator implements IValidator {
 
-	/** The Constant errorMessage. */
-	private static final String errorMessage = "String is not a valid regualar expression.";
+    /**
+     * The Constant errorMessage.
+     */
+    private static final String errorMessage = "String is not a valid regualar expression.";
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
-	 */
-	@Override
-	public IStatus validate(Object value) {
-		if (value instanceof String && !"".equals(value)) {
-			try {
-				@SuppressWarnings("unused")
-				Pattern p = Pattern.compile((String) value);
-				return ValidationStatus.ok();
-			} catch (PatternSyntaxException e) {
-				return ValidationStatus.error(errorMessage);
-			}
-		}
-		return ValidationStatus.ok();
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
+     */
+    @Override
+    public IStatus validate(Object value) {
+        if (value instanceof String && !"".equals(value)) {
+            try {
+                @SuppressWarnings("unused")
+                Pattern p = Pattern.compile((String) value);
+                return ValidationStatus.ok();
+            } catch (PatternSyntaxException e) {
+                return ValidationStatus.error(errorMessage);
+            }
+        }
+        return ValidationStatus.ok();
+    }
 
 }

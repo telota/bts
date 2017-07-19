@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InterfixFlexionImpl extends InterfixImpl implements InterfixFlexion
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected InterfixFlexionImpl()
-  {
-    super();
-  }
+public class InterfixFlexionImpl extends InterfixImpl implements InterfixFlexion {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected InterfixFlexionImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.INTERFIX_FLEXION;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.INTERFIX_FLEXION;
+    }
 
 } //InterfixFlexionImpl

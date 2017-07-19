@@ -26,51 +26,51 @@ import com.google.inject.Inject;
 
 public class ContentFormatterFactory implements IContentFormatterFactory {
 
-	public class ContentFormatter implements IContentFormatter {
-		public void format(IDocument document, IRegion region) {
-			IXtextDocument doc = (IXtextDocument) document;
-			ReplaceRegion r = doc.readOnly(new FormattingUnitOfWork(region));
-			try {
-				if (r != null)
-					doc.replace(r.getOffset(), r.getLength(), r.getText());
-			} catch (BadLocationException e) {
-				throw new RuntimeException(e);
-			}
-		}
+    @Inject
+    protected INodeModelFormatter formatter;
 
-		public IFormattingStrategy getFormattingStrategy(String contentType) {
-			return null;
-		}
-	}
+    public IContentFormatter createConfiguredFormatter(
+            SourceViewerConfiguration configuration, ISourceViewer sourceViewer) {
+        return new ContentFormatter();
+    }
 
-	/**
-	 * TODO: Use a {@link org.eclipse.xtext.util.ReplaceRegion} instead of the {@link ReplaceRegion}.
-	 */
-	public class FormattingUnitOfWork implements
-			IUnitOfWork<ReplaceRegion, XtextResource> {
+    public class ContentFormatter implements IContentFormatter {
+        public void format(IDocument document, IRegion region) {
+            IXtextDocument doc = (IXtextDocument) document;
+            ReplaceRegion r = doc.readOnly(new FormattingUnitOfWork(region));
+            try {
+                if (r != null)
+                    doc.replace(r.getOffset(), r.getLength(), r.getText());
+            } catch (BadLocationException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-		protected final IRegion region;
+        public IFormattingStrategy getFormattingStrategy(String contentType) {
+            return null;
+        }
+    }
 
-		public FormattingUnitOfWork(IRegion region) {
-			super();
-			this.region = region;
-		}
+    /**
+     * TODO: Use a {@link org.eclipse.xtext.util.ReplaceRegion} instead of the {@link ReplaceRegion}.
+     */
+    public class FormattingUnitOfWork implements
+            IUnitOfWork<ReplaceRegion, XtextResource> {
 
-		public ReplaceRegion exec(XtextResource state) throws Exception {
-			IParseResult parseResult = state.getParseResult();
-			if (parseResult == null)
-				return null;
-			IFormattedRegion r = formatter.format(parseResult.getRootNode(), region.getOffset(), region.getLength());
-			return new ReplaceRegion(r.getOffset(), r.getLength(), r.getFormattedText());
-		}
-	}
+        protected final IRegion region;
 
-	@Inject
-	protected INodeModelFormatter formatter;
+        public FormattingUnitOfWork(IRegion region) {
+            super();
+            this.region = region;
+        }
 
-	public IContentFormatter createConfiguredFormatter(
-			SourceViewerConfiguration configuration, ISourceViewer sourceViewer) {
-		return new ContentFormatter();
-	}
+        public ReplaceRegion exec(XtextResource state) throws Exception {
+            IParseResult parseResult = state.getParseResult();
+            if (parseResult == null)
+                return null;
+            IFormattedRegion r = formatter.format(parseResult.getRootNode(), region.getOffset(), region.getLength());
+            return new ReplaceRegion(r.getOffset(), r.getLength(), r.getFormattedText());
+        }
+    }
 
 }

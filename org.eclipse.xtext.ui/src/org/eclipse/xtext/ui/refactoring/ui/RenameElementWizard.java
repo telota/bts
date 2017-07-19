@@ -31,103 +31,103 @@ import org.eclipse.xtext.util.Strings;
  */
 public class RenameElementWizard extends RefactoringWizard {
 
-	private AbstractRenameProcessor renameProcessor;
-	
-	private SaveHelper saveHelper;
+    private AbstractRenameProcessor renameProcessor;
 
-	private IRenameElementContext context;
+    private SaveHelper saveHelper;
 
-	public RenameElementWizard(ProcessorBasedRefactoring refactoring, SaveHelper saveHelper, IRenameElementContext context) {
-		super(refactoring, DIALOG_BASED_USER_INTERFACE);
-		this.saveHelper = saveHelper;
-		this.context = context;
-		renameProcessor = (AbstractRenameProcessor) refactoring.getProcessor();
-	}
+    private IRenameElementContext context;
 
-	@Override
-	protected void addUserInputPages() {
-		addPage(new UserInputPage(getRenameProcessor(), saveHelper, context));
-	}
+    public RenameElementWizard(ProcessorBasedRefactoring refactoring, SaveHelper saveHelper, IRenameElementContext context) {
+        super(refactoring, DIALOG_BASED_USER_INTERFACE);
+        this.saveHelper = saveHelper;
+        this.context = context;
+        renameProcessor = (AbstractRenameProcessor) refactoring.getProcessor();
+    }
 
-	protected AbstractRenameProcessor getRenameProcessor() {
-		return renameProcessor;
-	}
+    @Override
+    protected void addUserInputPages() {
+        addPage(new UserInputPage(getRenameProcessor(), saveHelper, context));
+    }
 
-	protected static class UserInputPage extends UserInputWizardPage {
+    protected AbstractRenameProcessor getRenameProcessor() {
+        return renameProcessor;
+    }
 
-		private final AbstractRenameProcessor renameProcessor;
-		private Text nameField;
-		private String currentName;
-		private SaveHelper saveHelper;
-		private IRenameElementContext context;
+    protected static class UserInputPage extends UserInputWizardPage {
 
-		public UserInputPage(AbstractRenameProcessor renameProcessor, SaveHelper saveHelper, IRenameElementContext context) {
-			super("RenameElementResourceRefactoringInputPage"); //$NON-NLS-1$
-			this.renameProcessor = renameProcessor;
-			this.saveHelper = saveHelper;
-			this.context = context;
-			currentName = renameProcessor.getNewName() != null ? renameProcessor.getNewName()
-					: renameProcessor.getOriginalName();
-		}
+        private final AbstractRenameProcessor renameProcessor;
+        private Text nameField;
+        private String currentName;
+        private SaveHelper saveHelper;
+        private IRenameElementContext context;
 
-		public void createControl(Composite parent) {
-			Composite composite = new Composite(parent, SWT.NONE);
-			composite.setLayout(new GridLayout(2, false));
-			composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			composite.setFont(parent.getFont());
-			Label label = new Label(composite, SWT.NONE);
-			label.setText("New name");//$NON-NLS-1$
-			label.setLayoutData(new GridData());
-			nameField = new Text(composite, SWT.BORDER);
+        public UserInputPage(AbstractRenameProcessor renameProcessor, SaveHelper saveHelper, IRenameElementContext context) {
+            super("RenameElementResourceRefactoringInputPage"); //$NON-NLS-1$
+            this.renameProcessor = renameProcessor;
+            this.saveHelper = saveHelper;
+            this.context = context;
+            currentName = renameProcessor.getNewName() != null ? renameProcessor.getNewName()
+                    : renameProcessor.getOriginalName();
+        }
 
-			nameField.setText(currentName);
-			nameField.setFont(composite.getFont());
-			nameField.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, true, false));
-			nameField.addModifyListener(new ModifyListener() {
-				public void modifyText(ModifyEvent e) {
-					validatePage();
-				}
-			});
-			nameField.selectAll();
-			validatePage();
-			setControl(composite);
-		}
+        public void createControl(Composite parent) {
+            Composite composite = new Composite(parent, SWT.NONE);
+            composite.setLayout(new GridLayout(2, false));
+            composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            composite.setFont(parent.getFont());
+            Label label = new Label(composite, SWT.NONE);
+            label.setText("New name");//$NON-NLS-1$
+            label.setLayoutData(new GridData());
+            nameField = new Text(composite, SWT.BORDER);
 
-		@Override
-		public void setVisible(boolean visible) {
-			if (visible) {
-				nameField.setFocus();
-			}
-			super.setVisible(visible);
-		}
+            nameField.setText(currentName);
+            nameField.setFont(composite.getFont());
+            nameField.setLayoutData(new GridData(GridData.FILL, GridData.BEGINNING, true, false));
+            nameField.addModifyListener(new ModifyListener() {
+                public void modifyText(ModifyEvent e) {
+                    validatePage();
+                }
+            });
+            nameField.selectAll();
+            validatePage();
+            setControl(composite);
+        }
 
-		protected final void validatePage() {
-			String text = nameField.getText();
-			if(Strings.isEmpty(text)) {
-				setPageComplete(false);
-			} else {
-				RefactoringStatus status = renameProcessor.validateNewName(text);
-				setPageComplete(status);
-				if(equal(renameProcessor.getOriginalName(), text)) 
-					setPageComplete(false);
-			}
-		}
+        @Override
+        public void setVisible(boolean visible) {
+            if (visible) {
+                nameField.setFocus();
+            }
+            super.setVisible(visible);
+        }
 
-		@Override
-		protected boolean performFinish() {
-			setNewName();
-			//saveHelper.saveEditors(context);
-			return super.performFinish();
-		}
+        protected final void validatePage() {
+            String text = nameField.getText();
+            if (Strings.isEmpty(text)) {
+                setPageComplete(false);
+            } else {
+                RefactoringStatus status = renameProcessor.validateNewName(text);
+                setPageComplete(status);
+                if (equal(renameProcessor.getOriginalName(), text))
+                    setPageComplete(false);
+            }
+        }
 
-		@Override
-		public IWizardPage getNextPage() {
-			setNewName();
-			return super.getNextPage();
-		}
+        @Override
+        protected boolean performFinish() {
+            setNewName();
+            //saveHelper.saveEditors(context);
+            return super.performFinish();
+        }
 
-		private void setNewName() {
-			renameProcessor.setNewName(nameField.getText());
-		}
-	}
+        @Override
+        public IWizardPage getNextPage() {
+            setNewName();
+            return super.getNextPage();
+        }
+
+        private void setNewName() {
+            renameProcessor.setNewName(nameField.getText());
+        }
+    }
 }

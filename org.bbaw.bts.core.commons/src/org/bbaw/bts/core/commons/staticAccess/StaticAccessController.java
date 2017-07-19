@@ -51,120 +51,128 @@ import org.eclipse.e4.ui.services.EContextService;
  */
 public class StaticAccessController {
 
-	/** The EHandlerService. */
-	@Inject
-	@Optional
-	private static EHandlerService service;
-	
-	/** The EContextService. */
-	@Inject
-	@Optional
-	private static EContextService contextService;
-	
-	/** The context. */
-	@Inject
-	private static IEclipseContext context;
+    /**
+     * The EHandlerService.
+     */
+    @Inject
+    @Optional
+    private static EHandlerService service;
 
-	/** The preference store. */
-	private static IEclipsePreferences preferenceStore = ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app");
-	@Inject
-	@Named("org.bbaw.bts.ui.resources.BTSResourceProvider")
-	private static Object resourceProvider;
-	
-	/** The logger. */
-	@Inject
-	private Logger logger;
-	
-	/**
-	 * Gets the service.
-	 *
-	 * @return the service
-	 */
-	public static EHandlerService getService() {
-		if (service == null)
-		{
-			service = context.get(EHandlerService.class);
-		}
-		return service;
-	}
+    /**
+     * The EContextService.
+     */
+    @Inject
+    @Optional
+    private static EContextService contextService;
 
+    /**
+     * The context.
+     */
+    @Inject
+    private static IEclipseContext context;
 
-	/**
-	 * Sets the service.
-	 *
-	 * @param service the new service
-	 */
-	public void setService(EHandlerService service) {
-		this.service = service;
-	}
+    /**
+     * The preference store.
+     */
+    private static IEclipsePreferences preferenceStore = ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app");
+    @Inject
+    @Named("org.bbaw.bts.ui.resources.BTSResourceProvider")
+    private static Object resourceProvider;
 
-	/**
-	 * Gets the context service.
-	 *
-	 * @return the context service
-	 */
-	public static EContextService getContextService() {
-		if (contextService == null)
-		{
-			contextService = context.get(EContextService.class);
-		}
-		return contextService;
-	}
+    /**
+     * The logger.
+     */
+    @Inject
+    private Logger logger;
 
-	/**
-	 * Sets the context service.
-	 *
-	 * @param contextService the new context service
-	 */
-	public static void setContextService(EContextService contextService) {
-		StaticAccessController.contextService = contextService;
-	}
-
-	/**
-	 * Gets the resource provider.
-	 *
-	 * @return the resource provider
-	 */
-	public static Object getResourceProvider() {
-		return resourceProvider;
-	}
-
-	/**
-	 * Gets the context.
-	 *
-	 * @return the context
-	 */
-	public static IEclipseContext getContext() {
-		return context;
-	}
-
-	/**
-	 * Gets the preference store.
-	 *
-	 * @return the preference store
-	 */
-	public static Object getPreferenceStore() {
-		return null;
-	}
+    /**
+     * Gets the service.
+     *
+     * @return the service
+     */
+    public static EHandlerService getService() {
+        if (service == null) {
+            service = context.get(EHandlerService.class);
+        }
+        return service;
+    }
 
 
-	/**
-	 * Gets the logger.
-	 *
-	 * @return the logger
-	 */
-	public Logger getLogger() {
-		return logger;
-	}
+    /**
+     * Sets the service.
+     *
+     * @param service the new service
+     */
+    public void setService(EHandlerService service) {
+        this.service = service;
+    }
+
+    /**
+     * Gets the context service.
+     *
+     * @return the context service
+     */
+    public static EContextService getContextService() {
+        if (contextService == null) {
+            contextService = context.get(EContextService.class);
+        }
+        return contextService;
+    }
+
+    /**
+     * Sets the context service.
+     *
+     * @param contextService the new context service
+     */
+    public static void setContextService(EContextService contextService) {
+        StaticAccessController.contextService = contextService;
+    }
+
+    /**
+     * Gets the resource provider.
+     *
+     * @return the resource provider
+     */
+    public static Object getResourceProvider() {
+        return resourceProvider;
+    }
+
+    /**
+     * Gets the context.
+     *
+     * @return the context
+     */
+    public static IEclipseContext getContext() {
+        return context;
+    }
+
+    /**
+     * Gets the preference store.
+     *
+     * @return the preference store
+     */
+    public static Object getPreferenceStore() {
+        return null;
+    }
 
 
-	/**
-	 * Sets the logger.
-	 *
-	 * @param logger the new logger
-	 */
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-	}
+    /**
+     * Gets the logger.
+     *
+     * @return the logger
+     */
+    public Logger getLogger() {
+        return logger;
+    }
+
+
+    /**
+     * Sets the logger.
+     *
+     * @param logger the new logger
+     */
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
 
 }

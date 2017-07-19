@@ -36,15 +36,14 @@ import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.workbench.lifecycle.PostContextCreate;
 import org.eclipse.equinox.app.IApplicationContext;
 
-public class ApplicationLifeCyleManager
-{
+public class ApplicationLifeCyleManager {
 
-	@PostContextCreate
-	void managePostContextCreate(final IEclipseContext context, BTSProjectService projectService,
-			IApplicationContext appContext, Logger logger, ApplicationStartupController applicationStartupController) 
+    @PostContextCreate
+    void managePostContextCreate(final IEclipseContext context, BTSProjectService projectService,
+                                 IApplicationContext appContext, Logger logger, ApplicationStartupController applicationStartupController)
 //			@Optional MWindow window,
 //			IEventBroker eventBroker)
-	{
+    {
 //		if (window != null)
 //		{
 //		try {
@@ -72,10 +71,10 @@ public class ApplicationLifeCyleManager
 //						}
 //			});
 //		}
-		logger.info("ApplicationStartupControllerImpl.applicationStartup");
-		applicationStartupController.applicationStartup(context, projectService, appContext);
+        logger.info("ApplicationStartupControllerImpl.applicationStartup");
+        applicationStartupController.applicationStartup(context, projectService, appContext);
 
-	}
+    }
 
 //	private void setWindowImage(MWindow window) {
 //		Bundle bundle = FrameworkUtil.getBundle(this.getClass());

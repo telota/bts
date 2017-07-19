@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.main.widgets;
 
 import java.util.HashMap;
@@ -38,297 +37,275 @@ import org.eclipse.swt.widgets.Label;
 
 public class CompoundIdentifiersEditorComposite extends Composite {
 
-	@Inject
-	private IEclipseContext context;
+    @Inject
+    @Optional
+    @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
+    protected boolean userMayEdit;
+    @Inject
+    private IEclipseContext context;
+    @Inject
+    private EditingDomain editingDomain;
+    @Inject
+    private BTSConfigurationController configurationController;
+    @Inject
+    private BTSResourceProvider resourceProvider;
+    @Inject
+    private BTSObject object;
+    private Map<String, BTSConfigItem> identifierConfigCache = new HashMap<String, BTSConfigItem>();
 
-	@Inject
-	private EditingDomain editingDomain;
+    private List<BTSConfigItem> cachedIdentifierConfigs;
 
-	@Inject
-	private BTSConfigurationController configurationController;
+    @Inject
+    public CompoundIdentifiersEditorComposite(Composite parent) {
+        super(parent, SWT.NONE);
+    }
 
-	@Inject
-	private BTSResourceProvider resourceProvider;
+    @PostConstruct
+    public void postConstruct(Composite parent) {
+        this.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 6, 1));
+        this.setLayout(new GridLayout(3, false));
+        ((GridLayout) this.getLayout()).marginWidth = 0;
+        ((GridLayout) this.getLayout()).marginHeight = 0;
 
-	@Inject
-	private BTSObject object;
+        this.setBackground(parent.getBackground());
+        createWidgets();
 
-	@Inject
-	@Optional
-	@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
-	protected boolean userMayEdit;
-	
-	private Map<String, BTSConfigItem> identifierConfigCache = new HashMap<String, BTSConfigItem>();
+        this.layout();
+    }
 
-	private List<BTSConfigItem> cachedIdentifierConfigs;
+    private void createWidgets() {
+        if (!object.getExternalReferences().isEmpty()) {
+            for (int i = 0; i < object.getExternalReferences().size(); i++) {
+                BTSExternalReference reference = object.getExternalReferences().get(i);
+                BTSConfigItem identifiersConfig = getIdentifierConfig(reference);
+                createWidget(reference, i, identifiersConfig);
 
-	@Inject
-	public CompoundIdentifiersEditorComposite(Composite parent) {
-		super(parent, SWT.NONE);
-	}
-	
-	@PostConstruct
-	public void postConstruct(Composite parent) {
-		this.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 6, 1));
-		this.setLayout(new GridLayout(3, false));
-		((GridLayout) this.getLayout()).marginWidth = 0;
-		((GridLayout) this.getLayout()).marginHeight = 0;
+            }
+        } else {
+            // create add buttons
+            Label addButton = new Label(this, SWT.PUSH);
+            addButton.setImage(resourceProvider.getImage(Display.getDefault(),
+                    BTSResourceProvider.IMG_ADD));
+            addButton.setToolTipText("Add Identifier");
+            addButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
+                    false, 1, 1));
+            ((GridData) addButton.getLayoutData()).verticalIndent = 2;
+            addButton.addMouseListener(new MouseAdapter() {
 
-		this.setBackground(parent.getBackground());
-		createWidgets();
+                @Override
+                public void mouseDown(MouseEvent e) {
+                    if (CompoundIdentifiersEditorComposite.this.userMayEdit) {
+                        Label l = (Label) e.getSource();
+                        l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+                    }
+                }
 
-		this.layout();
-	}
+                @Override
+                public void mouseUp(MouseEvent e) {
+                    if (CompoundIdentifiersEditorComposite.this.userMayEdit) {
+                        Label l = (Label) e.getSource();
+                        l.setBackground(l.getParent().getBackground());
+                        BTSExternalReference ref = makeAdditionalExternalReference();
+                        CompoundCommand compoundCommand = new CompoundCommand();
+                        org.eclipse.emf.common.command.Command command = AddCommand
+                                .create(editingDomain,
+                                        object,
+                                        BtsmodelPackage.Literals.BTS_OBJECT__EXTERNAL_REFERENCES,
+                                        ref);
+                        compoundCommand.append(command);
+                        editingDomain.getCommandStack().execute(compoundCommand);
+                    }
+                }
+            });
+        }
 
-	private void createWidgets() {
-		if (!object.getExternalReferences().isEmpty())
-		{
-			for (int i = 0; i < object.getExternalReferences().size(); i++) {
-				BTSExternalReference reference = object.getExternalReferences().get(i);
-				BTSConfigItem identifiersConfig = getIdentifierConfig(reference);
-					createWidget(reference, i, identifiersConfig);
-	
-			}
-		}
-		else
-		{
-			// create add buttons
-			Label addButton = new Label(this, SWT.PUSH);
-			addButton.setImage(resourceProvider.getImage(Display.getDefault(),
-					BTSResourceProvider.IMG_ADD));
-			addButton.setToolTipText("Add Identifier");
-			addButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
-					false, 1, 1));
-			((GridData) addButton.getLayoutData()).verticalIndent = 2;
-			addButton.addMouseListener(new MouseAdapter() {
+    }
 
-				@Override
-				public void mouseDown(MouseEvent e) {
-					if (CompoundIdentifiersEditorComposite.this.userMayEdit)
-					{
-					Label l = (Label) e.getSource();
-					l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-					}
-				}
+    private BTSConfigItem getIdentifierConfig(BTSExternalReference reference) {
+        if (identifierConfigCache.containsKey(reference.getType())) {
+            return identifierConfigCache.get(reference.getType());
+        } else {
+            BTSConfigItem last = null;
+            for (BTSConfigItem child : listAllIdentifiersConfigs()) {
 
-				@Override
-				public void mouseUp(MouseEvent e) {
-					if (CompoundIdentifiersEditorComposite.this.userMayEdit)
-					{
-					Label l = (Label) e.getSource();
-					l.setBackground(l.getParent().getBackground());
-					BTSExternalReference ref = makeAdditionalExternalReference();
-					CompoundCommand compoundCommand = new CompoundCommand();
-					org.eclipse.emf.common.command.Command command = AddCommand
-							.create(editingDomain,
-									object,
-									BtsmodelPackage.Literals.BTS_OBJECT__EXTERNAL_REFERENCES,
-									ref);
-					compoundCommand.append(command);
-					editingDomain.getCommandStack().execute(compoundCommand);
-					}
-				}
-			});
-		}
+                //if relation type not set
+                if (reference.getType() == null && child.getValue().equals("partOf")) {
+                    return child;
+                } else if (child.getValue() != null
+                        && child.getValue().equals(reference.getType())) {
+                    identifierConfigCache.put(child.getType(), child);
+                    return child;
+                }
+                last = child;
+            }
+            return last;
+        }
+    }
 
-	}
+    private List<BTSConfigItem> listAllIdentifiersConfigs() {
+        if (cachedIdentifierConfigs == null) {
+            cachedIdentifierConfigs = new Vector<BTSConfigItem>();
+            addToListRecursively(configurationController
+                    .getIdentifiersConfigItem());
 
-	private BTSConfigItem getIdentifierConfig(BTSExternalReference reference) {
-		if (identifierConfigCache.containsKey(reference.getType())) {
-			return identifierConfigCache.get(reference.getType());
-		} else {
-			BTSConfigItem last = null;
-			for (BTSConfigItem child : listAllIdentifiersConfigs()) {
-				
-				//if relation type not set
-				if (reference.getType() == null && child.getValue().equals("partOf"))
-				{
-					return child;
-				}
-				else if (child.getValue() != null
-						&& child.getValue().equals(reference.getType())) {
-					identifierConfigCache.put(child.getType(), child);
-					return child;
-				}
-				last = child;
-			}
-			return last;
-		}
-	}
+        }
+        return cachedIdentifierConfigs;
+    }
 
-	private List<BTSConfigItem> listAllIdentifiersConfigs() {
-		if (cachedIdentifierConfigs == null) {
-			cachedIdentifierConfigs = new Vector<BTSConfigItem>();
-			addToListRecursively(configurationController
-					.getIdentifiersConfigItem());
+    private void addToListRecursively(BTSConfig identifiersConfigItem) {
+        if (!BTSCoreConstants.IDENTIFIERS
+                .equals(((BTSConfigItem) identifiersConfigItem).getValue())) {
+            cachedIdentifierConfigs.add((BTSConfigItem) identifiersConfigItem);
+        }
+        for (BTSConfig item : identifiersConfigItem.getChildren()) {
+            addToListRecursively(item);
+        }
 
-		}
-		return cachedIdentifierConfigs;
-	}
+    }
 
-	private void addToListRecursively(BTSConfig identifiersConfigItem) {
-		if (!BTSCoreConstants.IDENTIFIERS
-				.equals(((BTSConfigItem) identifiersConfigItem).getValue()))
-		{
-			cachedIdentifierConfigs.add((BTSConfigItem) identifiersConfigItem);
-		}
-		for (BTSConfig item : identifiersConfigItem.getChildren()) {
-			addToListRecursively(item);
-		}
+    private void createWidget(final BTSExternalReference reference, int index,
+                              BTSConfigItem identifiersConfig) {
+        IEclipseContext child = context.createChild("id:"
+                + reference.get_id());
 
-	}
+        Composite composite = new Composite(this, SWT.NONE);
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1,
+                1));
+        composite.setLayout(new GridLayout(1, true));
+        composite.setBackground(this.getBackground());
+        ((GridLayout) composite.getLayout()).marginWidth = 0;
+        ((GridLayout) composite.getLayout()).marginHeight = 0;
+        ((GridLayout) composite.getLayout()).horizontalSpacing = 5;
+        ((GridLayout) composite.getLayout()).verticalSpacing = 5;
 
-	private void createWidget(final BTSExternalReference reference, int index,
-			BTSConfigItem identifiersConfig) {
-		IEclipseContext child = context.createChild("id:"
-				+ reference.get_id());
+        child.set(Composite.class, composite);
+        child.set(BTSConfigItem.class, identifiersConfig);
+        child.set(EditingDomain.class, editingDomain);
+        child.set(BTSExternalReference.class, reference);
 
-		Composite composite = new Composite(this, SWT.NONE);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1,
-				1));
-		composite.setLayout(new GridLayout(1, true));
-		composite.setBackground(this.getBackground());
-		((GridLayout) composite.getLayout()).marginWidth = 0;
-		((GridLayout) composite.getLayout()).marginHeight = 0;
-		((GridLayout) composite.getLayout()).horizontalSpacing = 5;
-		((GridLayout) composite.getLayout()).verticalSpacing = 5;
+        child.set(BTSObject.class, object);
+        child.set(BTSResourceProvider.class, resourceProvider);
+        ContextInjectionFactory.make(
+                IdentifierEditorComposite.class, child);
+        // relationMap.put(relationConfig, composite);
 
-		child.set(Composite.class, composite);
-		child.set(BTSConfigItem.class, identifiersConfig);
-		child.set(EditingDomain.class, editingDomain);
-		child.set(BTSExternalReference.class, reference);
+        if (index == 0) {
 
-		child.set(BTSObject.class, object);
-		child.set(BTSResourceProvider.class, resourceProvider);
-		ContextInjectionFactory.make(
-				IdentifierEditorComposite.class, child);
-		// relationMap.put(relationConfig, composite);
+            Label delButton = new Label(this, SWT.PUSH);
+            setButtonImage(delButton, identifiersConfig, false);
+            delButton.setToolTipText("Remove widget");
+            delButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
+                    false, 1, 1));
+            ((GridData) delButton.getLayoutData()).verticalIndent = 2;
+            delButton.addMouseListener(new MouseAdapter() {
 
-		if (index == 0) {
+                @Override
+                public void mouseDown(MouseEvent e) {
+                    if (CompoundIdentifiersEditorComposite.this.userMayEdit) {
+                        Label l = (Label) e.getSource();
+                        l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+                    }
+                }
 
-			Label delButton = new Label(this, SWT.PUSH);
-			setButtonImage(delButton, identifiersConfig, false);
-			delButton.setToolTipText("Remove widget");
-			delButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
-					false, 1, 1));
-			((GridData) delButton.getLayoutData()).verticalIndent = 2;
-			delButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseUp(MouseEvent e) {
+                    if (CompoundIdentifiersEditorComposite.this.userMayEdit) {
+                        Label l = (Label) e.getSource();
+                        l.setBackground(l.getParent().getBackground());
+                        CompoundCommand compoundCommand = new CompoundCommand();
+                        org.eclipse.emf.common.command.Command command = DeleteCommand
+                                .create(editingDomain, reference);
+                        compoundCommand.append(command);
+                        editingDomain.getCommandStack().execute(compoundCommand);
+                    }
+                }
+            });
+            Label addButton = new Label(this, SWT.PUSH);
+            setButtonImage(addButton, identifiersConfig, true);
+            addButton.setToolTipText("Add Identifier");
+            addButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
+                    false, 1, 1));
+            ((GridData) addButton.getLayoutData()).verticalIndent = 2;
+            addButton.addMouseListener(new MouseAdapter() {
 
-				@Override
-				public void mouseDown(MouseEvent e) {
-					if (CompoundIdentifiersEditorComposite.this.userMayEdit)
-					{
-					Label l = (Label) e.getSource();
-					l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-					}
-				}
+                @Override
+                public void mouseDown(MouseEvent e) {
+                    if (CompoundIdentifiersEditorComposite.this.userMayEdit) {
+                        Label l = (Label) e.getSource();
+                        l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+                    }
+                }
 
-				@Override
-				public void mouseUp(MouseEvent e) {
-					if (CompoundIdentifiersEditorComposite.this.userMayEdit)
-					{
-					Label l = (Label) e.getSource();
-					l.setBackground(l.getParent().getBackground());
-					CompoundCommand compoundCommand = new CompoundCommand();
-					org.eclipse.emf.common.command.Command command = DeleteCommand
-							.create(editingDomain, reference);
-					compoundCommand.append(command);
-					editingDomain.getCommandStack().execute(compoundCommand);
-					}
-				}
-			});
-			Label addButton = new Label(this, SWT.PUSH);
-			setButtonImage(addButton, identifiersConfig, true);
-			addButton.setToolTipText("Add Identifier");
-			addButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
-					false, 1, 1));
-			((GridData) addButton.getLayoutData()).verticalIndent = 2;
-			addButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseUp(MouseEvent e) {
+                    if (CompoundIdentifiersEditorComposite.this.userMayEdit) {
+                        Label l = (Label) e.getSource();
+                        l.setBackground(l.getParent().getBackground());
+                        BTSExternalReference rel = makeAdditionalExternalReference();
+                        CompoundCommand compoundCommand = new CompoundCommand();
+                        org.eclipse.emf.common.command.Command command = AddCommand
+                                .create(editingDomain,
+                                        object,
+                                        BtsmodelPackage.Literals.BTS_OBJECT__EXTERNAL_REFERENCES,
+                                        rel);
+                        compoundCommand.append(command);
+                        editingDomain.getCommandStack().execute(compoundCommand);
+                    }
+                }
+            });
+        } else {
+            Label delButton = new Label(this, SWT.PUSH);
+            setButtonImage(delButton, identifiersConfig, false);
 
-				@Override
-				public void mouseDown(MouseEvent e) {
-					if (CompoundIdentifiersEditorComposite.this.userMayEdit)
-					{
-					Label l = (Label) e.getSource();
-					l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-					}
-				}
+            delButton.setToolTipText("Remove widget");
+            delButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
+                    false, 1, 1));
+            ((GridData) delButton.getLayoutData()).verticalIndent = 2;
+            ((GridData) delButton.getLayoutData()).horizontalSpan = 2;
 
-				@Override
-				public void mouseUp(MouseEvent e) {
-					if (CompoundIdentifiersEditorComposite.this.userMayEdit)
-					{
-					Label l = (Label) e.getSource();
-					l.setBackground(l.getParent().getBackground());
-					BTSExternalReference rel = makeAdditionalExternalReference();
-					CompoundCommand compoundCommand = new CompoundCommand();
-					org.eclipse.emf.common.command.Command command = AddCommand
-							.create(editingDomain,
-									object,
-									BtsmodelPackage.Literals.BTS_OBJECT__EXTERNAL_REFERENCES,
-									rel);
-					compoundCommand.append(command);
-					editingDomain.getCommandStack().execute(compoundCommand);
-					}
-				}
-			});
-		} else {
-			Label delButton = new Label(this, SWT.PUSH);
-			setButtonImage(delButton, identifiersConfig, false);
+            delButton.addMouseListener(new MouseAdapter() {
 
-			delButton.setToolTipText("Remove widget");
-			delButton.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false,
-					false, 1, 1));
-			((GridData) delButton.getLayoutData()).verticalIndent = 2;
-			((GridData) delButton.getLayoutData()).horizontalSpan = 2;
+                @Override
+                public void mouseDown(MouseEvent e) {
+                    if (CompoundIdentifiersEditorComposite.this.userMayEdit) {
+                        Label l = (Label) e.getSource();
+                        l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+                    }
+                }
 
-			delButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseUp(MouseEvent e) {
+                    if (CompoundIdentifiersEditorComposite.this.userMayEdit) {
+                        Label l = (Label) e.getSource();
+                        l.setBackground(l.getParent().getBackground());
+                        CompoundCommand compoundCommand = new CompoundCommand();
+                        org.eclipse.emf.common.command.Command command = DeleteCommand
+                                .create(editingDomain, reference);
+                        compoundCommand.append(command);
+                        editingDomain.getCommandStack().execute(compoundCommand);
+                    }
+                }
+            });
+        }
 
-				@Override
-				public void mouseDown(MouseEvent e) {
-					if (CompoundIdentifiersEditorComposite.this.userMayEdit)
-					{
-					Label l = (Label) e.getSource();
-					l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-					}
-				}
+    }
 
-				@Override
-				public void mouseUp(MouseEvent e) {
-					if (CompoundIdentifiersEditorComposite.this.userMayEdit)
-					{
-					Label l = (Label) e.getSource();
-					l.setBackground(l.getParent().getBackground());
-					CompoundCommand compoundCommand = new CompoundCommand();
-					org.eclipse.emf.common.command.Command command = DeleteCommand
-							.create(editingDomain, reference);
-					compoundCommand.append(command);
-					editingDomain.getCommandStack().execute(compoundCommand);
-					}
-				}
-			});
-		}
+    private void setButtonImage(Label button, BTSConfigItem relationConfig,
+                                boolean isAdd) {
+        if (isAdd) {
+            button.setImage(resourceProvider.getImage(Display.getDefault(),
+                    BTSResourceProvider.IMG_ADD));
+        } else {
+            button.setImage(resourceProvider.getImage(Display.getDefault(),
+                    BTSResourceProvider.IMG_DELETE));
+        }
 
-	}
+    }
 
-	private void setButtonImage(Label button, BTSConfigItem relationConfig,
-			boolean isAdd) {
-		if (isAdd) {
-			button.setImage(resourceProvider.getImage(Display.getDefault(),
-					BTSResourceProvider.IMG_ADD));
-		} else {
-			button.setImage(resourceProvider.getImage(Display.getDefault(),
-					BTSResourceProvider.IMG_DELETE));
-		}
+    protected BTSExternalReference makeAdditionalExternalReference() {
+        BTSExternalReference ref = BtsmodelFactory.eINSTANCE.createBTSExternalReference();
+        return ref;
+    }
 
-	}
 
-	protected BTSExternalReference makeAdditionalExternalReference() {
-		BTSExternalReference ref = BtsmodelFactory.eINSTANCE.createBTSExternalReference();
-		return ref;
-	}
-	
-	
-	
-	
 }

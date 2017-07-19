@@ -33,57 +33,57 @@ import com.google.inject.Inject;
  */
 public class DefaultUITraceURIConverter extends DefaultTraceURIConverter {
 
-	private final static Logger LOG = Logger.getLogger(DefaultUITraceURIConverter.class);
+    private final static Logger LOG = Logger.getLogger(DefaultUITraceURIConverter.class);
 
-	@Inject
-	private IStorage2UriMapper mapper;
+    @Inject
+    private IStorage2UriMapper mapper;
 
-	@Override
-	public URI getURIForTrace(XtextResource context) {
-		ResourceSet rs = context.getResourceSet();
-		if (!(rs instanceof XtextResourceSet && ((XtextResourceSet) rs).getClasspathURIContext() instanceof IJavaProject))
-			return super.getURIForTrace(context);
-		IJavaProject javaProject = (IJavaProject) ((XtextResourceSet) rs).getClasspathURIContext();
-		try {
-			return computeTraceURI(context.getURI(), javaProject);
-		} catch (JavaModelException e) {
-			LOG.error(e);
-		}
-		return super.getURIForTrace(context);
-	}
+    @Override
+    public URI getURIForTrace(XtextResource context) {
+        ResourceSet rs = context.getResourceSet();
+        if (!(rs instanceof XtextResourceSet && ((XtextResourceSet) rs).getClasspathURIContext() instanceof IJavaProject))
+            return super.getURIForTrace(context);
+        IJavaProject javaProject = (IJavaProject) ((XtextResourceSet) rs).getClasspathURIContext();
+        try {
+            return computeTraceURI(context.getURI(), javaProject);
+        } catch (JavaModelException e) {
+            LOG.error(e);
+        }
+        return super.getURIForTrace(context);
+    }
 
-	@Override
-	public URI getURIForTrace(URI uri) {
-		if (uri.isPlatform() && uri.segmentCount() > 1) {
-			Iterator<Pair<IStorage, IProject>> storagesIterator = mapper.getStorages(uri).iterator();
-			if(storagesIterator.hasNext()){
-				Pair<IStorage, IProject> candidate = storagesIterator.next();
-				IProject project = candidate.getSecond();
-				try {
-					if (project.exists()) {
-						if (project.hasNature(JavaCore.NATURE_ID)) {
-							IJavaProject javaProject = JavaCore.create(project);
-							if (javaProject != null)
-								return computeTraceURI(uri, javaProject);
-						}
-					}
-				} catch (JavaModelException e) {
-					LOG.error(e);
-				} catch (CoreException e) {
-					LOG.error(e);
-				}
-			}
-		}
-		return super.getURIForTrace(uri);
-	}
+    @Override
+    public URI getURIForTrace(URI uri) {
+        if (uri.isPlatform() && uri.segmentCount() > 1) {
+            Iterator<Pair<IStorage, IProject>> storagesIterator = mapper.getStorages(uri).iterator();
+            if (storagesIterator.hasNext()) {
+                Pair<IStorage, IProject> candidate = storagesIterator.next();
+                IProject project = candidate.getSecond();
+                try {
+                    if (project.exists()) {
+                        if (project.hasNature(JavaCore.NATURE_ID)) {
+                            IJavaProject javaProject = JavaCore.create(project);
+                            if (javaProject != null)
+                                return computeTraceURI(uri, javaProject);
+                        }
+                    }
+                } catch (JavaModelException e) {
+                    LOG.error(e);
+                } catch (CoreException e) {
+                    LOG.error(e);
+                }
+            }
+        }
+        return super.getURIForTrace(uri);
+    }
 
-	protected URI computeTraceURI(URI uri, IJavaProject javaProject) throws JavaModelException {
-		for (IPackageFragmentRoot root : javaProject.getPackageFragmentRoots())
-			if (root.getKind() == IPackageFragmentRoot.K_SOURCE) {
-				URI prefix = URI.createPlatformResourceURI(root.getResource().getFullPath().addTrailingSeparator().toString(), true);
-				if (isPrefix(prefix, uri))
-					return uri.deresolve(prefix).trimFragment().trimQuery();
-			}
-		return super.getURIForTrace(uri);
-	}
+    protected URI computeTraceURI(URI uri, IJavaProject javaProject) throws JavaModelException {
+        for (IPackageFragmentRoot root : javaProject.getPackageFragmentRoots())
+            if (root.getKind() == IPackageFragmentRoot.K_SOURCE) {
+                URI prefix = URI.createPlatformResourceURI(root.getResource().getFullPath().addTrailingSeparator().toString(), true);
+                if (isPrefix(prefix, uri))
+                    return uri.deresolve(prefix).trimFragment().trimQuery();
+            }
+        return super.getURIForTrace(uri);
+    }
 }

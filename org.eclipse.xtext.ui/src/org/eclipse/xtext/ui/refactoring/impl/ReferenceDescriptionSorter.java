@@ -17,33 +17,33 @@ import com.google.inject.Inject;
 
 /**
  * Sorts reference descriptions by project and by resource to allow efficient processing later on.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class ReferenceDescriptionSorter {
 
-	@Inject
-	private ProjectUtil projectUtil;
+    @Inject
+    private ProjectUtil projectUtil;
 
-	public Multimap<IProject, IReferenceDescription> sortByProject(Iterable<IReferenceDescription> referenceDescriptions) {
-		Multimap<IProject, IReferenceDescription> referencesByProject = HashMultimap.create();
-		for (IReferenceDescription referenceDescription : referenceDescriptions) {
-			URI sourceResourceUri = referenceDescription.getSourceEObjectUri().trimFragment();
-			IProject project = projectUtil.getProject(sourceResourceUri);
-			if(project != null) {
-				referencesByProject.put(project, referenceDescription);
-			}
-		}
-		return referencesByProject;
-	}
+    public Multimap<IProject, IReferenceDescription> sortByProject(Iterable<IReferenceDescription> referenceDescriptions) {
+        Multimap<IProject, IReferenceDescription> referencesByProject = HashMultimap.create();
+        for (IReferenceDescription referenceDescription : referenceDescriptions) {
+            URI sourceResourceUri = referenceDescription.getSourceEObjectUri().trimFragment();
+            IProject project = projectUtil.getProject(sourceResourceUri);
+            if (project != null) {
+                referencesByProject.put(project, referenceDescription);
+            }
+        }
+        return referencesByProject;
+    }
 
-	public Multimap<URI, IReferenceDescription> sortByResource(Iterable<IReferenceDescription> referenceDescriptions) {
-		Multimap<URI, IReferenceDescription> referencesByResourceURI = HashMultimap.create();
-		for (IReferenceDescription referenceDescription : referenceDescriptions) {
-			URI sourceResourceUri = referenceDescription.getSourceEObjectUri().trimFragment();
-			referencesByResourceURI.put(sourceResourceUri, referenceDescription);
-		}
-		return referencesByResourceURI;
-	}
+    public Multimap<URI, IReferenceDescription> sortByResource(Iterable<IReferenceDescription> referenceDescriptions) {
+        Multimap<URI, IReferenceDescription> referencesByResourceURI = HashMultimap.create();
+        for (IReferenceDescription referenceDescription : referenceDescriptions) {
+            URI sourceResourceUri = referenceDescription.getSourceEObjectUri().trimFragment();
+            referencesByResourceURI.put(sourceResourceUri, referenceDescription);
+        }
+        return referencesByResourceURI;
+    }
 
 }

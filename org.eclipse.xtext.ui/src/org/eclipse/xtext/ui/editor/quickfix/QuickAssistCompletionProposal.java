@@ -18,57 +18,57 @@ import org.eclipse.swt.graphics.Point;
 
 public class QuickAssistCompletionProposal implements ICompletionProposal, ICompletionProposalExtension3 {
 
-	private Position pos;
-	private IssueResolution resolution;
-	private Image image;
+    private Position pos;
+    private IssueResolution resolution;
+    private Image image;
 
-	public QuickAssistCompletionProposal(Position pos, IssueResolution resolution, Image image) {
-		this.pos = pos;
-		this.resolution = resolution;
-		this.image = image;
-	}
+    public QuickAssistCompletionProposal(Position pos, IssueResolution resolution, Image image) {
+        this.pos = pos;
+        this.resolution = resolution;
+        this.image = image;
+    }
 
-	public void apply(IDocument document) {
-		resolution.apply();
-	}
+    public void apply(IDocument document) {
+        resolution.apply();
+    }
 
-	public Point getSelection(IDocument document) {
-		return new Point(pos.offset, 0);
-	}
+    public Point getSelection(IDocument document) {
+        return new Point(pos.offset, 0);
+    }
 
-	public String getAdditionalProposalInfo() {
-		return resolution.getDescription();
-	}
+    public String getAdditionalProposalInfo() {
+        return resolution.getDescription();
+    }
 
-	public String getDisplayString() {
-		return resolution.getLabel();
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public int getRelevance() {
-		return resolution.getRelevance();
-	}
+    public String getDisplayString() {
+        return resolution.getLabel();
+    }
 
-	public Image getImage() {
-		return image;
-	}
+    /**
+     * @since 2.4
+     */
+    public int getRelevance() {
+        return resolution.getRelevance();
+    }
 
-	public IContextInformation getContextInformation() {
-		return null;
-	}
+    public Image getImage() {
+        return image;
+    }
 
-	public IInformationControlCreator getInformationControlCreator() {
-		return null;
-	}
+    public IContextInformation getContextInformation() {
+        return null;
+    }
 
-	public int getPrefixCompletionStart(IDocument document, int completionOffset) {
-		return 0;
-	}
+    public IInformationControlCreator getInformationControlCreator() {
+        return null;
+    }
 
-	public CharSequence getPrefixCompletionText(IDocument document, int completionOffset) {
-		return null;
-	}
+    public int getPrefixCompletionStart(IDocument document, int completionOffset) {
+        return 0;
+    }
+
+    public CharSequence getPrefixCompletionText(IDocument document, int completionOffset) {
+        return null;
+    }
 
 }

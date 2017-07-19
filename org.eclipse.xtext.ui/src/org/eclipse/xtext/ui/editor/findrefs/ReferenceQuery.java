@@ -24,59 +24,57 @@ import com.google.inject.Inject;
  */
 public class ReferenceQuery implements ISearchQuery {
 
-	@Inject
-	private IReferenceFinder finder;
+    @Inject
+    protected EditorResourceAccess localContextProvider;
+    @Inject
+    private IReferenceFinder finder;
+    private ReferenceSearchResult searchResult;
 
-	@Inject
-	protected EditorResourceAccess localContextProvider;
+    private String label;
 
-	private ReferenceSearchResult searchResult;
+    private Iterable<URI> targetURIs;
 
-	private String label;
-	
-	private Iterable<URI> targetURIs;
+    private Predicate<IReferenceDescription> filter;
 
-	private Predicate<IReferenceDescription> filter;
+    public ReferenceQuery() {
+    }
 
-	public ReferenceQuery() {
-	}
+    public void init(Iterable<URI> targetURIs, Predicate<IReferenceDescription> filter, String label) {
+        this.targetURIs = targetURIs;
+        this.label = label;
+        this.filter = filter;
+        this.searchResult = createSearchResult();
+    }
 
-	public void init(Iterable<URI> targetURIs, Predicate<IReferenceDescription> filter, String label) {
-		this.targetURIs = targetURIs;
-		this.label = label;
-		this.filter = filter;
-		this.searchResult = createSearchResult();
-	}
+    public boolean canRerun() {
+        return true;
+    }
 
-	public boolean canRerun() {
-		return true;
-	}
+    public boolean canRunInBackground() {
+        return true;
+    }
 
-	public boolean canRunInBackground() {
-		return true;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public String getLabel() {
-		return label;
-	}
-	
-	public Predicate<IReferenceDescription> getFilter() {
-		return filter;
-	}
-	
-	public ISearchResult getSearchResult() {
-		return searchResult;
-	}
+    public Predicate<IReferenceDescription> getFilter() {
+        return filter;
+    }
 
-	public IStatus run(IProgressMonitor monitor) throws OperationCanceledException {
-		searchResult.reset();
-		finder.findAllReferences(targetURIs, localContextProvider, searchResult, monitor);
-		searchResult.finish();
-		return (monitor.isCanceled()) ? Status.CANCEL_STATUS : Status.OK_STATUS;
-	}
+    public ISearchResult getSearchResult() {
+        return searchResult;
+    }
 
-	protected ReferenceSearchResult createSearchResult() {
-		return new ReferenceSearchResult(this);
-	}
-	
+    public IStatus run(IProgressMonitor monitor) throws OperationCanceledException {
+        searchResult.reset();
+        finder.findAllReferences(targetURIs, localContextProvider, searchResult, monitor);
+        searchResult.finish();
+        return (monitor.isCanceled()) ? Status.CANCEL_STATUS : Status.OK_STATUS;
+    }
+
+    protected ReferenceSearchResult createSearchResult() {
+        return new ReferenceSearchResult(this);
+    }
+
 }

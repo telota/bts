@@ -23,34 +23,34 @@ import com.google.inject.Inject;
  * @since 2.2
  */
 public class OutlineNodeElementOpener {
-	
-	@Inject
-	private IURIEditorOpener uriEditorOpener;
-	
-	public void open(IOutlineNode node, ISourceViewer textViewer) {
-		if (node != null) {
-			ITextRegion textRegion = node.getSignificantTextRegion();
-			if (textRegion != null && textRegion != ITextRegion.EMPTY_REGION) {
-				int offset = textRegion.getOffset();
-				int length = textRegion.getLength();
-				textViewer.setRangeIndication(offset, length, true);
-				textViewer.revealRange(offset, length);
-				textViewer.setSelectedRange(offset, length);
-			} else {
-				node.readOnly(new IUnitOfWork.Void<EObject>() {
-					@Override
-					public void process(EObject state) throws Exception {
-						openEObject(state);
-					}
-				});
-			}
-			
-		}
-	}
 
-	protected void openEObject(EObject state) {
-		URI uri = EcoreUtil.getURI(state);
-		uriEditorOpener.open(uri, true);
-	}
+    @Inject
+    private IURIEditorOpener uriEditorOpener;
+
+    public void open(IOutlineNode node, ISourceViewer textViewer) {
+        if (node != null) {
+            ITextRegion textRegion = node.getSignificantTextRegion();
+            if (textRegion != null && textRegion != ITextRegion.EMPTY_REGION) {
+                int offset = textRegion.getOffset();
+                int length = textRegion.getLength();
+                textViewer.setRangeIndication(offset, length, true);
+                textViewer.revealRange(offset, length);
+                textViewer.setSelectedRange(offset, length);
+            } else {
+                node.readOnly(new IUnitOfWork.Void<EObject>() {
+                    @Override
+                    public void process(EObject state) throws Exception {
+                        openEObject(state);
+                    }
+                });
+            }
+
+        }
+    }
+
+    protected void openEObject(EObject state) {
+        URI uri = EcoreUtil.getURI(state);
+        uriEditorOpener.open(uri, true);
+    }
 
 }

@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
@@ -15,25 +14,25 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
 public class AddAnnotationLemmaNavigatorHandler {
-	@Execute
-	public void execute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection,
-			@Optional @Named("annotationTypePath") String annotationTypePath,
-			EventBroker eventBroker,
-			LemmaNavigatorController lemmaNavigatorController) {
-		if (selection instanceof BTSLemmaEntry) {
-			final BTSAnnotation object = lemmaNavigatorController
-					.createNewAnnotation((BTSLemmaEntry) selection, annotationTypePath);
-			lemmaNavigatorController.save(object);
-			eventBroker.post("model_add/BTSAnnotation", object);
-		}
-	}
-	
-	
-	@CanExecute
-	public boolean canExecute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
-		return (selection instanceof BTSCorpusObject && !(selection instanceof BTSAnnotation));
-	}
-		
+    @Execute
+    public void execute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection,
+            @Optional @Named("annotationTypePath") String annotationTypePath,
+            EventBroker eventBroker,
+            LemmaNavigatorController lemmaNavigatorController) {
+        if (selection instanceof BTSLemmaEntry) {
+            final BTSAnnotation object = lemmaNavigatorController
+                    .createNewAnnotation((BTSLemmaEntry) selection, annotationTypePath);
+            lemmaNavigatorController.save(object);
+            eventBroker.post("model_add/BTSAnnotation", object);
+        }
+    }
+
+
+    @CanExecute
+    public boolean canExecute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
+        return (selection instanceof BTSCorpusObject && !(selection instanceof BTSAnnotation));
+    }
+
 }

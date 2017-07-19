@@ -41,11 +41,11 @@ import org.bbaw.bts.btsviewmodel.StatusMessage;
  */
 public interface BTSStatusMessageService {
 
-	/**
-	 * Lists last status messages.
-	 *
-	 * @param number the number requested last messages
-	 * @return the list last messages
-	 */
-	List<StatusMessage> listLastStatusMessages(int number);
+    /**
+     * Lists last status messages.
+     *
+     * @param number the number requested last messages
+     * @return the list last messages
+     */
+    List<StatusMessage> listLastStatusMessages(int number);
 }

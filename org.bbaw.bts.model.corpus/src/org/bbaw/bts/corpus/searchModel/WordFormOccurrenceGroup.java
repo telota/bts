@@ -35,86 +35,84 @@ import java.util.Vector;
 
 /**
  * @author plutte
- *
  */
 public class WordFormOccurrenceGroup {
-	
-	public static String GROUP_LEMMA = "lemma";
-	
-	public static String GROUP_TRANSLITERATION = "transliteration";
 
-	public static String GROUP_TRANSLATION = "translation";
+    public static String GROUP_LEMMA = "lemma";
 
-	public static String GROUP_FLEXION = "flexion";
+    public static String GROUP_TRANSLITERATION = "transliteration";
 
-	public static String GROUP_SPELLING = "spelling";
+    public static String GROUP_TRANSLATION = "translation";
 
-	
-	private String value;
-	
-	private String label;
-	
-	private String groupType;
-	
-	private List<WordFormOccurrence> occurrences;
+    public static String GROUP_FLEXION = "flexion";
 
-	/**
-	 * @return the value
-	 */
-	public String getValue() {
-		return value;
-	}
+    public static String GROUP_SPELLING = "spelling";
 
-	/**
-	 * @param value the value to set
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
 
-	/**
-	 * @return the label
-	 */
-	public String getLabel() {
-		return label;
-	}
+    private String value;
 
-	/**
-	 * @param label the label to set
-	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    private String label;
 
-	/**
-	 * @return the occurrences
-	 */
-	public List<WordFormOccurrence> getOccurrences() {
-		return occurrences;
-	}
+    private String groupType;
 
-	/**
-	 * @param occurrences the occurrences to set
-	 */
-	public void setOccurrences(List<WordFormOccurrence> occurrences) {
-		this.occurrences = occurrences;
-	}
-	
-	public void addOccurrence(WordFormOccurrence occurrence) {
-		if (occurrence == null) return;
-		if (this.occurrences == null)
-		{
-			this.occurrences = new Vector<WordFormOccurrence>();
-		}
-		this.occurrences.add(occurrence);
-	}
+    private List<WordFormOccurrence> occurrences;
 
-	public String getGroupType() {
-		return groupType;
-	}
+    /**
+     * @return the value
+     */
+    public String getValue() {
+        return value;
+    }
 
-	public void setGroupType(String groupType) {
-		this.groupType = groupType;
-	}
+    /**
+     * @param value the value to set
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    /**
+     * @return the label
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * @param label the label to set
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    /**
+     * @return the occurrences
+     */
+    public List<WordFormOccurrence> getOccurrences() {
+        return occurrences;
+    }
+
+    /**
+     * @param occurrences the occurrences to set
+     */
+    public void setOccurrences(List<WordFormOccurrence> occurrences) {
+        this.occurrences = occurrences;
+    }
+
+    public void addOccurrence(WordFormOccurrence occurrence) {
+        if (occurrence == null) return;
+        if (this.occurrences == null) {
+            this.occurrences = new Vector<WordFormOccurrence>();
+        }
+        this.occurrences.add(occurrence);
+    }
+
+    public String getGroupType() {
+        return groupType;
+    }
+
+    public void setGroupType(String groupType) {
+        this.groupType = groupType;
+    }
 
 }

@@ -17,13 +17,13 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(ICompletionProposalPostProcessor.NullProcessor.class)
 public interface ICompletionProposalPostProcessor {
 
-	ICompletionProposal[] postProcess(ICompletionProposal[] proposals);
+    ICompletionProposal[] postProcess(ICompletionProposal[] proposals);
 
-	public class NullProcessor implements ICompletionProposalPostProcessor {
+    public class NullProcessor implements ICompletionProposalPostProcessor {
 
-		public ICompletionProposal[] postProcess(ICompletionProposal[] proposals) {
-			return proposals;
-		}
+        public ICompletionProposal[] postProcess(ICompletionProposal[] proposals) {
+            return proposals;
+        }
 
-	}
+    }
 }

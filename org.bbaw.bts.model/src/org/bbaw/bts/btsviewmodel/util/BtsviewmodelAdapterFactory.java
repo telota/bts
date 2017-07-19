@@ -43,165 +43,173 @@ import org.eclipse.emf.ecore.EObject;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.bbaw.bts.btsviewmodel.BtsviewmodelPackage
+ *
  * @generated
+ * @see org.bbaw.bts.btsviewmodel.BtsviewmodelPackage
  */
-public class BtsviewmodelAdapterFactory extends AdapterFactoryImpl
-{
-	/**
-	 * The cached model package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected static BtsviewmodelPackage modelPackage;
+public class BtsviewmodelAdapterFactory extends AdapterFactoryImpl {
+    /**
+     * The cached model package.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected static BtsviewmodelPackage modelPackage;
+    /**
+     * The switch that delegates to the <code>createXXX</code> methods.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BtsviewmodelSwitch<Adapter> modelSwitch =
+            new BtsviewmodelSwitch<Adapter>() {
+                @Override
+                public Adapter caseTreeNodeWrapper(TreeNodeWrapper object) {
+                    return createTreeNodeWrapperAdapter();
+                }
 
-	/**
-	 * Creates an instance of the adapter factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public BtsviewmodelAdapterFactory()
-	{
-		if (modelPackage == null) {
-			modelPackage = BtsviewmodelPackage.eINSTANCE;
-		}
-	}
+                @Override
+                public Adapter caseStatusMessage(StatusMessage object) {
+                    return createStatusMessageAdapter();
+                }
 
-	/**
-	 * Returns whether this factory is applicable for the type of the object.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
-	 * <!-- end-user-doc -->
-	 * @return whether this factory is applicable for the type of the object.
-	 * @generated
-	 */
-	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage) {
-			return true;
-		}
-		if (object instanceof EObject) {
-			return ((EObject)object).eClass().getEPackage() == modelPackage;
-		}
-		return false;
-	}
+                @Override
+                public Adapter caseBTSObjectTypeTreeNode(BTSObjectTypeTreeNode object) {
+                    return createBTSObjectTypeTreeNodeAdapter();
+                }
 
-	/**
-	 * The switch that delegates to the <code>createXXX</code> methods.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected BtsviewmodelSwitch<Adapter> modelSwitch =
-		new BtsviewmodelSwitch<Adapter>() {
-			@Override
-			public Adapter caseTreeNodeWrapper(TreeNodeWrapper object) {
-				return createTreeNodeWrapperAdapter();
-			}
-			@Override
-			public Adapter caseStatusMessage(StatusMessage object) {
-				return createStatusMessageAdapter();
-			}
-			@Override
-			public Adapter caseBTSObjectTypeTreeNode(BTSObjectTypeTreeNode object) {
-				return createBTSObjectTypeTreeNodeAdapter();
-			}
-			@Override
-			public Adapter caseDBCollectionStatusInformation(DBCollectionStatusInformation object) {
-				return createDBCollectionStatusInformationAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+                @Override
+                public Adapter caseDBCollectionStatusInformation(DBCollectionStatusInformation object) {
+                    return createDBCollectionStatusInformationAdapter();
+                }
 
-	/**
-	 * Creates an adapter for the <code>target</code>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param target the object to adapt.
-	 * @return the adapter for the <code>target</code>.
-	 * @generated
-	 */
-	@Override
-	public Adapter createAdapter(Notifier target)
-	{
-		return modelSwitch.doSwitch((EObject)target);
-	}
+                @Override
+                public Adapter defaultCase(EObject object) {
+                    return createEObjectAdapter();
+                }
+            };
+
+    /**
+     * Creates an instance of the adapter factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public BtsviewmodelAdapterFactory() {
+        if (modelPackage == null) {
+            modelPackage = BtsviewmodelPackage.eINSTANCE;
+        }
+    }
+
+    /**
+     * Returns whether this factory is applicable for the type of the object.
+     * <!-- begin-user-doc -->
+     * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
+     * <!-- end-user-doc -->
+     *
+     * @return whether this factory is applicable for the type of the object.
+     * @generated
+     */
+    @Override
+    public boolean isFactoryForType(Object object) {
+        if (object == modelPackage) {
+            return true;
+        }
+        if (object instanceof EObject) {
+            return ((EObject) object).eClass().getEPackage() == modelPackage;
+        }
+        return false;
+    }
+
+    /**
+     * Creates an adapter for the <code>target</code>.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param target the object to adapt.
+     * @return the adapter for the <code>target</code>.
+     * @generated
+     */
+    @Override
+    public Adapter createAdapter(Notifier target) {
+        return modelSwitch.doSwitch((EObject) target);
+    }
 
 
-	/**
-	 * Creates a new adapter for an object of class '{@link org.bbaw.bts.btsviewmodel.TreeNodeWrapper <em>Tree Node Wrapper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.bbaw.bts.btsviewmodel.TreeNodeWrapper
-	 * @generated
-	 */
-	public Adapter createTreeNodeWrapperAdapter()
-	{
-		return null;
-	}
+    /**
+     * Creates a new adapter for an object of class '{@link org.bbaw.bts.btsviewmodel.TreeNodeWrapper <em>Tree Node Wrapper</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     *
+     * @return the new adapter.
+     * @generated
+     * @see org.bbaw.bts.btsviewmodel.TreeNodeWrapper
+     */
+    public Adapter createTreeNodeWrapperAdapter() {
+        return null;
+    }
 
-	/**
-	 * Creates a new adapter for an object of class '{@link org.bbaw.bts.btsviewmodel.StatusMessage <em>Status Message</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.bbaw.bts.btsviewmodel.StatusMessage
-	 * @generated
-	 */
-	public Adapter createStatusMessageAdapter() {
-		return null;
-	}
+    /**
+     * Creates a new adapter for an object of class '{@link org.bbaw.bts.btsviewmodel.StatusMessage <em>Status Message</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     *
+     * @return the new adapter.
+     * @generated
+     * @see org.bbaw.bts.btsviewmodel.StatusMessage
+     */
+    public Adapter createStatusMessageAdapter() {
+        return null;
+    }
 
-	/**
-	 * Creates a new adapter for an object of class '{@link org.bbaw.bts.btsviewmodel.BTSObjectTypeTreeNode <em>BTS Object Type Tree Node</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.bbaw.bts.btsviewmodel.BTSObjectTypeTreeNode
-	 * @generated
-	 */
-	public Adapter createBTSObjectTypeTreeNodeAdapter() {
-		return null;
-	}
+    /**
+     * Creates a new adapter for an object of class '{@link org.bbaw.bts.btsviewmodel.BTSObjectTypeTreeNode <em>BTS Object Type Tree Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     *
+     * @return the new adapter.
+     * @generated
+     * @see org.bbaw.bts.btsviewmodel.BTSObjectTypeTreeNode
+     */
+    public Adapter createBTSObjectTypeTreeNodeAdapter() {
+        return null;
+    }
 
-	/**
-	 * Creates a new adapter for an object of class '{@link org.bbaw.bts.btsviewmodel.DBCollectionStatusInformation <em>DB Collection Status Information</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.bbaw.bts.btsviewmodel.DBCollectionStatusInformation
-	 * @generated
-	 */
-	public Adapter createDBCollectionStatusInformationAdapter() {
-		return null;
-	}
+    /**
+     * Creates a new adapter for an object of class '{@link org.bbaw.bts.btsviewmodel.DBCollectionStatusInformation <em>DB Collection Status Information</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     *
+     * @return the new adapter.
+     * @generated
+     * @see org.bbaw.bts.btsviewmodel.DBCollectionStatusInformation
+     */
+    public Adapter createDBCollectionStatusInformationAdapter() {
+        return null;
+    }
 
-	/**
-	 * Creates a new adapter for the default case.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @generated
-	 */
-	public Adapter createEObjectAdapter()
-	{
-		return null;
-	}
+    /**
+     * Creates a new adapter for the default case.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null.
+     * <!-- end-user-doc -->
+     *
+     * @return the new adapter.
+     * @generated
+     */
+    public Adapter createEObjectAdapter() {
+        return null;
+    }
 
 } //BtsviewmodelAdapterFactory

@@ -22,53 +22,53 @@ import org.eclipse.swt.graphics.Image;
  */
 public class XtextTemplateProposal extends TemplateProposal implements ICompletionProposalExtension4 {
 
-	public XtextTemplateProposal(Template template, TemplateContext context, IRegion region, Image image) {
-		super(template, context, region, image);
-	}
-	
-	public XtextTemplateProposal(Template template, TemplateContext context, IRegion region, Image image, int relevance) {
-		super(template, context, region, image, relevance);
-	}
-	
-	public boolean isAutoInsertable() {
-		return getTemplate().isAutoInsertable();
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this)
-			return true;
-		if (obj == null || !(obj instanceof XtextTemplateProposal))
-			return false;
-		XtextTemplateProposal other = (XtextTemplateProposal) obj;
-		
-		return getTemplate().equals(other.getTemplate());
-	}
-	
-	@Override
-	public int hashCode() {
-		return getTemplate().hashCode();
-	}
-	
-	@Override
-	public String getAdditionalProposalInfo() {
-		try {
-		    TemplateContext context = getContext();
-			context.setReadOnly(true);
-			TemplateBuffer templateBuffer;
-			try {
-				Template template = getTemplate();
-				if (context instanceof XtextTemplateContext) {
-					templateBuffer= ((XtextTemplateContext)context).evaluateForDisplay(template);
-				} else {
-					templateBuffer= context.evaluate(template);
-				}
-			} catch (TemplateException e) {
-				return null;
-			}
-			return templateBuffer.getString();
-	    } catch (BadLocationException e) {
-			return null;
-		}
-	}
+    public XtextTemplateProposal(Template template, TemplateContext context, IRegion region, Image image) {
+        super(template, context, region, image);
+    }
+
+    public XtextTemplateProposal(Template template, TemplateContext context, IRegion region, Image image, int relevance) {
+        super(template, context, region, image, relevance);
+    }
+
+    public boolean isAutoInsertable() {
+        return getTemplate().isAutoInsertable();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (obj == null || !(obj instanceof XtextTemplateProposal))
+            return false;
+        XtextTemplateProposal other = (XtextTemplateProposal) obj;
+
+        return getTemplate().equals(other.getTemplate());
+    }
+
+    @Override
+    public int hashCode() {
+        return getTemplate().hashCode();
+    }
+
+    @Override
+    public String getAdditionalProposalInfo() {
+        try {
+            TemplateContext context = getContext();
+            context.setReadOnly(true);
+            TemplateBuffer templateBuffer;
+            try {
+                Template template = getTemplate();
+                if (context instanceof XtextTemplateContext) {
+                    templateBuffer = ((XtextTemplateContext) context).evaluateForDisplay(template);
+                } else {
+                    templateBuffer = context.evaluate(template);
+                }
+            } catch (TemplateException e) {
+                return null;
+            }
+            return templateBuffer.getString();
+        } catch (BadLocationException e) {
+            return null;
+        }
+    }
 }

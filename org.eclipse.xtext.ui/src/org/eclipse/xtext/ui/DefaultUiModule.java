@@ -114,281 +114,281 @@ import com.google.inject.name.Names;
  */
 public class DefaultUiModule extends AbstractGenericModule {
 
-	private final AbstractUIPlugin plugin;
+    private final AbstractUIPlugin plugin;
 
-	public DefaultUiModule(AbstractUIPlugin plugin) {
-		this.plugin = plugin;
-	}
+    public DefaultUiModule(AbstractUIPlugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public void configure(Binder binder) {
-		super.configure(binder);
-		binder.bind(AbstractUIPlugin.class).toInstance(plugin);
-		binder.bind(IDialogSettings.class).toInstance(plugin.getDialogSettings());
-	}
+    @Override
+    public void configure(Binder binder) {
+        super.configure(binder);
+        binder.bind(AbstractUIPlugin.class).toInstance(plugin);
+        binder.bind(IDialogSettings.class).toInstance(plugin.getDialogSettings());
+    }
 
-	public void configureBracketMatchingAction(Binder binder) {
-		binder.bind(IActionContributor.class).annotatedWith(Names.named("foldingActionGroup")).to( //$NON-NLS-1$
-				org.eclipse.xtext.ui.editor.folding.FoldingActionContributor.class);
-		binder.bind(IActionContributor.class).annotatedWith(Names.named("bracketMatcherAction")).to( //$NON-NLS-1$
-				org.eclipse.xtext.ui.editor.bracketmatching.GoToMatchingBracketAction.class);
-		binder.bind(IPreferenceStoreInitializer.class).annotatedWith(Names.named("bracketMatcherPrefernceInitializer")) //$NON-NLS-1$
-				.to(org.eclipse.xtext.ui.editor.bracketmatching.BracketMatchingPreferencesInitializer.class);
-		binder.bind(IActionContributor.class).annotatedWith(Names.named("selectionActionGroup")).to( //$NON-NLS-1$
-				org.eclipse.xtext.ui.editor.selection.AstSelectionActionContributor.class);
-	}
+    public void configureBracketMatchingAction(Binder binder) {
+        binder.bind(IActionContributor.class).annotatedWith(Names.named("foldingActionGroup")).to( //$NON-NLS-1$
+                org.eclipse.xtext.ui.editor.folding.FoldingActionContributor.class);
+        binder.bind(IActionContributor.class).annotatedWith(Names.named("bracketMatcherAction")).to( //$NON-NLS-1$
+                org.eclipse.xtext.ui.editor.bracketmatching.GoToMatchingBracketAction.class);
+        binder.bind(IPreferenceStoreInitializer.class).annotatedWith(Names.named("bracketMatcherPrefernceInitializer")) //$NON-NLS-1$
+                .to(org.eclipse.xtext.ui.editor.bracketmatching.BracketMatchingPreferencesInitializer.class);
+        binder.bind(IActionContributor.class).annotatedWith(Names.named("selectionActionGroup")).to( //$NON-NLS-1$
+                org.eclipse.xtext.ui.editor.selection.AstSelectionActionContributor.class);
+    }
 
-	public Class<? extends IImageHelper> bindIImageHelper() {
-		return PluginImageHelper.class;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public Class<? extends IImageDescriptorHelper> bindIImageDescriptorHelper() {
-		return PluginImageHelper.class;
-	}
+    public Class<? extends IImageHelper> bindIImageHelper() {
+        return PluginImageHelper.class;
+    }
 
-	public Class<? extends IIndentationInformation> bindIIndentationInformation() {
-		return PreferenceStoreIndentationInformation.class;
-	}
+    /**
+     * @since 2.4
+     */
+    public Class<? extends IImageDescriptorHelper> bindIImageDescriptorHelper() {
+        return PluginImageHelper.class;
+    }
 
-	/**
-	 * @since 2.3
-	 */
-	public Class<? extends IWhitespaceInformationProvider> bindIWhitespaceInformationProvider() {
-		return PreferenceStoreWhitespaceInformationProvider.class;
-	}
+    public Class<? extends IIndentationInformation> bindIIndentationInformation() {
+        return PreferenceStoreIndentationInformation.class;
+    }
 
-	public IPreferenceStore bindIPreferenceStore() {
-		return plugin.getPreferenceStore();
-	}
+    /**
+     * @since 2.3
+     */
+    public Class<? extends IWhitespaceInformationProvider> bindIWhitespaceInformationProvider() {
+        return PreferenceStoreWhitespaceInformationProvider.class;
+    }
 
-	public Class<? extends IReconciler> bindIReconciler() {
-		return XtextReconciler.class;
-	}
+    public IPreferenceStore bindIPreferenceStore() {
+        return plugin.getPreferenceStore();
+    }
 
-	public Class<? extends ISingleLineCommentHelper> bindISingleLineCommentHelper() {
-		return DefaultSingleLineCommentHelper.class;
-	}
+    public Class<? extends IReconciler> bindIReconciler() {
+        return XtextReconciler.class;
+    }
 
-	public Class<? extends IHyperlinkDetector> bindIHyperlinkDetector() {
-		return DefaultHyperlinkDetector.class;
-	}
+    public Class<? extends ISingleLineCommentHelper> bindISingleLineCommentHelper() {
+        return DefaultSingleLineCommentHelper.class;
+    }
 
-	public Class<? extends IPresentationDamager> bindIPresentationDamager() {
-		return PresentationDamager.class;
-	}
+    public Class<? extends IHyperlinkDetector> bindIHyperlinkDetector() {
+        return DefaultHyperlinkDetector.class;
+    }
 
-	public Class<? extends IPresentationRepairer> bindIPresentationRepairer() {
-		return PresentationRepairer.class;
-	}
+    public Class<? extends IPresentationDamager> bindIPresentationDamager() {
+        return PresentationDamager.class;
+    }
 
-	public ICharacterPairMatcher bindICharacterPairMatcher() {
-		return new DefaultCharacterPairMatcher(new char[] { '(', ')', '{', '}', '[', ']' });
-	}
+    public Class<? extends IPresentationRepairer> bindIPresentationRepairer() {
+        return PresentationRepairer.class;
+    }
 
-	public Class<? extends ITokenScanner> bindITokenScanner() {
-		return TokenScanner.class;
-	}
+    public ICharacterPairMatcher bindICharacterPairMatcher() {
+        return new DefaultCharacterPairMatcher(new char[]{'(', ')', '{', '}', '[', ']'});
+    }
 
-	public Class<? extends IPartitionTokenScanner> bindIPartitionTokenScanner() {
-		return PartitionTokenScanner.class;
-	}
+    public Class<? extends ITokenScanner> bindITokenScanner() {
+        return TokenScanner.class;
+    }
 
-	public Class<? extends IDocumentPartitioner> bindIDocumentPartitioner() {
-		return DocumentPartitioner.class;
-	}
+    public Class<? extends IPartitionTokenScanner> bindIPartitionTokenScanner() {
+        return PartitionTokenScanner.class;
+    }
 
-	public Class<? extends IHighlightingHelper> bindIHighlightingHelper() {
-		return HighlightingHelper.class;
-	}
+    public Class<? extends IDocumentPartitioner> bindIDocumentPartitioner() {
+        return DocumentPartitioner.class;
+    }
 
-	public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
-		return DefaultAutoEditStrategyProvider.class;
-	}
+    public Class<? extends IHighlightingHelper> bindIHighlightingHelper() {
+        return HighlightingHelper.class;
+    }
 
-	public Class<? extends AdapterFactory> bindAdapterFactory() {
-		return InjectableAdapterFactory.class;
-	}
+    public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
+        return DefaultAutoEditStrategyProvider.class;
+    }
 
-	public Class<? extends AdapterFactoryLabelProvider> bindAdapterFactoryLabelProvider() {
-		return InjectableAdapterFactoryLabelProvider.class;
-	}
+    public Class<? extends AdapterFactory> bindAdapterFactory() {
+        return InjectableAdapterFactory.class;
+    }
 
-	public ComposedAdapterFactory.Descriptor.Registry bindComposedAdapterFactory$Descriptor$RegistryToInstance() {
-		return ComposedAdapterFactory.Descriptor.Registry.INSTANCE;
-	}
+    public Class<? extends AdapterFactoryLabelProvider> bindAdapterFactoryLabelProvider() {
+        return InjectableAdapterFactoryLabelProvider.class;
+    }
 
-	public Class<? extends IContentAssistantFactory> bindIContentAssistantFactory() {
-		return DefaultContentAssistantFactory.class;
-	}
+    public ComposedAdapterFactory.Descriptor.Registry bindComposedAdapterFactory$Descriptor$RegistryToInstance() {
+        return ComposedAdapterFactory.Descriptor.Registry.INSTANCE;
+    }
 
-	public Class<? extends IContentAssistProcessor> bindIContentAssistProcessor() {
-		return XtextContentAssistProcessor.class;
-	}
+    public Class<? extends IContentAssistantFactory> bindIContentAssistantFactory() {
+        return DefaultContentAssistantFactory.class;
+    }
 
-	public Class<? extends ICompletionProposalPostProcessor> bindICompletionProposalPostProcessor() {
-		return DefaultCompletionProposalPostProcessor.class;
-	}
+    public Class<? extends IContentAssistProcessor> bindIContentAssistProcessor() {
+        return XtextContentAssistProcessor.class;
+    }
 
-	public Class<? extends ITemplateProposalProvider> bindITemplateProposalProvider() {
-		return DefaultTemplateProposalProvider.class;
-	}
+    public Class<? extends ICompletionProposalPostProcessor> bindICompletionProposalPostProcessor() {
+        return DefaultCompletionProposalPostProcessor.class;
+    }
 
-	public Class<? extends TemplateStore> bindTemplateStore() {
-		return XtextTemplateStore.class;
-	}
+    public Class<? extends ITemplateProposalProvider> bindITemplateProposalProvider() {
+        return DefaultTemplateProposalProvider.class;
+    }
 
-	public Class<? extends ContextTypeRegistry> bindContextTypeRegistry() {
-		return XtextTemplateContextTypeRegistry.class;
-	}
+    public Class<? extends TemplateStore> bindTemplateStore() {
+        return XtextTemplateStore.class;
+    }
 
-	public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
-		return ContentFormatterFactory.class;
-	}
+    public Class<? extends ContextTypeRegistry> bindContextTypeRegistry() {
+        return XtextTemplateContextTypeRegistry.class;
+    }
 
-	public void configureXtextEditorErrorTickUpdater(com.google.inject.Binder binder) {
-		binder.bind(IXtextEditorCallback.class).annotatedWith(Names.named("IXtextEditorCallBack")).to( //$NON-NLS-1$
-				XtextEditorErrorTickUpdater.class);
-	}
+    public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
+        return ContentFormatterFactory.class;
+    }
 
-	public Class<? extends IExternalContentSupport.IExternalContentProvider> bindIExternalContentSupport$IExternalContentProvider() {
-		return IDirtyStateManager.class;
-	}
+    public void configureXtextEditorErrorTickUpdater(com.google.inject.Binder binder) {
+        binder.bind(IXtextEditorCallback.class).annotatedWith(Names.named("IXtextEditorCallBack")).to( //$NON-NLS-1$
+                XtextEditorErrorTickUpdater.class);
+    }
 
-	public void configureHyperlinkLabelProvider(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.jface.viewers.ILabelProvider.class)
-				.annotatedWith(org.eclipse.xtext.ui.editor.hyperlinking.HyperlinkLabelProvider.class)
-				.to(org.eclipse.jface.viewers.ILabelProvider.class);
-	}
+    public Class<? extends IExternalContentSupport.IExternalContentProvider> bindIExternalContentSupport$IExternalContentProvider() {
+        return IDirtyStateManager.class;
+    }
 
-	public Class<? extends IContentOutlinePage> bindIContentOutlinePage() {
-		return OutlinePage.class;
-	}
+    public void configureHyperlinkLabelProvider(com.google.inject.Binder binder) {
+        binder.bind(org.eclipse.jface.viewers.ILabelProvider.class)
+                .annotatedWith(org.eclipse.xtext.ui.editor.hyperlinking.HyperlinkLabelProvider.class)
+                .to(org.eclipse.jface.viewers.ILabelProvider.class);
+    }
 
-	public void configureIOutlineContribution$Composite(Binder binder) {
-		binder.bind(IPreferenceStoreInitializer.class).annotatedWith(IOutlineContribution.All.class)
-				.to(IOutlineContribution.Composite.class);
-	}
+    public Class<? extends IContentOutlinePage> bindIContentOutlinePage() {
+        return OutlinePage.class;
+    }
 
-	public void configureToggleSortingOutlineContribution(Binder binder) {
-		binder.bind(IOutlineContribution.class).annotatedWith(IOutlineContribution.Sort.class)
-				.to(SortOutlineContribution.class);
-	}
+    public void configureIOutlineContribution$Composite(Binder binder) {
+        binder.bind(IPreferenceStoreInitializer.class).annotatedWith(IOutlineContribution.All.class)
+                .to(IOutlineContribution.Composite.class);
+    }
 
-	public void configureToggleLinkWithEditorOutlineContribution(Binder binder) {
-		binder.bind(IOutlineContribution.class).annotatedWith(IOutlineContribution.LinkWithEditor.class)
-				.to(LinkWithEditorOutlineContribution.class);
-	}
+    public void configureToggleSortingOutlineContribution(Binder binder) {
+        binder.bind(IOutlineContribution.class).annotatedWith(IOutlineContribution.Sort.class)
+                .to(SortOutlineContribution.class);
+    }
 
-	public Class<? extends IComparator> bindOutlineFilterAndSorter$IComparator() {
-		return SortOutlineContribution.DefaultComparator.class;
-	}
+    public void configureToggleLinkWithEditorOutlineContribution(Binder binder) {
+        binder.bind(IOutlineContribution.class).annotatedWith(IOutlineContribution.LinkWithEditor.class)
+                .to(LinkWithEditorOutlineContribution.class);
+    }
 
-	public void configureContentProposalLabelProvider(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.jface.viewers.ILabelProvider.class)
-				.annotatedWith(org.eclipse.xtext.ui.editor.contentassist.ContentProposalLabelProvider.class)
-				.to(org.eclipse.jface.viewers.ILabelProvider.class);
-	}
+    public Class<? extends IComparator> bindOutlineFilterAndSorter$IComparator() {
+        return SortOutlineContribution.DefaultComparator.class;
+    }
 
-	public void configureResourceUIServiceLabelProvider(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.jface.viewers.ILabelProvider.class)
-				.annotatedWith(org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider.class)
-				.to(DefaultDescriptionLabelProvider.class);
-	}
+    public void configureContentProposalLabelProvider(com.google.inject.Binder binder) {
+        binder.bind(org.eclipse.jface.viewers.ILabelProvider.class)
+                .annotatedWith(org.eclipse.xtext.ui.editor.contentassist.ContentProposalLabelProvider.class)
+                .to(org.eclipse.jface.viewers.ILabelProvider.class);
+    }
 
-	public Class<? extends ILabelProvider> bindILabelProvider() {
-		return DefaultEObjectLabelProvider.class;
-	}
+    public void configureResourceUIServiceLabelProvider(com.google.inject.Binder binder) {
+        binder.bind(org.eclipse.jface.viewers.ILabelProvider.class)
+                .annotatedWith(org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider.class)
+                .to(DefaultDescriptionLabelProvider.class);
+    }
 
-	public Class<? extends IssueResolutionProvider> bindIssueResolutionProvider() {
-		return DefaultQuickfixProvider.class;
-	}
+    public Class<? extends ILabelProvider> bindILabelProvider() {
+        return DefaultEObjectLabelProvider.class;
+    }
 
-	public void configureLanguageSpecificURIEditorOpener(com.google.inject.Binder binder) {
-		if (PlatformUI.isWorkbenchRunning())
-			binder.bind(IURIEditorOpener.class).annotatedWith(LanguageSpecific.class)
-					.to(LanguageSpecificURIEditorOpener.class);
-	}
+    public Class<? extends IssueResolutionProvider> bindIssueResolutionProvider() {
+        return DefaultQuickfixProvider.class;
+    }
 
-	public void configureUiEncodingProvider(Binder binder) {
-		binder.bind(IEncodingProvider.class).annotatedWith(DispatchingProvider.Ui.class)
-				.to(WorkspaceEncodingProvider.class);
-	}	
-	
-	public Class<? extends IAllContainersState.Provider> bindIAllContainersState$Provider() {
-		return ContainerStateProvider.class;
-	}
+    public void configureLanguageSpecificURIEditorOpener(com.google.inject.Binder binder) {
+        if (PlatformUI.isWorkbenchRunning())
+            binder.bind(IURIEditorOpener.class).annotatedWith(LanguageSpecific.class)
+                    .to(LanguageSpecificURIEditorOpener.class);
+    }
 
-	public Class<? extends IResourceForEditorInputFactory> bindIResourceForEditorInputFactory() {
-		return JavaClassPathResourceForIEditorInputFactory.class;
-	}
+    public void configureUiEncodingProvider(Binder binder) {
+        binder.bind(IEncodingProvider.class).annotatedWith(DispatchingProvider.Ui.class)
+                .to(WorkspaceEncodingProvider.class);
+    }
 
-	public Class<? extends IResourceSetProvider> bindIResourceSetProvider() {
-		return XtextResourceSetProvider.class;
-	}
+    public Class<? extends IAllContainersState.Provider> bindIAllContainersState$Provider() {
+        return ContainerStateProvider.class;
+    }
 
-	public Class<? extends IAnnotationHover> bindIAnnotationHover () {
-		return ProblemAnnotationHover.class;		
-	}
-		 
-	public Class<? extends org.eclipse.jface.text.ITextHover> bindITextHover() {
-		return DefaultCompositeHover.class;
-	}
+    public Class<? extends IResourceForEditorInputFactory> bindIResourceForEditorInputFactory() {
+        return JavaClassPathResourceForIEditorInputFactory.class;
+    }
 
-	public Class<? extends IEObjectHover> bindIEObjectHover() {
-		return DispatchingEObjectTextHover.class;
-	}
+    public Class<? extends IResourceSetProvider> bindIResourceSetProvider() {
+        return XtextResourceSetProvider.class;
+    }
 
-	public void configureMarkOccurrencesAction(Binder binder) {
-		binder.bind(IActionContributor.class).annotatedWith(Names.named("markOccurrences"))
-			.to(MarkOccurrenceActionContributor.class);
-	}
+    public Class<? extends IAnnotationHover> bindIAnnotationHover() {
+        return ProblemAnnotationHover.class;
+    }
 
-	/**
-	 * @since 2.1
-	 */
-	public void configureIResourceDescriptionsLiveScope(Binder binder) {
-		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.LIVE_SCOPE)).to(LiveShadowedResourceDescriptions.class);
-	}
-	
-	/**
-	 * @since 2.3
-	 */
-	public Class<? extends MarkerTypeProvider> bindMarkerTypeProvider() {
-		return LanguageAwareMarkerTypeProvider.class;
-	}
+    public Class<? extends org.eclipse.jface.text.ITextHover> bindITextHover() {
+        return DefaultCompositeHover.class;
+    }
 
-	/**
-	 * @since 2.4
-	 */
-	public void configureSmartCaretPreferenceInitializer(Binder binder) {
-		binder.bind(IPreferenceStoreInitializer.class).annotatedWith(Names.named("smartCaretPreferenceInitializer")) //$NON-NLS-1$
-				.to(SmartCaretPreferenceInitializer.class);
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public Class<? extends IPreferenceValuesProvider> bindIPreferenceValuesProvider() {
-		return EclipsePreferencesProvider.class;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public Class<? extends ITraceURIConverter> bindITraceURIConverter() {
-		return DefaultTraceURIConverter.class;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public Class<? extends CopyQualifiedNameService> bindCopyQualifiedNameService() {
-		return DefaultCopyQualifiedNameService.class;
-	}
-	
+    public Class<? extends IEObjectHover> bindIEObjectHover() {
+        return DispatchingEObjectTextHover.class;
+    }
+
+    public void configureMarkOccurrencesAction(Binder binder) {
+        binder.bind(IActionContributor.class).annotatedWith(Names.named("markOccurrences"))
+                .to(MarkOccurrenceActionContributor.class);
+    }
+
+    /**
+     * @since 2.1
+     */
+    public void configureIResourceDescriptionsLiveScope(Binder binder) {
+        binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.LIVE_SCOPE)).to(LiveShadowedResourceDescriptions.class);
+    }
+
+    /**
+     * @since 2.3
+     */
+    public Class<? extends MarkerTypeProvider> bindMarkerTypeProvider() {
+        return LanguageAwareMarkerTypeProvider.class;
+    }
+
+    /**
+     * @since 2.4
+     */
+    public void configureSmartCaretPreferenceInitializer(Binder binder) {
+        binder.bind(IPreferenceStoreInitializer.class).annotatedWith(Names.named("smartCaretPreferenceInitializer")) //$NON-NLS-1$
+                .to(SmartCaretPreferenceInitializer.class);
+    }
+
+    /**
+     * @since 2.4
+     */
+    public Class<? extends IPreferenceValuesProvider> bindIPreferenceValuesProvider() {
+        return EclipsePreferencesProvider.class;
+    }
+
+    /**
+     * @since 2.4
+     */
+    public Class<? extends ITraceURIConverter> bindITraceURIConverter() {
+        return DefaultTraceURIConverter.class;
+    }
+
+    /**
+     * @since 2.4
+     */
+    public Class<? extends CopyQualifiedNameService> bindCopyQualifiedNameService() {
+        return DefaultCopyQualifiedNameService.class;
+    }
+
 }
 
 

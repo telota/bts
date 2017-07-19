@@ -25,93 +25,96 @@ import org.eclipse.swt.widgets.Shell;
 
 public class CheckPassportDialog extends TitleAreaDialog {
 
-	@Inject
-	private IEclipseContext context;
+    @Inject
+    private IEclipseContext context;
 
-	@Inject
-	private BTSCorpusObject corpusObject;
-	
-	@Inject
-	private UISynchronize sync;
-	
-	@Inject
-	private PassportConfigurationController passportController;
-	
-	private Label lblPasportpercent;
+    @Inject
+    private BTSCorpusObject corpusObject;
 
-	/**
-	 * Create the dialog.
-	 * @param parentShell
-	 */
-	public CheckPassportDialog(Shell parentShell) {
-		super(parentShell);
-	}
+    @Inject
+    private UISynchronize sync;
 
-	/**
-	 * Create contents of the dialog.
-	 * @param parent
-	 */
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		Composite area = (Composite) super.createDialogArea(parent);
-		Composite container = new Composite(area, SWT.NONE);
-		container.setLayout(new GridLayout(2, false));
-		container.setLayoutData(new GridData(GridData.FILL_BOTH));
+    @Inject
+    private PassportConfigurationController passportController;
 
-		
-		Label lblPassportCompleted = new Label(container, SWT.NONE);
-		lblPassportCompleted.setText("Passport completed");
-		
-		lblPasportpercent = new Label(container, SWT.NONE);
-		lblPasportpercent.setText("pasportPercent");
+    private Label lblPasportpercent;
 
-		loadPercentages();
-		return area;
-	}
+    /**
+     * Create the dialog.
+     *
+     * @param parentShell
+     */
+    public CheckPassportDialog(Shell parentShell) {
+        super(parentShell);
+    }
 
-	private void loadPercentages() {
-		try {
-			IRunnableWithProgress op = new IRunnableWithProgress() {
+    /**
+     * Create contents of the dialog.
+     *
+     * @param parent
+     */
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        Composite area = (Composite) super.createDialogArea(parent);
+        Composite container = new Composite(area, SWT.NONE);
+        container.setLayout(new GridLayout(2, false));
+        container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-				@Override
-				public void run(IProgressMonitor monitor)
-						throws InvocationTargetException, InterruptedException {
-					final int percentage = passportController
-							.checkPassportCompleteness(corpusObject);
-					sync.asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							lblPasportpercent.setText(percentage + "%");
 
-						}
-					});
-				}
-			};
-			new ProgressMonitorDialog(getShell()).run(true, true, op);
-		} catch (InvocationTargetException e) {
-			// handle exception
-		} catch (InterruptedException e) {
-			// handle cancelation
-		}
+        Label lblPassportCompleted = new Label(container, SWT.NONE);
+        lblPassportCompleted.setText("Passport completed");
 
-	}
+        lblPasportpercent = new Label(container, SWT.NONE);
+        lblPasportpercent.setText("pasportPercent");
 
-	/**
-	 * Create contents of the button bar.
-	 * @param parent
-	 */
-	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
-				true);
-	}
+        loadPercentages();
+        return area;
+    }
 
-	/**
-	 * Return the initial size of the dialog.
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(450, 300);
-	}
+    private void loadPercentages() {
+        try {
+            IRunnableWithProgress op = new IRunnableWithProgress() {
+
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
+                    final int percentage = passportController
+                            .checkPassportCompleteness(corpusObject);
+                    sync.asyncExec(new Runnable() {
+                        @Override
+                        public void run() {
+                            lblPasportpercent.setText(percentage + "%");
+
+                        }
+                    });
+                }
+            };
+            new ProgressMonitorDialog(getShell()).run(true, true, op);
+        } catch (InvocationTargetException e) {
+            // handle exception
+        } catch (InterruptedException e) {
+            // handle cancelation
+        }
+
+    }
+
+    /**
+     * Create contents of the button bar.
+     *
+     * @param parent
+     */
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+                true);
+    }
+
+    /**
+     * Return the initial size of the dialog.
+     */
+    @Override
+    protected Point getInitialSize() {
+        return new Point(450, 300);
+    }
 
 }

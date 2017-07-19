@@ -19,11 +19,11 @@ import com.google.inject.Provider;
  */
 public class SimpleResourceSetProvider implements IResourceSetProvider {
 
-	@Inject
-	private Provider<XtextResourceSet> resourceSetProvider;
-	
-	public ResourceSet get(IProject project) {
-		return resourceSetProvider.get();
-	}
+    @Inject
+    private Provider<XtextResourceSet> resourceSetProvider;
+
+    public ResourceSet get(IProject project) {
+        return resourceSetProvider.get();
+    }
 
 }

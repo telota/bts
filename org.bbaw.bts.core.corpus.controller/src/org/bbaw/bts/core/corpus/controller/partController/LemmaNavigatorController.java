@@ -12,16 +12,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jface.viewers.ContentViewer;
 
-public interface LemmaNavigatorController extends GenericCorpusObjectNavigatorController<BTSLemmaEntry, String>{
+public interface LemmaNavigatorController extends GenericCorpusObjectNavigatorController<BTSLemmaEntry, String> {
 
-	BTSLemmaSubentry createNewSubEntry();
+    BTSLemmaSubentry createNewSubEntry();
 
-	LinkedHashMap<String, TreeNodeWrapper> loadNodesWithChildren(List<BTSLemmaEntry> subList,
-			IProgressMonitor monitor, boolean b);
+    LinkedHashMap<String, TreeNodeWrapper> loadNodesWithChildren(List<BTSLemmaEntry> subList,
+                                                                 IProgressMonitor monitor, boolean b);
 
-	List<BTSLemmaEntry> findChildrenOnlySubEntries(BTSLemmaEntry parent, Map<String, BTSQueryResultAbstract> queryResultMap,
-			ContentViewer viewer, TreeNodeWrapper parentHolder,
-			EReference referenceName, IProgressMonitor monitor);
+    List<BTSLemmaEntry> findChildrenOnlySubEntries(BTSLemmaEntry parent, Map<String, BTSQueryResultAbstract> queryResultMap,
+                                                   ContentViewer viewer, TreeNodeWrapper parentHolder,
+                                                   EReference referenceName, IProgressMonitor monitor);
 
-	
+
 }

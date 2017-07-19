@@ -45,276 +45,253 @@ import com.richclientgui.toolbox.duallists.DualListComposite;
 
 public class CorpusSettingsPage extends FieldEditorPreferencePage {
 
-	private ComboViewer mainCorpusComboViewer;
-	private BTSTextCorpus selectedTextCorpus;
-	private String main_corpus_key;
-	private DualListComposite<BTSCorpusObject> duallistcomposite;
-	private IEclipseContext context;
-	private CorpusNavigatorController corpusController;
-	private List<BTSTextCorpus> corpora;
-	private String active_corpora;
-	private IEclipsePreferences prefs;
-	private Logger logger;
-	private boolean loaded;
-	private BTSCorpusRemovableContentProvider chrosenProvider;
-	protected boolean activate;
-	private Boolean initialActivate;
-	private Button activateButton;
+    protected boolean activate;
+    private ComboViewer mainCorpusComboViewer;
+    private BTSTextCorpus selectedTextCorpus;
+    private String main_corpus_key;
+    private DualListComposite<BTSCorpusObject> duallistcomposite;
+    private IEclipseContext context;
+    private CorpusNavigatorController corpusController;
+    private List<BTSTextCorpus> corpora;
+    private String active_corpora;
+    private IEclipsePreferences prefs;
+    private Logger logger;
+    private boolean loaded;
+    private BTSCorpusRemovableContentProvider chrosenProvider;
+    private Boolean initialActivate;
+    private Button activateButton;
 
-	/**
-	 * Create the preference page.
-	 */
-	public CorpusSettingsPage() {
-		super(FLAT);
-		setTitle("Corpus Settings");
-	}
-	
+    /**
+     * Create the preference page.
+     */
+    public CorpusSettingsPage() {
+        super(FLAT);
+        setTitle("Corpus Settings");
+    }
 
-	/**
-	 * Create contents of the preference page.
-	 */
-	@Override
-	protected void createFieldEditors() {
-		
-		Composite container = (Composite) this.getControl();
-		activateButton = new Button(container, SWT.CHECK);
-		activateButton.setText("Activate to select main working corpus. All new objects will be PHYSICALLY located in this corpus.");
-		activateButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				activate = !activate;
-				mainCorpusComboViewer.getCombo().setEnabled(activate);
-				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		
-		Label lblSelectYourMain = new Label(container, SWT.NONE);
-		lblSelectYourMain.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
-		lblSelectYourMain.setText("Select your main working corpus");
 
-		mainCorpusComboViewer = new ComboViewer(container, SWT.READ_ONLY);
-		mainCorpusComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+    /**
+     * Create contents of the preference page.
+     */
+    @Override
+    protected void createFieldEditors() {
 
-		ComposedAdapterFactory factory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(factory);
-		mainCorpusComboViewer.setContentProvider(new ListContentProvider());
-		mainCorpusComboViewer.setLabelProvider(labelProvider);
-		mainCorpusComboViewer.addSelectionChangedListener(new ISelectionChangedListener()
-		{
+        Composite container = (Composite) this.getControl();
+        activateButton = new Button(container, SWT.CHECK);
+        activateButton.setText("Activate to select main working corpus. All new objects will be PHYSICALLY located in this corpus.");
+        activateButton.addSelectionListener(new SelectionListener() {
 
-			@Override
-			public void selectionChanged(SelectionChangedEvent event)
-			{
-				Object o = event.getSelection();
-				IStructuredSelection sel = (IStructuredSelection) o;
-				selectedTextCorpus = (BTSTextCorpus) sel.getFirstElement();
-			}
-		});
-		
-		Group grpFurtherProjectsFrom = new Group(container, SWT.NONE);
-		grpFurtherProjectsFrom.setLayout(new GridLayout(2, false));
-		grpFurtherProjectsFrom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpFurtherProjectsFrom.setText("Further corpora from which you want to load and read data");
-		
-		Label lblAvailableProjects = new Label(grpFurtherProjectsFrom, SWT.NONE);
-		lblAvailableProjects.setText("Available Corpora (Not activated)");
-		
-		Label lblProjectsToBe = new Label(grpFurtherProjectsFrom, SWT.NONE);
-		lblProjectsToBe.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-		lblProjectsToBe.setAlignment(SWT.RIGHT);
-		lblProjectsToBe.setText("Active Corpora");
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                activate = !activate;
+                mainCorpusComboViewer.getCombo().setEnabled(activate);
 
-		duallistcomposite = new DualListComposite<BTSCorpusObject>(grpFurtherProjectsFrom, SWT.NONE);
-		duallistcomposite.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true, 2, 1));
-		duallistcomposite.setBackground(grpFurtherProjectsFrom.getBackground());
-		
-		init(null);
-	}
+            }
 
-	/**
-	 * Initialize the preference page.
-	 */
-	public void init(IWorkbench workbench) {
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+
+        Label lblSelectYourMain = new Label(container, SWT.NONE);
+        lblSelectYourMain.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+        lblSelectYourMain.setText("Select your main working corpus");
+
+        mainCorpusComboViewer = new ComboViewer(container, SWT.READ_ONLY);
+        mainCorpusComboViewer.getControl().setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+
+        ComposedAdapterFactory factory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+        AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(factory);
+        mainCorpusComboViewer.setContentProvider(new ListContentProvider());
+        mainCorpusComboViewer.setLabelProvider(labelProvider);
+        mainCorpusComboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                Object o = event.getSelection();
+                IStructuredSelection sel = (IStructuredSelection) o;
+                selectedTextCorpus = (BTSTextCorpus) sel.getFirstElement();
+            }
+        });
+
+        Group grpFurtherProjectsFrom = new Group(container, SWT.NONE);
+        grpFurtherProjectsFrom.setLayout(new GridLayout(2, false));
+        grpFurtherProjectsFrom.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        grpFurtherProjectsFrom.setText("Further corpora from which you want to load and read data");
+
+        Label lblAvailableProjects = new Label(grpFurtherProjectsFrom, SWT.NONE);
+        lblAvailableProjects.setText("Available Corpora (Not activated)");
+
+        Label lblProjectsToBe = new Label(grpFurtherProjectsFrom, SWT.NONE);
+        lblProjectsToBe.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+        lblProjectsToBe.setAlignment(SWT.RIGHT);
+        lblProjectsToBe.setText("Active Corpora");
+
+        duallistcomposite = new DualListComposite<BTSCorpusObject>(grpFurtherProjectsFrom, SWT.NONE);
+        duallistcomposite.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true, 2, 1));
+        duallistcomposite.setBackground(grpFurtherProjectsFrom.getBackground());
+
+        init(null);
+    }
+
+    /**
+     * Initialize the preference page.
+     */
+    public void init(IWorkbench workbench) {
 //		BundleContext bundleContext = Platform.getBundle("org.bbaw.bts.ui.main").getBundleContext();
-		context = StaticAccessController.getContext();
-		corpusController = context.get(CorpusNavigatorController.class);
-		prefs = ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app");
-		IEclipsePreferences defaultpref = DefaultScope.INSTANCE.getNode("org.bbaw.bts.app");
+        context = StaticAccessController.getContext();
+        corpusController = context.get(CorpusNavigatorController.class);
+        prefs = ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app");
+        IEclipsePreferences defaultpref = DefaultScope.INSTANCE.getNode("org.bbaw.bts.app");
 
-		main_corpus_key = prefs.get(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, defaultpref.get(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, null));
-		active_corpora = prefs.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, defaultpref.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, null));
-		logger = context.get(Logger.class);
-		
-		loadListInput();
-		
-		activate = prefs.getBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, false);
-		initialActivate = new Boolean(activate);
-		mainCorpusComboViewer.getCombo().setEnabled(activate);
-		activateButton.setSelection(activate);
+        main_corpus_key = prefs.get(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, defaultpref.get(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, null));
+        active_corpora = prefs.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, defaultpref.get(BTSPluginIDs.PREF_ACTIVE_CORPORA, null));
+        logger = context.get(Logger.class);
 
-	}
-	
-	
-	private void loadListInput()
-	{
+        loadListInput();
 
-		corpora = corpusController.listTextCorpora(null);
+        activate = prefs.getBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, false);
+        initialActivate = new Boolean(activate);
+        mainCorpusComboViewer.getCombo().setEnabled(activate);
+        activateButton.setSelection(activate);
 
-		for (BTSTextCorpus corpus : corpora) {
-			if (corpusController.isWriteable(corpus)) {
-				mainCorpusComboViewer.add(corpus);
-			}
-		}
+    }
 
-		List<BTSCorpusObject> availableCorpora = new Vector<BTSCorpusObject>(1);
 
-		List<BTSCorpusObject> chosenCorpora = new Vector<BTSCorpusObject>(1);
+    private void loadListInput() {
 
-		if (active_corpora == null || active_corpora.trim().length() == 0)
-		{
-			active_corpora = main_corpus_key;
-		}
-		if (active_corpora != null && active_corpora.trim().length() > 0)
-		{
-			String[] pros = active_corpora.split("\\|");
+        corpora = corpusController.listTextCorpora(null);
 
-			for (BTSTextCorpus corpus : corpora)
-			{
+        for (BTSTextCorpus corpus : corpora) {
+            if (corpusController.isWriteable(corpus)) {
+                mainCorpusComboViewer.add(corpus);
+            }
+        }
 
-				boolean found = false;
-				if (main_corpus_key != null && main_corpus_key.equals(corpus.getDBCollectionKey() + "_" + corpus.getCorpusPrefix()))
-				{
-					selectedTextCorpus = corpus;
-					mainCorpusComboViewer.setSelection(new StructuredSelection(corpus));
-				}
-				for (String p : pros)
-				{
-					if (p.equals(corpus.getDBCollectionKey()+ "_" + corpus.getCorpusPrefix()))
-					{
-						chosenCorpora.add(corpus);
-						found = true;
-						break;
-					}
-				}
-				if (!found)
-				{
-					availableCorpora.add(corpus);
-				}
-			}
+        List<BTSCorpusObject> availableCorpora = new Vector<BTSCorpusObject>(1);
 
-		}
+        List<BTSCorpusObject> chosenCorpora = new Vector<BTSCorpusObject>(1);
 
-		duallistcomposite.setAvailableContentProvider(new BTSCorpusRemovableContentProvider(availableCorpora));
-		duallistcomposite.setAvailableLabelProvider(new BTSCorpusLabelProvider());
-		chrosenProvider = new BTSCorpusRemovableContentProvider(chosenCorpora);
-		duallistcomposite.setChosenContentProvider(chrosenProvider);
-		duallistcomposite.setChosenLabelProvider(new BTSCorpusLabelProvider());
-		loaded = true;
+        if (active_corpora == null || active_corpora.trim().length() == 0) {
+            active_corpora = main_corpus_key;
+        }
+        if (active_corpora != null && active_corpora.trim().length() > 0) {
+            String[] pros = active_corpora.split("\\|");
 
-	}
-	
-	
-	private String getActiveProjectSelectionsAsString() {
-		String string = "";
-		for (String s : getActiveProjectSelectionsAsStringList())
-		{
-			string += s + "|";
-		}
-		return string.length() > 2 ? string.substring(0, string.length() - 1) : "";
-	}
-	
-	private List<String> getActiveProjectSelectionsAsStringList()
-	{
-		List<String> prefixes = new Vector<String>();
-		if (chrosenProvider == null)
-		{
-			return prefixes;
-		}
-		List<BTSCorpusObject> selections = chrosenProvider.getInputElements();
-		for (BTSCorpusObject corpus : selections)
-		{
-			if (corpus.getDBCollectionKey() != null && !prefixes.contains(corpus.getDBCollectionKey()+ "_" + corpus.getCorpusPrefix()))
-			{
-				prefixes.add(corpus.getDBCollectionKey()+ "_" + corpus.getCorpusPrefix());
-			}
-		}
-		return prefixes;
-	}
-	@Override
-	public boolean performOk() {
-		if (!loaded)
-		{
-			return super.performOk();
-		}
-		boolean dirty = false;
-		if (selectedTextCorpus != null && selectedTextCorpus.getDBCollectionKey() != null && (main_corpus_key == null || !main_corpus_key.equals(selectedTextCorpus.getDBCollectionKey()+ "_" + selectedTextCorpus.getCorpusPrefix())))
-		{
-			ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").put(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, selectedTextCorpus.getDBCollectionKey()+ "_" + selectedTextCorpus.getCorpusPrefix());
-			// update instance scope so that new value is injected
-			InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").put(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, selectedTextCorpus.getDBCollectionKey()+ "_" + selectedTextCorpus.getCorpusPrefix());
-			try {
-				context.modify(BTSPluginIDs.PREF_MAIN_CORPUS, selectedTextCorpus);
-			} catch (Exception e1) {
-				context.declareModifiable(BTSPluginIDs.PREF_MAIN_CORPUS);
-				context.modify(BTSPluginIDs.PREF_MAIN_CORPUS, selectedTextCorpus);
-				e1.printStackTrace();
-			}
-			dirty = true;
-		}
-		String selectedProjetsString = getActiveProjectSelectionsAsString();
-		if (selectedProjetsString != null && !selectedProjetsString.equals(active_corpora))
-		{
-			ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").put(BTSPluginIDs.PREF_ACTIVE_CORPORA, selectedProjetsString);
-			// update instance scope so that new value is injected
-			InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").put(BTSPluginIDs.PREF_ACTIVE_CORPORA, selectedProjetsString);
-			context.modify(BTSPluginIDs.PREF_ACTIVE_CORPORA, selectedProjetsString);
-			dirty = true;
-			for (BTSTextCorpus c : corpora)
-			{
-				boolean active = false;
-				for (String s : getActiveProjectSelectionsAsStringList())
-				{
-					if (s.equals(c.getDBCollectionKey() + "_" + c.getCorpusPrefix()))
-					{
-						active = true;
-						break;
-					}
-				}
-				if (c.isActive() != active)
-				{
-					c.setActive(active);
-				}
-				
-			}
-		}
-		if (initialActivate == null || initialActivate.booleanValue() != activate)
-		{
-			ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").putBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, activate);
-			// update instance scope so that new value is injected
-			InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").putBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, activate);
-			dirty = true;
-		}
-		if (dirty)
-		{
-			try {
-				ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").flush();
-			} catch (BackingStoreException e) {
-				logger.error(e);
-			}
-			try {
-				InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").flush();
-			} catch (BackingStoreException e) {
-				logger.error(e);
-			}
-		}
-		return super.performOk();
-	}
+            for (BTSTextCorpus corpus : corpora) {
+
+                boolean found = false;
+                if (main_corpus_key != null && main_corpus_key.equals(corpus.getDBCollectionKey() + "_" + corpus.getCorpusPrefix())) {
+                    selectedTextCorpus = corpus;
+                    mainCorpusComboViewer.setSelection(new StructuredSelection(corpus));
+                }
+                for (String p : pros) {
+                    if (p.equals(corpus.getDBCollectionKey() + "_" + corpus.getCorpusPrefix())) {
+                        chosenCorpora.add(corpus);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    availableCorpora.add(corpus);
+                }
+            }
+
+        }
+
+        duallistcomposite.setAvailableContentProvider(new BTSCorpusRemovableContentProvider(availableCorpora));
+        duallistcomposite.setAvailableLabelProvider(new BTSCorpusLabelProvider());
+        chrosenProvider = new BTSCorpusRemovableContentProvider(chosenCorpora);
+        duallistcomposite.setChosenContentProvider(chrosenProvider);
+        duallistcomposite.setChosenLabelProvider(new BTSCorpusLabelProvider());
+        loaded = true;
+
+    }
+
+
+    private String getActiveProjectSelectionsAsString() {
+        String string = "";
+        for (String s : getActiveProjectSelectionsAsStringList()) {
+            string += s + "|";
+        }
+        return string.length() > 2 ? string.substring(0, string.length() - 1) : "";
+    }
+
+    private List<String> getActiveProjectSelectionsAsStringList() {
+        List<String> prefixes = new Vector<String>();
+        if (chrosenProvider == null) {
+            return prefixes;
+        }
+        List<BTSCorpusObject> selections = chrosenProvider.getInputElements();
+        for (BTSCorpusObject corpus : selections) {
+            if (corpus.getDBCollectionKey() != null && !prefixes.contains(corpus.getDBCollectionKey() + "_" + corpus.getCorpusPrefix())) {
+                prefixes.add(corpus.getDBCollectionKey() + "_" + corpus.getCorpusPrefix());
+            }
+        }
+        return prefixes;
+    }
+
+    @Override
+    public boolean performOk() {
+        if (!loaded) {
+            return super.performOk();
+        }
+        boolean dirty = false;
+        if (selectedTextCorpus != null && selectedTextCorpus.getDBCollectionKey() != null && (main_corpus_key == null || !main_corpus_key.equals(selectedTextCorpus.getDBCollectionKey() + "_" + selectedTextCorpus.getCorpusPrefix()))) {
+            ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").put(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, selectedTextCorpus.getDBCollectionKey() + "_" + selectedTextCorpus.getCorpusPrefix());
+            // update instance scope so that new value is injected
+            InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").put(BTSPluginIDs.PREF_MAIN_CORPUS_KEY, selectedTextCorpus.getDBCollectionKey() + "_" + selectedTextCorpus.getCorpusPrefix());
+            try {
+                context.modify(BTSPluginIDs.PREF_MAIN_CORPUS, selectedTextCorpus);
+            } catch (Exception e1) {
+                context.declareModifiable(BTSPluginIDs.PREF_MAIN_CORPUS);
+                context.modify(BTSPluginIDs.PREF_MAIN_CORPUS, selectedTextCorpus);
+                e1.printStackTrace();
+            }
+            dirty = true;
+        }
+        String selectedProjetsString = getActiveProjectSelectionsAsString();
+        if (selectedProjetsString != null && !selectedProjetsString.equals(active_corpora)) {
+            ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").put(BTSPluginIDs.PREF_ACTIVE_CORPORA, selectedProjetsString);
+            // update instance scope so that new value is injected
+            InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").put(BTSPluginIDs.PREF_ACTIVE_CORPORA, selectedProjetsString);
+            context.modify(BTSPluginIDs.PREF_ACTIVE_CORPORA, selectedProjetsString);
+            dirty = true;
+            for (BTSTextCorpus c : corpora) {
+                boolean active = false;
+                for (String s : getActiveProjectSelectionsAsStringList()) {
+                    if (s.equals(c.getDBCollectionKey() + "_" + c.getCorpusPrefix())) {
+                        active = true;
+                        break;
+                    }
+                }
+                if (c.isActive() != active) {
+                    c.setActive(active);
+                }
+
+            }
+        }
+        if (initialActivate == null || initialActivate.booleanValue() != activate) {
+            ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").putBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, activate);
+            // update instance scope so that new value is injected
+            InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").putBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, activate);
+            dirty = true;
+        }
+        if (dirty) {
+            try {
+                ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").flush();
+            } catch (BackingStoreException e) {
+                logger.error(e);
+            }
+            try {
+                InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").flush();
+            } catch (BackingStoreException e) {
+                logger.error(e);
+            }
+        }
+        return super.performOk();
+    }
 }

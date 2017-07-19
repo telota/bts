@@ -10,5 +10,5 @@ package org.eclipse.xtext.ui.editor.hyperlinking;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 
 public interface IHyperlinkAcceptor {
-	void accept(IHyperlink hyperlink);
+    void accept(IHyperlink hyperlink);
 }

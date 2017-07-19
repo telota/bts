@@ -11,26 +11,27 @@ import org.eclipse.swt.widgets.Display;
 
 public class CompareViewerFactoryGeneralImpl implements CompareViewerFactory {
 
-	protected BTSResourceProvider resourceProvider = StaticAccessController.getContext().get(BTSResourceProvider.class);
-	@Override
-	public <T> boolean hasViewerForObject(Class<T> clazz) {
-		return BTSDBBaseObject.class.isAssignableFrom(clazz);
-	}
+    protected BTSResourceProvider resourceProvider = StaticAccessController.getContext().get(BTSResourceProvider.class);
 
-	@Override
-	public CompareViewer createViewer(Composite parent, int style) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public <T> boolean hasViewerForObject(Class<T> clazz) {
+        return BTSDBBaseObject.class.isAssignableFrom(clazz);
+    }
 
-	@Override
-	public String getCompareViewerName() {
-		return "Json";
-	}
+    @Override
+    public CompareViewer createViewer(Composite parent, int style) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public Image getCompareViewerIcon() {
-		Image i = resourceProvider.getImage(Display.getDefault(), BTSResourceProvider.IMG_TEXTS);
-		return i;
-	}
+    @Override
+    public String getCompareViewerName() {
+        return "Json";
+    }
+
+    @Override
+    public Image getCompareViewerIcon() {
+        Image i = resourceProvider.getImage(Display.getDefault(), BTSResourceProvider.IMG_TEXTS);
+        return i;
+    }
 }

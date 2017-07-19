@@ -43,23 +43,25 @@ import org.eclipse.emf.ecore.EClass;
  * @generated
  */
 public class BTSTCObjectImpl extends BTSCorpusObjectImpl implements BTSTCObject {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected BTSTCObjectImpl() {
-		super();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BTSTCObjectImpl() {
+        super();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return BtsCorpusModelPackage.Literals.BTSTC_OBJECT;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BtsCorpusModelPackage.Literals.BTSTC_OBJECT;
+    }
 
 } //BTSTCObjectImpl

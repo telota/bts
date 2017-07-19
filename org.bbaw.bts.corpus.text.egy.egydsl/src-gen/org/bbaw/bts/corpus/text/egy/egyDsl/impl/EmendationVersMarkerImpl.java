@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class EmendationVersMarkerImpl extends VersMarkerImpl implements EmendationVersMarker
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected EmendationVersMarkerImpl()
-  {
-    super();
-  }
+public class EmendationVersMarkerImpl extends VersMarkerImpl implements EmendationVersMarker {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected EmendationVersMarkerImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.EMENDATION_VERS_MARKER;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.EMENDATION_VERS_MARKER;
+    }
 
 } //EmendationVersMarkerImpl

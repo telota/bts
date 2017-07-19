@@ -12,47 +12,49 @@ import org.eclipse.ui.texteditor.AbstractTextEditor;
 
 /**
  * Maps an action definition id to an {@link StyledText} action.
- * 
+ * <p>
  * Initially copied from IdMapEntry in {@link AbstractTextEditor}
- * 
+ *
  * @see org.eclipse.ui.texteditor.AbstractTextEditor
  * @since 2.3
  */
 public class ActionDefinitionToStyledTextAction {
 
-	/** The action id. */
-	private String fActionId;
-	/** The StyledText action. */
-	private int fAction;
+    /**
+     * The action id.
+     */
+    private String fActionId;
+    /**
+     * The StyledText action.
+     */
+    private int fAction;
 
-	/**
-	 * Creates a new mapping.
-	 * 
-	 * @param actionId
-	 *            the action id
-	 * @param action
-	 *            the StyledText action
-	 */
-	public ActionDefinitionToStyledTextAction(String actionId, int action) {
-		fActionId = actionId;
-		fAction = action;
-	}
+    /**
+     * Creates a new mapping.
+     *
+     * @param actionId the action id
+     * @param action   the StyledText action
+     */
+    public ActionDefinitionToStyledTextAction(String actionId, int action) {
+        fActionId = actionId;
+        fAction = action;
+    }
 
-	/**
-	 * Returns the action id.
-	 * 
-	 * @return the action id
-	 */
-	public String getActionId() {
-		return fActionId;
-	}
+    /**
+     * Returns the action id.
+     *
+     * @return the action id
+     */
+    public String getActionId() {
+        return fActionId;
+    }
 
-	/**
-	 * Returns the action.
-	 * 
-	 * @return the action
-	 */
-	public int getAction() {
-		return fAction;
-	}
+    /**
+     * Returns the action.
+     *
+     * @return the action
+     */
+    public int getAction() {
+        return fAction;
+    }
 }

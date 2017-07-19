@@ -4,6 +4,6 @@ import org.bbaw.bts.core.services.GenericObjectService;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTCObject;
 
 public interface BTSTCObjectService extends
-		GenericObjectService<BTSTCObject, String> {
+        GenericObjectService<BTSTCObject, String> {
 
 }

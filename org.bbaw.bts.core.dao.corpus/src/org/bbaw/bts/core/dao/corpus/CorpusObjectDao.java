@@ -7,13 +7,12 @@ import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSPassportEntry;
 
-public interface CorpusObjectDao extends GenericDao<BTSCorpusObject, String>
-{
+public interface CorpusObjectDao extends GenericDao<BTSCorpusObject, String> {
 
-	List<BTSCorpusObject> getRootBTSCorpusObjects(String path);
+    List<BTSCorpusObject> getRootBTSCorpusObjects(String path);
 
-	List<BTSPassportEntry> getPassportEntryProposals(
-			BTSQueryRequest query, String indexName, String indexType);
+    List<BTSPassportEntry> getPassportEntryProposals(
+            BTSQueryRequest query, String indexName, String indexType);
 
 
 }

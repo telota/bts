@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class RestorationOverRasurMarkerImpl extends VersMarkerImpl implements RestorationOverRasurMarker
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected RestorationOverRasurMarkerImpl()
-  {
-    super();
-  }
+public class RestorationOverRasurMarkerImpl extends VersMarkerImpl implements RestorationOverRasurMarker {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected RestorationOverRasurMarkerImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.RESTORATION_OVER_RASUR_MARKER;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.RESTORATION_OVER_RASUR_MARKER;
+    }
 
 } //RestorationOverRasurMarkerImpl

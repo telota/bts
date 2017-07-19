@@ -35,124 +35,132 @@ import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>BTS Graphic</b></em>'.
  * <!-- end-user-doc -->
- *
+ * <p>
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getInnerSentenceOrder <em>Inner Sentence Order</em>}</li>
- *   <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getCode <em>Code</em>}</li>
- *   <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getReference <em>Reference</em>}</li>
- *   <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#isIgnored <em>Ignored</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getInnerSentenceOrder <em>Inner Sentence Order</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getCode <em>Code</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getReference <em>Reference</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#isIgnored <em>Ignored</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic()
  */
 public interface BTSGraphic extends BTSIdentifiableItem {
-	/**
-	 * Returns the value of the '<em><b>Inner Sentence Order</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Inner Sentence Order</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Inner Sentence Order</em>' attribute.
-	 * @see #setInnerSentenceOrder(int)
-	 * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic_InnerSentenceOrder()
-	 * @model
-	 * @generated
-	 */
-	int getInnerSentenceOrder();
+    /**
+     * Returns the value of the '<em><b>Inner Sentence Order</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Inner Sentence Order</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Inner Sentence Order</em>' attribute.
+     * @model
+     * @generated
+     * @see #setInnerSentenceOrder(int)
+     * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic_InnerSentenceOrder()
+     */
+    int getInnerSentenceOrder();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getInnerSentenceOrder <em>Inner Sentence Order</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Inner Sentence Order</em>' attribute.
-	 * @see #getInnerSentenceOrder()
-	 * @generated
-	 */
-	void setInnerSentenceOrder(int value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getInnerSentenceOrder <em>Inner Sentence Order</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Inner Sentence Order</em>' attribute.
+     * @generated
+     * @see #getInnerSentenceOrder()
+     */
+    void setInnerSentenceOrder(int value);
 
-	/**
-	 * Returns the value of the '<em><b>Code</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Code</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Code</em>' attribute.
-	 * @see #setCode(String)
-	 * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic_Code()
-	 * @model
-	 * @generated
-	 */
-	String getCode();
+    /**
+     * Returns the value of the '<em><b>Code</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Code</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Code</em>' attribute.
+     * @model
+     * @generated
+     * @see #setCode(String)
+     * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic_Code()
+     */
+    String getCode();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getCode <em>Code</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Code</em>' attribute.
-	 * @see #getCode()
-	 * @generated
-	 */
-	void setCode(String value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getCode <em>Code</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Code</em>' attribute.
+     * @generated
+     * @see #getCode()
+     */
+    void setCode(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Reference</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Reference</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Reference</em>' attribute.
-	 * @see #setReference(String)
-	 * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic_Reference()
-	 * @model
-	 * @generated
-	 */
-	String getReference();
+    /**
+     * Returns the value of the '<em><b>Reference</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Reference</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Reference</em>' attribute.
+     * @model
+     * @generated
+     * @see #setReference(String)
+     * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic_Reference()
+     */
+    String getReference();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getReference <em>Reference</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Reference</em>' attribute.
-	 * @see #getReference()
-	 * @generated
-	 */
-	void setReference(String value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#getReference <em>Reference</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Reference</em>' attribute.
+     * @generated
+     * @see #getReference()
+     */
+    void setReference(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Ignored</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Ignored</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Ignored</em>' attribute.
-	 * @see #setIgnored(boolean)
-	 * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic_Ignored()
-	 * @model
-	 * @generated
-	 */
-	boolean isIgnored();
+    /**
+     * Returns the value of the '<em><b>Ignored</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Ignored</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Ignored</em>' attribute.
+     * @model
+     * @generated
+     * @see #setIgnored(boolean)
+     * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSGraphic_Ignored()
+     */
+    boolean isIgnored();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#isIgnored <em>Ignored</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Ignored</em>' attribute.
-	 * @see #isIgnored()
-	 * @generated
-	 */
-	void setIgnored(boolean value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic#isIgnored <em>Ignored</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Ignored</em>' attribute.
+     * @generated
+     * @see #isIgnored()
+     */
+    void setIgnored(boolean value);
 
 } // BTSGraphic

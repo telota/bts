@@ -20,69 +20,69 @@ import org.eclipse.xtext.util.Strings;
 
 /**
  * Base class for all {@link IRenameStrategy} implementations. Performs the declaration updates on a semantic EMF model.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public abstract class AbstractRenameStrategy implements DefaultRenameStrategyProvider.IInitializable {
 
-	private String originalName;
-	private URI targetElementOriginalURI;
-	private URI targetElementNewURI;
-	private EAttribute nameAttribute;
-	
-	public boolean initialize(EObject targetElement, IRenameElementContext context) {
-		this.nameAttribute = getNameAttribute(targetElement);
-		if(nameAttribute == null)
-			return false;
-		this.targetElementOriginalURI = EcoreUtil.getURI(targetElement);
-		this.originalName = targetElement.eGet(nameAttribute).toString();
-		return !Strings.isEmpty(originalName);
-	}
+    private String originalName;
+    private URI targetElementOriginalURI;
+    private URI targetElementNewURI;
+    private EAttribute nameAttribute;
 
-	
-	public String getOriginalName() {
-		return originalName;
-	}
+    public boolean initialize(EObject targetElement, IRenameElementContext context) {
+        this.nameAttribute = getNameAttribute(targetElement);
+        if (nameAttribute == null)
+            return false;
+        this.targetElementOriginalURI = EcoreUtil.getURI(targetElement);
+        this.originalName = targetElement.eGet(nameAttribute).toString();
+        return !Strings.isEmpty(originalName);
+    }
 
-	public RefactoringStatus validateNewName(String newName) {
-		RefactoringStatus status = new RefactoringStatus();
-		return status;
-	}
 
-	public void applyDeclarationChange(String newName, ResourceSet resourceSet) {
-		EObject renamedElement = setName(targetElementOriginalURI, newName, resourceSet);
-		targetElementNewURI = EcoreUtil.getURI(renamedElement);
-	}
+    public String getOriginalName() {
+        return originalName;
+    }
 
-	public void revertDeclarationChange(ResourceSet resourceSet) {
-		if (targetElementNewURI == null)
-			return;
-		setName(targetElementNewURI, originalName, resourceSet);
-	}
+    public RefactoringStatus validateNewName(String newName) {
+        RefactoringStatus status = new RefactoringStatus();
+        return status;
+    }
 
-	protected EObject setName(URI targetElementURI, String newName, ResourceSet resourceSet) {
-		EObject targetElement = resourceSet.getEObject(targetElementURI, false);
-		if (targetElement == null) {
-			throw new RefactoringException("Target element not loaded.");
-		}
-		targetElement.eSet(nameAttribute, newName);
-		return targetElement;
-	}
+    public void applyDeclarationChange(String newName, ResourceSet resourceSet) {
+        EObject renamedElement = setName(targetElementOriginalURI, newName, resourceSet);
+        targetElementNewURI = EcoreUtil.getURI(renamedElement);
+    }
 
-	protected URI getTargetElementOriginalURI() {
-		return targetElementOriginalURI;
-	}
+    public void revertDeclarationChange(ResourceSet resourceSet) {
+        if (targetElementNewURI == null)
+            return;
+        setName(targetElementNewURI, originalName, resourceSet);
+    }
 
-	protected URI getTargetElementNewURI() {
-		return targetElementNewURI;
-	}
+    protected EObject setName(URI targetElementURI, String newName, ResourceSet resourceSet) {
+        EObject targetElement = resourceSet.getEObject(targetElementURI, false);
+        if (targetElement == null) {
+            throw new RefactoringException("Target element not loaded.");
+        }
+        targetElement.eSet(nameAttribute, newName);
+        return targetElement;
+    }
 
-	protected EAttribute getNameAttribute(EObject targetElement) {
-		return SimpleAttributeResolver.NAME_RESOLVER.getAttribute(targetElement);
-	}
-	
-	protected EAttribute getNameAttribute() {
-		return nameAttribute;
-	}
+    protected URI getTargetElementOriginalURI() {
+        return targetElementOriginalURI;
+    }
+
+    protected URI getTargetElementNewURI() {
+        return targetElementNewURI;
+    }
+
+    protected EAttribute getNameAttribute(EObject targetElement) {
+        return SimpleAttributeResolver.NAME_RESOLVER.getAttribute(targetElement);
+    }
+
+    protected EAttribute getNameAttribute() {
+        return nameAttribute;
+    }
 
 }

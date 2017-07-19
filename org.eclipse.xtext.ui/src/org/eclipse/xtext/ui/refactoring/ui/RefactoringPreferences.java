@@ -17,33 +17,31 @@ import com.google.inject.Inject;
  */
 public class RefactoringPreferences {
 
-	public static class Initializer implements IPreferenceStoreInitializer {
-		public void initialize(IPreferenceStoreAccess access) {
-			access.getWritablePreferenceStore().setDefault(SAVE_ALL_BEFORE_REFACTORING, false);
-			access.getWritablePreferenceStore().setDefault(USE_INLINE_REFACTORING, true);
-		}
-	}
+    public static final String SAVE_ALL_BEFORE_REFACTORING = "saveAllBeforeRefactoring";
+    public static final String USE_INLINE_REFACTORING = "useInlineRefactoring";
+    @Inject
+    private IPreferenceStoreAccess preferenceStoreAccess;
 
-	public static final String SAVE_ALL_BEFORE_REFACTORING = "saveAllBeforeRefactoring";
+    public boolean isSaveAllBeforeRefactoring() {
+        return preferenceStoreAccess.getPreferenceStore().getBoolean(SAVE_ALL_BEFORE_REFACTORING);
+    }
 
-	public static final String USE_INLINE_REFACTORING = "useInlineRefactoring";
+    public void setSaveAllBeforeRefactoring(boolean isSaveAllBeforeRefatoring) {
+        preferenceStoreAccess.getWritablePreferenceStore().setValue(SAVE_ALL_BEFORE_REFACTORING, isSaveAllBeforeRefatoring);
+    }
 
-	@Inject
-	private IPreferenceStoreAccess preferenceStoreAccess;
+    public boolean useInlineRefactoring() {
+        return preferenceStoreAccess.getPreferenceStore().getBoolean(USE_INLINE_REFACTORING);
+    }
 
-	public boolean isSaveAllBeforeRefactoring() {
-		return preferenceStoreAccess.getPreferenceStore().getBoolean(SAVE_ALL_BEFORE_REFACTORING);
-	}
+    public void setUseInlineRefactoring(boolean useInlineRefatoring) {
+        preferenceStoreAccess.getWritablePreferenceStore().setValue(USE_INLINE_REFACTORING, useInlineRefatoring);
+    }
 
-	public boolean useInlineRefactoring() {
-		return preferenceStoreAccess.getPreferenceStore().getBoolean(USE_INLINE_REFACTORING);
-	}
-	
-	public void setSaveAllBeforeRefactoring(boolean isSaveAllBeforeRefatoring) {
-		preferenceStoreAccess.getWritablePreferenceStore().setValue(SAVE_ALL_BEFORE_REFACTORING, isSaveAllBeforeRefatoring);
-	}
-
-	public void setUseInlineRefactoring(boolean useInlineRefatoring) {
-		preferenceStoreAccess.getWritablePreferenceStore().setValue(USE_INLINE_REFACTORING, useInlineRefatoring);
-	}
+    public static class Initializer implements IPreferenceStoreInitializer {
+        public void initialize(IPreferenceStoreAccess access) {
+            access.getWritablePreferenceStore().setDefault(SAVE_ALL_BEFORE_REFACTORING, false);
+            access.getWritablePreferenceStore().setDefault(USE_INLINE_REFACTORING, true);
+        }
+    }
 }

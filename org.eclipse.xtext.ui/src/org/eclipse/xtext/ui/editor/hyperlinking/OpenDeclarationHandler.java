@@ -26,34 +26,34 @@ import com.google.inject.Inject;
  * @author Peter Friese - Initial contribution and API
  */
 public class OpenDeclarationHandler extends AbstractHandler {
-	
-	@Inject
-	private IHyperlinkDetector detector;
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor(event);
-		if (xtextEditor != null) {
-			ITextSelection selection = (ITextSelection) xtextEditor.getSelectionProvider().getSelection();
-	
-			IRegion region = new Region(selection.getOffset(), selection.getLength());
-	
-			ISourceViewer internalSourceViewer = xtextEditor.getInternalSourceViewer();
-	
-			IHyperlink[] hyperlinks = getDetector().detectHyperlinks(internalSourceViewer, region, false);
-			if (hyperlinks != null && hyperlinks.length > 0) {
-				IHyperlink hyperlink = hyperlinks[0];
-				hyperlink.open();
-			}
-		}		
-		return null;
-	}
+    @Inject
+    private IHyperlinkDetector detector;
 
-	public void setDetector(IHyperlinkDetector detector) {
-		this.detector = detector;
-	}
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor(event);
+        if (xtextEditor != null) {
+            ITextSelection selection = (ITextSelection) xtextEditor.getSelectionProvider().getSelection();
 
-	public IHyperlinkDetector getDetector() {
-		return detector;
-	}
+            IRegion region = new Region(selection.getOffset(), selection.getLength());
+
+            ISourceViewer internalSourceViewer = xtextEditor.getInternalSourceViewer();
+
+            IHyperlink[] hyperlinks = getDetector().detectHyperlinks(internalSourceViewer, region, false);
+            if (hyperlinks != null && hyperlinks.length > 0) {
+                IHyperlink hyperlink = hyperlinks[0];
+                hyperlink.open();
+            }
+        }
+        return null;
+    }
+
+    public IHyperlinkDetector getDetector() {
+        return detector;
+    }
+
+    public void setDetector(IHyperlinkDetector detector) {
+        this.detector = detector;
+    }
 
 }

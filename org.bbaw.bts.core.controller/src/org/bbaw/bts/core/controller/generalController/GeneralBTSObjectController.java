@@ -40,45 +40,45 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * The GeneralBTSObjectController manages access to BTSObjects if their type is not specified.
  */
 public interface GeneralBTSObjectController {
-	
-	/**
-	 * Gets the object proposals for.
-	 *
-	 * @param configItem the config item
-	 * @param text the text
-	 * @param object the object
-	 * @return the object proposals for
-	 */
-	List<BTSObject> getObjectProposalsFor(
-			BTSConfigItem configItem, String text, BTSObject object, IProgressMonitor monitor);
 
-	/**
-	 * Gets the display name of the object by its id.
-	 *
-	 * @param id the id
-	 * @return the display name of the object or id if object not found
-	 */
-	String getDisplayName(String id);
-	
-	/**
-	 * Query objects with given query and object state, classname.
-	 *
-	 * @param query the query
-	 * @param objectState the object state
-	 * @param registerQuery true if query should be registered e.g. with percolator.
-	 * @param className the class name
-	 * @return the list
-	 */
-	List<BTSObject> queryObjects(BTSQueryRequest query,
-			String objectState, boolean registerQuery, String className, IProgressMonitor monitor);
-	
-	/**
-	 * Find object by id and - if available - classname.
-	 * Providing a classname is not required but improves performance.
-	 *
-	 * @param id the id
-	 * @param classname the classname if available of the object.
-	 * @return the BTS object
-	 */
-	BTSObject findObject(String id, String classname, IProgressMonitor monitor);
+    /**
+     * Gets the object proposals for.
+     *
+     * @param configItem the config item
+     * @param text       the text
+     * @param object     the object
+     * @return the object proposals for
+     */
+    List<BTSObject> getObjectProposalsFor(
+            BTSConfigItem configItem, String text, BTSObject object, IProgressMonitor monitor);
+
+    /**
+     * Gets the display name of the object by its id.
+     *
+     * @param id the id
+     * @return the display name of the object or id if object not found
+     */
+    String getDisplayName(String id);
+
+    /**
+     * Query objects with given query and object state, classname.
+     *
+     * @param query         the query
+     * @param objectState   the object state
+     * @param registerQuery true if query should be registered e.g. with percolator.
+     * @param className     the class name
+     * @return the list
+     */
+    List<BTSObject> queryObjects(BTSQueryRequest query,
+                                 String objectState, boolean registerQuery, String className, IProgressMonitor monitor);
+
+    /**
+     * Find object by id and - if available - classname.
+     * Providing a classname is not required but improves performance.
+     *
+     * @param id        the id
+     * @param classname the classname if available of the object.
+     * @return the BTS object
+     */
+    BTSObject findObject(String id, String classname, IProgressMonitor monitor);
 }

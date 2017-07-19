@@ -21,28 +21,28 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
  */
 public class OutlineCopyQualifiedNameHandler extends AbstractCopyQualifiedNameHandler {
 
-	@Override
-	protected String getQualifiedName(ExecutionEvent event) {
-		IOutlineNode outlineNode = getOutlineNode(event);
-		if (outlineNode == null) {
-			return null;
-		}
-		return outlineNode.readOnly(new IUnitOfWork<String, EObject>() {
+    @Override
+    protected String getQualifiedName(ExecutionEvent event) {
+        IOutlineNode outlineNode = getOutlineNode(event);
+        if (outlineNode == null) {
+            return null;
+        }
+        return outlineNode.readOnly(new IUnitOfWork<String, EObject>() {
 
-			public String exec(EObject selectedElement) throws Exception {
-				return getQualifiedName(selectedElement);
-			}
+            public String exec(EObject selectedElement) throws Exception {
+                return getQualifiedName(selectedElement);
+            }
 
-		});
-	}
+        });
+    }
 
-	private IOutlineNode getOutlineNode(ExecutionEvent event) {
-		ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
-		if (!(currentSelection instanceof IStructuredSelection)) {
-			return null;
-		}
-		IStructuredSelection structuredSelection = (IStructuredSelection) currentSelection;
-		return (IOutlineNode) structuredSelection.getFirstElement();
-	}
+    private IOutlineNode getOutlineNode(ExecutionEvent event) {
+        ISelection currentSelection = HandlerUtil.getCurrentSelection(event);
+        if (!(currentSelection instanceof IStructuredSelection)) {
+            return null;
+        }
+        IStructuredSelection structuredSelection = (IStructuredSelection) currentSelection;
+        return (IOutlineNode) structuredSelection.getFirstElement();
+    }
 
 }

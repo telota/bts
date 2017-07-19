@@ -26,74 +26,65 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
-public class Login
-{
+public class Login {
 
-	@Inject
-	private IEclipseContext context;
+    @Inject
+    private IEclipseContext context;
 
-	@Inject
-	@Named(IServiceConstants.ACTIVE_SHELL)
-	private Shell shell;
+    @Inject
+    @Named(IServiceConstants.ACTIVE_SHELL)
+    private Shell shell;
 
-	@Inject
-	private BTSUserController userController;
+    @Inject
+    private BTSUserController userController;
 
-	private boolean restartRequired;
+    private boolean restartRequired;
 
-	public void login(IEclipseContext context, BTSUserController userController)
-	{
-		if (context == null)
-		{
-			this.context = context;
-		}
-		if (userController == null)
-		{
-			this.userController = userController;
-		}
-		System.out.println("login");
-		if (shell == null)
-		{
-			shell = new Shell(SWT.NO_TRIM | SWT.ON_TOP);
-		}
+    public void login(IEclipseContext context, BTSUserController userController) {
+        if (context == null) {
+            this.context = context;
+        }
+        if (userController == null) {
+            this.userController = userController;
+        }
+        System.out.println("login");
+        if (shell == null) {
+            shell = new Shell(SWT.NO_TRIM | SWT.ON_TOP);
+        }
 
-		final LoginDialog dialog = new LoginDialog(shell, context,
-				userController);
-		dialog.create();
-		// close the static splash screen
+        final LoginDialog dialog = new LoginDialog(shell, context,
+                userController);
+        dialog.create();
+        // close the static splash screen
 
-		// position the shell
-		setLocation(Display.getDefault(), shell);
-		// String cssTheme = "org.bbaw.bts.ui.themes.login";
-		// context.set(E4Application.THEME_ID, cssTheme);
-		// String cssURI = "css/login.css";
-		// context.set(E4Workbench.CSS_URI_ARG, cssURI);
-		//
-		// PartRenderingEngine.initializeStyling(shell.getDisplay(), context);
-		int returnCode =dialog.open();
-		if (returnCode != Window.OK)
-		{
-			// we don't have a workbench yet...
-			System.exit(0);
-		}
-		if (dialog.isRestartRequired())
-		{
-			this.restartRequired = true;
-		}
-	}
+        // position the shell
+        setLocation(Display.getDefault(), shell);
+        // String cssTheme = "org.bbaw.bts.ui.themes.login";
+        // context.set(E4Application.THEME_ID, cssTheme);
+        // String cssURI = "css/login.css";
+        // context.set(E4Workbench.CSS_URI_ARG, cssURI);
+        //
+        // PartRenderingEngine.initializeStyling(shell.getDisplay(), context);
+        int returnCode = dialog.open();
+        if (returnCode != Window.OK) {
+            // we don't have a workbench yet...
+            System.exit(0);
+        }
+        if (dialog.isRestartRequired()) {
+            this.restartRequired = true;
+        }
+    }
 
-	private void setLocation(Display display, Shell shell)
-	{
-		Monitor monitor = display.getPrimaryMonitor();
-		Rectangle monitorRect = monitor.getBounds();
-		Rectangle shellRect = shell.getBounds();
-		int x = monitorRect.x + (monitorRect.width - shellRect.width) / 2;
-		int y = monitorRect.y + (monitorRect.height - shellRect.height) / 2;
-		shell.setLocation(x, y);
-	}
-	
-	public boolean isRestartRequired()
-	{
-		return restartRequired;
-	}
+    private void setLocation(Display display, Shell shell) {
+        Monitor monitor = display.getPrimaryMonitor();
+        Rectangle monitorRect = monitor.getBounds();
+        Rectangle shellRect = shell.getBounds();
+        int x = monitorRect.x + (monitorRect.width - shellRect.width) / 2;
+        int y = monitorRect.y + (monitorRect.height - shellRect.height) / 2;
+        shell.setLocation(x, y);
+    }
+
+    public boolean isRestartRequired() {
+        return restartRequired;
+    }
 }

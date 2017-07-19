@@ -25,42 +25,40 @@ import org.eclipselabs.emfjson.internal.JSONLoad;
 import org.eclipselabs.emfjson.internal.JSONSave;
 
 /**
- * 
  * @author ghillairet
- *
  */
 public class JsResourceImpl extends ResourceImpl {
-	
-	public JsResourceImpl() {
-		super();
-	}
-	
-	public JsResourceImpl(URI uri) {
-		super(uri);
-	}
 
-	@Override
-	protected void doLoad(InputStream inputStream, Map<?, ?> options) throws IOException {
-		if (options == null) {
-			options = Collections.<String, Object> emptyMap();
-		}
-		
-		final JSONLoad loader = new JSONLoad(inputStream, options, this.getResourceSet());
-		final Collection<EObject> roots = loader.fillResource(this);
-		
-		this.getContents().addAll(roots);
-	}
-	
-	@Override
-	protected void doSave(OutputStream outputStream, Map<?, ?> options) throws IOException {
-		if (options == null) {
-			options = Collections.<String, Object> emptyMap();
-		}
-		
-		final JSONSave writer = new JSONSave(options);
-		final JsonNode rootNode = writer.genJson(this, options);
-		
-		writer.getDelegate().writeValue(outputStream, rootNode);
-	}
-		
+    public JsResourceImpl() {
+        super();
+    }
+
+    public JsResourceImpl(URI uri) {
+        super(uri);
+    }
+
+    @Override
+    protected void doLoad(InputStream inputStream, Map<?, ?> options) throws IOException {
+        if (options == null) {
+            options = Collections.<String, Object>emptyMap();
+        }
+
+        final JSONLoad loader = new JSONLoad(inputStream, options, this.getResourceSet());
+        final Collection<EObject> roots = loader.fillResource(this);
+
+        this.getContents().addAll(roots);
+    }
+
+    @Override
+    protected void doSave(OutputStream outputStream, Map<?, ?> options) throws IOException {
+        if (options == null) {
+            options = Collections.<String, Object>emptyMap();
+        }
+
+        final JSONSave writer = new JSONSave(options);
+        final JsonNode rootNode = writer.genJson(this, options);
+
+        writer.getDelegate().writeValue(outputStream, rootNode);
+    }
+
 }

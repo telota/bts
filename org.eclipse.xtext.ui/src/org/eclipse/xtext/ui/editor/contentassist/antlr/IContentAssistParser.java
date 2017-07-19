@@ -11,16 +11,17 @@ import java.util.Collection;
 
 /**
  * Parser that returns the expected elements when EOF is reached.
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public interface IContentAssistParser {
 
-	/**
-	 * @param strict if <code>true</code>
-	 * the parser will not use error recovery on the very last token of the input.
-	 */
-	Collection<FollowElement> getFollowElements(String input, boolean strict);
+    /**
+     * @param strict if <code>true</code>
+     *               the parser will not use error recovery on the very last token of the input.
+     */
+    Collection<FollowElement> getFollowElements(String input, boolean strict);
 
-	Collection<FollowElement> getFollowElements(FollowElement element);
-	
+    Collection<FollowElement> getFollowElements(FollowElement element);
+
 }

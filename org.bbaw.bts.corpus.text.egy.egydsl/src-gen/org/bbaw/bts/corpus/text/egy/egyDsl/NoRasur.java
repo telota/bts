@@ -9,11 +9,9 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>No Rasur</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoRasur()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoRasur()
  */
-public interface NoRasur extends EObject
-{
+public interface NoRasur extends EObject {
 } // NoRasur

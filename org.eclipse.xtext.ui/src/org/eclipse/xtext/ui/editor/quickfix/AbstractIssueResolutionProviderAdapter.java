@@ -22,33 +22,33 @@ import com.google.inject.name.Named;
  */
 public abstract class AbstractIssueResolutionProviderAdapter {
 
-	public static final String DEFAULT_IMAGE = "org.eclipse.xtext.ui.editor.quickfix.AbstractIssueResolutionProviderAdapter.DEFAULT_IMAGE"; 
-	
-	@Named(DEFAULT_IMAGE)
-	@Inject(optional=true)
-	private String defaultImage = XtextPluginImages.OBJ_CORRECTION_CHANGE;  
+    public static final String DEFAULT_IMAGE = "org.eclipse.xtext.ui.editor.quickfix.AbstractIssueResolutionProviderAdapter.DEFAULT_IMAGE";
 
-	@Inject 
-	private IssueResolutionProvider resolutionProvider;
+    @Named(DEFAULT_IMAGE)
+    @Inject(optional = true)
+    private String defaultImage = XtextPluginImages.OBJ_CORRECTION_CHANGE;
 
-	@Inject
-	private IImageHelper imageHelper;
+    @Inject
+    private IssueResolutionProvider resolutionProvider;
 
-	protected IssueResolutionProvider getResolutionProvider() {
-		return resolutionProvider;
-	}
-	
-	public Iterable<IssueResolution> getResolutions(final Issue issue, final IXtextDocument document) {
-		Iterable<IssueResolution> result = resolutionProvider.getResolutions(issue);
-		return result;
-	}
+    @Inject
+    private IImageHelper imageHelper;
 
-	public Image getImage(IssueResolution resolution) {
-		if(Strings.isEmpty(resolution.getImage()))
-			return XtextPluginImages.get(defaultImage);
-		else
-			return imageHelper.getImage(resolution.getImage());
-	}
+    protected IssueResolutionProvider getResolutionProvider() {
+        return resolutionProvider;
+    }
+
+    public Iterable<IssueResolution> getResolutions(final Issue issue, final IXtextDocument document) {
+        Iterable<IssueResolution> result = resolutionProvider.getResolutions(issue);
+        return result;
+    }
+
+    public Image getImage(IssueResolution resolution) {
+        if (Strings.isEmpty(resolution.getImage()))
+            return XtextPluginImages.get(defaultImage);
+        else
+            return imageHelper.getImage(resolution.getImage());
+    }
 
 
 }

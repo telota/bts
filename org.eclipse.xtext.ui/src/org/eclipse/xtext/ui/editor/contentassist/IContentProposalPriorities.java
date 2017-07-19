@@ -17,10 +17,10 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(ContentProposalPriorities.class)
 public interface IContentProposalPriorities {
 
-	void adjustKeywordPriority(ICompletionProposal proposal, String prefix);
+    void adjustKeywordPriority(ICompletionProposal proposal, String prefix);
 
-	void adjustCrossReferencePriority(ICompletionProposal proposal, String prefix);
+    void adjustCrossReferencePriority(ICompletionProposal proposal, String prefix);
 
-	int getDefaultPriority();
+    int getDefaultPriority();
 
 }

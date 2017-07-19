@@ -34,30 +34,29 @@ package org.bbaw.bts.core.commons.exceptions;
  *
  * @author Christoph Plutte
  */
-public class BTSDBException extends BTSRuntimeException
-{
-	
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = -1556776064316564601L;
+public class BTSDBException extends BTSRuntimeException {
 
-	/**
-	 * Instantiates a new BTSDB exception.
-	 *
-	 * @param message the message
-	 */
-	public BTSDBException(String message)
-	{
-		super(message);
-	}
+    /**
+     * The Constant serialVersionUID.
+     */
+    private static final long serialVersionUID = -1556776064316564601L;
 
-	/**
-	 * Instantiates a new BTSDB exception.
-	 *
-	 * @param message the message
-	 * @param throwable the throwable
-	 */
-	public BTSDBException(String message, Throwable throwable)
-	{
-		super(message, throwable);
-	}
+    /**
+     * Instantiates a new BTSDB exception.
+     *
+     * @param message the message
+     */
+    public BTSDBException(String message) {
+        super(message);
+    }
+
+    /**
+     * Instantiates a new BTSDB exception.
+     *
+     * @param message   the message
+     * @param throwable the throwable
+     */
+    public BTSDBException(String message, Throwable throwable) {
+        super(message, throwable);
+    }
 }

@@ -8,12 +8,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface LemmatizerPartController {
 
-	List<BTSLemmaEntry> findLemmaProposals(String prefix, IProgressMonitor monitor);
+    List<BTSLemmaEntry> findLemmaProposals(String prefix, IProgressMonitor monitor);
 
-	String processWordCharForLemmatizing(String wordChars);
+    String processWordCharForLemmatizing(String wordChars);
 
-	List<BTSLemmaEntry> filterAndSortLemmaProposals(List<BTSLemmaEntry> obs, String searchString);
+    List<BTSLemmaEntry> filterAndSortLemmaProposals(List<BTSLemmaEntry> obs, String searchString);
 
-	BTSQueryRequest getLemmaSearchQuery(String searchString);
+    BTSQueryRequest getLemmaSearchQuery(String searchString);
 
 }

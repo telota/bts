@@ -24,148 +24,148 @@ import com.google.inject.name.Named;
  */
 public class XtextContentAssistProcessor implements IContentAssistProcessor, CompletionProposalComputer.State, ContextInformationComputer.State {
 
-	public static final String COMPLETION_AUTO_ACTIVATION_CHARS = "org.eclipse.xtext.ui.editor.XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS";
+    public static final String COMPLETION_AUTO_ACTIVATION_CHARS = "org.eclipse.xtext.ui.editor.XtextContentAssistProcessor.COMPLETION_AUTO_ACTIVATION_CHARS";
 
-	public static final String CONTEXT_INFO_AUTO_ACTIVATION_CHARS = "org.eclipse.xtext.ui.editor.XtextContentAssistProcessor.CONTEXT_INFO_AUTO_ACTIVATION_CHARS";
+    public static final String CONTEXT_INFO_AUTO_ACTIVATION_CHARS = "org.eclipse.xtext.ui.editor.XtextContentAssistProcessor.CONTEXT_INFO_AUTO_ACTIVATION_CHARS";
 
-	public static final String ERROR_MESSAGE = "org.eclipse.xtext.ui.editor.XtextContentAssistProcessor.ERROR_MESSAGE";
-	
-	@Inject
-	private ContentAssistContext.Factory contextFactory;
-	
-	@Inject(optional = true)
-	private ITemplateProposalProvider templateProposalProvider;
-	
-	@Inject(optional = true)
-	private IContentProposalProvider contentProposalProvider;
-	
-	@Inject(optional = true)
-	private IContextInformationProvider contextInformationProvider;
-	
-	@Inject
-	private ICompletionProposalComparator completionProposalComparator;
-	
-	@Inject
-	private ICompletionProposalPostProcessor completionProposalPostProcessor;
-	
-	@Inject(optional = true)
-	@Named(value=COMPLETION_AUTO_ACTIVATION_CHARS)
-	private String completionProposalAutoActivationCharacters = null;
-	
-	@Inject(optional = true)
-	@Named(value=CONTEXT_INFO_AUTO_ACTIVATION_CHARS)
-	private String contextInformationAutoActivationCharacters = null;
-	
-	@Inject(optional = true)
-	@Named(value=ERROR_MESSAGE)
-	private String errorMessage = null;
-	
-	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
-		if (contentProposalProvider == null)
-			return null;
-		
-		IXtextDocument document = (IXtextDocument) viewer.getDocument();
-		ICompletionProposal[] result = document.readOnly(createCompletionProposalComputer(viewer, offset));
-		Arrays.sort(result, completionProposalComparator);
-		result = completionProposalPostProcessor.postProcess(result);
-		return result;
-	}
+    public static final String ERROR_MESSAGE = "org.eclipse.xtext.ui.editor.XtextContentAssistProcessor.ERROR_MESSAGE";
 
-	protected CompletionProposalComputer createCompletionProposalComputer(ITextViewer viewer, int offset) {
-		return new CompletionProposalComputer(this, viewer, offset);
-	}
+    @Inject
+    private ContentAssistContext.Factory contextFactory;
 
-	public IContextInformation[] computeContextInformation(final ITextViewer viewer, final int offset) {
-		if (contextInformationProvider == null)
-			return null;
-		
-		IXtextDocument document = (IXtextDocument) viewer.getDocument();
-		return document.readOnly(createContextInformationComputer(viewer, offset));
-	}
+    @Inject(optional = true)
+    private ITemplateProposalProvider templateProposalProvider;
 
-	protected ContextInformationComputer createContextInformationComputer(final ITextViewer viewer, final int offset) {
-		return new ContextInformationComputer(this, viewer, offset);
-	}
+    @Inject(optional = true)
+    private IContentProposalProvider contentProposalProvider;
 
-	public char[] getCompletionProposalAutoActivationCharacters() {
-		if (completionProposalAutoActivationCharacters != null)
-			return completionProposalAutoActivationCharacters.toCharArray();
-		return null;
-	}
+    @Inject(optional = true)
+    private IContextInformationProvider contextInformationProvider;
 
-	public char[] getContextInformationAutoActivationCharacters() {
-		if (contextInformationAutoActivationCharacters != null)
-			return contextInformationAutoActivationCharacters.toCharArray();
-		return null;
-	}
+    @Inject
+    private ICompletionProposalComparator completionProposalComparator;
 
-	public IContextInformationValidator getContextInformationValidator() {
-		return new SmartInformationAwareContextInformationValidator(this);
-	}
+    @Inject
+    private ICompletionProposalPostProcessor completionProposalPostProcessor;
 
-	public String getErrorMessage() {
-		return errorMessage;
-	}
+    @Inject(optional = true)
+    @Named(value = COMPLETION_AUTO_ACTIVATION_CHARS)
+    private String completionProposalAutoActivationCharacters = null;
 
-	public void setCompletionProposalAutoActivationCharacters(String completionProposalAutoActivationCharacters) {
-		this.completionProposalAutoActivationCharacters = completionProposalAutoActivationCharacters;
-	}
+    @Inject(optional = true)
+    @Named(value = CONTEXT_INFO_AUTO_ACTIVATION_CHARS)
+    private String contextInformationAutoActivationCharacters = null;
 
-	public void setContextFactory(ContentAssistContext.Factory contextFactory) {
-		this.contextFactory = contextFactory;
-	}
+    @Inject(optional = true)
+    @Named(value = ERROR_MESSAGE)
+    private String errorMessage = null;
 
-	public ContentAssistContext.Factory getContextFactory() {
-		return contextFactory;
-	}
+    public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
+        if (contentProposalProvider == null)
+            return null;
 
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
+        IXtextDocument document = (IXtextDocument) viewer.getDocument();
+        ICompletionProposal[] result = document.readOnly(createCompletionProposalComputer(viewer, offset));
+        Arrays.sort(result, completionProposalComparator);
+        result = completionProposalPostProcessor.postProcess(result);
+        return result;
+    }
 
-	public void setContextInformationAutoActivationCharacters(String contextInformationAutoActivationCharacters) {
-		this.contextInformationAutoActivationCharacters = contextInformationAutoActivationCharacters;
-	}
+    protected CompletionProposalComputer createCompletionProposalComputer(ITextViewer viewer, int offset) {
+        return new CompletionProposalComputer(this, viewer, offset);
+    }
 
-	public void setContentProposalProvider(IContentProposalProvider contentProposalProvider) {
-		this.contentProposalProvider = contentProposalProvider;
-	}
+    public IContextInformation[] computeContextInformation(final ITextViewer viewer, final int offset) {
+        if (contextInformationProvider == null)
+            return null;
 
-	public IContentProposalProvider getContentProposalProvider() {
-		return contentProposalProvider;
-	}
+        IXtextDocument document = (IXtextDocument) viewer.getDocument();
+        return document.readOnly(createContextInformationComputer(viewer, offset));
+    }
 
-	public void setTemplateProposalProvider(ITemplateProposalProvider templateProposalProvider) {
-		this.templateProposalProvider = templateProposalProvider;
-	}
+    protected ContextInformationComputer createContextInformationComputer(final ITextViewer viewer, final int offset) {
+        return new ContextInformationComputer(this, viewer, offset);
+    }
 
-	public ITemplateProposalProvider getTemplateProposalProvider() {
-		return templateProposalProvider;
-	}
+    public char[] getCompletionProposalAutoActivationCharacters() {
+        if (completionProposalAutoActivationCharacters != null)
+            return completionProposalAutoActivationCharacters.toCharArray();
+        return null;
+    }
 
-	public IContextInformationProvider getContextInformationProvider() {
-		return contextInformationProvider;
-	}
-	
-	public ICompletionProposalAcceptor decorateAcceptor(ICompletionProposalAcceptor acceptor) {
-		return acceptor;
-	}
-	
-	public ITemplateAcceptor decorateAcceptor(ITemplateAcceptor acceptor) {
-		return acceptor;
-	}
+    public void setCompletionProposalAutoActivationCharacters(String completionProposalAutoActivationCharacters) {
+        this.completionProposalAutoActivationCharacters = completionProposalAutoActivationCharacters;
+    }
 
-	public IContextInformationAcceptor decorateAcceptor(IContextInformationAcceptor acceptor) {
-		return acceptor;
-	}
+    public char[] getContextInformationAutoActivationCharacters() {
+        if (contextInformationAutoActivationCharacters != null)
+            return contextInformationAutoActivationCharacters.toCharArray();
+        return null;
+    }
 
-	public void setCompletionProposalPostProcessor(ICompletionProposalPostProcessor completionProposalPostProcessor) {
-		this.completionProposalPostProcessor = completionProposalPostProcessor;
-	}
+    public void setContextInformationAutoActivationCharacters(String contextInformationAutoActivationCharacters) {
+        this.contextInformationAutoActivationCharacters = contextInformationAutoActivationCharacters;
+    }
 
-	public ICompletionProposalPostProcessor getCompletionProposalPostProcessor() {
-		return completionProposalPostProcessor;
-	}
+    public IContextInformationValidator getContextInformationValidator() {
+        return new SmartInformationAwareContextInformationValidator(this);
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public ContentAssistContext.Factory getContextFactory() {
+        return contextFactory;
+    }
+
+    public void setContextFactory(ContentAssistContext.Factory contextFactory) {
+        this.contextFactory = contextFactory;
+    }
+
+    public IContentProposalProvider getContentProposalProvider() {
+        return contentProposalProvider;
+    }
+
+    public void setContentProposalProvider(IContentProposalProvider contentProposalProvider) {
+        this.contentProposalProvider = contentProposalProvider;
+    }
+
+    public ITemplateProposalProvider getTemplateProposalProvider() {
+        return templateProposalProvider;
+    }
+
+    public void setTemplateProposalProvider(ITemplateProposalProvider templateProposalProvider) {
+        this.templateProposalProvider = templateProposalProvider;
+    }
+
+    public IContextInformationProvider getContextInformationProvider() {
+        return contextInformationProvider;
+    }
+
+    public ICompletionProposalAcceptor decorateAcceptor(ICompletionProposalAcceptor acceptor) {
+        return acceptor;
+    }
+
+    public ITemplateAcceptor decorateAcceptor(ITemplateAcceptor acceptor) {
+        return acceptor;
+    }
+
+    public IContextInformationAcceptor decorateAcceptor(IContextInformationAcceptor acceptor) {
+        return acceptor;
+    }
+
+    public ICompletionProposalPostProcessor getCompletionProposalPostProcessor() {
+        return completionProposalPostProcessor;
+    }
+
+    public void setCompletionProposalPostProcessor(ICompletionProposalPostProcessor completionProposalPostProcessor) {
+        this.completionProposalPostProcessor = completionProposalPostProcessor;
+    }
 
 }
 

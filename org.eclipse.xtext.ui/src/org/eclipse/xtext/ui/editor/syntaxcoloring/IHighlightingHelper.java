@@ -15,8 +15,8 @@ import org.eclipse.xtext.ui.editor.XtextSourceViewer;
  */
 public interface IHighlightingHelper {
 
-	void install(XtextEditor xtextEditor, XtextSourceViewer sourceViewer);
+    void install(XtextEditor xtextEditor, XtextSourceViewer sourceViewer);
 
-	void uninstall();
-	
+    void uninstall();
+
 }

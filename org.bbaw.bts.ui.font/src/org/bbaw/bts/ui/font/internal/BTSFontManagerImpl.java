@@ -46,86 +46,79 @@ import org.eclipse.swt.graphics.Font;
 /**
  * The Class BTSFontManagerImpl implements the interface BTSFontManager.
  */
-public class BTSFontManagerImpl implements BTSFontManager
-{
+public class BTSFontManagerImpl implements BTSFontManager {
 
-	/** The context. */
-	@Inject
-	private IEclipseContext context;
-	
-	/** The logger. */
-	@Inject
-	private Logger logger;
-	
-	/** The Constant FONT_PROVIDER_EXTENSION_POINT_ID. */
-	private static final String FONT_PROVIDER_EXTENSION_POINT_ID = "org.bbaw.bts.ui.font.fontProvider";
+    /**
+     * The Constant FONT_PROVIDER_EXTENSION_POINT_ID.
+     */
+    private static final String FONT_PROVIDER_EXTENSION_POINT_ID = "org.bbaw.bts.ui.font.fontProvider";
+    /**
+     * The context.
+     */
+    @Inject
+    private IEclipseContext context;
+    /**
+     * The logger.
+     */
+    @Inject
+    private Logger logger;
 
-	/* (non-Javadoc)
-	 * @see org.bbaw.bts.ui.font.BTSFontManager#getFont(java.lang.String)
-	 */
-	@Override
-	public Font getFont(String fontName)
-	{
-		logger.info("FontManager load font, name: " + fontName);
-		IExtensionRegistry registry = ((IExtensionRegistry) context.get(IExtensionRegistry.class.getName()));
+    /* (non-Javadoc)
+     * @see org.bbaw.bts.ui.font.BTSFontManager#getFont(java.lang.String)
+     */
+    @Override
+    public Font getFont(String fontName) {
+        logger.info("FontManager load font, name: " + fontName);
+        IExtensionRegistry registry = ((IExtensionRegistry) context.get(IExtensionRegistry.class.getName()));
 
-		IConfigurationElement[] config = registry.getConfigurationElementsFor(FONT_PROVIDER_EXTENSION_POINT_ID);
-		logger.info("FontManager load extension, number of extensions: " + config.length);
-		for (IConfigurationElement e : config)
-		{
-			Object o = null;
-			try
-			{
-				o = e.createExecutableExtension("class");
-			} catch (CoreException e1)
-			{
-				logger.error(e1);
-			}
-			if (o != null && o instanceof BTSFontProvider)
-			{
-				BTSFontProvider p = (BTSFontProvider) o;
-				logger.info("FontManager load extension, BTSFontProvider name: " + p.getFontName());
+        IConfigurationElement[] config = registry.getConfigurationElementsFor(FONT_PROVIDER_EXTENSION_POINT_ID);
+        logger.info("FontManager load extension, number of extensions: " + config.length);
+        for (IConfigurationElement e : config) {
+            Object o = null;
+            try {
+                o = e.createExecutableExtension("class");
+            } catch (CoreException e1) {
+                logger.error(e1);
+            }
+            if (o != null && o instanceof BTSFontProvider) {
+                BTSFontProvider p = (BTSFontProvider) o;
+                logger.info("FontManager load extension, BTSFontProvider name: " + p.getFontName());
 
-				if (p.getFontName() != null && p.getFontName().equals(fontName))
-				{
-					return p.getFont();
-				}
-			}
-		}
-		return null;
-	}
+                if (p.getFontName() != null && p.getFontName().equals(fontName)) {
+                    return p.getFont();
+                }
+            }
+        }
+        return null;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.bbaw.bts.ui.font.BTSFontManager#getAvailableFontNames()
-	 */
-	@Override
-	public String[] getAvailableFontNames()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /* (non-Javadoc)
+     * @see org.bbaw.bts.ui.font.BTSFontManager#getAvailableFontNames()
+     */
+    @Override
+    public String[] getAvailableFontNames() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	/**
-	 * Gets the registered font provider.
-	 *
-	 * @return the registered font provider
-	 * @throws CoreException the core exception
-	 */
-	private Map<String, BTSFontProvider> getRegisteredFontProvider() throws CoreException
-	{
-		IExtensionRegistry registry = ((IExtensionRegistry) context.get(IExtensionRegistry.class.getName()));
+    /**
+     * Gets the registered font provider.
+     *
+     * @return the registered font provider
+     * @throws CoreException the core exception
+     */
+    private Map<String, BTSFontProvider> getRegisteredFontProvider() throws CoreException {
+        IExtensionRegistry registry = ((IExtensionRegistry) context.get(IExtensionRegistry.class.getName()));
 
-		IConfigurationElement[] config = registry.getConfigurationElementsFor(FONT_PROVIDER_EXTENSION_POINT_ID);
-		Map<String, BTSFontProvider> providers = new HashMap<String, BTSFontProvider>(config.length);
-		for (IConfigurationElement e : config)
-		{
-			final Object o = e.createExecutableExtension("class");
-			if (o instanceof BTSFontProvider)
-			{
-				BTSFontProvider p = (BTSFontProvider) o;
-				providers.put(p.getFontName(), p);
-			}
-		}
-		return providers;
-	}
+        IConfigurationElement[] config = registry.getConfigurationElementsFor(FONT_PROVIDER_EXTENSION_POINT_ID);
+        Map<String, BTSFontProvider> providers = new HashMap<String, BTSFontProvider>(config.length);
+        for (IConfigurationElement e : config) {
+            final Object o = e.createExecutableExtension("class");
+            if (o instanceof BTSFontProvider) {
+                BTSFontProvider p = (BTSFontProvider) o;
+                providers.put(p.getFontName(), p);
+            }
+        }
+        return providers;
+    }
 }

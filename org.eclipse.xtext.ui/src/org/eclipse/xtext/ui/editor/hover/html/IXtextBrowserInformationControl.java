@@ -19,23 +19,23 @@ import org.eclipse.swt.browser.LocationListener;
  * @since 2.3
  */
 public interface IXtextBrowserInformationControl extends IInformationControl {
-	
-	/**
-	 * @noreference This method is not intended to be referenced by clients.
-	 */
-	public BrowserInformationControlInput getInput();
-	
-	public void setInput(Object input);
 
-	public void notifyDelayedInputChange(Object object);
+    /**
+     * @noreference This method is not intended to be referenced by clients.
+     */
+    public BrowserInformationControlInput getInput();
 
-	public void dispose();
+    public void setInput(Object input);
 
-	public void addLocationListener(LocationListener createLocationListener);
+    public void notifyDelayedInputChange(Object object);
 
-	public boolean hasDelayedInputChangeListener();
+    public void dispose();
 
-	public void addInputChangeListener(IInputChangedListener inputChangeListener);
-	
-	
+    public void addLocationListener(LocationListener createLocationListener);
+
+    public boolean hasDelayedInputChangeListener();
+
+    public void addInputChangeListener(IInputChangedListener inputChangeListener);
+
+
 }

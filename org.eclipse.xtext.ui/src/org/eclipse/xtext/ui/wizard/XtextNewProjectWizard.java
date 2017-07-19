@@ -27,81 +27,75 @@ import com.google.inject.Inject;
  */
 public abstract class XtextNewProjectWizard extends Wizard implements INewWizard {
 
-	private static final Logger logger = Logger.getLogger(XtextNewProjectWizard.class);
+    private static final Logger logger = Logger.getLogger(XtextNewProjectWizard.class);
 
-	protected IStructuredSelection selection;
+    protected IStructuredSelection selection;
 
-	@Inject
-	private FileOpener fileOpener;
-	
-	private IProjectCreator creator;
+    @Inject
+    private FileOpener fileOpener;
 
-	private IWorkbench workbench;
-	
-	public XtextNewProjectWizard(IProjectCreator creator) {
-		this.creator = creator;
-		setNeedsProgressMonitor(true);
-	}
+    private IProjectCreator creator;
 
-	protected abstract IProjectInfo getProjectInfo();
+    private IWorkbench workbench;
 
-	@Override
-	public boolean performFinish() {
-		final IProjectInfo projectInfo = getProjectInfo();
-		IRunnableWithProgress op = new IRunnableWithProgress() {
-			public void run(IProgressMonitor monitor) throws InvocationTargetException {
-				try {
-					doFinish(projectInfo, monitor);
-				}
-				catch (Exception e) {
-					throw new InvocationTargetException(e);
-				}
-				finally {
-					monitor.done();
-				}
-			}
-		};
-		try {
-			getContainer().run(true, false, op);
-		}
-		catch (InterruptedException e) {
-			return false;
-		}
-		catch (InvocationTargetException e) {
-			logger.error(e.getMessage(), e);
-			Throwable realException = e.getTargetException();
-			MessageDialog.openError(getShell(), Messages.XtextNewProjectWizard_ErrorDialog_Title, realException.getMessage());
-			return false;
-		}
-		return true;
-	}
+    public XtextNewProjectWizard(IProjectCreator creator) {
+        this.creator = creator;
+        setNeedsProgressMonitor(true);
+    }
 
-	protected void doFinish(final IProjectInfo projectInfo, final IProgressMonitor monitor) {
-		try {
-			creator.setProjectInfo(projectInfo);
-			creator.run(monitor);
-			fileOpener.selectAndReveal(creator.getResult());
-			fileOpener.openFileToEdit(getShell(), creator.getResult());
-		}
-		catch (final InvocationTargetException e) {
-			logger.error(e.getMessage(), e);
-		}
-		catch (final InterruptedException e) {
-			logger.error(e.getMessage(), e);
-		}
-	}
+    protected abstract IProjectInfo getProjectInfo();
 
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		this.workbench = workbench;
-		this.selection = selection;
-	}
+    @Override
+    public boolean performFinish() {
+        final IProjectInfo projectInfo = getProjectInfo();
+        IRunnableWithProgress op = new IRunnableWithProgress() {
+            public void run(IProgressMonitor monitor) throws InvocationTargetException {
+                try {
+                    doFinish(projectInfo, monitor);
+                } catch (Exception e) {
+                    throw new InvocationTargetException(e);
+                } finally {
+                    monitor.done();
+                }
+            }
+        };
+        try {
+            getContainer().run(true, false, op);
+        } catch (InterruptedException e) {
+            return false;
+        } catch (InvocationTargetException e) {
+            logger.error(e.getMessage(), e);
+            Throwable realException = e.getTargetException();
+            MessageDialog.openError(getShell(), Messages.XtextNewProjectWizard_ErrorDialog_Title, realException.getMessage());
+            return false;
+        }
+        return true;
+    }
 
-	public IWorkbench getWorkbench() {
-		return workbench;
-	}
-	
-	protected IProjectCreator getCreator() {
-		return creator;
-	}
+    protected void doFinish(final IProjectInfo projectInfo, final IProgressMonitor monitor) {
+        try {
+            creator.setProjectInfo(projectInfo);
+            creator.run(monitor);
+            fileOpener.selectAndReveal(creator.getResult());
+            fileOpener.openFileToEdit(getShell(), creator.getResult());
+        } catch (final InvocationTargetException e) {
+            logger.error(e.getMessage(), e);
+        } catch (final InterruptedException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
+        this.workbench = workbench;
+        this.selection = selection;
+    }
+
+    public IWorkbench getWorkbench() {
+        return workbench;
+    }
+
+    protected IProjectCreator getCreator() {
+        return creator;
+    }
 
 }

@@ -13,117 +13,115 @@ import org.eclipse.ui.texteditor.ChainedPreferenceStore;
 import org.eclipse.xtext.ui.editor.preferences.PreferenceConstants;
 
 /**
- * @author Dennis Hübner - Initial contribution and API
- * 
+ * @author Dennis Hï¿½bner - Initial contribution and API
  */
 public abstract class AbstractDetailsPart extends FieldEditorPreferencePage {
-	/**
-	 * 
-	 */
-	protected IPreferenceStore masterPreferenceStore;
-	protected PreferenceStore internalStore;
-	private List<FieldEditor> internalEditorsList = new ArrayList<FieldEditor>();
-	private String preferencePrefix;
+    /**
+     *
+     */
+    protected IPreferenceStore masterPreferenceStore;
+    protected PreferenceStore internalStore;
+    private List<FieldEditor> internalEditorsList = new ArrayList<FieldEditor>();
+    private String preferencePrefix;
 
-	public AbstractDetailsPart(IPreferenceStore masterPreferenceStore) {
-		super(GRID);
-		this.masterPreferenceStore = masterPreferenceStore;
-		internalStore = new PreferenceStore();
-	}
+    public AbstractDetailsPart(IPreferenceStore masterPreferenceStore) {
+        super(GRID);
+        this.masterPreferenceStore = masterPreferenceStore;
+        internalStore = new PreferenceStore();
+    }
 
-	@Override
-	protected final void addField(FieldEditor editor) {
-		String prefix = null;
-		if (getPreferencePrefix() != null)
-			prefix = getPreferencePrefix() + PreferenceConstants.SEPARATOR + editor.getPreferenceName();
-		else
-			prefix = editor.getPreferenceName();
-		editor.setPreferenceName(prefix);
-		internalEditorsList.add(editor);
-		super.addField(editor);
-	}
+    @Override
+    protected final void addField(FieldEditor editor) {
+        String prefix = null;
+        if (getPreferencePrefix() != null)
+            prefix = getPreferencePrefix() + PreferenceConstants.SEPARATOR + editor.getPreferenceName();
+        else
+            prefix = editor.getPreferenceName();
+        editor.setPreferenceName(prefix);
+        internalEditorsList.add(editor);
+        super.addField(editor);
+    }
 
-	@Override
-	protected final IPreferenceStore doGetPreferenceStore() {
-		return new ChainedPreferenceStore(new IPreferenceStore[] { internalStore, masterPreferenceStore });
-	}
+    @Override
+    protected final IPreferenceStore doGetPreferenceStore() {
+        return new ChainedPreferenceStore(new IPreferenceStore[]{internalStore, masterPreferenceStore});
+    }
 
-	protected final void load(String preferencePrefix) {
-		setPreferencePrefix(preferencePrefix);
-		initialize();
-	}
+    protected final void load(String preferencePrefix) {
+        setPreferencePrefix(preferencePrefix);
+        initialize();
+    }
 
-	protected final void loadDefaults(String preferencePrefix) {
-		setPreferencePrefix(preferencePrefix);
-		performDefaults();
-		for (FieldEditor fe : internalEditorsList) {
-			if (fe.presentsDefaultValue()) {
-				internalStore.setValue(fe.getPreferenceName(), masterPreferenceStore.getDefaultString(fe
-						.getPreferenceName()));
-			}
-		}
-	}
+    protected final void loadDefaults(String preferencePrefix) {
+        setPreferencePrefix(preferencePrefix);
+        performDefaults();
+        for (FieldEditor fe : internalEditorsList) {
+            if (fe.presentsDefaultValue()) {
+                internalStore.setValue(fe.getPreferenceName(), masterPreferenceStore.getDefaultString(fe
+                        .getPreferenceName()));
+            }
+        }
+    }
 
-	@Override
-	public final boolean performOk() {
-		int changed = 0;
-		for (String prefKey : internalStore.preferenceNames()) {
-			if (!internalStore.isDefault(prefKey)) {
-				masterPreferenceStore.putValue(prefKey, internalStore.getString(prefKey));
-				changed++;
-			}
-			else {
-				masterPreferenceStore.setToDefault(prefKey);
-				changed++;
-			}
-		}
-		if (changed > 0)
-			masterPreferenceStore.firePropertyChangeEvent(getPreferencePrefix(), null, null);
-		resetPreferenceStore();
-		return true;
-	}
+    @Override
+    public final boolean performOk() {
+        int changed = 0;
+        for (String prefKey : internalStore.preferenceNames()) {
+            if (!internalStore.isDefault(prefKey)) {
+                masterPreferenceStore.putValue(prefKey, internalStore.getString(prefKey));
+                changed++;
+            } else {
+                masterPreferenceStore.setToDefault(prefKey);
+                changed++;
+            }
+        }
+        if (changed > 0)
+            masterPreferenceStore.firePropertyChangeEvent(getPreferencePrefix(), null, null);
+        resetPreferenceStore();
+        return true;
+    }
 
-	/**
-	 * 
-	 */
-	private void resetPreferenceStore() {
-		internalStore = new PreferenceStore();
-		setPreferenceStore(null);
-	}
+    /**
+     *
+     */
+    private void resetPreferenceStore() {
+        internalStore = new PreferenceStore();
+        setPreferenceStore(null);
+    }
 
-	@Override
-	public final void createControl(Composite parent) {
-		noDefaultAndApplyButton();
-		super.createControl(parent);
-	}
+    @Override
+    public final void createControl(Composite parent) {
+        noDefaultAndApplyButton();
+        super.createControl(parent);
+    }
 
-	@Override
-	public final void propertyChange(PropertyChangeEvent event) {
-		if (event.getSource() instanceof FieldEditor) {
-			FieldEditor fe = (FieldEditor) event.getSource();
-			internalStore.setValue(fe.getPreferenceName(), fe.getPreferenceStore().getDefaultString(fe.getPreferenceName()));
-			fe.setPreferenceStore(internalStore);
-			fe.store();
-		}
-		super.propertyChange(event);
-	}
+    @Override
+    public final void propertyChange(PropertyChangeEvent event) {
+        if (event.getSource() instanceof FieldEditor) {
+            FieldEditor fe = (FieldEditor) event.getSource();
+            internalStore.setValue(fe.getPreferenceName(), fe.getPreferenceStore().getDefaultString(fe.getPreferenceName()));
+            fe.setPreferenceStore(internalStore);
+            fe.store();
+        }
+        super.propertyChange(event);
+    }
 
-	@Override
-	abstract protected void createFieldEditors();
+    @Override
+    abstract protected void createFieldEditors();
 
-	protected final String getPreferencePrefix() {
-		return preferencePrefix;
-	}
+    protected final String getPreferencePrefix() {
+        return preferencePrefix;
+    }
 
-	private void setPreferencePrefix(String preferencePrefix) {
-		this.preferencePrefix = preferencePrefix;
-		for (FieldEditor fe : internalEditorsList) {
-			String oldPreferenceName = fe.getPreferenceName();
-			if (oldPreferenceName.indexOf(PreferenceConstants.SEPARATOR) >= 0) {
-				oldPreferenceName = oldPreferenceName.substring(oldPreferenceName
-						.lastIndexOf(PreferenceConstants.SEPARATOR) + 1);
-			}
-			fe.setPreferenceName(getPreferencePrefix() + PreferenceConstants.SEPARATOR + oldPreferenceName);
-		}
-	}
+    private void setPreferencePrefix(String preferencePrefix) {
+        this.preferencePrefix = preferencePrefix;
+        for (FieldEditor fe : internalEditorsList) {
+            String oldPreferenceName = fe.getPreferenceName();
+            if (oldPreferenceName.indexOf(PreferenceConstants.SEPARATOR) >= 0) {
+                oldPreferenceName = oldPreferenceName.substring(oldPreferenceName
+                        .lastIndexOf(PreferenceConstants.SEPARATOR) + 1);
+            }
+            fe.setPreferenceName(getPreferencePrefix() + PreferenceConstants.SEPARATOR + oldPreferenceName);
+        }
+    }
 }

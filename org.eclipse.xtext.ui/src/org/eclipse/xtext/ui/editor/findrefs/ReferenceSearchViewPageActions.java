@@ -15,69 +15,69 @@ import org.eclipse.xtext.ui.internal.XtextPluginImages;
  */
 public interface ReferenceSearchViewPageActions {
 
-	public static class ShowNext extends Action {
+    public static class ShowNext extends Action {
 
-		private ReferenceSearchViewPage page;
+        private ReferenceSearchViewPage page;
 
-		public ShowNext(ReferenceSearchViewPage page) {
-			super(Messages.ReferenceSearchViewPageActions_showNextMatch);
-			setImageDescriptor(XtextPluginImages.DESC_SEARCH_NEXT);
-			setToolTipText(Messages.ReferenceSearchViewPageActions_showNextMatch_tooltip);
-			this.page = page;
-		}
+        public ShowNext(ReferenceSearchViewPage page) {
+            super(Messages.ReferenceSearchViewPageActions_showNextMatch);
+            setImageDescriptor(XtextPluginImages.DESC_SEARCH_NEXT);
+            setToolTipText(Messages.ReferenceSearchViewPageActions_showNextMatch_tooltip);
+            this.page = page;
+        }
 
-		@Override
-		public void run() {
-			new TreeViewerNavigator(page).navigateNext(true);
-		}
-	}
+        @Override
+        public void run() {
+            new TreeViewerNavigator(page).navigateNext(true);
+        }
+    }
 
-	public static class ShowPrevious extends Action {
+    public static class ShowPrevious extends Action {
 
-		private ReferenceSearchViewPage page;
+        private ReferenceSearchViewPage page;
 
-		public ShowPrevious(ReferenceSearchViewPage page) {
-			super(Messages.ReferenceSearchViewPageActions_showPreviousMatch);
-			setImageDescriptor(XtextPluginImages.DESC_SEARCH_PREVIOUS);
-			setToolTipText(Messages.ReferenceSearchViewPageActions_showPreviousMatch_tooltip);
-			this.page = page;
-		}
+        public ShowPrevious(ReferenceSearchViewPage page) {
+            super(Messages.ReferenceSearchViewPageActions_showPreviousMatch);
+            setImageDescriptor(XtextPluginImages.DESC_SEARCH_PREVIOUS);
+            setToolTipText(Messages.ReferenceSearchViewPageActions_showPreviousMatch_tooltip);
+            this.page = page;
+        }
 
-		@Override
-		public void run() {
-			new TreeViewerNavigator(page).navigateNext(false);
-		}
-	}
-	
-	public static class ExpandAll extends Action {
-		private ReferenceSearchViewPage page;
+        @Override
+        public void run() {
+            new TreeViewerNavigator(page).navigateNext(false);
+        }
+    }
 
-		public ExpandAll(ReferenceSearchViewPage page) {
-			super(Messages.ReferenceSearchViewPageActions_expandAll);
-			setImageDescriptor(XtextPluginImages.DESC_EXPAND_ALL);
-			setToolTipText(Messages.ReferenceSearchViewPageActions_expandAll_tooltip);
-			this.page = page;
-		}
+    public static class ExpandAll extends Action {
+        private ReferenceSearchViewPage page;
 
-		@Override
-		public void run() {
-			page.getViewer().expandAll();
-		}
-	}
+        public ExpandAll(ReferenceSearchViewPage page) {
+            super(Messages.ReferenceSearchViewPageActions_expandAll);
+            setImageDescriptor(XtextPluginImages.DESC_EXPAND_ALL);
+            setToolTipText(Messages.ReferenceSearchViewPageActions_expandAll_tooltip);
+            this.page = page;
+        }
 
-	public static class CollapseAll extends Action {
-		private ReferenceSearchViewPage page;
+        @Override
+        public void run() {
+            page.getViewer().expandAll();
+        }
+    }
 
-		public CollapseAll(ReferenceSearchViewPage page) {
-			super(Messages.ReferenceSearchViewPageActions_collapseAll);
-			setImageDescriptor(XtextPluginImages.DESC_COLLAPSE_ALL);
-			setToolTipText(Messages.ReferenceSearchViewPageActions_collapseAll_tooltip);
-			this.page = page;
-		}
+    public static class CollapseAll extends Action {
+        private ReferenceSearchViewPage page;
 
-		@Override
-		public void run() {
-			page.getViewer().collapseAll();
-		}
-	}
+        public CollapseAll(ReferenceSearchViewPage page) {
+            super(Messages.ReferenceSearchViewPageActions_collapseAll);
+            setImageDescriptor(XtextPluginImages.DESC_COLLAPSE_ALL);
+            setToolTipText(Messages.ReferenceSearchViewPageActions_collapseAll_tooltip);
+            this.page = page;
+        }
+
+        @Override
+        public void run() {
+            page.getViewer().collapseAll();
+        }
+    }
 }

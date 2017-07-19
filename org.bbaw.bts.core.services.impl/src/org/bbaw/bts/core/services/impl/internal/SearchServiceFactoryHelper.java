@@ -7,27 +7,27 @@ import org.bbaw.bts.core.services.BTSUserGroupService;
 import org.bbaw.bts.core.services.BTSUserService;
 
 public class SearchServiceFactoryHelper {
-		
-		@Inject
-		public SearchServiceFactoryHelper(){}
-		@Inject
-		private BTSUserService userService;
-		
-		@Inject
-		private BTSUserGroupService userGroupService;
-		
-		@Inject
-		private BTSCommentService commentService;
 
-		public BTSUserService getUserService() {
-			return userService;
-		}
+    @Inject
+    private BTSUserService userService;
+    @Inject
+    private BTSUserGroupService userGroupService;
+    @Inject
+    private BTSCommentService commentService;
 
-		public BTSUserGroupService getUserGroupService() {
-			return userGroupService;
-		}
+    @Inject
+    public SearchServiceFactoryHelper() {
+    }
 
-		public BTSCommentService getCommentService() {
-			return commentService;
-		}
-	}
+    public BTSUserService getUserService() {
+        return userService;
+    }
+
+    public BTSUserGroupService getUserGroupService() {
+        return userGroupService;
+    }
+
+    public BTSCommentService getCommentService() {
+        return commentService;
+    }
+}

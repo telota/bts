@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.main.handlers;
 
 import org.bbaw.bts.db.DBManager;
@@ -10,42 +9,42 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
 public class RestartHandler {
-	@Execute
-	public void execute(EPartService partService, final IWorkbench workbench,
-			Shell shell, DBManager dbManager, UISynchronize sync) {
-		boolean saveAll = false;
-		boolean close = false;
-		if (!partService.getDirtyParts().isEmpty()) {
-			saveAll = MessageDialog.openConfirm(shell, "Unsaved Data",
-					"Unsaved data, do you want to save and restart?");
+    @Execute
+    public void execute(EPartService partService, final IWorkbench workbench,
+                        Shell shell, DBManager dbManager, UISynchronize sync) {
+        boolean saveAll = false;
+        boolean close = false;
+        if (!partService.getDirtyParts().isEmpty()) {
+            saveAll = MessageDialog.openConfirm(shell, "Unsaved Data",
+                    "Unsaved data, do you want to save and restart?");
 
-		} else {
-			close = MessageDialog.openConfirm(shell, "Restart",
-					"Restart application?");
-		}
+        } else {
+            close = MessageDialog.openConfirm(shell, "Restart",
+                    "Restart application?");
+        }
 
-		if (saveAll) {
-			partService.saveAll(false);
-		}
-		if (close || saveAll) {
-			try {
-				if (dbManager.optimizationRequired()) {
-					// ask user if optimize
-					dbManager.optimize();
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			sync.asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					workbench.restart();
-				}
-			});
-		}
+        if (saveAll) {
+            partService.saveAll(false);
+        }
+        if (close || saveAll) {
+            try {
+                if (dbManager.optimizationRequired()) {
+                    // ask user if optimize
+                    dbManager.optimize();
+                }
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
-	}
+            sync.asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    workbench.restart();
+                }
+            });
+        }
+
+    }
 
 }

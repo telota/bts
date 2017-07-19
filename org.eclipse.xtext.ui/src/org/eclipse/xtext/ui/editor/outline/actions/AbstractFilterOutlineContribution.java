@@ -18,51 +18,51 @@ import org.eclipse.xtext.ui.editor.outline.impl.OutlinePage;
  */
 public abstract class AbstractFilterOutlineContribution extends AbstractToggleOutlineContribution {
 
-	private OutlineFilterAndSorter outlineFilterAndSorter;
+    private OutlineFilterAndSorter outlineFilterAndSorter;
 
-	private IFilter filter;
+    private IFilter filter;
 
-	private TreeViewer treeViewer;
+    private TreeViewer treeViewer;
 
-	protected abstract boolean apply(IOutlineNode node);
+    protected abstract boolean apply(IOutlineNode node);
 
-	protected IFilter getFilter() {
-		if (filter == null) {
-			filter = new IFilter() {
-				public boolean apply(IOutlineNode node) {
-					return AbstractFilterOutlineContribution.this.apply(node);
-				}
+    protected IFilter getFilter() {
+        if (filter == null) {
+            filter = new IFilter() {
+                public boolean apply(IOutlineNode node) {
+                    return AbstractFilterOutlineContribution.this.apply(node);
+                }
 
-				public boolean isEnabled() {
-					return isPropertySet();
-				}
-			};
-		}
-		return filter;
-	}
-	
-	@Override
-	protected void stateChanged(boolean newState) {
-		if(treeViewer != null && !treeViewer.getTree().isDisposed()) 
-			treeViewer.refresh();
-	}
+                public boolean isEnabled() {
+                    return isPropertySet();
+                }
+            };
+        }
+        return filter;
+    }
 
-	@Override
-	public void register(OutlinePage outlinePage) {
-		super.register(outlinePage);
-		outlineFilterAndSorter = outlinePage.getFilterAndSorter();
-		outlineFilterAndSorter.addFilter(getFilter());
-		treeViewer = outlinePage.getTreeViewer();
-	}
-	
-	@Override
-	public void deregister(OutlinePage outlinePage) {
-		super.deregister(outlinePage);
-		if (filter != null) {
-			outlineFilterAndSorter.removeFilter(getFilter());
-			filter = null;
-		}
-		outlineFilterAndSorter = null;
-		treeViewer = null;
-	}
+    @Override
+    protected void stateChanged(boolean newState) {
+        if (treeViewer != null && !treeViewer.getTree().isDisposed())
+            treeViewer.refresh();
+    }
+
+    @Override
+    public void register(OutlinePage outlinePage) {
+        super.register(outlinePage);
+        outlineFilterAndSorter = outlinePage.getFilterAndSorter();
+        outlineFilterAndSorter.addFilter(getFilter());
+        treeViewer = outlinePage.getTreeViewer();
+    }
+
+    @Override
+    public void deregister(OutlinePage outlinePage) {
+        super.deregister(outlinePage);
+        if (filter != null) {
+            outlineFilterAndSorter.removeFilter(getFilter());
+            filter = null;
+        }
+        outlineFilterAndSorter = null;
+        treeViewer = null;
+    }
 }

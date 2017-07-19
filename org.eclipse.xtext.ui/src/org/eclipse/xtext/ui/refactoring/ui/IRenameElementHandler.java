@@ -17,15 +17,14 @@ import com.google.inject.ImplementedBy;
 
 /**
  * @author Jan Koehnlein - Initial contribution and API
- * 
- * @noimplement This interface is not intended to be implemented by clients. 
+ * @noimplement This interface is not intended to be implemented by clients.
  * @deprecation use {@link DefaultRenameElementHandler}�and {@link IRenameContextFactory} instead.
  */
 @Deprecated
 @ImplementedBy(DefaultRenameElementHandler.class)
 public interface IRenameElementHandler extends IHandler2 {
 
-	IRenameElementContext createRenameElementContext(EObject targetElement, final XtextEditor editor,
-			final ITextSelection selection, XtextResource resource);
+    IRenameElementContext createRenameElementContext(EObject targetElement, final XtextEditor editor,
+                                                     final ITextSelection selection, XtextResource resource);
 
 }

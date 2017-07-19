@@ -32,93 +32,90 @@ import com.google.inject.Inject;
 
 /**
  * Default rename strategy for Xtext based elements that have an {@link EAttribute} <code>name</code>.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  * @author Holger Schill
  */
 public class DefaultRenameStrategy extends AbstractRenameStrategy {
 
-	@Inject
-	private ILocationInFileProvider locationInFileProvider;
+    protected ITextRegion originalNameRegion;
+    protected String nameRuleName;
+    @Inject
+    private ILocationInFileProvider locationInFileProvider;
+    @Inject
+    private IValueConverterService valueConverterService;
 
-	@Inject
-	private IValueConverterService valueConverterService;
+    @Override
+    public boolean initialize(EObject targetElement, IRenameElementContext context) {
+        if (super.initialize(targetElement, context)) {
+            this.originalNameRegion = getOriginalNameRegion(targetElement, getNameAttribute());
+            this.nameRuleName = getNameRuleName(targetElement, getNameAttribute());
+            return true;
+        }
+        return false;
+    }
 
-	protected ITextRegion originalNameRegion;
+    @Override
+    public RefactoringStatus validateNewName(String newName) {
+        RefactoringStatus status = super.validateNewName(newName);
+        if (nameRuleName != null && valueConverterService != null) {
+            try {
+                String value = getNameAsValue(newName);
+                String text = getNameAsText(value);
+                if (!equal(text, newName)) {
+                    status.addError("Illegal name: '" + newName + "'. Consider using '" + text + "' instead.");
+                }
+            } catch (ValueConverterException vce) {
+                status.addFatalError("Illegal name: " + notNull(vce.getMessage()));
+            }
+        }
+        return status;
+    }
 
-	protected String nameRuleName;
+    protected ITextRegion getOriginalNameRegion(final EObject targetElement, EAttribute nameAttribute) {
+        return locationInFileProvider.getFullTextRegion(targetElement, nameAttribute, 0);
+    }
 
-	@Override
-	public boolean initialize(EObject targetElement, IRenameElementContext context) {
-		if (super.initialize(targetElement, context)) {
-			this.originalNameRegion = getOriginalNameRegion(targetElement, getNameAttribute());
-			this.nameRuleName = getNameRuleName(targetElement, getNameAttribute());
-			return true;
-		}
-		return false;
-	}
+    protected String getNameRuleName(EObject targetElement, EAttribute nameAttribute) {
+        List<INode> nameNodes = NodeModelUtils.findNodesForFeature(targetElement, nameAttribute);
+        if (nameNodes.size() == 1) {
+            EObject grammarElement = nameNodes.get(0).getGrammarElement();
+            if (grammarElement instanceof RuleCall) {
+                AbstractRule nameRule = ((RuleCall) grammarElement).getRule();
+                if (nameRule != null)
+                    return nameRule.getName();
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public RefactoringStatus validateNewName(String newName) {
-		RefactoringStatus status = super.validateNewName(newName);
-		if(nameRuleName != null && valueConverterService != null) {
-			try {
-				String value = getNameAsValue(newName);
-				String text = getNameAsText(value);
-				if(!equal(text, newName)) {
-					status.addError("Illegal name: '" + newName + "'. Consider using '" + text + "' instead.");
-				}
-			} catch(ValueConverterException vce) {
-				status.addFatalError("Illegal name: " + notNull(vce.getMessage()));
-			}
-		}
-		return status;
-	}
-	
-	protected ITextRegion getOriginalNameRegion(final EObject targetElement, EAttribute nameAttribute) {
-		return locationInFileProvider.getFullTextRegion(targetElement, nameAttribute, 0);
-	}
+    public void createDeclarationUpdates(String newName, ResourceSet resourceSet,
+                                         IRefactoringUpdateAcceptor updateAcceptor) {
+        updateAcceptor.accept(getTargetElementOriginalURI().trimFragment(), getDeclarationTextEdit(newName));
+    }
 
-	protected String getNameRuleName(EObject targetElement, EAttribute nameAttribute) {
-		List<INode> nameNodes = NodeModelUtils.findNodesForFeature(targetElement, nameAttribute);
-		if(nameNodes.size() == 1) {
-			EObject grammarElement = nameNodes.get(0).getGrammarElement();
-			if(grammarElement instanceof RuleCall) {
-				AbstractRule nameRule = ((RuleCall) grammarElement).getRule();
-				if(nameRule != null)
-					return nameRule.getName();
-			}
-		}
-		return null;
-	}
-	
-	public void createDeclarationUpdates(String newName, ResourceSet resourceSet,
-			IRefactoringUpdateAcceptor updateAcceptor) {
-		updateAcceptor.accept(getTargetElementOriginalURI().trimFragment(), getDeclarationTextEdit(newName));
-	}
+    protected TextEdit getDeclarationTextEdit(String newName) {
+        String text = newName;
+        return new ReplaceEdit(originalNameRegion.getOffset(), originalNameRegion.getLength(), text);
+    }
 
-	protected TextEdit getDeclarationTextEdit(String newName) {
-		String text = newName;
-		return new ReplaceEdit(originalNameRegion.getOffset(), originalNameRegion.getLength(), text);
-	}
+    protected String getNameAsText(String nameAsValue) {
+        return (nameRuleName != null) ? valueConverterService.toString(nameAsValue, nameRuleName) : nameAsValue;
+    }
 
-	protected String getNameAsText(String nameAsValue) {
-		return (nameRuleName != null) ? valueConverterService.toString(nameAsValue, nameRuleName) : nameAsValue;
-	}
+    protected String getNameAsValue(String nameAsText) {
+        return (nameRuleName != null) ? valueConverterService.toValue(nameAsText, nameRuleName, null).toString()
+                : nameAsText;
+    }
 
-	protected String getNameAsValue(String nameAsText) {
-		return (nameRuleName != null) ? valueConverterService.toValue(nameAsText, nameRuleName, null).toString()
-				: nameAsText;
-	}
+    @Override
+    public String getOriginalName() {
+        return getNameAsText(super.getOriginalName());
+    }
 
-	@Override
-	public String getOriginalName() {
-		return getNameAsText(super.getOriginalName());
-	}
-
-	@Override
-	public void applyDeclarationChange(String newName, ResourceSet resourceSet) {
-		super.applyDeclarationChange(getNameAsValue(newName), resourceSet);
-	}
+    @Override
+    public void applyDeclarationChange(String newName, ResourceSet resourceSet) {
+        super.applyDeclarationChange(getNameAsValue(newName), resourceSet);
+    }
 
 }

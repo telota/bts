@@ -48,86 +48,87 @@ import org.eclipse.jface.viewers.ViewerFilter;
 /*
   The UserManagerController manages user objects and access of the userManagerPart.
  */
+
 /**
  * @author Christoph Plutte
- *
  */
-public interface UserManagerController
-{
+public interface UserManagerController {
 
-	/**
-	 * List user groups.
-	 *
-	 * @return the list
-	 */
-	List<BTSUserGroup> listUserGroups(IProgressMonitor monitor);
+    /**
+     * List user groups.
+     *
+     * @return the list
+     */
+    List<BTSUserGroup> listUserGroups(IProgressMonitor monitor);
 
-	/**
-	 * List users.
-	 *
-	 * @return the list
-	 */
-	List<BTSUser> listUsers(IProgressMonitor monitor);
+    /**
+     * List users.
+     *
+     * @return the list
+     */
+    List<BTSUser> listUsers(IProgressMonitor monitor);
 
-	/**
-	 * Find group members.
-	 *
-	 * @param group the group
-	 * @param queryResultMap the query result map
-	 * @param viewer the viewer
-	 * @param parentHolder the parent holder
-	 * @param referenceName the reference name
-	 * @return the list
-	 */
-	List<BTSUser> findGroupMembers(BTSUserGroup group, Map<String, BTSQueryResultAbstract> queryResultMap,
-			ContentViewer viewer, TreeNodeWrapper parentHolder, EReference referenceName, IProgressMonitor monitor);
+    /**
+     * Find group members.
+     *
+     * @param group          the group
+     * @param queryResultMap the query result map
+     * @param viewer         the viewer
+     * @param parentHolder   the parent holder
+     * @param referenceName  the reference name
+     * @return the list
+     */
+    List<BTSUser> findGroupMembers(BTSUserGroup group, Map<String, BTSQueryResultAbstract> queryResultMap,
+                                   ContentViewer viewer, TreeNodeWrapper parentHolder, EReference referenceName, IProgressMonitor monitor);
 
-	/**
-	 * Creates the new user.
-	 *
-	 * @param userName the user name
-	 * @return the BTS user
-	 */
-	BTSUser createNewUser(String userName);
+    /**
+     * Creates the new user.
+     *
+     * @param userName the user name
+     * @return the BTS user
+     */
+    BTSUser createNewUser(String userName);
 
-	/**
-	 * Creates the new user group.
-	 *
-	 * @return the BTS user group
-	 */
-	BTSUserGroup createNewUserGroup();
+    /**
+     * Creates the new user group.
+     *
+     * @return the BTS user group
+     */
+    BTSUserGroup createNewUserGroup();
 
-	/**
-	 * Save users.
-	 *
-	 * @param dirtyUsers the dirty users
-	 * @return true, if successful
-	 */
-	boolean saveUsers(Set<BTSUser> dirtyUsers);
+    /**
+     * Save users.
+     *
+     * @param dirtyUsers the dirty users
+     * @return true, if successful
+     */
+    boolean saveUsers(Set<BTSUser> dirtyUsers);
 
-	/**
-	 * Save user groups.
-	 *
-	 * @param dirtyUserGroups the dirty user groups
-	 * @return true, if successful
-	 */
-	boolean saveUserGroups(Set<BTSUserGroup> dirtyUserGroups);
+    /**
+     * Save user groups.
+     *
+     * @param dirtyUserGroups the dirty user groups
+     * @return true, if successful
+     */
+    boolean saveUserGroups(Set<BTSUserGroup> dirtyUserGroups);
 
-	/**
-	 * Save db base object.
-	 *
-	 * @param dbBaseObject the db base object
-	 * @return true, if successful
-	 */
-	boolean saveDBBaseObject(BTSDBBaseObject dbBaseObject);
+    /**
+     * Save db base object.
+     *
+     * @param dbBaseObject the db base object
+     * @return true, if successful
+     */
+    boolean saveDBBaseObject(BTSDBBaseObject dbBaseObject);
 
-	
-	/** Lists terminated users and user groups.
-	 * @return all terminated users and user groups.
-	 */
-	List<BTSObject> listTerminatedUsersUserGroups(IProgressMonitor monitor);
 
-	List<BTSObject> getUserUserGroupOrphans(ViewerFilter[] filters, IProgressMonitor monitor);
+    /**
+     * Lists terminated users and user groups.
+     *
+     * @return all terminated users and user groups.
+     */
+    List<BTSObject> listTerminatedUsersUserGroups(IProgressMonitor monitor);
+
+    List<BTSObject> getUserUserGroupOrphans(ViewerFilter[] filters, IProgressMonitor monitor);
 
 
 }

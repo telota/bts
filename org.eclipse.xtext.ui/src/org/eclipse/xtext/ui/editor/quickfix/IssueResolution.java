@@ -17,65 +17,67 @@ import org.eclipse.xtext.ui.editor.model.edit.IModificationContext;
  */
 public class IssueResolution {
 
-	private String description;
-	private String label;
-	private String image;
-	private IModification modification;
-	private IModificationContext modificationContext;
-	private int relevance;
-	
-	public IssueResolution(String label, String description, String image, IModificationContext modificationContext, IModification modification) {
-		this(label, description, image, modificationContext, modification, 0);
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public IssueResolution(String label, String description, String image, IModificationContext modificationContext, IModification modification, int relevance) {
-		this.description = description;
-		this.label = label;
-		this.image = image;
-		this.modificationContext = modificationContext;
-		this.modification = modification;
-		this.relevance = relevance;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public int getRelevance() {
-		return relevance;
-	}
+    private String description;
+    private String label;
+    private String image;
+    private IModification modification;
+    private IModificationContext modificationContext;
+    private int relevance;
 
-	public String getDescription() {
-		return description;
-	}
+    public IssueResolution(String label, String description, String image, IModificationContext modificationContext, IModification modification) {
+        this(label, description, image, modificationContext, modification, 0);
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    /**
+     * @since 2.4
+     */
+    public IssueResolution(String label, String description, String image, IModificationContext modificationContext, IModification modification, int relevance) {
+        this.description = description;
+        this.label = label;
+        this.image = image;
+        this.modificationContext = modificationContext;
+        this.modification = modification;
+        this.relevance = relevance;
+    }
 
-	public String getImage() {
-		return image;
-	}
-	/**
-	 * @since 2.2
-	 */
-	public IModification getModification() {
-		return modification;
-	}
-	/**
-	 * @since 2.2
-	 */
-	public IModificationContext getModificationContext() {
-		return modificationContext;
-	}
+    /**
+     * @since 2.4
+     */
+    public int getRelevance() {
+        return relevance;
+    }
 
-	public void apply() {
-		try {
-			modification.apply(modificationContext);
-		} catch(Exception exc) {
-			throw new WrappedException(exc);
-		}
-	}
+    public String getDescription() {
+        return description;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @since 2.2
+     */
+    public IModification getModification() {
+        return modification;
+    }
+
+    /**
+     * @since 2.2
+     */
+    public IModificationContext getModificationContext() {
+        return modificationContext;
+    }
+
+    public void apply() {
+        try {
+            modification.apply(modificationContext);
+        } catch (Exception exc) {
+            throw new WrappedException(exc);
+        }
+    }
 }

@@ -34,157 +34,155 @@ import org.osgi.service.prefs.BackingStoreException;
 
 public class CorpusNavigatorSettingsPage extends FieldEditorPreferencePage {
 
-	private Combo visibilityCMB_Admin;
-	private ComboViewer visibility_viewer;
-	private Combo reviewCMB_Admin;
-	private ComboViewer reviewState_viewer;
-	private ComposedAdapterFactory factory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-	private PassportConfigurationController configurationController;
-	private IEclipseContext context;
-	private IEclipsePreferences prefs;
-	private String default_visibility;
-	private String default_reviewState;
-	private BTSTCObject object;
-	/**
-	 * @wbp.parser.constructor
-	 */
-	public CorpusNavigatorSettingsPage() {
-		super(FLAT);
-		setTitle("Corpus Navigator Settings");
-	}
+    private Combo visibilityCMB_Admin;
+    private ComboViewer visibility_viewer;
+    private Combo reviewCMB_Admin;
+    private ComboViewer reviewState_viewer;
+    private ComposedAdapterFactory factory = new ComposedAdapterFactory(
+            ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+    private PassportConfigurationController configurationController;
+    private IEclipseContext context;
+    private IEclipsePreferences prefs;
+    private String default_visibility;
+    private String default_reviewState;
+    private BTSTCObject object;
+
+    /**
+     * @wbp.parser.constructor
+     */
+    public CorpusNavigatorSettingsPage() {
+        super(FLAT);
+        setTitle("Corpus Navigator Settings");
+    }
 
 
-	@Override
-	protected void createFieldEditors() {
-		// TODO Auto-generated method stub
-		Composite container = (Composite) this.getControl();
-		addField(new BooleanFieldEditor(BTSCorpusConstants.PREF_CORPUS_NAVIGATOR_SORTBYKEY, "Corpus Navigator sort by sort key (Changes require application restart)", BooleanFieldEditor.DEFAULT, getFieldEditorParent()));
-		
-		context = StaticAccessController.getContext();
-		configurationController = context.get(PassportConfigurationController.class);
-		
-		Label lblVisibility = new Label(container, SWT.NONE);
-		lblVisibility.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,
-				false, 1, 1));
-		lblVisibility.setText("Default Visibility");
+    @Override
+    protected void createFieldEditors() {
+        // TODO Auto-generated method stub
+        Composite container = (Composite) this.getControl();
+        addField(new BooleanFieldEditor(BTSCorpusConstants.PREF_CORPUS_NAVIGATOR_SORTBYKEY, "Corpus Navigator sort by sort key (Changes require application restart)", BooleanFieldEditor.DEFAULT, getFieldEditorParent()));
 
-		visibilityCMB_Admin = new Combo(container, SWT.READ_ONLY);
-		visibilityCMB_Admin.setLayoutData(new GridData(SWT.LEFT, SWT.TOP,
-				true, false, 3, 1));
-		visibility_viewer = new ComboViewer(visibilityCMB_Admin);
-		AdapterFactoryLabelProvider labelProvider_vis = new AdapterFactoryLabelProvider(
-				factory);
-		AdapterFactoryContentProvider contentProvider_vis = new AdapterFactoryContentProvider(
-				factory);
+        context = StaticAccessController.getContext();
+        configurationController = context.get(PassportConfigurationController.class);
 
-		visibility_viewer.setContentProvider(contentProvider_vis);
-		visibility_viewer.setLabelProvider(labelProvider_vis);
-		visibility_viewer.setInput(configurationController
-				.getVisibilityConfigItemProcessedClones(null));
-		
-		
-		Label lblRevisionState = new Label(container, SWT.NONE);
-		lblRevisionState.setLayoutData(new GridData(SWT.LEFT, SWT.TOP,
-				false, false, 1, 1));
-		lblRevisionState.setText("Default Review State");
+        Label lblVisibility = new Label(container, SWT.NONE);
+        lblVisibility.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false,
+                false, 1, 1));
+        lblVisibility.setText("Default Visibility");
 
-		reviewCMB_Admin = new Combo(container, SWT.READ_ONLY);
-		reviewCMB_Admin.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true,
-				false, 3, 1));
-		reviewState_viewer = new ComboViewer(reviewCMB_Admin);
+        visibilityCMB_Admin = new Combo(container, SWT.READ_ONLY);
+        visibilityCMB_Admin.setLayoutData(new GridData(SWT.LEFT, SWT.TOP,
+                true, false, 3, 1));
+        visibility_viewer = new ComboViewer(visibilityCMB_Admin);
+        AdapterFactoryLabelProvider labelProvider_vis = new AdapterFactoryLabelProvider(
+                factory);
+        AdapterFactoryContentProvider contentProvider_vis = new AdapterFactoryContentProvider(
+                factory);
 
-		AdapterFactoryLabelProvider labelProvider_rev = new AdapterFactoryLabelProvider(
-				factory);
-		AdapterFactoryContentProvider contentProvider_rev = new AdapterFactoryContentProvider(
-				factory);
+        visibility_viewer.setContentProvider(contentProvider_vis);
+        visibility_viewer.setLabelProvider(labelProvider_vis);
+        visibility_viewer.setInput(configurationController
+                .getVisibilityConfigItemProcessedClones(null));
 
-		reviewState_viewer.setContentProvider(contentProvider_rev);
-		reviewState_viewer.setLabelProvider(labelProvider_rev);
-		reviewState_viewer.setInput(configurationController
-				.getReviewStateConfigItemProcessedClones(null));
-		init();
-		container.layout();
-	}
-	
-	protected void init() {
-		prefs = ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus");
-		IEclipsePreferences defaultpref = DefaultScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus");
 
-		default_visibility = prefs.get(BTSCorpusConstants.PREF_CORPUS_DEFAULT_VISIBILITY, null);
-		default_reviewState = prefs.get(BTSCorpusConstants.PREF_CORPUS_DEFAULT_REVIEWSTATE, null);
-		
-		object = BtsCorpusModelFactory.eINSTANCE.createBTSTCObject();
-		object.setVisibility(default_visibility);
-		object.setRevisionState(default_reviewState);
-		
-		DataBindingContext bindingContext = new DataBindingContext();
-		
-		// visibility
-		EMFUpdateValueStrategy targetToModel_vis = new EMFUpdateValueStrategy();
-		targetToModel_vis.setConverter(new BTSConfigItemToStringConverter());
-		EMFUpdateValueStrategy modelToTarget_vis = new EMFUpdateValueStrategy();
-		modelToTarget_vis.setConverter(new BTSStringToConfigItemConverter(
-				visibility_viewer));
-		IObservableValue target_vis_viewer = ViewersObservables
-				.observeSingleSelection(visibility_viewer);
-		Binding binding_vis = bindingContext
-				.bindValue(
-						target_vis_viewer,
-						EMFProperties
-								.value(BtsmodelPackage.Literals.ADMINISTRATIV_DATA_OBJECT__VISIBILITY)
-								.observe(object), targetToModel_vis,
-						modelToTarget_vis);		
-		
-		// review status
-		EMFUpdateValueStrategy targetToModel_rev = new EMFUpdateValueStrategy();
-		targetToModel_rev.setConverter(new BTSConfigItemToStringConverter());
-		EMFUpdateValueStrategy modelToTarget_rev = new EMFUpdateValueStrategy();
-		modelToTarget_rev.setConverter(new BTSStringToConfigItemConverter(
-				reviewState_viewer));
-		IObservableValue target_rev_viewer = ViewersObservables
-				.observeSingleSelection(reviewState_viewer);
-		Binding binding_rev = bindingContext
-				.bindValue(
-						target_rev_viewer,
-						EMFProperties
-								.value(BtsmodelPackage.Literals.ADMINISTRATIV_DATA_OBJECT__REVISION_STATE)
-								.observe(object), targetToModel_rev,
-						modelToTarget_rev);
-		super.initialize();
-	}
+        Label lblRevisionState = new Label(container, SWT.NONE);
+        lblRevisionState.setLayoutData(new GridData(SWT.LEFT, SWT.TOP,
+                false, false, 1, 1));
+        lblRevisionState.setText("Default Review State");
 
-	@Override
-	public boolean performOk() {
-		boolean dirty = false;
+        reviewCMB_Admin = new Combo(container, SWT.READ_ONLY);
+        reviewCMB_Admin.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true,
+                false, 3, 1));
+        reviewState_viewer = new ComboViewer(reviewCMB_Admin);
 
-		if (object != null && object.getVisibility() != null && !object.getVisibility().equals(default_visibility))
-		{
-			ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").put(BTSCorpusConstants.PREF_CORPUS_DEFAULT_VISIBILITY, object.getVisibility());
-			// update instance scope so that new value is injected
-			InstanceScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").put(BTSCorpusConstants.PREF_CORPUS_DEFAULT_VISIBILITY, object.getVisibility());
-			dirty = true;
-		}
-		
-		if (object != null && object.getRevisionState() != null && !object.getRevisionState().equals(default_reviewState))
-		{
-			ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").put(BTSCorpusConstants.PREF_CORPUS_DEFAULT_REVIEWSTATE, object.getRevisionState());
-			// update instance scope so that new value is injected
-			InstanceScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").put(BTSCorpusConstants.PREF_CORPUS_DEFAULT_REVIEWSTATE, object.getRevisionState());
-			dirty = true;
-		}
-		
-		if (dirty)
-		{
-			try {
-				ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").flush();
-			} catch (BackingStoreException e) {
-			}
-			try {
-				InstanceScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").flush();
-			} catch (BackingStoreException e) {
-			}
-		}
-		return super.performOk();
-	}
+        AdapterFactoryLabelProvider labelProvider_rev = new AdapterFactoryLabelProvider(
+                factory);
+        AdapterFactoryContentProvider contentProvider_rev = new AdapterFactoryContentProvider(
+                factory);
+
+        reviewState_viewer.setContentProvider(contentProvider_rev);
+        reviewState_viewer.setLabelProvider(labelProvider_rev);
+        reviewState_viewer.setInput(configurationController
+                .getReviewStateConfigItemProcessedClones(null));
+        init();
+        container.layout();
+    }
+
+    protected void init() {
+        prefs = ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus");
+        IEclipsePreferences defaultpref = DefaultScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus");
+
+        default_visibility = prefs.get(BTSCorpusConstants.PREF_CORPUS_DEFAULT_VISIBILITY, null);
+        default_reviewState = prefs.get(BTSCorpusConstants.PREF_CORPUS_DEFAULT_REVIEWSTATE, null);
+
+        object = BtsCorpusModelFactory.eINSTANCE.createBTSTCObject();
+        object.setVisibility(default_visibility);
+        object.setRevisionState(default_reviewState);
+
+        DataBindingContext bindingContext = new DataBindingContext();
+
+        // visibility
+        EMFUpdateValueStrategy targetToModel_vis = new EMFUpdateValueStrategy();
+        targetToModel_vis.setConverter(new BTSConfigItemToStringConverter());
+        EMFUpdateValueStrategy modelToTarget_vis = new EMFUpdateValueStrategy();
+        modelToTarget_vis.setConverter(new BTSStringToConfigItemConverter(
+                visibility_viewer));
+        IObservableValue target_vis_viewer = ViewersObservables
+                .observeSingleSelection(visibility_viewer);
+        Binding binding_vis = bindingContext
+                .bindValue(
+                        target_vis_viewer,
+                        EMFProperties
+                                .value(BtsmodelPackage.Literals.ADMINISTRATIV_DATA_OBJECT__VISIBILITY)
+                                .observe(object), targetToModel_vis,
+                        modelToTarget_vis);
+
+        // review status
+        EMFUpdateValueStrategy targetToModel_rev = new EMFUpdateValueStrategy();
+        targetToModel_rev.setConverter(new BTSConfigItemToStringConverter());
+        EMFUpdateValueStrategy modelToTarget_rev = new EMFUpdateValueStrategy();
+        modelToTarget_rev.setConverter(new BTSStringToConfigItemConverter(
+                reviewState_viewer));
+        IObservableValue target_rev_viewer = ViewersObservables
+                .observeSingleSelection(reviewState_viewer);
+        Binding binding_rev = bindingContext
+                .bindValue(
+                        target_rev_viewer,
+                        EMFProperties
+                                .value(BtsmodelPackage.Literals.ADMINISTRATIV_DATA_OBJECT__REVISION_STATE)
+                                .observe(object), targetToModel_rev,
+                        modelToTarget_rev);
+        super.initialize();
+    }
+
+    @Override
+    public boolean performOk() {
+        boolean dirty = false;
+
+        if (object != null && object.getVisibility() != null && !object.getVisibility().equals(default_visibility)) {
+            ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").put(BTSCorpusConstants.PREF_CORPUS_DEFAULT_VISIBILITY, object.getVisibility());
+            // update instance scope so that new value is injected
+            InstanceScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").put(BTSCorpusConstants.PREF_CORPUS_DEFAULT_VISIBILITY, object.getVisibility());
+            dirty = true;
+        }
+
+        if (object != null && object.getRevisionState() != null && !object.getRevisionState().equals(default_reviewState)) {
+            ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").put(BTSCorpusConstants.PREF_CORPUS_DEFAULT_REVIEWSTATE, object.getRevisionState());
+            // update instance scope so that new value is injected
+            InstanceScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").put(BTSCorpusConstants.PREF_CORPUS_DEFAULT_REVIEWSTATE, object.getRevisionState());
+            dirty = true;
+        }
+
+        if (dirty) {
+            try {
+                ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").flush();
+            } catch (BackingStoreException e) {
+            }
+            try {
+                InstanceScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").flush();
+            } catch (BackingStoreException e) {
+            }
+        }
+        return super.performOk();
+    }
 }

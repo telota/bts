@@ -22,68 +22,62 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
 
 public class FilterOnlyInvalidLemmataHandler {
-	
-	@Execute
-	public void execute(final LemmaEditorController lemmaEditorController, IEclipseContext context, @Active MPart activePart, @Active Shell shell, 
-			final UISynchronize sync)
-	{
-		
-		Object o = activePart.getObject();
-		final LemmaNavigator part;
-		// see if part has a StructuredViewer
-		if (o instanceof LemmaNavigator)
-		{
-			part = (LemmaNavigator) o;
-		}
-		else
-		{
-			return;
-		}
-		// // in new job, search
-				try {
-					 IRunnableWithProgress op = new IRunnableWithProgress() {
 
-							@Override
-							public void run(IProgressMonitor monitor)
-									throws InvocationTargetException, InterruptedException 
-							{
-								final List<BTSCorpusObject> obs = new Vector<BTSCorpusObject>();
-								monitor.beginTask("Load all lemmata", IProgressMonitor.UNKNOWN);
-								List<BTSLemmaEntry> lemmata = lemmaEditorController.listInAllInvalidLemmata(monitor);
+    @Execute
+    public void execute(final LemmaEditorController lemmaEditorController, IEclipseContext context, @Active MPart activePart, @Active Shell shell,
+                        final UISynchronize sync) {
 
-								for (BTSLemmaEntry t : lemmata)
-								{
-									obs.add(t);
-								}
-								// If you want to update the UI
-								sync.asyncExec(new Runnable() {
-									@Override
-									public void run() {
-										part.setInputList(obs, "invalid Lemmata");
-									}
-								});
-							}};
-				       new ProgressMonitorDialog(shell).run(true, true, op);
-				    } catch (InvocationTargetException e) {
-				       // handle exception
-				    } catch (InterruptedException e) {
-				       // handle cancelation
-				    }
-		
-		
-	}
+        Object o = activePart.getObject();
+        final LemmaNavigator part;
+        // see if part has a StructuredViewer
+        if (o instanceof LemmaNavigator) {
+            part = (LemmaNavigator) o;
+        } else {
+            return;
+        }
+        // // in new job, search
+        try {
+            IRunnableWithProgress op = new IRunnableWithProgress() {
 
-	
+                @Override
+                public void run(IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
+                    final List<BTSCorpusObject> obs = new Vector<BTSCorpusObject>();
+                    monitor.beginTask("Load all lemmata", IProgressMonitor.UNKNOWN);
+                    List<BTSLemmaEntry> lemmata = lemmaEditorController.listInAllInvalidLemmata(monitor);
 
-	@CanExecute
-	public boolean canExecute(@Active MPart activePart) {
-		
-		// have active part injected via param
-		
-		// true if active part has a StructuredViewer
-		Object o = activePart.getObject();
-		LemmaNavigator part;
-		// see if part has a StructuredViewer
+                    for (BTSLemmaEntry t : lemmata) {
+                        obs.add(t);
+                    }
+                    // If you want to update the UI
+                    sync.asyncExec(new Runnable() {
+                        @Override
+                        public void run() {
+                            part.setInputList(obs, "invalid Lemmata");
+                        }
+                    });
+                }
+            };
+            new ProgressMonitorDialog(shell).run(true, true, op);
+        } catch (InvocationTargetException e) {
+            // handle exception
+        } catch (InterruptedException e) {
+            // handle cancelation
+        }
+
+
+    }
+
+
+    @CanExecute
+    public boolean canExecute(@Active MPart activePart) {
+
+        // have active part injected via param
+
+        // true if active part has a StructuredViewer
+        Object o = activePart.getObject();
+        LemmaNavigator part;
+        // see if part has a StructuredViewer
         return o instanceof LemmaNavigator;
 
     }

@@ -15,13 +15,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 
 /**
- * 
  * @author ghillairet
- *
  */
 public class JsResourceFactoryImpl extends ResourceFactoryImpl {
-	@Override
-	public Resource createResource(URI uri) {
-		return new JsResourceImpl(uri);
-	}
+    @Override
+    public Resource createResource(URI uri) {
+        return new JsResourceImpl(uri);
+    }
 }

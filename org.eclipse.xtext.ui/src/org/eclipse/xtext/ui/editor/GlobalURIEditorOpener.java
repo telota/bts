@@ -40,106 +40,106 @@ import com.google.inject.Inject;
  */
 public class GlobalURIEditorOpener implements IURIEditorOpener {
 
-	private static final Logger logger = Logger.getLogger(GlobalURIEditorOpener.class);
-	
-	@Inject
-	private IResourceServiceProvider.Registry resourceServiceProviderRegistry;
-	
-	@Inject
-	private ILocationInFileProvider locationProvider;
-	
-	@Inject
-	private IStorage2UriMapper mapper;
-	
-	//@Inject(optional=true) XXX cp uncommented
-	//@Nullable
-	private IWorkbench workbench;
-	
-	/**
-	 * @since 2.2
-	 */
-	public IEditorPart open(URI uri, Object context, boolean select) {
-		return open(uri, select);
-	}
-	
-	public IEditorPart open(URI uri, boolean select) {
-		IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry.getResourceServiceProvider(uri.trimFragment());
-		if(resourceServiceProvider instanceof IResourceUIServiceProvider) {
-			return ((IResourceUIServiceProvider) resourceServiceProvider).getURIEditorOpener().open(uri, select);
-		}
-		return openDefaultEditor(uri, null, -1, select);
-	}
+    private static final Logger logger = Logger.getLogger(GlobalURIEditorOpener.class);
 
-	public IEditorPart open(URI referenceOwnerURI, EReference reference, int indexInList, boolean select) {
-		IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry.getResourceServiceProvider(referenceOwnerURI.trimFragment());
-		if(resourceServiceProvider instanceof IResourceUIServiceProvider) {
-			return ((IResourceUIServiceProvider) resourceServiceProvider).getURIEditorOpener().open(referenceOwnerURI, reference, indexInList, select);
-		}
-		return openDefaultEditor(referenceOwnerURI, reference, indexInList, select);
-	}
-	
-	protected IEditorPart openDefaultEditor(URI uri, EReference crossReference, int indexInList, boolean select) {
-		Iterator<Pair<IStorage, IProject>> storages = mapper.getStorages(uri.trimFragment()).iterator();
-		if (storages != null && storages.hasNext()) {
-			try {
-				IStorage storage = storages.next().getFirst();
-				IEditorPart editor = null;
-				if (storage instanceof IFile) {
-					editor = openDefaultEditor((IFile) storage);
-				} else {
-					editor = openDefaultEditor(storage, uri);
-				}
-				selectAndReveal(editor, uri, crossReference, indexInList, select);
-				return editor;
-			} catch (WrappedException e) {
-				logger.error("Error while opening editor part for EMF URI '" + uri + "'", e.getCause());
-			} catch (PartInitException partInitException) {
-				logger.error("Error while opening editor part for EMF URI '" + uri + "'", partInitException);
-			}
-		}
-		return null;
-	}
+    @Inject
+    private IResourceServiceProvider.Registry resourceServiceProviderRegistry;
 
-	protected void selectAndReveal(IEditorPart openEditor, final URI uri, final EReference crossReference,
-			final int indexInList, final boolean select) {
-		final XtextEditor xtextEditor = EditorUtils.getXtextEditor(openEditor);
-		if (xtextEditor != null) {
-			if (uri.fragment() != null) {
-				xtextEditor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
-					@Override
-					public void process(XtextResource resource) throws Exception {
-						if (resource != null) {
-							EObject object = resource.getEObject(uri.fragment());
-							ITextRegion location = (crossReference != null) ? locationProvider.getSignificantTextRegion(object,
-									crossReference, indexInList) : locationProvider.getSignificantTextRegion(object);
-							if (select) {
-								xtextEditor.selectAndReveal(location.getOffset(), location.getLength());
-							} else {
-								xtextEditor.reveal(location.getOffset(), location.getLength());								
-							}
-						}
-					}
-				});
-			}
-		}
-	}
+    @Inject
+    private ILocationInFileProvider locationProvider;
 
-	protected IEditorPart openDefaultEditor(IFile file) throws PartInitException {
-		IWorkbenchPage page = getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		return IDE.openEditor(page, file);
-	}
+    @Inject
+    private IStorage2UriMapper mapper;
+
+    //@Inject(optional=true) XXX cp uncommented
+    //@Nullable
+    private IWorkbench workbench;
+
+    /**
+     * @since 2.2
+     */
+    public IEditorPart open(URI uri, Object context, boolean select) {
+        return open(uri, select);
+    }
+
+    public IEditorPart open(URI uri, boolean select) {
+        IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry.getResourceServiceProvider(uri.trimFragment());
+        if (resourceServiceProvider instanceof IResourceUIServiceProvider) {
+            return ((IResourceUIServiceProvider) resourceServiceProvider).getURIEditorOpener().open(uri, select);
+        }
+        return openDefaultEditor(uri, null, -1, select);
+    }
+
+    public IEditorPart open(URI referenceOwnerURI, EReference reference, int indexInList, boolean select) {
+        IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry.getResourceServiceProvider(referenceOwnerURI.trimFragment());
+        if (resourceServiceProvider instanceof IResourceUIServiceProvider) {
+            return ((IResourceUIServiceProvider) resourceServiceProvider).getURIEditorOpener().open(referenceOwnerURI, reference, indexInList, select);
+        }
+        return openDefaultEditor(referenceOwnerURI, reference, indexInList, select);
+    }
+
+    protected IEditorPart openDefaultEditor(URI uri, EReference crossReference, int indexInList, boolean select) {
+        Iterator<Pair<IStorage, IProject>> storages = mapper.getStorages(uri.trimFragment()).iterator();
+        if (storages != null && storages.hasNext()) {
+            try {
+                IStorage storage = storages.next().getFirst();
+                IEditorPart editor = null;
+                if (storage instanceof IFile) {
+                    editor = openDefaultEditor((IFile) storage);
+                } else {
+                    editor = openDefaultEditor(storage, uri);
+                }
+                selectAndReveal(editor, uri, crossReference, indexInList, select);
+                return editor;
+            } catch (WrappedException e) {
+                logger.error("Error while opening editor part for EMF URI '" + uri + "'", e.getCause());
+            } catch (PartInitException partInitException) {
+                logger.error("Error while opening editor part for EMF URI '" + uri + "'", partInitException);
+            }
+        }
+        return null;
+    }
+
+    protected void selectAndReveal(IEditorPart openEditor, final URI uri, final EReference crossReference,
+                                   final int indexInList, final boolean select) {
+        final XtextEditor xtextEditor = EditorUtils.getXtextEditor(openEditor);
+        if (xtextEditor != null) {
+            if (uri.fragment() != null) {
+                xtextEditor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
+                    @Override
+                    public void process(XtextResource resource) throws Exception {
+                        if (resource != null) {
+                            EObject object = resource.getEObject(uri.fragment());
+                            ITextRegion location = (crossReference != null) ? locationProvider.getSignificantTextRegion(object,
+                                    crossReference, indexInList) : locationProvider.getSignificantTextRegion(object);
+                            if (select) {
+                                xtextEditor.selectAndReveal(location.getOffset(), location.getLength());
+                            } else {
+                                xtextEditor.reveal(location.getOffset(), location.getLength());
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    protected IEditorPart openDefaultEditor(IFile file) throws PartInitException {
+        IWorkbenchPage page = getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        return IDE.openEditor(page, file);
+    }
 
 
-	protected IEditorPart openDefaultEditor(IStorage storage, URI uri) throws PartInitException {
-		XtextReadonlyEditorInput editorInput = new XtextReadonlyEditorInput(storage);
-		IWorkbenchPage page = getWorkbench().getActiveWorkbenchWindow().getActivePage();
-		return IDE.openEditor(page, editorInput, PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(
-				uri.lastSegment()).getId());
-	}
-	
-	protected IWorkbench getWorkbench() {
-		if (workbench==null)
-			throw new IllegalStateException("No workbench");
-		return workbench;
-	}
+    protected IEditorPart openDefaultEditor(IStorage storage, URI uri) throws PartInitException {
+        XtextReadonlyEditorInput editorInput = new XtextReadonlyEditorInput(storage);
+        IWorkbenchPage page = getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        return IDE.openEditor(page, editorInput, PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(
+                uri.lastSegment()).getId());
+    }
+
+    protected IWorkbench getWorkbench() {
+        if (workbench == null)
+            throw new IllegalStateException("No workbench");
+        return workbench;
+    }
 }

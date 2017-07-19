@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.egy.handlers;
 
 import javax.inject.Named;
@@ -20,37 +19,34 @@ import org.eclipse.e4.ui.services.internal.events.EventBroker;
 import org.eclipse.swt.widgets.Shell;
 
 public class CheckTextHandler {
-	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional Object object,
-			@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
-			IEclipseContext context) {
-		BTSText text = null;
-		if (object instanceof BTSText)
-		{
-			text = (BTSText) object;
-		}
-		else if (object instanceof BTSTextSelectionEvent && ((BTSTextSelectionEvent) object).data instanceof BTSText)
-		{
-			text = (BTSText) ((BTSTextSelectionEvent) object).data;
-		}
-		if (text == null) return;
-		IEclipseContext child = context.createChild();
-		child.set(BTSText.class, text);
-		child.set(Shell.class, shell);
-		
-		CheckTextDialog dialog = ContextInjectionFactory.make(
-				CheckTextDialog.class, child);
+    @Execute
+    public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional Object object,
+                        @Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
+                        IEclipseContext context) {
+        BTSText text = null;
+        if (object instanceof BTSText) {
+            text = (BTSText) object;
+        } else if (object instanceof BTSTextSelectionEvent && ((BTSTextSelectionEvent) object).data instanceof BTSText) {
+            text = (BTSText) ((BTSTextSelectionEvent) object).data;
+        }
+        if (text == null) return;
+        IEclipseContext child = context.createChild();
+        child.set(BTSText.class, text);
+        child.set(Shell.class, shell);
 
-		if (dialog.open() == CheckTextDialog.OK) {
-			
-		}
-	}
-	
-	
-	@CanExecute
-	public boolean canExecute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional Object object) {
-		
-		return (object instanceof BTSText) || (object instanceof BTSTextSelectionEvent);
-	}
-		
+        CheckTextDialog dialog = ContextInjectionFactory.make(
+                CheckTextDialog.class, child);
+
+        if (dialog.open() == CheckTextDialog.OK) {
+
+        }
+    }
+
+
+    @CanExecute
+    public boolean canExecute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional Object object) {
+
+        return (object instanceof BTSText) || (object instanceof BTSTextSelectionEvent);
+    }
+
 }

@@ -16,8 +16,8 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public interface IWorkbenchPartSelection {
 
-	IWorkbenchPart getWorkbenchPart();
+    IWorkbenchPart getWorkbenchPart();
 
-	ISelection getSelection();
+    ISelection getSelection();
 
 }

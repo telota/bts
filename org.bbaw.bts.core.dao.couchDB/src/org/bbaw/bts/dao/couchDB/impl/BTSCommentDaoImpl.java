@@ -11,23 +11,20 @@ import org.bbaw.bts.dao.couchDB.CouchDBDao;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 
-public class BTSCommentDaoImpl extends CouchDBDao<BTSComment, String> implements BTSCommentDao
-{
+public class BTSCommentDaoImpl extends CouchDBDao<BTSComment, String> implements BTSCommentDao {
 
-	@Override
-	public boolean removeBTSComment(BTSComment comment, String path)
-	{
-		super.remove(comment, path);
-		return true;
-	}
+    @Override
+    public boolean removeBTSComment(BTSComment comment, String path) {
+        super.remove(comment, path);
+        return true;
+    }
 
-	@Override
-	public List<BTSComment> query(BTSQueryRequest query, String indexName,
-			String indexType, String objectState, boolean registerQuery) {
-		// TODO Auto-generated method stub
-		return super.query(query, indexName, indexType, objectState, registerQuery);
-	}
+    @Override
+    public List<BTSComment> query(BTSQueryRequest query, String indexName,
+                                  String indexType, String objectState, boolean registerQuery) {
+        // TODO Auto-generated method stub
+        return super.query(query, indexName, indexType, objectState, registerQuery);
+    }
 
-	
 
 }

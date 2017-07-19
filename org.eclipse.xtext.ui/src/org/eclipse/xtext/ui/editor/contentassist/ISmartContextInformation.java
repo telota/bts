@@ -16,22 +16,23 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
 
 /**
  * A smart context information allows to customize the strategy that determines
- * validity and that allows to update the presentation. 
+ * validity and that allows to update the presentation.
+ *
+ * @author Sebastian Zarnekow - Initial contribution and API
  * @see IContextInformationValidator
  * @see IContextInformationPresenter
- * @author Sebastian Zarnekow - Initial contribution and API
  * @since 2.3
  */
 public interface ISmartContextInformation extends IContextInformation, IContextInformationExtension {
 
-	/**
-	 * @see org.eclipse.jface.text.contentassist.IContextInformationValidator#isContextInformationValid(int)
-	 */
-	boolean isContextInformationValid(ITextViewer viewer, int offset);
-	
-	/**
-	 * @see IContextInformationPresenter#updatePresentation(int, TextPresentation)
-	 */
-	boolean updatePresentation(ITextViewer viewer, int offset, TextPresentation presentation);
-	
+    /**
+     * @see org.eclipse.jface.text.contentassist.IContextInformationValidator#isContextInformationValid(int)
+     */
+    boolean isContextInformationValid(ITextViewer viewer, int offset);
+
+    /**
+     * @see IContextInformationPresenter#updatePresentation(int, TextPresentation)
+     */
+    boolean updatePresentation(ITextViewer viewer, int offset, TextPresentation presentation);
+
 }

@@ -34,43 +34,45 @@ package org.bbaw.bts.corpus.btsCorpusModel;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>BTS Marker</b></em>'.
  * <!-- end-user-doc -->
- *
+ * <p>
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSMarker#getValue <em>Value</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.BTSMarker#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSMarker()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSMarker()
  */
 public interface BTSMarker extends BTSAmbivalenceItem, BTSTextSentenceItem, BTSTextItems, BTSSentenceItem {
-	/**
-	 * Returns the value of the '<em><b>Value</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(String)
-	 * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSMarker_Value()
-	 * @model
-	 * @generated
-	 */
-	String getValue();
+    /**
+     * Returns the value of the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Value</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Value</em>' attribute.
+     * @model
+     * @generated
+     * @see #setValue(String)
+     * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSMarker_Value()
+     */
+    String getValue();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSMarker#getValue <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Value</em>' attribute.
-	 * @see #getValue()
-	 * @generated
-	 */
-	void setValue(String value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.corpus.btsCorpusModel.BTSMarker#getValue <em>Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Value</em>' attribute.
+     * @generated
+     * @see #getValue()
+     */
+    void setValue(String value);
 
 } // BTSMarker

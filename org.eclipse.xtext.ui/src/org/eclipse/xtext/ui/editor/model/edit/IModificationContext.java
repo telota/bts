@@ -15,8 +15,8 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
  */
 public interface IModificationContext {
 
-	IXtextDocument getXtextDocument();
-	
-	IXtextDocument getXtextDocument(URI uri);
+    IXtextDocument getXtextDocument();
+
+    IXtextDocument getXtextDocument(URI uri);
 
 }

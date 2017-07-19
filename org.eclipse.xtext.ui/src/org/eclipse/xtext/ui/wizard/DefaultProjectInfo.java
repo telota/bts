@@ -13,14 +13,14 @@ package org.eclipse.xtext.ui.wizard;
  */
 public class DefaultProjectInfo implements IProjectInfo {
 
-	private String projectName;
+    private String projectName;
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
+    public String getProjectName() {
+        return projectName;
+    }
 
-	public String getProjectName() {
-		return projectName;
-	}
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
 }

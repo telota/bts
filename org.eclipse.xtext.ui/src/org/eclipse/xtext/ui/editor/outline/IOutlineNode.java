@@ -20,42 +20,42 @@ import org.eclipse.xtext.util.concurrent.IReadAccess;
 /**
  * A model for a node in the outline. Implementors must inherit from
  * {@link org.eclipse.xtext.ui.editor.outline.impl.AbstractOutlineNode}.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public interface IOutlineNode extends IAdaptable, IReadAccess<EObject> {
 
-	Object getText();
+    Object getText();
 
-	Image getImage();
+    Image getImage();
 
-	IOutlineNode getParent();
+    IOutlineNode getParent();
 
-	List<IOutlineNode> getChildren();
+    List<IOutlineNode> getChildren();
 
-	boolean hasChildren();
+    boolean hasChildren();
 
-	/**
-	 * The region that triggers selection of this node when "Link with Editor" is enabled.
-	 */
-	ITextRegion getFullTextRegion();
+    /**
+     * The region that triggers selection of this node when "Link with Editor" is enabled.
+     */
+    ITextRegion getFullTextRegion();
 
-	/**
-	 * The region that is selected in the editor when this node is double clicked or selected in "Link with Editor"
-	 * mode.
-	 */
-	ITextRegion getSignificantTextRegion();
+    /**
+     * The region that is selected in the editor when this node is double clicked or selected in "Link with Editor"
+     * mode.
+     */
+    ITextRegion getSignificantTextRegion();
 
-	/**
-	 * Allows to use {@link ImageDescriptor}s instead of {@link Image}s. This enables 
-	 * calculating the outline nodes in a background thread. 
-	 * 
-	 * @author Jan Koehnlein - Initial contribution and API
-	 * @since 2.4
-	 * @see BackgroundOutlineTreeProvider
-	 */
-	public interface Extension {
+    /**
+     * Allows to use {@link ImageDescriptor}s instead of {@link Image}s. This enables
+     * calculating the outline nodes in a background thread.
+     *
+     * @author Jan Koehnlein - Initial contribution and API
+     * @see BackgroundOutlineTreeProvider
+     * @since 2.4
+     */
+    public interface Extension {
 
-		ImageDescriptor getImageDescriptor();
-	}
+        ImageDescriptor getImageDescriptor();
+    }
 }

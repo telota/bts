@@ -31,18 +31,17 @@ package org.bbaw.bts.core.services;
 
 /**
  * The Interface IDService handles creation of new uuids.
- * 
+ * <p>
  * Implementations must make sure to provide universal unique identifiers.
  *
  * @author Christoph Plutte
  */
-public interface IDService
-{
-	
-	/**
-	 * Creates the new UUID.
-	 *
-	 * @return the new UUID as String
-	 */
-	String createId(String dbCollection);
+public interface IDService {
+
+    /**
+     * Creates the new UUID.
+     *
+     * @return the new UUID as String
+     */
+    String createId(String dbCollection);
 }

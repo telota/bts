@@ -19,18 +19,18 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
  */
 public class SimpleLocalResourceAccess implements IReferenceFinder.ILocalResourceAccess {
 
-	private ResourceSet resourceSet;
+    private ResourceSet resourceSet;
 
-	public SimpleLocalResourceAccess(ResourceSet resourceSet) {
-		this.resourceSet = resourceSet;
-	}
+    public SimpleLocalResourceAccess(ResourceSet resourceSet) {
+        this.resourceSet = resourceSet;
+    }
 
-	public <R> R readOnly(URI targetURI, IUnitOfWork<R, ResourceSet> work) {
-		try {
-			return work.exec(resourceSet);
-		} catch(Exception exc) {
-			throw new WrappedException(exc);
-		}
-	}
+    public <R> R readOnly(URI targetURI, IUnitOfWork<R, ResourceSet> work) {
+        try {
+            return work.exec(resourceSet);
+        } catch (Exception exc) {
+            throw new WrappedException(exc);
+        }
+    }
 
 }

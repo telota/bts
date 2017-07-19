@@ -39,15 +39,13 @@ import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
  * component's <code>addBackend2ClientUpdateListener<code> method. When
  * the backend2ClientUpdate event occurs, that object's appropriate
  * method is invoked.
- *
  */
-public interface Backend2ClientUpdateListener
-{
+public interface Backend2ClientUpdateListener {
 
-	/**
-	 * Handle update.
-	 *
-	 * @param notification the notification
-	 */
-	void handleUpdate(BTSModelUpdateNotification notification);
+    /**
+     * Handle update.
+     *
+     * @param notification the notification
+     */
+    void handleUpdate(BTSModelUpdateNotification notification);
 }

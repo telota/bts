@@ -28,187 +28,182 @@ import org.eclipse.e4.ui.workbench.IWorkbench;
 
 public class BTSUserControllerImpl implements BTSUserController {
 
-	@Inject
-	private BTSUserService userService;
+    @Inject
+    private BTSUserService userService;
 
-	private IEclipseContext workbenchContext;
+    private IEclipseContext workbenchContext;
 
-	@Inject
-	private BTSUserGroupService userGroupService;
+    @Inject
+    private BTSUserGroupService userGroupService;
 
-	@Inject
-	private BTSProjectService projectService;
-	
-	@Inject
-	@Optional
-	private IWorkbench workbench;
-	
-	@Inject
-	private DBManager dbManager;
-	
-	@Inject
-	private UISynchronize sync;
-	
-	@Inject
-	private IEclipseContext context;
+    @Inject
+    private BTSProjectService projectService;
+
+    @Inject
+    @Optional
+    private IWorkbench workbench;
+
+    @Inject
+    private DBManager dbManager;
+
+    @Inject
+    private UISynchronize sync;
+
+    @Inject
+    private IEclipseContext context;
 
 
-	@Inject
-	public BTSUserControllerImpl(IEclipseContext ctx) {
-		workbenchContext = ctx;
-		MApplication application = ctx.get(MApplication.class);
-		if (application != null && application.getContext() != null) {
-			workbenchContext = application.getContext();
-		}
-		workbenchContext.declareModifiable(BTSCoreConstants.AUTHENTICATED_USER);
-		workbenchContext
-				.declareModifiable(BTSCoreConstants.USERGROUPS_OF_AUTHENTICATED_USER);
-	}
+    @Inject
+    public BTSUserControllerImpl(IEclipseContext ctx) {
+        workbenchContext = ctx;
+        MApplication application = ctx.get(MApplication.class);
+        if (application != null && application.getContext() != null) {
+            workbenchContext = application.getContext();
+        }
+        workbenchContext.declareModifiable(BTSCoreConstants.AUTHENTICATED_USER);
+        workbenchContext
+                .declareModifiable(BTSCoreConstants.USERGROUPS_OF_AUTHENTICATED_USER);
+    }
 
-	@Override
-	public String getUserDisplayName(String userId) {
-		return userService.getDisplayName(userId, null);
-		
-	}
+    @Override
+    public String getUserDisplayName(String userId) {
+        return userService.getDisplayName(userId, null);
 
-	@Override
-	public boolean setAuthenticatedUser(BTSUser validUser) {
-		workbenchContext.modify(BTSCoreConstants.AUTHENTICATED_USER, validUser);
-		List<BTSUserGroup> groups = new Vector<BTSUserGroup>(4);
+    }
 
-		if (validUser != null) {
-			for (String id : validUser.getGroupIds()) {
-				BTSUserGroup g = null;
-				try {
-					g = userGroupService.find(id, null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				if (g != null && !groups.contains(g)) {
-					groups.add(g);
-				}
-			}
-		}
-		workbenchContext.modify(
-				BTSCoreConstants.USERGROUPS_OF_AUTHENTICATED_USER, groups);
-		return validUser != null;
+    @Override
+    public boolean setAuthenticatedUser(BTSUser validUser) {
+        workbenchContext.modify(BTSCoreConstants.AUTHENTICATED_USER, validUser);
+        List<BTSUserGroup> groups = new Vector<BTSUserGroup>(4);
 
-	}
+        if (validUser != null) {
+            for (String id : validUser.getGroupIds()) {
+                BTSUserGroup g = null;
+                try {
+                    g = userGroupService.find(id, null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (g != null && !groups.contains(g)) {
+                    groups.add(g);
+                }
+            }
+        }
+        workbenchContext.modify(
+                BTSCoreConstants.USERGROUPS_OF_AUTHENTICATED_USER, groups);
+        return validUser != null;
 
-	@Override
-	public boolean setAuthentication(String userName, String passWord) {
-		return userService.setAuthentication(userName, passWord);
-	}
+    }
 
-	@Override
-	public List<BTSUser> query(BTSQueryRequest query, IProgressMonitor monitor) {
-		return userService.query(query, BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-	}
+    @Override
+    public boolean setAuthentication(String userName, String passWord) {
+        return userService.setAuthentication(userName, passWord);
+    }
 
-	@Override
-	public BTSUser findUser(String id, IProgressMonitor monitor) {
-		return userService.find(id, monitor);
-	}
+    @Override
+    public List<BTSUser> query(BTSQueryRequest query, IProgressMonitor monitor) {
+        return userService.query(query, BTSConstants.OBJECT_STATE_ACTIVE, monitor);
+    }
 
-	@Override
-	public BTSUserGroup findUserGroup(String id, IProgressMonitor monitor) {
-		return userGroupService.find(id, monitor);
-	}
+    @Override
+    public BTSUser findUser(String id, IProgressMonitor monitor) {
+        return userService.find(id, monitor);
+    }
 
-	@Override
-	public BTSObject findUserOrUserGroup(String id, IProgressMonitor monitor) {
-		BTSObject o = userService.find(id, monitor);
-		if (o == null) {
-			o = userGroupService.find(id, monitor);
-		}
-		return o;
-	}
+    @Override
+    public BTSUserGroup findUserGroup(String id, IProgressMonitor monitor) {
+        return userGroupService.find(id, monitor);
+    }
 
-	@Override
-	public void setRememberedUser(BTSUser user) {
-		userService.setRememberedUser(user);
+    @Override
+    public BTSObject findUserOrUserGroup(String id, IProgressMonitor monitor) {
+        BTSObject o = userService.find(id, monitor);
+        if (o == null) {
+            o = userGroupService.find(id, monitor);
+        }
+        return o;
+    }
 
-	}
+    @Override
+    public void setRememberedUser(BTSUser user) {
+        userService.setRememberedUser(user);
 
-	@Override
-	public List<BTSUser> listAll(IProgressMonitor monitor) {
-		return userService.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-	}
-	
-	@Override
-	public List<BTSUser> listAll(String userName, String passWord) {
-		return userService.listAll(BTSConstants.OBJECT_STATE_ACTIVE, userName, passWord);
-	}
+    }
 
-	@Override
-	public boolean removeUserUserGroup(BTSObject object,
-			List<BTSProject> projects) {
-		object.setState(BTSConstants.OBJECT_STATE_TERMINATED);
-		if (object instanceof BTSUser)
-		{
-			userService.save((BTSUser) object);
-			userService.removeDatabaseUser((BTSUser) object);
-		}
-		else if (object instanceof BTSUserGroup)
-		{
-			userGroupService.save((BTSUserGroup) object);
-		}
-		projectService.removeUserUserGroupFromAuthorization(object, projects);
-		return true;
-	}
+    @Override
+    public List<BTSUser> listAll(IProgressMonitor monitor) {
+        return userService.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
+    }
 
-	@Override
-	public boolean authenticatedUserIsDBAdmin(String userName, String passWord) {
-		return userService.authenticatedUserIsDBAdmin(userName, passWord);
-	}
+    @Override
+    public List<BTSUser> listAll(String userName, String passWord) {
+        return userService.listAll(BTSConstants.OBJECT_STATE_ACTIVE, userName, passWord);
+    }
 
-	@Override
-	public boolean isValidAuthentication(String userName, String passWord) {
-		return userService.isValidAuthentication(userName, passWord);
-	}
+    @Override
+    public boolean removeUserUserGroup(BTSObject object,
+                                       List<BTSProject> projects) {
+        object.setState(BTSConstants.OBJECT_STATE_TERMINATED);
+        if (object instanceof BTSUser) {
+            userService.save((BTSUser) object);
+            userService.removeDatabaseUser((BTSUser) object);
+        } else if (object instanceof BTSUserGroup) {
+            userGroupService.save((BTSUserGroup) object);
+        }
+        projectService.removeUserUserGroupFromAuthorization(object, projects);
+        return true;
+    }
 
-	@Override
-	public boolean checkAndChangeDBAdminPassword(String userName,
-			String newPassword) {
-		return userService.checkAndChangeDBAdminPassword(userName, newPassword);
-	}
+    @Override
+    public boolean authenticatedUserIsDBAdmin(String userName, String passWord) {
+        return userService.authenticatedUserIsDBAdmin(userName, passWord);
+    }
 
-	@Override
-	public void makeUserLocalDBAdmin(String userName, String passWord) throws Exception {
-		userService.makeUserLocalDBAdmin(userName, passWord);
-		
-	}
+    @Override
+    public boolean isValidAuthentication(String userName, String passWord) {
+        return userService.isValidAuthentication(userName, passWord);
+    }
 
-	@Override
-	public void stopDBAndRestartApplication() {
-		try {
-			if (dbManager.optimizationRequired())
-			{
-				// ask user if optimize
-				dbManager.optimize();
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    try {
-			dbManager.shutdown();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    sync.asyncExec(new Runnable() {
+    @Override
+    public boolean checkAndChangeDBAdminPassword(String userName,
+                                                 String newPassword) {
+        return userService.checkAndChangeDBAdminPassword(userName, newPassword);
+    }
 
-			@Override
-			public void run() {
-				if (workbench == null)
-				{
-					workbench = context.get(IWorkbench.class);
-				}
-				 workbench.restart();
-			}
-		});
-		
-	}
+    @Override
+    public void makeUserLocalDBAdmin(String userName, String passWord) throws Exception {
+        userService.makeUserLocalDBAdmin(userName, passWord);
+
+    }
+
+    @Override
+    public void stopDBAndRestartApplication() {
+        try {
+            if (dbManager.optimizationRequired()) {
+                // ask user if optimize
+                dbManager.optimize();
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            dbManager.shutdown();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        sync.asyncExec(new Runnable() {
+
+            @Override
+            public void run() {
+                if (workbench == null) {
+                    workbench = context.get(IWorkbench.class);
+                }
+                workbench.restart();
+            }
+        });
+
+    }
 
 }

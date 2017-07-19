@@ -38,39 +38,40 @@ import org.bbaw.bts.btsmodel.BTSUser;
  *
  * @author Christoph Plutte
  */
-public interface BTSUserDao extends GenericDao<BTSUser, String>
-{
+public interface BTSUserDao extends GenericDao<BTSUser, String> {
 
-	/**
-	 * Removes the bts user.
-	 *
-	 * @param btsUser the bts user
-	 * @param path the path
-	 * @return true, if successful
-	 */
-	boolean removeBTSUser(BTSUser btsUser, String path);
+    /**
+     * Removes the bts user.
+     *
+     * @param btsUser the bts user
+     * @param path    the path
+     * @return true, if successful
+     */
+    boolean removeBTSUser(BTSUser btsUser, String path);
 
-	/**
-	 * List user objects using the given credentials to access the database.
-	 *
-	 * @param admin the admin
-	 * @param objectState the object state
-	 * @param userName the user name
-	 * @param passWord the pass word
-	 * @return the list
-	 */
-	List<BTSUser> list(String admin, String objectState, String userName,
-			String passWord);
+    /**
+     * List user objects using the given credentials to access the database.
+     *
+     * @param admin       the admin
+     * @param objectState the object state
+     * @param userName    the user name
+     * @param passWord    the pass word
+     * @return the list
+     */
+    List<BTSUser> list(String admin, String objectState, String userName,
+                       String passWord);
 
-	/** Remove database user leaving the btsUser unmodified.
-	 * The idea is to remove login credentials and authentication options for the given user
-	 * but keeping information on the user and user-id.
-	 * @param user user credentials to be removed from db.
-	 * @return true if successful.
-	 */
-	boolean removeDatabaseUser(BTSUser user);
+    /**
+     * Remove database user leaving the btsUser unmodified.
+     * The idea is to remove login credentials and authentication options for the given user
+     * but keeping information on the user and user-id.
+     *
+     * @param user user credentials to be removed from db.
+     * @return true if successful.
+     */
+    boolean removeDatabaseUser(BTSUser user);
 
-	boolean changeAuthentication(String userName, String password,
-			String newPassword);
+    boolean changeAuthentication(String userName, String password,
+                                 String newPassword);
 
 }

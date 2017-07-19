@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * This class provides a skeletal implementation of the {@code Cache} interface to minimize the
  * effort required to implement this interface.
- *
+ * <p>
  * <p>To implement a cache, the programmer needs only to extend this class and provide an
  * implementation for the {@link #get(Object)} and {@link #getIfPresent} methods.
  * {@link #getUnchecked}, {@link #get(Object, Callable)}, and {@link #getAll} are implemented in
@@ -42,38 +42,41 @@ import java.util.concurrent.ExecutionException;
  */
 @Beta
 public abstract class AbstractLoadingCache<K, V>
-    extends AbstractCache<K, V> implements LoadingCache<K, V> {
+        extends AbstractCache<K, V> implements LoadingCache<K, V> {
 
-  /** Constructor for use by subclasses. */
-  protected AbstractLoadingCache() {}
-
-  @Override
-  public V getUnchecked(K key) {
-    try {
-      return get(key);
-    } catch (ExecutionException e) {
-      throw new UncheckedExecutionException(e.getCause());
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected AbstractLoadingCache() {
     }
-  }
 
-  @Override
-  public ImmutableMap<K, V> getAll(Iterable<? extends K> keys) throws ExecutionException {
-    Map<K, V> result = Maps.newLinkedHashMap();
-    for (K key : keys) {
-      if (!result.containsKey(key)) {
-        result.put(key, get(key));
-      }
+    @Override
+    public V getUnchecked(K key) {
+        try {
+            return get(key);
+        } catch (ExecutionException e) {
+            throw new UncheckedExecutionException(e.getCause());
+        }
     }
-    return ImmutableMap.copyOf(result);
-  }
 
-  @Override
-  public final V apply(K key) {
-    return getUnchecked(key);
-  }
+    @Override
+    public ImmutableMap<K, V> getAll(Iterable<? extends K> keys) throws ExecutionException {
+        Map<K, V> result = Maps.newLinkedHashMap();
+        for (K key : keys) {
+            if (!result.containsKey(key)) {
+                result.put(key, get(key));
+            }
+        }
+        return ImmutableMap.copyOf(result);
+    }
 
-  @Override
-  public void refresh(K key) {
-    throw new UnsupportedOperationException();
-  }
+    @Override
+    public final V apply(K key) {
+        return getUnchecked(key);
+    }
+
+    @Override
+    public void refresh(K key) {
+        throw new UnsupportedOperationException();
+    }
 }

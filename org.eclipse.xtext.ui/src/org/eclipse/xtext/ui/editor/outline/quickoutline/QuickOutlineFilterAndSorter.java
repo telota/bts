@@ -15,8 +15,8 @@ import org.eclipse.xtext.ui.editor.outline.impl.OutlineFilterAndSorter;
  */
 public class QuickOutlineFilterAndSorter extends OutlineFilterAndSorter {
 
-	@Override
-	protected boolean isSortingEnabled() {
-		return true;
-	}
+    @Override
+    protected boolean isSortingEnabled() {
+        return true;
+    }
 }

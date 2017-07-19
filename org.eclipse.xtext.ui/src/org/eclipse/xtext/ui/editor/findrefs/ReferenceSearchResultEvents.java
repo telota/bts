@@ -9,35 +9,35 @@ import org.eclipse.xtext.resource.IReferenceDescription;
  */
 public interface ReferenceSearchResultEvents {
 
-	public static class Added extends SearchResultEvent {
-		private static final long serialVersionUID = 591474718721135067L;
-		private final IReferenceDescription referenceDescription;
+    public static class Added extends SearchResultEvent {
+        private static final long serialVersionUID = 591474718721135067L;
+        private final IReferenceDescription referenceDescription;
 
-		public Added(ISearchResult searchResult, IReferenceDescription referenceDescription) {
-			super(searchResult);
-			this.referenceDescription = referenceDescription;
-		}
+        public Added(ISearchResult searchResult, IReferenceDescription referenceDescription) {
+            super(searchResult);
+            this.referenceDescription = referenceDescription;
+        }
 
-		public IReferenceDescription getReferenceDescription() {
-			return referenceDescription;
-		}
-	}
+        public IReferenceDescription getReferenceDescription() {
+            return referenceDescription;
+        }
+    }
 
-	public static class Finish extends SearchResultEvent {
+    public static class Finish extends SearchResultEvent {
 
-		private static final long serialVersionUID = 114654633086769996L;
+        private static final long serialVersionUID = 114654633086769996L;
 
-		public Finish(ISearchResult result) {
-			super(result);
-		}
-	}
+        public Finish(ISearchResult result) {
+            super(result);
+        }
+    }
 
-	public static class Reset extends SearchResultEvent {
-		private static final long serialVersionUID = 1244392086001617021L;
+    public static class Reset extends SearchResultEvent {
+        private static final long serialVersionUID = 1244392086001617021L;
 
-		public Reset(ReferenceSearchResult referenceSearchResult) {
-			super(referenceSearchResult);
-		}
-	}
+        public Reset(ReferenceSearchResult referenceSearchResult) {
+            super(referenceSearchResult);
+        }
+    }
 
 }

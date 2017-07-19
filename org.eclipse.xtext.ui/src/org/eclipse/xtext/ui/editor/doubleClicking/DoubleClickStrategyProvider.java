@@ -15,22 +15,22 @@ import com.google.inject.Inject;
 
 /**
  * Provide the double click strategies for the given content types in a document.
- * 
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public class DoubleClickStrategyProvider {
 
-	@Inject
-	private LexerTokenAndCharacterPairAwareStrategy defaultDoubleClickStrategy;
-	
-	public ITextDoubleClickStrategy getStrategy(ISourceViewer sourceViewer, String contentType, String documentPartitioning) {
-		if (TerminalsTokenTypeToPartitionMapper.COMMENT_PARTITION.equals(contentType))
-			return new FixedCharCountPartitionDoubleClickSelector(documentPartitioning, 0, 0);
-		if (TerminalsTokenTypeToPartitionMapper.SL_COMMENT_PARTITION.equals(contentType))
-			return new FixedCharCountPartitionDoubleClickSelector(documentPartitioning, 0, 0);
-		if (TerminalsTokenTypeToPartitionMapper.STRING_LITERAL_PARTITION.equals(contentType))
-			return new FixedCharCountPartitionDoubleClickSelector(documentPartitioning, 1, 1);
-		return defaultDoubleClickStrategy;
-	}
+    @Inject
+    private LexerTokenAndCharacterPairAwareStrategy defaultDoubleClickStrategy;
+
+    public ITextDoubleClickStrategy getStrategy(ISourceViewer sourceViewer, String contentType, String documentPartitioning) {
+        if (TerminalsTokenTypeToPartitionMapper.COMMENT_PARTITION.equals(contentType))
+            return new FixedCharCountPartitionDoubleClickSelector(documentPartitioning, 0, 0);
+        if (TerminalsTokenTypeToPartitionMapper.SL_COMMENT_PARTITION.equals(contentType))
+            return new FixedCharCountPartitionDoubleClickSelector(documentPartitioning, 0, 0);
+        if (TerminalsTokenTypeToPartitionMapper.STRING_LITERAL_PARTITION.equals(contentType))
+            return new FixedCharCountPartitionDoubleClickSelector(documentPartitioning, 1, 1);
+        return defaultDoubleClickStrategy;
+    }
 
 }

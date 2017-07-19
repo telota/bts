@@ -17,9 +17,9 @@ import com.google.inject.Inject;
  */
 public class EmfResourceUIServiceProvider extends DefaultResourceUIServiceProvider {
 
-	@Inject
-	public EmfResourceUIServiceProvider(GenericResourceServiceProvider runtimeDelegate) {
-		super(runtimeDelegate);
-	}
-	
+    @Inject
+    public EmfResourceUIServiceProvider(GenericResourceServiceProvider runtimeDelegate) {
+        super(runtimeDelegate);
+    }
+
 }

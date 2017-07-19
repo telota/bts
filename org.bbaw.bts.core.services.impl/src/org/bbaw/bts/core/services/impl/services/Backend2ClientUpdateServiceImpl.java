@@ -26,63 +26,56 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
-public class Backend2ClientUpdateServiceImpl implements Backend2ClientUpdateService, Backend2ClientUpdateListener
-{
+public class Backend2ClientUpdateServiceImpl implements Backend2ClientUpdateService, Backend2ClientUpdateListener {
 
-	@Inject
-	private GeneralPurposeDao generalPurposeDao;
-	@Inject
-	private Backend2ClientUpdateDao updateDao;
-	@Inject
-	private EventBroker eventBroker;
-	@Inject
-	private IEclipseContext context;
-	@Inject
-	private BTSEvaluationService evaluationService;
-	
-	@Inject
-	private Logger logger;
-	
-	private IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app");
+    @Inject
+    private GeneralPurposeDao generalPurposeDao;
+    @Inject
+    private Backend2ClientUpdateDao updateDao;
+    @Inject
+    private EventBroker eventBroker;
+    @Inject
+    private IEclipseContext context;
+    @Inject
+    private BTSEvaluationService evaluationService;
 
-	private String btsUUID = prefs.get(BTSConstants.BTS_UUID, null);
-	
-	@Inject
-	@Optional
-	@Named(BTSCoreConstants.AUTHENTICATED_USER)
-	private BTSUser authenticatedUser;
+    @Inject
+    private Logger logger;
 
-	@Override
-	public void handleUpdate(BTSModelUpdateNotification notification)
-	{
+    private IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app");
 
-		//logger.info("Notify Listener about change: " + ", Changed object id: " + notification.getObject());
-		if (notification.getObject() instanceof DBLease)
-		{
-				DBLease lease = (DBLease) notification.getObject();
-				if (!(lease.getBtsUUID() != null && lease.getBtsUUID().equals(btsUUID)
-						&& authenticatedUser.get_id().equals(lease.getUserId()))) {
-					eventBroker.post("lease_update/async", notification);
-				}
-			
-		} else
-		{
-			// filter
-			if (evaluationService.filter(notification.getObject()))
-			{
-				// check percolator and views to identifiy which last querys
-				// might match
-				if (notification.isLoaded())
-				{
-					if (notification.getQueryIds() != null)
-					{
-						List<String> queryIds = updateDao.fingQueryIds(notification.getObject(),
-								((BTSDBBaseObject) notification.getObject()).get_id(), notification.getDbCollection());
-						notification.setQueryIds(queryIds);
-						logger.info("Notify Listener about change. size of found queryIds: " + queryIds.size());
-					}
+    private String btsUUID = prefs.get(BTSConstants.BTS_UUID, null);
 
-				}
+    @Inject
+    @Optional
+    @Named(BTSCoreConstants.AUTHENTICATED_USER)
+    private BTSUser authenticatedUser;
+
+    @Override
+    public void handleUpdate(BTSModelUpdateNotification notification) {
+
+        //logger.info("Notify Listener about change: " + ", Changed object id: " + notification.getObject());
+        if (notification.getObject() instanceof DBLease) {
+            DBLease lease = (DBLease) notification.getObject();
+            if (!(lease.getBtsUUID() != null && lease.getBtsUUID().equals(btsUUID)
+                    && authenticatedUser.get_id().equals(lease.getUserId()))) {
+                eventBroker.post("lease_update/async", notification);
+            }
+
+        } else {
+            // filter
+            if (evaluationService.filter(notification.getObject())) {
+                // check percolator and views to identifiy which last querys
+                // might match
+                if (notification.isLoaded()) {
+                    if (notification.getQueryIds() != null) {
+                        List<String> queryIds = updateDao.fingQueryIds(notification.getObject(),
+                                ((BTSDBBaseObject) notification.getObject()).get_id(), notification.getDbCollection());
+                        notification.setQueryIds(queryIds);
+                        logger.info("Notify Listener about change. size of found queryIds: " + queryIds.size());
+                    }
+
+                }
 //				if (notification.getObject() != null && notification.getObject() instanceof BTSObject)
 //				{
 //					logger.info("Notify eventBroker about change. Object name: " + ((BTSObject) notification.getObject()).getName());
@@ -93,28 +86,26 @@ public class Backend2ClientUpdateServiceImpl implements Backend2ClientUpdateServ
 //
 //				}
 
-				eventBroker.post("model_update/async", notification);
+                eventBroker.post("model_update/async", notification);
 
-			}
-		}
+            }
+        }
 
-	}
+    }
 
-	@Override
-	public void startListening2Updates(BTSProject project)
-	{
-		updateDao.addUpdateListener(this);
-		for (BTSProjectDBCollection collection : project.getDbCollections())
-		{
-			updateDao.runAndListenToUpdates(generalPurposeDao, collection.getCollectionName());
-		}
+    @Override
+    public void startListening2Updates(BTSProject project) {
+        updateDao.addUpdateListener(this);
+        for (BTSProjectDBCollection collection : project.getDbCollections()) {
+            updateDao.runAndListenToUpdates(generalPurposeDao, collection.getCollectionName());
+        }
 
-	}
+    }
 
-	@Override
-	public void startListening2Updates(BTSProjectDBCollection collection) {
-		updateDao.runAndListenToUpdates(generalPurposeDao, collection.getCollectionName());
-		
-	}
+    @Override
+    public void startListening2Updates(BTSProjectDBCollection collection) {
+        updateDao.runAndListenToUpdates(generalPurposeDao, collection.getCollectionName());
+
+    }
 
 }

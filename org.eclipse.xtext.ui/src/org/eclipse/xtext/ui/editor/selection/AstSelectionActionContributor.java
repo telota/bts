@@ -16,13 +16,13 @@ import com.google.inject.Inject;
  * @author Michael Clay - Initial contribution and API
  */
 public class AstSelectionActionContributor implements IActionContributor {
-	@Inject
-	private AstSelectionProvider astSelectionProvider;
+    @Inject
+    private AstSelectionProvider astSelectionProvider;
 
-	public void contributeActions(XtextEditor xtextEditor) {
-		astSelectionProvider.initialize(xtextEditor);
-	}
+    public void contributeActions(XtextEditor xtextEditor) {
+        astSelectionProvider.initialize(xtextEditor);
+    }
 
-	public void editorDisposed(XtextEditor editor) {
-	}
+    public void editorDisposed(XtextEditor editor) {
+    }
 }

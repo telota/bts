@@ -9,11 +9,9 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>No Cartouche</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoCartouche()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoCartouche()
  */
-public interface NoCartouche extends EObject
-{
+public interface NoCartouche extends EObject {
 } // NoCartouche

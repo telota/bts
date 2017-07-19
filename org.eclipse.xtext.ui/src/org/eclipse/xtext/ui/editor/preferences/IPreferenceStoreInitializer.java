@@ -16,36 +16,36 @@ import com.google.inject.TypeLiteral;
 
 /**
  * @author Sven Efftinge - Initial contribution and API
- * 
- * a preference store initialize can be used to set programmatic defaults 
- * in one of the preference stores. 
+ * <p>
+ * a preference store initialize can be used to set programmatic defaults
+ * in one of the preference stores.
  */
 public interface IPreferenceStoreInitializer {
-	/**
-	 * Initialize preference values with the given {@link IPreferenceStoreAccess}
-	 */
-	public void initialize(IPreferenceStoreAccess access);
-	
-	/**
-	 * a composite initialize calling all registered {@link IPreferenceStoreInitializer}s
-	 */
-	static class CompositeImpl implements IPreferenceStoreInitializer {
+    /**
+     * Initialize preference values with the given {@link IPreferenceStoreAccess}
+     */
+    public void initialize(IPreferenceStoreAccess access);
 
-		private Injector injector;
-		
-		@Inject
-		public void setInjector(Injector injector) {
-			this.injector = injector;
-		}
-		
-		public void initialize(IPreferenceStoreAccess access) {
-			List<Binding<IPreferenceStoreInitializer>> list = injector.findBindingsByType(TypeLiteral
-					.get(IPreferenceStoreInitializer.class));
-			for (Binding<IPreferenceStoreInitializer> binding : list) {
-				IPreferenceStoreInitializer storeInitializer = injector.getInstance(binding.getKey());
-				storeInitializer.initialize(access);
-			}
-		}
-		
-	}
+    /**
+     * a composite initialize calling all registered {@link IPreferenceStoreInitializer}s
+     */
+    static class CompositeImpl implements IPreferenceStoreInitializer {
+
+        private Injector injector;
+
+        @Inject
+        public void setInjector(Injector injector) {
+            this.injector = injector;
+        }
+
+        public void initialize(IPreferenceStoreAccess access) {
+            List<Binding<IPreferenceStoreInitializer>> list = injector.findBindingsByType(TypeLiteral
+                    .get(IPreferenceStoreInitializer.class));
+            for (Binding<IPreferenceStoreInitializer> binding : list) {
+                IPreferenceStoreInitializer storeInitializer = injector.getInstance(binding.getKey());
+                storeInitializer.initialize(access);
+            }
+        }
+
+    }
 }

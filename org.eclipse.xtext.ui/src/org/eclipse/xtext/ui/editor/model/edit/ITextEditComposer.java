@@ -18,10 +18,10 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultTextEditComposer.class)
 public interface ITextEditComposer {
 
-	void beginRecording(Resource resource);
+    void beginRecording(Resource resource);
 
-	TextEdit endRecording();
+    TextEdit endRecording();
 
-	TextEdit getTextEdit();
+    TextEdit getTextEdit();
 
 }

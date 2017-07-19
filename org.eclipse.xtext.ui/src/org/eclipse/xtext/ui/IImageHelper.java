@@ -19,42 +19,43 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(IImageHelper.NullImageHelper.class)
 public interface IImageHelper {
 
-	Image getImage(String name);
-	
-	Image getImage(ImageDescriptor imageDescriptor);
-	
-	class NullImageHelper implements IImageHelper, IImageDescriptorHelper {
+    Image getImage(String name);
 
-		public Image getImage(String name) {
-			return null;
-		}
+    Image getImage(ImageDescriptor imageDescriptor);
 
-		public Image getImage(ImageDescriptor imageDescriptor) {
-			return null;
-		}
+    /**
+     * @since 2.4
+     */
+    @ImplementedBy(IImageHelper.NullImageHelper.class)
+    public interface IImageDescriptorHelper {
+        ImageDescriptor getImageDescriptor(String name);
 
-		/**
-		 * @since 2.4
-		 */
-		public ImageDescriptor getImageDescriptor(String name) {
-			return null;
-		}
+        ImageDescriptor getImageDescriptor(Image image);
+    }
 
-		/**
-		 * @since 2.4
-		 */
-		public ImageDescriptor getImageDescriptor(Image image) {
-			return null;
-		}
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	@ImplementedBy(IImageHelper.NullImageHelper.class)
-	public interface IImageDescriptorHelper {
-		ImageDescriptor getImageDescriptor(String name);
-		ImageDescriptor getImageDescriptor(Image image);
-	}
+    class NullImageHelper implements IImageHelper, IImageDescriptorHelper {
+
+        public Image getImage(String name) {
+            return null;
+        }
+
+        public Image getImage(ImageDescriptor imageDescriptor) {
+            return null;
+        }
+
+        /**
+         * @since 2.4
+         */
+        public ImageDescriptor getImageDescriptor(String name) {
+            return null;
+        }
+
+        /**
+         * @since 2.4
+         */
+        public ImageDescriptor getImageDescriptor(Image image) {
+            return null;
+        }
+    }
 
 }

@@ -43,23 +43,25 @@ import org.eclipse.emf.ecore.EClass;
  * @generated
  */
 public class BTSAnnotationImpl extends BTSCorpusObjectImpl implements BTSAnnotation {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected BTSAnnotationImpl() {
-		super();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BTSAnnotationImpl() {
+        super();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return BtsCorpusModelPackage.Literals.BTS_ANNOTATION;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BtsCorpusModelPackage.Literals.BTS_ANNOTATION;
+    }
 
 } //BTSAnnotationImpl

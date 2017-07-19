@@ -23,177 +23,176 @@ import com.google.inject.Inject;
 /**
  * A label provider that implements {@link ILabelProvider} as well as {@link IStyledLabelProvider} with an optional
  * delegate.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public abstract class AbstractLabelProvider extends LabelProvider implements IStyledLabelProvider, IItemLabelProvider, ILabelProviderImageDescriptorExtension {
 
-	private ILabelProvider delegate;
+    private ILabelProvider delegate;
 
-	@Inject
-	private IImageHelper imageHelper;
-	@Inject
-	private IImageDescriptorHelper imageDescriptorHelper;
+    @Inject
+    private IImageHelper imageHelper;
+    @Inject
+    private IImageDescriptorHelper imageDescriptorHelper;
 
-	protected AbstractLabelProvider() {
-	}
+    protected AbstractLabelProvider() {
+    }
 
-	protected AbstractLabelProvider(ILabelProvider delegate) {
-		this.delegate = delegate;
-	}
+    protected AbstractLabelProvider(ILabelProvider delegate) {
+        this.delegate = delegate;
+    }
 
-	/**
-	 * Subclasses should rather override {@link #doGetImage}.
-	 */
-	@Override
-	public Image getImage(Object element) {
-		Image image = convertToImage(doGetImage(element));
-		if (image != null) {
-			return image;
-		} else if (delegate != null) {
-			image = delegate.getImage(element);
-			if (image != null) {
-				return image;
-			}
-		}
-		return convertToImage(getDefaultImage());
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public ImageDescriptor getImageDescriptor(Object element) {
-		Object image = doGetImage(element);
-		ImageDescriptor imageDescriptor = convertToImageDescriptor(image);
-		return imageDescriptor;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	protected ImageDescriptor convertToImageDescriptor(Object imageDescription) {
-		if (imageDescription instanceof Image) {
-			final Image image = (Image) imageDescription;
-			return imageDescriptorHelper.getImageDescriptor(image);
-		} else if (imageDescription instanceof ImageDescriptor) {
-			return (ImageDescriptor) imageDescription;
-		} else if (imageDescription instanceof String) {
-			return imageDescriptorHelper.getImageDescriptor((String) imageDescription);
-		}
-		return null;
-	}
+    /**
+     * Subclasses should rather override {@link #doGetImage}.
+     */
+    @Override
+    public Image getImage(Object element) {
+        Image image = convertToImage(doGetImage(element));
+        if (image != null) {
+            return image;
+        } else if (delegate != null) {
+            image = delegate.getImage(element);
+            if (image != null) {
+                return image;
+            }
+        }
+        return convertToImage(getDefaultImage());
+    }
 
-	/**
-	 * @param imageDescription
-	 *            a {@link String}, an {@link ImageDescriptor} or an {@link Image}
-	 * @return the {@link Image} associated with the description or <code>null</code>
-	 */
-	protected Image convertToImage(Object imageDescription) {
-		if (imageDescription instanceof Image) {
-			return (Image) imageDescription;
-		} else if (imageDescription instanceof ImageDescriptor) {
-			return imageHelper.getImage((ImageDescriptor) imageDescription);
-		} else if (imageDescription instanceof String) {
-			return imageHelper.getImage((String) imageDescription);
-		}
-		return null;
-	}
+    /**
+     * @since 2.4
+     */
+    public ImageDescriptor getImageDescriptor(Object element) {
+        Object image = doGetImage(element);
+        ImageDescriptor imageDescriptor = convertToImageDescriptor(image);
+        return imageDescriptor;
+    }
 
-	/**
-	 * Expected to be overridden by clients.
-	 * 
-	 * @return a {@link String}, an {@link ImageDescriptor} or an {@link Image} passed to
-	 *         {@link #convertToImage(Object)} to determine the actual {@link Image}.
-	 */
-	protected Object doGetImage(Object element) {
-		return null;
-	}
+    /**
+     * @since 2.4
+     */
+    protected ImageDescriptor convertToImageDescriptor(Object imageDescription) {
+        if (imageDescription instanceof Image) {
+            final Image image = (Image) imageDescription;
+            return imageDescriptorHelper.getImageDescriptor(image);
+        } else if (imageDescription instanceof ImageDescriptor) {
+            return (ImageDescriptor) imageDescription;
+        } else if (imageDescription instanceof String) {
+            return imageDescriptorHelper.getImageDescriptor((String) imageDescription);
+        }
+        return null;
+    }
 
-	protected Object getDefaultImage() {
-		return null;
-	}
+    /**
+     * @param imageDescription a {@link String}, an {@link ImageDescriptor} or an {@link Image}
+     * @return the {@link Image} associated with the description or <code>null</code>
+     */
+    protected Image convertToImage(Object imageDescription) {
+        if (imageDescription instanceof Image) {
+            return (Image) imageDescription;
+        } else if (imageDescription instanceof ImageDescriptor) {
+            return imageHelper.getImage((ImageDescriptor) imageDescription);
+        } else if (imageDescription instanceof String) {
+            return imageHelper.getImage((String) imageDescription);
+        }
+        return null;
+    }
 
-	/**
-	 * Subclasses should rather override {@link #doGetText}.
-	 */
-	public StyledString getStyledText(Object element) {
-		StyledString styledText = convertToStyledString(doGetText(element));
-		if (styledText != null) {
-			return styledText;
-		} else if (delegate != null) {
-			if (delegate instanceof IStyledLabelProvider) {
-				styledText = ((IStyledLabelProvider) delegate).getStyledText(element);
-				if (styledText != null) {
-					return styledText;
-				}
-			} else {
-				styledText = convertToStyledString(delegate.getText(element));
-				if (styledText != null) {
-					return styledText;
-				}
-			}
-		}
-		return getDefaultStyledText();
-	}
+    /**
+     * Expected to be overridden by clients.
+     *
+     * @return a {@link String}, an {@link ImageDescriptor} or an {@link Image} passed to
+     * {@link #convertToImage(Object)} to determine the actual {@link Image}.
+     */
+    protected Object doGetImage(Object element) {
+        return null;
+    }
 
-	/**
-	 * @param text a {@link StyledString} or a a {@link String}
-	 * @return a {@link StyledString} representing the parameter or <code>null</code>.
-	 */
-	protected StyledString convertToStyledString(Object text) {
-		if (text instanceof StyledString) {
-			return (StyledString) text;
-		} else if(text instanceof String){
-			return new StyledString((String) text);
-		}
-		return null;
-	}
+    protected Object getDefaultImage() {
+        return null;
+    }
 
-	@Override
-	public String getText(Object element) {
-		String text = convertToString(doGetText(element));
-		if (text != null) {
-			return text;
-		} else if (delegate != null) {
-			text = delegate.getText(element);
-			if (text != null) {
-				return text;
-			}
-		}
-		return getDefaultText();
-	}
+    /**
+     * Subclasses should rather override {@link #doGetText}.
+     */
+    public StyledString getStyledText(Object element) {
+        StyledString styledText = convertToStyledString(doGetText(element));
+        if (styledText != null) {
+            return styledText;
+        } else if (delegate != null) {
+            if (delegate instanceof IStyledLabelProvider) {
+                styledText = ((IStyledLabelProvider) delegate).getStyledText(element);
+                if (styledText != null) {
+                    return styledText;
+                }
+            } else {
+                styledText = convertToStyledString(delegate.getText(element));
+                if (styledText != null) {
+                    return styledText;
+                }
+            }
+        }
+        return getDefaultStyledText();
+    }
 
-	/**
-	 * @param text a {@link StyledString} or a a {@link String}
-	 * @return a {@link String} representing the parameter or <code>null</code>.
-	 */
-	protected String convertToString(Object text) {
-		if (text instanceof StyledString) {
-			return ((StyledString) text).getString();
-		} else if(text instanceof String){
-			return (String) text;
-		}
-		return null;
-	}
+    /**
+     * @param text a {@link StyledString} or a a {@link String}
+     * @return a {@link StyledString} representing the parameter or <code>null</code>.
+     */
+    protected StyledString convertToStyledString(Object text) {
+        if (text instanceof StyledString) {
+            return (StyledString) text;
+        } else if (text instanceof String) {
+            return new StyledString((String) text);
+        }
+        return null;
+    }
 
-	/**
-	 * Expected to be overridden by clients.
-	 * 
-	 * @return a {@link StyledString} or a a {@link String}.
-	 */
-	protected Object doGetText(Object element) {
-		return null;
-	}
+    @Override
+    public String getText(Object element) {
+        String text = convertToString(doGetText(element));
+        if (text != null) {
+            return text;
+        } else if (delegate != null) {
+            text = delegate.getText(element);
+            if (text != null) {
+                return text;
+            }
+        }
+        return getDefaultText();
+    }
 
-	protected StyledString getDefaultStyledText() {
-		return null;
-	}
+    /**
+     * @param text a {@link StyledString} or a a {@link String}
+     * @return a {@link String} representing the parameter or <code>null</code>.
+     */
+    protected String convertToString(Object text) {
+        if (text instanceof StyledString) {
+            return ((StyledString) text).getString();
+        } else if (text instanceof String) {
+            return (String) text;
+        }
+        return null;
+    }
 
-	protected String getDefaultText() {
-		return null;
-	}
-	
-	protected void setImageHelper(IImageHelper imageHelper) {
-		this.imageHelper = imageHelper;
-	}
+    /**
+     * Expected to be overridden by clients.
+     *
+     * @return a {@link StyledString} or a a {@link String}.
+     */
+    protected Object doGetText(Object element) {
+        return null;
+    }
+
+    protected StyledString getDefaultStyledText() {
+        return null;
+    }
+
+    protected String getDefaultText() {
+        return null;
+    }
+
+    protected void setImageHelper(IImageHelper imageHelper) {
+        this.imageHelper = imageHelper;
+    }
 }

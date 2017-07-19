@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
@@ -12,14 +11,14 @@ import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
 @SuppressWarnings("restriction")
 public class AnnotationsPartFilterHandler {
-	@Execute
-	public void execute(@Optional @Named("annotationsPartFilterParam") String param,
-			EventBroker eventBroker,
-			MHandledItem menuItem) {
-		MCommand command = menuItem.getCommand();
-		if (command != null)
-			if ("org.bbaw.bts.ui.corpus.command.annotationsPart.paramFilter".equals(command.getElementId()))
-				eventBroker.post(BTSUIConstants.EVENT_TEXT_RELATING_OBJECTS_TOGGLE_FILTER, param);
-	}
-		
+    @Execute
+    public void execute(@Optional @Named("annotationsPartFilterParam") String param,
+                        EventBroker eventBroker,
+                        MHandledItem menuItem) {
+        MCommand command = menuItem.getCommand();
+        if (command != null)
+            if ("org.bbaw.bts.ui.corpus.command.annotationsPart.paramFilter".equals(command.getElementId()))
+                eventBroker.post(BTSUIConstants.EVENT_TEXT_RELATING_OBJECTS_TOGGLE_FILTER, param);
+    }
+
 }

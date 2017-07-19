@@ -27,122 +27,134 @@ import java.util.Arrays;
  * be mapped to a BloomFilter of M bits and k hash functions. These
  * strategies are part of the serialized form of the Bloom filters that use them, thus they must be
  * preserved as is (no updates allowed, only introduction of new versions).
- *
+ * <p>
  * Important: the order of the constants cannot change, and they cannot be deleted - we depend
  * on their ordinal for BloomFilter serialization.
  *
  * @author Dimitris Andreou
  */
 enum BloomFilterStrategies implements BloomFilter.Strategy {
-  /**
-   * See "Less Hashing, Same Performance: Building a Better Bloom Filter" by Adam Kirsch and
-   * Michael Mitzenmacher. The paper argues that this trick doesn't significantly deteriorate the
-   * performance of a Bloom filter (yet only needs two 32bit hash functions).
-   */
-  MURMUR128_MITZ_32() {
-    @Override public <T> boolean put(T object, Funnel<? super T> funnel,
-        int numHashFunctions, BitArray bits) {
-      long hash64 = Hashing.murmur3_128().hashObject(object, funnel).asLong();
-      int hash1 = (int) hash64;
-      int hash2 = (int) (hash64 >>> 32);
-      boolean bitsChanged = false;
-      for (int i = 1; i <= numHashFunctions; i++) {
-        int nextHash = hash1 + i * hash2;
-        if (nextHash < 0) {
-          nextHash = ~nextHash;
+    /**
+     * See "Less Hashing, Same Performance: Building a Better Bloom Filter" by Adam Kirsch and
+     * Michael Mitzenmacher. The paper argues that this trick doesn't significantly deteriorate the
+     * performance of a Bloom filter (yet only needs two 32bit hash functions).
+     */
+    MURMUR128_MITZ_32() {
+        @Override
+        public <T> boolean put(T object, Funnel<? super T> funnel,
+                               int numHashFunctions, BitArray bits) {
+            long hash64 = Hashing.murmur3_128().hashObject(object, funnel).asLong();
+            int hash1 = (int) hash64;
+            int hash2 = (int) (hash64 >>> 32);
+            boolean bitsChanged = false;
+            for (int i = 1; i <= numHashFunctions; i++) {
+                int nextHash = hash1 + i * hash2;
+                if (nextHash < 0) {
+                    nextHash = ~nextHash;
+                }
+                bitsChanged |= bits.set(nextHash % bits.bitSize());
+            }
+            return bitsChanged;
         }
-        bitsChanged |= bits.set(nextHash % bits.bitSize());
-      }
-      return bitsChanged;
-    }
 
-    @Override public <T> boolean mightContain(T object, Funnel<? super T> funnel,
-        int numHashFunctions, BitArray bits) {
-      long hash64 = Hashing.murmur3_128().hashObject(object, funnel).asLong();
-      int hash1 = (int) hash64;
-      int hash2 = (int) (hash64 >>> 32);
-      for (int i = 1; i <= numHashFunctions; i++) {
-        int nextHash = hash1 + i * hash2;
-        if (nextHash < 0) {
-          nextHash = ~nextHash;
+        @Override
+        public <T> boolean mightContain(T object, Funnel<? super T> funnel,
+                                        int numHashFunctions, BitArray bits) {
+            long hash64 = Hashing.murmur3_128().hashObject(object, funnel).asLong();
+            int hash1 = (int) hash64;
+            int hash2 = (int) (hash64 >>> 32);
+            for (int i = 1; i <= numHashFunctions; i++) {
+                int nextHash = hash1 + i * hash2;
+                if (nextHash < 0) {
+                    nextHash = ~nextHash;
+                }
+                if (!bits.get(nextHash % bits.bitSize())) {
+                    return false;
+                }
+            }
+            return true;
         }
-        if (!bits.get(nextHash % bits.bitSize())) {
-          return false;
+    };
+
+    // Note: We use this instead of java.util.BitSet because we need access to the long[] data field
+    static class BitArray {
+        final long[] data;
+        int bitCount;
+
+        BitArray(long bits) {
+            this(new long[Ints.checkedCast(LongMath.divide(bits, 64, RoundingMode.CEILING))]);
         }
-      }
-      return true;
-    }
-  };
 
-  // Note: We use this instead of java.util.BitSet because we need access to the long[] data field
-  static class BitArray {
-    final long[] data;
-    int bitCount;
+        // Used by serialization
+        BitArray(long[] data) {
+            checkArgument(data.length > 0, "data length is zero!");
+            this.data = data;
+            int bitCount = 0;
+            for (long value : data) {
+                bitCount += Long.bitCount(value);
+            }
+            this.bitCount = bitCount;
+        }
 
-    BitArray(long bits) {
-      this(new long[Ints.checkedCast(LongMath.divide(bits, 64, RoundingMode.CEILING))]);
-    }
+        /**
+         * Returns true if the bit changed value.
+         */
+        boolean set(int index) {
+            if (!get(index)) {
+                data[index >> 6] |= (1L << index);
+                bitCount++;
+                return true;
+            }
+            return false;
+        }
 
-    // Used by serialization
-    BitArray(long[] data) {
-      checkArgument(data.length > 0, "data length is zero!");
-      this.data = data;
-      int bitCount = 0;
-      for (long value : data) {
-        bitCount += Long.bitCount(value);
-      }
-      this.bitCount = bitCount;
-    }
+        boolean get(int index) {
+            return (data[index >> 6] & (1L << index)) != 0;
+        }
 
-    /** Returns true if the bit changed value. */
-    boolean set(int index) {
-      if (!get(index)) {
-        data[index >> 6] |= (1L << index);
-        bitCount++;
-        return true;
-      }
-      return false;
-    }
+        /**
+         * Number of bits
+         */
+        int bitSize() {
+            return data.length * Long.SIZE;
+        }
 
-    boolean get(int index) {
-      return (data[index >> 6] & (1L << index)) != 0;
-    }
+        /**
+         * Number of set bits (1s)
+         */
+        int bitCount() {
+            return bitCount;
+        }
 
-    /** Number of bits */
-    int bitSize() {
-      return data.length * Long.SIZE;
-    }
+        BitArray copy() {
+            return new BitArray(data.clone());
+        }
 
-    /** Number of set bits (1s) */
-    int bitCount() {
-      return bitCount;
-    }
+        /**
+         * Combines the two BitArrays using bitwise OR.
+         */
+        void putAll(BitArray array) {
+            checkArgument(data.length == array.data.length,
+                    "BitArrays must be of equal length (%s != %s)", data.length, array.data.length);
+            bitCount = 0;
+            for (int i = 0; i < data.length; i++) {
+                data[i] |= array.data[i];
+                bitCount += Long.bitCount(data[i]);
+            }
+        }
 
-    BitArray copy() {
-      return new BitArray(data.clone());
-    }
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof BitArray) {
+                BitArray bitArray = (BitArray) o;
+                return Arrays.equals(data, bitArray.data);
+            }
+            return false;
+        }
 
-    /** Combines the two BitArrays using bitwise OR. */
-    void putAll(BitArray array) {
-      checkArgument(data.length == array.data.length,
-          "BitArrays must be of equal length (%s != %s)", data.length, array.data.length);
-      bitCount = 0;
-      for (int i = 0; i < data.length; i++) {
-        data[i] |= array.data[i];
-        bitCount += Long.bitCount(data[i]);
-      }
+        @Override
+        public int hashCode() {
+            return Arrays.hashCode(data);
+        }
     }
-
-    @Override public boolean equals(Object o) {
-      if (o instanceof BitArray) {
-        BitArray bitArray = (BitArray) o;
-        return Arrays.equals(data, bitArray.data);
-      }
-      return false;
-    }
-
-    @Override public int hashCode() {
-      return Arrays.hashCode(data);
-    }
-  }
 }

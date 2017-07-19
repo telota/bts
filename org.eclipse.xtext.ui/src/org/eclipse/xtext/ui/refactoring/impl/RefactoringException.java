@@ -10,21 +10,21 @@ package org.eclipse.xtext.ui.refactoring.impl;
 
 /**
  * A convenient way to stop calculation of refactoring changes.
- * 
+ * <p>
  * The message will be reported to the {@link org.eclipse.ltk.core.refactoring.RefactoringStatus} and thus to the UI.
  * For any other exception, the stack trace is logged to the console additionally.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class RefactoringException extends RuntimeException {
 
-	private static final long serialVersionUID = 6796021485044787459L;
-	
-	public RefactoringException(String message) {
-		super(message);
-	}
+    private static final long serialVersionUID = 6796021485044787459L;
 
-	public RefactoringException(Exception cause) {
-		super(cause);
-	}
+    public RefactoringException(String message) {
+        super(message);
+    }
+
+    public RefactoringException(Exception cause) {
+        super(cause);
+    }
 }

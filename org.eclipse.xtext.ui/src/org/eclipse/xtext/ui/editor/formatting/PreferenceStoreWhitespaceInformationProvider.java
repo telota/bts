@@ -31,51 +31,51 @@ import java.util.Iterator;
  */
 public class PreferenceStoreWhitespaceInformationProvider implements IWhitespaceInformationProvider {
 
-	@Inject
-	private IIndentationInformation indentInfo;
+    @Inject
+    private IIndentationInformation indentInfo;
 
-	@Inject
-	private IStorage2UriMapper storage2UriMapper;
+    @Inject
+    private IStorage2UriMapper storage2UriMapper;
 
-	@Inject
-	private IWorkspace workspace;
+    @Inject
+    private IWorkspace workspace;
 
-	public IIndentationInformation getIndentationInformation(URI uri) {
-		return indentInfo;
-	}
+    public IIndentationInformation getIndentationInformation(URI uri) {
+        return indentInfo;
+    }
 
-	public ILineSeparatorInformation getLineSeparatorInformation(URI uri) {
-		final String lineSeparator = getLineSeparatorPreference(uri);
-		return new ILineSeparatorInformation() {
-			public String getLineSeparator() {
-				return lineSeparator;
-			}
-		};
-	}
+    public ILineSeparatorInformation getLineSeparatorInformation(URI uri) {
+        final String lineSeparator = getLineSeparatorPreference(uri);
+        return new ILineSeparatorInformation() {
+            public String getLineSeparator() {
+                return lineSeparator;
+            }
+        };
+    }
 
-	protected String getLineSeparatorPreference(URI uri) {
-		IProject project = null;
-		if (uri.isPlatformResource()) {
-			project = workspace.getRoot().getProject(uri.segment(1));
-		} else {
-			Iterator<Pair<IStorage, IProject>> it = storage2UriMapper.getStorages(uri).iterator();
-			if (it.hasNext())
-				project = it.next().getSecond();
-		}
-		if (project != null) {
-			String result = getLineSeparatorPreference(new ProjectScope(project));
-			if (result != null)
-				return result;
-		}
-		String result = getLineSeparatorPreference(new InstanceScope());
-		if (result != null)
-			return result;
-		return System.getProperty("line.separator");
-	}
+    protected String getLineSeparatorPreference(URI uri) {
+        IProject project = null;
+        if (uri.isPlatformResource()) {
+            project = workspace.getRoot().getProject(uri.segment(1));
+        } else {
+            Iterator<Pair<IStorage, IProject>> it = storage2UriMapper.getStorages(uri).iterator();
+            if (it.hasNext())
+                project = it.next().getSecond();
+        }
+        if (project != null) {
+            String result = getLineSeparatorPreference(new ProjectScope(project));
+            if (result != null)
+                return result;
+        }
+        String result = getLineSeparatorPreference(new InstanceScope());
+        if (result != null)
+            return result;
+        return System.getProperty("line.separator");
+    }
 
-	protected String getLineSeparatorPreference(IScopeContext scopeContext) {
-		String lineDelimiter = Platform.getPreferencesService().getString(Platform.PI_RUNTIME,
-				Platform.PREF_LINE_SEPARATOR, null, new IScopeContext[] { scopeContext });
-		return lineDelimiter;
-	}
+    protected String getLineSeparatorPreference(IScopeContext scopeContext) {
+        String lineDelimiter = Platform.getPreferencesService().getString(Platform.PI_RUNTIME,
+                Platform.PREF_LINE_SEPARATOR, null, new IScopeContext[]{scopeContext});
+        return lineDelimiter;
+    }
 }

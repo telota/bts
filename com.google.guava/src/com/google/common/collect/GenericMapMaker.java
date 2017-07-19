@@ -37,115 +37,117 @@ import java.util.concurrent.TimeUnit;
  * @author Kevin Bourrillion
  * @since 7.0
  * @deprecated This class existed only to support the generic paramterization necessary for the
- *     caching functionality in {@code MapMaker}. That functionality has been moved to {@link
- *     com.google.common.cache.CacheBuilder}, which is a properly generified class and thus needs no
- *     "Generic" equivalent; simple use {@code CacheBuilder} naturally. For general migration
- *     instructions, see the <a
- *     href="http://code.google.com/p/guava-libraries/wiki/MapMakerMigration">MapMaker Migration
- *     Guide</a>. This class is scheduled for removal in Guava 16.0.
+ * caching functionality in {@code MapMaker}. That functionality has been moved to {@link
+ * com.google.common.cache.CacheBuilder}, which is a properly generified class and thus needs no
+ * "Generic" equivalent; simple use {@code CacheBuilder} naturally. For general migration
+ * instructions, see the <a
+ * href="http://code.google.com/p/guava-libraries/wiki/MapMakerMigration">MapMaker Migration
+ * Guide</a>. This class is scheduled for removal in Guava 16.0.
  */
 @Beta
 @Deprecated
 @GwtCompatible(emulated = true)
 public abstract class GenericMapMaker<K0, V0> {
-  @GwtIncompatible("To be supported")
-  enum NullListener implements RemovalListener<Object, Object> {
-    INSTANCE;
+    // Set by MapMaker, but sits in this class to preserve the type relationship
+    @GwtIncompatible("To be supported")
+    RemovalListener<K0, V0> removalListener;
 
-    @Override
-    public void onRemoval(RemovalNotification<Object, Object> notification) {}
-  }
+    // No subclasses but our own
+    GenericMapMaker() {
+    }
 
-  // Set by MapMaker, but sits in this class to preserve the type relationship
-  @GwtIncompatible("To be supported")
-  RemovalListener<K0, V0> removalListener;
+    /**
+     * See {@link MapMaker#keyEquivalence}.
+     */
+    @GwtIncompatible("To be supported")
+    abstract GenericMapMaker<K0, V0> keyEquivalence(Equivalence<Object> equivalence);
 
-  // No subclasses but our own
-  GenericMapMaker() {}
+    /**
+     * See {@link MapMaker#initialCapacity}.
+     */
+    public abstract GenericMapMaker<K0, V0> initialCapacity(int initialCapacity);
 
-  /**
-   * See {@link MapMaker#keyEquivalence}.
-   */
-  @GwtIncompatible("To be supported")
-  abstract GenericMapMaker<K0, V0> keyEquivalence(Equivalence<Object> equivalence);
+    /**
+     * See {@link MapMaker#maximumSize}.
+     */
+    abstract GenericMapMaker<K0, V0> maximumSize(int maximumSize);
 
-  /**
-   * See {@link MapMaker#initialCapacity}.
-   */
-  public abstract GenericMapMaker<K0, V0> initialCapacity(int initialCapacity);
+    /**
+     * See {@link MapMaker#concurrencyLevel}.
+     */
+    public abstract GenericMapMaker<K0, V0> concurrencyLevel(int concurrencyLevel);
 
-  /**
-   * See {@link MapMaker#maximumSize}.
-   */
-  abstract GenericMapMaker<K0, V0> maximumSize(int maximumSize);
+    /**
+     * See {@link MapMaker#weakKeys}.
+     */
+    @GwtIncompatible("java.lang.ref.WeakReference")
+    public abstract GenericMapMaker<K0, V0> weakKeys();
 
-  /**
-   * See {@link MapMaker#concurrencyLevel}.
-   */
-  public abstract GenericMapMaker<K0, V0> concurrencyLevel(int concurrencyLevel);
+    /**
+     * See {@link MapMaker#weakValues}.
+     */
+    @GwtIncompatible("java.lang.ref.WeakReference")
+    public abstract GenericMapMaker<K0, V0> weakValues();
 
-  /**
-   * See {@link MapMaker#weakKeys}.
-   */
-  @GwtIncompatible("java.lang.ref.WeakReference")
-  public abstract GenericMapMaker<K0, V0> weakKeys();
+    /**
+     * See {@link MapMaker#softValues}.
+     *
+     * @deprecated Caching functionality in {@code MapMaker} has been moved to {@link
+     * com.google.common.cache.CacheBuilder}, with {@link #softValues} being replaced by {@link
+     * com.google.common.cache.CacheBuilder#softValues}. Note that {@code CacheBuilder} is simply
+     * an enhanced API for an implementation which was branched from {@code MapMaker}. <b>This
+     * method is scheduled for deletion in August 2014.</b>
+     */
+    @Deprecated
+    @GwtIncompatible("java.lang.ref.SoftReference")
+    public abstract GenericMapMaker<K0, V0> softValues();
 
-  /**
-   * See {@link MapMaker#weakValues}.
-   */
-  @GwtIncompatible("java.lang.ref.WeakReference")
-  public abstract GenericMapMaker<K0, V0> weakValues();
+    /**
+     * See {@link MapMaker#expireAfterWrite}.
+     */
+    abstract GenericMapMaker<K0, V0> expireAfterWrite(long duration, TimeUnit unit);
 
-  /**
-   * See {@link MapMaker#softValues}.
-   *
-   * @deprecated Caching functionality in {@code MapMaker} has been moved to {@link
-   *     com.google.common.cache.CacheBuilder}, with {@link #softValues} being replaced by {@link
-   *     com.google.common.cache.CacheBuilder#softValues}. Note that {@code CacheBuilder} is simply
-   *     an enhanced API for an implementation which was branched from {@code MapMaker}. <b>This
-   *     method is scheduled for deletion in August 2014.</b>
-   */
-  @Deprecated
-  @GwtIncompatible("java.lang.ref.SoftReference")
-  public abstract GenericMapMaker<K0, V0> softValues();
+    /**
+     * See {@link MapMaker#expireAfterAccess}.
+     */
+    @GwtIncompatible("To be supported")
+    abstract GenericMapMaker<K0, V0> expireAfterAccess(long duration, TimeUnit unit);
 
-  /**
-   * See {@link MapMaker#expireAfterWrite}.
-   */
-  abstract GenericMapMaker<K0, V0> expireAfterWrite(long duration, TimeUnit unit);
-
-  /**
-   * See {@link MapMaker#expireAfterAccess}.
-   */
-  @GwtIncompatible("To be supported")
-  abstract GenericMapMaker<K0, V0> expireAfterAccess(long duration, TimeUnit unit);
+    @SuppressWarnings("unchecked") // safe covariant cast
+    @GwtIncompatible("To be supported")
+    <K extends K0, V extends V0> RemovalListener<K, V> getRemovalListener() {
+        return (RemovalListener<K, V>) Objects.firstNonNull(removalListener, NullListener.INSTANCE);
+    }
 
   /*
    * Note that MapMaker's removalListener() is not here, because once you're interacting with a
    * GenericMapMaker you've already called that, and shouldn't be calling it again.
    */
 
-  @SuppressWarnings("unchecked") // safe covariant cast
-  @GwtIncompatible("To be supported")
-  <K extends K0, V extends V0> RemovalListener<K, V> getRemovalListener() {
-    return (RemovalListener<K, V>) Objects.firstNonNull(removalListener, NullListener.INSTANCE);
-  }
+    /**
+     * See {@link MapMaker#makeMap}.
+     */
+    public abstract <K extends K0, V extends V0> ConcurrentMap<K, V> makeMap();
 
-  /**
-   * See {@link MapMaker#makeMap}.
-   */
-  public abstract <K extends K0, V extends V0> ConcurrentMap<K, V> makeMap();
+    /**
+     * See {@link MapMaker#makeCustomMap}.
+     */
+    @GwtIncompatible("MapMakerInternalMap")
+    abstract <K, V> MapMakerInternalMap<K, V> makeCustomMap();
 
-  /**
-   * See {@link MapMaker#makeCustomMap}.
-   */
-  @GwtIncompatible("MapMakerInternalMap")
-  abstract <K, V> MapMakerInternalMap<K, V> makeCustomMap();
+    /**
+     * See {@link MapMaker#makeComputingMap}.
+     */
+    @Deprecated
+    abstract <K extends K0, V extends V0> ConcurrentMap<K, V> makeComputingMap(
+            Function<? super K, ? extends V> computingFunction);
 
-  /**
-   * See {@link MapMaker#makeComputingMap}.
-   */
-  @Deprecated
-  abstract <K extends K0, V extends V0> ConcurrentMap<K, V> makeComputingMap(
-      Function<? super K, ? extends V> computingFunction);
+    @GwtIncompatible("To be supported")
+    enum NullListener implements RemovalListener<Object, Object> {
+        INSTANCE;
+
+        @Override
+        public void onRemoval(RemovalNotification<Object, Object> notification) {
+        }
+    }
 }

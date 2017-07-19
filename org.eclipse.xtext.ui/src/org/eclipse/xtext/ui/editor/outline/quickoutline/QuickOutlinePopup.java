@@ -62,355 +62,342 @@ import com.google.inject.Inject;
  */
 public class QuickOutlinePopup extends PopupDialog implements DisposeListener {
 
-	protected class NamePatternFilter extends ViewerFilter {
+    @Inject
+    private IOutlineTreeProvider treeProvider;
+    @Inject
+    private OutlineNodeLabelProvider labelProvider;
+    @Inject
+    private OutlineNodeContentProvider contentProvider;
+    @Inject
+    private OutlineFilterAndSorter.IComparator comparator;
+    @Inject
+    private QuickOutlineFilterAndSorter filterAndSorter;
+    @Inject
+    private PrefixMatcher prefixMatcher;
+    @Inject
+    private OutlineNodeElementOpener elementOpener;
+    private int TREESTYLE = SWT.V_SCROLL | SWT.H_SCROLL;
+    private TreeViewer treeViewer;
+    private IXtextDocument document;
+    private XtextEditor xtextEditor;
+    private Text filterText;
+    private PrefixMatcherOutlineAdapter prefixMatcherOutlineAdapter;
+    private KeyStroke invokingKeystroke;
 
-		public NamePatternFilter() {
-		}
+    public QuickOutlinePopup() {
+        this(null);
+    }
 
-		@Override
-		public boolean select(Viewer viewer, Object parentElement, Object element) {
-			StringMatcher matcher = getMatcher();
-			if (matcher == null || !(viewer instanceof TreeViewer))
-				return true;
-			TreeViewer treeViewer = (TreeViewer) viewer;
+    public QuickOutlinePopup(Shell parent) {
+        super(parent, SWT.RESIZE, true, false, true, true, true, null,
+                Messages.QuickOutlinePopup_pressESC);
+    }
 
-			String matchName = ((ILabelProvider) treeViewer.getLabelProvider()).getText(element);
-			matchName = TextProcessor.deprocess(matchName);
-			if (matchName != null && matcher.match(matchName))
-				return true;
+    @Override
+    protected Control createTitleControl(Composite parent) {
+        filterText = createFilterText(parent);
+        return filterText;
+    }
 
-			return hasUnfilteredChild(treeViewer, element);
-		}
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        treeViewer = createTreeViewer(parent, TREESTYLE);
 
-		/**
-		 * @since 2.1 protected
-		 */
-		protected boolean hasUnfilteredChild(TreeViewer viewer, Object element) {
-			Object[] children = ((ITreeContentProvider) viewer.getContentProvider()).getChildren(element);
-			for (int i = 0; i < children.length; i++)
-				if (select(viewer, element, children[i]))
-					return true;
-			return false;
-		}
-	}
+        final Tree tree = treeViewer.getTree();
+        tree.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.character == 0x1B) { // ESC
+                    dispose();
+                } else {
+                    if (e.keyCode == invokingKeystroke.getNaturalKey() && e.stateMask == invokingKeystroke.getModifierKeys()) {
+                        changeOutlineMode();
+                        e.doit = false;
+                    }
+                }
+            }
+        });
 
-	@Inject
-	private IOutlineTreeProvider treeProvider;
+        tree.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                gotoSelectedElement();
+            }
+        });
 
-	@Inject
-	private OutlineNodeLabelProvider labelProvider;
+        installFilter();
+        setInfoText();
 
-	@Inject
-	private OutlineNodeContentProvider contentProvider;
+        addDisposeListener(this);
+        return treeViewer.getControl();
+    }
 
-	@Inject
-	private OutlineFilterAndSorter.IComparator comparator;
-	
-	@Inject
-	private QuickOutlineFilterAndSorter filterAndSorter;
-	
-	@Inject
-	private PrefixMatcher prefixMatcher;
-	
-	@Inject
-	private OutlineNodeElementOpener elementOpener;
+    /**
+     * @since 2.2
+     */
+    protected void setInfoText() {
+        if (treeProvider instanceof IOutlineTreeProvider.ModeAware)
+            setInfoText("Press " + invokingKeystroke + " to " + ((IOutlineTreeProvider.ModeAware) treeProvider)
+                    .getNextMode().getDescription());
+        else
+            setInfoText(Messages.QuickOutlinePopup_pressESC);
+    }
 
-	private int TREESTYLE = SWT.V_SCROLL | SWT.H_SCROLL;
+    protected TreeViewer createTreeViewer(Composite parent, int style) {
+        Tree tree = new Tree(parent, SWT.SINGLE | (style & ~SWT.MULTI));
+        GridData gd = new GridData(GridData.FILL_BOTH);
+        gd.heightHint = tree.getItemHeight() * 12;
+        tree.setLayoutData(gd);
 
-	private TreeViewer treeViewer;
+        final TreeViewer treeViewer = new TreeViewer(tree);
+        treeViewer.addFilter(new NamePatternFilter());
 
-	private IXtextDocument document;
+        treeViewer.setContentProvider(contentProvider);
+        filterAndSorter.setComparator(comparator);
+        contentProvider.setFilterAndSorter(filterAndSorter);
+        treeViewer.setLabelProvider(labelProvider);
+        treeViewer.setAutoExpandLevel(AbstractTreeViewer.ALL_LEVELS);
+        IOutlineNode rootNode = document.readOnly(new IUnitOfWork<IOutlineNode, XtextResource>() {
+            public IOutlineNode exec(XtextResource state) throws Exception {
+                IOutlineNode rootNode = treeProvider.createRoot(document);
+                createChildrenRecursively(rootNode.getChildren());
+                return rootNode;
+            }
 
-	private XtextEditor xtextEditor;
+            protected void createChildrenRecursively(List<IOutlineNode> nodes) {
+                for (IOutlineNode node : nodes) {
+                    createChildrenRecursively(node.getChildren());
+                }
+            }
+        });
+        treeViewer.setInput(rootNode);
+        return treeViewer;
+    }
 
-	private Text filterText;
+    protected Text createFilterText(Composite parent) {
+        filterText = new Text(parent, SWT.NONE);
+        Dialog.applyDialogFont(filterText);
 
-	private PrefixMatcherOutlineAdapter prefixMatcherOutlineAdapter;
+        GridData data = new GridData(GridData.FILL_HORIZONTAL);
+        data.horizontalAlignment = GridData.FILL;
+        data.verticalAlignment = GridData.CENTER;
+        filterText.setLayoutData(data);
 
-	private KeyStroke invokingKeystroke;
+        filterText.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.keyCode == 0x0D) // return
+                    gotoSelectedElement();
+                if (e.keyCode == SWT.ARROW_DOWN)
+                    treeViewer.getTree().setFocus();
+                if (e.keyCode == SWT.ARROW_UP)
+                    treeViewer.getTree().setFocus();
+                if (e.character == 0x1B) // ESC
+                    dispose();
+                if (e.keyCode == invokingKeystroke.getNaturalKey() && e.stateMask == invokingKeystroke.getModifierKeys()) {
+                    changeOutlineMode();
+                    e.doit = false;
+                }
 
-	public QuickOutlinePopup() {
-		this(null);
-	}
+            }
+        });
+        return filterText;
+    }
 
-	public QuickOutlinePopup(Shell parent) {
-		super(parent, SWT.RESIZE, true, false, true, true, true, null,
-				Messages.QuickOutlinePopup_pressESC);
-	}
+    @Override
+    protected Control getFocusControl() {
+        return filterText;
+    }
 
-	@Override
-	protected Control createTitleControl(Composite parent) {
-		filterText = createFilterText(parent);
-		return filterText;
-	}
+    /**
+     * @since 2.1 protected
+     */
+    protected void installFilter() {
+        filterText.setText(""); //$NON-NLS-1$
 
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		treeViewer = createTreeViewer(parent, TREESTYLE);
+        filterText.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                String text = ((Text) e.widget).getText();
+                setMatcherString(text, true);
+            }
+        });
+    }
 
-		final Tree tree = treeViewer.getTree();
-		tree.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.character == 0x1B) { // ESC
-					dispose();
-				} else {
-					if(e.keyCode == invokingKeystroke.getNaturalKey() && e.stateMask == invokingKeystroke.getModifierKeys()) {
-						changeOutlineMode();
-						e.doit = false;
-					}
-				}
-			}
-		});
+    protected StringMatcher getMatcher() {
+        return prefixMatcherOutlineAdapter;
+    }
 
-		tree.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				gotoSelectedElement();
-			}
-		});
+    protected boolean hasMatcher() {
+        return prefixMatcherOutlineAdapter != null;
+    }
 
-		installFilter();
-		setInfoText();
+    protected void setMatcherString(String pattern, boolean update) {
+        if (pattern.length() == 0) {
+            prefixMatcherOutlineAdapter = null;
+        } else {
+            prefixMatcherOutlineAdapter = new PrefixMatcherOutlineAdapter(pattern, prefixMatcher);
+        }
 
-		addDisposeListener(this);
-		return treeViewer.getControl();
-	}
-	
-	/**
-	 * @since 2.2
-	 */
-	protected void setInfoText() {
-		if(treeProvider instanceof IOutlineTreeProvider.ModeAware) 
-			setInfoText("Press " + invokingKeystroke + " to " + ((IOutlineTreeProvider.ModeAware) treeProvider)
-					.getNextMode().getDescription());
-		else 
-			setInfoText(Messages.QuickOutlinePopup_pressESC);
-	}
+        if (update)
+            stringMatcherUpdated();
+    }
 
-	protected TreeViewer createTreeViewer(Composite parent, int style) {
-		Tree tree = new Tree(parent, SWT.SINGLE | (style & ~SWT.MULTI));
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		gd.heightHint = tree.getItemHeight() * 12;
-		tree.setLayoutData(gd);
+    protected void stringMatcherUpdated() {
+        // refresh viewer to re-filter
+        treeViewer.getControl().setRedraw(false);
+        treeViewer.refresh();
+        treeViewer.expandAll();
+        selectFirstMatch();
+        treeViewer.getControl().setRedraw(true);
+    }
 
-		final TreeViewer treeViewer = new TreeViewer(tree);
-		treeViewer.addFilter(new NamePatternFilter());
+    protected void selectFirstMatch() {
+        Object[] rootElements = contentProvider.getElements(treeViewer.getInput());
+        Object matchingElement = findMatchingElement(rootElements);
 
-		treeViewer.setContentProvider(contentProvider);
-		filterAndSorter.setComparator(comparator);
-		contentProvider.setFilterAndSorter(filterAndSorter);
-		treeViewer.setLabelProvider(labelProvider);
-		treeViewer.setAutoExpandLevel(AbstractTreeViewer.ALL_LEVELS);
-		IOutlineNode rootNode = document.readOnly(new IUnitOfWork<IOutlineNode, XtextResource>() {
-			public IOutlineNode exec(XtextResource state) throws Exception {
-				IOutlineNode rootNode = treeProvider.createRoot(document);
-				createChildrenRecursively(rootNode.getChildren());
-				return rootNode;
-			}
+        ISelection selection = StructuredSelection.EMPTY;
+        if (matchingElement != null) {
+            selection = new StructuredSelection(matchingElement);
+        }
+        treeViewer.setSelection(selection);
+    }
 
-			protected void createChildrenRecursively(List<IOutlineNode> nodes) {
-				for (IOutlineNode node : nodes) {
-					createChildrenRecursively(node.getChildren());
-				}
-			}
-		});
-		treeViewer.setInput(rootNode);
-		return treeViewer;
-	}
+    protected Object findMatchingElement(Object[] elements) {
+        if (hasMatcher()) {
+            for (Object element : elements) {
+                String text = labelProvider.getStyledStringProvider().getStyledText(element).getString();
+                if (getMatcher().match(text)) {
+                    return element;
+                }
+                Object[] children = contentProvider.getChildren(element);
+                Object matchingChild = findMatchingElement(children);
+                if (matchingChild != null) {
+                    return matchingChild;
+                }
+            }
+        }
+        return null;
+    }
 
-	protected Text createFilterText(Composite parent) {
-		filterText = new Text(parent, SWT.NONE);
-		Dialog.applyDialogFont(filterText);
+    protected Object getSelectedElement() {
+        if (treeViewer == null) {
+            return null;
+        }
+        return ((IStructuredSelection) treeViewer.getSelection()).getFirstElement();
+    }
 
-		GridData data = new GridData(GridData.FILL_HORIZONTAL);
-		data.horizontalAlignment = GridData.FILL;
-		data.verticalAlignment = GridData.CENTER;
-		filterText.setLayoutData(data);
+    /**
+     * @since 2.1 protected
+     */
+    protected void gotoSelectedElement() {
+        Object selectedElement = getSelectedElement();
+        if (selectedElement != null) {
+            dispose();
+            if (selectedElement instanceof IOutlineNode) {
+                elementOpener.open((IOutlineNode) selectedElement, xtextEditor.getInternalSourceViewer());
+            }
+        }
+    }
 
-		filterText.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.keyCode == 0x0D) // return
-					gotoSelectedElement();
-				if (e.keyCode == SWT.ARROW_DOWN)
-					treeViewer.getTree().setFocus();
-				if (e.keyCode == SWT.ARROW_UP)
-					treeViewer.getTree().setFocus();
-				if (e.character == 0x1B) // ESC
-					dispose();
-				if(e.keyCode == invokingKeystroke.getNaturalKey() && e.stateMask == invokingKeystroke.getModifierKeys()) {
-					changeOutlineMode();
-					e.doit = false;
-				}
+    public final void dispose() {
+        close();
+    }
 
-			}
-		});
-		return filterText;
-	}
+    public void addDisposeListener(DisposeListener listener) {
+        getShell().addDisposeListener(listener);
+    }
 
-	@Override
-	protected Control getFocusControl() {
-		return filterText;
-	}
+    public void removeDisposeListener(DisposeListener listener) {
+        getShell().removeDisposeListener(listener);
+    }
 
-	/**
-	 * @since 2.1 protected
-	 */
-	protected void installFilter() {
-		filterText.setText(""); //$NON-NLS-1$
+    public void widgetDisposed(DisposeEvent event) {
+        treeViewer = null;
+        filterText = null;
+    }
 
-		filterText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				String text = ((Text) e.widget).getText();
-				setMatcherString(text, true);
-			}
-		});
-	}
+    public void setInput(IXtextDocument document) {
+        if (treeViewer != null) {
+            treeViewer.setInput(treeProvider.createRoot(document));
+        }
+        this.document = document;
+    }
 
-	protected StringMatcher getMatcher() {
-		return prefixMatcherOutlineAdapter;
-	}
+    @Override
+    protected Point getDefaultLocation(Point initialSize) {
+        Control textWidget = (Control) xtextEditor.getAdapter(Control.class);
+        Point size = textWidget.getSize();
 
-	protected boolean hasMatcher() {
-		return prefixMatcherOutlineAdapter != null;
-	}
+        Point popupLocation = new Point((size.x / 2) - (initialSize.x / 2), (size.y / 2) - (initialSize.y / 2));
+        return textWidget.toDisplay(popupLocation);
+    }
 
-	protected void setMatcherString(String pattern, boolean update) {
-		if (pattern.length() == 0) {
-			prefixMatcherOutlineAdapter = null;
-		} else {
-			prefixMatcherOutlineAdapter = new PrefixMatcherOutlineAdapter(pattern, prefixMatcher);
-		}
+    @Override
+    protected IDialogSettings getDialogSettings() {
+        String sectionName = "xtext.quickoutline"; //$NON-NLS-1$
 
-		if (update)
-			stringMatcherUpdated();
-	}
+        IDialogSettings settings = Activator.getDefault().getDialogSettings().getSection(sectionName);
+        if (settings == null) {
+            settings = Activator.getDefault().getDialogSettings().addNewSection(sectionName);
+        }
 
-	protected void stringMatcherUpdated() {
-		// refresh viewer to re-filter
-		treeViewer.getControl().setRedraw(false);
-		treeViewer.refresh();
-		treeViewer.expandAll();
-		selectFirstMatch();
-		treeViewer.getControl().setRedraw(true);
-	}
+        return settings;
+    }
 
-	protected void selectFirstMatch() {
-		Object[] rootElements = contentProvider.getElements(treeViewer.getInput());
-		Object matchingElement = findMatchingElement(rootElements);
+    public void setEditor(XtextEditor xtextEditor) {
+        this.xtextEditor = xtextEditor;
+    }
 
-		ISelection selection = StructuredSelection.EMPTY;
-		if (matchingElement != null) {
-			selection = new StructuredSelection(matchingElement);
-		}
-		treeViewer.setSelection(selection);
-	}
+    /**
+     * @since 2.2
+     */
+    public void setEvent(Event event) {
+        this.invokingKeystroke = KeyStroke.getInstance(event.stateMask, event.keyCode);
+    }
 
-	protected Object findMatchingElement(Object[] elements) {
-		if (hasMatcher()) {
-			for (Object element : elements) {
-				String text = labelProvider.getStyledStringProvider().getStyledText(element).getString();
-				if (getMatcher().match(text)) {
-					return element;
-				}
-				Object[] children = contentProvider.getChildren(element);
-				Object matchingChild = findMatchingElement(children);
-				if (matchingChild != null) {
-					return matchingChild;
-				}
-			}
-		}
-		return null;
-	}
+    /**
+     * @since 2.2
+     */
+    protected void changeOutlineMode() {
+        if (treeProvider instanceof IOutlineTreeProvider.ModeAware) {
+            IOutlineTreeProvider.ModeAware modeTreeProvider = (IOutlineTreeProvider.ModeAware) treeProvider;
+            OutlineMode nextMode = modeTreeProvider.getNextMode();
+            modeTreeProvider.setCurrentMode(nextMode);
+            setInfoText();
+            setInput(document);
+        }
+    }
 
-	protected Object getSelectedElement() {
-		if (treeViewer == null) {
-			return null;
-		}
-		return ((IStructuredSelection) treeViewer.getSelection()).getFirstElement();
-	}
+    protected class NamePatternFilter extends ViewerFilter {
 
-	/**
-	 * @since 2.1 protected
-	 */
-	protected void gotoSelectedElement() {
-		Object selectedElement = getSelectedElement();
-		if (selectedElement != null) {
-			dispose();
-			if (selectedElement instanceof IOutlineNode) {
-				elementOpener.open((IOutlineNode) selectedElement, xtextEditor.getInternalSourceViewer());
-			}
-		}
-	}
+        public NamePatternFilter() {
+        }
 
-	public final void dispose() {
-		close();
-	}
+        @Override
+        public boolean select(Viewer viewer, Object parentElement, Object element) {
+            StringMatcher matcher = getMatcher();
+            if (matcher == null || !(viewer instanceof TreeViewer))
+                return true;
+            TreeViewer treeViewer = (TreeViewer) viewer;
 
-	public void addDisposeListener(DisposeListener listener) {
-		getShell().addDisposeListener(listener);
-	}
+            String matchName = ((ILabelProvider) treeViewer.getLabelProvider()).getText(element);
+            matchName = TextProcessor.deprocess(matchName);
+            if (matchName != null && matcher.match(matchName))
+                return true;
 
-	public void removeDisposeListener(DisposeListener listener) {
-		getShell().removeDisposeListener(listener);
-	}
+            return hasUnfilteredChild(treeViewer, element);
+        }
 
-	public void widgetDisposed(DisposeEvent event) {
-		treeViewer = null;
-		filterText = null;
-	}
-
-	public void setInput(IXtextDocument document) {
-		if (treeViewer != null) {
-			treeViewer.setInput(treeProvider.createRoot(document));
-		} 
-		this.document = document;
-	}
-
-	@Override
-	protected Point getDefaultLocation(Point initialSize) {
-		Control textWidget = (Control) xtextEditor.getAdapter(Control.class);
-		Point size = textWidget.getSize();
-
-		Point popupLocation = new Point((size.x / 2) - (initialSize.x / 2), (size.y / 2) - (initialSize.y / 2));
-		return textWidget.toDisplay(popupLocation);
-	}
-
-	@Override
-	protected IDialogSettings getDialogSettings() {
-		String sectionName = "xtext.quickoutline"; //$NON-NLS-1$
-
-		IDialogSettings settings = Activator.getDefault().getDialogSettings().getSection(sectionName);
-		if (settings == null) {
-			settings = Activator.getDefault().getDialogSettings().addNewSection(sectionName);
-		}
-
-		return settings;
-	}
-
-	public void setEditor(XtextEditor xtextEditor) {
-		this.xtextEditor = xtextEditor;
-	}
-
-	/**
-	 * @since 2.2
-	 */
-	public void setEvent(Event event) {
-		this.invokingKeystroke = KeyStroke.getInstance(event.stateMask, event.keyCode);
-	}
-	
-	/**
-	 * @since 2.2
-	 */
-	protected void changeOutlineMode() {
-		if(treeProvider instanceof IOutlineTreeProvider.ModeAware) {
-			IOutlineTreeProvider.ModeAware modeTreeProvider = (IOutlineTreeProvider.ModeAware) treeProvider;
-			OutlineMode nextMode = modeTreeProvider.getNextMode();
-			modeTreeProvider.setCurrentMode(nextMode);
-			setInfoText();
-			setInput(document);
-		}
-	}
+        /**
+         * @since 2.1 protected
+         */
+        protected boolean hasUnfilteredChild(TreeViewer viewer, Object element) {
+            Object[] children = ((ITreeContentProvider) viewer.getContentProvider()).getChildren(element);
+            for (int i = 0; i < children.length; i++)
+                if (select(viewer, element, children[i]))
+                    return true;
+            return false;
+        }
+    }
 
 }

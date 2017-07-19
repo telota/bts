@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import org.bbaw.bts.commons.BTSPluginIDs;
@@ -11,17 +10,17 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
 public class AddThsRootEntryHandler {
-	@Execute
-	public void execute(@Active MPart part,
-			ThsNavigatorController thsController, EventBroker eventBroker) {
-		BTSThsEntry entry = thsController.createNew();
-		entry.setName("Thesaurus Root");
-		eventBroker.post("model_ths_new_root/asyncEvent", entry);
-	}
+    @Execute
+    public void execute(@Active MPart part,
+                        ThsNavigatorController thsController, EventBroker eventBroker) {
+        BTSThsEntry entry = thsController.createNew();
+        entry.setName("Thesaurus Root");
+        eventBroker.post("model_ths_new_root/asyncEvent", entry);
+    }
 
-	@CanExecute
-	public boolean canExecute(@Active MPart part) {
-		return part.getElementId().equals(BTSPluginIDs.PART_ID_THS_NAVIGATOR);
-	}
-		
+    @CanExecute
+    public boolean canExecute(@Active MPart part) {
+        return part.getElementId().equals(BTSPluginIDs.PART_ID_THS_NAVIGATOR);
+    }
+
 }

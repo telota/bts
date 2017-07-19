@@ -26,68 +26,68 @@ import com.google.inject.Provider;
  */
 public class AbstractDeclarativeQuickfixProvider implements IssueResolutionProvider {
 
-	private static final Logger LOG = Logger.getLogger(AbstractDeclarativeQuickfixProvider.class);
+    private static final Logger LOG = Logger.getLogger(AbstractDeclarativeQuickfixProvider.class);
 
-	@Inject
-	private Provider<IssueResolutionAcceptor> issueResolutionAcceptorProvider;
+    @Inject
+    private Provider<IssueResolutionAcceptor> issueResolutionAcceptorProvider;
 
-	protected Predicate<Method> getFixMethodPredicate(final String issueCode) {
-		return new Predicate<Method>() {
-			public boolean apply(Method input) {
-				Fix annotation = input.getAnnotation(Fix.class);
-				boolean result = annotation != null && issueCode.equals(annotation.value())
-						&& input.getParameterTypes().length == 2 && Void.TYPE == input.getReturnType()
-						&& input.getParameterTypes()[0].isAssignableFrom(Issue.class)
-						&& input.getParameterTypes()[1].isAssignableFrom(IssueResolutionAcceptor.class);
-				return result;
-			}
-		};
-	}
+    protected Predicate<Method> getFixMethodPredicate(final String issueCode) {
+        return new Predicate<Method>() {
+            public boolean apply(Method input) {
+                Fix annotation = input.getAnnotation(Fix.class);
+                boolean result = annotation != null && issueCode.equals(annotation.value())
+                        && input.getParameterTypes().length == 2 && Void.TYPE == input.getReturnType()
+                        && input.getParameterTypes()[0].isAssignableFrom(Issue.class)
+                        && input.getParameterTypes()[1].isAssignableFrom(IssueResolutionAcceptor.class);
+                return result;
+            }
+        };
+    }
 
-	protected List<IssueResolution> getResolutions(Issue issue, List<Method> fixMethods) {
-		IssueResolutionAcceptor issueResolutionAcceptor = issueResolutionAcceptorProvider.get();
-		for (Method fixMethod : fixMethods) {
-			try {
-				fixMethod.setAccessible(true);
-				fixMethod.invoke(this, issue, issueResolutionAcceptor);
-			} catch (Exception e) {
-				LOG.error("Error executing fix method", e);
-			}
-		}
-		return issueResolutionAcceptor.getIssueResolutions();
-	}
+    protected List<IssueResolution> getResolutions(Issue issue, List<Method> fixMethods) {
+        IssueResolutionAcceptor issueResolutionAcceptor = issueResolutionAcceptorProvider.get();
+        for (Method fixMethod : fixMethods) {
+            try {
+                fixMethod.setAccessible(true);
+                fixMethod.invoke(this, issue, issueResolutionAcceptor);
+            } catch (Exception e) {
+                LOG.error("Error executing fix method", e);
+            }
+        }
+        return issueResolutionAcceptor.getIssueResolutions();
+    }
 
-	protected Iterable<Method> collectMethods(Class<? extends AbstractDeclarativeQuickfixProvider> clazz,
-			String issueCode) {
-		List<Method> methods = Lists.newArrayList(clazz.getMethods());
-		return Iterables.filter(methods, getFixMethodPredicate(issueCode));
-	}
+    protected Iterable<Method> collectMethods(Class<? extends AbstractDeclarativeQuickfixProvider> clazz,
+                                              String issueCode) {
+        List<Method> methods = Lists.newArrayList(clazz.getMethods());
+        return Iterables.filter(methods, getFixMethodPredicate(issueCode));
+    }
 
-	protected List<Method> getFixMethods(final Issue issue) {
-		return Lists.newArrayList(collectMethods(getClass(), issue.getCode()));
-	}
+    protected List<Method> getFixMethods(final Issue issue) {
+        return Lists.newArrayList(collectMethods(getClass(), issue.getCode()));
+    }
 
-	public boolean hasResolutionFor(final String issueCode) {
-		if (issueCode == null)
-			return false;
-		// TODO : cache this if it's a performance hit
-		Iterable<Method> methods = collectMethods(getClass(), issueCode);
-		return methods.iterator().hasNext();
-	}
+    public boolean hasResolutionFor(final String issueCode) {
+        if (issueCode == null)
+            return false;
+        // TODO : cache this if it's a performance hit
+        Iterable<Method> methods = collectMethods(getClass(), issueCode);
+        return methods.iterator().hasNext();
+    }
 
-	public List<IssueResolution> getResolutions(final Issue issue) {
-		List<Method> fixMethods = getFixMethods(issue);
-		return getResolutions(issue, fixMethods);
-	}
+    public List<IssueResolution> getResolutions(final Issue issue) {
+        List<Method> fixMethods = getFixMethods(issue);
+        return getResolutions(issue, fixMethods);
+    }
 
-	protected Provider<IssueResolutionAcceptor> getIssueResolutionAcceptorProvider() {
-		return issueResolutionAcceptorProvider;
-	}
+    protected Provider<IssueResolutionAcceptor> getIssueResolutionAcceptorProvider() {
+        return issueResolutionAcceptorProvider;
+    }
 
-	/**
-	 * for testing without guice
-	 */
-	public void setIssueResolutionAcceptorProvider(Provider<IssueResolutionAcceptor> issueResolutionAcceptorProvider) {
-		this.issueResolutionAcceptorProvider = issueResolutionAcceptorProvider;
-	}
+    /**
+     * for testing without guice
+     */
+    public void setIssueResolutionAcceptorProvider(Provider<IssueResolutionAcceptor> issueResolutionAcceptorProvider) {
+        this.issueResolutionAcceptorProvider = issueResolutionAcceptorProvider;
+    }
 }

@@ -16,27 +16,26 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class NoPartialDestructionImpl extends MinimalEObjectImpl.Container implements NoPartialDestruction
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected NoPartialDestructionImpl()
-  {
-    super();
-  }
+public class NoPartialDestructionImpl extends MinimalEObjectImpl.Container implements NoPartialDestruction {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected NoPartialDestructionImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.NO_PARTIAL_DESTRUCTION;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.NO_PARTIAL_DESTRUCTION;
+    }
 
 } //NoPartialDestructionImpl

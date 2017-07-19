@@ -31,45 +31,45 @@ import org.eclipselabs.emfjson.internal.JsOutputStream;
 
 public class CouchDBHandler extends URIHandlerImpl {
 
-	@Override
-	public boolean canHandle(URI uri) {
-		return isCouchDbService(uri);
-	}
+    @Override
+    public boolean canHandle(URI uri) {
+        return isCouchDbService(uri);
+    }
 
-	@Override
-	public InputStream createInputStream(final URI uri, final Map<?, ?> options) throws IOException {
-		if (checkDataBase(uri) == 0) {
-			throw new IllegalArgumentException("DataBase does not exist");
-		}
-		return new JsInputStream(uri, options) {
-			@Override
-			public void loadResource(Resource resource) throws IOException {
-				final HttpURLConnection connection = getGetConnection(uri);
-				final InputStream inStream = connection.getInputStream();
-				final JSONLoad loader = new JSONLoad(inStream, options, resource.getResourceSet());
-				loader.fillResource(resource);
-			}
-		};
-	}
-	
-	@Override
-	public OutputStream createOutputStream(final URI uri, Map<?, ?> options) throws IOException {
-		if (checkDataBase(uri) == 0) {
-			createDataBase(uri);
-		}
-		return new JsOutputStream(options) {
-			public void close() throws IOException {
-				URI documentURI = CouchDB.createOrUpdateDocument(uri, writer, currentRoot);		
-				if (documentURI != uri) {
-					resource.setURI(documentURI);
-				}
-			}
-		};
-	}
-	
-	@Override
-	public void delete(URI uri, Map<?, ?> options) throws IOException {
-		CouchDB.delete(uri);
-	}
-	
+    @Override
+    public InputStream createInputStream(final URI uri, final Map<?, ?> options) throws IOException {
+        if (checkDataBase(uri) == 0) {
+            throw new IllegalArgumentException("DataBase does not exist");
+        }
+        return new JsInputStream(uri, options) {
+            @Override
+            public void loadResource(Resource resource) throws IOException {
+                final HttpURLConnection connection = getGetConnection(uri);
+                final InputStream inStream = connection.getInputStream();
+                final JSONLoad loader = new JSONLoad(inStream, options, resource.getResourceSet());
+                loader.fillResource(resource);
+            }
+        };
+    }
+
+    @Override
+    public OutputStream createOutputStream(final URI uri, Map<?, ?> options) throws IOException {
+        if (checkDataBase(uri) == 0) {
+            createDataBase(uri);
+        }
+        return new JsOutputStream(options) {
+            public void close() throws IOException {
+                URI documentURI = CouchDB.createOrUpdateDocument(uri, writer, currentRoot);
+                if (documentURI != uri) {
+                    resource.setURI(documentURI);
+                }
+            }
+        };
+    }
+
+    @Override
+    public void delete(URI uri, Map<?, ?> options) throws IOException {
+        CouchDB.delete(uri);
+    }
+
 }

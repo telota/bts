@@ -20,124 +20,124 @@ import org.eclipse.equinox.p2.query.QueryUtil;
 import org.ramo.klevis.p2.core.iservice.IUninstallSoftwareService;
 
 public class UninstallSoftwareService implements IUninstallSoftwareService {
-	IProvisioningAgent agent;
-	public static final int GROUP = 0;
-	public static final int CATEGORY = 1;
-	public static final int ANY = 2;
+    public static final int GROUP = 0;
+    public static final int CATEGORY = 1;
+    public static final int ANY = 2;
+    IProvisioningAgent agent;
 
-	@Override
-	public List<IInstallableUnit> listInstalledSoftware(
-			IProvisioningAgent agen, int i) {
+    @Override
+    public List<IInstallableUnit> listInstalledSoftware(
+            IProvisioningAgent agen, int i) {
 
-		this.agent = agen;
-		IProfileRegistry service = (IProfileRegistry) agen
-				.getService(IProfileRegistry.SERVICE_NAME);
+        this.agent = agen;
+        IProfileRegistry service = (IProfileRegistry) agen
+                .getService(IProfileRegistry.SERVICE_NAME);
 
-		IQueryable<IInstallableUnit> queryable = service.getProfile("_SELF_");
+        IQueryable<IInstallableUnit> queryable = service.getProfile("_SELF_");
 
-		if(queryable==null){
-			return null;
-		}
-		NullProgressMonitor monitor = new NullProgressMonitor();
-		IQuery<IInstallableUnit> createIU = null;
-		if (i == GROUP) {
-			createIU = QueryUtil.createIUGroupQuery();
-		} else if (i == CATEGORY) {
-			createIU = QueryUtil.createIUCategoryQuery();
-		} else if (i == ANY) {
+        if (queryable == null) {
+            return null;
+        }
+        NullProgressMonitor monitor = new NullProgressMonitor();
+        IQuery<IInstallableUnit> createIU = null;
+        if (i == GROUP) {
+            createIU = QueryUtil.createIUGroupQuery();
+        } else if (i == CATEGORY) {
+            createIU = QueryUtil.createIUCategoryQuery();
+        } else if (i == ANY) {
 
-			createIU = QueryUtil.createIUAnyQuery();
-		}
-		IQueryResult<IInstallableUnit> query = queryable.query(createIU,
-				monitor);
+            createIU = QueryUtil.createIUAnyQuery();
+        }
+        IQueryResult<IInstallableUnit> query = queryable.query(createIU,
+                monitor);
 
-		List<IInstallableUnit> list = org.ramo.klevis.p2.core.util.Utils
-				.toList(query);
+        List<IInstallableUnit> list = org.ramo.klevis.p2.core.util.Utils
+                .toList(query);
 
-		return list;
+        return list;
 
-	}
+    }
 
-	@Override
-	public String uninstallSelected(List<IInstallableUnit> listToUninstall) {
-		try {
-			UninstallOperation uninstallOperation = new UninstallOperation(
-					new ProvisioningSession(agent), listToUninstall);
-			uninstallOperation.setProvisioningContext(new ProvisioningContext(
-					agent));
-			NullProgressMonitor monitor = new NullProgressMonitor();
-			IStatus resolveModal = uninstallOperation.resolveModal(monitor);
-			String resolutionDetails = uninstallOperation
-					.getResolutionDetails();
-			if (!resolveModal.isOK()) {
-				return resolutionDetails;
-			}
-			if (resolveModal.getSeverity() == IStatus.ERROR) {
-				return resolutionDetails;
-			}
+    @Override
+    public String uninstallSelected(List<IInstallableUnit> listToUninstall) {
+        try {
+            UninstallOperation uninstallOperation = new UninstallOperation(
+                    new ProvisioningSession(agent), listToUninstall);
+            uninstallOperation.setProvisioningContext(new ProvisioningContext(
+                    agent));
+            NullProgressMonitor monitor = new NullProgressMonitor();
+            IStatus resolveModal = uninstallOperation.resolveModal(monitor);
+            String resolutionDetails = uninstallOperation
+                    .getResolutionDetails();
+            if (!resolveModal.isOK()) {
+                return resolutionDetails;
+            }
+            if (resolveModal.getSeverity() == IStatus.ERROR) {
+                return resolutionDetails;
+            }
 
-			if (resolveModal.getCode() == IStatus.ERROR) {
+            if (resolveModal.getCode() == IStatus.ERROR) {
 
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.WARNING) {
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.CANCEL) {
-				return resolutionDetails;
-			} else if (resolveModal.getCode() == IStatus.INFO) {
-				return resolutionDetails;
-			}
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.WARNING) {
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.CANCEL) {
+                return resolutionDetails;
+            } else if (resolveModal.getCode() == IStatus.INFO) {
+                return resolutionDetails;
+            }
 
-			ProvisioningJob provisioningJob = uninstallOperation
-					.getProvisioningJob(null);
+            ProvisioningJob provisioningJob = uninstallOperation
+                    .getProvisioningJob(null);
 
-			provisioningJob.addJobChangeListener(new JobChangeAdapter() {
+            provisioningJob.addJobChangeListener(new JobChangeAdapter() {
 
-				@Override
-				public void scheduled(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void scheduled(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.scheduled(event);
-				}
+                    super.scheduled(event);
+                }
 
-				@Override
-				public void sleeping(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void sleeping(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.sleeping(event);
-				}
+                    super.sleeping(event);
+                }
 
-				@Override
-				public void aboutToRun(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void aboutToRun(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.aboutToRun(event);
+                    super.aboutToRun(event);
 
-				}
+                }
 
-				@Override
-				public void running(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void running(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.running(event);
-				}
+                    super.running(event);
+                }
 
-				@Override
-				public void done(IJobChangeEvent event) {
-					// TODO Auto-generated method stub
+                @Override
+                public void done(IJobChangeEvent event) {
+                    // TODO Auto-generated method stub
 
-					super.done(event);
-				}
+                    super.done(event);
+                }
 
-			});
+            });
 
-			IStatus run = provisioningJob.runModal(monitor);
+            IStatus run = provisioningJob.runModal(monitor);
 
-		} catch (Exception ex) {
+        } catch (Exception ex) {
 
-			throw new RuntimeException(ex.getMessage());
-		}
+            throw new RuntimeException(ex.getMessage());
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

@@ -17,31 +17,31 @@ import org.eclipse.swt.widgets.Shell;
 
 public class OpenUpdatersReadersEditorDialogHandler {
 
-	@Inject
-	private PermissionsAndExpressionsEvaluationController permissionsController;
-	
-	@Optional
-	@Execute
-	public void execute(
-			@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
-			@Named(IServiceConstants.ACTIVE_SELECTION) final BTSDBBaseObject selection,
-			IEclipseContext context) {
-		IEclipseContext childContext = context.createChild("Edit Updaters/Readers Context");
-		childContext.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT, 
-				new Boolean(permissionsController.userMayEditObject(
-						permissionsController.getAuthenticatedUser(), selection)));
-		ObjectUpdaterReaderEditorDialog dialog = ContextInjectionFactory.make(
-				ObjectUpdaterReaderEditorDialog.class, childContext);
-		childContext.set(ObjectUpdaterReaderEditorDialog.class, dialog);
-		dialog.open();
-	}
+    @Inject
+    private PermissionsAndExpressionsEvaluationController permissionsController;
 
-	@CanExecute
-	public boolean canExecute(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection) {
-		if (selection != null) {
-			return permissionsController.userMayEditObject(permissionsController.getAuthenticatedUser(), selection);
-		}
-		return false;
-	}
+    @Optional
+    @Execute
+    public void execute(
+            @Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
+            @Named(IServiceConstants.ACTIVE_SELECTION) final BTSDBBaseObject selection,
+            IEclipseContext context) {
+        IEclipseContext childContext = context.createChild("Edit Updaters/Readers Context");
+        childContext.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT,
+                new Boolean(permissionsController.userMayEditObject(
+                        permissionsController.getAuthenticatedUser(), selection)));
+        ObjectUpdaterReaderEditorDialog dialog = ContextInjectionFactory.make(
+                ObjectUpdaterReaderEditorDialog.class, childContext);
+        childContext.set(ObjectUpdaterReaderEditorDialog.class, dialog);
+        dialog.open();
+    }
+
+    @CanExecute
+    public boolean canExecute(
+            @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection) {
+        if (selection != null) {
+            return permissionsController.userMayEditObject(permissionsController.getAuthenticatedUser(), selection);
+        }
+        return false;
+    }
 }

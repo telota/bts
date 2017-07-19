@@ -9,11 +9,9 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>No Partial Destruction</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoPartialDestruction()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoPartialDestruction()
  */
-public interface NoPartialDestruction extends EObject
-{
+public interface NoPartialDestruction extends EObject {
 } // NoPartialDestruction

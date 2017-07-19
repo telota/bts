@@ -16,14 +16,14 @@ import org.eclipse.xtext.ui.editor.model.edit.IModificationContext;
  */
 public class CompletionProposalBasedModification implements IModification {
 
-	private final ICompletionProposal proposal;
+    private final ICompletionProposal proposal;
 
-	public CompletionProposalBasedModification(ICompletionProposal proposal) {
-		this.proposal = proposal;
-	}
-	
-	public void apply(IModificationContext context) throws Exception {
-		proposal.apply(context.getXtextDocument());
-	}
-	
+    public CompletionProposalBasedModification(ICompletionProposal proposal) {
+        this.proposal = proposal;
+    }
+
+    public void apply(IModificationContext context) throws Exception {
+        proposal.apply(context.getXtextDocument());
+    }
+
 }

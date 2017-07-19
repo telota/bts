@@ -27,62 +27,61 @@ import org.eclipse.jface.operation.IThreadListener;
  */
 public class WorkbenchRunnableAdapter implements IRunnableWithProgress, IThreadListener {
 
-	private IWorkspaceRunnable workspaceRunnable;
-	private ISchedulingRule rule;
-	private boolean fTransfer;
+    private IWorkspaceRunnable workspaceRunnable;
+    private ISchedulingRule rule;
+    private boolean fTransfer;
 
-	/**
-	 * Runs a workspace runnable with the given lock or <code>null</code>
-	 * to run with no lock at all.
-	 *
-	 * @param runnable the workspace runnable
-	 * @param rule the scheduling rule
-	 */
-	public WorkbenchRunnableAdapter(IWorkspaceRunnable runnable, ISchedulingRule rule) {
-		this(runnable, rule, true);
-	}
+    /**
+     * Runs a workspace runnable with the given lock or <code>null</code>
+     * to run with no lock at all.
+     *
+     * @param runnable the workspace runnable
+     * @param rule     the scheduling rule
+     */
+    public WorkbenchRunnableAdapter(IWorkspaceRunnable runnable, ISchedulingRule rule) {
+        this(runnable, rule, true);
+    }
 
-	/**
-	 * Runs a workspace runnable with the given lock or <code>null</code>
-	 * to run with no lock at all.
-	 *
-	 * @param runnable the workspace runnable
-	 * @param rule the scheduling rule
-	 * @param transfer <code>true</code> if the rule is to be transfered
-	 *  to the model context thread. Otherwise <code>false</code>
-	 *
-	 *  @since 3.1
-	 */
-	public WorkbenchRunnableAdapter(IWorkspaceRunnable runnable, ISchedulingRule rule, boolean transfer) {
-		Assert.isNotNull(runnable);
-		Assert.isNotNull(rule);
-		workspaceRunnable= runnable;
-		this.rule= rule;
-		fTransfer= transfer;
-	}
+    /**
+     * Runs a workspace runnable with the given lock or <code>null</code>
+     * to run with no lock at all.
+     *
+     * @param runnable the workspace runnable
+     * @param rule     the scheduling rule
+     * @param transfer <code>true</code> if the rule is to be transfered
+     *                 to the model context thread. Otherwise <code>false</code>
+     * @since 3.1
+     */
+    public WorkbenchRunnableAdapter(IWorkspaceRunnable runnable, ISchedulingRule rule, boolean transfer) {
+        Assert.isNotNull(runnable);
+        Assert.isNotNull(rule);
+        workspaceRunnable = runnable;
+        this.rule = rule;
+        fTransfer = transfer;
+    }
 
-	public ISchedulingRule getSchedulingRule() {
-		return rule;
-	}
+    public ISchedulingRule getSchedulingRule() {
+        return rule;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void threadChange(Thread thread) {
-		if (fTransfer)
-			Job.getJobManager().transferRule(rule, thread);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void threadChange(Thread thread) {
+        if (fTransfer)
+            Job.getJobManager().transferRule(rule, thread);
+    }
 
-	/*
-	 * @see IRunnableWithProgress#run(IProgressMonitor)
-	 */
-	public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-		try {
-			ResourcesPlugin.getWorkspace().run(workspaceRunnable, rule, IWorkspace.AVOID_UPDATE, monitor);
-		} catch (OperationCanceledException e) {
-			throw new InterruptedException(e.getMessage());
-		} catch (CoreException e) {
-			throw new InvocationTargetException(e);
-		}
-	}
+    /*
+     * @see IRunnableWithProgress#run(IProgressMonitor)
+     */
+    public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+        try {
+            ResourcesPlugin.getWorkspace().run(workspaceRunnable, rule, IWorkspace.AVOID_UPDATE, monitor);
+        } catch (OperationCanceledException e) {
+            throw new InterruptedException(e.getMessage());
+        } catch (CoreException e) {
+            throw new InvocationTargetException(e);
+        }
+    }
 }

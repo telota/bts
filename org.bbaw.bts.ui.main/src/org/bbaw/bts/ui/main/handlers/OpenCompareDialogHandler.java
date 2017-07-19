@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.main.handlers;
 
 import javax.inject.Named;
@@ -18,33 +17,31 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.widgets.Shell;
 
 public class OpenCompareDialogHandler {
-	@Execute
-	public void execute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
-			@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
-			IEclipseContext context) {
-		IEclipseContext child = context.createChild();
-		Object o = context.get(CompareObjectsController.class);
-		child.set("compareObject", selection);
-		CompareDialog dialog = ContextInjectionFactory.make(
-				CompareDialog.class, child);
-		// context.set(UserManagementDialog.class, dialog);
+    @Execute
+    public void execute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
+                        @Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
+                        IEclipseContext context) {
+        IEclipseContext child = context.createChild();
+        Object o = context.get(CompareObjectsController.class);
+        child.set("compareObject", selection);
+        CompareDialog dialog = ContextInjectionFactory.make(
+                CompareDialog.class, child);
+        // context.set(UserManagementDialog.class, dialog);
 
-		if (dialog.open() == dialog.OK) {
-		}
-	}
-	
-	
-	@CanExecute
-	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
-			@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) Boolean mayEdit) {
-		if (mayEdit != null && mayEdit.booleanValue() && selection instanceof AdministrativDataObject)
-		{
-			if (!((AdministrativDataObject)selection).getRevisions().isEmpty())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-		
+        if (dialog.open() == dialog.OK) {
+        }
+    }
+
+
+    @CanExecute
+    public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
+                              @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) Boolean mayEdit) {
+        if (mayEdit != null && mayEdit.booleanValue() && selection instanceof AdministrativDataObject) {
+            if (!((AdministrativDataObject) selection).getRevisions().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -30,63 +30,63 @@ import com.google.inject.Inject;
  */
 public class XtextQuickAssistAssistant extends QuickAssistAssistant {
 
-	protected ISourceViewer viewer;
-	protected Position storedPosition;
+    protected ISourceViewer viewer;
+    protected Position storedPosition;
 
-	@Inject
-	public XtextQuickAssistAssistant(XtextQuickAssistProcessor processor) {
-		setQuickAssistProcessor(processor);
-		setInformationControlCreator(createInformationControlCreator());
-		setRestoreSelection();
-	}
+    @Inject
+    public XtextQuickAssistAssistant(XtextQuickAssistProcessor processor) {
+        setQuickAssistProcessor(processor);
+        setInformationControlCreator(createInformationControlCreator());
+        setRestoreSelection();
+    }
 
-	protected void setRestoreSelection() {
-		addCompletionListener(new ICompletionListener() {
+    protected void setRestoreSelection() {
+        addCompletionListener(new ICompletionListener() {
 
-			public void assistSessionStarted(ContentAssistEvent event) {
-				Point selectedRange = viewer.getSelectedRange();
-				storePosition(selectedRange.x, selectedRange.y);
-			}
+            public void assistSessionStarted(ContentAssistEvent event) {
+                Point selectedRange = viewer.getSelectedRange();
+                storePosition(selectedRange.x, selectedRange.y);
+            }
 
-			public void assistSessionEnded(ContentAssistEvent event) {
-				restorePosition();
-			}
+            public void assistSessionEnded(ContentAssistEvent event) {
+                restorePosition();
+            }
 
-			public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {
-			}
-		});
-	}
+            public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {
+            }
+        });
+    }
 
-	protected AbstractReusableInformationControlCreator createInformationControlCreator() {
-		return new AbstractReusableInformationControlCreator() {
-			@Override
-			public IInformationControl doCreateInformationControl(Shell parent) {
-				return new DefaultInformationControl(parent, (IInformationPresenter) null);
-			}
-		};
-	}
+    protected AbstractReusableInformationControlCreator createInformationControlCreator() {
+        return new AbstractReusableInformationControlCreator() {
+            @Override
+            public IInformationControl doCreateInformationControl(Shell parent) {
+                return new DefaultInformationControl(parent, (IInformationPresenter) null);
+            }
+        };
+    }
 
-	@Override
-	public void install(ISourceViewer sourceViewer) {
-		super.install(sourceViewer);
-		viewer = sourceViewer;
-	}
-	
-	@Override
-	public void uninstall() {
-		viewer = null;
-		super.uninstall();
-	}
+    @Override
+    public void install(ISourceViewer sourceViewer) {
+        super.install(sourceViewer);
+        viewer = sourceViewer;
+    }
 
-	private void restorePosition() {
-		if (storedPosition != null && !storedPosition.isDeleted() && viewer.getDocument() != null) {
-			viewer.setSelectedRange(storedPosition.offset, storedPosition.length);
-			viewer.revealRange(storedPosition.offset, storedPosition.length);
-		}
-		storedPosition = null;
-	}
+    @Override
+    public void uninstall() {
+        viewer = null;
+        super.uninstall();
+    }
 
-	private void storePosition(int currOffset, int currLength) {
-		storedPosition = new Position(currOffset, currLength);
-	}
+    private void restorePosition() {
+        if (storedPosition != null && !storedPosition.isDeleted() && viewer.getDocument() != null) {
+            viewer.setSelectedRange(storedPosition.offset, storedPosition.length);
+            viewer.revealRange(storedPosition.offset, storedPosition.length);
+        }
+        storedPosition = null;
+    }
+
+    private void storePosition(int currOffset, int currLength) {
+        storedPosition = new Position(currOffset, currLength);
+    }
 }

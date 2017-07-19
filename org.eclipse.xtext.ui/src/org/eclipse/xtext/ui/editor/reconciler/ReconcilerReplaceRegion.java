@@ -22,112 +22,112 @@ import org.eclipse.xtext.util.ReplaceRegion;
  */
 public class ReconcilerReplaceRegion extends ReplaceRegion implements IRegion {
 
-	private long modificationStamp;
-	private List<DocumentEvent> events;
-	
-	public ReconcilerReplaceRegion(int offset, int length, String text) {
-		super(offset, length, text);
-	}
+    private long modificationStamp;
+    private List<DocumentEvent> events;
 
-	public long getModificationStamp() {
-		return modificationStamp;
-	}
+    public ReconcilerReplaceRegion(int offset, int length, String text) {
+        super(offset, length, text);
+    }
 
-	public void setModificationStamp(long docModificationStampAfter) {
-		this.modificationStamp = docModificationStampAfter;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public void addDocumentEvent(DocumentEvent event) {
-		if(events == null)
-			events = newArrayList();
-		events.add(event);
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public List<DocumentEvent> getDocumentEvents() {
-		return (events == null) ? Collections.<DocumentEvent>emptyList() : events;
-	}
-	
-	@Override
-	public String toString() {
-		return "ReconcilerReplaceRegion [" + getOffset() + ":" + getLength() + "] '" 
-				+ getText() + "' modificationStamp:" + getModificationStamp();  
-	}
-	
-	public static Builder builder(String text) {
-		return new Builder(text);
-	}
-	
-	public static class Builder {
+    public static Builder builder(String text) {
+        return new Builder(text);
+    }
 
-		private StringBuilder text;
+    public long getModificationStamp() {
+        return modificationStamp;
+    }
 
-		private boolean isEmpty;
-		
-		private int currentOffset;
-		private int currentLength;
-		private int currentReplacementOffset;
-		private int currentReplacementLength;
-		
-		protected Builder(String text) {
-			this.text = new StringBuilder(text);
-			isEmpty = true;
-		}
-		
-		public Builder add(final int nextOffset, final int nextLength, final String nextReplacement) {
-			if(isEmpty) {
-				isEmpty = false;
-				currentOffset = nextOffset;
-				currentLength = nextLength;
-				currentReplacementOffset = nextOffset;
-				currentReplacementLength = nextReplacement.length();
-				text.replace(nextOffset, nextOffset + nextLength, nextReplacement);
-			} else {
-				int currentEnd = currentOffset + currentReplacementLength;
-				int nextEnd = nextOffset + nextLength;
-				int newOffset = Math.min(currentOffset, nextOffset);
-				int newLength = nextLength;
-				int prefixSize = 0;
-				int postfixSize = 0;
-				if(nextOffset >= currentOffset) {
-					prefixSize = nextOffset - currentOffset;
-					if(nextEnd <= currentEnd) {
-						newLength = currentLength;
-						postfixSize = currentEnd - nextEnd; 
-					} else if(nextOffset < currentEnd) {
-						newLength = currentLength + nextLength - (currentEnd-nextOffset);
-					} else {
-						newLength = currentLength + (nextOffset - currentEnd) + nextLength;
-					}
-				} else {
-					if(nextEnd <= currentOffset) {
-						newLength = nextLength + (currentOffset-nextEnd) + currentLength;
-						postfixSize = currentEnd - nextEnd;
-					} else if(nextEnd <= currentEnd) {
-						newLength = currentLength + nextLength - (nextEnd-currentOffset);
-						postfixSize = currentEnd - nextEnd; 
-					} else {
-						newLength = nextLength + currentLength - currentReplacementLength;
-					}
-				}
-				currentOffset = newOffset;
-				currentLength = newLength;
-				text.replace(nextOffset, nextOffset + nextLength, nextReplacement);
-				currentReplacementOffset = nextOffset - prefixSize;
-				currentReplacementLength = nextReplacement.length() + prefixSize + postfixSize;
-			}
-			return this;
-		}
-		
-		public ReconcilerReplaceRegion create() {
-			String currentReplacement = text.substring(currentReplacementOffset, currentReplacementOffset + currentReplacementLength);
-			return new ReconcilerReplaceRegion(currentOffset, currentLength, currentReplacement);
-		}
-	}
-	
+    public void setModificationStamp(long docModificationStampAfter) {
+        this.modificationStamp = docModificationStampAfter;
+    }
+
+    /**
+     * @since 2.4
+     */
+    public void addDocumentEvent(DocumentEvent event) {
+        if (events == null)
+            events = newArrayList();
+        events.add(event);
+    }
+
+    /**
+     * @since 2.4
+     */
+    public List<DocumentEvent> getDocumentEvents() {
+        return (events == null) ? Collections.<DocumentEvent>emptyList() : events;
+    }
+
+    @Override
+    public String toString() {
+        return "ReconcilerReplaceRegion [" + getOffset() + ":" + getLength() + "] '"
+                + getText() + "' modificationStamp:" + getModificationStamp();
+    }
+
+    public static class Builder {
+
+        private StringBuilder text;
+
+        private boolean isEmpty;
+
+        private int currentOffset;
+        private int currentLength;
+        private int currentReplacementOffset;
+        private int currentReplacementLength;
+
+        protected Builder(String text) {
+            this.text = new StringBuilder(text);
+            isEmpty = true;
+        }
+
+        public Builder add(final int nextOffset, final int nextLength, final String nextReplacement) {
+            if (isEmpty) {
+                isEmpty = false;
+                currentOffset = nextOffset;
+                currentLength = nextLength;
+                currentReplacementOffset = nextOffset;
+                currentReplacementLength = nextReplacement.length();
+                text.replace(nextOffset, nextOffset + nextLength, nextReplacement);
+            } else {
+                int currentEnd = currentOffset + currentReplacementLength;
+                int nextEnd = nextOffset + nextLength;
+                int newOffset = Math.min(currentOffset, nextOffset);
+                int newLength = nextLength;
+                int prefixSize = 0;
+                int postfixSize = 0;
+                if (nextOffset >= currentOffset) {
+                    prefixSize = nextOffset - currentOffset;
+                    if (nextEnd <= currentEnd) {
+                        newLength = currentLength;
+                        postfixSize = currentEnd - nextEnd;
+                    } else if (nextOffset < currentEnd) {
+                        newLength = currentLength + nextLength - (currentEnd - nextOffset);
+                    } else {
+                        newLength = currentLength + (nextOffset - currentEnd) + nextLength;
+                    }
+                } else {
+                    if (nextEnd <= currentOffset) {
+                        newLength = nextLength + (currentOffset - nextEnd) + currentLength;
+                        postfixSize = currentEnd - nextEnd;
+                    } else if (nextEnd <= currentEnd) {
+                        newLength = currentLength + nextLength - (nextEnd - currentOffset);
+                        postfixSize = currentEnd - nextEnd;
+                    } else {
+                        newLength = nextLength + currentLength - currentReplacementLength;
+                    }
+                }
+                currentOffset = newOffset;
+                currentLength = newLength;
+                text.replace(nextOffset, nextOffset + nextLength, nextReplacement);
+                currentReplacementOffset = nextOffset - prefixSize;
+                currentReplacementLength = nextReplacement.length() + prefixSize + postfixSize;
+            }
+            return this;
+        }
+
+        public ReconcilerReplaceRegion create() {
+            String currentReplacement = text.substring(currentReplacementOffset, currentReplacementOffset + currentReplacementLength);
+            return new ReconcilerReplaceRegion(currentOffset, currentLength, currentReplacement);
+        }
+    }
+
 }

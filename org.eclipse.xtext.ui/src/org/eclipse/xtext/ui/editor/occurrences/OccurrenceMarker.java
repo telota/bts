@@ -41,129 +41,129 @@ import com.google.inject.Inject;
  */
 public class OccurrenceMarker {
 
-	private ISelectionChangedListener selectionListener;
+    private ISelectionChangedListener selectionListener;
 
-	private boolean isMarkOccurrences;
+    private boolean isMarkOccurrences;
 
-	private XtextEditor editor;
+    private XtextEditor editor;
 
-	@Inject
-	private MarkOccurrenceJob markOccurrenceJob;
+    @Inject
+    private MarkOccurrenceJob markOccurrenceJob;
 
-	public void connect(XtextEditor editor, boolean isMarkOccurrences) {
-		this.editor = editor;
-		((IPostSelectionProvider) editor.getSelectionProvider())
-				.addPostSelectionChangedListener(getSelectionChangedListener());
-		this.isMarkOccurrences = isMarkOccurrences;
-	}
+    public void connect(XtextEditor editor, boolean isMarkOccurrences) {
+        this.editor = editor;
+        ((IPostSelectionProvider) editor.getSelectionProvider())
+                .addPostSelectionChangedListener(getSelectionChangedListener());
+        this.isMarkOccurrences = isMarkOccurrences;
+    }
 
-	public void disconnect(XtextEditor editor) {
-		((IPostSelectionProvider) editor.getSelectionProvider())
-				.removePostSelectionChangedListener(getSelectionChangedListener());
-	}
+    public void disconnect(XtextEditor editor) {
+        ((IPostSelectionProvider) editor.getSelectionProvider())
+                .removePostSelectionChangedListener(getSelectionChangedListener());
+    }
 
-	public void setMarkOccurrences(boolean isMarkOccurrences) {
-		this.isMarkOccurrences = isMarkOccurrences;
-		doMarkOccurrences(editor.getSelectionProvider().getSelection());
-	}
+    public void setMarkOccurrences(boolean isMarkOccurrences) {
+        this.isMarkOccurrences = isMarkOccurrences;
+        doMarkOccurrences(editor.getSelectionProvider().getSelection());
+    }
 
-	protected void doMarkOccurrences(final ISelection selection) {
-		if (selection instanceof ITextSelection) {
-			markOccurrenceJob.cancel();
-			markOccurrenceJob.initialize(editor, (ITextSelection) selection, isMarkOccurrences);
-			if (!markOccurrenceJob.isSystem())
-				markOccurrenceJob.setSystem(true);
-			markOccurrenceJob.setPriority(Job.DECORATE);
-			markOccurrenceJob.schedule();
-		}
-	}
+    protected void doMarkOccurrences(final ISelection selection) {
+        if (selection instanceof ITextSelection) {
+            markOccurrenceJob.cancel();
+            markOccurrenceJob.initialize(editor, (ITextSelection) selection, isMarkOccurrences);
+            if (!markOccurrenceJob.isSystem())
+                markOccurrenceJob.setSystem(true);
+            markOccurrenceJob.setPriority(Job.DECORATE);
+            markOccurrenceJob.schedule();
+        }
+    }
 
-	protected ISelectionChangedListener getSelectionChangedListener() {
-		if (selectionListener == null)
-			selectionListener = createSelectionChangedListener();
-		return selectionListener;
-	}
+    protected ISelectionChangedListener getSelectionChangedListener() {
+        if (selectionListener == null)
+            selectionListener = createSelectionChangedListener();
+        return selectionListener;
+    }
 
-	protected ISelectionChangedListener createSelectionChangedListener() {
-		return new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
-				if (isMarkOccurrences)
-					doMarkOccurrences(event.getSelection());
-			}
-		};
-	}
+    protected ISelectionChangedListener createSelectionChangedListener() {
+        return new ISelectionChangedListener() {
+            public void selectionChanged(SelectionChangedEvent event) {
+                if (isMarkOccurrences)
+                    doMarkOccurrences(event.getSelection());
+            }
+        };
+    }
 
-	public static class MarkOccurrenceJob extends Job {
+    public static class MarkOccurrenceJob extends Job {
 
-		@Inject
-		private IOccurrenceComputer occurrenceComputer;
+        @Inject
+        private IOccurrenceComputer occurrenceComputer;
 
-		private XtextEditor initialEditor;
-		private boolean initialIsMarkOccurrences;
-		private ITextSelection initialSelection;
+        private XtextEditor initialEditor;
+        private boolean initialIsMarkOccurrences;
+        private ITextSelection initialSelection;
 
-		public MarkOccurrenceJob() {
-			super(Messages.OccurrenceMarker_MarkOccurenceJob_title);
-		}
+        public MarkOccurrenceJob() {
+            super(Messages.OccurrenceMarker_MarkOccurenceJob_title);
+        }
 
-		public void initialize(XtextEditor editor, ITextSelection selection, boolean isMarkOccurrences) {
-			this.initialEditor = editor;
-			this.initialIsMarkOccurrences = isMarkOccurrences;
-			this.initialSelection = selection;
-		}
+        public void initialize(XtextEditor editor, ITextSelection selection, boolean isMarkOccurrences) {
+            this.initialEditor = editor;
+            this.initialIsMarkOccurrences = isMarkOccurrences;
+            this.initialSelection = selection;
+        }
 
-		@Override
-		protected IStatus run(IProgressMonitor monitor) {
-			final XtextEditor editor = initialEditor;
-			final boolean isMarkOccurrences = initialIsMarkOccurrences;
-			final ITextSelection selection = initialSelection;
-			final SubMonitor progress = SubMonitor.convert(monitor, 2);
-			if (!progress.isCanceled()) {
-				final Map<Annotation, Position> annotations = (isMarkOccurrences) ? occurrenceComputer.createAnnotationMap(editor, selection,
-						progress.newChild(1)) : Collections.<Annotation, Position>emptyMap();
-				if (!progress.isCanceled()) {
-					Display.getDefault().asyncExec(new Runnable() {
-						public void run() {
-							if (!progress.isCanceled()) {
-								final IAnnotationModel annotationModel = getAnnotationModel(editor);
-								if (annotationModel instanceof IAnnotationModelExtension)
-									((IAnnotationModelExtension) annotationModel).replaceAnnotations(
-											getExistingOccurrenceAnnotations(annotationModel), annotations);
-								else if(annotationModel != null)
-									throw new IllegalStateException(
-											"AnnotationModel does not implement IAnnotationModelExtension");  //$NON-NLS-1$
-							}
-						}
-					});
-				}
-			}
-			return progress.isCanceled() ? Status.CANCEL_STATUS : Status.OK_STATUS;
-		}
+        @Override
+        protected IStatus run(IProgressMonitor monitor) {
+            final XtextEditor editor = initialEditor;
+            final boolean isMarkOccurrences = initialIsMarkOccurrences;
+            final ITextSelection selection = initialSelection;
+            final SubMonitor progress = SubMonitor.convert(monitor, 2);
+            if (!progress.isCanceled()) {
+                final Map<Annotation, Position> annotations = (isMarkOccurrences) ? occurrenceComputer.createAnnotationMap(editor, selection,
+                        progress.newChild(1)) : Collections.<Annotation, Position>emptyMap();
+                if (!progress.isCanceled()) {
+                    Display.getDefault().asyncExec(new Runnable() {
+                        public void run() {
+                            if (!progress.isCanceled()) {
+                                final IAnnotationModel annotationModel = getAnnotationModel(editor);
+                                if (annotationModel instanceof IAnnotationModelExtension)
+                                    ((IAnnotationModelExtension) annotationModel).replaceAnnotations(
+                                            getExistingOccurrenceAnnotations(annotationModel), annotations);
+                                else if (annotationModel != null)
+                                    throw new IllegalStateException(
+                                            "AnnotationModel does not implement IAnnotationModelExtension");  //$NON-NLS-1$
+                            }
+                        }
+                    });
+                }
+            }
+            return progress.isCanceled() ? Status.CANCEL_STATUS : Status.OK_STATUS;
+        }
 
-		protected IAnnotationModel getAnnotationModel(XtextEditor editor) {
-			if(editor != null) {
-				IEditorInput editorInput = editor.getEditorInput();
-				if(editorInput != null)  {
-					IDocumentProvider documentProvider = editor.getDocumentProvider();
-					if(documentProvider != null) {
-						return documentProvider.getAnnotationModel(editorInput);
-					}
-				}
-			}
-			return null;
-		}
+        protected IAnnotationModel getAnnotationModel(XtextEditor editor) {
+            if (editor != null) {
+                IEditorInput editorInput = editor.getEditorInput();
+                if (editorInput != null) {
+                    IDocumentProvider documentProvider = editor.getDocumentProvider();
+                    if (documentProvider != null) {
+                        return documentProvider.getAnnotationModel(editorInput);
+                    }
+                }
+            }
+            return null;
+        }
 
-		@SuppressWarnings("unchecked")
-		protected Annotation[] getExistingOccurrenceAnnotations(IAnnotationModel annotationModel) {
-			Set<Annotation> removeSet = newHashSet();
-			for (Iterator<Annotation> annotationIter = annotationModel.getAnnotationIterator(); annotationIter
-					.hasNext();) {
-				Annotation annotation = annotationIter.next();
-				if (occurrenceComputer.hasAnnotationType(annotation.getType())) {
-					removeSet.add(annotation);
-				}
-			}
-			return toArray(removeSet, Annotation.class);
-		}
-	}
+        @SuppressWarnings("unchecked")
+        protected Annotation[] getExistingOccurrenceAnnotations(IAnnotationModel annotationModel) {
+            Set<Annotation> removeSet = newHashSet();
+            for (Iterator<Annotation> annotationIter = annotationModel.getAnnotationIterator(); annotationIter
+                    .hasNext(); ) {
+                Annotation annotation = annotationIter.next();
+                if (occurrenceComputer.hasAnnotationType(annotation.getType())) {
+                    removeSet.add(annotation);
+                }
+            }
+            return toArray(removeSet, Annotation.class);
+        }
+    }
 }

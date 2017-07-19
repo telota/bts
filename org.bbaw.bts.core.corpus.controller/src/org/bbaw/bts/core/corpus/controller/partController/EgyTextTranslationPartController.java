@@ -6,8 +6,8 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 
 public interface EgyTextTranslationPartController {
 
-	String loadTranslation(BTSText text, String language,
-			IAnnotationModel annotationModel);
+    String loadTranslation(BTSText text, String language,
+                           IAnnotationModel annotationModel);
 
-	String createSentenceTranslationLabel(BTSSenctence sentence, String language);
+    String createSentenceTranslationLabel(BTSSenctence sentence, String language);
 }

@@ -45,202 +45,188 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
-public abstract class RelatedObjectGroup extends Composite{
+public abstract class RelatedObjectGroup extends Composite {
 
-	protected static final int TITLE_LENGTH = 23;
+    protected static final int TITLE_LENGTH = 23;
 
-	@Inject
-	protected BTSResourceProvider resourceProvider;
-	
-	@Inject
-	protected AnnotationsPart parentPart;
-	
-	@Inject
-	protected PermissionsAndExpressionsEvaluationController permissionsController;
+    @Inject
+    protected BTSResourceProvider resourceProvider;
 
-	@Inject
-	protected BTSUserController userController;
-	
-	@Inject
-	protected IEclipseContext context;
-	
-	private Group group;
-	private ExpandItem xpndtmNewExpanditem;
-	private BTSObject object;
-	private Composite composite;
-	private List<Listener> reziseListeners = new Vector<Listener>(2);
-	private List<Listener> selectionListeners = new Vector<Listener>(2);
-	private ExpandBar expandBar;
-	protected boolean selfSelecting;
-	private Composite contentComposite;
-	private Composite buttonComposite;
+    @Inject
+    protected AnnotationsPart parentPart;
 
-	@Inject
-	protected AnnotationPartController annotationsPartController;
+    @Inject
+    protected PermissionsAndExpressionsEvaluationController permissionsController;
 
-	protected EditingDomain editingDomain;
+    @Inject
+    protected BTSUserController userController;
 
-	@Inject
-	protected EditingDomainController editingDomainController;
+    @Inject
+    protected IEclipseContext context;
+    protected boolean selfSelecting;
+    @Inject
+    protected AnnotationPartController annotationsPartController;
+    protected EditingDomain editingDomain;
+    @Inject
+    protected EditingDomainController editingDomainController;
+    @Inject
+    protected Logger logger;
+    private Group group;
+    private ExpandItem xpndtmNewExpanditem;
+    private BTSObject object;
+    private Composite composite;
+    private List<Listener> reziseListeners = new Vector<Listener>(2);
+    private List<Listener> selectionListeners = new Vector<Listener>(2);
+    private ExpandBar expandBar;
+    private Composite contentComposite;
+    private Composite buttonComposite;
 
-	@Inject
-	protected Logger logger;
+    @Inject
+    public RelatedObjectGroup(Composite parent, BTSObject object) {
+        super(parent, SWT.None);
+        this.object = object;
+    }
 
-	@Inject
-	public RelatedObjectGroup(Composite parent, BTSObject object) {
-		super(parent, SWT.None);
-		this.object = object;
-	}
-	
-	@PostConstruct
-	public void postConstruct(){
-		
-		editingDomain = editingDomainController.getEditingDomain(object);
-		setLayout(new GridLayout(1, false));
-		((GridLayout)this.getLayout()).marginHeight = 0;
-		((GridLayout)this.getLayout()).marginWidth = 0;
-		((GridLayout)this.getLayout()).verticalSpacing = 0;
-		this.addControlListener(new ControlListener() {
-			
-			@Override
-			public void controlResized(ControlEvent e) {
-				RelatedObjectGroup.this.layout();
-				Event ev = new Event();
-				ev.data = e;
-				ev.widget = RelatedObjectGroup.this;
-				for (Listener l : reziseListeners)
-				{
-					l.handleEvent(ev);
-				}
-				
-			}
-			
-			@Override
-			public void controlMoved(ControlEvent e) {
-				
-			}
-		});
-		MouseAdapter mouseListener = new MouseAdapter() {
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
-				selfSelecting = true;
-				Event ev = new Event();
-				ev.data = e;
-				ev.widget = RelatedObjectGroup.this;
-				for (Listener l : selectionListeners)
-				{
-					l.handleEvent(ev);
-				}
-				selfSelecting = false;
-			}
-			
-		};
-		this.addMouseListener(mouseListener);
-		
-		group = new Group(this, SWT.NONE);
-		group.setLayout(new GridLayout(1, false));
-		((GridLayout)group.getLayout()).marginHeight = 0;
-		((GridLayout)group.getLayout()).marginWidth = 0;
-		((GridLayout)group.getLayout()).verticalSpacing = 0;
-		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		group.addMouseListener(mouseListener);
-		expandBar = new ExpandBar(group, SWT.NONE);
-		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		expandBar.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				RelatedObjectGroup.this.layout();
-				Event ev = new Event();
-				ev.data = e;
-				ev.widget = RelatedObjectGroup.this;
-				for (Listener l : reziseListeners)
-				{
-					l.handleEvent(ev);
-				}
-			}
-		});
-		expandBar.addMouseListener(mouseListener);
-		
+    @PostConstruct
+    public void postConstruct() {
 
-		
-		xpndtmNewExpanditem = new ExpandItem(expandBar, SWT.NONE);
-		xpndtmNewExpanditem.setExpanded(false);
-		if (object.getName() != null)
-		{
-			xpndtmNewExpanditem.setText(object.getName());
-		}
-		composite = new Composite(expandBar, SWT.NONE);
-		xpndtmNewExpanditem.setControl(composite);
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        editingDomain = editingDomainController.getEditingDomain(object);
+        setLayout(new GridLayout(1, false));
+        ((GridLayout) this.getLayout()).marginHeight = 0;
+        ((GridLayout) this.getLayout()).marginWidth = 0;
+        ((GridLayout) this.getLayout()).verticalSpacing = 0;
+        this.addControlListener(new ControlListener() {
+
+            @Override
+            public void controlResized(ControlEvent e) {
+                RelatedObjectGroup.this.layout();
+                Event ev = new Event();
+                ev.data = e;
+                ev.widget = RelatedObjectGroup.this;
+                for (Listener l : reziseListeners) {
+                    l.handleEvent(ev);
+                }
+
+            }
+
+            @Override
+            public void controlMoved(ControlEvent e) {
+
+            }
+        });
+        MouseAdapter mouseListener = new MouseAdapter() {
+
+            @Override
+            public void mouseDown(MouseEvent e) {
+                selfSelecting = true;
+                Event ev = new Event();
+                ev.data = e;
+                ev.widget = RelatedObjectGroup.this;
+                for (Listener l : selectionListeners) {
+                    l.handleEvent(ev);
+                }
+                selfSelecting = false;
+            }
+
+        };
+        this.addMouseListener(mouseListener);
+
+        group = new Group(this, SWT.NONE);
+        group.setLayout(new GridLayout(1, false));
+        ((GridLayout) group.getLayout()).marginHeight = 0;
+        ((GridLayout) group.getLayout()).marginWidth = 0;
+        ((GridLayout) group.getLayout()).verticalSpacing = 0;
+        group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        group.addMouseListener(mouseListener);
+        expandBar = new ExpandBar(group, SWT.NONE);
+        expandBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        expandBar.addPaintListener(new PaintListener() {
+
+            @Override
+            public void paintControl(PaintEvent e) {
+                RelatedObjectGroup.this.layout();
+                Event ev = new Event();
+                ev.data = e;
+                ev.widget = RelatedObjectGroup.this;
+                for (Listener l : reziseListeners) {
+                    l.handleEvent(ev);
+                }
+            }
+        });
+        expandBar.addMouseListener(mouseListener);
 
 
-		
-		composite.setLayout(new GridLayout(1, false));
-		((GridLayout)composite.getLayout()).marginHeight = 0;
-		((GridLayout)composite.getLayout()).marginWidth = 0;
-		((GridLayout)composite.getLayout()).verticalSpacing = 0;
+        xpndtmNewExpanditem = new ExpandItem(expandBar, SWT.NONE);
+        xpndtmNewExpanditem.setExpanded(false);
+        if (object.getName() != null) {
+            xpndtmNewExpanditem.setText(object.getName());
+        }
+        composite = new Composite(expandBar, SWT.NONE);
+        xpndtmNewExpanditem.setControl(composite);
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		composite.addMouseListener(mouseListener);
-		
-		
-		// micro buttons
-		buttonComposite = new Composite(composite, SWT.NONE);
-		buttonComposite.setLayout(new RowLayout());
-		buttonComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
-		buttonComposite.addMouseListener(mouseListener);
-		
-		contentComposite = new Composite(composite, SWT.NONE);
-		contentComposite.setLayout(new GridLayout(1, false));
-		((GridLayout)contentComposite.getLayout()).marginHeight = 0;
-		((GridLayout)contentComposite.getLayout()).marginWidth = 0;
-		contentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		contentComposite.addMouseListener(mouseListener);
-		
 
-		
-		fillContentComposite(contentComposite);
+        composite.setLayout(new GridLayout(1, false));
+        ((GridLayout) composite.getLayout()).marginHeight = 0;
+        ((GridLayout) composite.getLayout()).marginWidth = 0;
+        ((GridLayout) composite.getLayout()).verticalSpacing = 0;
 
-		makeReferenceButtons(buttonComposite);
-		addButtons(buttonComposite);
-		xpndtmNewExpanditem.setHeight(xpndtmNewExpanditem.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+        composite.addMouseListener(mouseListener);
 
-		this.layout();
-	}
 
-	protected abstract void addButtons(Composite composite);
+        // micro buttons
+        buttonComposite = new Composite(composite, SWT.NONE);
+        buttonComposite.setLayout(new RowLayout());
+        buttonComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false, 1, 1));
+        buttonComposite.addMouseListener(mouseListener);
 
-	protected abstract void fillContentComposite(Composite composite);
+        contentComposite = new Composite(composite, SWT.NONE);
+        contentComposite.setLayout(new GridLayout(1, false));
+        ((GridLayout) contentComposite.getLayout()).marginHeight = 0;
+        ((GridLayout) contentComposite.getLayout()).marginWidth = 0;
+        contentComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        contentComposite.addMouseListener(mouseListener);
 
-	protected void makeReferenceButtons(Composite composite) {
-		
-		Label addButton = new Label(composite, SWT.PUSH);
-		addButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_RELATION_ADD));
-		addButton.setToolTipText("Add Current Text Selection as Reference");
-		addButton.setLayoutData(new RowData());
-		addButton.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (mayEdit())
-				{
-					Label l = (Label) e.getSource();
-					l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-				}
-			}
+        fillContentComposite(contentComposite);
 
-			@Override
-			public void mouseUp(MouseEvent e) {
-				if (mayEdit())
-				{
-					Label l = (Label) e.getSource();
-					l.setBackground(l.getParent().getBackground());
-					addReference();
-				}
-			}
-		});
-		
+        makeReferenceButtons(buttonComposite);
+        addButtons(buttonComposite);
+        xpndtmNewExpanditem.setHeight(xpndtmNewExpanditem.getControl().computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
+
+        this.layout();
+    }
+
+    protected abstract void addButtons(Composite composite);
+
+    protected abstract void fillContentComposite(Composite composite);
+
+    protected void makeReferenceButtons(Composite composite) {
+
+        Label addButton = new Label(composite, SWT.PUSH);
+        addButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_RELATION_ADD));
+        addButton.setToolTipText("Add Current Text Selection as Reference");
+        addButton.setLayoutData(new RowData());
+        addButton.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseDown(MouseEvent e) {
+                if (mayEdit()) {
+                    Label l = (Label) e.getSource();
+                    l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+                }
+            }
+
+            @Override
+            public void mouseUp(MouseEvent e) {
+                if (mayEdit()) {
+                    Label l = (Label) e.getSource();
+                    l.setBackground(l.getParent().getBackground());
+                    addReference();
+                }
+            }
+        });
+
 		
 		/*Label editButton = new Label(composite, SWT.PUSH);
 		editButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_RELATION_EDIT));
@@ -268,284 +254,251 @@ public abstract class RelatedObjectGroup extends Composite{
 			}
 		});*/
 
-		Label delButton = new Label(composite, SWT.PUSH);
-		delButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_RELATION_DELETE));
-		delButton.setToolTipText("Remove Current Reference");
-		delButton.setLayoutData(new RowData());
-		delButton.addMouseListener(new MouseAdapter() {
+        Label delButton = new Label(composite, SWT.PUSH);
+        delButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_RELATION_DELETE));
+        delButton.setToolTipText("Remove Current Reference");
+        delButton.setLayoutData(new RowData());
+        delButton.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (mayEdit())
-				{
-					Label l = (Label) e.getSource();
-					l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-				}
-			}
+            @Override
+            public void mouseDown(MouseEvent e) {
+                if (mayEdit()) {
+                    Label l = (Label) e.getSource();
+                    l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+                }
+            }
 
-			@Override
-			public void mouseUp(MouseEvent e) {
-				if (mayEdit())
-				{
-					Label l = (Label) e.getSource();
-					l.setBackground(l.getParent().getBackground());
-					removeReference();
-				}
-			}
-		});
+            @Override
+            public void mouseUp(MouseEvent e) {
+                if (mayEdit()) {
+                    Label l = (Label) e.getSource();
+                    l.setBackground(l.getParent().getBackground());
+                    removeReference();
+                }
+            }
+        });
 
-		
-	}
 
-	protected boolean mayEdit() {
-		return permissionsController.authenticatedUserMayEditObject(object);
-	}
+    }
 
-	protected void editReference() {
-		BTSTextSelectionEvent selectionEvent = parentPart.getTextSelectionEvent();
-		if (selectionEvent == null) return;
-		
-		// in object suchen, ob relation auf Text besteht
-		BTSRelation relation = null;
-		for (BTSRelation rel : object.getRelations())
-		{
-			if (selectionEvent.data != null && ((BTSIdentifiableItem) selectionEvent.data).get_id().equals(rel.getObjectId()))
-			{
-				relation = rel;
-				break;
-			}
-		}
-		
-		// wenn nein, neue anlegen, 
-		if (relation == null)
-		{
-			relation = BtsmodelFactory.eINSTANCE.createBTSRelation();
-			relation.setObjectId(((BTSIdentifiableItem) selectionEvent.data).get_id());
-			relation.setType(BTSCoreConstants.BASIC_RELATIONS_PARTOF);
-			object.getRelations().add(relation);
-		}
-		
-		BTSInterTextReference reference = null;
-		for (BTSInterTextReference ref : selectionEvent.getInterTextReferences())
-		{
-			if (ref.eContainer() != null && ref.eContainer().equals(relation))
-			{
-				reference = ref;
-			}
-		}
+    protected boolean mayEdit() {
+        return permissionsController.authenticatedUserMayEditObject(object);
+    }
+
+    protected void editReference() {
+        BTSTextSelectionEvent selectionEvent = parentPart.getTextSelectionEvent();
+        if (selectionEvent == null) return;
+
+        // in object suchen, ob relation auf Text besteht
+        BTSRelation relation = null;
+        for (BTSRelation rel : object.getRelations()) {
+            if (selectionEvent.data != null && ((BTSIdentifiableItem) selectionEvent.data).get_id().equals(rel.getObjectId())) {
+                relation = rel;
+                break;
+            }
+        }
+
+        // wenn nein, neue anlegen,
+        if (relation == null) {
+            relation = BtsmodelFactory.eINSTANCE.createBTSRelation();
+            relation.setObjectId(((BTSIdentifiableItem) selectionEvent.data).get_id());
+            relation.setType(BTSCoreConstants.BASIC_RELATIONS_PARTOF);
+            object.getRelations().add(relation);
+        }
+
+        BTSInterTextReference reference = null;
+        for (BTSInterTextReference ref : selectionEvent.getInterTextReferences()) {
+            if (ref.eContainer() != null && ref.eContainer().equals(relation)) {
+                reference = ref;
+            }
+        }
 //		CompoundCommand compoundCommand = new CompoundCommand();
-		if (reference == null)
-		{
-			// neue reference anlegen, start ziel entsprechend selection
-			reference = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
-			reference.setBeginId(selectionEvent.getStartId());
-			reference.setEndId(selectionEvent.getEndId());
+        if (reference == null) {
+            // neue reference anlegen, start ziel entsprechend selection
+            reference = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
+            reference.setBeginId(selectionEvent.getStartId());
+            reference.setEndId(selectionEvent.getEndId());
 //			Command c = AddCommand
 //					.create(editingDomain, relation, BtsmodelPackage.BTS_RELATION__PARTS, reference);
 //			compoundCommand.append(c);
-			
-			// without command
-			relation.getParts().add(reference);
-		}
-		else
-		{
+
+            // without command
+            relation.getParts().add(reference);
+        } else {
 //			Command c = SetCommand
 //					.create(editingDomain, reference, BtsmodelPackage.BTS_INTER_TEXT_REFERENCE__BEGIN_ID, selectionEvent.getStartId());
 //			compoundCommand.append(c);
 //			Command cc = SetCommand
 //					.create(editingDomain, reference, BtsmodelPackage.BTS_INTER_TEXT_REFERENCE__END_ID, selectionEvent.getEndId());
 //			compoundCommand.append(cc);
-			
-			// without command
-			reference.setBeginId(selectionEvent.getStartId());
-			reference.setEndId(selectionEvent.getEndId());
-		}
-		// without command
+
+            // without command
+            reference.setBeginId(selectionEvent.getStartId());
+            reference.setEndId(selectionEvent.getEndId());
+        }
+        // without command
 //		editingDomain.getCommandStack().execute(
 //				compoundCommand);
-		
-		save();
-		
-		postUIEvent(reference);	
-	}
 
-	protected void addReference() {
-		BTSTextSelectionEvent selectionEvent = parentPart.getTextSelectionEvent();
-		if (selectionEvent == null) return;
-		
-		// in object suchen, ob relation auf Text besteht
-		BTSRelation relation = null;
-		for (BTSRelation rel : object.getRelations())
-		{
-			if (selectionEvent.data != null && ((BTSIdentifiableItem) selectionEvent.data).get_id().equals(rel.getObjectId()))
-			{
-				relation = rel;
-				break;
-			}
-		}
-		
-		// wenn nein, neue anlegen, 
-		if (relation == null)
-		{
-			relation = BtsmodelFactory.eINSTANCE.createBTSRelation();
-			relation.setObjectId(((BTSIdentifiableItem) selectionEvent.data).get_id());
-			relation.setType(BTSCoreConstants.BASIC_RELATIONS_PARTOF);
-			object.getRelations().add(relation);
-		}
-		
-		// neue reference anlegen, start ziel entsprechend selection
-		BTSInterTextReference reference = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
-		reference.setBeginId(selectionEvent.getStartId());
-		reference.setEndId(selectionEvent.getEndId());
-		
+        save();
+
+        postUIEvent(reference);
+    }
+
+    protected void addReference() {
+        BTSTextSelectionEvent selectionEvent = parentPart.getTextSelectionEvent();
+        if (selectionEvent == null) return;
+
+        // in object suchen, ob relation auf Text besteht
+        BTSRelation relation = null;
+        for (BTSRelation rel : object.getRelations()) {
+            if (selectionEvent.data != null && ((BTSIdentifiableItem) selectionEvent.data).get_id().equals(rel.getObjectId())) {
+                relation = rel;
+                break;
+            }
+        }
+
+        // wenn nein, neue anlegen,
+        if (relation == null) {
+            relation = BtsmodelFactory.eINSTANCE.createBTSRelation();
+            relation.setObjectId(((BTSIdentifiableItem) selectionEvent.data).get_id());
+            relation.setType(BTSCoreConstants.BASIC_RELATIONS_PARTOF);
+            object.getRelations().add(relation);
+        }
+
+        // neue reference anlegen, start ziel entsprechend selection
+        BTSInterTextReference reference = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
+        reference.setBeginId(selectionEvent.getStartId());
+        reference.setEndId(selectionEvent.getEndId());
+
 //		Command compoundCommand = AddCommand
 //				.create(editingDomain, relation, BtsmodelPackage.BTS_RELATION__PARTS, reference);
 //		editingDomain.getCommandStack().execute(
 //				compoundCommand);
-		
-		// without command
-		relation.getParts().add(reference);
-		//FIXME update Textviewer!!!!!!!!!
-		
-		save();
-		postUIEvent(reference);		
-		
-	}
 
-	private void postUIEvent(BTSInterTextReference reference) {
-		// TODO Auto-generated method stub
-		
-	}
+        // without command
+        relation.getParts().add(reference);
+        //FIXME update Textviewer!!!!!!!!!
 
-	protected void save() {
-		annotationsPartController.save(object);
-		
-	}
+        save();
+        postUIEvent(reference);
 
-	protected void removeReference() {
-		BTSTextSelectionEvent selectionEvent = parentPart.getTextSelectionEvent();
-		if (selectionEvent == null) return;
-		
-		// in object suchen, ob relation auf Text besteht
-		BTSRelation relation = null;
-		BTSInterTextReference reference = null;
-		for (BTSRelation rel : object.getRelations())
-		{
-			if (selectionEvent.data != null && ((BTSIdentifiableItem) selectionEvent.data).get_id().equals(rel.getObjectId()) && !rel.getParts().isEmpty())
-			{
-				relation = rel;
-				for (BTSInterTextReference ref : selectionEvent.getInterTextReferences())
-				{
-					if (ref != null && ref.eContainer() != null && ref.eContainer().equals(relation))
-					{
-						reference = ref;
-						break;
-					}
-				}
-				
-				if (reference != null)
-				{
-					break;
-				}
-			}
-		}
-		
-		// wenn nein, nichts zu löschen 
-		if (relation == null)
-		{
-			return;
-		}
-		
-		
-		if (reference == null) return;
+    }
+
+    private void postUIEvent(BTSInterTextReference reference) {
+        // TODO Auto-generated method stub
+
+    }
+
+    protected void save() {
+        annotationsPartController.save(object);
+
+    }
+
+    protected void removeReference() {
+        BTSTextSelectionEvent selectionEvent = parentPart.getTextSelectionEvent();
+        if (selectionEvent == null) return;
+
+        // in object suchen, ob relation auf Text besteht
+        BTSRelation relation = null;
+        BTSInterTextReference reference = null;
+        for (BTSRelation rel : object.getRelations()) {
+            if (selectionEvent.data != null && ((BTSIdentifiableItem) selectionEvent.data).get_id().equals(rel.getObjectId()) && !rel.getParts().isEmpty()) {
+                relation = rel;
+                for (BTSInterTextReference ref : selectionEvent.getInterTextReferences()) {
+                    if (ref != null && ref.eContainer() != null && ref.eContainer().equals(relation)) {
+                        reference = ref;
+                        break;
+                    }
+                }
+
+                if (reference != null) {
+                    break;
+                }
+            }
+        }
+
+        // wenn nein, nichts zu löschen
+        if (relation == null) {
+            return;
+        }
+
+
+        if (reference == null) return;
 //		Command compoundCommand = RemoveCommand
 //				.create(editingDomain, relation, BtsmodelPackage.BTS_RELATION__PARTS, reference);
 //		editingDomain.getCommandStack().execute(
 //				compoundCommand);
-		// without command
-		relation.getParts().remove(reference);
-		save();
-		
-		postUIEvent(reference);		
-	}
+        // without command
+        relation.getParts().remove(reference);
+        save();
 
-	public void addResizeListener(Listener resizeListener) {
-		if (resizeListener != null && !reziseListeners .contains(resizeListener))
-		{
-			reziseListeners.add(resizeListener);
-		}
-	}
+        postUIEvent(reference);
+    }
 
-	public void addSelectionListener(Listener selectionListener) {
-		if (selectionListener != null && !selectionListeners.contains(selectionListener))
-		{
-			selectionListeners.add(selectionListener);
-		}
-	}
-	
-	public BTSObject getObject()
-	{
-		return object;
-	}
-	public Group getGroup()
-	{
-		return group;
-	}
+    public void addResizeListener(Listener resizeListener) {
+        if (resizeListener != null && !reziseListeners.contains(resizeListener)) {
+            reziseListeners.add(resizeListener);
+        }
+    }
 
-	public void setSelected(boolean selected) {
-		if (selected)
-		{
-			setBackground(BTSUIConstants.VIEW_BACKGROUND_SELECTED_COLOR);
-		}
-		else
-		{
-			setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		}
-		if((!selected || !selfSelecting) && xpndtmNewExpanditem != null && xpndtmNewExpanditem.getExpanded() != selected)
-		{
-			xpndtmNewExpanditem.setExpanded(selected);
+    public void addSelectionListener(Listener selectionListener) {
+        if (selectionListener != null && !selectionListeners.contains(selectionListener)) {
+            selectionListeners.add(selectionListener);
+        }
+    }
 
-		}
-	}
-	
-	@Override
-	public void setBackground(Color color) {
-		super.setBackground(color);
-		if (group != null)
-		{
-			group.setBackground(color);
-			composite.setBackground(color);
-			expandBar.setBackground(color);
-			contentComposite.setBackground(color);
-			buttonComposite.setBackground(color);
-		}
+    public BTSObject getObject() {
+        return object;
+    }
 
-	}
-	
-	public void setExpandBarBackground(Color color)
-	{
-		expandBar.setBackground(color);
-	}
-	
-	public void setExpandBarIcon(Image image)
-	{
-		xpndtmNewExpanditem.setImage(image);
-	}
-	
-	public void setGroupTitle(String title)
-	{
-		if (title != null && group != null && !group.isDisposed())
-		{
-			group.setText(title);
-		}
-	}
-	
-	public void setExpandItemTitle(String title)
-	{
-		if (title != null && xpndtmNewExpanditem != null && !xpndtmNewExpanditem.isDisposed())
-		{
-			xpndtmNewExpanditem.setText(title);
-		}
-	}
-	
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setSelected(boolean selected) {
+        if (selected) {
+            setBackground(BTSUIConstants.VIEW_BACKGROUND_SELECTED_COLOR);
+        } else {
+            setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        }
+        if ((!selected || !selfSelecting) && xpndtmNewExpanditem != null && xpndtmNewExpanditem.getExpanded() != selected) {
+            xpndtmNewExpanditem.setExpanded(selected);
+
+        }
+    }
+
+    @Override
+    public void setBackground(Color color) {
+        super.setBackground(color);
+        if (group != null) {
+            group.setBackground(color);
+            composite.setBackground(color);
+            expandBar.setBackground(color);
+            contentComposite.setBackground(color);
+            buttonComposite.setBackground(color);
+        }
+
+    }
+
+    public void setExpandBarBackground(Color color) {
+        expandBar.setBackground(color);
+    }
+
+    public void setExpandBarIcon(Image image) {
+        xpndtmNewExpanditem.setImage(image);
+    }
+
+    public void setGroupTitle(String title) {
+        if (title != null && group != null && !group.isDisposed()) {
+            group.setText(title);
+        }
+    }
+
+    public void setExpandItemTitle(String title) {
+        if (title != null && xpndtmNewExpanditem != null && !xpndtmNewExpanditem.isDisposed()) {
+            xpndtmNewExpanditem.setText(title);
+        }
+    }
+
 }

@@ -15,160 +15,159 @@ import java.util.Set;
 /**
  * @author Sebastian Zarnekow - Initial contribution and API
  */
-public class LightweightPosition implements Comparable<LightweightPosition>{
+public class LightweightPosition implements Comparable<LightweightPosition> {
 
-	public static class IntToStringArray implements Comparable<IntToStringArray>{
-		private int timestamp;
-		private String[] ids;
-		
-		public IntToStringArray(int timestamp, String... ids) {
-			this.timestamp = timestamp;
-			this.ids = ids;
-		}
+    private final int offset;
+    private final int timestamp;
+    private int length;
+    private IntToStringArray[] ids;
+    public LightweightPosition(int offset, int length, int timestamp, String... ids) {
+        this(offset, length, timestamp, new IntToStringArray[]{new IntToStringArray(timestamp, ids)});
+    }
 
-		public int compareTo(IntToStringArray o) {
-			if (timestamp < o.timestamp)
-				return -1;
-			if (timestamp > o.timestamp)
-				return 1;
-			return 0;
-		}
+    public LightweightPosition(int offset, int length, int timestamp, IntToStringArray[] ids) {
+        this.offset = offset;
+        this.length = length;
+        this.timestamp = timestamp;
+        this.ids = ids;
+    }
 
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + timestamp;
-			return result;
-		}
+    public int compareTo(LightweightPosition pos) {
+        if (offset < pos.offset)
+            return -1;
+        if (offset > pos.offset)
+            return 1;
+        if (length < pos.length)
+            return -1;
+        if (length > pos.length)
+            return 1;
+        if (timestamp < pos.timestamp)
+            return -1;
+        if (timestamp > pos.timestamp)
+            return 1;
+        return 0;
+    }
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			IntToStringArray other = (IntToStringArray) obj;
-            return timestamp == other.timestamp;
-        }
-		
-		@Override
-		public String toString() {
-			return Arrays.toString(ids) + "@" + timestamp;
-		}
-		
-	}
-	
-	private final int offset;
-	private int length;
-	private IntToStringArray[] ids;
-	private final int timestamp;
-	
-	public LightweightPosition(int offset, int length, int timestamp, String... ids) {
-		this(offset, length, timestamp, new IntToStringArray[] { new IntToStringArray(timestamp, ids) });
-	}
-	
-	public LightweightPosition(int offset, int length, int timestamp, IntToStringArray[] ids) {
-		this.offset = offset;
-		this.length = length;
-		this.timestamp = timestamp;
-		this.ids = ids;
-	}
-	
-	public int compareTo(LightweightPosition pos) {
-		if (offset < pos.offset)
-			return -1;
-		if (offset > pos.offset)
-			return 1;
-		if (length < pos.length)
-			return -1;
-		if (length > pos.length)
-			return 1;
-		if (timestamp < pos.timestamp)
-			return -1;
-		if (timestamp > pos.timestamp)
-			return 1;
-		return 0;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + length;
-		result = prime * result + offset;
-		result = prime * result + timestamp;
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + length;
+        result = prime * result + offset;
+        result = prime * result + timestamp;
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LightweightPosition other = (LightweightPosition) obj;
-		if (length != other.length)
-			return false;
-		if (offset != other.offset)
-			return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        LightweightPosition other = (LightweightPosition) obj;
+        if (length != other.length)
+            return false;
+        if (offset != other.offset)
+            return false;
         return timestamp == other.timestamp;
     }
-	
-	@Override
-	public String toString() {
-		return offset + "(" + length + ")@" + timestamp + ": " + Arrays.toString(ids);
-	}
 
-	public void setLength(int length) {
-		this.length = length;
-	}
-	
-	public int getLength() {
-		return length;
-	}
-	
-	public int getOffset() {
-		return offset;
-	}
-	
-	IntToStringArray[] internalGetIds() {
-		return ids;
-	}
-	
-	public String[] getIds() {
-		if (ids.length == 1)
-			return ids[0].ids;
-		Arrays.sort(ids);
-		Set<String> allIds = new LinkedHashSet<String>(ids.length * ids[0].ids.length);
-		for (IntToStringArray intToStringArray: ids) {
-			List<String> addUs = Arrays.asList(intToStringArray.ids);
-			if (allIds.isEmpty()) {
-				allIds.addAll(addUs);
-			} else {
-				allIds.removeAll(addUs);
-				allIds.addAll(addUs);
-			}
-		}
-		return allIds.toArray(new String[allIds.size()]);
-	}
+    @Override
+    public String toString() {
+        return offset + "(" + length + ")@" + timestamp + ": " + Arrays.toString(ids);
+    }
 
-	public int getTimestamp() {
-		return timestamp;
-	}
-	
-	public void merge(int timestamp, String... other) {
-		merge(new IntToStringArray[] { new IntToStringArray(timestamp, other) });
-	}
+    public int getLength() {
+        return length;
+    }
 
-	public void merge(IntToStringArray[] other) {
-		IntToStringArray[] oldIds = ids;
-		ids = new IntToStringArray[oldIds.length + other.length];
-		System.arraycopy(oldIds, 0, ids, 0, oldIds.length);
-		System.arraycopy(other, 0, ids, oldIds.length, other.length);
-	}
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    IntToStringArray[] internalGetIds() {
+        return ids;
+    }
+
+    public String[] getIds() {
+        if (ids.length == 1)
+            return ids[0].ids;
+        Arrays.sort(ids);
+        Set<String> allIds = new LinkedHashSet<String>(ids.length * ids[0].ids.length);
+        for (IntToStringArray intToStringArray : ids) {
+            List<String> addUs = Arrays.asList(intToStringArray.ids);
+            if (allIds.isEmpty()) {
+                allIds.addAll(addUs);
+            } else {
+                allIds.removeAll(addUs);
+                allIds.addAll(addUs);
+            }
+        }
+        return allIds.toArray(new String[allIds.size()]);
+    }
+
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    public void merge(int timestamp, String... other) {
+        merge(new IntToStringArray[]{new IntToStringArray(timestamp, other)});
+    }
+
+    public void merge(IntToStringArray[] other) {
+        IntToStringArray[] oldIds = ids;
+        ids = new IntToStringArray[oldIds.length + other.length];
+        System.arraycopy(oldIds, 0, ids, 0, oldIds.length);
+        System.arraycopy(other, 0, ids, oldIds.length, other.length);
+    }
+
+    public static class IntToStringArray implements Comparable<IntToStringArray> {
+        private int timestamp;
+        private String[] ids;
+
+        public IntToStringArray(int timestamp, String... ids) {
+            this.timestamp = timestamp;
+            this.ids = ids;
+        }
+
+        public int compareTo(IntToStringArray o) {
+            if (timestamp < o.timestamp)
+                return -1;
+            if (timestamp > o.timestamp)
+                return 1;
+            return 0;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + timestamp;
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            IntToStringArray other = (IntToStringArray) obj;
+            return timestamp == other.timestamp;
+        }
+
+        @Override
+        public String toString() {
+            return Arrays.toString(ids) + "@" + timestamp;
+        }
+
+    }
 }

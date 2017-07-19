@@ -21,29 +21,29 @@ import com.google.inject.Singleton;
 @Singleton
 public class StrictJavaProjectsState extends AbstractJavaProjectsState {
 
-	@Inject
-	private JavaProjectsStateHelper helper;
-	
-	@Override
-	protected String doInitHandle(URI uri) {
-		return helper.initHandle(uri);
-	}
+    @Inject
+    private JavaProjectsStateHelper helper;
 
-	@Override
-	protected Collection<URI> doInitContainedURIs(String containerHandle) {
-		return helper.initContainedURIs(containerHandle);
-	}
-	
-	@Override
-	protected List<String> doInitVisibleHandles(String handle) {
-		return helper.initVisibleHandles(handle);
-	}
-	
-	public JavaProjectsStateHelper getHelper() {
-		return helper;
-	}
-	
-	public void setHelper(JavaProjectsStateHelper helper) {
-		this.helper = helper;
-	}
+    @Override
+    protected String doInitHandle(URI uri) {
+        return helper.initHandle(uri);
+    }
+
+    @Override
+    protected Collection<URI> doInitContainedURIs(String containerHandle) {
+        return helper.initContainedURIs(containerHandle);
+    }
+
+    @Override
+    protected List<String> doInitVisibleHandles(String handle) {
+        return helper.initVisibleHandles(handle);
+    }
+
+    public JavaProjectsStateHelper getHelper() {
+        return helper;
+    }
+
+    public void setHelper(JavaProjectsStateHelper helper) {
+        this.helper = helper;
+    }
 }

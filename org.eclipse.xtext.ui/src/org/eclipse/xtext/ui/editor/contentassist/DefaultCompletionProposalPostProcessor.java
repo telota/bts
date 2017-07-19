@@ -14,16 +14,16 @@ import org.eclipse.jface.text.contentassist.ICompletionProposal;
  */
 public class DefaultCompletionProposalPostProcessor implements ICompletionProposalPostProcessor {
 
-	public ICompletionProposal[] postProcess(ICompletionProposal[] proposals) {
-		if (proposals.length == 1) {
-			if (proposals[0] instanceof ConfigurableCompletionProposal) {
-				ConfigurableCompletionProposal proposal = (ConfigurableCompletionProposal) proposals[0];
-				if (proposal.isAutoInsertable() && proposal.getReplaceContextLength() > proposal.getReplacementLength()) {
-					proposal.setAutoInsertable(false);
-				}
-			}
-		}
-		return proposals;
-	}
-	
+    public ICompletionProposal[] postProcess(ICompletionProposal[] proposals) {
+        if (proposals.length == 1) {
+            if (proposals[0] instanceof ConfigurableCompletionProposal) {
+                ConfigurableCompletionProposal proposal = (ConfigurableCompletionProposal) proposals[0];
+                if (proposal.isAutoInsertable() && proposal.getReplaceContextLength() > proposal.getReplacementLength()) {
+                    proposal.setAutoInsertable(false);
+                }
+            }
+        }
+        return proposals;
+    }
+
 }

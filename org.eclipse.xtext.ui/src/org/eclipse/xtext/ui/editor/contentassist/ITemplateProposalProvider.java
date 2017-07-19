@@ -12,6 +12,6 @@ package org.eclipse.xtext.ui.editor.contentassist;
  */
 public interface ITemplateProposalProvider {
 
-	void createTemplates(ContentAssistContext context, ITemplateAcceptor acceptor);
+    void createTemplates(ContentAssistContext context, ITemplateAcceptor acceptor);
 
 }

@@ -25,59 +25,57 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import com.google.inject.Inject;
 
 /**
- * Reverts document changes when the linked mode is left. 
- * 
+ * Reverts document changes when the linked mode is left.
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class LinkedEditingUndoSupport {
 
-	@Inject
-	private SyncUtil syncUtil;
-	
-	private static final Logger LOG = Logger.getLogger(LinkedEditingUndoSupport.class);
-	
-	private IUndoableOperation startingUndoOperation;
-	
-	private XtextEditor editor;
+    private static final Logger LOG = Logger.getLogger(LinkedEditingUndoSupport.class);
+    @Inject
+    private SyncUtil syncUtil;
+    private IUndoableOperation startingUndoOperation;
 
-	public void startRecording(XtextEditor editor) {
-		this.editor = editor;
-		ISourceViewer viewer = editor.getInternalSourceViewer();
-		if (viewer instanceof ITextViewerExtension6) {
-			IUndoManager undoManager = ((ITextViewerExtension6) viewer).getUndoManager();
-			if (undoManager instanceof IUndoManagerExtension) {
-				IUndoManagerExtension undoManagerExtension = (IUndoManagerExtension) undoManager;
-				IUndoContext undoContext = undoManagerExtension.getUndoContext();
-				IOperationHistory operationHistory = OperationHistoryFactory.getOperationHistory();
-				startingUndoOperation = operationHistory.getUndoOperation(undoContext);
-			}
-		}
-	}
-	
-	public void undoDocumentChanges() {
-		final ISourceViewer viewer = editor.getInternalSourceViewer();
-		try {
-			editor.getSite().getWorkbenchWindow().run(false, true, new IRunnableWithProgress() {
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					if (viewer instanceof ITextViewerExtension6) {
-						IUndoManager undoManager = ((ITextViewerExtension6) viewer).getUndoManager();
-						if (undoManager instanceof IUndoManagerExtension) {
-							IUndoManagerExtension undoManagerExtension = (IUndoManagerExtension) undoManager;
-							IUndoContext undoContext = undoManagerExtension.getUndoContext();
-							IOperationHistory operationHistory = OperationHistoryFactory.getOperationHistory();
-							while (undoManager.undoable()) {
-								if (startingUndoOperation != null
-										&& startingUndoOperation.equals(operationHistory.getUndoOperation(undoContext)))
-									return;
-								undoManager.undo();
-							}
-						}
-					}
-				}
-			});
-			syncUtil.waitForReconciler(editor);
-		} catch (Exception e) {
-			LOG.error(e.getMessage(), e);
-		}
-	}
+    private XtextEditor editor;
+
+    public void startRecording(XtextEditor editor) {
+        this.editor = editor;
+        ISourceViewer viewer = editor.getInternalSourceViewer();
+        if (viewer instanceof ITextViewerExtension6) {
+            IUndoManager undoManager = ((ITextViewerExtension6) viewer).getUndoManager();
+            if (undoManager instanceof IUndoManagerExtension) {
+                IUndoManagerExtension undoManagerExtension = (IUndoManagerExtension) undoManager;
+                IUndoContext undoContext = undoManagerExtension.getUndoContext();
+                IOperationHistory operationHistory = OperationHistoryFactory.getOperationHistory();
+                startingUndoOperation = operationHistory.getUndoOperation(undoContext);
+            }
+        }
+    }
+
+    public void undoDocumentChanges() {
+        final ISourceViewer viewer = editor.getInternalSourceViewer();
+        try {
+            editor.getSite().getWorkbenchWindow().run(false, true, new IRunnableWithProgress() {
+                public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+                    if (viewer instanceof ITextViewerExtension6) {
+                        IUndoManager undoManager = ((ITextViewerExtension6) viewer).getUndoManager();
+                        if (undoManager instanceof IUndoManagerExtension) {
+                            IUndoManagerExtension undoManagerExtension = (IUndoManagerExtension) undoManager;
+                            IUndoContext undoContext = undoManagerExtension.getUndoContext();
+                            IOperationHistory operationHistory = OperationHistoryFactory.getOperationHistory();
+                            while (undoManager.undoable()) {
+                                if (startingUndoOperation != null
+                                        && startingUndoOperation.equals(operationHistory.getUndoOperation(undoContext)))
+                                    return;
+                                undoManager.undo();
+                            }
+                        }
+                    }
+                }
+            });
+            syncUtil.waitForReconciler(editor);
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+    }
 }

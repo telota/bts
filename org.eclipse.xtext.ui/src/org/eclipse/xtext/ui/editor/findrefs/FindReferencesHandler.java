@@ -26,54 +26,52 @@ import com.google.inject.Inject;
 
 /**
  * This class must neither be renamed nor moved.
- * 
+ *
  * @author Jan K�hnlein - Initial contribution and API
  * @author Peter Friese
  */
 public class FindReferencesHandler extends AbstractHandler {
 
-	@Inject
-	protected EObjectAtOffsetHelper eObjectAtOffsetHelper;
+    private static final Logger LOG = Logger.getLogger(FindReferencesHandler.class);
+    @Inject
+    protected EObjectAtOffsetHelper eObjectAtOffsetHelper;
+    @Inject
+    protected IGlobalServiceProvider globalServiceProvider;
 
-	@Inject
-	protected IGlobalServiceProvider globalServiceProvider;
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        try {
+            XtextEditor editor = EditorUtils.getActiveXtextEditor(event);
+            if (editor != null) {
+                final ITextSelection selection = (ITextSelection) editor.getSelectionProvider().getSelection();
+                editor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
+                    @Override
+                    public void process(XtextResource state) throws Exception {
+                        EObject target = eObjectAtOffsetHelper.resolveElementAt(state, selection.getOffset());
+                        findReferences(target);
+                    }
+                });
+            }
+        } catch (Exception e) {
+            LOG.error(Messages.FindReferencesHandler_3, e);
+        }
+        return null;
+    }
 
-	private static final Logger LOG = Logger.getLogger(FindReferencesHandler.class);
+    protected void findReferences(EObject target) {
+        ReferenceQueryExecutor queryExecutor = getQueryExecutor(target);
+        if (queryExecutor != null)
+            queryExecutor.execute();
+    }
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		try {
-			XtextEditor editor = EditorUtils.getActiveXtextEditor(event);
-			if (editor != null) {
-				final ITextSelection selection = (ITextSelection) editor.getSelectionProvider().getSelection();
-				editor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
-					@Override
-					public void process(XtextResource state) throws Exception {
-						EObject target = eObjectAtOffsetHelper.resolveElementAt(state, selection.getOffset());
-						findReferences(target);
-					}
-				});
-			}
-		} catch (Exception e) {
-			LOG.error(Messages.FindReferencesHandler_3, e);
-		}
-		return null;
-	}
-
-	protected void findReferences(EObject target) {
-		ReferenceQueryExecutor queryExecutor = getQueryExecutor(target);
-		if(queryExecutor != null) 
-			queryExecutor.execute();
-	}
-
-	protected ReferenceQueryExecutor getQueryExecutor(EObject target) {
-		URI targetURI = EcoreUtil2.getPlatformResourceOrNormalizedURI(target);
-		if(targetURI != null) {
-			ReferenceQueryExecutor queryExecutor = globalServiceProvider.findService(targetURI.trimFragment(), ReferenceQueryExecutor.class);
-			if (queryExecutor != null) {
-				queryExecutor.init(target);
-				return queryExecutor;
-			}
-		}
-		return null;
-	}
+    protected ReferenceQueryExecutor getQueryExecutor(EObject target) {
+        URI targetURI = EcoreUtil2.getPlatformResourceOrNormalizedURI(target);
+        if (targetURI != null) {
+            ReferenceQueryExecutor queryExecutor = globalServiceProvider.findService(targetURI.trimFragment(), ReferenceQueryExecutor.class);
+            if (queryExecutor != null) {
+                queryExecutor.init(target);
+                return queryExecutor;
+            }
+        }
+        return null;
+    }
 }

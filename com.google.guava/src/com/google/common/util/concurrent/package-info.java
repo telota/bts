@@ -16,16 +16,16 @@
 
 /**
  * Concurrency utilities.
- *
+ * <p>
  * <p>Commonly used types include {@link
  * com.google.common.util.concurrent.ListenableFuture} and {@link
  * com.google.common.util.concurrent.Service}.
- *
+ * <p>
  * <p>Commonly used utilities include {@link
  * com.google.common.util.concurrent.Futures}, {@link
  * com.google.common.util.concurrent.MoreExecutors}, and {@link
  * com.google.common.util.concurrent.ThreadFactoryBuilder}.
- *
+ * <p>
  * <p>This package is a part of the open-source
  * <a href="http://guava-libraries.googlecode.com">Guava libraries</a>.
  */

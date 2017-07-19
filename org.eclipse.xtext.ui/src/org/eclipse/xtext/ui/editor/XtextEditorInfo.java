@@ -14,27 +14,26 @@ import com.google.inject.Singleton;
 
 /**
  * @author Sebastian Zarnekow - Initial contribution and API
- * @since 2.3
- * 
  * @noextend This class is not intended to be subclassed by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
+ * @since 2.3
  */
 @Singleton
 public class XtextEditorInfo {
 
-	protected final LanguageInfo languageInfo;
-	
-	@Inject
-	public XtextEditorInfo(LanguageInfo languageInfo) {
-		this.languageInfo = languageInfo;
-	}
-	
-	public String getEditorId() {
-		return languageInfo.getLanguageName();
-	}
-	
-	public LanguageInfo getLanguageInfo() {
-		return languageInfo;
-	}
-	
+    protected final LanguageInfo languageInfo;
+
+    @Inject
+    public XtextEditorInfo(LanguageInfo languageInfo) {
+        this.languageInfo = languageInfo;
+    }
+
+    public String getEditorId() {
+        return languageInfo.getLanguageName();
+    }
+
+    public LanguageInfo getLanguageInfo() {
+        return languageInfo;
+    }
+
 }

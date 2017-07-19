@@ -25,54 +25,52 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
- * 
  * @author ghillairet
- *
  */
 public class ModelUtil {
-	
-	public static String getElementName(EStructuralFeature feature) {
-		final EAnnotation annotation = feature.getEAnnotation(EJS_JSON_ANNOTATION);
-		if (annotation != null && annotation.getDetails().containsKey(EJS_ELEMENT_ANNOTATION)) {
-			return annotation.getDetails().get(EJS_ELEMENT_ANNOTATION);
-		}
-		return feature.getName();
-	}
 
-	public static String getRootNode(EObject object) {
-		if (object instanceof EClass) {
-			EClass eClass = (EClass) object;
+    public static String getElementName(EStructuralFeature feature) {
+        final EAnnotation annotation = feature.getEAnnotation(EJS_JSON_ANNOTATION);
+        if (annotation != null && annotation.getDetails().containsKey(EJS_ELEMENT_ANNOTATION)) {
+            return annotation.getDetails().get(EJS_ELEMENT_ANNOTATION);
+        }
+        return feature.getName();
+    }
 
-			if (eClass.getEAnnotation(EJS_JSON_ANNOTATION) != null) {
-				EAnnotation annotation = eClass.getEAnnotation(EJS_JSON_ANNOTATION);
+    public static String getRootNode(EObject object) {
+        if (object instanceof EClass) {
+            EClass eClass = (EClass) object;
 
-				if (annotation.getDetails().containsKey(EJS_ROOT_ANNOTATION)) {
-					if (annotation.getDetails().containsKey(EJS_ELEMENT_ANNOTATION)) {
-						return annotation.getDetails().get(EJS_ELEMENT_ANNOTATION);
-					}
-				}
-			}
-			return null;
-		}
-		return null;
-	}
+            if (eClass.getEAnnotation(EJS_JSON_ANNOTATION) != null) {
+                EAnnotation annotation = eClass.getEAnnotation(EJS_JSON_ANNOTATION);
 
-	public static URL getURL(URI uri, Object parameters) throws MalformedURLException {
-		URI outURI = uri;
+                if (annotation.getDetails().containsKey(EJS_ROOT_ANNOTATION)) {
+                    if (annotation.getDetails().containsKey(EJS_ELEMENT_ANNOTATION)) {
+                        return annotation.getDetails().get(EJS_ELEMENT_ANNOTATION);
+                    }
+                }
+            }
+            return null;
+        }
+        return null;
+    }
 
-		if (parameters != null && parameters instanceof Map) {
-			Map<?, ?> map = (Map<?,?>) parameters;
-			for (Object key: map.keySet()) {
-				String query = key+"="+(String) map.get(key);
-				if (outURI.hasQuery()) {
-					outURI = URI.createURI(outURI+"&"+query);
-				} else {
-					outURI = outURI.appendQuery(query);
-				}
-			}
-		}
+    public static URL getURL(URI uri, Object parameters) throws MalformedURLException {
+        URI outURI = uri;
 
-		return new URL(outURI.toString());
-	}
-	
+        if (parameters != null && parameters instanceof Map) {
+            Map<?, ?> map = (Map<?, ?>) parameters;
+            for (Object key : map.keySet()) {
+                String query = key + "=" + (String) map.get(key);
+                if (outURI.hasQuery()) {
+                    outURI = URI.createURI(outURI + "&" + query);
+                } else {
+                    outURI = outURI.appendQuery(query);
+                }
+            }
+        }
+
+        return new URL(outURI.toString());
+    }
+
 }

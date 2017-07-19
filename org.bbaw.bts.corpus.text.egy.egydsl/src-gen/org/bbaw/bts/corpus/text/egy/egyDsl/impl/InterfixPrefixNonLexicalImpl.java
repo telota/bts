@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InterfixPrefixNonLexicalImpl extends InterfixImpl implements InterfixPrefixNonLexical
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected InterfixPrefixNonLexicalImpl()
-  {
-    super();
-  }
+public class InterfixPrefixNonLexicalImpl extends InterfixImpl implements InterfixPrefixNonLexical {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected InterfixPrefixNonLexicalImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.INTERFIX_PREFIX_NON_LEXICAL;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.INTERFIX_PREFIX_NON_LEXICAL;
+    }
 
 } //InterfixPrefixNonLexicalImpl

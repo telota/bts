@@ -11,18 +11,18 @@ import org.bbaw.bts.core.services.corpus.impl.internal.CorpusSearchServiceFactor
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 
 public class BTSObjectSearchServiceFactoryCorpus implements
-		BTSObjectSearchServiceFactory {
+        BTSObjectSearchServiceFactory {
 
-	public BTSObjectSearchServiceFactoryCorpus() {
-		// TODO Auto-generated constructor stub
-	}
+    public BTSObjectSearchServiceFactoryCorpus() {
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public List<BTSObjectSearchService> getSearchServices() {
-		CorpusSearchServiceFactoryHelper helper = ContextInjectionFactory.make(CorpusSearchServiceFactoryHelper.class, StaticAccessController.getContext());
-		List<BTSObjectSearchService> services = new Vector<>(7);
-		
-		GenericObjectService<?, ?> service = null;
+    @Override
+    public List<BTSObjectSearchService> getSearchServices() {
+        CorpusSearchServiceFactoryHelper helper = ContextInjectionFactory.make(CorpusSearchServiceFactoryHelper.class, StaticAccessController.getContext());
+        List<BTSObjectSearchService> services = new Vector<>(7);
+
+        GenericObjectService<?, ?> service = null;
 //		service = helper.getAnnotationService();
 //		if (service instanceof BTSObjectSearchService)
 //		{
@@ -35,11 +35,10 @@ public class BTSObjectSearchServiceFactoryCorpus implements
 //			services.add((BTSObjectSearchService) service);
 //		}
 //		
-		service = helper.getWlistService();
-		if (service instanceof BTSObjectSearchService)
-		{
-			services.add((BTSObjectSearchService) service);
-		}
+        service = helper.getWlistService();
+        if (service instanceof BTSObjectSearchService) {
+            services.add((BTSObjectSearchService) service);
+        }
 //		
 //		service = helper.getTcObjectService();
 //		if (service instanceof BTSObjectSearchService)
@@ -47,30 +46,27 @@ public class BTSObjectSearchServiceFactoryCorpus implements
 //			services.add((BTSObjectSearchService) service);
 //		}
 //		
-		service = helper.getTextCorpusService();
-		if (service instanceof BTSObjectSearchService)
-		{
-			services.add((BTSObjectSearchService) service);
-		}
+        service = helper.getTextCorpusService();
+        if (service instanceof BTSObjectSearchService) {
+            services.add((BTSObjectSearchService) service);
+        }
 //		
 //		service = helper.getTextService();
 //		if (service instanceof BTSObjectSearchService)
 //		{
 //			services.add((BTSObjectSearchService) service);
 //		}
-		
-		service = helper.getThsService();
-		if (service instanceof BTSObjectSearchService)
-		{
-			services.add((BTSObjectSearchService) service);
-		}
-		
-		service = helper.getCorpusObjectService();
-		if (service instanceof BTSObjectSearchService)
-		{
-			services.add((BTSObjectSearchService) service);
-		}
-		return services;
-	}
+
+        service = helper.getThsService();
+        if (service instanceof BTSObjectSearchService) {
+            services.add((BTSObjectSearchService) service);
+        }
+
+        service = helper.getCorpusObjectService();
+        if (service instanceof BTSObjectSearchService) {
+            services.add((BTSObjectSearchService) service);
+        }
+        return services;
+    }
 
 }

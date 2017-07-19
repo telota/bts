@@ -17,16 +17,16 @@ import org.eclipse.xtext.validation.Issue;
  */
 public class ReplaceModification implements IModification {
 
-	private final Issue issue;
-	private final String replacement;
+    private final Issue issue;
+    private final String replacement;
 
-	public ReplaceModification(Issue issue, String replacement) {
-		this.issue = issue;
-		this.replacement = replacement;
-	}
-	
-	public void apply(IModificationContext context) throws BadLocationException {
-		context.getXtextDocument().replace(issue.getOffset(), issue.getLength(), replacement);
-	}
+    public ReplaceModification(Issue issue, String replacement) {
+        this.issue = issue;
+        this.replacement = replacement;
+    }
+
+    public void apply(IModificationContext context) throws BadLocationException {
+        context.getXtextDocument().replace(issue.getOffset(), issue.getLength(), replacement);
+    }
 
 }

@@ -19,9 +19,9 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultResourceUIServiceProvider.class)
 public interface IResourceUIServiceProviderExtension {
 
-	/**
-	 * @return returns true, if the file described by uri and storage should be handled by the Xtext builder.
-	 */
-	boolean canBuild(URI uri, IStorage storage);
+    /**
+     * @return returns true, if the file described by uri and storage should be handled by the Xtext builder.
+     */
+    boolean canBuild(URI uri, IStorage storage);
 
 }

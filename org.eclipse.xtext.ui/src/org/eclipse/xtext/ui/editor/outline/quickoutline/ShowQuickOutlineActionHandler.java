@@ -25,35 +25,35 @@ import com.google.inject.Injector;
  * @author Peter Friese - Initial contribution and API
  */
 public class ShowQuickOutlineActionHandler extends AbstractHandler {
-	
-	@Inject
-	private Injector injector;
-	
-	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		final XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor(event);
-		if (xtextEditor != null) {
-			final IXtextDocument document = xtextEditor.getDocument();
-			document.readOnly(new IUnitOfWork.Void<XtextResource>()  {
-				@Override
-				public void process(XtextResource state) throws Exception {
-					final QuickOutlinePopup quickOutlinePopup = createPopup(xtextEditor.getEditorSite().getShell());
-					quickOutlinePopup.setEditor(xtextEditor);
-					quickOutlinePopup.setInput(document);
-					quickOutlinePopup.setEvent((Event) event.getTrigger());
-					quickOutlinePopup.open();
-				}
-			});
-		}
-		return null;
-	}
-	
-	/**
-	 * @since 2.2
-	 */
-	protected QuickOutlinePopup createPopup(Shell parent) {
-		QuickOutlinePopup result = new QuickOutlinePopup(parent);
-		injector.injectMembers(result);
-		return result;
-	}
+
+    @Inject
+    private Injector injector;
+
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
+        final XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor(event);
+        if (xtextEditor != null) {
+            final IXtextDocument document = xtextEditor.getDocument();
+            document.readOnly(new IUnitOfWork.Void<XtextResource>() {
+                @Override
+                public void process(XtextResource state) throws Exception {
+                    final QuickOutlinePopup quickOutlinePopup = createPopup(xtextEditor.getEditorSite().getShell());
+                    quickOutlinePopup.setEditor(xtextEditor);
+                    quickOutlinePopup.setInput(document);
+                    quickOutlinePopup.setEvent((Event) event.getTrigger());
+                    quickOutlinePopup.open();
+                }
+            });
+        }
+        return null;
+    }
+
+    /**
+     * @since 2.2
+     */
+    protected QuickOutlinePopup createPopup(Shell parent) {
+        QuickOutlinePopup result = new QuickOutlinePopup(parent);
+        injector.injectMembers(result);
+        return result;
+    }
 
 }

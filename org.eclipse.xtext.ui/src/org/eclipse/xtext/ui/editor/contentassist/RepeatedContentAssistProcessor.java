@@ -24,95 +24,94 @@ import com.google.inject.Inject;
  */
 public class RepeatedContentAssistProcessor extends XtextContentAssistProcessor implements ICompletionListener, ICompletionListenerExtension {
 
-	public interface ModeAware {
-		
-		/**
-		 * Reset the proposal provider's repetition state. The intial
-		 * proposals should be displayed after a subsequent
-		 * call to {@link #nextMode()}.
-		 */
-		void reset();
-		
-		/**
-		 * Announce that proposals will be computed.
-		 */
-		void nextMode();
-		
-		/**
-		 * @return <code>true</code> if a subsequent call to {@link #nextMode()} will
-		 * show the proposals for the first mode.
-		 */
-		boolean isLastMode();
-		
-		/**
-		 * @return a description of the proposal category that will be
-		 *   retrieved after a subsequent invocation of {@link #nextMode()}.
-		 */
-		String getNextCategory();
-		
-	}
-	
-	@Inject(optional = true)
+    @Inject(optional = true)
 //	@Nullable
-	private IWorkbench workbench;
-	
-	private IContentAssistantExtension2 currentAssistant;
-	
-	public ModeAware getModeAwareProposalProvider() {
-		return (ModeAware) super.getContentProposalProvider();
-	}
-	
-	@Override
-	public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
-		ModeAware proposalProvider = getModeAwareProposalProvider();
-		if (proposalProvider == null)
-			return new ICompletionProposal[0];
-		int i = 0;
-		while(i++ < 1000) { // just to prevent endless loop in case #isLastMode has an error
-			proposalProvider.nextMode();
-			if (currentAssistant != null)
-				currentAssistant.setStatusMessage(getStatusMessage());
-			ICompletionProposal[] result = super.computeCompletionProposals(viewer, offset);
-			if (result != null && result.length > 0)
-				return result;
-			if (proposalProvider.isLastMode()) {
-				return new ICompletionProposal[0];	
-			}
-		}
-		throw new IllegalStateException("#isLastMode did not return true for 1000 times");
-	}
-	
-	protected String getStatusMessage() {
-		String binding = "<binding>";
-		if (workbench != null) {
-			IBindingService bindingService = (IBindingService) workbench.getAdapter(IBindingService.class);
-			binding = bindingService.getBestActiveBindingFormattedFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
-		}
-		String category = getModeAwareProposalProvider().getNextCategory();
-		return binding + " to show " + category;
-	}
+    private IWorkbench workbench;
+    private IContentAssistantExtension2 currentAssistant;
 
-	public void assistSessionStarted(ContentAssistEvent event) {
-		ModeAware proposalProvider = getModeAwareProposalProvider();
-		if (proposalProvider != null)
-			proposalProvider.reset();
-		this.currentAssistant = (IContentAssistantExtension2) event.assistant;
-	}
+    public ModeAware getModeAwareProposalProvider() {
+        return (ModeAware) super.getContentProposalProvider();
+    }
 
-	public void assistSessionEnded(ContentAssistEvent event) {
-		ModeAware proposalProvider = getModeAwareProposalProvider();
-		if (proposalProvider != null)
-			proposalProvider.reset();
-		this.currentAssistant = null;
-	}
-	
-	public void assistSessionRestarted(ContentAssistEvent event) {
-		ModeAware proposalProvider = getModeAwareProposalProvider();
-		if (proposalProvider != null)
-			proposalProvider.reset();
-	}
+    @Override
+    public ICompletionProposal[] computeCompletionProposals(ITextViewer viewer, int offset) {
+        ModeAware proposalProvider = getModeAwareProposalProvider();
+        if (proposalProvider == null)
+            return new ICompletionProposal[0];
+        int i = 0;
+        while (i++ < 1000) { // just to prevent endless loop in case #isLastMode has an error
+            proposalProvider.nextMode();
+            if (currentAssistant != null)
+                currentAssistant.setStatusMessage(getStatusMessage());
+            ICompletionProposal[] result = super.computeCompletionProposals(viewer, offset);
+            if (result != null && result.length > 0)
+                return result;
+            if (proposalProvider.isLastMode()) {
+                return new ICompletionProposal[0];
+            }
+        }
+        throw new IllegalStateException("#isLastMode did not return true for 1000 times");
+    }
 
-	public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {
-	}
+    protected String getStatusMessage() {
+        String binding = "<binding>";
+        if (workbench != null) {
+            IBindingService bindingService = (IBindingService) workbench.getAdapter(IBindingService.class);
+            binding = bindingService.getBestActiveBindingFormattedFor(IWorkbenchCommandConstants.EDIT_CONTENT_ASSIST);
+        }
+        String category = getModeAwareProposalProvider().getNextCategory();
+        return binding + " to show " + category;
+    }
+
+    public void assistSessionStarted(ContentAssistEvent event) {
+        ModeAware proposalProvider = getModeAwareProposalProvider();
+        if (proposalProvider != null)
+            proposalProvider.reset();
+        this.currentAssistant = (IContentAssistantExtension2) event.assistant;
+    }
+
+    public void assistSessionEnded(ContentAssistEvent event) {
+        ModeAware proposalProvider = getModeAwareProposalProvider();
+        if (proposalProvider != null)
+            proposalProvider.reset();
+        this.currentAssistant = null;
+    }
+
+    public void assistSessionRestarted(ContentAssistEvent event) {
+        ModeAware proposalProvider = getModeAwareProposalProvider();
+        if (proposalProvider != null)
+            proposalProvider.reset();
+    }
+
+    public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {
+    }
+
+    public interface ModeAware {
+
+        /**
+         * Reset the proposal provider's repetition state. The intial
+         * proposals should be displayed after a subsequent
+         * call to {@link #nextMode()}.
+         */
+        void reset();
+
+        /**
+         * Announce that proposals will be computed.
+         */
+        void nextMode();
+
+        /**
+         * @return <code>true</code> if a subsequent call to {@link #nextMode()} will
+         * show the proposals for the first mode.
+         */
+        boolean isLastMode();
+
+        /**
+         * @return a description of the proposal category that will be
+         * retrieved after a subsequent invocation of {@link #nextMode()}.
+         */
+        String getNextCategory();
+
+    }
 
 }

@@ -14,46 +14,46 @@ import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
 
 /**
  * The JFace/SWT content provider. The tree of visible IOutlineNodes has already been pre-computed.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class OutlineNodeContentProvider implements ITreeContentProvider {
 
-	private OutlineFilterAndSorter filterSorter;
+    private OutlineFilterAndSorter filterSorter;
 
-	/**
-	 * @since 2.2
-	 */
-	public void setFilterAndSorter(OutlineFilterAndSorter filterSorter) {
-		this.filterSorter = filterSorter;
-	}
-	
-	public void dispose() {
-	}
+    /**
+     * @since 2.2
+     */
+    public void setFilterAndSorter(OutlineFilterAndSorter filterSorter) {
+        this.filterSorter = filterSorter;
+    }
 
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		Assert.isLegal(newInput == null || newInput instanceof IOutlineNode);
-	}
+    public void dispose() {
+    }
 
-	public Object[] getElements(Object inputElement) {
-		return getChildren(inputElement);
-	}
+    public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+        Assert.isLegal(newInput == null || newInput instanceof IOutlineNode);
+    }
 
-	public Object[] getChildren(Object parentElement) {
-		return filterSorter.filterAndSort(asOutlineNode(parentElement).getChildren());
-	}
+    public Object[] getElements(Object inputElement) {
+        return getChildren(inputElement);
+    }
 
-	public Object getParent(Object element) {
-		return asOutlineNode(element).getParent();
-	}
+    public Object[] getChildren(Object parentElement) {
+        return filterSorter.filterAndSort(asOutlineNode(parentElement).getChildren());
+    }
 
-	public boolean hasChildren(Object element) {
-		return asOutlineNode(element).hasChildren();
-	}
+    public Object getParent(Object element) {
+        return asOutlineNode(element).getParent();
+    }
 
-	protected IOutlineNode asOutlineNode(Object element) {
-		Assert.isLegal(element instanceof IOutlineNode);
-		return (IOutlineNode) element;
-	}
+    public boolean hasChildren(Object element) {
+        return asOutlineNode(element).hasChildren();
+    }
+
+    protected IOutlineNode asOutlineNode(Object element) {
+        Assert.isLegal(element instanceof IOutlineNode);
+        return (IOutlineNode) element;
+    }
 
 }

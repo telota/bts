@@ -8,11 +8,9 @@ package org.bbaw.bts.corpus.text.egy.egyDsl;
  * A representation of the model object '<em><b>Disputable Vers Marker</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getDisputableVersMarker()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getDisputableVersMarker()
  */
-public interface DisputableVersMarker extends VersMarker
-{
+public interface DisputableVersMarker extends VersMarker {
 } // DisputableVersMarker

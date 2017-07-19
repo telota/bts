@@ -24,51 +24,58 @@ import org.eclipse.jface.text.contentassist.IContextInformationValidator;
  * assist processor for all context information objects for the current position. If the
  * currently displayed information is in the result set, the context information is
  * considered valid.
+ *
  * @see ContextInformationValidator
  * @since 2.3
  */
 public class SmartInformationAwareContextInformationValidator implements IContextInformationValidator, IContextInformationPresenter {
 
-	/** The content assist processor. */
-	private IContentAssistProcessor fProcessor;
-	/** The context information to be validated. */
-	private IContextInformation fContextInformation;
-	/** The associated text viewer. */
-	private ITextViewer fViewer;
+    /**
+     * The content assist processor.
+     */
+    private IContentAssistProcessor fProcessor;
+    /**
+     * The context information to be validated.
+     */
+    private IContextInformation fContextInformation;
+    /**
+     * The associated text viewer.
+     */
+    private ITextViewer fViewer;
 
-	/**
-	 * Creates a new context information validator which is ready to be installed on
-	 * a particular context information.
-	 *
-	 * @param processor the processor to be used for validation
-	 */
-	public SmartInformationAwareContextInformationValidator(IContentAssistProcessor processor) {
-		fProcessor= processor;
-	}
+    /**
+     * Creates a new context information validator which is ready to be installed on
+     * a particular context information.
+     *
+     * @param processor the processor to be used for validation
+     */
+    public SmartInformationAwareContextInformationValidator(IContentAssistProcessor processor) {
+        fProcessor = processor;
+    }
 
-	public void install(IContextInformation contextInformation, ITextViewer viewer, int offset) {
-		fContextInformation= contextInformation;
-		fViewer= viewer;
-	}
+    public void install(IContextInformation contextInformation, ITextViewer viewer, int offset) {
+        fContextInformation = contextInformation;
+        fViewer = viewer;
+    }
 
-	public boolean isContextInformationValid(int offset) {
-		if (fContextInformation instanceof ISmartContextInformation) {
-			return ((ISmartContextInformation) fContextInformation).isContextInformationValid(fViewer, offset);
-		} else {
-			IContextInformation[] infos= fProcessor.computeContextInformation(fViewer, offset);
-			if (infos != null && infos.length > 0) {
-				for (int i= 0; i < infos.length; i++)
-					if (fContextInformation.equals(infos[i]))
-						return true;
-			}
-			return false;
-		}
-	}
+    public boolean isContextInformationValid(int offset) {
+        if (fContextInformation instanceof ISmartContextInformation) {
+            return ((ISmartContextInformation) fContextInformation).isContextInformationValid(fViewer, offset);
+        } else {
+            IContextInformation[] infos = fProcessor.computeContextInformation(fViewer, offset);
+            if (infos != null && infos.length > 0) {
+                for (int i = 0; i < infos.length; i++)
+                    if (fContextInformation.equals(infos[i]))
+                        return true;
+            }
+            return false;
+        }
+    }
 
-	public boolean updatePresentation(int offset, TextPresentation presentation) {
-		if (fContextInformation instanceof ISmartContextInformation) {
-			return ((ISmartContextInformation) fContextInformation).updatePresentation(fViewer, offset, presentation);
-		}
-		return false;
-	}
+    public boolean updatePresentation(int offset, TextPresentation presentation) {
+        if (fContextInformation instanceof ISmartContextInformation) {
+            return ((ISmartContextInformation) fContextInformation).updatePresentation(fViewer, offset, presentation);
+        }
+        return false;
+    }
 }

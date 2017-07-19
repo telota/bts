@@ -42,167 +42,169 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * The Interface DBManager provides dao layer access to basic database management functions not covered by specific dao.
- * 
+ * <p>
  * This means installation of database, syncing, indexing, starting, shutdown, checks.
  *
  * @author Christoph Plutte
  */
-public interface DBManager
-{
+public interface DBManager {
 
-	/**
-	 * Prepare db synchronization with remote database.
-	 *
-	 * @param project the project to be synced
-	 * @return true, if successful
-	 * @throws MalformedURLException the malformed url exception
-	 */
-	boolean prepareDBSynchronization(BTSProject project) throws MalformedURLException;
+    /**
+     * Prepare db synchronization with remote database.
+     *
+     * @param project the project to be synced
+     * @return true, if successful
+     * @throws MalformedURLException the malformed url exception
+     */
+    boolean prepareDBSynchronization(BTSProject project) throws MalformedURLException;
 
-	/**
-	 * Prepare database indexing .
-	 *
-	 * @param project the project
-	 * @param monitor 
-	 * @return true, if successful
-	 * @throws URISyntaxException the URI syntax exception
-	 */
-	boolean checkDBIndexing(BTSProject project, IProgressMonitor monitor) throws URISyntaxException;
+    /**
+     * Prepare database indexing .
+     *
+     * @param project the project
+     * @param monitor
+     * @return true, if successful
+     * @throws URISyntaxException the URI syntax exception
+     */
+    boolean checkDBIndexing(BTSProject project, IProgressMonitor monitor) throws URISyntaxException;
 
-	/**
-	 * Prepare database for startup.
-	 *
-	 * @return true, if successful
-	 * @throws URISyntaxException the URI syntax exception
-	 */
-	boolean prepareDB() throws URISyntaxException;
+    /**
+     * Prepare database for startup.
+     *
+     * @return true, if successful
+     * @throws URISyntaxException the URI syntax exception
+     */
+    boolean prepareDB() throws URISyntaxException;
 
-	/**
-	 * Checks whether database is installed.
-	 *
-	 * @param db_installation_dir the database installation directory
-	 * @return true, if successful
-	 */
-	boolean databaseIsInstalled(String db_installation_dir);
+    /**
+     * Checks whether database is installed.
+     *
+     * @param db_installation_dir the database installation directory
+     * @return true, if successful
+     */
+    boolean databaseIsInstalled(String db_installation_dir);
 
-	/**
-	 * Install database in the given repository setting it to the given port and registering the given credentials as
-	 * local database administrator.
-	 * 
-	 * throws an exception if anything goes wrong such as file not found...
-	 *
-	 * @param dbInstallationDir the database installation directory
-	 * @param localPort the local port
-	 * @param localAdminName the local admin name
-	 * @param localAdminpassword the local adminpassword
-	 * @return true, if successful
-	 * @throws Exception the exception
-	 */
-	boolean installDatabase(String dbInstallationDir, int localPort, String localAdminName, String localAdminpassword) throws Exception;
+    /**
+     * Install database in the given repository setting it to the given port and registering the given credentials as
+     * local database administrator.
+     * <p>
+     * throws an exception if anything goes wrong such as file not found...
+     *
+     * @param dbInstallationDir  the database installation directory
+     * @param localPort          the local port
+     * @param localAdminName     the local admin name
+     * @param localAdminpassword the local adminpassword
+     * @return true, if successful
+     * @throws Exception the exception
+     */
+    boolean installDatabase(String dbInstallationDir, int localPort, String localAdminName, String localAdminpassword) throws Exception;
 
-	/**
-	 * Check connection to database using given credentials.
-	 *
-	 * @param url the url of database
-	 * @param username the username
-	 * @param password the password
-	 * @return true, if successful
-	 * @throws MalformedURLException the malformed url exception
-	 */
-	boolean checkConnection(String url, String username, String password) throws MalformedURLException;
+    /**
+     * Check connection to database using given credentials.
+     *
+     * @param url      the url of database
+     * @param username the username
+     * @param password the password
+     * @return true, if successful
+     * @throws MalformedURLException the malformed url exception
+     */
+    boolean checkConnection(String url, String username, String password) throws MalformedURLException;
 
-	/**
-	 * Prepares db collection indexing.
-	 *
-	 * @param db collection the db collection name
-	 * @return true, if successful
-	 */
-	boolean prepareDBCollectionIndexing(String string);
-	
-	/**
-	 * Starts database accesable under given url.
-	 *
-	 * @param btsInstallationDir the bts installation dir
-	 * @param localDBUrl the local db url
-	 * @return true, if successful
-	 * @throws Exception the exception
-	 */
-	boolean startDatabase(String btsInstallationDir, String localDBUrl) throws Exception;
+    /**
+     * Prepares db collection indexing.
+     *
+     * @param db collection the db collection name
+     * @return true, if successful
+     */
+    boolean prepareDBCollectionIndexing(String string);
 
-	/**
-	 * Synchronizes remote projects.
-	 *
-	 * @param mainProject the main project
-	 * @param projecsToSync the projecs to sync
-	 * @param serverurl the serverurl
-	 * @param localDBUrl the local db url
-	 * @return true, if successful
-	 * @throws Exception the exception
-	 */
-	boolean synchronizeRemoteProjects(String mainProject,
-			List<String> projecsToSync, String serverurl, String localDBUrl) throws Exception;
+    /**
+     * Starts database accesable under given url.
+     *
+     * @param btsInstallationDir the bts installation dir
+     * @param localDBUrl         the local db url
+     * @return true, if successful
+     * @throws Exception the exception
+     */
+    boolean startDatabase(String btsInstallationDir, String localDBUrl) throws Exception;
 
-	/**
-	 * Shutdown database.
-	 */
-	void shutdown();
+    /**
+     * Synchronizes remote projects.
+     *
+     * @param mainProject   the main project
+     * @param projecsToSync the projecs to sync
+     * @param serverurl     the serverurl
+     * @param localDBUrl    the local db url
+     * @return true, if successful
+     * @throws Exception the exception
+     */
+    boolean synchronizeRemoteProjects(String mainProject,
+                                      List<String> projecsToSync, String serverurl, String localDBUrl) throws Exception;
 
-	/**
-	 * Check and create db collection.
-	 *
-	 * @param project the project
-	 * @param collection the collection
-	 * @param string the string
-	 * @param index the index
-	 * @param synchronize the synchronize
-	 * @return true, if successful
-	 */
-	boolean checkAndCreateDBCollection(BTSProject project, BTSProjectDBCollection collection, String string, boolean index, boolean synchronize);
+    /**
+     * Shutdown database.
+     */
+    void shutdown();
 
-	/**
-	 * Check user is database admin.
-	 *
-	 * @param userName the user name
-	 * @param password the password
-	 * @return true, if successful
-	 */
-	boolean checkUserIsDBAdmin(String userName, String password);
+    /**
+     * Check and create db collection.
+     *
+     * @param project     the project
+     * @param collection  the collection
+     * @param string      the string
+     * @param index       the index
+     * @param synchronize the synchronize
+     * @return true, if successful
+     */
+    boolean checkAndCreateDBCollection(BTSProject project, BTSProjectDBCollection collection, String string, boolean index, boolean synchronize);
 
-	/**
-	 * checks if database collection exists.
-	 *
-	 * @param dbCollectionName the db collection name
-	 * @return true, if collection exists
-	 */
-	boolean dbCollectionExists(String dbCollectionName);
+    /**
+     * Check user is database admin.
+     *
+     * @param userName the user name
+     * @param password the password
+     * @return true, if successful
+     */
+    boolean checkUserIsDBAdmin(String userName, String password);
 
-	
-	/** Checks whether optimization of Cache, logging or so is required.
-	 * @return true if optimization is required or recommended
-	 */
-	boolean optimizationRequired();
+    /**
+     * checks if database collection exists.
+     *
+     * @param dbCollectionName the db collection name
+     * @return true, if collection exists
+     */
+    boolean dbCollectionExists(String dbCollectionName);
 
-	/**
-	 * optimize storage, cache and logging.
-	 * @return true if successful
-	 */
-	boolean optimize();
 
-	String getLocalDBurl();
+    /**
+     * Checks whether optimization of Cache, logging or so is required.
+     *
+     * @return true if optimization is required or recommended
+     */
+    boolean optimizationRequired();
 
-	String getLocalESGuiURL();
+    /**
+     * optimize storage, cache and logging.
+     *
+     * @return true if successful
+     */
+    boolean optimize();
 
-	List<DBCollectionStatusInformation> getDBCollectionStatusInformations(IProgressMonitor monitor);
-	
-	DBCollectionStatusInformation getDBCollectionStatusInformations(String dbCollection, IProgressMonitor monitor);
+    String getLocalDBurl();
 
-	boolean reindex(String dbCollectionName, IProgressMonitor monitor);
+    String getLocalESGuiURL();
 
-	boolean changeAuthenticationDBAdmin(String userName, String password) throws FileNotFoundException;
+    List<DBCollectionStatusInformation> getDBCollectionStatusInformations(IProgressMonitor monitor);
 
-	void synchronizeDBUserObject(String userName, String passWord);
+    DBCollectionStatusInformation getDBCollectionStatusInformations(String dbCollection, IProgressMonitor monitor);
 
-	void addAuthenticationDBAdmin(String userName, String passWord) throws FileNotFoundException;
+    boolean reindex(String dbCollectionName, IProgressMonitor monitor);
+
+    boolean changeAuthenticationDBAdmin(String userName, String password) throws FileNotFoundException;
+
+    void synchronizeDBUserObject(String userName, String passWord);
+
+    void addAuthenticationDBAdmin(String userName, String passWord) throws FileNotFoundException;
 
 
 }

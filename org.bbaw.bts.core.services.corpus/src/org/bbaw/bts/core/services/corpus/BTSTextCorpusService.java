@@ -4,14 +4,14 @@ import org.bbaw.bts.core.services.GenericObjectService;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextCorpus;
 
 public interface BTSTextCorpusService extends
-		GenericObjectService<BTSTextCorpus, String> {
+        GenericObjectService<BTSTextCorpus, String> {
 
-	boolean makeAndSaveNewTextCorpus(BTSTextCorpus corpus,
-			boolean synchronizeCorpus);
+    boolean makeAndSaveNewTextCorpus(BTSTextCorpus corpus,
+                                     boolean synchronizeCorpus);
 
-	BTSTextCorpus findTextCorpusByPrefix(String corpusPrefix);
+    BTSTextCorpus findTextCorpusByPrefix(String corpusPrefix);
 
-	String[] getActive_corporaPrefixes(String projecPrefix);
-	
-	String getMainCorpusPrefix();
+    String[] getActive_corporaPrefixes(String projecPrefix);
+
+    String getMainCorpusPrefix();
 }

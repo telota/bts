@@ -30,34 +30,34 @@
 package org.bbaw.bts.ui.commons.compare;
 
 /**
- * The Interface CompareViewer allows UI extensions to implement this and thus provide specific compare viewers for 
+ * The Interface CompareViewer allows UI extensions to implement this and thus provide specific compare viewers for
  * specific objects.
  *
  * @author Christoph Plutte
  */
 public interface CompareViewer {
-	
-	/**
-	 * Load objects into the viewer.
-	 *
-	 * @param leftObject the left object
-	 * @param leftEditable the left editable
-	 * @param rightObject the right object
-	 * @param rightEditable the right editable
-	 * @return true, if successful
-	 */
-	boolean load(Object leftObject, boolean leftEditable, Object rightObject, boolean rightEditable);
-	
-	/**
-	 * Save changes to the leftObject.
-	 *
-	 * @return true, if successful
-	 */
-	boolean save();
 
-	/**
-	 * Dispose.
-	 */
-	void dispose();
+    /**
+     * Load objects into the viewer.
+     *
+     * @param leftObject    the left object
+     * @param leftEditable  the left editable
+     * @param rightObject   the right object
+     * @param rightEditable the right editable
+     * @return true, if successful
+     */
+    boolean load(Object leftObject, boolean leftEditable, Object rightObject, boolean rightEditable);
+
+    /**
+     * Save changes to the leftObject.
+     *
+     * @return true, if successful
+     */
+    boolean save();
+
+    /**
+     * Dispose.
+     */
+    void dispose();
 
 }

@@ -48,185 +48,185 @@ import com.google.inject.name.Named;
 
 /**
  * A rename participant that triggers further rename refactorings based on {@link RenameProcessor}s.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public abstract class AbstractProcessorBasedRenameParticipant extends RenameParticipant {
 
-	private static final Logger LOG = Logger.getLogger(AbstractProcessorBasedRenameParticipant.class);
+    private static final Logger LOG = Logger.getLogger(AbstractProcessorBasedRenameParticipant.class);
 
-	@Inject
-	private IGlobalServiceProvider globalServiceProvider;
+    @Inject
+    private IGlobalServiceProvider globalServiceProvider;
 
-	@Inject
-	private RefactoringResourceSetProvider resourceSetProvider;
+    @Inject
+    private RefactoringResourceSetProvider resourceSetProvider;
 
-	@Inject
-	private ProjectUtil projectUtil;
+    @Inject
+    private ProjectUtil projectUtil;
 
-	@Inject
-	@Named(Constants.LANGUAGE_NAME)
-	private String languageName;
+    @Inject
+    @Named(Constants.LANGUAGE_NAME)
+    private String languageName;
 
-	@Inject
-	private StatusWrapper status;
-	
-	@Inject 
-	private SyncUtil syncUtil;
-	
-	@Inject
-	private RefactoringPreferences preferences;
+    @Inject
+    private StatusWrapper status;
 
-	private List<RenameProcessor> wrappedProcessors;
+    @Inject
+    private SyncUtil syncUtil;
 
-	private Set<Object> disabledTargets = newHashSet();
+    @Inject
+    private RefactoringPreferences preferences;
 
-	@Override
-	protected boolean initialize(Object originalTargetElement) {
-		try {
-			wrappedProcessors = getRenameProcessors(originalTargetElement);
-			if(wrappedProcessors != null) {
-				syncUtil.totalSync(preferences.isSaveAllBeforeRefactoring());
-				return true;
-			}	
-		} catch (Exception exc) {
-			status.add(ERROR, "Error initializing refactoring participant.", exc, LOG);
-		}
-		return false;
-	}
+    private List<RenameProcessor> wrappedProcessors;
 
-	protected List<RenameProcessor> getRenameProcessors(Object originalTargetElement) {
-		List<? extends IRenameElementContext> participantContexts = createRenameElementContexts(originalTargetElement);
-		if (participantContexts != null) {
-			List<RenameProcessor> processors = newArrayList();
-			for (IRenameElementContext participantContext : participantContexts) {
-				RenameProcessor renameProcessor = getRenameProcessor(participantContext);
-				if (renameProcessor != null) {
-					processors.add(renameProcessor);
-				}
-			}
-			return processors;
-		}
-		return null;
-	}
+    private Set<Object> disabledTargets = newHashSet();
 
-	protected RenameProcessor getRenameProcessor(IRenameElementContext participantContext) {
-		IRenameRefactoringProvider renameRefactoringProvider = getRenameRefactoringProvider(participantContext);
-		if (renameRefactoringProvider != null)
-			return renameRefactoringProvider.getRenameProcessor(participantContext);
-		else
-			return null;
-	}
+    @Override
+    protected boolean initialize(Object originalTargetElement) {
+        try {
+            wrappedProcessors = getRenameProcessors(originalTargetElement);
+            if (wrappedProcessors != null) {
+                syncUtil.totalSync(preferences.isSaveAllBeforeRefactoring());
+                return true;
+            }
+        } catch (Exception exc) {
+            status.add(ERROR, "Error initializing refactoring participant.", exc, LOG);
+        }
+        return false;
+    }
 
-	protected IRenameRefactoringProvider getRenameRefactoringProvider(IRenameElementContext renameElementContext) {
-		return globalServiceProvider.findService(renameElementContext.getTargetElementURI(),
-				IRenameRefactoringProvider.class);
-	}
+    protected List<RenameProcessor> getRenameProcessors(Object originalTargetElement) {
+        List<? extends IRenameElementContext> participantContexts = createRenameElementContexts(originalTargetElement);
+        if (participantContexts != null) {
+            List<RenameProcessor> processors = newArrayList();
+            for (IRenameElementContext participantContext : participantContexts) {
+                RenameProcessor renameProcessor = getRenameProcessor(participantContext);
+                if (renameProcessor != null) {
+                    processors.add(renameProcessor);
+                }
+            }
+            return processors;
+        }
+        return null;
+    }
 
-	@Override
-	public String getName() {
-		return languageName;
-	}
+    protected RenameProcessor getRenameProcessor(IRenameElementContext participantContext) {
+        IRenameRefactoringProvider renameRefactoringProvider = getRenameRefactoringProvider(participantContext);
+        if (renameRefactoringProvider != null)
+            return renameRefactoringProvider.getRenameProcessor(participantContext);
+        else
+            return null;
+    }
 
-	public Object[] getElements() {
-		List<Object> elements = newArrayList();
-		for (RenameProcessor wrappedProcessor : wrappedProcessors) {
-			elements.addAll(Arrays.asList(wrappedProcessor.getElements()));
-		}
-		return toArray(elements, Object.class);
-	}
+    protected IRenameRefactoringProvider getRenameRefactoringProvider(IRenameElementContext renameElementContext) {
+        return globalServiceProvider.findService(renameElementContext.getTargetElementURI(),
+                IRenameRefactoringProvider.class);
+    }
 
-	public void disableFor(Object... elements) {
-		disabledTargets.addAll(Arrays.asList(elements));
-	}
+    @Override
+    public String getName() {
+        return languageName;
+    }
 
-	@Override
-	public RefactoringStatus checkConditions(IProgressMonitor pm, CheckConditionsContext context)
-			throws OperationCanceledException {
-		SubMonitor progress = SubMonitor.convert(pm).setWorkRemaining(100);
-		try {
-			for (RenameProcessor wrappedProcessor : wrappedProcessors) {
-				List<Object> targetElements = Arrays.asList(wrappedProcessor.getElements());
-				if (!disabledTargets.containsAll(targetElements)) {
-					setNewName(wrappedProcessor, getNewName());
-					status.merge(wrappedProcessor.checkInitialConditions(progress.newChild(20)));
-					if(!status.getRefactoringStatus().hasFatalError())
-						status.merge(wrappedProcessor.checkFinalConditions(progress.newChild(80), context));
-				}
-			}
-		} catch (Exception ce) {
-			status.add(ERROR, "Error checking conditions in refactoring participant: {0}. See log for details", ce, LOG);
-		}
-		return status.getRefactoringStatus();
-	}
+    public Object[] getElements() {
+        List<Object> elements = newArrayList();
+        for (RenameProcessor wrappedProcessor : wrappedProcessors) {
+            elements.addAll(Arrays.asList(wrappedProcessor.getElements()));
+        }
+        return toArray(elements, Object.class);
+    }
 
-	protected void setNewName(RenameProcessor processor, String newName) {
-		((AbstractRenameProcessor) processor).setNewName(newName);
-	}
+    public void disableFor(Object... elements) {
+        disabledTargets.addAll(Arrays.asList(elements));
+    }
 
-	@Override
-	public Change createChange(IProgressMonitor pm) throws CoreException, OperationCanceledException {
-		CompositeChange compositeChange = null;
-		try {
-			for (RenameProcessor wrappedProcessor : wrappedProcessors) {
-				if (!disabledTargets.containsAll(Arrays.asList(wrappedProcessor.getElements()))) {
-					Change processorChange = wrappedProcessor.createChange(pm);
-					if (processorChange != null) {
-						if (compositeChange == null)
-							compositeChange = new CompositeChange("Changes from participant: " + getName());
-						compositeChange.add(processorChange);
-					}
-				}
-			}
-		} catch (Exception e) {
-			throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error creating change", e));
-		} finally {
-			dispose();
-		}
-		return compositeChange;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	protected void dispose() {
-		status = null;
-		wrappedProcessors = null;
-		disabledTargets.clear();
-	}
+    @Override
+    public RefactoringStatus checkConditions(IProgressMonitor pm, CheckConditionsContext context)
+            throws OperationCanceledException {
+        SubMonitor progress = SubMonitor.convert(pm).setWorkRemaining(100);
+        try {
+            for (RenameProcessor wrappedProcessor : wrappedProcessors) {
+                List<Object> targetElements = Arrays.asList(wrappedProcessor.getElements());
+                if (!disabledTargets.containsAll(targetElements)) {
+                    setNewName(wrappedProcessor, getNewName());
+                    status.merge(wrappedProcessor.checkInitialConditions(progress.newChild(20)));
+                    if (!status.getRefactoringStatus().hasFatalError())
+                        status.merge(wrappedProcessor.checkFinalConditions(progress.newChild(80), context));
+                }
+            }
+        } catch (Exception ce) {
+            status.add(ERROR, "Error checking conditions in refactoring participant: {0}. See log for details", ce, LOG);
+        }
+        return status.getRefactoringStatus();
+    }
 
-	protected List<? extends IRenameElementContext> createRenameElementContexts(Object element) {
-		if (element instanceof IRenameElementContext) {
-			IRenameElementContext triggeringContext = (IRenameElementContext) element;
-			IProject project = projectUtil.getProject(triggeringContext.getTargetElementURI());
-			if (project != null) {
-				ResourceSet resourceSet = resourceSetProvider.get(project);
-				EObject originalTarget = resourceSet.getEObject(triggeringContext.getTargetElementURI(), true);
-				List<EObject> renamedElements = getRenamedElementsOrProxies(originalTarget);
-				if (renamedElements == null || renamedElements.isEmpty())
-					return null;
-				List<IRenameElementContext> contexts = newArrayListWithCapacity(renamedElements.size());
-				for (EObject renamedElement : renamedElements)
-					contexts.add(new IRenameElementContext.Impl(EcoreUtil.getURI(renamedElement), renamedElement
-							.eClass(), triggeringContext.getTriggeringEditor(), triggeringContext
-							.getTriggeringEditorSelection(), triggeringContext.getContextResourceURI()));
-				return contexts;
-			}
-		}
-		return null;
-	}
+    protected void setNewName(RenameProcessor processor, String newName) {
+        ((AbstractRenameProcessor) processor).setNewName(newName);
+    }
 
-	protected abstract List<EObject> getRenamedElementsOrProxies(EObject originalTarget);
+    @Override
+    public Change createChange(IProgressMonitor pm) throws CoreException, OperationCanceledException {
+        CompositeChange compositeChange = null;
+        try {
+            for (RenameProcessor wrappedProcessor : wrappedProcessors) {
+                if (!disabledTargets.containsAll(Arrays.asList(wrappedProcessor.getElements()))) {
+                    Change processorChange = wrappedProcessor.createChange(pm);
+                    if (processorChange != null) {
+                        if (compositeChange == null)
+                            compositeChange = new CompositeChange("Changes from participant: " + getName());
+                        compositeChange.add(processorChange);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Error creating change", e));
+        } finally {
+            dispose();
+        }
+        return compositeChange;
+    }
 
-	protected String getNewName() {
-		return getArguments().getNewName();
-	}
+    /**
+     * @since 2.4
+     */
+    protected void dispose() {
+        status = null;
+        wrappedProcessors = null;
+        disabledTargets.clear();
+    }
 
-	protected StatusWrapper getStatus() {
-		return status;
-	}
+    protected List<? extends IRenameElementContext> createRenameElementContexts(Object element) {
+        if (element instanceof IRenameElementContext) {
+            IRenameElementContext triggeringContext = (IRenameElementContext) element;
+            IProject project = projectUtil.getProject(triggeringContext.getTargetElementURI());
+            if (project != null) {
+                ResourceSet resourceSet = resourceSetProvider.get(project);
+                EObject originalTarget = resourceSet.getEObject(triggeringContext.getTargetElementURI(), true);
+                List<EObject> renamedElements = getRenamedElementsOrProxies(originalTarget);
+                if (renamedElements == null || renamedElements.isEmpty())
+                    return null;
+                List<IRenameElementContext> contexts = newArrayListWithCapacity(renamedElements.size());
+                for (EObject renamedElement : renamedElements)
+                    contexts.add(new IRenameElementContext.Impl(EcoreUtil.getURI(renamedElement), renamedElement
+                            .eClass(), triggeringContext.getTriggeringEditor(), triggeringContext
+                            .getTriggeringEditorSelection(), triggeringContext.getContextResourceURI()));
+                return contexts;
+            }
+        }
+        return null;
+    }
 
-	protected IGlobalServiceProvider getGlobalServiceProvider() {
-		return globalServiceProvider;
-	}
+    protected abstract List<EObject> getRenamedElementsOrProxies(EObject originalTarget);
+
+    protected String getNewName() {
+        return getArguments().getNewName();
+    }
+
+    protected StatusWrapper getStatus() {
+        return status;
+    }
+
+    protected IGlobalServiceProvider getGlobalServiceProvider() {
+        return globalServiceProvider;
+    }
 }

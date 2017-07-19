@@ -9,21 +9,21 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 
 public class OpenStatusMessagesDialogHandler {
-	@Inject
-	private BTSStatusMessageService service;
-	
-	@Execute
-	public void execute(IEclipseContext context) {
-		IEclipseContext child = context.createChild();
-		
-		StatusMessageDialog dialog = new StatusMessageDialog();
-				
-		ContextInjectionFactory.inject(
-						dialog, child);
-		dialog.create();
+    @Inject
+    private BTSStatusMessageService service;
 
-		if (dialog.open() == dialog.OK) {
-		}
-	}
-		
+    @Execute
+    public void execute(IEclipseContext context) {
+        IEclipseContext child = context.createChild();
+
+        StatusMessageDialog dialog = new StatusMessageDialog();
+
+        ContextInjectionFactory.inject(
+                dialog, child);
+        dialog.create();
+
+        if (dialog.open() == dialog.OK) {
+        }
+    }
+
 }

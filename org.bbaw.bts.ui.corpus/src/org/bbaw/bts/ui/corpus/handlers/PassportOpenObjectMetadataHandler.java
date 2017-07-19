@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
@@ -13,26 +12,25 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 
 public class PassportOpenObjectMetadataHandler {
-	@Execute
-	public void execute(IEclipseContext context, @Named("objectId") String objectId, 
-			CorpusNavigatorController corpusNavigatorController) {
-		
-		if (objectId != null)
-		{
-			BTSObject object = corpusNavigatorController.find(objectId, null);
-			if (object == null) return;
-			IEclipseContext child = context.createChild();
-			child.set(BTSObject.class, object);
-			child.set(Shell.class, new Shell());
-			child.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT, false);
+    @Execute
+    public void execute(IEclipseContext context, @Named("objectId") String objectId,
+                        CorpusNavigatorController corpusNavigatorController) {
 
-			PassportEditorDialog dialog = ContextInjectionFactory.make(
-					PassportEditorDialog.class, child);
-			if (dialog.open() == dialog.OK) {
-				
-			}
-		}
-		
-	}
-		
+        if (objectId != null) {
+            BTSObject object = corpusNavigatorController.find(objectId, null);
+            if (object == null) return;
+            IEclipseContext child = context.createChild();
+            child.set(BTSObject.class, object);
+            child.set(Shell.class, new Shell());
+            child.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT, false);
+
+            PassportEditorDialog dialog = ContextInjectionFactory.make(
+                    PassportEditorDialog.class, child);
+            if (dialog.open() == dialog.OK) {
+
+            }
+        }
+
+    }
+
 }

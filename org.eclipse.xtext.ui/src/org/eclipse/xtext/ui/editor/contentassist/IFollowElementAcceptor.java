@@ -13,22 +13,22 @@ import org.eclipse.xtext.AbstractElement;
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public interface IFollowElementAcceptor {
-	
-	void accept(AbstractElement element);
-	
-	public static class NullSafeElementAcceptor implements IFollowElementAcceptor {
 
-		private final IFollowElementAcceptor decorated;
+    void accept(AbstractElement element);
 
-		public NullSafeElementAcceptor(IFollowElementAcceptor decorated) {
-			this.decorated = decorated;
-		}
+    public static class NullSafeElementAcceptor implements IFollowElementAcceptor {
 
-		public void accept(AbstractElement element) {
-			if (element != null)
-				decorated.accept(element);
-		}
+        private final IFollowElementAcceptor decorated;
 
-	}
+        public NullSafeElementAcceptor(IFollowElementAcceptor decorated) {
+            this.decorated = decorated;
+        }
+
+        public void accept(AbstractElement element) {
+            if (element != null)
+                decorated.accept(element);
+        }
+
+    }
 
 }

@@ -34,10 +34,10 @@ package org.bbaw.bts.core.controller.generalController;
  * called on the E4 Event PostContextConstruct.
  */
 public interface ExtensionStartUpController {
-	
-	/**
-	 * Starts up the plugin specific startup process.
-	 */
-	void startup();
+
+    /**
+     * Starts up the plugin specific startup process.
+     */
+    void startup();
 
 }

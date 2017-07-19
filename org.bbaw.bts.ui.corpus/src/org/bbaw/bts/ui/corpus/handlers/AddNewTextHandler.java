@@ -17,35 +17,33 @@ import org.eclipse.e4.ui.services.internal.events.EventBroker;
 import org.eclipse.swt.widgets.Shell;
 
 @SuppressWarnings("restriction")
-public class AddNewTextHandler
-{
+public class AddNewTextHandler {
 
-	@Inject
-	private PermissionsAndExpressionsEvaluationController permissionController;
+    @Inject
+    private PermissionsAndExpressionsEvaluationController permissionController;
 
-	@Inject
-	private CorpusNavigatorController navigatorController;
+    @Inject
+    private CorpusNavigatorController navigatorController;
 
-	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSCorpusObject selection,
-			@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell, EventBroker eventBroker,
-			CorpusNavigatorController corpusNavigatorController)
-	{
-		final BTSText object = corpusNavigatorController.createNewText(selection);
+    @Execute
+    public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSCorpusObject selection,
+                        @Named(IServiceConstants.ACTIVE_SHELL) final Shell shell, EventBroker eventBroker,
+                        CorpusNavigatorController corpusNavigatorController) {
+        final BTSText object = corpusNavigatorController.createNewText(selection);
 
-		corpusNavigatorController.save(object);
-		eventBroker.post("model_new/BTSText", object);
-	}
+        corpusNavigatorController.save(object);
+        eventBroker.post("model_new/BTSText", object);
+    }
 
-	@CanExecute
-	public boolean canExecute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
-		if (selection instanceof BTSCorpusObject && !(selection instanceof BTSAnnotation)) {
-			String dbCollectionName = navigatorController.getDBCollectionName(
-					(BTSCorpusObject)selection);
-			return permissionController.authenticatedUserMayAddToDBCollection(dbCollectionName);
-		}
-		return false;
-	}
+    @CanExecute
+    public boolean canExecute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
+        if (selection instanceof BTSCorpusObject && !(selection instanceof BTSAnnotation)) {
+            String dbCollectionName = navigatorController.getDBCollectionName(
+                    (BTSCorpusObject) selection);
+            return permissionController.authenticatedUserMayAddToDBCollection(dbCollectionName);
+        }
+        return false;
+    }
 
 }

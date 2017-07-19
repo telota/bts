@@ -21,68 +21,65 @@ import org.eclipse.swt.widgets.Shell;
 
 public class RelatedObjectGroupRubrum extends RelatedObjectGroup {
 
-	@Inject
-	public RelatedObjectGroupRubrum(Composite parent, BTSObject object) {
-		super(parent, object);
-	}
+    @Inject
+    public RelatedObjectGroupRubrum(Composite parent, BTSObject object) {
+        super(parent, object);
+    }
 
-	@Override
-	protected void addButtons(Composite composite) {
-		Label editButton = new Label(composite, SWT.PUSH);
-		editButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_EDIT));
-		if (mayEdit())
-		{
-			editButton.setToolTipText("Edit Rubrum");
-		}
-		else
-		{
-			editButton.setToolTipText("Open Rubrum");
-		}
-		editButton.setLayoutData(new RowData());
-		editButton.addMouseListener(new MouseAdapter() {
+    @Override
+    protected void addButtons(Composite composite) {
+        Label editButton = new Label(composite, SWT.PUSH);
+        editButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_EDIT));
+        if (mayEdit()) {
+            editButton.setToolTipText("Edit Rubrum");
+        } else {
+            editButton.setToolTipText("Open Rubrum");
+        }
+        editButton.setLayoutData(new RowData());
+        editButton.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mouseDown(MouseEvent e) {
-				Label l = (Label) e.getSource();
-				l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-			}
+            @Override
+            public void mouseDown(MouseEvent e) {
+                Label l = (Label) e.getSource();
+                l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+            }
 
-			@Override
-			public void mouseUp(MouseEvent e) {
-				Label l = (Label) e.getSource();
-				l.setBackground(l.getParent().getBackground());
-				editObject();
-			}
-		});
-		
-	}
+            @Override
+            public void mouseUp(MouseEvent e) {
+                Label l = (Label) e.getSource();
+                l.setBackground(l.getParent().getBackground());
+                editObject();
+            }
+        });
 
-	protected void editObject() {
-		IEclipseContext child = context.createChild();
-		child.set(BTSObject.class, (BTSObject) getObject());
-		child.set(Shell.class, new Shell());
-		
-		PassportEditorDialog dialog = ContextInjectionFactory.make(
-				PassportEditorDialog.class, child);
-		dialog.setEditable(mayEdit());
+    }
 
-		if (dialog.open() == dialog.OK) {
-			refreschContent((BTSObject) getObject());
-		}
-		
-	}
+    protected void editObject() {
+        IEclipseContext child = context.createChild();
+        child.set(BTSObject.class, (BTSObject) getObject());
+        child.set(Shell.class, new Shell());
 
-	private void refreschContent(BTSObject object) {
-		setGroupTitle("Rubrum");
+        PassportEditorDialog dialog = ContextInjectionFactory.make(
+                PassportEditorDialog.class, child);
+        dialog.setEditable(mayEdit());
 
-		
-	}
+        if (dialog.open() == dialog.OK) {
+            refreschContent((BTSObject) getObject());
+        }
 
-	@Override
-	protected void fillContentComposite(Composite composite) {
-		setExpandBarIcon(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_RUBRUM));
-		setExpandBarBackground(BTSUIConstants.COLOR_WIHTE);
-		refreschContent((BTSObject) getObject());
-	}
+    }
+
+    private void refreschContent(BTSObject object) {
+        setGroupTitle("Rubrum");
+
+
+    }
+
+    @Override
+    protected void fillContentComposite(Composite composite) {
+        setExpandBarIcon(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_RUBRUM));
+        setExpandBarBackground(BTSUIConstants.COLOR_WIHTE);
+        refreschContent((BTSObject) getObject());
+    }
 
 }

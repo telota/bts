@@ -23,7 +23,7 @@ import com.google.common.annotations.Beta;
 /**
  * Wraps an event that was posted, but which had no subscribers and thus could
  * not be delivered.
- *
+ * <p>
  * <p>Subscribing a DeadEvent handler is useful for debugging or logging, as it
  * can detect misconfigurations in a system's event distribution.
  *
@@ -33,39 +33,39 @@ import com.google.common.annotations.Beta;
 @Beta
 public class DeadEvent {
 
-  private final Object source;
-  private final Object event;
+    private final Object source;
+    private final Object event;
 
-  /**
-   * Creates a new DeadEvent.
-   *
-   * @param source  object broadcasting the DeadEvent (generally the
-   *                {@link EventBus}).
-   * @param event   the event that could not be delivered.
-   */
-  public DeadEvent(Object source, Object event) {
-    this.source = checkNotNull(source);
-    this.event = checkNotNull(event);
-  }
+    /**
+     * Creates a new DeadEvent.
+     *
+     * @param source object broadcasting the DeadEvent (generally the
+     *               {@link EventBus}).
+     * @param event  the event that could not be delivered.
+     */
+    public DeadEvent(Object source, Object event) {
+        this.source = checkNotNull(source);
+        this.event = checkNotNull(event);
+    }
 
-  /**
-   * Returns the object that originated this event (<em>not</em> the object that
-   * originated the wrapped event).  This is generally an {@link EventBus}.
-   *
-   * @return the source of this event.
-   */
-  public Object getSource() {
-    return source;
-  }
+    /**
+     * Returns the object that originated this event (<em>not</em> the object that
+     * originated the wrapped event).  This is generally an {@link EventBus}.
+     *
+     * @return the source of this event.
+     */
+    public Object getSource() {
+        return source;
+    }
 
-  /**
-   * Returns the wrapped, 'dead' event, which the system was unable to deliver
-   * to any registered handler.
-   *
-   * @return the 'dead' event that could not be delivered.
-   */
-  public Object getEvent() {
-    return event;
-  }
+    /**
+     * Returns the wrapped, 'dead' event, which the system was unable to deliver
+     * to any registered handler.
+     *
+     * @return the 'dead' event that could not be delivered.
+     */
+    public Object getEvent() {
+        return event;
+    }
 
 }

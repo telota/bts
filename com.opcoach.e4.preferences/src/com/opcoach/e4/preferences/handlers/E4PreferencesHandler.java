@@ -31,35 +31,29 @@ import org.eclipse.swt.widgets.Shell;
 import com.opcoach.e4.preferences.internal.E4PreferenceRegistry;
 
 
-public class E4PreferencesHandler
-{
-	
-	
-	@CanExecute
-	public boolean canExecute()
-	{
-		return true;	
-	}
-	
-	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell,  E4PreferenceRegistry prefReg, 
-			@Optional @Named("preferencePageId") String pageId)
-	{
-		PreferenceManager pm = prefReg.getPreferenceManager();
-		PreferenceDialog dialog = new PreferenceDialog(shell, pm);
-		if (pageId != null)
-		{
-			dialog.setSelectedNode(pageId);
-		}
+public class E4PreferencesHandler {
 
-		dialog.create();
-		dialog.getTreeViewer().setComparator(new ViewerComparator());
+
+    @CanExecute
+    public boolean canExecute() {
+        return true;
+    }
+
+    @Execute
+    public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell shell, E4PreferenceRegistry prefReg,
+                        @Optional @Named("preferencePageId") String pageId) {
+        PreferenceManager pm = prefReg.getPreferenceManager();
+        PreferenceDialog dialog = new PreferenceDialog(shell, pm);
+        if (pageId != null) {
+            dialog.setSelectedNode(pageId);
+        }
+
+        dialog.create();
+        dialog.getTreeViewer().setComparator(new ViewerComparator());
 //		dialog.getTreeViewer().expandAll();
-		dialog.open();
-		
-	}
+        dialog.open();
 
-	
+    }
 
-	
+
 }

@@ -26,13 +26,13 @@ import javax.annotation.Nullable;
  * {@code Multimap}. For example, {@link MapConstraints#notNull()}, which
  * prevents a map from including any null keys or values, could be implemented
  * like this: <pre>   {@code
- *
+ * <p>
  *   public void checkKeyValue(Object key, Object value) {
  *     if (key == null || value == null) {
  *       throw new NullPointerException();
  *     }
  *   }}</pre>
- *
+ * <p>
  * <p>In order to be effective, constraints should be deterministic; that is, they
  * should not depend on state that can change (such as external state, random
  * variables, and time) and should only depend on the value of the passed-in key
@@ -48,18 +48,18 @@ import javax.annotation.Nullable;
 @GwtCompatible
 @Beta
 public interface MapConstraint<K, V> {
-  /**
-   * Throws a suitable {@code RuntimeException} if the specified key or value is
-   * illegal. Typically this is either a {@link NullPointerException}, an
-   * {@link IllegalArgumentException}, or a {@link ClassCastException}, though
-   * an application-specific exception class may be used if appropriate.
-   */
-  void checkKeyValue(@Nullable K key, @Nullable V value);
+    /**
+     * Throws a suitable {@code RuntimeException} if the specified key or value is
+     * illegal. Typically this is either a {@link NullPointerException}, an
+     * {@link IllegalArgumentException}, or a {@link ClassCastException}, though
+     * an application-specific exception class may be used if appropriate.
+     */
+    void checkKeyValue(@Nullable K key, @Nullable V value);
 
-  /**
-   * Returns a brief human readable description of this constraint, such as
-   * "Not null".
-   */
-  @Override
-  String toString();
+    /**
+     * Returns a brief human readable description of this constraint, such as
+     * "Not null".
+     */
+    @Override
+    String toString();
 }

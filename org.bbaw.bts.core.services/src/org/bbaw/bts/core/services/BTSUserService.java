@@ -40,70 +40,72 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 
 // TODO: Auto-generated Javadoc
+
 /**
  * The Service Interface BTSUserService provides service layer access to BTSUser-objects.
- * 
- * Service-Implementations should incorporate as much as possible of business logic which 
+ * <p>
+ * Service-Implementations should incorporate as much as possible of business logic which
  * does not depend on UI specific implementation and should be implemented in the controller layer
  * nor database specific logic which should be implemented in the dao layer.
- * 
+ * <p>
  * Services should be implemented generically.
  */
-public interface BTSUserService extends GenericObjectService<BTSUser, String>
-{
+public interface BTSUserService extends GenericObjectService<BTSUser, String> {
 
-	/**
-	 * Creates the new user object.
-	 *
-	 * @param userName the user name
-	 * @return the BTS user
-	 */
-	BTSUser createNewUser(String userName);
+    /**
+     * Creates the new user object.
+     *
+     * @param userName the user name
+     * @return the BTS user
+     */
+    BTSUser createNewUser(String userName);
 
-	/**
-	 * Sets the authentication of the given credentials.
-	 *
-	 * @param userName the user name
-	 * @param passWord the pass word
-	 * @return true, if successful
-	 */
-	boolean setAuthentication(String userName, String passWord);
+    /**
+     * Sets the authentication of the given credentials.
+     *
+     * @param userName the user name
+     * @param passWord the pass word
+     * @return true, if successful
+     */
+    boolean setAuthentication(String userName, String passWord);
 
-	/**
-	 * Sets the remembered user in the remember-Me function.
-	 *
-	 * @param user the new remembered user
-	 */
-	void setRememberedUser(BTSUser user);
-	
-	/**
-	 * List all BTSUser-objects using the given credentials.
-	 *
-	 * @param objectState the object state
-	 * @param userName the user name
-	 * @param passWord the pass word
-	 * @return the list all user objects
-	 */
-	List<BTSUser> listAll(String objectState, String userName, String passWord);
+    /**
+     * Sets the remembered user in the remember-Me function.
+     *
+     * @param user the new remembered user
+     */
+    void setRememberedUser(BTSUser user);
 
-	
-	/** Remove database user leaving the btsUser unmodified.
-	 * The idea is to remove login credentials and authentication options for the given user
-	 * but keeping information on the user and user-id.
-	 * @param user user credentials to be removed from db.
-	 * @return true if successful.
-	 */
-	boolean removeDatabaseUser(BTSUser user);
+    /**
+     * List all BTSUser-objects using the given credentials.
+     *
+     * @param objectState the object state
+     * @param userName    the user name
+     * @param passWord    the pass word
+     * @return the list all user objects
+     */
+    List<BTSUser> listAll(String objectState, String userName, String passWord);
 
-	List<BTSObject> getUserOrphans(List<BTSFilter> btsFilters, List<BTSObject> rootEntries, IProgressMonitor monitor);
 
-	boolean authenticatedUserIsDBAdmin(String userName, String passWord);
+    /**
+     * Remove database user leaving the btsUser unmodified.
+     * The idea is to remove login credentials and authentication options for the given user
+     * but keeping information on the user and user-id.
+     *
+     * @param user user credentials to be removed from db.
+     * @return true if successful.
+     */
+    boolean removeDatabaseUser(BTSUser user);
 
-	boolean isValidAuthentication(String userName, String passWord);
+    List<BTSObject> getUserOrphans(List<BTSFilter> btsFilters, List<BTSObject> rootEntries, IProgressMonitor monitor);
 
-	boolean checkAndChangeDBAdminPassword(String userName, String newPassword);
+    boolean authenticatedUserIsDBAdmin(String userName, String passWord);
 
-	void makeUserLocalDBAdmin(String userName, String passWord) throws FileNotFoundException;
+    boolean isValidAuthentication(String userName, String passWord);
+
+    boolean checkAndChangeDBAdminPassword(String userName, String newPassword);
+
+    void makeUserLocalDBAdmin(String userName, String passWord) throws FileNotFoundException;
 
 
 }

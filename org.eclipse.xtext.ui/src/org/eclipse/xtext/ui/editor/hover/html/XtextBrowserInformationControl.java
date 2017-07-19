@@ -18,19 +18,19 @@ import org.eclipse.swt.widgets.Shell;
  * @since 2.3
  */
 public class XtextBrowserInformationControl extends BrowserInformationControl implements
-		IXtextBrowserInformationControl {
+        IXtextBrowserInformationControl {
 
-	public XtextBrowserInformationControl(Shell parent, String symbolicFontName, boolean resizable) {
-		super(parent, symbolicFontName, resizable);
-	}
+    public XtextBrowserInformationControl(Shell parent, String symbolicFontName, boolean resizable) {
+        super(parent, symbolicFontName, resizable);
+    }
 
-	public XtextBrowserInformationControl(Shell parent, String symbolicFontName, String statusFieldText) {
-		super(parent, symbolicFontName, statusFieldText);
-	}
-	
-	public XtextBrowserInformationControl(Shell parent, String symbolicFontName, ToolBarManager toolBarManager) {
-		super(parent, symbolicFontName, toolBarManager);
-	}
+    public XtextBrowserInformationControl(Shell parent, String symbolicFontName, String statusFieldText) {
+        super(parent, symbolicFontName, statusFieldText);
+    }
+
+    public XtextBrowserInformationControl(Shell parent, String symbolicFontName, ToolBarManager toolBarManager) {
+        super(parent, symbolicFontName, toolBarManager);
+    }
 
 
 }

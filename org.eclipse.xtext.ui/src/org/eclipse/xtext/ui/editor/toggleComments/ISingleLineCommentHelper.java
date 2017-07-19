@@ -14,6 +14,6 @@ import org.eclipse.jface.text.source.ISourceViewer;
  */
 public interface ISingleLineCommentHelper {
 
-	String[] getDefaultPrefixes(ISourceViewer sourceViewer, String contentType);
+    String[] getDefaultPrefixes(ISourceViewer sourceViewer, String contentType);
 
 }

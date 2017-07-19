@@ -16,79 +16,79 @@ import org.eclipse.xtext.util.PolymorphicDispatcher.ErrorHandler;
 
 /**
  * A label provider that dispatches to typed <code>Object image()</code> and <code>Object text()</code> methods.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class DeclarativeLabelProvider extends AbstractLabelProvider {
 
-	
-	private final PolymorphicDispatcher<Object> textDispatcher = new PolymorphicDispatcher<Object>("text", 1, 1,
-			Collections.singletonList(this), new ErrorHandler<Object>() {
-				public Object handle(Object[] params, Throwable e) {
-					return handleTextError(params, e);
-				}
-			});
 
-	private final PolymorphicDispatcher<Object> imageDispatcher = new PolymorphicDispatcher<Object>("image", 1, 1,
-			Collections.singletonList(this), new ErrorHandler<Object>() {
-			public Object handle(Object[] params, Throwable e) {
-				return handleImageError(params, e);
-			}
-		});
+    private final PolymorphicDispatcher<Object> textDispatcher = new PolymorphicDispatcher<Object>("text", 1, 1,
+            Collections.singletonList(this), new ErrorHandler<Object>() {
+        public Object handle(Object[] params, Throwable e) {
+            return handleTextError(params, e);
+        }
+    });
 
-	public DeclarativeLabelProvider() {
-		super();
-	}
+    private final PolymorphicDispatcher<Object> imageDispatcher = new PolymorphicDispatcher<Object>("image", 1, 1,
+            Collections.singletonList(this), new ErrorHandler<Object>() {
+        public Object handle(Object[] params, Throwable e) {
+            return handleImageError(params, e);
+        }
+    });
 
-	public DeclarativeLabelProvider(ILabelProvider delegate) {
-		super(delegate);
-	}
+    public DeclarativeLabelProvider() {
+        super();
+    }
 
-	@Override
-	protected Object doGetText(Object element) {
-		Object text = textDispatcher.invoke(element);
-		if (text != null) {
-			return text;
-		}
-		return null;
-	}
+    public DeclarativeLabelProvider(ILabelProvider delegate) {
+        super(delegate);
+    }
 
-	@Override
-	protected Object doGetImage(Object element) {
-		Object image = imageDispatcher.invoke(element);
-		if (image != null) {
-			return image;
-		}
-		return super.doGetImage(element);
-	}
+    @Override
+    protected Object doGetText(Object element) {
+        Object text = textDispatcher.invoke(element);
+        if (text != null) {
+            return text;
+        }
+        return null;
+    }
 
-	public Object image(Object element) {
-		return null;
-	}
+    @Override
+    protected Object doGetImage(Object element) {
+        Object image = imageDispatcher.invoke(element);
+        if (image != null) {
+            return image;
+        }
+        return super.doGetImage(element);
+    }
 
-	public Object text(Object element) {
-		return null;
-	}
-	
-	public Object image(Void element) {
-		return null;
-	}
-	
-	public Object text(Void element) {
-		return null;
-	}
-	
-	protected Object handleTextError(Object[] params, Throwable e) {
-		if(e instanceof NullPointerException) {
-			return getDefaultText();
-		}
-		return Exceptions.throwUncheckedException(e);
-	}
+    public Object image(Object element) {
+        return null;
+    }
 
-	protected Object handleImageError(Object[] params, Throwable e) {
-		if(e instanceof NullPointerException) {
-			return getDefaultImage();
-		}
-		return Exceptions.throwUncheckedException(e);
-	}
+    public Object text(Object element) {
+        return null;
+    }
+
+    public Object image(Void element) {
+        return null;
+    }
+
+    public Object text(Void element) {
+        return null;
+    }
+
+    protected Object handleTextError(Object[] params, Throwable e) {
+        if (e instanceof NullPointerException) {
+            return getDefaultText();
+        }
+        return Exceptions.throwUncheckedException(e);
+    }
+
+    protected Object handleImageError(Object[] params, Throwable e) {
+        if (e instanceof NullPointerException) {
+            return getDefaultImage();
+        }
+        return Exceptions.throwUncheckedException(e);
+    }
 }

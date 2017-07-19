@@ -23,8 +23,8 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultOccurrenceComputer.class)
 public interface IOccurrenceComputer {
 
-	Map<Annotation, Position> createAnnotationMap(XtextEditor editor, ITextSelection selection,
-			SubMonitor monitor);
+    Map<Annotation, Position> createAnnotationMap(XtextEditor editor, ITextSelection selection,
+                                                  SubMonitor monitor);
 
-	boolean hasAnnotationType(String annotationType);
+    boolean hasAnnotationType(String annotationType);
 }

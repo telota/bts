@@ -35,81 +35,79 @@ import Btsaux.provider.BtsauxItemProviderAdapterFactory;
 
 public class LemmaImporter {
 
-	private ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-	
+    private ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+            ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+
 //	public static void main(String[] args) {
 //		String fileName = "D:/AAEW/transform/authors/authors_2.btsaux";
 //		LemmaImporter ui = new LemmaImporter();
 //		ui.importLemmata(fileName);
 //	}
 
-	private AdapterFactoryEditingDomain editingDomain;
-	
-	public void importLemmata(String fileName) {
-		File f = new File(fileName);
-		if (f.exists())
-		{
-			DocumentRoot root = createModel(fileName);
-			IEclipseContext context = StaticAccessController.getContext();
+    private AdapterFactoryEditingDomain editingDomain;
 
-			Lemma2BTSTransform transform = ContextInjectionFactory.make(Lemma2BTSTransform.class, context);
-			
-			BTSLemmaEntryService LemmaService = context.get(BTSLemmaEntryService.class);
-			List<BTSLemmaEntry> Lemmas = transform.transform(root, fileName.contains("demo"));
-			//TODO counter
-			for (BTSLemmaEntry th : Lemmas)
-			{
-				try {
-					LemmaService.save(th);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			
-			System.out.println(root);
-		}
-		
-	}
-	public DocumentRoot createModel(String fileName) {
-		URI resourceURI = URI.createFileURI( fileName);
-		System.out.println(resourceURI);
-		Exception exception = null;
-		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new BtsauxItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
-		editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
-				new BasicCommandStack());
-		Resource resource = null;
-		try {
-			// Load the resource through the editing domain.
-			//
-			resource = editingDomain.getResourceSet().getResource(resourceURI, true);
-		}
-		catch (Exception e) {
-			exception = e;
-			resource = editingDomain.getResourceSet().getResource(resourceURI, false);
-		}
+    public void importLemmata(String fileName) {
+        File f = new File(fileName);
+        if (f.exists()) {
+            DocumentRoot root = createModel(fileName);
+            IEclipseContext context = StaticAccessController.getContext();
+
+            Lemma2BTSTransform transform = ContextInjectionFactory.make(Lemma2BTSTransform.class, context);
+
+            BTSLemmaEntryService LemmaService = context.get(BTSLemmaEntryService.class);
+            List<BTSLemmaEntry> Lemmas = transform.transform(root, fileName.contains("demo"));
+            //TODO counter
+            for (BTSLemmaEntry th : Lemmas) {
+                try {
+                    LemmaService.save(th);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+
+            System.out.println(root);
+        }
+
+    }
+
+    public DocumentRoot createModel(String fileName) {
+        URI resourceURI = URI.createFileURI(fileName);
+        System.out.println(resourceURI);
+        Exception exception = null;
+        adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new BtsauxItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+        editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
+                new BasicCommandStack());
+        Resource resource = null;
+        try {
+            // Load the resource through the editing domain.
+            //
+            resource = editingDomain.getResourceSet().getResource(resourceURI, true);
+        } catch (Exception e) {
+            exception = e;
+            resource = editingDomain.getResourceSet().getResource(resourceURI, false);
+        }
 
 //		Diagnostic diagnostic = analyzeResourceProblems(resource, exception);
 //		if (diagnostic.getSeverity() != Diagnostic.OK) {
 //			resourceToDiagnosticMap.put(resource,  analyzeResourceProblems(resource, exception));
 //		}
 //		editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
-		DocumentRoot data = (DocumentRoot)resource.getContents().get(0);  
-		  return data;
-	}
+        DocumentRoot data = (DocumentRoot) resource.getContents().get(0);
+        return data;
+    }
 
-	public DocumentRoot loadData(String fileName) throws FileNotFoundException, IOException {
-		
-		  XMIResourceImpl resource = new XMIResourceImpl();
-		  File source = new File(fileName);
-		  resource.load( new FileInputStream(source), new HashMap<Object,Object>());
-		  DocumentRoot data = (DocumentRoot)resource.getContents().get(0);  
-		  return data;
-		}
+    public DocumentRoot loadData(String fileName) throws FileNotFoundException, IOException {
+
+        XMIResourceImpl resource = new XMIResourceImpl();
+        File source = new File(fileName);
+        resource.load(new FileInputStream(source), new HashMap<Object, Object>());
+        DocumentRoot data = (DocumentRoot) resource.getContents().get(0);
+        return data;
+    }
 
 
 }

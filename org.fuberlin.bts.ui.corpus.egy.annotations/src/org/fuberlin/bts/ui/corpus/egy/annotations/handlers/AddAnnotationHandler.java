@@ -21,59 +21,55 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
 public class AddAnnotationHandler {
-	@Execute
-	public void execute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event,
-			@Optional @Named("annotationTypePath") String annotationTypePath,
-			@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
-			CorpusNavigatorController corpusNavigatorController,
-			IEclipseContext context) {
-			BTSObject dbbaseObject = (BTSObject) event.data;
-		
-			if (dbbaseObject != null)
-			{
-				final BTSAnnotation object = corpusNavigatorController
-						.createNewAnnotation((BTSCorpusObject) dbbaseObject, annotationTypePath);
-				BTSRelation rel = null;
-				if (object.getRelations().isEmpty())
-				{
-					rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
-					object.getRelations().add(rel);
+    @Execute
+    public void execute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event,
+            @Optional @Named("annotationTypePath") String annotationTypePath,
+            @Named(IServiceConstants.ACTIVE_SHELL) final Shell shell,
+            CorpusNavigatorController corpusNavigatorController,
+            IEclipseContext context) {
+        BTSObject dbbaseObject = (BTSObject) event.data;
 
-				}
-				else
-				{
-					rel = object.getRelations().get(0);
-				}
-	
-				rel.setObjectId(dbbaseObject.get_id());
-				BTSInterTextReference ref = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
-				ref.setBeginId(event.getStartId());
-				ref.setEndId(event.getEndId());
-				rel.getParts().add(ref);
+        if (dbbaseObject != null) {
+            final BTSAnnotation object = corpusNavigatorController
+                    .createNewAnnotation((BTSCorpusObject) dbbaseObject, annotationTypePath);
+            BTSRelation rel = null;
+            if (object.getRelations().isEmpty()) {
+                rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
+                object.getRelations().add(rel);
 
-				IEclipseContext child = context.createChild();
-				child.set(BTSObject.class, (BTSObject)object);
-				child.set(Shell.class, shell);
-				PassportEditorDialog dialog = ContextInjectionFactory.make(
-						PassportEditorDialog.class, child);
-				int res = dialog.open();
-				if (res == SWT.DEFAULT || res == 1) {
-					// if cancelled, annotation does not get saved.
-				} else {
-					// passport editor does the saving already.
-					//corpusNavigatorController.save(object);
-				}
-				child.dispose();
+            } else {
+                rel = object.getRelations().get(0);
+            }
 
-			}
-			// FIXME eventBroker.post("model_add/BTSAnnotation", object);
-	}
+            rel.setObjectId(dbbaseObject.get_id());
+            BTSInterTextReference ref = BtsmodelFactory.eINSTANCE.createBTSInterTextReference();
+            ref.setBeginId(event.getStartId());
+            ref.setEndId(event.getEndId());
+            rel.getParts().add(ref);
 
-	@CanExecute
-	public boolean canExecute(
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event) {
-		return (!event.getSelectedItems().isEmpty());
-	}
+            IEclipseContext child = context.createChild();
+            child.set(BTSObject.class, (BTSObject) object);
+            child.set(Shell.class, shell);
+            PassportEditorDialog dialog = ContextInjectionFactory.make(
+                    PassportEditorDialog.class, child);
+            int res = dialog.open();
+            if (res == SWT.DEFAULT || res == 1) {
+                // if cancelled, annotation does not get saved.
+            } else {
+                // passport editor does the saving already.
+                //corpusNavigatorController.save(object);
+            }
+            child.dispose();
+
+        }
+        // FIXME eventBroker.post("model_add/BTSAnnotation", object);
+    }
+
+    @CanExecute
+    public boolean canExecute(
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSTextSelectionEvent event) {
+        return (!event.getSelectedItems().isEmpty());
+    }
 
 }

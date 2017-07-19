@@ -35,163 +35,149 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class EditDBCollectionDialog extends TitleAreaDialog
-{
-	private Text text;
-	private BTSProjectDBCollection collection;
-	private Button btnSyncronizeCollection;
-	private Button btnIndexCollectionFor;
-	private IEclipseContext context;
-	private UISynchronize sync;
-	private PermissionsAndExpressionsEvaluationController permisionsController;
-	private EditingDomainController editingDomainController;
+public class EditDBCollectionDialog extends TitleAreaDialog {
+    private Text text;
+    private BTSProjectDBCollection collection;
+    private Button btnSyncronizeCollection;
+    private Button btnIndexCollectionFor;
+    private IEclipseContext context;
+    private UISynchronize sync;
+    private PermissionsAndExpressionsEvaluationController permisionsController;
+    private EditingDomainController editingDomainController;
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parentShell
-	 */
-	public EditDBCollectionDialog(Shell parentShell, BTSProjectDBCollection collection)
-	{
-		super(parentShell);
-		this.collection = collection;
-	}
+    /**
+     * Create the dialog.
+     *
+     * @param parentShell
+     */
+    public EditDBCollectionDialog(Shell parentShell, BTSProjectDBCollection collection) {
+        super(parentShell);
+        this.collection = collection;
+    }
 
-	/**
-	 * Create contents of the dialog.
-	 * 
-	 * @param parent
-	 */
-	@Override
-	protected Control createDialogArea(Composite parent)
-	{
-		Composite area = (Composite) super.createDialogArea(parent);
-		Composite container = new Composite(area, SWT.NONE);
-		container.setLayout(new GridLayout(2, false));
-		container.setLayoutData(new GridData(GridData.FILL_BOTH));
+    /**
+     * Create contents of the dialog.
+     *
+     * @param parent
+     */
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        Composite area = (Composite) super.createDialogArea(parent);
+        Composite container = new Composite(area, SWT.NONE);
+        container.setLayout(new GridLayout(2, false));
+        container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		Label lblDbCollectionName = new Label(container, SWT.NONE);
-		lblDbCollectionName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblDbCollectionName.setText("DB Collection Name");
+        Label lblDbCollectionName = new Label(container, SWT.NONE);
+        lblDbCollectionName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblDbCollectionName.setText("DB Collection Name");
 
-		text = new Text(container, SWT.BORDER);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		text.addModifyListener(new ModifyListener() {
-			
-			@Override
-			public void modifyText(ModifyEvent e) {
-				if (text.getText().trim().length() > 0)
-				{
-					final boolean enabled = btnSyncronizeCollection.isEnabled();
-					final String dbColl = text.getText();
-					Job j = new Job("check may sync"){
-	
-						@Override
-						protected IStatus run(IProgressMonitor monitor) {
-							final boolean may = permisionsController.authenticatedUserMaySyncDBColl(dbColl);
-							
-							if (may != enabled)
-							{
-								sync.asyncExec(new Runnable()
-								{
-									@Override
-									public void run()
-									{
-										btnSyncronizeCollection.setEnabled(may);
-									}
-								});
-							}
-							return Status.OK_STATUS;
-						}
-						
-					};
-					j.schedule();
-				}
-			}
-		});
-		btnSyncronizeCollection = new Button(container, SWT.CHECK);
-		btnSyncronizeCollection.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnSyncronizeCollection.setText("Synchronize Collection");
+        text = new Text(container, SWT.BORDER);
+        text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        text.addModifyListener(new ModifyListener() {
 
-		btnIndexCollectionFor = new Button(container, SWT.CHECK);
-		btnIndexCollectionFor.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-		btnIndexCollectionFor.setText("Index Collection for Full Text Search");
-		initializeBindings();
+            @Override
+            public void modifyText(ModifyEvent e) {
+                if (text.getText().trim().length() > 0) {
+                    final boolean enabled = btnSyncronizeCollection.isEnabled();
+                    final String dbColl = text.getText();
+                    Job j = new Job("check may sync") {
 
-		return area;
-	}
+                        @Override
+                        protected IStatus run(IProgressMonitor monitor) {
+                            final boolean may = permisionsController.authenticatedUserMaySyncDBColl(dbColl);
 
-	private DataBindingContext initializeBindings()
-	{
-		EMFUpdateValueStrategy us = new EMFUpdateValueStrategy();
-		context = StaticAccessController.getContext();
-		sync = context.get(UISynchronize.class);
-		editingDomainController = context.get(EditingDomainController.class);
-		permisionsController = context.get(PermissionsAndExpressionsEvaluationController.class);
-		us.setBeforeSetValidator(new IValidator()
-		{
+                            if (may != enabled) {
+                                sync.asyncExec(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        btnSyncronizeCollection.setEnabled(may);
+                                    }
+                                });
+                            }
+                            return Status.OK_STATUS;
+                        }
 
-			@Override
-			public IStatus validate(Object value)
-			{
-				if (value instanceof String)
-				{
-					if (value.toString().trim().length() > 0)
-					{
-						return ValidationStatus.ok();
-					}
-				}
-				return ValidationStatus.error("Content must be at least one character");
-			}
-		});
+                    };
+                    j.schedule();
+                }
+            }
+        });
+        btnSyncronizeCollection = new Button(container, SWT.CHECK);
+        btnSyncronizeCollection.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+        btnSyncronizeCollection.setText("Synchronize Collection");
 
-		DataBindingContext bindingContext = new DataBindingContext();
+        btnIndexCollectionFor = new Button(container, SWT.CHECK);
+        btnIndexCollectionFor.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+        btnIndexCollectionFor.setText("Index Collection for Full Text Search");
+        initializeBindings();
 
-		IObservableValue model = EMFProperties.value(
-				BtsmodelPackage.Literals.BTS_PROJECT_DB_COLLECTION__COLLECTION_NAME).observe(collection);
-		Binding binding = bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observeDelayed(400, text), model,
-				us, null);
-		bindingContext.addValidationStatusProvider(binding);
-		ControlDecorationSupport.create(binding, SWT.TOP | SWT.LEFT);
+        return area;
+    }
 
-		IObservableValue model2 = EMFProperties.value(BtsmodelPackage.Literals.BTS_PROJECT_DB_COLLECTION__SYNCHRONIZED)
-				.observe(collection);
-		Binding binding2 = bindingContext.bindValue(
-				WidgetProperties.selection().observeDelayed(0, btnSyncronizeCollection), model2, null, null);
-		bindingContext.addValidationStatusProvider(binding2);
-		ControlDecorationSupport.create(binding2, SWT.TOP | SWT.LEFT);
+    private DataBindingContext initializeBindings() {
+        EMFUpdateValueStrategy us = new EMFUpdateValueStrategy();
+        context = StaticAccessController.getContext();
+        sync = context.get(UISynchronize.class);
+        editingDomainController = context.get(EditingDomainController.class);
+        permisionsController = context.get(PermissionsAndExpressionsEvaluationController.class);
+        us.setBeforeSetValidator(new IValidator() {
 
-		IObservableValue model3 = EMFProperties.value(BtsmodelPackage.Literals.BTS_PROJECT_DB_COLLECTION__INDEXED)
-				.observe(collection);
-		Binding binding3 = bindingContext.bindValue(
-				WidgetProperties.selection().observeDelayed(0, btnIndexCollectionFor), model3, null, null);
-		bindingContext.addValidationStatusProvider(binding3);
-		ControlDecorationSupport.create(binding2, SWT.TOP | SWT.LEFT);
+            @Override
+            public IStatus validate(Object value) {
+                if (value instanceof String) {
+                    if (value.toString().trim().length() > 0) {
+                        return ValidationStatus.ok();
+                    }
+                }
+                return ValidationStatus.error("Content must be at least one character");
+            }
+        });
 
-		btnSyncronizeCollection.setEnabled(permisionsController.authenticatedUserMaySyncDBColl(text.getText()));
+        DataBindingContext bindingContext = new DataBindingContext();
 
-		return bindingContext;
-	}
+        IObservableValue model = EMFProperties.value(
+                BtsmodelPackage.Literals.BTS_PROJECT_DB_COLLECTION__COLLECTION_NAME).observe(collection);
+        Binding binding = bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observeDelayed(400, text), model,
+                us, null);
+        bindingContext.addValidationStatusProvider(binding);
+        ControlDecorationSupport.create(binding, SWT.TOP | SWT.LEFT);
 
-	/**
-	 * Create contents of the button bar.
-	 * 
-	 * @param parent
-	 */
-	@Override
-	protected void createButtonsForButtonBar(Composite parent)
-	{
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
-	}
+        IObservableValue model2 = EMFProperties.value(BtsmodelPackage.Literals.BTS_PROJECT_DB_COLLECTION__SYNCHRONIZED)
+                .observe(collection);
+        Binding binding2 = bindingContext.bindValue(
+                WidgetProperties.selection().observeDelayed(0, btnSyncronizeCollection), model2, null, null);
+        bindingContext.addValidationStatusProvider(binding2);
+        ControlDecorationSupport.create(binding2, SWT.TOP | SWT.LEFT);
 
-	/**
-	 * Return the initial size of the dialog.
-	 */
-	@Override
-	protected Point getInitialSize()
-	{
-		return new Point(450, 300);
-	}
+        IObservableValue model3 = EMFProperties.value(BtsmodelPackage.Literals.BTS_PROJECT_DB_COLLECTION__INDEXED)
+                .observe(collection);
+        Binding binding3 = bindingContext.bindValue(
+                WidgetProperties.selection().observeDelayed(0, btnIndexCollectionFor), model3, null, null);
+        bindingContext.addValidationStatusProvider(binding3);
+        ControlDecorationSupport.create(binding2, SWT.TOP | SWT.LEFT);
+
+        btnSyncronizeCollection.setEnabled(permisionsController.authenticatedUserMaySyncDBColl(text.getText()));
+
+        return bindingContext;
+    }
+
+    /**
+     * Create contents of the button bar.
+     *
+     * @param parent
+     */
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+    }
+
+    /**
+     * Return the initial size of the dialog.
+     */
+    @Override
+    protected Point getInitialSize() {
+        return new Point(450, 300);
+    }
 
 }

@@ -15,12 +15,11 @@ package org.eclipse.xtext.ui.editor.tasks.dialogfields;
  */
 public interface IDialogFieldListener {
 
-	/**
-	 * The dialog field has changed.
-	 * 
-	 * @param field
-	 *            the dialog field that changed
-	 */
-	void dialogFieldChanged(DialogField field);
+    /**
+     * The dialog field has changed.
+     *
+     * @param field the dialog field that changed
+     */
+    void dialogFieldChanged(DialogField field);
 
 }

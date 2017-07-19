@@ -41,174 +41,174 @@ import com.google.inject.Provider;
  * @author Michael Clay - Initial contribution and API
  */
 public class StreamContentDocumentProvider extends AbstractDocumentProvider {
-	private static final String SCHEME_REVISION = "revision:/";
-	@Inject
-	protected Provider<XtextDocument> documentProvider;
-	@Inject
-	protected Provider<IDocumentPartitioner> documentPartitioner;
-	@Inject
-	private IResourceSetProvider resourceSetProvider;
-	@Inject
-	private IResourceFactory resourceFactory;
+    private static final String SCHEME_REVISION = "revision:/";
+    @Inject
+    protected Provider<XtextDocument> documentProvider;
+    @Inject
+    protected Provider<IDocumentPartitioner> documentPartitioner;
+    @Inject
+    private IResourceSetProvider resourceSetProvider;
+    @Inject
+    private IResourceFactory resourceFactory;
 
-	protected XtextDocument createEmptyDocument() {
-		return documentProvider.get();
-	}
+    protected XtextDocument createEmptyDocument() {
+        return documentProvider.get();
+    }
 
-	@Override
-	protected IDocument createDocument(Object element) throws CoreException {
-		IDocument document = null;
-		if (element instanceof IStreamContentAccessor) {
-			document = createEmptyDocument();
-			setupDocument(element, document);
-		}
-		return document;
-	}
+    @Override
+    protected IDocument createDocument(Object element) throws CoreException {
+        IDocument document = null;
+        if (element instanceof IStreamContentAccessor) {
+            document = createEmptyDocument();
+            setupDocument(element, document);
+        }
+        return document;
+    }
 
-	protected void setupDocument(Object element, IDocument document) {
-		String content = getString(element);
-		document.set(content);
+    protected void setupDocument(Object element, IDocument document) {
+        String content = getString(element);
+        document.set(content);
 
-		IDocumentPartitioner partitioner = documentPartitioner.get();
-		partitioner.connect(document);
-		document.setDocumentPartitioner(partitioner);
+        IDocumentPartitioner partitioner = documentPartitioner.get();
+        partitioner.connect(document);
+        document.setDocumentPartitioner(partitioner);
 
-		XtextResource resource = createResource(element);
-		loadResource(element, resource);
-		if (resource!=null) {
-			((XtextDocument) document).setInput(resource);
-		}
-	}
+        XtextResource resource = createResource(element);
+        loadResource(element, resource);
+        if (resource != null) {
+            ((XtextDocument) document).setInput(resource);
+        }
+    }
 
-	protected XtextResource createResource(Object element) {
-		XtextResource xtextResource = null;
-		if (element instanceof IResourceProvider) {
-			IResourceProvider resourceProvider = (IResourceProvider) element;
-			IResource resource = resourceProvider.getResource();
-			if (resource != null) {
-				ResourceSet resourceSet = resourceSetProvider.get(resource.getProject());
-				URI uri = URI.createURI(SCHEME_REVISION + resource.getName());
-				xtextResource = (XtextResource) resourceFactory.createResource(uri);
-				xtextResource.setValidationDisabled(true);
-				resourceSet.getResources().add(xtextResource);
-			}
-		}
-		return xtextResource;
-	}
+    protected XtextResource createResource(Object element) {
+        XtextResource xtextResource = null;
+        if (element instanceof IResourceProvider) {
+            IResourceProvider resourceProvider = (IResourceProvider) element;
+            IResource resource = resourceProvider.getResource();
+            if (resource != null) {
+                ResourceSet resourceSet = resourceSetProvider.get(resource.getProject());
+                URI uri = URI.createURI(SCHEME_REVISION + resource.getName());
+                xtextResource = (XtextResource) resourceFactory.createResource(uri);
+                xtextResource.setValidationDisabled(true);
+                resourceSet.getResources().add(xtextResource);
+            }
+        }
+        return xtextResource;
+    }
 
-	protected void loadResource(Object element, Resource resource) {
-		if (resource == null) {
-			return;
-		}
-		if (element instanceof IStreamContentAccessor) {
-			IStreamContentAccessor streamContentAccessor = (IStreamContentAccessor) element;
-			InputStream inputStream = null;
-			try {
-				inputStream = streamContentAccessor.getContents();
-				if (inputStream != null) {
-					resource.load(inputStream,
-							Collections.singletonMap(XtextResource.OPTION_ENCODING, getEncoding(element)));
-				}
-			} catch (Exception exception) {
-				throw new WrappedException(exception);
-			} finally {
-				if (inputStream != null) {
-					try {
-						inputStream.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	}
+    protected void loadResource(Object element, Resource resource) {
+        if (resource == null) {
+            return;
+        }
+        if (element instanceof IStreamContentAccessor) {
+            IStreamContentAccessor streamContentAccessor = (IStreamContentAccessor) element;
+            InputStream inputStream = null;
+            try {
+                inputStream = streamContentAccessor.getContents();
+                if (inputStream != null) {
+                    resource.load(inputStream,
+                            Collections.singletonMap(XtextResource.OPTION_ENCODING, getEncoding(element)));
+                }
+            } catch (Exception exception) {
+                throw new WrappedException(exception);
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 
-	@Override
-	protected IAnnotationModel createAnnotationModel(Object element) throws CoreException {
-		return null;
-	}
+    @Override
+    protected IAnnotationModel createAnnotationModel(Object element) throws CoreException {
+        return null;
+    }
 
-	@Override
-	protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
-			throws CoreException {
+    @Override
+    protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
+            throws CoreException {
 
-	}
+    }
 
-	@Override
-	protected IRunnableContext getOperationRunner(IProgressMonitor monitor) {
-		return null;
-	}
+    @Override
+    protected IRunnableContext getOperationRunner(IProgressMonitor monitor) {
+        return null;
+    }
 
-	@Override
-	protected void disposeElementInfo(Object element, ElementInfo info) {
-		if (info.fDocument instanceof XtextDocument) {
-			XtextDocument document = (XtextDocument) info.fDocument;
-			document.disposeInput();
-		}
-		super.disposeElementInfo(element, info);
-	}
+    @Override
+    protected void disposeElementInfo(Object element, ElementInfo info) {
+        if (info.fDocument instanceof XtextDocument) {
+            XtextDocument document = (XtextDocument) info.fDocument;
+            document.disposeInput();
+        }
+        super.disposeElementInfo(element, info);
+    }
 
-	protected String getEncoding(Object element) {
-		String encoding = ResourcesPlugin.getEncoding();
-		if (element instanceof IEncodedStreamContentAccessor) {
-			try {
-				encoding = ((IEncodedStreamContentAccessor) element).getCharset();
-			} catch (CoreException exception) {
-			}
-		}
-		return encoding;
-	}
+    protected String getEncoding(Object element) {
+        String encoding = ResourcesPlugin.getEncoding();
+        if (element instanceof IEncodedStreamContentAccessor) {
+            try {
+                encoding = ((IEncodedStreamContentAccessor) element).getCharset();
+            } catch (CoreException exception) {
+            }
+        }
+        return encoding;
+    }
 
-	// helper methods initially copied from o.e.compare.internal.Utilities
-	protected String getString(Object input) {
-		if (input instanceof IStreamContentAccessor) {
-			IStreamContentAccessor streamContentAccessor = (IStreamContentAccessor) input;
-			try {
-				return readString(streamContentAccessor);
-			} catch (CoreException ex) {
-				throw new WrappedException(ex);
-			}
-		}
-		return ""; //$NON-NLS-1$
-	}
+    // helper methods initially copied from o.e.compare.internal.Utilities
+    protected String getString(Object input) {
+        if (input instanceof IStreamContentAccessor) {
+            IStreamContentAccessor streamContentAccessor = (IStreamContentAccessor) input;
+            try {
+                return readString(streamContentAccessor);
+            } catch (CoreException ex) {
+                throw new WrappedException(ex);
+            }
+        }
+        return ""; //$NON-NLS-1$
+    }
 
-	protected String readString(IStreamContentAccessor streamContentAccessor) throws CoreException {
-		InputStream inputStream = streamContentAccessor.getContents();
-		if (inputStream != null) {
-			String encoding = getEncoding(streamContentAccessor);
-			return readString(inputStream, encoding);
-		}
-		return null;
-	}
+    protected String readString(IStreamContentAccessor streamContentAccessor) throws CoreException {
+        InputStream inputStream = streamContentAccessor.getContents();
+        if (inputStream != null) {
+            String encoding = getEncoding(streamContentAccessor);
+            return readString(inputStream, encoding);
+        }
+        return null;
+    }
 
-	protected String readString(InputStream inputStream, String encoding) {
-		if (inputStream == null) {
-			return null;
-		}
-		BufferedReader reader = null;
-		try {
-			StringBuffer buffer = new StringBuffer();
-			char[] part = new char[2048];
-			int read = 0;
-			reader = new BufferedReader(new InputStreamReader(inputStream, encoding));
+    protected String readString(InputStream inputStream, String encoding) {
+        if (inputStream == null) {
+            return null;
+        }
+        BufferedReader reader = null;
+        try {
+            StringBuffer buffer = new StringBuffer();
+            char[] part = new char[2048];
+            int read = 0;
+            reader = new BufferedReader(new InputStreamReader(inputStream, encoding));
 
-			while ((read = reader.read(part)) != -1)
-				buffer.append(part, 0, read);
+            while ((read = reader.read(part)) != -1)
+                buffer.append(part, 0, read);
 
-			return buffer.toString();
+            return buffer.toString();
 
-		} catch (IOException ex) {
+        } catch (IOException ex) {
 
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException ex) {
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException ex) {
 
-				}
-			}
-		}
-		return null;
-	}
+                }
+            }
+        }
+        return null;
+    }
 
 }

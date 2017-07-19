@@ -15,43 +15,44 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(IXtextEditorCallback.NullImpl.class)
 public interface IXtextEditorCallback {
-	
-	void beforeSetInput(XtextEditor xtextEditor);
-	
-	void afterSetInput(XtextEditor xtextEditor);
-	
-	void afterCreatePartControl(XtextEditor editor);
-	
-	/**
-	 * Announce that the given editor's state is the same as the persisted state.
-	 * @param editor the editor which has not any unsaved changes
-	 */
-	void afterSave(XtextEditor editor);
-	
-	void beforeDispose(XtextEditor editor);
-	
-	boolean onValidateEditorInputState(XtextEditor editor);
-	
-	public static class NullImpl implements IXtextEditorCallback {
 
-		public void beforeSetInput(XtextEditor xtextEditor) {
-		}
-		
-		public void afterSetInput(XtextEditor xtextEditor) {
-		}
-		
-		public void afterCreatePartControl(XtextEditor editor) {
-		}
+    void beforeSetInput(XtextEditor xtextEditor);
 
-		public void afterSave(XtextEditor editor) {
-		}
+    void afterSetInput(XtextEditor xtextEditor);
 
-		public void beforeDispose(XtextEditor editor) {
-		}
+    void afterCreatePartControl(XtextEditor editor);
 
-		public boolean onValidateEditorInputState(XtextEditor editor) {
-			return true;
-		}
-	}
+    /**
+     * Announce that the given editor's state is the same as the persisted state.
+     *
+     * @param editor the editor which has not any unsaved changes
+     */
+    void afterSave(XtextEditor editor);
+
+    void beforeDispose(XtextEditor editor);
+
+    boolean onValidateEditorInputState(XtextEditor editor);
+
+    public static class NullImpl implements IXtextEditorCallback {
+
+        public void beforeSetInput(XtextEditor xtextEditor) {
+        }
+
+        public void afterSetInput(XtextEditor xtextEditor) {
+        }
+
+        public void afterCreatePartControl(XtextEditor editor) {
+        }
+
+        public void afterSave(XtextEditor editor) {
+        }
+
+        public void beforeDispose(XtextEditor editor) {
+        }
+
+        public boolean onValidateEditorInputState(XtextEditor editor) {
+            return true;
+        }
+    }
 
 }

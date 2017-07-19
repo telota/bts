@@ -14,13 +14,13 @@ import org.eclipse.xtext.resource.IReferenceDescription;
  * A component to create updates for cross-references to elements that are renamed in a refactoring. Clients should
  * rather inherit from {@link org.eclipse.xtext.ui.refactoring.impl.AbstractReferenceUpdater} than implementing this
  * interface directly.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public interface IReferenceUpdater {
 
-	void createReferenceUpdates(ElementRenameArguments elementRenameArguments,
-			Iterable<IReferenceDescription> referenceDescriptions, IRefactoringUpdateAcceptor updateAcceptor,
-			IProgressMonitor monitor);
+    void createReferenceUpdates(ElementRenameArguments elementRenameArguments,
+                                Iterable<IReferenceDescription> referenceDescriptions, IRefactoringUpdateAcceptor updateAcceptor,
+                                IProgressMonitor monitor);
 
 }

@@ -38,80 +38,98 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.equinox.app.IApplicationContext;
 
 
-/** Application controller controlls the startup process of the application and manages also the 
+/**
+ * Application controller controlls the startup process of the application and manages also the
  * first startup which is actually the installation process.
- * @author Christoph Plutte
  *
+ * @author Christoph Plutte
  */
-public interface ApplicationStartupController
-{
-	/** Starts application. Should be called on E4 Event PostContextConstruct.
-	 * @param context EclipseContext
-	 * @param projectService project Service
-	 * @param appContext application Context
-	 */
-	void applicationStartup(IEclipseContext context, BTSProjectService projectService, IApplicationContext appContext);
+public interface ApplicationStartupController {
+    /**
+     * Starts application. Should be called on E4 Event PostContextConstruct.
+     *
+     * @param context        EclipseContext
+     * @param projectService project Service
+     * @param appContext     application Context
+     */
+    void applicationStartup(IEclipseContext context, BTSProjectService projectService, IApplicationContext appContext);
 
-	/** Checks the database connection.
-	 * @param url url of database
-	 * @param user username, login credentials
-	 * @param password password, login credentials
-	 * @return true if connection could be established successfully
-	 * @throws MalformedURLException if url not valid
-	 */
-	boolean checkDBConnection(String url, String user, String password) throws MalformedURLException;
+    /**
+     * Checks the database connection.
+     *
+     * @param url      url of database
+     * @param user     username, login credentials
+     * @param password password, login credentials
+     * @return true if connection could be established successfully
+     * @throws MalformedURLException if url not valid
+     */
+    boolean checkDBConnection(String url, String user, String password) throws MalformedURLException;
 
-	/** Loads projects form remote database.
-	 * @param password 
-	 * @param username 
-	 * @return list of projects from remote database
-	 * @throws MalformedURLException exception if url not valid.
-	 */
-	List<BTSProject> loadRemoteProjects(String username, String password) throws MalformedURLException;
+    /**
+     * Loads projects form remote database.
+     *
+     * @param password
+     * @param username
+     * @return list of projects from remote database
+     * @throws MalformedURLException exception if url not valid.
+     */
+    List<BTSProject> loadRemoteProjects(String username, String password) throws MalformedURLException;
 
-	/** Sets the remote database connection 
-	 * @param url url of database
-	 * @param user username, login credentials
-	 * @param password password, login credentials
-	 * @throws MalformedURLException if url not valid
-	 */
-	void setRemoteDBConnection(String url, String user, String password) throws MalformedURLException;
+    /**
+     * Sets the remote database connection
+     *
+     * @param url      url of database
+     * @param user     username, login credentials
+     * @param password password, login credentials
+     * @throws MalformedURLException if url not valid
+     */
+    void setRemoteDBConnection(String url, String user, String password) throws MalformedURLException;
 
-	/** Gets the path to the directory of the database installation.
-	 * @return full path to db installation directory.
-	 */
-	String getDBInstallationDir();
-	
-	/** Installs the database in the given directory with the given port and sets the given login credentials as database administrator.
-	 * @param dbInstallationDir installation dir.
-	 * @param localPort port to set database to
-	 * @param localAdminName username
-	 * @param localAdminpassword password
-	 * @return
-	 */
-	boolean installDB(String dbInstallationDir, int localPort, String localAdminName, String localAdminpassword);
-	
-	/** Checks if database is already installed or installation is required.
-	 * @return true if installation is required, otherwise false.
-	 */
-	boolean requiresDBInstallation();
-		
-	/** Initializes and creates local user which is registered with the database and my connect to db.
-	 * @param localAdminName username
-	 * @param localAdminPassword password
-	 * @return true if initialization successful, otherwise false.
-	 */
-	boolean initializeLocalUser(String username, String password);
-	
-	/** Synchronizes remote projects from remote database.
-	 * @param mainProject main project key
-	 * @param projecsToSync list of projects to sync
-	 * @param serverurl url of remote db
-	 * @param localDBUrl url of local db
-	 * @return true if sync successfull
-	 * @throws Exception if error occurs.
-	 */
-	boolean synchronizeRemoteProjects(String mainProject, List<String> projecsToSync, String serverurl, String localDBUrl) throws Exception;
+    /**
+     * Gets the path to the directory of the database installation.
+     *
+     * @return full path to db installation directory.
+     */
+    String getDBInstallationDir();
 
-	boolean startDB(String dbInstallationDir, String localURL);
+    /**
+     * Installs the database in the given directory with the given port and sets the given login credentials as database administrator.
+     *
+     * @param dbInstallationDir  installation dir.
+     * @param localPort          port to set database to
+     * @param localAdminName     username
+     * @param localAdminpassword password
+     * @return
+     */
+    boolean installDB(String dbInstallationDir, int localPort, String localAdminName, String localAdminpassword);
+
+    /**
+     * Checks if database is already installed or installation is required.
+     *
+     * @return true if installation is required, otherwise false.
+     */
+    boolean requiresDBInstallation();
+
+    /**
+     * Initializes and creates local user which is registered with the database and my connect to db.
+     *
+     * @param localAdminName     username
+     * @param localAdminPassword password
+     * @return true if initialization successful, otherwise false.
+     */
+    boolean initializeLocalUser(String username, String password);
+
+    /**
+     * Synchronizes remote projects from remote database.
+     *
+     * @param mainProject   main project key
+     * @param projecsToSync list of projects to sync
+     * @param serverurl     url of remote db
+     * @param localDBUrl    url of local db
+     * @return true if sync successfull
+     * @throws Exception if error occurs.
+     */
+    boolean synchronizeRemoteProjects(String mainProject, List<String> projecsToSync, String serverurl, String localDBUrl) throws Exception;
+
+    boolean startDB(String dbInstallationDir, String localURL);
 }

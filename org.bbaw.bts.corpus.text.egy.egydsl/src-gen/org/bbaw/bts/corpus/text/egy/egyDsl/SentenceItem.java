@@ -9,11 +9,9 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Sentence Item</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getSentenceItem()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getSentenceItem()
  */
-public interface SentenceItem extends EObject
-{
+public interface SentenceItem extends EObject {
 } // SentenceItem

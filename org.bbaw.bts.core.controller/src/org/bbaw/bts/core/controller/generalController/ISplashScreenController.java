@@ -32,37 +32,36 @@ package org.bbaw.bts.core.controller.generalController;
 /**
  * The ISplashScreenController manages the splash screen.
  */
-public interface ISplashScreenController
-{
-	
-	/**
-	 * Tell the Service where to find the Splash-Image.
-	 *
-	 * @param pluginId            ID of teh Plugin where the Image resides
-	 */
-	public void setSplashPluginId(String pluginId);
+public interface ISplashScreenController {
 
-	/**
-	 * Tell the service the path and name of the Splash-Image.
-	 *
-	 * @param path            Path and filename of the Spalsh-Image
-	 */
-	public void setSplashImagePath(String path);
+    /**
+     * Tell the Service where to find the Splash-Image.
+     *
+     * @param pluginId ID of teh Plugin where the Image resides
+     */
+    public void setSplashPluginId(String pluginId);
 
-	/**
-	 * Open the Splash-Screen.
-	 */
-	public void open();
+    /**
+     * Tell the service the path and name of the Splash-Image.
+     *
+     * @param path Path and filename of the Spalsh-Image
+     */
+    public void setSplashImagePath(String path);
 
-	/**
-	 * Colse the Splash Screen.
-	 */
-	public void close();
+    /**
+     * Open the Splash-Screen.
+     */
+    public void open();
 
-	/**
-	 * Set the displayed message on the Splash-Screen.
-	 *
-	 * @param message            Text-Message to be displayed.
-	 */
-	public void setMessage(String message);
+    /**
+     * Colse the Splash Screen.
+     */
+    public void close();
+
+    /**
+     * Set the displayed message on the Splash-Screen.
+     *
+     * @param message Text-Message to be displayed.
+     */
+    public void setMessage(String message);
 }

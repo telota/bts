@@ -43,24 +43,26 @@ import org.eclipse.emf.ecore.EClass;
  * @generated
  */
 public class BTSThsEntryImpl extends BTSCorpusObjectImpl implements BTSThsEntry {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected BTSThsEntryImpl() {
-		super();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BTSThsEntryImpl() {
+        super();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return BtsCorpusModelPackage.Literals.BTS_THS_ENTRY;
-	}
-	
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BtsCorpusModelPackage.Literals.BTS_THS_ENTRY;
+    }
+
 
 } //BTSThsEntryImpl

@@ -12,6 +12,6 @@ package org.eclipse.e4.ui.workbench.perspectiveswitcher;
 
 public class E4WorkbenchMessages {
 
-	public static final String OpenSelectPerspectiveWindow = "Open Perspective...";
-	
+    public static final String OpenSelectPerspectiveWindow = "Open Perspective...";
+
 }

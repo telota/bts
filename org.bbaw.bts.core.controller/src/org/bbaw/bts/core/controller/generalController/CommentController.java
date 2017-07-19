@@ -32,22 +32,27 @@ package org.bbaw.bts.core.controller.generalController;
 import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSObject;
 
-/** CommentController manages all view access to comment objects.
- * @author Christoph Plutte
+/**
+ * CommentController manages all view access to comment objects.
  *
+ * @author Christoph Plutte
  */
 public interface CommentController {
 
-	/** Creates a new comment.
-	 * @param commentedObject
-	 * @return
-	 */
-	BTSComment createComment(BTSObject commentedObject);
-	
-	/** Saves a new or modified comment.
-	 * @param comment
-	 * @return
-	 */
-	boolean save(BTSComment comment);
+    /**
+     * Creates a new comment.
+     *
+     * @param commentedObject
+     * @return
+     */
+    BTSComment createComment(BTSObject commentedObject);
+
+    /**
+     * Saves a new or modified comment.
+     *
+     * @param comment
+     * @return
+     */
+    boolean save(BTSComment comment);
 
 }

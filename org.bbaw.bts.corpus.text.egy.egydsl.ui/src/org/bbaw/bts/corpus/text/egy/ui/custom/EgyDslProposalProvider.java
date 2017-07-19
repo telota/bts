@@ -4,13 +4,9 @@ import org.bbaw.bts.corpus.text.egy.ui.contentassist.AbstractEgyDslProposalProvi
 
 public class EgyDslProposalProvider extends AbstractEgyDslProposalProvider {
 
-	public EgyDslProposalProvider() {
-	}
-	
-	
-	
-	
-	
-	
+    public EgyDslProposalProvider() {
+    }
+
+
 }
 

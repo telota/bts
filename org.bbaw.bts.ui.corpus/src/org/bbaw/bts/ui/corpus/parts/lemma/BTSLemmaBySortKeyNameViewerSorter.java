@@ -8,15 +8,15 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.di.extensions.Preference;
 
 public class BTSLemmaBySortKeyNameViewerSorter extends
-		BTSEgyObjectByNameViewerSorter {
-	
-	@Inject
-	@Optional
-	@Preference(value = BTSCorpusConstants.PREF_LEMMA_NAVIGATOR_SORTBYKEY, nodePath = "org.bbaw.bts.ui.corpus")
-	protected boolean forceSortKey;
+        BTSEgyObjectByNameViewerSorter {
 
-	
-	protected boolean isForceSortKey() {
-		return this.forceSortKey;
-	}
+    @Inject
+    @Optional
+    @Preference(value = BTSCorpusConstants.PREF_LEMMA_NAVIGATOR_SORTBYKEY, nodePath = "org.bbaw.bts.ui.corpus")
+    protected boolean forceSortKey;
+
+
+    protected boolean isForceSortKey() {
+        return this.forceSortKey;
+    }
 }

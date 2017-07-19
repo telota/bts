@@ -20,12 +20,12 @@ import com.google.inject.Singleton;
 @Singleton
 public class MarkerTypeProvider {
 
-	public String getMarkerType(Issue issue) {
-		return MarkerTypes.forCheckType(issue.getType());
-	}
+    public String getMarkerType(Issue issue) {
+        return MarkerTypes.forCheckType(issue.getType());
+    }
 
-	public CheckType getCheckType(String markerType) {
-		return MarkerTypes.toCheckType(markerType);
-	}
+    public CheckType getCheckType(String markerType) {
+        return MarkerTypes.toCheckType(markerType);
+    }
 
 }

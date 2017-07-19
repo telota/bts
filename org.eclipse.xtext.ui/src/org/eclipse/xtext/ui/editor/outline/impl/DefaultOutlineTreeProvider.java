@@ -35,202 +35,197 @@ import com.google.inject.Inject;
 
 /**
  * The default implementation of an {@link IOutlineTreeProvider}.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class DefaultOutlineTreeProvider implements IOutlineTreeStructureProvider, IOutlineTreeProvider {
 
-	@Inject
-	protected ILabelProvider labelProvider;
+    @Inject
+    protected ILabelProvider labelProvider;
 
-	@Inject
-	protected ILocationInFileProvider locationInFileProvider;
+    @Inject
+    protected ILocationInFileProvider locationInFileProvider;
+    protected PolymorphicDispatcher<Void> createChildrenDispatcher = PolymorphicDispatcher.createForSingleTarget(
+            "_createChildren", 2, 2, this);
+    protected PolymorphicDispatcher<Void> createNodeDispatcher = PolymorphicDispatcher.createForSingleTarget(
+            "_createNode", 2, 2, this);
+    protected PolymorphicDispatcher<Object> textDispatcher = PolymorphicDispatcher.createForSingleTarget("_text", 1, 1,
+            this);
+    protected PolymorphicDispatcher<Image> imageDispatcher = PolymorphicDispatcher.createForSingleTarget("_image", 1,
+            1, this);
+    protected PolymorphicDispatcher<Boolean> isLeafDispatcher = PolymorphicDispatcher.createForSingleTarget("_isLeaf",
+            1, 1, this);
 
-	public DefaultOutlineTreeProvider() {
-	}
+    public DefaultOutlineTreeProvider() {
+    }
 
-	/**
-	 * For testing.
-	 */
-	public DefaultOutlineTreeProvider(ILabelProvider labelProvider, ILocationInFileProvider locationInFileProvider) {
-		this.labelProvider = labelProvider;
-		this.locationInFileProvider = locationInFileProvider;
-	}
+    /**
+     * For testing.
+     */
+    public DefaultOutlineTreeProvider(ILabelProvider labelProvider, ILocationInFileProvider locationInFileProvider) {
+        this.labelProvider = labelProvider;
+        this.locationInFileProvider = locationInFileProvider;
+    }
 
-	protected PolymorphicDispatcher<Void> createChildrenDispatcher = PolymorphicDispatcher.createForSingleTarget(
-			"_createChildren", 2, 2, this);
+    public IOutlineNode createRoot(IXtextDocument document) {
+        DocumentRootNode documentNode = new DocumentRootNode(labelProvider.getImage(document),
+                labelProvider.getText(document), document, this);
+        documentNode.setTextRegion(new TextRegion(0, document.getLength()));
+        return documentNode;
+    }
 
-	protected PolymorphicDispatcher<Void> createNodeDispatcher = PolymorphicDispatcher.createForSingleTarget(
-			"_createNode", 2, 2, this);
+    public void createChildren(IOutlineNode parent, EObject modelElement) {
+        if (modelElement != null && parent.hasChildren())
+            createChildrenDispatcher.invoke(parent, modelElement);
+    }
 
-	protected PolymorphicDispatcher<Object> textDispatcher = PolymorphicDispatcher.createForSingleTarget("_text", 1, 1,
-			this);
+    protected void _createChildren(DocumentRootNode parentNode, EObject modelElement) {
+        createNode(parentNode, modelElement);
+    }
 
-	protected PolymorphicDispatcher<Image> imageDispatcher = PolymorphicDispatcher.createForSingleTarget("_image", 1,
-			1, this);
+    protected void _createChildren(IOutlineNode parentNode, EObject modelElement) {
+        for (EObject childElement : modelElement.eContents())
+            createNode(parentNode, childElement);
+    }
 
-	protected PolymorphicDispatcher<Boolean> isLeafDispatcher = PolymorphicDispatcher.createForSingleTarget("_isLeaf",
-			1, 1, this);
+    protected void _createChildren(EStructuralFeatureNode parentNode, EObject modelElement) {
+        Object values = modelElement.eGet(parentNode.getEStructuralFeature());
+        if (values != null) {
+            if (parentNode.getEStructuralFeature().isMany()) {
+                for (EObject value : EcoreUtil2.typeSelect((List<?>) values, EObject.class)) {
+                    createNode(parentNode, value);
+                }
+            } else {
+                if (values instanceof EObject)
+                    createNode(parentNode, (EObject) values);
+            }
+        }
+    }
 
-	public IOutlineNode createRoot(IXtextDocument document) {
-		DocumentRootNode documentNode = new DocumentRootNode(labelProvider.getImage(document),
-				labelProvider.getText(document), document, this);
-		documentNode.setTextRegion(new TextRegion(0, document.getLength()));
-		return documentNode;
-	}
+    protected void createNode(IOutlineNode parent, EObject modelElement) {
+        createNodeDispatcher.invoke(parent, modelElement);
+    }
 
-	public void createChildren(IOutlineNode parent, EObject modelElement) {
-		if (modelElement != null && parent.hasChildren())
-			createChildrenDispatcher.invoke(parent, modelElement);
-	}
+    /**
+     * @since 2.1
+     */
+    protected void _createNode(DocumentRootNode parentNode, EObject modelElement) {
+        Object text = textDispatcher.invoke(modelElement);
+        if (text == null) {
+            text = modelElement.eResource().getURI().trimFileExtension().lastSegment();
+        }
+        createEObjectNode(parentNode, modelElement, imageDispatcher.invoke(modelElement), text,
+                isLeafDispatcher.invoke(modelElement));
+    }
 
-	protected void _createChildren(DocumentRootNode parentNode, EObject modelElement) {
-		createNode(parentNode, modelElement);
-	}
+    protected void _createNode(IOutlineNode parentNode, EObject modelElement) {
+        Object text = textDispatcher.invoke(modelElement);
+        boolean isLeaf = isLeafDispatcher.invoke(modelElement);
+        if (text == null && isLeaf)
+            return;
+        Image image = imageDispatcher.invoke(modelElement);
+        createEObjectNode(parentNode, modelElement, image, text, isLeaf);
+    }
 
-	protected void _createChildren(IOutlineNode parentNode, EObject modelElement) {
-		for (EObject childElement : modelElement.eContents())
-			createNode(parentNode, childElement);
-	}
+    protected EObjectNode createEObjectNode(IOutlineNode parentNode, EObject modelElement) {
+        return createEObjectNode(parentNode, modelElement, imageDispatcher.invoke(modelElement),
+                textDispatcher.invoke(modelElement), isLeafDispatcher.invoke(modelElement));
+    }
 
-	protected void _createChildren(EStructuralFeatureNode parentNode, EObject modelElement) {
-		Object values = modelElement.eGet(parentNode.getEStructuralFeature());
-		if (values != null) {
-			if (parentNode.getEStructuralFeature().isMany()) {
-				for (EObject value : EcoreUtil2.typeSelect((List<?>) values, EObject.class)) {
-					createNode(parentNode, value);
-				}
-			} else {
-				if (values instanceof EObject)
-					createNode(parentNode, (EObject) values);
-			}
-		}
-	}
+    /**
+     * @since 2.2
+     */
+    protected boolean isLocalElement(IOutlineNode node, final EObject element) {
+        if (node instanceof AbstractOutlineNode) {
+            return ((AbstractOutlineNode) node).getDocument().readOnly(new IUnitOfWork<Boolean, XtextResource>() {
+                public Boolean exec(XtextResource state) throws Exception {
+                    return element.eResource() == state;
+                }
+            });
+        }
+        return true;
+    }
 
-	protected void createNode(IOutlineNode parent, EObject modelElement) {
-		createNodeDispatcher.invoke(parent, modelElement);
-	}
+    /**
+     * @since 2.1
+     */
+    protected EObjectNode createEObjectNode(IOutlineNode parentNode, EObject modelElement, Image image, Object text,
+                                            boolean isLeaf) {
+        EObjectNode eObjectNode = new EObjectNode(modelElement, parentNode, image, text, isLeaf);
+        ICompositeNode parserNode = NodeModelUtils.getNode(modelElement);
+        if (parserNode != null)
+            eObjectNode.setTextRegion(new TextRegion(parserNode.getOffset(), parserNode.getLength()));
+        if (isLocalElement(parentNode, modelElement))
+            eObjectNode.setShortTextRegion(locationInFileProvider.getSignificantTextRegion(modelElement));
+        return eObjectNode;
+    }
 
-	/**
-	 * @since 2.1
-	 */
-	protected void _createNode(DocumentRootNode parentNode, EObject modelElement) {
-		Object text = textDispatcher.invoke(modelElement);
-		if (text == null) {
-			text = modelElement.eResource().getURI().trimFileExtension().lastSegment();
-		}
-		createEObjectNode(parentNode, modelElement, imageDispatcher.invoke(modelElement), text,
-				isLeafDispatcher.invoke(modelElement));
-	}
+    protected boolean _isLeaf(final EObject modelElement) {
+        return !Iterables.any(modelElement.eClass().getEAllContainments(), new Predicate<EReference>() {
+            public boolean apply(EReference containmentRef) {
+                return modelElement.eIsSet(containmentRef);
+            }
+        });
+    }
 
-	protected void _createNode(IOutlineNode parentNode, EObject modelElement) {
-		Object text = textDispatcher.invoke(modelElement);
-		boolean isLeaf = isLeafDispatcher.invoke(modelElement);
-		if (text == null && isLeaf)
-			return;
-		Image image = imageDispatcher.invoke(modelElement);
-		createEObjectNode(parentNode, modelElement, image, text, isLeaf);
-	}
+    protected EStructuralFeatureNode createEStructuralFeatureNode(IOutlineNode parentNode, EObject owner,
+                                                                  EStructuralFeature feature, Image image, Object text, boolean isLeaf) {
+        boolean isFeatureSet = owner.eIsSet(feature);
+        EStructuralFeatureNode eStructuralFeatureNode = new EStructuralFeatureNode(owner, feature, parentNode, image,
+                text, isLeaf || !isFeatureSet);
+        if (isFeatureSet) {
+            ITextRegion region = locationInFileProvider.getFullTextRegion(owner, feature, 0);
+            if (feature.isMany()) {
+                int numValues = ((Collection<?>) owner.eGet(feature)).size();
+                ITextRegion fullTextRegion = locationInFileProvider.getFullTextRegion(owner, feature, numValues - 1);
+                if (fullTextRegion != null)
+                    region = region.merge(fullTextRegion);
+            }
+            eStructuralFeatureNode.setTextRegion(region);
+        }
+        return eStructuralFeatureNode;
+    }
 
-	protected EObjectNode createEObjectNode(IOutlineNode parentNode, EObject modelElement) {
-		return createEObjectNode(parentNode, modelElement, imageDispatcher.invoke(modelElement),
-				textDispatcher.invoke(modelElement), isLeafDispatcher.invoke(modelElement));
-	}
+    /**
+     * Default for createChildrenDispatcher
+     */
+    protected void _createChildren(Object parent, Object element) {
+        // do nothing
+    }
 
-	/**
-	 * @since 2.2
-	 */
-	protected boolean isLocalElement(IOutlineNode node, final EObject element) {
-		if (node instanceof AbstractOutlineNode) {
-			return ((AbstractOutlineNode) node).getDocument().readOnly(new IUnitOfWork<Boolean, XtextResource>() {
-				public Boolean exec(XtextResource state) throws Exception {
-					return element.eResource() == state;
-				}
-			});
-		}
-		return true;
-	}
+    /**
+     * Default for createNodeDispatcher
+     */
+    protected void _createNode(Object parentObject, EObject modelElement) {
+        throw new IllegalArgumentException("Could not find method createNode(" + nullSafeClassName(parentObject) + ","
+                + nullSafeClassName(modelElement));
+    }
 
-	/**
-	 * @since 2.1
-	 */
-	protected EObjectNode createEObjectNode(IOutlineNode parentNode, EObject modelElement, Image image, Object text,
-			boolean isLeaf) {
-		EObjectNode eObjectNode = new EObjectNode(modelElement, parentNode, image, text, isLeaf);
-		ICompositeNode parserNode = NodeModelUtils.getNode(modelElement);
-		if (parserNode != null)
-			eObjectNode.setTextRegion(new TextRegion(parserNode.getOffset(), parserNode.getLength()));
-		if (isLocalElement(parentNode, modelElement))
-			eObjectNode.setShortTextRegion(locationInFileProvider.getSignificantTextRegion(modelElement));
-		return eObjectNode;
-	}
+    /**
+     * Default for isLeafDispatcher
+     */
+    protected boolean _isLeaf(Object modelElement) {
+        return true;
+    }
 
-	protected boolean _isLeaf(final EObject modelElement) {
-		return !Iterables.any(modelElement.eClass().getEAllContainments(), new Predicate<EReference>() {
-			public boolean apply(EReference containmentRef) {
-				return modelElement.eIsSet(containmentRef);
-			}
-		});
-	}
+    /**
+     * Default for textDispatcher
+     */
+    protected Object _text(Object modelElement) {
+        if (labelProvider instanceof IStyledLabelProvider)
+            return ((IStyledLabelProvider) labelProvider).getStyledText(modelElement);
+        else
+            return labelProvider.getText(modelElement);
+    }
 
-	protected EStructuralFeatureNode createEStructuralFeatureNode(IOutlineNode parentNode, EObject owner,
-			EStructuralFeature feature, Image image, Object text, boolean isLeaf) {
-		boolean isFeatureSet = owner.eIsSet(feature);
-		EStructuralFeatureNode eStructuralFeatureNode = new EStructuralFeatureNode(owner, feature, parentNode, image,
-				text, isLeaf || !isFeatureSet);
-		if (isFeatureSet) {
-			ITextRegion region = locationInFileProvider.getFullTextRegion(owner, feature, 0);
-			if (feature.isMany()) {
-				int numValues = ((Collection<?>) owner.eGet(feature)).size();
-				ITextRegion fullTextRegion = locationInFileProvider.getFullTextRegion(owner, feature, numValues - 1);
-				if (fullTextRegion != null)
-					region = region.merge(fullTextRegion);
-			}
-			eStructuralFeatureNode.setTextRegion(region);
-		}
-		return eStructuralFeatureNode;
-	}
+    /**
+     * Default for imageDispatcher
+     */
+    protected Image _image(Object modelElement) {
+        return labelProvider.getImage(modelElement);
+    }
 
-	/**
-	 * Default for createChildrenDispatcher
-	 */
-	protected void _createChildren(Object parent, Object element) {
-		// do nothing
-	}
-
-	/**
-	 * Default for createNodeDispatcher
-	 */
-	protected void _createNode(Object parentObject, EObject modelElement) {
-		throw new IllegalArgumentException("Could not find method createNode(" + nullSafeClassName(parentObject) + ","
-				+ nullSafeClassName(modelElement));
-	}
-
-	/**
-	 * Default for isLeafDispatcher
-	 */
-	protected boolean _isLeaf(Object modelElement) {
-		return true;
-	}
-
-	/**
-	 * Default for textDispatcher
-	 */
-	protected Object _text(Object modelElement) {
-		if (labelProvider instanceof IStyledLabelProvider)
-			return ((IStyledLabelProvider) labelProvider).getStyledText(modelElement);
-		else
-			return labelProvider.getText(modelElement);
-	}
-
-	/**
-	 * Default for imageDispatcher
-	 */
-	protected Image _image(Object modelElement) {
-		return labelProvider.getImage(modelElement);
-	}
-
-	protected String nullSafeClassName(Object object) {
-		return (object != null) ? object.getClass().getName() : "null";
-	}
+    protected String nullSafeClassName(Object object) {
+        return (object != null) ? object.getClass().getName() : "null";
+    }
 }

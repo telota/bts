@@ -75,478 +75,476 @@ import org.eclipse.xtext.ui.refactoring.impl.Messages;
  */
 public class RenameRefactoringPopup implements IWidgetTokenKeeper, IWidgetTokenKeeperExtension {
 
-	/**
-	 * Offset of info hover arrow from the left or right side.
-	 */
-	private static final int HAO = 10;
+    /**
+     * Offset of info hover arrow from the left or right side.
+     */
+    private static final int HAO = 10;
 
-	/**
-	 * Width of info hover arrow.
-	 */
-	private static final int HAW = 8;
+    /**
+     * Width of info hover arrow.
+     */
+    private static final int HAW = 8;
 
-	/**
-	 * Height of info hover arrow.
-	 */
-	private static final int HAH = 10;
+    /**
+     * Height of info hover arrow.
+     */
+    private static final int HAH = 10;
 
-	/**
-	 * Gap between linked position and popup.
-	 */
-	private static final int GAP = 2;
+    /**
+     * Gap between linked position and popup.
+     */
+    private static final int GAP = 2;
+    private static final int WIDGET_PRIORITY = 1000;
+    private static final int POPUP_VISIBILITY_DELAY = 300;
+    private static boolean MAC = Util.isMac();
+    private XtextEditor editor;
+    private RenameRefactoringController controller;
+    private Region region;
+    private boolean delayJobFinished = false;
+    private String openDialogBinding;
+    private Shell popup;
+    private GridLayout popupLayout;
+    private ToolBar toolBar;
+    private Image menuImage;
+    private MenuManager menuManager;
+    private boolean iSMenuUp = false;
 
-	private XtextEditor editor;
-	private RenameRefactoringController controller;
+    private RenameLinkedMode renameLinkedMode;
 
-	private Region region;
-	private static final int WIDGET_PRIORITY = 1000;
-	private static boolean MAC = Util.isMac();
-	private boolean delayJobFinished = false;
-	private static final int POPUP_VISIBILITY_DELAY = 300;
-	private String openDialogBinding;
-	private Shell popup;
-	private GridLayout popupLayout;
-	private ToolBar toolBar;
-	private Image menuImage;
-	private MenuManager menuManager;
-	private boolean iSMenuUp = false;
+    public RenameRefactoringPopup(XtextEditor editor, RenameRefactoringController controller, RenameLinkedMode renameLinkedMode) {
+        this.editor = editor;
+        this.controller = controller;
+        this.renameLinkedMode = renameLinkedMode;
+    }
 
-	private RenameLinkedMode renameLinkedMode;
+    protected static void recursiveSetBackgroundColor(Control control, Color color) {
+        control.setBackground(color);
+        if (control instanceof Composite) {
+            Control[] children = ((Composite) control).getChildren();
+            for (int i = 0; i < children.length; i++) {
+                recursiveSetBackgroundColor(children[i], color);
+            }
+        }
+    }
 
-	public RenameRefactoringPopup(XtextEditor editor, RenameRefactoringController controller, RenameLinkedMode renameLinkedMode) {
-		this.editor = editor;
-		this.controller = controller;
-		this.renameLinkedMode = renameLinkedMode;
-	}
-	
-	protected void updateVisibility() {
-		if (popup != null && !popup.isDisposed() && delayJobFinished) {
-			boolean visible = false;
-			if (renameLinkedMode.isCaretInLinkedPosition()) {
-				StyledText textWidget = editor.getInternalSourceViewer().getTextWidget();
-				Rectangle eArea = Geometry.toDisplay(textWidget, textWidget.getClientArea());
-				Rectangle pBounds = popup.getBounds();
-				pBounds.x -= GAP;
-				pBounds.y -= GAP;
-				pBounds.width += 2 * GAP;
-				pBounds.height += 2 * GAP;
-				if (eArea.intersects(pBounds)) {
-					visible = true;
-				}
-			}
-			if (visible && !popup.isVisible()) {
-				ISourceViewer viewer = editor.getInternalSourceViewer();
-				if (viewer instanceof IWidgetTokenOwnerExtension) {
-					IWidgetTokenOwnerExtension widgetTokenOwnerExtension = (IWidgetTokenOwnerExtension) viewer;
-					widgetTokenOwnerExtension.requestWidgetToken(this, WIDGET_PRIORITY);
-				}
-			} else if (!visible && popup.isVisible()) {
-				releaseWidgetToken();
-			}
-			popup.setVisible(visible);
-		}
-	}
+    protected static String getEnterBinding() {
+        return KeyStroke.getInstance(KeyLookupFactory.getDefault().formalKeyLookup(IKeyLookup.CR_NAME)).format();
+    }
 
-	protected void releaseWidgetToken() {
-		ISourceViewer viewer = editor.getInternalSourceViewer();
-		if (viewer instanceof IWidgetTokenOwner) {
-			IWidgetTokenOwner widgetTokenOwner = (IWidgetTokenOwner) viewer;
-			widgetTokenOwner.releaseWidgetToken(this);
-		}
-	}
+    /**
+     * WARNING: only works in workbench window context!
+     *
+     * @return the keybinding for Refactor &gt; Rename
+     */
+    protected static String getOpenDialogBinding() {
+        IBindingService bindingService = (IBindingService) PlatformUI.getWorkbench().getAdapter(IBindingService.class);
+        if (bindingService == null)
+            return ""; //$NON-NLS-1$
+        String binding = bindingService
+                .getBestActiveBindingFormattedFor("org.eclipse.xtext.ui.refactoring.RenameElement");
+        return binding == null ? "" : binding; //$NON-NLS-1$
+    }
 
-	public void open() {
-		
-		// Must cache here, since editor context is not available in menu from popup shell:
-		openDialogBinding = getOpenDialogBinding();
-		Shell workbenchShell = editor.getSite().getShell();
-		final Display display = workbenchShell.getDisplay();
-		popup = new Shell(workbenchShell, SWT.ON_TOP | SWT.NO_TRIM | SWT.TOOL);
-		popupLayout = new GridLayout(2, false);
-		popupLayout.marginWidth = 1;
-		popupLayout.marginHeight = 1;
-		popupLayout.marginLeft = 4;
-		popupLayout.horizontalSpacing = 0;
-		popup.setLayout(popupLayout);
-		createContent(popup);
-		updatePopupLocation();
-		new PopupVisibilityManager().start();
+    protected void updateVisibility() {
+        if (popup != null && !popup.isDisposed() && delayJobFinished) {
+            boolean visible = false;
+            if (renameLinkedMode.isCaretInLinkedPosition()) {
+                StyledText textWidget = editor.getInternalSourceViewer().getTextWidget();
+                Rectangle eArea = Geometry.toDisplay(textWidget, textWidget.getClientArea());
+                Rectangle pBounds = popup.getBounds();
+                pBounds.x -= GAP;
+                pBounds.y -= GAP;
+                pBounds.width += 2 * GAP;
+                pBounds.height += 2 * GAP;
+                if (eArea.intersects(pBounds)) {
+                    visible = true;
+                }
+            }
+            if (visible && !popup.isVisible()) {
+                ISourceViewer viewer = editor.getInternalSourceViewer();
+                if (viewer instanceof IWidgetTokenOwnerExtension) {
+                    IWidgetTokenOwnerExtension widgetTokenOwnerExtension = (IWidgetTokenOwnerExtension) viewer;
+                    widgetTokenOwnerExtension.requestWidgetToken(this, WIDGET_PRIORITY);
+                }
+            } else if (!visible && popup.isVisible()) {
+                releaseWidgetToken();
+            }
+            popup.setVisible(visible);
+        }
+    }
 
-		// Leave linked mode when popup loses focus
-		// (except when focus goes back to workbench window or menu is open):
-		popup.addShellListener(new ShellAdapter() {
-			@Override
-			public void shellDeactivated(ShellEvent e) {
-				if (iSMenuUp)
-					return;
+    protected void releaseWidgetToken() {
+        ISourceViewer viewer = editor.getInternalSourceViewer();
+        if (viewer instanceof IWidgetTokenOwner) {
+            IWidgetTokenOwner widgetTokenOwner = (IWidgetTokenOwner) viewer;
+            widgetTokenOwner.releaseWidgetToken(this);
+        }
+    }
 
-				final Shell editorShell = editor.getSite().getShell();
-				display.asyncExec(new Runnable() {
-					// post to UI thread since editor shell only gets activated after popup has lost focus
-					public void run() {
-						Shell activeShell = display.getActiveShell();
-						if (activeShell != editorShell) {
-							controller.cancelLinkedMode();
-						}
-					}
-				});
-			}
-		});
+    public void open() {
 
-		if (!MAC) { // carbon and cocoa draw their own border...
-			popup.addPaintListener(new PaintListener() {
-				public void paintControl(PaintEvent pe) {
-					pe.gc.drawPolygon(getPolygon(true));
-				}
-			});
-		}
+        // Must cache here, since editor context is not available in menu from popup shell:
+        openDialogBinding = getOpenDialogBinding();
+        Shell workbenchShell = editor.getSite().getShell();
+        final Display display = workbenchShell.getDisplay();
+        popup = new Shell(workbenchShell, SWT.ON_TOP | SWT.NO_TRIM | SWT.TOOL);
+        popupLayout = new GridLayout(2, false);
+        popupLayout.marginWidth = 1;
+        popupLayout.marginHeight = 1;
+        popupLayout.marginLeft = 4;
+        popupLayout.horizontalSpacing = 0;
+        popup.setLayout(popupLayout);
+        createContent(popup);
+        updatePopupLocation();
+        new PopupVisibilityManager().start();
 
-		UIJob delayJob = new UIJob(display, "Delayed RenameInformationPopup") {
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				delayJobFinished = true;
-				if (popup != null && !popup.isDisposed()) {
-					updateVisibility();
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		delayJob.setSystem(true);
-		delayJob.setPriority(Job.INTERACTIVE);
-		delayJob.schedule(POPUP_VISIBILITY_DELAY);
-	}
+        // Leave linked mode when popup loses focus
+        // (except when focus goes back to workbench window or menu is open):
+        popup.addShellListener(new ShellAdapter() {
+            @Override
+            public void shellDeactivated(ShellEvent e) {
+                if (iSMenuUp)
+                    return;
 
-	protected void createContent(Composite parent) {
-		Display display = parent.getDisplay();
-		Color foreground = display.getSystemColor(SWT.COLOR_INFO_FOREGROUND);
-		Color background = display.getSystemColor(SWT.COLOR_INFO_BACKGROUND);
-		StyledText hint = new StyledText(popup, SWT.READ_ONLY | SWT.SINGLE);
-		String enterKeyName = getEnterBinding();
-		String hintTemplate = "Enter new name, press {0} to refactor";
-		hint.setText(Messages.format(hintTemplate, enterKeyName));
-		hint.setForeground(foreground);
-		hint.setStyleRange(new StyleRange(hintTemplate.indexOf("{0}"), enterKeyName.length(), null, null, SWT.BOLD)); //$NON-NLS-1$
-		hint.setEnabled(false); // text must not be selectable
-		addViewMenu(parent);
-		recursiveSetBackgroundColor(parent, background);
-	}
+                final Shell editorShell = editor.getSite().getShell();
+                display.asyncExec(new Runnable() {
+                    // post to UI thread since editor shell only gets activated after popup has lost focus
+                    public void run() {
+                        Shell activeShell = display.getActiveShell();
+                        if (activeShell != editorShell) {
+                            controller.cancelLinkedMode();
+                        }
+                    }
+                });
+            }
+        });
 
-	protected static void recursiveSetBackgroundColor(Control control, Color color) {
-		control.setBackground(color);
-		if (control instanceof Composite) {
-			Control[] children = ((Composite) control).getChildren();
-			for (int i = 0; i < children.length; i++) {
-				recursiveSetBackgroundColor(children[i], color);
-			}
-		}
-	}
+        if (!MAC) { // carbon and cocoa draw their own border...
+            popup.addPaintListener(new PaintListener() {
+                public void paintControl(PaintEvent pe) {
+                    pe.gc.drawPolygon(getPolygon(true));
+                }
+            });
+        }
 
-	protected ToolBar addViewMenu(final Composite parent) {
-		toolBar = new ToolBar(parent, SWT.FLAT);
-		final ToolItem menuButton = new ToolItem(toolBar, SWT.PUSH, 0);
-		menuImage = Activator.getImageDescriptor("icons/elcl16/view_menu.gif").createImage();
-		menuButton.setImage(menuImage);
-		menuButton.setToolTipText("Menu");
-		toolBar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				showMenu(toolBar);
-			}
-		});
-		menuButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				showMenu(toolBar);
-			}
-		});
-		toolBar.pack();
-		return toolBar;
-	}
+        UIJob delayJob = new UIJob(display, "Delayed RenameInformationPopup") {
+            @Override
+            public IStatus runInUIThread(IProgressMonitor monitor) {
+                delayJobFinished = true;
+                if (popup != null && !popup.isDisposed()) {
+                    updateVisibility();
+                }
+                return Status.OK_STATUS;
+            }
+        };
+        delayJob.setSystem(true);
+        delayJob.setPriority(Job.INTERACTIVE);
+        delayJob.schedule(POPUP_VISIBILITY_DELAY);
+    }
 
-	protected void showMenu(ToolBar toolBar) {
-		Menu menu = getMenuManager().createContextMenu(toolBar);
-		menu.setLocation(toolBar.toDisplay(0, toolBar.getSize().y));
-		iSMenuUp = true;
-		menu.setVisible(true);
-	}
+    protected void createContent(Composite parent) {
+        Display display = parent.getDisplay();
+        Color foreground = display.getSystemColor(SWT.COLOR_INFO_FOREGROUND);
+        Color background = display.getSystemColor(SWT.COLOR_INFO_BACKGROUND);
+        StyledText hint = new StyledText(popup, SWT.READ_ONLY | SWT.SINGLE);
+        String enterKeyName = getEnterBinding();
+        String hintTemplate = "Enter new name, press {0} to refactor";
+        hint.setText(Messages.format(hintTemplate, enterKeyName));
+        hint.setForeground(foreground);
+        hint.setStyleRange(new StyleRange(hintTemplate.indexOf("{0}"), enterKeyName.length(), null, null, SWT.BOLD)); //$NON-NLS-1$
+        hint.setEnabled(false); // text must not be selectable
+        addViewMenu(parent);
+        recursiveSetBackgroundColor(parent, background);
+    }
 
-	protected MenuManager getMenuManager() {
-		if (menuManager != null) {
-			return menuManager;
-		}
+    protected ToolBar addViewMenu(final Composite parent) {
+        toolBar = new ToolBar(parent, SWT.FLAT);
+        final ToolItem menuButton = new ToolItem(toolBar, SWT.PUSH, 0);
+        menuImage = Activator.getImageDescriptor("icons/elcl16/view_menu.gif").createImage();
+        menuButton.setImage(menuImage);
+        menuButton.setToolTipText("Menu");
+        toolBar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDown(MouseEvent e) {
+                showMenu(toolBar);
+            }
+        });
+        menuButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                showMenu(toolBar);
+            }
+        });
+        toolBar.pack();
+        return toolBar;
+    }
 
-		menuManager = new MenuManager();
-		menuManager.setRemoveAllWhenShown(true);
-		menuManager.addMenuListener(new IMenuListener2() {
+    protected void showMenu(ToolBar toolBar) {
+        Menu menu = getMenuManager().createContextMenu(toolBar);
+        menu.setLocation(toolBar.toDisplay(0, toolBar.getSize().y));
+        iSMenuUp = true;
+        menu.setVisible(true);
+    }
 
-			public void menuAboutToHide(IMenuManager manager) {
-				iSMenuUp = false;
-			}
+    protected MenuManager getMenuManager() {
+        if (menuManager != null) {
+            return menuManager;
+        }
 
-			public void menuAboutToShow(IMenuManager manager) {
-				boolean canRefactor = renameLinkedMode.isCurrentNameValid();
-				IAction refactorAction = new Action("Rename...") {
-					@Override
-					public void run() {
-						activateEditor();
-						controller.startRefactoring(RefactoringType.REFACTORING_DIRECT);
-					}
-				};
-				refactorAction.setAccelerator(SWT.CR);
-				refactorAction.setEnabled(canRefactor);
-				manager.add(refactorAction);
+        menuManager = new MenuManager();
+        menuManager.setRemoveAllWhenShown(true);
+        menuManager.addMenuListener(new IMenuListener2() {
 
-				IAction previewAction = new Action("Preview...") {
-					@Override
-					public void run() {
-						activateEditor();
-						controller.startRefactoring(RefactoringType.REFACTORING_PREVIEW);
-					}
-				};
-				previewAction.setAccelerator(SWT.CTRL | SWT.CR);
-				previewAction.setEnabled(canRefactor);
-				manager.add(previewAction);
+            public void menuAboutToHide(IMenuManager manager) {
+                iSMenuUp = false;
+            }
 
-				IAction openDialogAction = new Action("Open Rename Dialog..." + '\t' + openDialogBinding) {
-					@Override
-					public void run() {
-						activateEditor();
-						controller.startRefactoring(RefactoringType.REFACTORING_DIALOG);
-					}
-				};
-				manager.add(openDialogAction);
-			}
-		});
-		return menuManager;
-	}
+            public void menuAboutToShow(IMenuManager manager) {
+                boolean canRefactor = renameLinkedMode.isCurrentNameValid();
+                IAction refactorAction = new Action("Rename...") {
+                    @Override
+                    public void run() {
+                        activateEditor();
+                        controller.startRefactoring(RefactoringType.REFACTORING_DIRECT);
+                    }
+                };
+                refactorAction.setAccelerator(SWT.CR);
+                refactorAction.setEnabled(canRefactor);
+                manager.add(refactorAction);
 
-	protected static String getEnterBinding() {
-		return KeyStroke.getInstance(KeyLookupFactory.getDefault().formalKeyLookup(IKeyLookup.CR_NAME)).format();
-	}
+                IAction previewAction = new Action("Preview...") {
+                    @Override
+                    public void run() {
+                        activateEditor();
+                        controller.startRefactoring(RefactoringType.REFACTORING_PREVIEW);
+                    }
+                };
+                previewAction.setAccelerator(SWT.CTRL | SWT.CR);
+                previewAction.setEnabled(canRefactor);
+                manager.add(previewAction);
 
-	protected Point computePopupLocation() {
-		if (popup == null || popup.isDisposed())
-			return null;
+                IAction openDialogAction = new Action("Open Rename Dialog..." + '\t' + openDialogBinding) {
+                    @Override
+                    public void run() {
+                        activateEditor();
+                        controller.startRefactoring(RefactoringType.REFACTORING_DIALOG);
+                    }
+                };
+                manager.add(openDialogAction);
+            }
+        });
+        return menuManager;
+    }
 
-		LinkedPosition position = renameLinkedMode.getCurrentLinkedPosition();
-		if (position == null)
-			return null;
-		ISourceViewer viewer = editor.getInternalSourceViewer();
-		ITextViewerExtension5 viewer5 = (ITextViewerExtension5) viewer;
-		int widgetOffset = viewer5.modelOffset2WidgetOffset(position.offset);
+    protected Point computePopupLocation() {
+        if (popup == null || popup.isDisposed())
+            return null;
 
-		StyledText textWidget = viewer.getTextWidget();
-		Point pos = textWidget.getLocationAtOffset(widgetOffset);
-		Point pSize = getExtent();
-		pSize.y += HAH + 1;
-		pos.x -= HAO;
-		pos.y += textWidget.getLineHeight(widgetOffset);
-		Point dPos = textWidget.toDisplay(pos);
-		Rectangle displayBounds = textWidget.getDisplay().getClientArea();
-		Rectangle dPopupRect = Geometry.createRectangle(dPos, pSize);
-		Geometry.moveInside(dPopupRect, displayBounds);
-		return new Point(dPopupRect.x, dPopupRect.y);
-	}
+        LinkedPosition position = renameLinkedMode.getCurrentLinkedPosition();
+        if (position == null)
+            return null;
+        ISourceViewer viewer = editor.getInternalSourceViewer();
+        ITextViewerExtension5 viewer5 = (ITextViewerExtension5) viewer;
+        int widgetOffset = viewer5.modelOffset2WidgetOffset(position.offset);
 
-	protected Point getExtent() {
-		Point e = popup.getSize();
-		e.y -= HAH;
-		return e;
-	}
+        StyledText textWidget = viewer.getTextWidget();
+        Point pos = textWidget.getLocationAtOffset(widgetOffset);
+        Point pSize = getExtent();
+        pSize.y += HAH + 1;
+        pos.x -= HAO;
+        pos.y += textWidget.getLineHeight(widgetOffset);
+        Point dPos = textWidget.toDisplay(pos);
+        Rectangle displayBounds = textWidget.getDisplay().getClientArea();
+        Rectangle dPopupRect = Geometry.createRectangle(dPos, pSize);
+        Geometry.moveInside(dPopupRect, displayBounds);
+        return new Point(dPopupRect.x, dPopupRect.y);
+    }
 
-	protected void updatePopupLocation() {
-		packPopup();
-		Point loc = computePopupLocation();
+    protected Point getExtent() {
+        Point e = popup.getSize();
+        e.y -= HAH;
+        return e;
+    }
 
-		if (loc != null && !loc.equals(popup.getLocation())) {
-			popup.setLocation(loc);
-		}
-	}
+    protected void updatePopupLocation() {
+        packPopup();
+        Point loc = computePopupLocation();
 
-	protected void packPopup() {
-		popupLayout.marginTop = HAH;
-		popupLayout.marginBottom = 0;
-		popup.pack();
-		Region oldRegion = region;
-		region = new Region();
-		region.add(getPolygon(false));
-		popup.setRegion(region);
-		Rectangle bounds = region.getBounds();
-		popup.setSize(bounds.width, bounds.height + 2);
-		if (oldRegion != null) {
-			oldRegion.dispose();
-		}
-	}
+        if (loc != null && !loc.equals(popup.getLocation())) {
+            popup.setLocation(loc);
+        }
+    }
 
-	protected int[] getPolygon(boolean border) {
-		Point e = getExtent();
-		int b = border ? 1 : 0;
-		boolean isRTL = (popup.getStyle() & SWT.RIGHT_TO_LEFT) != 0;
-		int ha1 = isRTL ? e.x - HAO : HAO + HAW;
-		int ha2 = isRTL ? e.x - HAO - HAW / 2 : HAO + HAW / 2;
-		int ha3 = isRTL ? e.x - HAO - HAW : HAO;
-		int[] poly;
-		poly = new int[] { 0, HAH, ha3 + b, HAH, ha2, b, ha1 - b, HAH, e.x - b, HAH, e.x - b, e.y + HAH - b, 0,
-				e.y + HAH - b, 0, HAH };
-		return poly;
-	}
+    protected void packPopup() {
+        popupLayout.marginTop = HAH;
+        popupLayout.marginBottom = 0;
+        popup.pack();
+        Region oldRegion = region;
+        region = new Region();
+        region.add(getPolygon(false));
+        popup.setRegion(region);
+        Rectangle bounds = region.getBounds();
+        popup.setSize(bounds.width, bounds.height + 2);
+        if (oldRegion != null) {
+            oldRegion.dispose();
+        }
+    }
 
-	/**
-	 * WARNING: only works in workbench window context!
-	 * 
-	 * @return the keybinding for Refactor &gt; Rename
-	 */
-	protected static String getOpenDialogBinding() {
-		IBindingService bindingService = (IBindingService) PlatformUI.getWorkbench().getAdapter(IBindingService.class);
-		if (bindingService == null)
-			return ""; //$NON-NLS-1$
-		String binding = bindingService
-				.getBestActiveBindingFormattedFor("org.eclipse.xtext.ui.refactoring.RenameElement");
-		return binding == null ? "" : binding; //$NON-NLS-1$
-	}
+    protected int[] getPolygon(boolean border) {
+        Point e = getExtent();
+        int b = border ? 1 : 0;
+        boolean isRTL = (popup.getStyle() & SWT.RIGHT_TO_LEFT) != 0;
+        int ha1 = isRTL ? e.x - HAO : HAO + HAW;
+        int ha2 = isRTL ? e.x - HAO - HAW / 2 : HAO + HAW / 2;
+        int ha3 = isRTL ? e.x - HAO - HAW : HAO;
+        int[] poly;
+        poly = new int[]{0, HAH, ha3 + b, HAH, ha2, b, ha1 - b, HAH, e.x - b, HAH, e.x - b, e.y + HAH - b, 0,
+                e.y + HAH - b, 0, HAH};
+        return poly;
+    }
 
-	public boolean requestWidgetToken(IWidgetTokenOwner owner, int priority) {
-		return false;
-	}
+    public boolean requestWidgetToken(IWidgetTokenOwner owner, int priority) {
+        return false;
+    }
 
-	public boolean setFocus(IWidgetTokenOwner owner) {
-		if (toolBar != null && !toolBar.isDisposed())
-			showMenu(toolBar);
-		return true;
-	}
+    public boolean setFocus(IWidgetTokenOwner owner) {
+        if (toolBar != null && !toolBar.isDisposed())
+            showMenu(toolBar);
+        return true;
+    }
 
-	public boolean requestWidgetToken(IWidgetTokenOwner owner) {
-		return false;
-	}
+    public boolean requestWidgetToken(IWidgetTokenOwner owner) {
+        return false;
+    }
 
-	public boolean ownsFocusShell() {
-		if (iSMenuUp)
-			return true;
-		if (popup == null || popup.isDisposed())
-			return false;
-		Shell activeShell = popup.getDisplay().getActiveShell();
+    public boolean ownsFocusShell() {
+        if (iSMenuUp)
+            return true;
+        if (popup == null || popup.isDisposed())
+            return false;
+        Shell activeShell = popup.getDisplay().getActiveShell();
         return popup == activeShell;
     }
 
-	protected void activateEditor() {
-		editor.getSite().getShell().setActive();
-	}
+    protected void activateEditor() {
+        editor.getSite().getShell().setActive();
+    }
 
-	public void close() {
-		if (popup != null) {
-			if (!popup.isDisposed()) {
-				popup.close();
-			}
-			popup = null;
-		}
-		releaseWidgetToken();
-		if (region != null) {
-			if (!region.isDisposed()) {
-				region.dispose();
-			}
-		}
-	}
+    public void close() {
+        if (popup != null) {
+            if (!popup.isDisposed()) {
+                popup.close();
+            }
+            popup = null;
+        }
+        releaseWidgetToken();
+        if (region != null) {
+            if (!region.isDisposed()) {
+                region.dispose();
+            }
+        }
+    }
 
-	protected class PopupVisibilityManager implements IPartListener2, ControlListener, MouseListener, KeyListener, IViewportListener {
+    protected class PopupVisibilityManager implements IPartListener2, ControlListener, MouseListener, KeyListener, IViewportListener {
 
-		protected void start() {
-			editor.getSite().getWorkbenchWindow().getPartService().addPartListener(this);
-			final ISourceViewer viewer = editor.getInternalSourceViewer();
-			final StyledText textWidget = viewer.getTextWidget();
-			textWidget.addControlListener(this);
-			textWidget.addMouseListener(this);
-			textWidget.addKeyListener(this);
-			editor.getSite().getShell().addControlListener(this);
-			viewer.addViewportListener(this);
-			popup.addDisposeListener(new DisposeListener() {
-				public void widgetDisposed(DisposeEvent e) {
-					editor.getSite().getWorkbenchWindow().getPartService()
-							.removePartListener(PopupVisibilityManager.this);
-					if (!textWidget.isDisposed()) {
-						textWidget.removeControlListener(PopupVisibilityManager.this);
-						textWidget.removeMouseListener(PopupVisibilityManager.this);
-						textWidget.removeKeyListener(PopupVisibilityManager.this);
-					}
-					editor.getSite().getShell().removeControlListener(PopupVisibilityManager.this);
-					viewer.removeViewportListener(PopupVisibilityManager.this);
-					if (menuImage != null) {
-						menuImage.dispose();
-						menuImage = null;
-					}
-					if (menuManager != null) {
-						menuManager.dispose();
-						menuManager = null;
-					}
-				}
-			});
-		}
+        protected void start() {
+            editor.getSite().getWorkbenchWindow().getPartService().addPartListener(this);
+            final ISourceViewer viewer = editor.getInternalSourceViewer();
+            final StyledText textWidget = viewer.getTextWidget();
+            textWidget.addControlListener(this);
+            textWidget.addMouseListener(this);
+            textWidget.addKeyListener(this);
+            editor.getSite().getShell().addControlListener(this);
+            viewer.addViewportListener(this);
+            popup.addDisposeListener(new DisposeListener() {
+                public void widgetDisposed(DisposeEvent e) {
+                    editor.getSite().getWorkbenchWindow().getPartService()
+                            .removePartListener(PopupVisibilityManager.this);
+                    if (!textWidget.isDisposed()) {
+                        textWidget.removeControlListener(PopupVisibilityManager.this);
+                        textWidget.removeMouseListener(PopupVisibilityManager.this);
+                        textWidget.removeKeyListener(PopupVisibilityManager.this);
+                    }
+                    editor.getSite().getShell().removeControlListener(PopupVisibilityManager.this);
+                    viewer.removeViewportListener(PopupVisibilityManager.this);
+                    if (menuImage != null) {
+                        menuImage.dispose();
+                        menuImage = null;
+                    }
+                    if (menuManager != null) {
+                        menuManager.dispose();
+                        menuManager = null;
+                    }
+                }
+            });
+        }
 
-		public void partActivated(IWorkbenchPartReference partRef) {
-			IWorkbenchPart fPart = editor.getEditorSite().getPart();
-			if (partRef.getPart(false) == fPart) {
-				updateVisibility();
-			}
-		}
+        public void partActivated(IWorkbenchPartReference partRef) {
+            IWorkbenchPart fPart = editor.getEditorSite().getPart();
+            if (partRef.getPart(false) == fPart) {
+                updateVisibility();
+            }
+        }
 
-		public void partDeactivated(IWorkbenchPartReference partRef) {
-			IWorkbenchPart fPart = editor.getEditorSite().getPart();
-			if (popup != null && !popup.isDisposed() && partRef.getPart(false) == fPart) {
-				popup.setVisible(false);
-			}
-		}
+        public void partDeactivated(IWorkbenchPartReference partRef) {
+            IWorkbenchPart fPart = editor.getEditorSite().getPart();
+            if (popup != null && !popup.isDisposed() && partRef.getPart(false) == fPart) {
+                popup.setVisible(false);
+            }
+        }
 
-		public void viewportChanged(int verticalOffset) {
-			updatePopupLocation();
-			updateVisibility();
-		}
+        public void viewportChanged(int verticalOffset) {
+            updatePopupLocation();
+            updateVisibility();
+        }
 
-		public void mouseUp(MouseEvent e) {
-			updatePopupLocation();
-			updateVisibility();
-		}
+        public void mouseUp(MouseEvent e) {
+            updatePopupLocation();
+            updateVisibility();
+        }
 
-		public void keyPressed(KeyEvent e) {
-			updatePopupLocation();
-			updateVisibility();
-		}
+        public void keyPressed(KeyEvent e) {
+            updatePopupLocation();
+            updateVisibility();
+        }
 
-		public void controlMoved(ControlEvent e) {
-			updatePopupLocation();
-			updateVisibility();
-		}
+        public void controlMoved(ControlEvent e) {
+            updatePopupLocation();
+            updateVisibility();
+        }
 
-		public void controlResized(ControlEvent e) {
-			updatePopupLocation();
-			updateVisibility();
-		}
+        public void controlResized(ControlEvent e) {
+            updatePopupLocation();
+            updateVisibility();
+        }
 
-		public void partBroughtToTop(IWorkbenchPartReference partRef) {
-		}
+        public void partBroughtToTop(IWorkbenchPartReference partRef) {
+        }
 
-		public void partClosed(IWorkbenchPartReference partRef) {
-		}
+        public void partClosed(IWorkbenchPartReference partRef) {
+        }
 
-		public void partHidden(IWorkbenchPartReference partRef) {
-		}
+        public void partHidden(IWorkbenchPartReference partRef) {
+        }
 
-		public void partInputChanged(IWorkbenchPartReference partRef) {
-		}
+        public void partInputChanged(IWorkbenchPartReference partRef) {
+        }
 
-		public void partOpened(IWorkbenchPartReference partRef) {
-		}
+        public void partOpened(IWorkbenchPartReference partRef) {
+        }
 
-		public void partVisible(IWorkbenchPartReference partRef) {
-		}
+        public void partVisible(IWorkbenchPartReference partRef) {
+        }
 
-		public void mouseDoubleClick(MouseEvent e) {
-		}
+        public void mouseDoubleClick(MouseEvent e) {
+        }
 
-		public void mouseDown(MouseEvent e) {
-		}
+        public void mouseDown(MouseEvent e) {
+        }
 
-		public void keyReleased(KeyEvent e) {
-		}
+        public void keyReleased(KeyEvent e) {
+        }
 
-	}
+    }
 
 }

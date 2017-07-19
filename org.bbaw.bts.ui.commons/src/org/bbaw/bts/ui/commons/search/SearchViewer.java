@@ -36,15 +36,15 @@ import org.bbaw.bts.core.dao.util.BTSQueryRequest;
  * @author Christoph Plutte
  */
 public interface SearchViewer {
-	
-	static final String OPT_NAME_ONLY = "search_option_name_only";
-	static final String OPT_ID_ONLY = "search_option_id_only";
-	
-	/**
-	 * Dispose.
-	 */
-	void dispose();
-	
 
-	void search(BTSQueryRequest query, String queryName, String viewerFilterString);
+    static final String OPT_NAME_ONLY = "search_option_name_only";
+    static final String OPT_ID_ONLY = "search_option_id_only";
+
+    /**
+     * Dispose.
+     */
+    void dispose();
+
+
+    void search(BTSQueryRequest query, String queryName, String viewerFilterString);
 }

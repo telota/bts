@@ -21,25 +21,20 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultResourceUIValidatorExtension.class)
 public interface IResourceUIValidatorExtension {
 
-	/**
-	 * Update the validation markers of the given file
-	 * 
-	 * @param file
-	 *            the file to create validation markers for
-	 * @param resource
-	 *            the resource corresponding to the given file
-	 * @param mode
-	 *            the mode (normal,fast,expensive) of the validation
-	 */
-	void updateValidationMarkers(IFile file, Resource resource, CheckMode mode, IProgressMonitor monitor);
+    /**
+     * Update the validation markers of the given file
+     *
+     * @param file     the file to create validation markers for
+     * @param resource the resource corresponding to the given file
+     * @param mode     the mode (normal,fast,expensive) of the validation
+     */
+    void updateValidationMarkers(IFile file, Resource resource, CheckMode mode, IProgressMonitor monitor);
 
-	/**
-	 * Delete all validation markers corresponding to the given checkMode on the passed in file
-	 * 
-	 * @param file
-	 *            the file to create validation markers for
-	 * @param checkMode
-	 *            the mode (normal,fast,expensive) of the validation
-	 */
-	void deleteValidationMarkers(IFile file, CheckMode checkMode, IProgressMonitor monitor);
+    /**
+     * Delete all validation markers corresponding to the given checkMode on the passed in file
+     *
+     * @param file      the file to create validation markers for
+     * @param checkMode the mode (normal,fast,expensive) of the validation
+     */
+    void deleteValidationMarkers(IFile file, CheckMode checkMode, IProgressMonitor monitor);
 }

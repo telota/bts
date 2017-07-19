@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * An object which can send data from an object of type {@code T} into a {@code PrimitiveSink}.
  * Implementations for common types can be found in {@link Funnels}.
- *
+ * <p>
  * <p>Note that serialization of {@linkplain BloomFilter bloom filters} requires the proper
  * serialization of funnels. When possible, it is recommended that funnels be implemented as a
  * single-element enum to maintain serialization guarantees. See Effective Java (2nd Edition),
@@ -42,12 +42,12 @@ import java.io.Serializable;
 @Beta
 public interface Funnel<T> extends Serializable {
 
-  /**
-   * Sends a stream of data from the {@code from} object into the sink {@code into}. There
-   * is no requirement that this data be complete enough to fully reconstitute the object
-   * later.
-   *
-   * @since 12.0 (in Guava 11.0, {@code PrimitiveSink} was named {@code Sink})
-   */
-  void funnel(T from, PrimitiveSink into);
+    /**
+     * Sends a stream of data from the {@code from} object into the sink {@code into}. There
+     * is no requirement that this data be complete enough to fully reconstitute the object
+     * later.
+     *
+     * @since 12.0 (in Guava 11.0, {@code PrimitiveSink} was named {@code Sink})
+     */
+    void funnel(T from, PrimitiveSink into);
 }

@@ -10,97 +10,82 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.validation.XtextAnnotation;
 import org.eclipse.xtext.validation.Issue;
 
-public class BTSModelAnnotation extends XtextAnnotation
-{
+public class BTSModelAnnotation extends XtextAnnotation {
 
-	public static final String HIGHLIGHTED = ".highlighted";
+    public static final String HIGHLIGHTED = ".highlighted";
 
-	public static final String TOKEN = "token";
+    public static final String TOKEN = "token";
 
-	protected IResourceProviderService resourceProvider = (IResourceProviderService) StaticAccessController.getResourceProvider();
+    protected IResourceProviderService resourceProvider = (IResourceProviderService) StaticAccessController.getResourceProvider();
+    protected String cachedType;
+    private BTSInterTextReference interTextReference;
+    private BTSObject relatingObject;
+    private boolean highlighted = false;
+    private BTSIdentifiableItem model;
 
-	
-	private BTSInterTextReference interTextReference;
-	
-	private BTSObject relatingObject;
-	
-	protected String cachedType;
-	
-	private boolean highlighted = false;
+    public BTSModelAnnotation(String type, BTSIdentifiableItem model) {
+        this(type, null, new Issue.IssueImpl(), model);
+    }
 
-	
-	public BTSModelAnnotation(String type, BTSIdentifiableItem model)
-	{
-		this(type, null, new Issue.IssueImpl(), model);
-	}
+    public BTSModelAnnotation(BTSIdentifiableItem model, BTSInterTextReference interTextReference, BTSObject relatingObject) {
+        super(CorpusUtils.getTypeIdentifier(relatingObject),
+                false, null, new Issue.IssueImpl(), false);
+        this.model = model;
+        this.interTextReference = interTextReference;
+        this.relatingObject = relatingObject;
+    }
 
-	public BTSModelAnnotation(BTSIdentifiableItem model, BTSInterTextReference interTextReference, BTSObject relatingObject)
-	{
-		super(CorpusUtils.getTypeIdentifier(relatingObject),
-				false, null, new Issue.IssueImpl(), false);
-		this.model = model;
-		this.interTextReference = interTextReference;
-		this.relatingObject = relatingObject;
-	}
+    public BTSModelAnnotation(String type, IXtextDocument document, Issue issue,
+                              BTSIdentifiableItem modelObject) {
+        super(type, false, document, issue, false);
+        this.model = modelObject;
+    }
 
-	public BTSModelAnnotation(String type, IXtextDocument document, Issue issue,
-			BTSIdentifiableItem modelObject) {
-		super(type, false, document, issue, false);
-		this.model = modelObject;
-	}
+    public BTSIdentifiableItem getModel() {
+        return model;
+    }
 
-	private BTSIdentifiableItem model;
+    public void setModel(BTSIdentifiableItem model) {
+        this.model = model;
+        setType(CorpusUtils.getTypeIdentifier(model));
+    }
 
-	public BTSIdentifiableItem getModel()
-	{
-		return model;
-	}
+    public BTSInterTextReference getInterTextReference() {
+        return interTextReference;
+    }
 
-	public void setModel(BTSIdentifiableItem model)
-	{
-		this.model = model;
-		setType(CorpusUtils.getTypeIdentifier(model));
-	}
+    public void setInterTextReference(BTSInterTextReference interTextRefernce) {
+        this.interTextReference = interTextRefernce;
+    }
 
-	public BTSInterTextReference getInterTextReference() {
-		return interTextReference;
-	}
+    public BTSObject getRelatingObject() {
+        return relatingObject;
+    }
 
-	public void setInterTextReference(BTSInterTextReference interTextRefernce) {
-		this.interTextReference = interTextRefernce;
-	}
+    public void setRelatingObject(BTSObject relatingObject) {
+        this.relatingObject = relatingObject;
+    }
 
-	public BTSObject getRelatingObject() {
-		return relatingObject;
-	}
+    public void setHighlighted(boolean highlighted) {
+        this.highlighted = highlighted;
+    }
 
-	public void setRelatingObject(BTSObject relatingObject) {
-		this.relatingObject = relatingObject;
-	}
+    @Override
+    public String getType() {
+        return super.getType() + (this.highlighted ? HIGHLIGHTED : "");
+    }
 
-	public void setHighlighted(boolean highlighted)
-	{
-		this.highlighted = highlighted;
-	}
-	
-	@Override
-	public String getType() {
-		return super.getType() + (this.highlighted ? HIGHLIGHTED : "");
-	}
-	
-	@Override
-	public String getText() {
-		if (relatingObject != null)
-		{
-			String text = "";
-			if (relatingObject.getType() != null)
-			{
-				text = relatingObject.getType() + ": ";
-			}
-			text += relatingObject.getName();
-			return text;
-			
-		}
-		return super.getText();
-	}
+    @Override
+    public String getText() {
+        if (relatingObject != null) {
+            String text = "";
+            if (relatingObject.getType() != null) {
+                text = relatingObject.getType() + ": ";
+            }
+            text += relatingObject.getName();
+            return text;
+
+        }
+        return super.getText();
+    }
 }

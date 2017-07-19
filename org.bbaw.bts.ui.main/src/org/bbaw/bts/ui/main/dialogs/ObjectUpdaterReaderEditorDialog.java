@@ -29,151 +29,151 @@ import org.eclipse.swt.widgets.Shell;
 
 public class ObjectUpdaterReaderEditorDialog extends TitleAreaDialog {
 
-	@Inject
-	private IEclipseContext context;
-	@Inject
-	private EPartService partService;
+    @Inject
+    private IEclipseContext context;
+    @Inject
+    private EPartService partService;
 
-	@Inject
-	@Named(IServiceConstants.ACTIVE_SELECTION)
-	private BTSDBBaseObject dbBaseObject;
+    @Inject
+    @Named(IServiceConstants.ACTIVE_SELECTION)
+    private BTSDBBaseObject dbBaseObject;
 
-	private ComposedAdapterFactory factory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-	private AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-			factory);
-	private ObjectUpdaterReaderEditorPart part;
-	private Button saveButton;
+    private ComposedAdapterFactory factory = new ComposedAdapterFactory(
+            ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+    private AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
+            factory);
+    private ObjectUpdaterReaderEditorPart part;
+    private Button saveButton;
 
-	@Override
-	public void create() {
-		// TODO Auto-generated method stub
-		super.create();
-		dialogArea.addListener(SWT.Traverse, new Listener() {
-			@Override
-			public void handleEvent(final Event e) {
-				if (e.detail == SWT.TRAVERSE_ESCAPE) {
-					e.doit = false;
-				}
-			}
-		});
-		setTitle("Edit Updaters and Readers of Object "
-				+ labelProvider.getText(dbBaseObject));
+    /**
+     * Create the dialog with default constructor.
+     *
+     * @wbp.parser.constructor
+     */
+    public ObjectUpdaterReaderEditorDialog() {
+        super(new Shell());
+        System.out.println("construct UpdatersReadersEditor");
 
-	}
+    }
 
-	/**
-	 * Create the dialog with default constructor.
-	 * 
-	 * @wbp.parser.constructor
-	 */
-	public ObjectUpdaterReaderEditorDialog() {
-		super(new Shell());
-		System.out.println("construct UpdatersReadersEditor");
+    /**
+     * Create the dialog.
+     *
+     * @param parentShell
+     */
+    public ObjectUpdaterReaderEditorDialog(Shell parentShell) {
+        super(parentShell);
+    }
 
-	}
+    @Override
+    public void create() {
+        // TODO Auto-generated method stub
+        super.create();
+        dialogArea.addListener(SWT.Traverse, new Listener() {
+            @Override
+            public void handleEvent(final Event e) {
+                if (e.detail == SWT.TRAVERSE_ESCAPE) {
+                    e.doit = false;
+                }
+            }
+        });
+        setTitle("Edit Updaters and Readers of Object "
+                + labelProvider.getText(dbBaseObject));
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param parentShell
-	 */
-	public ObjectUpdaterReaderEditorDialog(Shell parentShell) {
-		super(parentShell);
-	}
+    }
 
-	/**
-	 * Create contents of the dialog.
-	 * 
-	 * @param parent
-	 */
-	@Override
-	protected Control createDialogArea(Composite parent) {
+    /**
+     * Create contents of the dialog.
+     *
+     * @param parent
+     */
+    @Override
+    protected Control createDialogArea(Composite parent) {
 
-		Composite area = (Composite) super.createDialogArea(parent);
-		area.setLayout(new GridLayout());
-		((GridLayout) area.getLayout()).marginWidth = 0;
-		((GridLayout) area.getLayout()).marginHeight = 0;
-		IEclipseContext child = context
-				.createChild("updatersReadersEditorDialog");
-		child.set(Composite.class, area);
-		part = ContextInjectionFactory.make(
-				ObjectUpdaterReaderEditorPart.class, child);
-		// area.layout();
-		// parent.layout();
-		// part.postConstruct();
-		return area;
-	}
+        Composite area = (Composite) super.createDialogArea(parent);
+        area.setLayout(new GridLayout());
+        ((GridLayout) area.getLayout()).marginWidth = 0;
+        ((GridLayout) area.getLayout()).marginHeight = 0;
+        IEclipseContext child = context
+                .createChild("updatersReadersEditorDialog");
+        child.set(Composite.class, area);
+        part = ContextInjectionFactory.make(
+                ObjectUpdaterReaderEditorPart.class, child);
+        // area.layout();
+        // parent.layout();
+        // part.postConstruct();
+        return area;
+    }
 
-	/**
-	 * Create contents of the button bar.
-	 * 
-	 * @param parent
-	 */
-	@Override
-	protected void createButtonsForButtonBar(Composite parent) {
-		saveButton = createSaveButton(parent, IDialogConstants.OK_ID,
-				"Save and Close", true);
-		createButton(parent, IDialogConstants.CANCEL_ID,
-				IDialogConstants.CANCEL_LABEL, false);
-	}
+    /**
+     * Create contents of the button bar.
+     *
+     * @param parent
+     */
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        saveButton = createSaveButton(parent, IDialogConstants.OK_ID,
+                "Save and Close", true);
+        createButton(parent, IDialogConstants.CANCEL_ID,
+                IDialogConstants.CANCEL_LABEL, false);
+    }
 
-	private Button createSaveButton(Composite parent, int id, String label,
-			boolean defaultButton) {
-		((GridLayout) parent.getLayout()).numColumns++;
-		Button button = new Button(parent, SWT.PUSH);
-		button.setText(label);
-		button.setFont(JFaceResources.getDialogFont());
-		button.setData(new Integer(id));
-		button.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent event) {
-				if (isValidInput()) {
-					saveInput();
-					okPressed();
-				}
-			}
-		});
-		if (defaultButton) {
-			Shell shell = parent.getShell();
-			if (shell != null) {
-				shell.setDefaultButton(button);
-			}
-		}
+    private Button createSaveButton(Composite parent, int id, String label,
+                                    boolean defaultButton) {
+        ((GridLayout) parent.getLayout()).numColumns++;
+        Button button = new Button(parent, SWT.PUSH);
+        button.setText(label);
+        button.setFont(JFaceResources.getDialogFont());
+        button.setData(new Integer(id));
+        button.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent event) {
+                if (isValidInput()) {
+                    saveInput();
+                    okPressed();
+                }
+            }
+        });
+        if (defaultButton) {
+            Shell shell = parent.getShell();
+            if (shell != null) {
+                shell.setDefaultButton(button);
+            }
+        }
 
-		button.setEnabled((Boolean)context.get(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT));
-		setButtonLayoutData(button);
-		return button;
+        button.setEnabled((Boolean) context.get(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT));
+        setButtonLayoutData(button);
+        return button;
 
-	}
+    }
 
-	private boolean saveInput() {
-		part.save(null);
-		return true;
+    private boolean saveInput() {
+        part.save(null);
+        return true;
 
-	}
+    }
 
-	private boolean isValidInput() {
-		return true;
-	}
+    private boolean isValidInput() {
+        return true;
+    }
 
-	/**
-	 * Return the initial size of the dialog.
-	 */
-	@Override
-	protected Point getInitialSize() {
-		return new Point(785, 600);
-	}
+    /**
+     * Return the initial size of the dialog.
+     */
+    @Override
+    protected Point getInitialSize() {
+        return new Point(785, 600);
+    }
 
-	@Override
-	protected boolean isResizable() {
-		return true;
-	}
+    @Override
+    protected boolean isResizable() {
+        return true;
+    }
 
-	@Override
-	public boolean close() {
-		part.dispose();
-		part = null;
-		return super.close();
-	}
+    @Override
+    public boolean close() {
+        part.dispose();
+        part = null;
+        return super.close();
+    }
 
 }

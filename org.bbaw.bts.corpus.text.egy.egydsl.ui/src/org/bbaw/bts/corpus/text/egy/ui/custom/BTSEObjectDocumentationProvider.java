@@ -26,103 +26,92 @@ import org.eclipse.xtext.ui.editor.XtextSourceViewer;
 import com.google.inject.Inject;
 
 public class BTSEObjectDocumentationProvider implements
-		IEObjectDocumentationProvider {
+        IEObjectDocumentationProvider {
 
-	@Inject
-	private XtextSourceViewer textViewer;
-	
-	BTSEObjectDocumentationProvider(){
-		System.out.println("construct");
-		
-	}
-	@Override
-	public String getDocumentation(EObject o) {
+    @Inject
+    private XtextSourceViewer textViewer;
 
-		Word w = findContainingWordRecursively(o);
-		if (w != null)
-		{
-			try {
-				return getWordDocumentation(w);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
+    BTSEObjectDocumentationProvider() {
+        System.out.println("construct");
 
-	private String getWordDocumentation(Word w) {
-		String doc = "";
-		for (WordPart p : w.getWChar())
-		{
+    }
+
+    @Override
+    public String getDocumentation(EObject o) {
+
+        Word w = findContainingWordRecursively(o);
+        if (w != null) {
+            try {
+                return getWordDocumentation(w);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private String getWordDocumentation(Word w) {
+        String doc = "";
+        for (WordPart p : w.getWChar()) {
 //			doc += p.;
-		}
-		INode node = NodeModelUtils.findActualNodeFor(w);
-		int x = node.getOffset();
-		if (textViewer == null) return null;
-		Iterator it = textViewer.getAnnotationModel()
-				.getAnnotationIterator();
-		List<Annotation> annotations = new Vector<Annotation>(4);
-		IEclipseContext context = StaticAccessController.getContext();
-		BTSTextEditorController controller = context.get(BTSTextEditorController.class);
-		while (it.hasNext()) {
-			Annotation a = (Annotation) it.next();
-			if (a instanceof BTSModelAnnotation) {
-				Position pos = textViewer.getAnnotationModel()
-						.getPosition(a);
-				if (pos.offset == x)
-				{
-					if (a instanceof BTSLemmaAnnotation)
-					{
-						BTSLemmaEntry lemma = (BTSLemmaEntry) ((BTSLemmaAnnotation) a).getRelatingObject();
-						BTSIdentifiableItem item = ((BTSLemmaAnnotation) a).getModel();
-						if (lemma == null && item instanceof BTSWord)
-						{
-							try {
-								lemma = controller.findLemmaEntry(((BTSWord)item).getLKey(), null);
-							} catch (Exception e) {
-							}
-							if (lemma != null)
-							{
-								((BTSLemmaAnnotation) a).setRelatingObject(lemma);
-							}
-						}
-						if (lemma != null)
-						{
-							doc += "Lemma Id: " + lemma.get_id() + "                     " + "<br/>Lemma: " + lemma.getName();
-							
-						}
-						if (((BTSModelAnnotation) a).getModel() instanceof BTSWord)
-						{
-							BTSWord word = (BTSWord) ((BTSModelAnnotation) a).getModel();
-							
-							if (!word.getTranslation().getTranslations().isEmpty())
-							{
-								doc += "<br/>";
-								for (BTSTranslation trans : word.getTranslation().getTranslations())
-								{
-									if (trans.getValue() != null && !"".equals(trans.getValue()))
-									{
-										doc += trans.getLang() + ": " + trans.getValue() + "<br/>";
-									}
-								}
-							}
-						}
-						break;
-					}
-				}
-			}
-		}
-		return doc;
-	}
+        }
+        INode node = NodeModelUtils.findActualNodeFor(w);
+        int x = node.getOffset();
+        if (textViewer == null) return null;
+        Iterator it = textViewer.getAnnotationModel()
+                .getAnnotationIterator();
+        List<Annotation> annotations = new Vector<Annotation>(4);
+        IEclipseContext context = StaticAccessController.getContext();
+        BTSTextEditorController controller = context.get(BTSTextEditorController.class);
+        while (it.hasNext()) {
+            Annotation a = (Annotation) it.next();
+            if (a instanceof BTSModelAnnotation) {
+                Position pos = textViewer.getAnnotationModel()
+                        .getPosition(a);
+                if (pos.offset == x) {
+                    if (a instanceof BTSLemmaAnnotation) {
+                        BTSLemmaEntry lemma = (BTSLemmaEntry) ((BTSLemmaAnnotation) a).getRelatingObject();
+                        BTSIdentifiableItem item = ((BTSLemmaAnnotation) a).getModel();
+                        if (lemma == null && item instanceof BTSWord) {
+                            try {
+                                lemma = controller.findLemmaEntry(((BTSWord) item).getLKey(), null);
+                            } catch (Exception e) {
+                            }
+                            if (lemma != null) {
+                                ((BTSLemmaAnnotation) a).setRelatingObject(lemma);
+                            }
+                        }
+                        if (lemma != null) {
+                            doc += "Lemma Id: " + lemma.get_id() + "                     " + "<br/>Lemma: " + lemma.getName();
 
-	private Word findContainingWordRecursively(EObject o) {
-		if (o instanceof Word) return (Word) o;
-		while(o.eContainer() != null && !(o.eContainer() instanceof Word))
-		{
-			o = o.eContainer();
-		}
-		return (Word) o.eContainer();
-	}
+                        }
+                        if (((BTSModelAnnotation) a).getModel() instanceof BTSWord) {
+                            BTSWord word = (BTSWord) ((BTSModelAnnotation) a).getModel();
+
+                            if (!word.getTranslation().getTranslations().isEmpty()) {
+                                doc += "<br/>";
+                                for (BTSTranslation trans : word.getTranslation().getTranslations()) {
+                                    if (trans.getValue() != null && !"".equals(trans.getValue())) {
+                                        doc += trans.getLang() + ": " + trans.getValue() + "<br/>";
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return doc;
+    }
+
+    private Word findContainingWordRecursively(EObject o) {
+        if (o instanceof Word) return (Word) o;
+        while (o.eContainer() != null && !(o.eContainer() instanceof Word)) {
+            o = o.eContainer();
+        }
+        return (Word) o.eContainer();
+    }
 
 
 }

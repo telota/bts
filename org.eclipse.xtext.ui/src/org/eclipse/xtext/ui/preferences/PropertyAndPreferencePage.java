@@ -51,318 +51,318 @@ import com.google.inject.Inject;
 
 /**
  * Initially copied from Jdt.
- * 
+ *
  * @author Michael Clay
  * @since 2.1
  */
 public abstract class PropertyAndPreferencePage extends PreferencePage implements IWorkbenchPreferencePage,
-		IWorkbenchPropertyPage {
-	public static final String DATA_NO_LINK = "PropertyAndPreferencePage.nolink"; //$NON-NLS-1$
-	private Control configurationBlockControl;
-	private ControlEnableState blockEnableState;
-	private Link changeWorkspaceSettings;
-	private SelectionButtonDialogField useProjectSettings;
-	private IStatus blockStatus;
-	private Composite parentComposite;
-	private IProject project;
-	private Map<Object, Object> pageData;
-	@Inject
-	private IDialogSettings dialogSettings;
+        IWorkbenchPropertyPage {
+    public static final String DATA_NO_LINK = "PropertyAndPreferencePage.nolink"; //$NON-NLS-1$
+    private Control configurationBlockControl;
+    private ControlEnableState blockEnableState;
+    private Link changeWorkspaceSettings;
+    private SelectionButtonDialogField useProjectSettings;
+    private IStatus blockStatus;
+    private Composite parentComposite;
+    private IProject project;
+    private Map<Object, Object> pageData;
+    @Inject
+    private IDialogSettings dialogSettings;
 
-	public PropertyAndPreferencePage() {
-		blockStatus = new StatusInfo();
-		blockEnableState = null;
-		project = null;
-		pageData = null;
-	}
+    public PropertyAndPreferencePage() {
+        blockStatus = new StatusInfo();
+        blockEnableState = null;
+        project = null;
+        pageData = null;
+    }
 
-	protected abstract Control createPreferenceContent(Composite composite,
-			IPreferencePageContainer preferencePageContainer);
+    private static void applyToStatusLine(DialogPage page, IStatus status) {
+        String message = status.getMessage();
+        if (message != null && message.length() == 0) {
+            message = null;
+        }
+        switch (status.getSeverity()) {
+            case IStatus.OK:
+                page.setMessage(message, IMessageProvider.NONE);
+                page.setErrorMessage(null);
+                break;
+            case IStatus.WARNING:
+                page.setMessage(message, IMessageProvider.WARNING);
+                page.setErrorMessage(null);
+                break;
+            case IStatus.INFO:
+                page.setMessage(message, IMessageProvider.INFORMATION);
+                page.setErrorMessage(null);
+                break;
+            default:
+                page.setMessage(null);
+                page.setErrorMessage(message);
+                break;
+        }
+    }
 
-	protected abstract boolean hasProjectSpecificOptions(IProject project);
+    protected abstract Control createPreferenceContent(Composite composite,
+                                                       IPreferencePageContainer preferencePageContainer);
 
-	protected abstract String getPreferencePageID();
+    protected abstract boolean hasProjectSpecificOptions(IProject project);
 
-	protected abstract String getPropertyPageID();
+    protected abstract String getPreferencePageID();
 
-	protected boolean supportsProjectSpecificOptions() {
-		return getPropertyPageID() != null;
-	}
+    protected abstract String getPropertyPageID();
 
-	protected boolean offerLink() {
-		return pageData == null || !Boolean.TRUE.equals(pageData.get(DATA_NO_LINK));
-	}
+    protected boolean supportsProjectSpecificOptions() {
+        return getPropertyPageID() != null;
+    }
 
-	@Override
-	protected Label createDescriptionLabel(Composite parent) {
-		parentComposite = parent;
-		if (isProjectPreferencePage()) {
-			Composite composite = new Composite(parent, SWT.NONE);
-			composite.setFont(parent.getFont());
-			GridLayout layout = new GridLayout();
-			layout.marginHeight = 0;
-			layout.marginWidth = 0;
-			layout.numColumns = 2;
-			composite.setLayout(layout);
-			composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    protected boolean offerLink() {
+        return pageData == null || !Boolean.TRUE.equals(pageData.get(DATA_NO_LINK));
+    }
 
-			IDialogFieldListener listener = new IDialogFieldListener() {
-				public void dialogFieldChanged(DialogField field) {
-					boolean enabled = ((SelectionButtonDialogField) field).isSelected();
-					enableProjectSpecificSettings(enabled);
+    @Override
+    protected Label createDescriptionLabel(Composite parent) {
+        parentComposite = parent;
+        if (isProjectPreferencePage()) {
+            Composite composite = new Composite(parent, SWT.NONE);
+            composite.setFont(parent.getFont());
+            GridLayout layout = new GridLayout();
+            layout.marginHeight = 0;
+            layout.marginWidth = 0;
+            layout.numColumns = 2;
+            composite.setLayout(layout);
+            composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-					if (enabled && getData() != null) {
-						applyData(getData());
-					}
-				}
-			};
+            IDialogFieldListener listener = new IDialogFieldListener() {
+                public void dialogFieldChanged(DialogField field) {
+                    boolean enabled = ((SelectionButtonDialogField) field).isSelected();
+                    enableProjectSpecificSettings(enabled);
 
-			useProjectSettings = new SelectionButtonDialogField(SWT.CHECK);
-			useProjectSettings.setDialogFieldListener(listener);
-			useProjectSettings.setLabelText(Messages.PropertyAndPreferencePage_useprojectsettings_label);
-			useProjectSettings.doFillIntoGrid(composite, 1);
-			LayoutUtil.setHorizontalGrabbing(useProjectSettings.getSelectionButton(null));
+                    if (enabled && getData() != null) {
+                        applyData(getData());
+                    }
+                }
+            };
 
-			if (offerLink()) {
-				changeWorkspaceSettings = createLink(composite,
-						Messages.PropertyAndPreferencePage_useworkspacesettings_change);
-				changeWorkspaceSettings.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
-			} else {
-				LayoutUtil.setHorizontalSpan(useProjectSettings.getSelectionButton(null), 2);
-			}
+            useProjectSettings = new SelectionButtonDialogField(SWT.CHECK);
+            useProjectSettings.setDialogFieldListener(listener);
+            useProjectSettings.setLabelText(Messages.PropertyAndPreferencePage_useprojectsettings_label);
+            useProjectSettings.doFillIntoGrid(composite, 1);
+            LayoutUtil.setHorizontalGrabbing(useProjectSettings.getSelectionButton(null));
 
-			Label horizontalLine = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
-			horizontalLine.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false, 2, 1));
-			horizontalLine.setFont(composite.getFont());
-		} else if (supportsProjectSpecificOptions() && offerLink()) {
-			changeWorkspaceSettings = createLink(parent,
-					Messages.PropertyAndPreferencePage_showprojectspecificsettings_label);
-			changeWorkspaceSettings.setLayoutData(new GridData(SWT.END, SWT.CENTER, true, false));
-		}
+            if (offerLink()) {
+                changeWorkspaceSettings = createLink(composite,
+                        Messages.PropertyAndPreferencePage_useworkspacesettings_change);
+                changeWorkspaceSettings.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
+            } else {
+                LayoutUtil.setHorizontalSpan(useProjectSettings.getSelectionButton(null), 2);
+            }
 
-		return super.createDescriptionLabel(parent);
-	}
+            Label horizontalLine = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+            horizontalLine.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false, 2, 1));
+            horizontalLine.setFont(composite.getFont());
+        } else if (supportsProjectSpecificOptions() && offerLink()) {
+            changeWorkspaceSettings = createLink(parent,
+                    Messages.PropertyAndPreferencePage_showprojectspecificsettings_label);
+            changeWorkspaceSettings.setLayoutData(new GridData(SWT.END, SWT.CENTER, true, false));
+        }
 
-	@Override
-	protected Control createContents(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NONE);
-		GridLayout layout = new GridLayout();
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
-		composite.setLayout(layout);
-		composite.setFont(parent.getFont());
+        return super.createDescriptionLabel(parent);
+    }
 
-		GridData data = new GridData(GridData.FILL, GridData.FILL, true, true);
+    @Override
+    protected Control createContents(Composite parent) {
+        Composite composite = new Composite(parent, SWT.NONE);
+        GridLayout layout = new GridLayout();
+        layout.marginHeight = 0;
+        layout.marginWidth = 0;
+        composite.setLayout(layout);
+        composite.setFont(parent.getFont());
 
-		configurationBlockControl = createPreferenceContent(composite, getContainer());
-		configurationBlockControl.setLayoutData(data);
+        GridData data = new GridData(GridData.FILL, GridData.FILL, true, true);
 
-		if (isProjectPreferencePage()) {
-			boolean useProjectSettings = hasProjectSpecificOptions(getProject());
-			enableProjectSpecificSettings(useProjectSettings);
-		}
+        configurationBlockControl = createPreferenceContent(composite, getContainer());
+        configurationBlockControl.setLayoutData(data);
 
-		Dialog.applyDialogFont(composite);
-		return composite;
-	}
+        if (isProjectPreferencePage()) {
+            boolean useProjectSettings = hasProjectSpecificOptions(getProject());
+            enableProjectSpecificSettings(useProjectSettings);
+        }
 
-	private Link createLink(Composite composite, String text) {
-		Link link = new Link(composite, SWT.NONE);
-		link.setFont(composite.getFont());
-		link.setText("<A>" + text + "</A>"); //$NON-NLS-1$//$NON-NLS-2$
-		link.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
-				doLinkActivated((Link) e.widget);
-			}
+        Dialog.applyDialogFont(composite);
+        return composite;
+    }
 
-			public void widgetDefaultSelected(SelectionEvent e) {
-				doLinkActivated((Link) e.widget);
-			}
-		});
-		return link;
-	}
+    private Link createLink(Composite composite, String text) {
+        Link link = new Link(composite, SWT.NONE);
+        link.setFont(composite.getFont());
+        link.setText("<A>" + text + "</A>"); //$NON-NLS-1$//$NON-NLS-2$
+        link.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                doLinkActivated((Link) e.widget);
+            }
 
-	protected boolean useProjectSettings() {
-		return isProjectPreferencePage() && useProjectSettings != null && useProjectSettings.isSelected();
-	}
+            public void widgetDefaultSelected(SelectionEvent e) {
+                doLinkActivated((Link) e.widget);
+            }
+        });
+        return link;
+    }
 
-	protected boolean isProjectPreferencePage() {
-		return project != null;
-	}
+    protected boolean useProjectSettings() {
+        return isProjectPreferencePage() && useProjectSettings != null && useProjectSettings.isSelected();
+    }
 
-	protected IProject getProject() {
-		return project;
-	}
+    protected boolean isProjectPreferencePage() {
+        return project != null;
+    }
 
-	final void doLinkActivated(Link link) {
-		Map<Object, Object> data = getData();
-		if (data == null) {
-			data = new HashMap<Object, Object>();
-		}
-		data.put(DATA_NO_LINK, Boolean.TRUE);
+    protected IProject getProject() {
+        return project;
+    }
 
-		if (isProjectPreferencePage()) {
-			openWorkspacePreferences(data);
-		} else {
-			Set<IProject> projectsWithSpecifics = Sets.newHashSet();
-			IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-			for (IProject project : projects) {
-				if (XtextProjectHelper.hasNature(project) && hasProjectSpecificOptions(project)) {
-					projectsWithSpecifics.add(project);
-				}
-			}
-			ProjectSelectionDialog dialog = new ProjectSelectionDialog(getShell(), projectsWithSpecifics,
-					dialogSettings);
-			if (dialog.open() == Window.OK) {
-				IProject project = (IProject) dialog.getFirstResult();
-				openProjectProperties(project, data);
-			}
-		}
-	}
+    final void doLinkActivated(Link link) {
+        Map<Object, Object> data = getData();
+        if (data == null) {
+            data = new HashMap<Object, Object>();
+        }
+        data.put(DATA_NO_LINK, Boolean.TRUE);
 
-	protected final void openWorkspacePreferences(Object data) {
-		String id = getPreferencePageID();
-		PreferencesUtil.createPreferenceDialogOn(getShell(), id, new String[] { id }, data).open();
-	}
+        if (isProjectPreferencePage()) {
+            openWorkspacePreferences(data);
+        } else {
+            Set<IProject> projectsWithSpecifics = Sets.newHashSet();
+            IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+            for (IProject project : projects) {
+                if (XtextProjectHelper.hasNature(project) && hasProjectSpecificOptions(project)) {
+                    projectsWithSpecifics.add(project);
+                }
+            }
+            ProjectSelectionDialog dialog = new ProjectSelectionDialog(getShell(), projectsWithSpecifics,
+                    dialogSettings);
+            if (dialog.open() == Window.OK) {
+                IProject project = (IProject) dialog.getFirstResult();
+                openProjectProperties(project, data);
+            }
+        }
+    }
 
-	protected final void openProjectProperties(IProject project, Object data) {
-		String id = getPropertyPageID();
-		if (id != null) {
-			PreferencesUtil.createPropertyDialogOn(getShell(), project, id, new String[] { id }, data).open();
-		}
-	}
+    protected final void openWorkspacePreferences(Object data) {
+        String id = getPreferencePageID();
+        PreferencesUtil.createPreferenceDialogOn(getShell(), id, new String[]{id}, data).open();
+    }
 
-	protected void enableProjectSpecificSettings(boolean useProjectSpecificSettings) {
-		useProjectSettings.setSelection(useProjectSpecificSettings);
-		enablePreferenceContent(useProjectSpecificSettings);
-		updateLinkVisibility();
-		doStatusChanged();
-	}
+    protected final void openProjectProperties(IProject project, Object data) {
+        String id = getPropertyPageID();
+        if (id != null) {
+            PreferencesUtil.createPropertyDialogOn(getShell(), project, id, new String[]{id}, data).open();
+        }
+    }
 
-	private void updateLinkVisibility() {
-		if (changeWorkspaceSettings == null || changeWorkspaceSettings.isDisposed()) {
-			return;
-		}
+    protected void enableProjectSpecificSettings(boolean useProjectSpecificSettings) {
+        useProjectSettings.setSelection(useProjectSpecificSettings);
+        enablePreferenceContent(useProjectSpecificSettings);
+        updateLinkVisibility();
+        doStatusChanged();
+    }
 
-		if (isProjectPreferencePage()) {
-			changeWorkspaceSettings.setEnabled(!useProjectSettings());
-		}
-	}
+    private void updateLinkVisibility() {
+        if (changeWorkspaceSettings == null || changeWorkspaceSettings.isDisposed()) {
+            return;
+        }
 
-	protected void setPreferenceContentStatus(IStatus status) {
-		blockStatus = status;
-		doStatusChanged();
-	}
+        if (isProjectPreferencePage()) {
+            changeWorkspaceSettings.setEnabled(!useProjectSettings());
+        }
+    }
 
-	protected IStatusChangeListener getNewStatusChangedListener() {
-		return new IStatusChangeListener() {
-			public void statusChanged(IStatus status) {
-				setPreferenceContentStatus(status);
-			}
-		};
-	}
+    protected IStatusChangeListener getNewStatusChangedListener() {
+        return new IStatusChangeListener() {
+            public void statusChanged(IStatus status) {
+                setPreferenceContentStatus(status);
+            }
+        };
+    }
 
-	protected IStatus getPreferenceContentStatus() {
-		return blockStatus;
-	}
+    protected IStatus getPreferenceContentStatus() {
+        return blockStatus;
+    }
 
-	protected void doStatusChanged() {
-		if (!isProjectPreferencePage() || useProjectSettings()) {
-			updateStatus(blockStatus);
-		} else {
-			updateStatus(new StatusInfo());
-		}
-	}
+    protected void setPreferenceContentStatus(IStatus status) {
+        blockStatus = status;
+        doStatusChanged();
+    }
 
-	protected void enablePreferenceContent(boolean enable) {
-		if (enable) {
-			if (blockEnableState != null) {
-				blockEnableState.restore();
-				blockEnableState = null;
-			}
-		} else {
-			if (blockEnableState == null) {
-				blockEnableState = ControlEnableState.disable(configurationBlockControl);
-			}
-		}
-	}
+    protected void doStatusChanged() {
+        if (!isProjectPreferencePage() || useProjectSettings()) {
+            updateStatus(blockStatus);
+        } else {
+            updateStatus(new StatusInfo());
+        }
+    }
 
-	@Override
-	protected void performDefaults() {
-		if (useProjectSettings()) {
-			enableProjectSpecificSettings(false);
-		}
-		super.performDefaults();
-	}
+    protected void enablePreferenceContent(boolean enable) {
+        if (enable) {
+            if (blockEnableState != null) {
+                blockEnableState.restore();
+                blockEnableState = null;
+            }
+        } else {
+            if (blockEnableState == null) {
+                blockEnableState = ControlEnableState.disable(configurationBlockControl);
+            }
+        }
+    }
 
-	private void updateStatus(IStatus status) {
-		setValid(!status.matches(IStatus.ERROR));
-		applyToStatusLine(this, status);
-	}
+    @Override
+    protected void performDefaults() {
+        if (useProjectSettings()) {
+            enableProjectSpecificSettings(false);
+        }
+        super.performDefaults();
+    }
 
-	public void init(IWorkbench workbench) {
-	}
+    private void updateStatus(IStatus status) {
+        setValid(!status.matches(IStatus.ERROR));
+        applyToStatusLine(this, status);
+    }
 
-	public IAdaptable getElement() {
-		return project;
-	}
+    public void init(IWorkbench workbench) {
+    }
 
-	public void setElement(IAdaptable element) {
-		project = (IProject) element.getAdapter(IResource.class);
-	}
+    public IAdaptable getElement() {
+        return project;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void applyData(Object data) {
-		if (data instanceof Map) {
-			pageData = (Map<Object, Object>) data;
-		}
-		if (changeWorkspaceSettings != null) {
-			if (!offerLink()) {
-				changeWorkspaceSettings.dispose();
-				parentComposite.layout(true, true);
-			}
-		}
-	}
+    public void setElement(IAdaptable element) {
+        project = (IProject) element.getAdapter(IResource.class);
+    }
 
-	protected Map<Object, Object> getData() {
-		return pageData;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public void applyData(Object data) {
+        if (data instanceof Map) {
+            pageData = (Map<Object, Object>) data;
+        }
+        if (changeWorkspaceSettings != null) {
+            if (!offerLink()) {
+                changeWorkspaceSettings.dispose();
+                parentComposite.layout(true, true);
+            }
+        }
+    }
 
-	protected IWorkingCopyManager getWorkingCopyManager() {
-		IWorkbenchPreferenceContainer container = (IWorkbenchPreferenceContainer) getContainer();
-		IWorkingCopyManager manager;
-		if (container == null) {
-			manager = new WorkingCopyManager();
-		} else {
-			manager = container.getWorkingCopyManager();
-		}
-		return manager;
-	}
+    protected Map<Object, Object> getData() {
+        return pageData;
+    }
 
-	private static void applyToStatusLine(DialogPage page, IStatus status) {
-		String message = status.getMessage();
-		if (message != null && message.length() == 0) {
-			message = null;
-		}
-		switch (status.getSeverity()) {
-			case IStatus.OK:
-				page.setMessage(message, IMessageProvider.NONE);
-				page.setErrorMessage(null);
-				break;
-			case IStatus.WARNING:
-				page.setMessage(message, IMessageProvider.WARNING);
-				page.setErrorMessage(null);
-				break;
-			case IStatus.INFO:
-				page.setMessage(message, IMessageProvider.INFORMATION);
-				page.setErrorMessage(null);
-				break;
-			default:
-				page.setMessage(null);
-				page.setErrorMessage(message);
-				break;
-		}
-	}
+    protected IWorkingCopyManager getWorkingCopyManager() {
+        IWorkbenchPreferenceContainer container = (IWorkbenchPreferenceContainer) getContainer();
+        IWorkingCopyManager manager;
+        if (container == null) {
+            manager = new WorkingCopyManager();
+        } else {
+            manager = container.getWorkingCopyManager();
+        }
+        return manager;
+    }
 
 }

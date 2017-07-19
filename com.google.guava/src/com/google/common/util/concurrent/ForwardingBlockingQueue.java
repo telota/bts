@@ -28,47 +28,57 @@ import java.util.concurrent.TimeUnit;
  * modify the behavior of the backing collection as desired per the <a
  * href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
  *
- * @author Raimundo Mirisola
- *
  * @param <E> the type of elements held in this collection
+ * @author Raimundo Mirisola
  * @since 4.0
  */
 public abstract class ForwardingBlockingQueue<E> extends ForwardingQueue<E>
-    implements BlockingQueue<E> {
+        implements BlockingQueue<E> {
 
-  /** Constructor for use by subclasses. */
-  protected ForwardingBlockingQueue() {}
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected ForwardingBlockingQueue() {
+    }
 
-  @Override protected abstract BlockingQueue<E> delegate();
+    @Override
+    protected abstract BlockingQueue<E> delegate();
 
-  @Override public int drainTo(
-      Collection<? super E> c, int maxElements) {
-    return delegate().drainTo(c, maxElements);
-  }
+    @Override
+    public int drainTo(
+            Collection<? super E> c, int maxElements) {
+        return delegate().drainTo(c, maxElements);
+    }
 
-  @Override public int drainTo(Collection<? super E> c) {
-    return delegate().drainTo(c);
-  }
+    @Override
+    public int drainTo(Collection<? super E> c) {
+        return delegate().drainTo(c);
+    }
 
-  @Override public boolean offer(E e, long timeout, TimeUnit unit)
-      throws InterruptedException {
-    return delegate().offer(e, timeout, unit);
-  }
+    @Override
+    public boolean offer(E e, long timeout, TimeUnit unit)
+            throws InterruptedException {
+        return delegate().offer(e, timeout, unit);
+    }
 
-  @Override public E poll(long timeout, TimeUnit unit)
-      throws InterruptedException {
-    return delegate().poll(timeout, unit);
-  }
+    @Override
+    public E poll(long timeout, TimeUnit unit)
+            throws InterruptedException {
+        return delegate().poll(timeout, unit);
+    }
 
-  @Override public void put(E e) throws InterruptedException {
-    delegate().put(e);
-  }
+    @Override
+    public void put(E e) throws InterruptedException {
+        delegate().put(e);
+    }
 
-  @Override public int remainingCapacity() {
-    return delegate().remainingCapacity();
-  }
+    @Override
+    public int remainingCapacity() {
+        return delegate().remainingCapacity();
+    }
 
-  @Override public E take() throws InterruptedException {
-    return delegate().take();
-  }
+    @Override
+    public E take() throws InterruptedException {
+        return delegate().take();
+    }
 }

@@ -35,37 +35,45 @@ import java.util.Set;
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-/** The ProjectController manages all view layer access to project objects.
- * @author Christoph Plutte
+/**
+ * The ProjectController manages all view layer access to project objects.
  *
+ * @author Christoph Plutte
  */
-public interface BTSProjectController
-{
+public interface BTSProjectController {
 
-	/** Creates a new Project object.
-	 * @return
-	 */
-	BTSProject createNewProject();
+    /**
+     * Creates a new Project object.
+     *
+     * @return
+     */
+    BTSProject createNewProject();
 
-	/** Saves a new or modified project.
-	 * @param project
-	 * @return
-	 */
-	boolean saveProject(BTSProject project);
+    /**
+     * Saves a new or modified project.
+     *
+     * @param project
+     * @return
+     */
+    boolean saveProject(BTSProject project);
 
-	/** Lists all available projects.
-	 * @return
-	 */
-	List<BTSProject> listProjects(IProgressMonitor monitor);
+    /**
+     * Lists all available projects.
+     *
+     * @return
+     */
+    List<BTSProject> listProjects(IProgressMonitor monitor);
 
-	/** Saves multiple projects.
-	 * @param dirtyProjects
-	 * @return
-	 */
-	boolean saveProjects(Set<BTSProject> dirtyProjects);
+    /**
+     * Saves multiple projects.
+     *
+     * @param dirtyProjects
+     * @return
+     */
+    boolean saveProjects(Set<BTSProject> dirtyProjects);
 
-	BTSProject findProjectByProjectPrefix(String project);
+    BTSProject findProjectByProjectPrefix(String project);
 
-	boolean remove(BTSProject project);
+    boolean remove(BTSProject project);
 
 }

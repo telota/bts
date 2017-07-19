@@ -5,11 +5,9 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 
 public interface BTSThsEntryService extends
-		GenericCorpusObjectService<BTSThsEntry, String> {
+        GenericCorpusObjectService<BTSThsEntry, String> {
 
-	BTSAnnotation createNewAnnotationRelationPartOf(BTSCorpusObject annotatedObject);
-
-	
+    BTSAnnotation createNewAnnotationRelationPartOf(BTSCorpusObject annotatedObject);
 
 
 }

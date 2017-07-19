@@ -36,37 +36,37 @@ import org.eclipse.swt.widgets.Composite;
  * A factory for creating CompareViewer objects.
  */
 public interface CompareViewerFactory {
-	
-	/**
-	 * Checks for viewer for object.
-	 *
-	 * @param <T> the generic type
-	 * @param clazz the clazz
-	 * @return true, if successful
-	 */
-	<T> boolean hasViewerForObject(Class<T> clazz);
-	
-	/**
-	 * Creates a new CompareViewer object.
-	 *
-	 * @param parent the parent
-	 * @param style the style
-	 * @return the compare viewer
-	 */
-	CompareViewer createViewer(Composite parent, int style);
-	
-	/**
-	 * Gets the compare viewer name.
-	 *
-	 * @return the compare viewer name
-	 */
-	String getCompareViewerName();
-	
-	/**
-	 * Gets the compare viewer icon.
-	 *
-	 * @return the compare viewer icon
-	 */
-	Image getCompareViewerIcon();
+
+    /**
+     * Checks for viewer for object.
+     *
+     * @param <T>   the generic type
+     * @param clazz the clazz
+     * @return true, if successful
+     */
+    <T> boolean hasViewerForObject(Class<T> clazz);
+
+    /**
+     * Creates a new CompareViewer object.
+     *
+     * @param parent the parent
+     * @param style  the style
+     * @return the compare viewer
+     */
+    CompareViewer createViewer(Composite parent, int style);
+
+    /**
+     * Gets the compare viewer name.
+     *
+     * @return the compare viewer name
+     */
+    String getCompareViewerName();
+
+    /**
+     * Gets the compare viewer icon.
+     *
+     * @return the compare viewer icon
+     */
+    Image getCompareViewerIcon();
 
 }

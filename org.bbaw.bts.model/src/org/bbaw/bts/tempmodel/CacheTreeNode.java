@@ -35,40 +35,38 @@ import java.util.Vector;
 
 public class CacheTreeNode {
 
-	private String id;
-	
-	private List<CacheTreeNode> children;
+    private String id;
 
-	private Object object;
+    private List<CacheTreeNode> children;
 
-	public CacheTreeNode(String id, Object object)
-	{
-		this.id = id;
-		this.object = object;
-	}
-	
-	public String getId() {
-		return id;
-	}
+    private Object object;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public CacheTreeNode(String id, Object object) {
+        this.id = id;
+        this.object = object;
+    }
 
-	public List<CacheTreeNode> getChildren() {
-		if (children == null)
-		{
-			children = new Vector<CacheTreeNode>(4);
-		}
-		return children;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setChildren(List<CacheTreeNode> children) {
-		this.children = children;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public Object getObject() {
-		return object;
-	}
+    public List<CacheTreeNode> getChildren() {
+        if (children == null) {
+            children = new Vector<CacheTreeNode>(4);
+        }
+        return children;
+    }
+
+    public void setChildren(List<CacheTreeNode> children) {
+        this.children = children;
+    }
+
+    public Object getObject() {
+        return object;
+    }
 
 }

@@ -12,8 +12,8 @@ package org.eclipse.xtext.ui.editor;
  * @author Sven Efftinge - Initial contribution and API
  */
 public interface IContentTypeSpecific {
-	/**
-	 * @return the content type for which this strategy should be active
-	 */
-	String getContentType();
+    /**
+     * @return the content type for which this strategy should be active
+     */
+    String getContentType();
 }

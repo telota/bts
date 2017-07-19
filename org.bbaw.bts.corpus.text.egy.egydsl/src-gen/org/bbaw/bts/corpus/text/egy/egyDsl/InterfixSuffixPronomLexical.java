@@ -8,11 +8,9 @@ package org.bbaw.bts.corpus.text.egy.egyDsl;
  * A representation of the model object '<em><b>Interfix Suffix Pronom Lexical</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getInterfixSuffixPronomLexical()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getInterfixSuffixPronomLexical()
  */
-public interface InterfixSuffixPronomLexical extends Interfix
-{
+public interface InterfixSuffixPronomLexical extends Interfix {
 } // InterfixSuffixPronomLexical

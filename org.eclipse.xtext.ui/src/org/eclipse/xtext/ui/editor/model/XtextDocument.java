@@ -50,325 +50,319 @@ import static com.google.common.collect.Lists.*;
  */
 public class XtextDocument extends Document implements IXtextDocument {
 
-	private DocumentTokenSource tokenSource;
+    private final static IUnitOfWork.Void<XtextResource> noWork = new IUnitOfWork.Void<XtextResource>() {
+        @Override
+        public void process(XtextResource state) throws Exception {
+        }
+    };
+    private static final Logger log = Logger.getLogger(XtextDocument.class);
+    private final List<IXtextModelListener> modelListeners = new ArrayList<IXtextModelListener>();
+    private final ListenerList xtextDocumentObservers = new ListenerList(ListenerList.IDENTITY);
+    private final XtextDocumentLocker stateAccess = createDocumentLocker();
+    private DocumentTokenSource tokenSource;
+    private ITextEditComposer composer;
+    private XtextResource resource = null;
+    private transient Job validationJob;
+    /*
+     * fix for https://bugs.eclipse.org/bugs/show_bug.cgi?id=297946
+     */
+    private ReadWriteLock positionsLock = new ReentrantReadWriteLock();
+    private Lock positionsReadLock = positionsLock.readLock();
+    private Lock positionsWriteLock = positionsLock.writeLock();
 
-	private ITextEditComposer composer;
+    @Inject
+    public XtextDocument(DocumentTokenSource tokenSource, ITextEditComposer composer) {
+        this.tokenSource = tokenSource;
+        tokenSource.computeDamageRegion(new DocumentEvent(this, 0, getLength(), this.get()));
+        this.composer = composer;
+    }
 
-	@Inject
-	public XtextDocument(DocumentTokenSource tokenSource, ITextEditComposer composer) {
-		this.tokenSource = tokenSource;
-		tokenSource.computeDamageRegion(new DocumentEvent(this, 0, getLength(), this.get()));
-		this.composer = composer;
-	}
+    public void setInput(XtextResource resource) {
+        Assert.isNotNull(resource);
+        this.resource = resource;
+    }
 
-	private XtextResource resource = null;
-	private final List<IXtextModelListener> modelListeners = new ArrayList<IXtextModelListener>();
-	private final ListenerList xtextDocumentObservers = new ListenerList(ListenerList.IDENTITY);
+    public void disposeInput() {
+        // clients may override
+    }
 
-	public void setInput(XtextResource resource) {
-		Assert.isNotNull(resource);
-		this.resource = resource;
-	}
+    protected XtextDocumentLocker createDocumentLocker() {
+        return new XtextDocumentLocker();
+    }
 
-	public void disposeInput() {
-		// clients may override
-	}
+    public <T> T readOnly(IUnitOfWork<T, XtextResource> work) {
+        return stateAccess.readOnly(work);
+    }
 
-	private final XtextDocumentLocker stateAccess = createDocumentLocker();
+    public <T> T modify(IUnitOfWork<T, XtextResource> work) {
+        // do a dummy read only, to make sure any scheduled changes get applied.
+        readOnly(noWork);
+        IUnitOfWork<T, XtextResource> reconcilingUnitOfWork = new ReconcilingUnitOfWork<T>(work, this, composer);
+        return internalModify(reconcilingUnitOfWork);
+    }
 
-	protected XtextDocumentLocker createDocumentLocker() {
-		return new XtextDocumentLocker();
-	}
+    /**
+     * Modifies the document's semantic model without reconciling the text nor the node model. For internal use only.
+     */
+    public <T> T internalModify(IUnitOfWork<T, XtextResource> work) {
+        return stateAccess.modify(work);
+    }
 
-	public <T> T readOnly(IUnitOfWork<T, XtextResource> work) {
-		return stateAccess.readOnly(work);
-	}
-	
-	private final static IUnitOfWork.Void<XtextResource> noWork = new IUnitOfWork.Void<XtextResource>() {
-		@Override
-		public void process(XtextResource state) throws Exception {}
-	};
+    protected void ensureThatStateIsNotReturned(Object exec, IUnitOfWork<?, XtextResource> uow) {
+        // TODO activate
+        // if (exec instanceof EObject) {
+        // if (((EObject) exec).eResource() == resource
+        // || ((exec instanceof AbstractNode) &&
+        // NodeUtil.getNearestSemanticObject((AbstractNode) exec)
+        // .eResource() == resource))
+        // throw new IllegalStateException(
+        // "The unit of work returned state from the resource. This is causing race condition problems and therefore not allowed! "+uow.getClass().getName());
+        // }
+    }
 
-	public <T> T modify(IUnitOfWork<T, XtextResource> work) {
-		// do a dummy read only, to make sure any scheduled changes get applied.
-		readOnly(noWork);
-		IUnitOfWork<T, XtextResource> reconcilingUnitOfWork = new ReconcilingUnitOfWork<T>(work, this, composer);
-		return internalModify(reconcilingUnitOfWork);
-	}
+    public void addModelListener(IXtextModelListener listener) {
+        Assert.isNotNull(listener);
+        synchronized (modelListeners) {
+            if (modelListeners.contains(listener))
+                return;
+            if (listener instanceof DirtyStateEditorSupport) {
+                modelListeners.add(0, listener);
+            } else {
+                modelListeners.add(listener);
+            }
+        }
+    }
 
-	/**
-	 * Modifies the document's semantic model without reconciling the text nor the node model. For internal use only.
-	 */
-	public <T> T internalModify(IUnitOfWork<T, XtextResource> work) {
-		return stateAccess.modify(work);
-	}
+    public void removeModelListener(IXtextModelListener listener) {
+        Assert.isNotNull(listener);
+        synchronized (modelListeners) {
+            modelListeners.remove(listener);
+        }
+    }
 
-	protected void ensureThatStateIsNotReturned(Object exec, IUnitOfWork<?, XtextResource> uow) {
-		// TODO activate
-		// if (exec instanceof EObject) {
-		// if (((EObject) exec).eResource() == resource
-		// || ((exec instanceof AbstractNode) &&
-		// NodeUtil.getNearestSemanticObject((AbstractNode) exec)
-		// .eResource() == resource))
-		// throw new IllegalStateException(
-		// "The unit of work returned state from the resource. This is causing race condition problems and therefore not allowed! "+uow.getClass().getName());
-		// }
-	}
+    protected void notifyModelListeners(XtextResource res) {
+        List<IXtextModelListener> modelListenersCopy;
+        synchronized (modelListeners) {
+            modelListenersCopy = newArrayList(modelListeners);
+        }
+        for (IXtextModelListener listener : modelListenersCopy) {
+            try {
+                listener.modelChanged(res);
+            } catch (Exception exc) {
+                log.error("Error in IXtextModelListener", exc);
+            }
+        }
+    }
 
-	public void addModelListener(IXtextModelListener listener) {
-		Assert.isNotNull(listener);
-		synchronized (modelListeners) {
-			if (modelListeners.contains(listener))
-				return;
-			if (listener instanceof DirtyStateEditorSupport) {
-				modelListeners.add(0,listener);
-			} else {
-				modelListeners.add(listener);
-			}
-		}
-	}
+    public void addXtextDocumentContentObserver(IXtextDocumentContentObserver observer) {
+        addDocumentListener(observer);
+        xtextDocumentObservers.add(observer);
+    }
 
-	public void removeModelListener(IXtextModelListener listener) {
-		Assert.isNotNull(listener);
-		synchronized (modelListeners) {
-			modelListeners.remove(listener);
-		}
-	}
+    public void removeXtextDocumentContentObserver(IXtextDocumentContentObserver observer) {
+        xtextDocumentObservers.remove(observer);
+        removeDocumentListener(observer);
+    }
 
-	protected void notifyModelListeners(XtextResource res) {
-		List<IXtextModelListener> modelListenersCopy;
-		synchronized (modelListeners) {
-			modelListenersCopy = newArrayList(modelListeners);
-		}
-		for (IXtextModelListener listener : modelListenersCopy){
-			try {
-				listener.modelChanged(res);
-			} catch(Exception exc) {
-				log.error("Error in IXtextModelListener", exc);
-			}
-		}
-	}
+    protected <T> void updateContentBeforeRead() {
+        Object[] listeners = xtextDocumentObservers.getListeners();
+        for (int i = 0; i < listeners.length; i++) {
+            ((IXtextDocumentContentObserver) listeners[i]).performNecessaryUpdates(stateAccess);
+        }
+    }
 
-	public void addXtextDocumentContentObserver(IXtextDocumentContentObserver observer) {
-		addDocumentListener(observer);
-		xtextDocumentObservers.add(observer);
-	}
+    public Job getValidationJob() {
+        return validationJob;
+    }
 
-	public void removeXtextDocumentContentObserver(IXtextDocumentContentObserver observer) {
-		xtextDocumentObservers.remove(observer);
-		removeDocumentListener(observer);
-	}
+    public void setValidationJob(Job validationJob) {
+        this.validationJob = validationJob;
+    }
 
-	protected <T> void updateContentBeforeRead() {
-		Object[] listeners = xtextDocumentObservers.getListeners();
-		for (int i = 0; i < listeners.length; i++) {
-			((IXtextDocumentContentObserver) listeners[i]).performNecessaryUpdates(stateAccess);
-		}
-	}
+    public void checkAndUpdateAnnotations() {
+        if (validationJob != null) {
+            validationJob.cancel();
+            validationJob.schedule();
+        }
+    }
 
-	/**
-	 * @author Sven Efftinge - Initial contribution and API
-	 * 
-	 */
-	protected class XtextDocumentLocker extends AbstractReadWriteAcces<XtextResource> implements Processor {
-		@Override
-		protected XtextResource getState() {
-			return resource;
-		}
+    /**
+     * Returns the {@link URI uri} of the associated {@link org.eclipse.emf.ecore.resource.Resource emf resource}.
+     * May be null if no resource is available or its uri is <code>null</code>.
+     *
+     * @return the resource uri if available.
+     * @since 2.1
+     */
+    public URI getResourceURI() {
+        if (resource != null)
+            return resource.getURI();
+        return null;
+    }
 
-		@Override
-		protected void beforeReadOnly(XtextResource res, IUnitOfWork<?, XtextResource> work) {
-			if (log.isDebugEnabled())
-				log.debug("read - " + Thread.currentThread().getName());
-			// Don't updateContent on write lock request. Reentrant read doesn't matter as 
-			// updateContentBeforeRead() is cheap when the pending event queue is swept
-			if (getReadHoldCount() == 1 && getWriteHoldCount() == 0)
-				updateContentBeforeRead();
-		}
+    @SuppressWarnings("unchecked")
+    public <T> T getAdapter(Class<T> adapterType) {
+        URI uri = resource.getURI();
+        if ((adapterType == IFile.class || adapterType == IResource.class) && uri.isPlatformResource()) {
+            return (T) ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri.toPlatformString(true)));
+        }
+        return null;
+    }
 
-		@Override
-		protected void beforeModify(XtextResource state, IUnitOfWork<?, XtextResource> work) {
-			if (log.isDebugEnabled())
-				log.debug("write - " + Thread.currentThread().getName());
-		}
+    @Override
+    public Position[] getPositions(String category, int offset, int length, boolean canStartBefore, boolean canEndAfter)
+            throws BadPositionCategoryException {
+        positionsReadLock.lock();
+        try {
+            return super.getPositions(category, offset, length, canStartBefore, canEndAfter);
+        } finally {
+            positionsReadLock.unlock();
+        }
+    }
 
-		@Override
-		protected void afterReadOnly(XtextResource res, Object result, IUnitOfWork<?, XtextResource> work) {
-			ensureThatStateIsNotReturned(result, work);
-		}
+    @Override
+    public Position[] getPositions(String category) throws BadPositionCategoryException {
+        positionsReadLock.lock();
+        try {
+            return super.getPositions(category);
+        } finally {
+            positionsReadLock.unlock();
+        }
+    }
 
-		@Override
-		protected void afterModify(XtextResource res, Object result, IUnitOfWork<?, XtextResource> work) {
-			ensureThatStateIsNotReturned(result, work);
-			if(!(work instanceof ReconcilingUnitOfWork))
-				notifyModelListeners(resource);
-		}
+    @Override
+    public void addPosition(Position position) throws BadLocationException {
+        positionsWriteLock.lock();
+        try {
+            super.addPosition(position);
+        } finally {
+            positionsWriteLock.unlock();
+        }
+    }
 
-		@Override
-		public <T> T modify(IUnitOfWork<T, XtextResource> work) {
-			try {
-				if (validationJob!=null) {
-					validationJob.cancel();
-				}
-				Object state = getState();
-				if (state instanceof ISynchronizable<?>) {
-					synchronized (((ISynchronizable<?>) state).getLock()) {
-						return super.modify(work);
-					}
-				} else {
-					return super.modify(work);
-				}
-			} catch (RuntimeException e) {
-				try {
-					XtextResource state = getState();
-					if (state != null)
-						state.reparse(get());
-				} catch (IOException ioe) {
-				}
-				throw e;
-			} finally {
-				if(!(work instanceof ReconcilingUnitOfWork))
-					checkAndUpdateAnnotations();
-			}
-		}
-		
-		/**
-		 * @since 2.4
-		 */
-		@Override
-		public <T> T readOnly(IUnitOfWork<T, XtextResource> work) {
-			Object state = getState();
-			if (state instanceof ISynchronizable<?>) {
-				synchronized (((ISynchronizable<?>) state).getLock()) {
-					return super.readOnly(work);
-				}
-			} else {
-				return super.readOnly(work);
-			}
-		}
+    @Override
+    public void addPosition(String category, Position position) throws BadLocationException,
+            BadPositionCategoryException {
+        positionsWriteLock.lock();
+        try {
+            super.addPosition(category, position);
+        } finally {
+            positionsWriteLock.unlock();
+        }
+    }
 
-	}
+    @Override
+    public void removePosition(Position position) {
+        positionsWriteLock.lock();
+        try {
+            super.removePosition(position);
+        } finally {
+            positionsWriteLock.unlock();
+        }
+    }
 
-	private static final Logger log = Logger.getLogger(XtextDocument.class);
+    @Override
+    public void removePosition(String category, Position position) throws BadPositionCategoryException {
+        positionsWriteLock.lock();
+        try {
+            super.removePosition(category, position);
+        } finally {
+            positionsWriteLock.unlock();
+        }
+    }
 
-	private transient Job validationJob;
+    @Override
+    protected void fireDocumentChanged(DocumentEvent event) {
+        tokenSource.updateStructure(event);
+        super.fireDocumentChanged(event);
+    }
 
-	public void setValidationJob(Job validationJob) {
-		this.validationJob = validationJob;
-	}
+    public IRegion getLastDamage() {
+        return tokenSource.getLastDamagedRegion();
+    }
 
-	public Job getValidationJob() {
-		return validationJob;
-	}
+    public Iterable<ILexerTokenRegion> getTokens() {
+        return tokenSource.getTokenInfos();
+    }
 
-	public void checkAndUpdateAnnotations() {
-		if (validationJob!=null) {
-			validationJob.cancel();
-			validationJob.schedule();
-		}
-	}
-	
-	/**
-	 * Returns the {@link URI uri} of the associated {@link org.eclipse.emf.ecore.resource.Resource emf resource}.
-	 * May be null if no resource is available or its uri is <code>null</code>.
-	 * @return the resource uri if available.
-	 * @since 2.1
-	 */
-	public URI getResourceURI() {
-		if (resource != null)
-			return resource.getURI();
-		return null;
-	}
+    /**
+     * @author Sven Efftinge - Initial contribution and API
+     */
+    protected class XtextDocumentLocker extends AbstractReadWriteAcces<XtextResource> implements Processor {
+        @Override
+        protected XtextResource getState() {
+            return resource;
+        }
 
-	@SuppressWarnings("unchecked")
-	public <T> T getAdapter(Class<T> adapterType) {
-		URI uri = resource.getURI();
-		if ((adapterType == IFile.class || adapterType == IResource.class) && uri.isPlatformResource()) {
-			return (T) ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(uri.toPlatformString(true)));
-		}
-		return null;
-	}
+        @Override
+        protected void beforeReadOnly(XtextResource res, IUnitOfWork<?, XtextResource> work) {
+            if (log.isDebugEnabled())
+                log.debug("read - " + Thread.currentThread().getName());
+            // Don't updateContent on write lock request. Reentrant read doesn't matter as
+            // updateContentBeforeRead() is cheap when the pending event queue is swept
+            if (getReadHoldCount() == 1 && getWriteHoldCount() == 0)
+                updateContentBeforeRead();
+        }
 
-	/*
-	 * fix for https://bugs.eclipse.org/bugs/show_bug.cgi?id=297946
-	 */
-	private ReadWriteLock positionsLock = new ReentrantReadWriteLock();
-	private Lock positionsReadLock = positionsLock.readLock();
-	private Lock positionsWriteLock = positionsLock.writeLock();
+        @Override
+        protected void beforeModify(XtextResource state, IUnitOfWork<?, XtextResource> work) {
+            if (log.isDebugEnabled())
+                log.debug("write - " + Thread.currentThread().getName());
+        }
 
-	@Override
-	public Position[] getPositions(String category, int offset, int length, boolean canStartBefore, boolean canEndAfter)
-			throws BadPositionCategoryException {
-		positionsReadLock.lock();
-		try {
-			return super.getPositions(category, offset, length, canStartBefore, canEndAfter);
-		} finally {
-			positionsReadLock.unlock();
-		}
-	}
+        @Override
+        protected void afterReadOnly(XtextResource res, Object result, IUnitOfWork<?, XtextResource> work) {
+            ensureThatStateIsNotReturned(result, work);
+        }
 
-	@Override
-	public Position[] getPositions(String category) throws BadPositionCategoryException {
-		positionsReadLock.lock();
-		try {
-			return super.getPositions(category);
-		} finally {
-			positionsReadLock.unlock();
-		}
-	}
+        @Override
+        protected void afterModify(XtextResource res, Object result, IUnitOfWork<?, XtextResource> work) {
+            ensureThatStateIsNotReturned(result, work);
+            if (!(work instanceof ReconcilingUnitOfWork))
+                notifyModelListeners(resource);
+        }
 
-	@Override
-	public void addPosition(Position position) throws BadLocationException {
-		positionsWriteLock.lock();
-		try {
-			super.addPosition(position);
-		} finally {
-			positionsWriteLock.unlock();
-		}
-	}
+        @Override
+        public <T> T modify(IUnitOfWork<T, XtextResource> work) {
+            try {
+                if (validationJob != null) {
+                    validationJob.cancel();
+                }
+                Object state = getState();
+                if (state instanceof ISynchronizable<?>) {
+                    synchronized (((ISynchronizable<?>) state).getLock()) {
+                        return super.modify(work);
+                    }
+                } else {
+                    return super.modify(work);
+                }
+            } catch (RuntimeException e) {
+                try {
+                    XtextResource state = getState();
+                    if (state != null)
+                        state.reparse(get());
+                } catch (IOException ioe) {
+                }
+                throw e;
+            } finally {
+                if (!(work instanceof ReconcilingUnitOfWork))
+                    checkAndUpdateAnnotations();
+            }
+        }
 
-	@Override
-	public void addPosition(String category, Position position) throws BadLocationException,
-			BadPositionCategoryException {
-		positionsWriteLock.lock();
-		try {
-			super.addPosition(category, position);
-		} finally {
-			positionsWriteLock.unlock();
-		}
-	}
+        /**
+         * @since 2.4
+         */
+        @Override
+        public <T> T readOnly(IUnitOfWork<T, XtextResource> work) {
+            Object state = getState();
+            if (state instanceof ISynchronizable<?>) {
+                synchronized (((ISynchronizable<?>) state).getLock()) {
+                    return super.readOnly(work);
+                }
+            } else {
+                return super.readOnly(work);
+            }
+        }
 
-	@Override
-	public void removePosition(Position position) {
-		positionsWriteLock.lock();
-		try {
-			super.removePosition(position);
-		} finally {
-			positionsWriteLock.unlock();
-		}
-	}
-
-	@Override
-	public void removePosition(String category, Position position) throws BadPositionCategoryException {
-		positionsWriteLock.lock();
-		try {
-			super.removePosition(category, position);
-		} finally {
-			positionsWriteLock.unlock();
-		}
-	}
-
-	@Override
-	protected void fireDocumentChanged(DocumentEvent event) {
-		tokenSource.updateStructure(event);
-		super.fireDocumentChanged(event);
-	}
-
-	public IRegion getLastDamage() {
-		return tokenSource.getLastDamagedRegion();
-	}
-
-	public Iterable<ILexerTokenRegion> getTokens() {
-		return tokenSource.getTokenInfos();
-	}
+    }
 }

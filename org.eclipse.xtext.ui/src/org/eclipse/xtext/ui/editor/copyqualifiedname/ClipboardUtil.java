@@ -19,21 +19,21 @@ import org.eclipse.xtext.ui.util.SWTUtil;
  */
 public class ClipboardUtil {
 
-	public static Object copy(String data) {
-		if (data == null) {
-			return null;
-		}
-		Clipboard clipboard = null;
-		try {
-			Display display = SWTUtil.getStandardDisplay();
-			clipboard = new Clipboard(display);
-			clipboard.setContents(new Object[] { data }, new Transfer[] { TextTransfer.getInstance() });
-		} finally {
-			if (clipboard != null) {
-				clipboard.dispose();
-			}
-		}
-		return null;
-	}
+    public static Object copy(String data) {
+        if (data == null) {
+            return null;
+        }
+        Clipboard clipboard = null;
+        try {
+            Display display = SWTUtil.getStandardDisplay();
+            clipboard = new Clipboard(display);
+            clipboard.setContents(new Object[]{data}, new Transfer[]{TextTransfer.getInstance()});
+        } finally {
+            if (clipboard != null) {
+                clipboard.dispose();
+            }
+        }
+        return null;
+    }
 
 }

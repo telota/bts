@@ -32,12 +32,11 @@ package org.bbaw.bts.core.controller.handlerController;
 /**
  * The Backend2ClientUpdateHandlerController manages the listening to database update events.
  */
-public interface Backend2ClientUpdateHandlerController
-{
+public interface Backend2ClientUpdateHandlerController {
 
-	/**
-	 * Start listening to database update events.
-	 */
-	void startListening();
+    /**
+     * Start listening to database update events.
+     */
+    void startListening();
 
 }

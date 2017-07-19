@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.main.handlers;
 
 import javax.inject.Named;
@@ -18,29 +17,29 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 public class DeleteHandler {
-	@Execute
-	public void execute(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
-			EditingDomainController editingDomainController) {
-		System.out.println("delete");
-		if (selection instanceof EObject) {
-			EditingDomain ed = null; // editingDomainController.getEditingDomain((EObject)
-										// selection);
-			if (ed != null) {
-				Command command = SetCommand.create(ed, selection,
-						BtsmodelPackage.ADMINISTRATIV_DATA_OBJECT__STATE,
-						BTSConstants.OBJECT_STATE_TERMINATED);
-				ed.getCommandStack().execute(command);
+    @Execute
+    public void execute(
+            @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
+            EditingDomainController editingDomainController) {
+        System.out.println("delete");
+        if (selection instanceof EObject) {
+            EditingDomain ed = null; // editingDomainController.getEditingDomain((EObject)
+            // selection);
+            if (ed != null) {
+                Command command = SetCommand.create(ed, selection,
+                        BtsmodelPackage.ADMINISTRATIV_DATA_OBJECT__STATE,
+                        BTSConstants.OBJECT_STATE_TERMINATED);
+                ed.getCommandStack().execute(command);
 
-			}
- else {
-				((AdministrativDataObject) selection)
-						.setState(BTSConstants.OBJECT_STATE_TERMINATED);
-			}
-		}
-	}
-	@CanExecute
-	public boolean canExecute(@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
-		return mayDelete.booleanValue();
-	}	
+            } else {
+                ((AdministrativDataObject) selection)
+                        .setState(BTSConstants.OBJECT_STATE_TERMINATED);
+            }
+        }
+    }
+
+    @CanExecute
+    public boolean canExecute(@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
+        return mayDelete.booleanValue();
+    }
 }

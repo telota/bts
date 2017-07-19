@@ -27,46 +27,46 @@ import com.google.inject.Singleton;
 /**
  * Resolves the encoding for {@link IEncodedStorage} behind the given {@link URI}s and falls back to the
  * {@link IEncodingProvider} configured for in the runtime module otherwise.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 @Singleton
 public class WorkspaceEncodingProvider implements IEncodingProvider {
 
-	private static final Logger LOG = Logger.getLogger(WorkspaceEncodingProvider.class);
+    private static final Logger LOG = Logger.getLogger(WorkspaceEncodingProvider.class);
 
-	@Inject
-	private IWorkspace workspace;
+    @Inject
+    private IWorkspace workspace;
 
-	@Inject
-	private IStorage2UriMapper storage2UriMapper;
+    @Inject
+    private IStorage2UriMapper storage2UriMapper;
 
-	@Inject
-	@DispatchingProvider.Runtime
-	private IEncodingProvider runtimeEncodingProvider;
+    @Inject
+    @DispatchingProvider.Runtime
+    private IEncodingProvider runtimeEncodingProvider;
 
-	public String getEncoding(URI uri) {
-		if (workspace != null) {
-			Iterator<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(uri).iterator();
-			while (storages.hasNext()) {
-				Pair<IStorage, IProject> storage = storages.next();
-				if (storage.getFirst() instanceof IEncodedStorage) {
-					try {
-						return ((IEncodedStorage) storage.getFirst()).getCharset();
-					} catch (CoreException e) {
-						LOG.error("Error getting file encoding", e);
-					}
-				}
-				try {
-					String result = storage.getSecond().getDefaultCharset(true);
-					return result;
-				} catch (CoreException e) {
-					LOG.error("Error getting project's default encoding", e);
-				}
-			}
-		}
-		// fallback to runtime encoding provider
-		return runtimeEncodingProvider.getEncoding(uri);
-	}
+    public String getEncoding(URI uri) {
+        if (workspace != null) {
+            Iterator<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(uri).iterator();
+            while (storages.hasNext()) {
+                Pair<IStorage, IProject> storage = storages.next();
+                if (storage.getFirst() instanceof IEncodedStorage) {
+                    try {
+                        return ((IEncodedStorage) storage.getFirst()).getCharset();
+                    } catch (CoreException e) {
+                        LOG.error("Error getting file encoding", e);
+                    }
+                }
+                try {
+                    String result = storage.getSecond().getDefaultCharset(true);
+                    return result;
+                } catch (CoreException e) {
+                    LOG.error("Error getting project's default encoding", e);
+                }
+            }
+        }
+        // fallback to runtime encoding provider
+        return runtimeEncodingProvider.getEncoding(uri);
+    }
 
 }

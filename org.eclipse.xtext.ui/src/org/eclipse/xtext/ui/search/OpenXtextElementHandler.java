@@ -27,53 +27,49 @@ import com.google.inject.name.Named;
  */
 public class OpenXtextElementHandler extends AbstractHandler {
 
-	@Inject
-	private IURIEditorOpener uriEditorOpener;
-	
-	@Inject
-	private IXtextEObjectSearch searchEngine;
-	
-	@Inject
-	private GlobalDescriptionLabelProvider globalDescriptionLabelProvider;
-	
-	@Inject(optional=true)
-	@Named("xtext.enable.styledLables")
-	private boolean enableStyledLabels = true;
-	
-	private static final Logger LOG = Logger.getLogger(OpenXtextElementHandler.class);
+    private static final Logger LOG = Logger.getLogger(OpenXtextElementHandler.class);
+    @Inject
+    private IURIEditorOpener uriEditorOpener;
+    @Inject
+    private IXtextEObjectSearch searchEngine;
+    @Inject
+    private GlobalDescriptionLabelProvider globalDescriptionLabelProvider;
+    @Inject(optional = true)
+    @Named("xtext.enable.styledLables")
+    private boolean enableStyledLabels = true;
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		Shell activeShell = HandlerUtil.getActiveShell(event);
-		ListDialog searchDialog = createSearchDialog(event, activeShell, searchEngine);
-		int result = searchDialog.open();
-		if (result == Window.OK) {
-			try {
-				Object[] selections = searchDialog.getResult();
-				if (selections != null && selections.length > 0) {
-					Object selection = selections[0];
-					if (selection instanceof IEObjectDescription) {
-						IEObjectDescription selectedObjectDescription = (IEObjectDescription) selection;
-						uriEditorOpener.open(selectedObjectDescription.getEObjectURI(), true);
-					}
-				}
-			} catch (Exception e) {
-				LOG.error("Error opening editor", e);
-				throw new ExecutionException("Error opening editor", e);
-			}
-		}
-		return null;
-	}
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        Shell activeShell = HandlerUtil.getActiveShell(event);
+        ListDialog searchDialog = createSearchDialog(event, activeShell, searchEngine);
+        int result = searchDialog.open();
+        if (result == Window.OK) {
+            try {
+                Object[] selections = searchDialog.getResult();
+                if (selections != null && selections.length > 0) {
+                    Object selection = selections[0];
+                    if (selection instanceof IEObjectDescription) {
+                        IEObjectDescription selectedObjectDescription = (IEObjectDescription) selection;
+                        uriEditorOpener.open(selectedObjectDescription.getEObjectURI(), true);
+                    }
+                }
+            } catch (Exception e) {
+                LOG.error("Error opening editor", e);
+                throw new ExecutionException("Error opening editor", e);
+            }
+        }
+        return null;
+    }
 
-	protected ListDialog createSearchDialog(ExecutionEvent event, Shell activeShell, IXtextEObjectSearch searchEngine) {
-		return new XtextEObjectSearchDialog(activeShell, searchEngine, globalDescriptionLabelProvider, isEnableStyledLabels());
-	}
+    protected ListDialog createSearchDialog(ExecutionEvent event, Shell activeShell, IXtextEObjectSearch searchEngine) {
+        return new XtextEObjectSearchDialog(activeShell, searchEngine, globalDescriptionLabelProvider, isEnableStyledLabels());
+    }
 
-	public void setEnableStyledLabels(boolean enableStyledLabels) {
-		this.enableStyledLabels = enableStyledLabels;
-	}
+    public boolean isEnableStyledLabels() {
+        return enableStyledLabels;
+    }
 
-	public boolean isEnableStyledLabels() {
-		return enableStyledLabels;
-	}
+    public void setEnableStyledLabels(boolean enableStyledLabels) {
+        this.enableStyledLabels = enableStyledLabels;
+    }
 
 }

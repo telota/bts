@@ -14,14 +14,14 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(TerminalsTokenTypeToPartitionMapper.class)
 public interface ITokenTypeToPartitionTypeMapper {
-	
-	/**
-	 * returns the partition type for the given antlr type
-	 */
-	String getPartitionType(int antlrTokenType);
-	
-	/**
-	 * returns all supported partition types
-	 */
-	String[] getSupportedPartitionTypes();
+
+    /**
+     * returns the partition type for the given antlr type
+     */
+    String getPartitionType(int antlrTokenType);
+
+    /**
+     * returns all supported partition types
+     */
+    String[] getSupportedPartitionTypes();
 }

@@ -29,82 +29,78 @@ import bts.transform.ui.xtend.Authors2BTSTransform;
 
 public class UsersImporter {
 
-	private ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-	
-	public static void main(String[] args) {
-		String fileName = "D:/AAEW/transform/authors/authors_2.btsaux";
-		UsersImporter ui = new UsersImporter();
-		ui.importUsers(fileName);
-	}
+    private ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+            ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+    private AdapterFactoryEditingDomain editingDomain;
 
-	private AdapterFactoryEditingDomain editingDomain;
-	
-	public void importUsers(String fileName) {
-		File f = new File(fileName);
-		if (f.exists())
-		{
-			DocumentRoot root = createModel(fileName);
-			IEclipseContext context = StaticAccessController.getContext();
+    public static void main(String[] args) {
+        String fileName = "D:/AAEW/transform/authors/authors_2.btsaux";
+        UsersImporter ui = new UsersImporter();
+        ui.importUsers(fileName);
+    }
 
-			Authors2BTSTransform transform = ContextInjectionFactory.make(Authors2BTSTransform.class, context);
-			
-			BTSUserService userService = context.get(BTSUserService.class);
-			BTSUserGroupService userGroupService = context.get(BTSUserGroupService.class);
-			List<BTSUser> users = transform.transform(root);
-			List<BTSUserGroup> groups = transform.getGroups();
-			
-			for (BTSUser u : users)
-			{
-				userService.save(u);
-			}
-			
-			for (BTSUserGroup ug : groups)
-			{
-				userGroupService.save(ug);
-			}
-			
-			System.out.println(root);
-		}
-		
-	}
-	public DocumentRoot createModel(String fileName) {
-		URI resourceURI = URI.createFileURI( fileName);
-		System.out.println(resourceURI);
-		Exception exception = null;
-		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new BtsauxItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
-		editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
-				new BasicCommandStack());
-		Resource resource = null;
-		try {
-			// Load the resource through the editing domain.
-			//
-			resource = editingDomain.getResourceSet().getResource(resourceURI, true);
-		}
-		catch (Exception e) {
-			exception = e;
-			resource = editingDomain.getResourceSet().getResource(resourceURI, false);
-		}
+    public void importUsers(String fileName) {
+        File f = new File(fileName);
+        if (f.exists()) {
+            DocumentRoot root = createModel(fileName);
+            IEclipseContext context = StaticAccessController.getContext();
+
+            Authors2BTSTransform transform = ContextInjectionFactory.make(Authors2BTSTransform.class, context);
+
+            BTSUserService userService = context.get(BTSUserService.class);
+            BTSUserGroupService userGroupService = context.get(BTSUserGroupService.class);
+            List<BTSUser> users = transform.transform(root);
+            List<BTSUserGroup> groups = transform.getGroups();
+
+            for (BTSUser u : users) {
+                userService.save(u);
+            }
+
+            for (BTSUserGroup ug : groups) {
+                userGroupService.save(ug);
+            }
+
+            System.out.println(root);
+        }
+
+    }
+
+    public DocumentRoot createModel(String fileName) {
+        URI resourceURI = URI.createFileURI(fileName);
+        System.out.println(resourceURI);
+        Exception exception = null;
+        adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new BtsauxItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+        editingDomain = new AdapterFactoryEditingDomain(adapterFactory,
+                new BasicCommandStack());
+        Resource resource = null;
+        try {
+            // Load the resource through the editing domain.
+            //
+            resource = editingDomain.getResourceSet().getResource(resourceURI, true);
+        } catch (Exception e) {
+            exception = e;
+            resource = editingDomain.getResourceSet().getResource(resourceURI, false);
+        }
 
 //		Diagnostic diagnostic = analyzeResourceProblems(resource, exception);
 //		if (diagnostic.getSeverity() != Diagnostic.OK) {
 //			resourceToDiagnosticMap.put(resource,  analyzeResourceProblems(resource, exception));
 //		}
 //		editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
-		DocumentRoot data = (DocumentRoot)resource.getContents().get(0);  
-		  return data;
-	}
+        DocumentRoot data = (DocumentRoot) resource.getContents().get(0);
+        return data;
+    }
 
-	public DocumentRoot loadData(String fileName) throws FileNotFoundException, IOException {
-		
-		  XMIResourceImpl resource = new XMIResourceImpl();
-		  File source = new File(fileName);
-		  resource.load( new FileInputStream(source), new HashMap<Object,Object>());
-		  DocumentRoot data = (DocumentRoot)resource.getContents().get(0);  
-		  return data;
-		}
+    public DocumentRoot loadData(String fileName) throws FileNotFoundException, IOException {
+
+        XMIResourceImpl resource = new XMIResourceImpl();
+        File source = new File(fileName);
+        resource.load(new FileInputStream(source), new HashMap<Object, Object>());
+        DocumentRoot data = (DocumentRoot) resource.getContents().get(0);
+        return data;
+    }
 //	protected void setupOptions(XMLResource result)
 //    {
 //        result.getDefaultLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, new BasicExtendedMetaData()

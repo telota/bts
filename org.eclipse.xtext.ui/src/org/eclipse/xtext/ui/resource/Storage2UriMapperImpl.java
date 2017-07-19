@@ -38,107 +38,112 @@ import com.google.inject.Singleton;
  * @author Sven Efftinge - Initial contribution and API
  * @noextend This class is not intended to be subclassed by clients.
  */
-@Singleton public class Storage2UriMapperImpl implements IStorage2UriMapper {
-	
-	private final static Logger log = Logger.getLogger(Storage2UriMapperImpl.class);
-	
-	@Inject private IResourceServiceProvider.Registry resourceServiceProviderRegistry = IResourceServiceProvider.Registry.INSTANCE;
-	@Inject private UriValidator uriValidator;
-	
-	/**
-	 * @since 2.4
-	 */
-	public void setUriValidator(UriValidator uriValidator) {
-		this.uriValidator = uriValidator;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public Map<URI, IStorage> getAllEntries(IContainer container) {
-		final Map<URI,IStorage> result = newLinkedHashMap();
-		try {
-			container.accept(new IResourceVisitor() {
-				public boolean visit(IResource resource) throws CoreException {
-					if (resource instanceof IFile) {
-						final IFile storage = (IFile) resource;
-						URI uri = getUri(storage);
-						if (uri != null)
-							result.put(uri, storage);
-					}
-					if (resource instanceof IFolder) {
-						return isHandled((IFolder)resource);
-					}
-					return true;
-				}
-			});
-		} catch (CoreException e) {
-			log.error(e.getMessage(), e);
-		}
-		return result;
-	}
-	
-	/**
-	 * Return <code>true</code> if the folder should be traversed. <code>False</code> otherwise.
-	 * Defaults to <code>true</code> for all folders.
-	 * @return <code>true</code> if the folder should be traversed. <code>False</code> otherwise.
-	 * @since 2.4
-	 */
-	protected boolean isHandled(IFolder folder) {
-		return true;
-	}
+@Singleton
+public class Storage2UriMapperImpl implements IStorage2UriMapper {
 
-	public Iterable<Pair<IStorage, IProject>> getStorages(URI uri) {
-		if (!uri.isPlatformResource()) {
-			// support storage lookup by absolute file URI as it is possibly resolved by importURI references
-			if (uri.isFile()) {
-				IPath path = new Path(uri.toFileString());
-				if (path.isAbsolute()) {
-					IFile file = getWorkspaceRoot().getFileForLocation(path);
-					return getStorages(file);
-				}
-			}
-			return emptySet();
-		}
-		IFile file = getWorkspaceRoot().getFile(new Path(uri.toPlatformString(true)));
-		return getStorages(file);
-	}
+    private final static Logger log = Logger.getLogger(Storage2UriMapperImpl.class);
 
-	private Iterable<Pair<IStorage, IProject>> getStorages(IFile file) {
-		if (file == null || !file.isAccessible()) {
-			return emptySet();
-		}
-		return singleton(Tuples.<IStorage,IProject>create(file, file.getProject()));
-	}
+    @Inject
+    private IResourceServiceProvider.Registry resourceServiceProviderRegistry = IResourceServiceProvider.Registry.INSTANCE;
+    @Inject
+    private UriValidator uriValidator;
 
-	protected IWorkspaceRoot getWorkspaceRoot() {
-		return ResourcesPlugin.getWorkspace().getRoot();
-	}
+    /**
+     * @since 2.4
+     */
+    public void setUriValidator(UriValidator uriValidator) {
+        this.uriValidator = uriValidator;
+    }
 
-	public final URI getUri(IStorage storage) {
-		if (!uriValidator.isPossiblyManaged(storage))
-			return null;
-		URI uri = internalGetUri(storage);
-		if (uri != null && isValidUri(uri,storage))
-			return uri;
-		return null;
-	}
+    /**
+     * @since 2.4
+     */
+    public Map<URI, IStorage> getAllEntries(IContainer container) {
+        final Map<URI, IStorage> result = newLinkedHashMap();
+        try {
+            container.accept(new IResourceVisitor() {
+                public boolean visit(IResource resource) throws CoreException {
+                    if (resource instanceof IFile) {
+                        final IFile storage = (IFile) resource;
+                        URI uri = getUri(storage);
+                        if (uri != null)
+                            result.put(uri, storage);
+                    }
+                    if (resource instanceof IFolder) {
+                        return isHandled((IFolder) resource);
+                    }
+                    return true;
+                }
+            });
+        } catch (CoreException e) {
+            log.error(e.getMessage(), e);
+        }
+        return result;
+    }
 
-	protected URI internalGetUri(IStorage storage) {
-		if (storage instanceof IFile) {
-			return URI.createPlatformResourceURI(storage.getFullPath().toString(), true);
-		} 
-		return null;
-	}
-	
+    /**
+     * Return <code>true</code> if the folder should be traversed. <code>False</code> otherwise.
+     * Defaults to <code>true</code> for all folders.
+     *
+     * @return <code>true</code> if the folder should be traversed. <code>False</code> otherwise.
+     * @since 2.4
+     */
+    protected boolean isHandled(IFolder folder) {
+        return true;
+    }
 
-	public boolean isValidUri(URI uri, IStorage storage) {
-		boolean valid = uriValidator.isValid(uri, storage);
-		return valid;
-	}
-	
-	@Deprecated public void resourceChanged(IResourceChangeEvent event) {
-		log.warn("Storage2UriMapperImpl.resourceChanged(IResourceChangeEvent) is deprecated and does nothing.");
-	}
-	
+    public Iterable<Pair<IStorage, IProject>> getStorages(URI uri) {
+        if (!uri.isPlatformResource()) {
+            // support storage lookup by absolute file URI as it is possibly resolved by importURI references
+            if (uri.isFile()) {
+                IPath path = new Path(uri.toFileString());
+                if (path.isAbsolute()) {
+                    IFile file = getWorkspaceRoot().getFileForLocation(path);
+                    return getStorages(file);
+                }
+            }
+            return emptySet();
+        }
+        IFile file = getWorkspaceRoot().getFile(new Path(uri.toPlatformString(true)));
+        return getStorages(file);
+    }
+
+    private Iterable<Pair<IStorage, IProject>> getStorages(IFile file) {
+        if (file == null || !file.isAccessible()) {
+            return emptySet();
+        }
+        return singleton(Tuples.<IStorage, IProject>create(file, file.getProject()));
+    }
+
+    protected IWorkspaceRoot getWorkspaceRoot() {
+        return ResourcesPlugin.getWorkspace().getRoot();
+    }
+
+    public final URI getUri(IStorage storage) {
+        if (!uriValidator.isPossiblyManaged(storage))
+            return null;
+        URI uri = internalGetUri(storage);
+        if (uri != null && isValidUri(uri, storage))
+            return uri;
+        return null;
+    }
+
+    protected URI internalGetUri(IStorage storage) {
+        if (storage instanceof IFile) {
+            return URI.createPlatformResourceURI(storage.getFullPath().toString(), true);
+        }
+        return null;
+    }
+
+
+    public boolean isValidUri(URI uri, IStorage storage) {
+        boolean valid = uriValidator.isValid(uri, storage);
+        return valid;
+    }
+
+    @Deprecated
+    public void resourceChanged(IResourceChangeEvent event) {
+        log.warn("Storage2UriMapperImpl.resourceChanged(IResourceChangeEvent) is deprecated and does nothing.");
+    }
+
 }

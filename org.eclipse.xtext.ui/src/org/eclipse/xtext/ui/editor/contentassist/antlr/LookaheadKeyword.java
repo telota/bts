@@ -12,45 +12,44 @@ import org.eclipse.xtext.Keyword;
 
 public class LookaheadKeyword extends LookAheadTerminal {
 
-	private String keyword;
+    private String keyword;
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
+    public String getKeyword() {
+        return keyword;
+    }
 
-	public String getKeyword() {
-		return keyword;
-	}
-	
-	@Override
-	public boolean matches(AbstractElement element) {
-		return (element instanceof Keyword) && getKeyword().equals(((Keyword) element).getValue());
-	}
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((keyword == null) ? 0 : keyword.hashCode());
-		return result;
-	}
+    @Override
+    public boolean matches(AbstractElement element) {
+        return (element instanceof Keyword) && getKeyword().equals(((Keyword) element).getValue());
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LookaheadKeyword other = (LookaheadKeyword) obj;
-		if (keyword == null) {
-			if (other.keyword != null)
-				return false;
-		}
-		else if (!keyword.equals(other.keyword))
-			return false;
-		return true;
-	}
-	
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((keyword == null) ? 0 : keyword.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        LookaheadKeyword other = (LookaheadKeyword) obj;
+        if (keyword == null) {
+            if (other.keyword != null)
+                return false;
+        } else if (!keyword.equals(other.keyword))
+            return false;
+        return true;
+    }
+
 }

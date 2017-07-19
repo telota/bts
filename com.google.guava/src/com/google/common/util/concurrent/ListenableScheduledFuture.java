@@ -25,9 +25,9 @@ import java.util.concurrent.ScheduledFuture;
  * {@link ScheduledFuture}.
  *
  * @author Anthony Zana
- *
  * @since 15.0
  */
 @Beta
 public interface ListenableScheduledFuture<V>
-    extends ScheduledFuture<V>, ListenableFuture<V> {}
+        extends ScheduledFuture<V>, ListenableFuture<V> {
+}

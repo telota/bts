@@ -23,61 +23,61 @@ import org.eclipse.xtext.util.TextRegion;
  * @author Sebastian Zarnekow - Introduced FoldedPosition
  */
 public class DefaultFoldingRegionAcceptor implements IFoldingRegionAcceptor<ITextRegion> {
-	private static final Logger log = Logger.getLogger(DefaultFoldingRegionAcceptor.class);
-	private Collection<FoldedPosition> result;
-	private IXtextDocument xtextDocument;
+    private static final Logger log = Logger.getLogger(DefaultFoldingRegionAcceptor.class);
+    private Collection<FoldedPosition> result;
+    private IXtextDocument xtextDocument;
 
-	public DefaultFoldingRegionAcceptor(IXtextDocument document, Collection<FoldedPosition> result) {
-		this.result = result;
-		this.xtextDocument = document;
-	}
+    public DefaultFoldingRegionAcceptor(IXtextDocument document, Collection<FoldedPosition> result) {
+        this.result = result;
+        this.xtextDocument = document;
+    }
 
-	public void accept(int offset, int length, ITextRegion significantRegion) {
-		IRegion position = getLineRegion(offset, length);
-		try {
-			if (xtextDocument != null && significantRegion != null) {
-				int firstLine = xtextDocument.getLineOfOffset(significantRegion.getOffset());
-				int lastLine = xtextDocument.getLineOfOffset(significantRegion.getOffset()+significantRegion.getLength());
-				if (firstLine != lastLine) {
-					int endOffset = xtextDocument.getLineOffset(firstLine)+xtextDocument.getLineLength(firstLine);
-					significantRegion = new TextRegion(significantRegion.getOffset(), endOffset - significantRegion.getOffset());
-				}
-			}
-		} catch (BadLocationException e) {
-		}
-		FoldedPosition foldingRegion = newFoldedPosition(position, significantRegion);
-		if (foldingRegion != null) {
-			result.add(foldingRegion);
-		}
-	}
-	
-	public void accept(int offset, int length) {
-		accept(offset, length, null);
-	}
+    public void accept(int offset, int length, ITextRegion significantRegion) {
+        IRegion position = getLineRegion(offset, length);
+        try {
+            if (xtextDocument != null && significantRegion != null) {
+                int firstLine = xtextDocument.getLineOfOffset(significantRegion.getOffset());
+                int lastLine = xtextDocument.getLineOfOffset(significantRegion.getOffset() + significantRegion.getLength());
+                if (firstLine != lastLine) {
+                    int endOffset = xtextDocument.getLineOffset(firstLine) + xtextDocument.getLineLength(firstLine);
+                    significantRegion = new TextRegion(significantRegion.getOffset(), endOffset - significantRegion.getOffset());
+                }
+            }
+        } catch (BadLocationException e) {
+        }
+        FoldedPosition foldingRegion = newFoldedPosition(position, significantRegion);
+        if (foldingRegion != null) {
+            result.add(foldingRegion);
+        }
+    }
 
-	protected IRegion getLineRegion(int offset, int length) {
-		IRegion position = null;
-		try {
-			int startLine = xtextDocument.getLineOfOffset(offset);
-			int endLine = xtextDocument.getLineOfOffset(offset + length);
-			if (startLine < endLine) {
-				int start = xtextDocument.getLineOffset(startLine);
-				int end = xtextDocument.getLineOffset(endLine) + xtextDocument.getLineLength(endLine);
-				position = new Region(start, end - start);
-			}
-		} catch (BadLocationException e) {
-			if (log.isInfoEnabled())
-				log.info(e.getMessage(), e);
-		}
-		return position;
-	}
+    public void accept(int offset, int length) {
+        accept(offset, length, null);
+    }
 
-	protected FoldedPosition newFoldedPosition(IRegion region, ITextRegion significantRegion) {
-		if (region == null)
-			return null;
-		if (significantRegion != null)
-			return new DefaultFoldedPosition(region.getOffset(), region.getLength(), significantRegion.getOffset() - region.getOffset(), significantRegion.getLength());
-		return new DefaultFoldedPosition(region.getOffset(), region.getLength(), DefaultFoldedPosition.UNSET, DefaultFoldedPosition.UNSET);
-	}
+    protected IRegion getLineRegion(int offset, int length) {
+        IRegion position = null;
+        try {
+            int startLine = xtextDocument.getLineOfOffset(offset);
+            int endLine = xtextDocument.getLineOfOffset(offset + length);
+            if (startLine < endLine) {
+                int start = xtextDocument.getLineOffset(startLine);
+                int end = xtextDocument.getLineOffset(endLine) + xtextDocument.getLineLength(endLine);
+                position = new Region(start, end - start);
+            }
+        } catch (BadLocationException e) {
+            if (log.isInfoEnabled())
+                log.info(e.getMessage(), e);
+        }
+        return position;
+    }
+
+    protected FoldedPosition newFoldedPosition(IRegion region, ITextRegion significantRegion) {
+        if (region == null)
+            return null;
+        if (significantRegion != null)
+            return new DefaultFoldedPosition(region.getOffset(), region.getLength(), significantRegion.getOffset() - region.getOffset(), significantRegion.getLength());
+        return new DefaultFoldedPosition(region.getOffset(), region.getLength(), DefaultFoldedPosition.UNSET, DefaultFoldedPosition.UNSET);
+    }
 
 }

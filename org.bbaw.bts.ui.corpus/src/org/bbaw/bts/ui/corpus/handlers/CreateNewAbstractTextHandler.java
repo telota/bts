@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import org.bbaw.bts.core.corpus.controller.partController.ATextNavigatorController;
@@ -9,12 +8,12 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
 public class CreateNewAbstractTextHandler {
-	@Execute
-	public void execute(@Active MPart part,
-			ATextNavigatorController atextController, EventBroker eventBroker) {
-		BTSAbstractText atext = atextController.createNew();
-		atext.setName("Abstract Text");
-		eventBroker.post("model_atext_new_root/asyncEvent", atext);
-	}
-		
+    @Execute
+    public void execute(@Active MPart part,
+                        ATextNavigatorController atextController, EventBroker eventBroker) {
+        BTSAbstractText atext = atextController.createNew();
+        atext.setName("Abstract Text");
+        eventBroker.post("model_atext_new_root/asyncEvent", atext);
+    }
+
 }

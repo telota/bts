@@ -19,28 +19,25 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 
 /**
- * 
- * 	@author ghillairet
- *	
+ * @author ghillairet
  */
 public abstract class JsOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable {
-	
-	@SuppressWarnings("unused")
-	private Map<?, ?> options;
-	
-	protected final JSONSave writer;
-	protected JsonNode currentRoot;
-	protected Resource resource;
-	
-	public JsOutputStream(Map<?, ?> options) {
-		this.options = options;
-		this.writer = new JSONSave(options);
-	}
-	
-	@Override
-	public void saveResource(Resource resource) throws IOException {
-		this.resource = resource;
-		this.currentRoot = writer.genJson(resource);
-	}
-	
+
+    protected final JSONSave writer;
+    protected JsonNode currentRoot;
+    protected Resource resource;
+    @SuppressWarnings("unused")
+    private Map<?, ?> options;
+
+    public JsOutputStream(Map<?, ?> options) {
+        this.options = options;
+        this.writer = new JSONSave(options);
+    }
+
+    @Override
+    public void saveResource(Resource resource) throws IOException {
+        this.resource = resource;
+        this.currentRoot = writer.genJson(resource);
+    }
+
 }

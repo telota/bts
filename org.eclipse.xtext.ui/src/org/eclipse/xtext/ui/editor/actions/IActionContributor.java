@@ -22,37 +22,37 @@ import com.google.inject.TypeLiteral;
  * @author Sven Efftinge - Initial contribution and API
  */
 public interface IActionContributor {
-	/**
-	 * hook used to contribute any actions on editor start up.
-	 */
-	public void contributeActions(XtextEditor editor);
-	
-	public void editorDisposed(XtextEditor editor);
-	
-	/**
-	 * composite action contributor delegating call to all registered {@link IActionContributor}
-	 */
-	public class CompositeImpl implements IActionContributor {
-		
-		@Inject
-		private Injector injector;
+    /**
+     * hook used to contribute any actions on editor start up.
+     */
+    public void contributeActions(XtextEditor editor);
 
-		private List<IActionContributor> children = newArrayList();
+    public void editorDisposed(XtextEditor editor);
 
-		public void contributeActions(XtextEditor editor) {
-			List<Binding<IActionContributor>> bindingsByType = injector.findBindingsByType(TypeLiteral.get(IActionContributor.class));
-			for (Binding<IActionContributor> binding : bindingsByType) {
-				IActionContributor actionContributor = injector.getInstance(binding.getKey());
-				actionContributor.contributeActions(editor);
-				children.add(actionContributor);
-			}
-		}
-		
-		public void editorDisposed(XtextEditor editor) {
-			for (IActionContributor actionContributor: children) {
-				actionContributor.editorDisposed(editor);
-			}
-		}
+    /**
+     * composite action contributor delegating call to all registered {@link IActionContributor}
+     */
+    public class CompositeImpl implements IActionContributor {
 
-	}
+        @Inject
+        private Injector injector;
+
+        private List<IActionContributor> children = newArrayList();
+
+        public void contributeActions(XtextEditor editor) {
+            List<Binding<IActionContributor>> bindingsByType = injector.findBindingsByType(TypeLiteral.get(IActionContributor.class));
+            for (Binding<IActionContributor> binding : bindingsByType) {
+                IActionContributor actionContributor = injector.getInstance(binding.getKey());
+                actionContributor.contributeActions(editor);
+                children.add(actionContributor);
+            }
+        }
+
+        public void editorDisposed(XtextEditor editor) {
+            for (IActionContributor actionContributor : children) {
+                actionContributor.editorDisposed(editor);
+            }
+        }
+
+    }
 }

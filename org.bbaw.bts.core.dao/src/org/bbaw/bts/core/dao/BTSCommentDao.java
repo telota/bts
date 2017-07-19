@@ -36,16 +36,15 @@ import org.bbaw.bts.btsmodel.BTSComment;
  *
  * @author Christoph Plutte
  */
-public interface BTSCommentDao extends GenericDao<BTSComment, String>
-{
+public interface BTSCommentDao extends GenericDao<BTSComment, String> {
 
-	/**
-	 * Removes the bts comment.
-	 *
-	 * @param comment the comment
-	 * @param path the path
-	 * @return true, if successful
-	 */
-	boolean removeBTSComment(BTSComment comment, String path);
+    /**
+     * Removes the bts comment.
+     *
+     * @param comment the comment
+     * @param path    the path
+     * @return true, if successful
+     */
+    boolean removeBTSComment(BTSComment comment, String path);
 
 }

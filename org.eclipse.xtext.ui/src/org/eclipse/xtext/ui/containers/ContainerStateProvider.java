@@ -7,11 +7,11 @@ import com.google.inject.Inject;
 
 public class ContainerStateProvider implements IAllContainersState.Provider {
 
-	@Inject
-	private IAllContainersState containerState;
+    @Inject
+    private IAllContainersState containerState;
 
-	public IAllContainersState get(IResourceDescriptions context) {
-		return containerState;
-	}
+    public IAllContainersState get(IResourceDescriptions context) {
+        return containerState;
+    }
 
 }

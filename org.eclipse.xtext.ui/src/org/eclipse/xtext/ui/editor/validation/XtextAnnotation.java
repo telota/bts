@@ -32,62 +32,62 @@ import org.eclipse.xtext.validation.Issue;
  */
 public class XtextAnnotation extends Annotation implements IAnnotationPresentation {
 
-	private final IXtextDocument document;
-	private final Issue issue;
-	private final int layer;
-	private final boolean isQuickfixable;
-	private final AnnotationPreferenceLookup lookup= EditorsUI.getAnnotationPreferenceLookup();
+    private final IXtextDocument document;
+    private final Issue issue;
+    private final int layer;
+    private final boolean isQuickfixable;
+    private final AnnotationPreferenceLookup lookup = EditorsUI.getAnnotationPreferenceLookup();
 
-	public String getIssueCode() {
-		return issue.getCode();
-	}
-	
-	public String[] getIssueData() {
-		return issue.getData();
-	}
-	
-	public IXtextDocument getDocument() {
-		return document;
-	}
-	
-	public URI getUriToProblem() {
-		return issue.getUriToProblem();
-	}
-	
-	public Issue getIssue() {
-		return issue;
-	}
-	
-	public boolean isQuickFixable() {
-		return isQuickfixable;
-	}
-	
-	public XtextAnnotation(String type, boolean isPersistent, IXtextDocument document, Issue issue, boolean isQuickfixable) {
-		super(type, isPersistent, issue.getMessage());
-		
-		AnnotationPreference preference= lookup.getAnnotationPreference(this);
-		if (preference != null)
-			this.layer = preference.getPresentationLayer() + 1;
-		else
-			this.layer = IAnnotationAccessExtension.DEFAULT_LAYER + 1;
-		
-		this.document = document;
-		this.issue = issue;
-		this.isQuickfixable = isQuickfixable;
-	}
+    public XtextAnnotation(String type, boolean isPersistent, IXtextDocument document, Issue issue, boolean isQuickfixable) {
+        super(type, isPersistent, issue.getMessage());
 
-	public int getLayer() {
-		return layer;
-	}
+        AnnotationPreference preference = lookup.getAnnotationPreference(this);
+        if (preference != null)
+            this.layer = preference.getPresentationLayer() + 1;
+        else
+            this.layer = IAnnotationAccessExtension.DEFAULT_LAYER + 1;
 
-	public void paint(GC gc, Canvas canvas, Rectangle bounds) {
-		Image image = getImages().get(getType());
-		if(image != null)
-			ImageUtilities.drawImage(image, gc, canvas, bounds, SWT.CENTER, SWT.TOP);
-	}
+        this.document = document;
+        this.issue = issue;
+        this.isQuickfixable = isQuickfixable;
+    }
 
-	private Map<String, Image> getImages() {
-		return isQuickfixable ? XtextPluginImages.getAnnotationImagesFixable() : XtextPluginImages.getAnnotationImagesNonfixable();
-	}
-	
+    public String getIssueCode() {
+        return issue.getCode();
+    }
+
+    public String[] getIssueData() {
+        return issue.getData();
+    }
+
+    public IXtextDocument getDocument() {
+        return document;
+    }
+
+    public URI getUriToProblem() {
+        return issue.getUriToProblem();
+    }
+
+    public Issue getIssue() {
+        return issue;
+    }
+
+    public boolean isQuickFixable() {
+        return isQuickfixable;
+    }
+
+    public int getLayer() {
+        return layer;
+    }
+
+    public void paint(GC gc, Canvas canvas, Rectangle bounds) {
+        Image image = getImages().get(getType());
+        if (image != null)
+            ImageUtilities.drawImage(image, gc, canvas, bounds, SWT.CENTER, SWT.TOP);
+    }
+
+    private Map<String, Image> getImages() {
+        return isQuickfixable ? XtextPluginImages.getAnnotationImagesFixable() : XtextPluginImages.getAnnotationImagesNonfixable();
+    }
+
 }

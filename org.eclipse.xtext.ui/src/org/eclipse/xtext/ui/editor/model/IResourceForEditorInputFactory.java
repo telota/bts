@@ -14,5 +14,5 @@ import org.eclipse.ui.IEditorInput;
  * @author Sven Efftinge - Initial contribution and API
  */
 public interface IResourceForEditorInputFactory {
-	Resource createResource(IEditorInput input);
+    Resource createResource(IEditorInput input);
 }

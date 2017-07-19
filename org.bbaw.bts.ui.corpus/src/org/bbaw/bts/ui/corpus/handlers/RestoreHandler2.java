@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
@@ -22,46 +21,44 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 public class RestoreHandler2 {
-	@Execute
-	public void execute(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
-			EditingDomainController editingDomainController, @Optional @Active MPart activePart) {
-		System.out.println("restore");
-		if (selection instanceof EObject) {
-			EditingDomain ed = editingDomainController
-					.getEditingDomain((EObject) selection);
-			if (ed != null) {
-				Command command = SetCommand.create(ed, selection,
-						BtsmodelPackage.ADMINISTRATIV_DATA_OBJECT__STATE,
-						BTSConstants.OBJECT_STATE_ACTIVE);
-				ed.getCommandStack().execute(command);
+    @Execute
+    public void execute(
+            @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection,
+            EditingDomainController editingDomainController, @Optional @Active MPart activePart) {
+        System.out.println("restore");
+        if (selection instanceof EObject) {
+            EditingDomain ed = editingDomainController
+                    .getEditingDomain((EObject) selection);
+            if (ed != null) {
+                Command command = SetCommand.create(ed, selection,
+                        BtsmodelPackage.ADMINISTRATIV_DATA_OBJECT__STATE,
+                        BTSConstants.OBJECT_STATE_ACTIVE);
+                ed.getCommandStack().execute(command);
 
-			} else {
-				((AdministrativDataObject) selection)
-						.setState(BTSConstants.OBJECT_STATE_ACTIVE);
-			}
-			
-			// General Command Controller... save!
-			if (activePart != null)
-			{
-			
-				Object o = activePart.getObject();
-				if (o instanceof StructuredViewerProvider)
-				{
-					StructuredViewerProvider viewerProvider = (StructuredViewerProvider) o;
-					viewerProvider.getActiveStructuredViewer().refresh();
-				}
-			}
-		}
-	}
-	@CanExecute
-	public boolean canExecute(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection,
-			@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
-		if (mayDelete != null && mayDelete.booleanValue())
-		{
-			return selection != null;
-		}
-		return false;
-	}	
+            } else {
+                ((AdministrativDataObject) selection)
+                        .setState(BTSConstants.OBJECT_STATE_ACTIVE);
+            }
+
+            // General Command Controller... save!
+            if (activePart != null) {
+
+                Object o = activePart.getObject();
+                if (o instanceof StructuredViewerProvider) {
+                    StructuredViewerProvider viewerProvider = (StructuredViewerProvider) o;
+                    viewerProvider.getActiveStructuredViewer().refresh();
+                }
+            }
+        }
+    }
+
+    @CanExecute
+    public boolean canExecute(
+            @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection,
+            @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
+        if (mayDelete != null && mayDelete.booleanValue()) {
+            return selection != null;
+        }
+        return false;
+    }
 }

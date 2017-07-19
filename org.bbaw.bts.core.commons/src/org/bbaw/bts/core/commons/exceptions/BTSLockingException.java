@@ -34,18 +34,20 @@ package org.bbaw.bts.core.commons.exceptions;
  *
  * @author Christoph Plutte
  */
-public class BTSLockingException extends BTSRuntimeException{
+public class BTSLockingException extends BTSRuntimeException {
 
-	/**
-	 * Instantiates a new BTS locking exception.
-	 *
-	 * @param message the message
-	 */
-	public BTSLockingException(String message) {
-		super(message);
-	}
+    /**
+     * The Constant serialVersionUID.
+     */
+    private static final long serialVersionUID = -6966838705643310221L;
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = -6966838705643310221L;
+    /**
+     * Instantiates a new BTS locking exception.
+     *
+     * @param message the message
+     */
+    public BTSLockingException(String message) {
+        super(message);
+    }
 
 }

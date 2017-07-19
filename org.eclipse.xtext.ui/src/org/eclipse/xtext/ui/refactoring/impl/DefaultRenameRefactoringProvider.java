@@ -22,45 +22,45 @@ import com.google.inject.Provider;
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class DefaultRenameRefactoringProvider implements IRenameRefactoringProvider {
-	@Inject
-	private Provider<AbstractRenameProcessor> processorProvider;
+    @Inject
+    private Provider<AbstractRenameProcessor> processorProvider;
 
-	public ProcessorBasedRefactoring getRenameRefactoring(IRenameElementContext renameElementContext) {
-		RenameProcessor processor = getRenameProcessor(renameElementContext);
-		if (processor != null) {
-			return new RenameRefactoring(processor);
-		}
-		return null;
-	}
-	
-	public RenameProcessor getRenameProcessor(IRenameElementContext renameElementContext) {
-		AbstractRenameProcessor processor = processorProvider.get();
-		if (processor != null && processor.initialize(renameElementContext)) {
-			return processor;
-		}
-		return null;
-	}
-	
-	protected static class RenameRefactoring extends ProcessorBasedRefactoring {
+    public ProcessorBasedRefactoring getRenameRefactoring(IRenameElementContext renameElementContext) {
+        RenameProcessor processor = getRenameProcessor(renameElementContext);
+        if (processor != null) {
+            return new RenameRefactoring(processor);
+        }
+        return null;
+    }
 
-		private RenameProcessor fProcessor;
+    public RenameProcessor getRenameProcessor(IRenameElementContext renameElementContext) {
+        AbstractRenameProcessor processor = processorProvider.get();
+        if (processor != null && processor.initialize(renameElementContext)) {
+            return processor;
+        }
+        return null;
+    }
 
-		public RenameRefactoring(RenameProcessor processor) {
-			super(processor);
-			Assert.isNotNull(processor);
-			fProcessor= processor;
-		}
+    protected static class RenameRefactoring extends ProcessorBasedRefactoring {
 
-		@Override
-		public RefactoringProcessor getProcessor() {
-			return fProcessor;
-		}
-		
-		@Override
-		protected RefactoringTickProvider doGetRefactoringTickProvider() {
-			// some geeky fun with progress markers
-			return new RefactoringTickProvider(1, 200, 1, 1);
-		}
-	}
+        private RenameProcessor fProcessor;
+
+        public RenameRefactoring(RenameProcessor processor) {
+            super(processor);
+            Assert.isNotNull(processor);
+            fProcessor = processor;
+        }
+
+        @Override
+        public RefactoringProcessor getProcessor() {
+            return fProcessor;
+        }
+
+        @Override
+        protected RefactoringTickProvider doGetRefactoringTickProvider() {
+            // some geeky fun with progress markers
+            return new RefactoringTickProvider(1, 200, 1, 1);
+        }
+    }
 
 }

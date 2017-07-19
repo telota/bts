@@ -10,17 +10,17 @@ package org.eclipse.xtext.ui.refactoring.ui;
 
 /**
  * Common UI facade of JDT and Xtext rename refactorings.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public interface IRenameSupport {
-	
-	interface Factory {
-		IRenameSupport create(Object context, String newName);
-	}
-	
-	void startRefactoringWithDialog(final boolean previewOnly) throws InterruptedException;
 
-	void startDirectRefactoring() throws InterruptedException;
-	
+    void startRefactoringWithDialog(final boolean previewOnly) throws InterruptedException;
+
+    void startDirectRefactoring() throws InterruptedException;
+
+    interface Factory {
+        IRenameSupport create(Object context, String newName);
+    }
+
 }

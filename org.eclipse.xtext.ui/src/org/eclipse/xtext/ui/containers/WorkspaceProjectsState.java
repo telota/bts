@@ -21,30 +21,30 @@ import com.google.inject.Singleton;
 @Singleton
 public class WorkspaceProjectsState extends AbstractAllContainersState {
 
-	@Inject
-	private WorkspaceProjectsStateHelper helper;
-	
-	@Override
-	protected String doInitHandle(URI uri) {
-		return helper.initHandle(uri);
-	}
+    @Inject
+    private WorkspaceProjectsStateHelper helper;
 
-	@Override
-	protected Collection<URI> doInitContainedURIs(String containerHandle) {
-		return helper.initContainedURIs(containerHandle);
-	}
-	
-	@Override
-	protected List<String> doInitVisibleHandles(String handle) {
-		return helper.initVisibleHandles(handle);
-	}
-	
-	public WorkspaceProjectsStateHelper getHelper() {
-		return helper;
-	}
-	
-	public void setHelper(WorkspaceProjectsStateHelper helper) {
-		this.helper = helper;
-	}
+    @Override
+    protected String doInitHandle(URI uri) {
+        return helper.initHandle(uri);
+    }
+
+    @Override
+    protected Collection<URI> doInitContainedURIs(String containerHandle) {
+        return helper.initContainedURIs(containerHandle);
+    }
+
+    @Override
+    protected List<String> doInitVisibleHandles(String handle) {
+        return helper.initVisibleHandles(handle);
+    }
+
+    public WorkspaceProjectsStateHelper getHelper() {
+        return helper;
+    }
+
+    public void setHelper(WorkspaceProjectsStateHelper helper) {
+        this.helper = helper;
+    }
 
 }

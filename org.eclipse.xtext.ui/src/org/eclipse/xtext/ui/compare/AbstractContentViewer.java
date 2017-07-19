@@ -18,60 +18,60 @@ import org.eclipse.swt.widgets.Control;
  * @author Michael Clay - Initial contribution and API
  */
 public abstract class AbstractContentViewer extends Viewer {
-	protected Composite parent;
-	protected CompareConfiguration compareConfiguration;
-	protected ISelection selection;
-	protected ISourceViewer sourceViewer;
-	protected Object input;
+    protected Composite parent;
+    protected CompareConfiguration compareConfiguration;
+    protected ISelection selection;
+    protected ISourceViewer sourceViewer;
+    protected Object input;
 
-	public void init(Composite parent, CompareConfiguration config) {
-		this.parent = parent;
-		this.compareConfiguration = config;
-	}
+    public void init(Composite parent, CompareConfiguration config) {
+        this.parent = parent;
+        this.compareConfiguration = config;
+    }
 
-	@Override
-	public Control getControl() {
-		if (sourceViewer == null) {
-			sourceViewer = createSourceViewer();
-			configureSourceViewer(sourceViewer);
-		}
-		return sourceViewer != null ? sourceViewer.getTextWidget() : null;
-	}
+    @Override
+    public Control getControl() {
+        if (sourceViewer == null) {
+            sourceViewer = createSourceViewer();
+            configureSourceViewer(sourceViewer);
+        }
+        return sourceViewer != null ? sourceViewer.getTextWidget() : null;
+    }
 
-	protected abstract ISourceViewer createSourceViewer();
+    protected abstract ISourceViewer createSourceViewer();
 
-	protected abstract void configureSourceViewer(ISourceViewer sourceViewer);
+    protected abstract void configureSourceViewer(ISourceViewer sourceViewer);
 
-	@Override
-	public Object getInput() {
-		return this.input;
-	}
+    @Override
+    public Object getInput() {
+        return this.input;
+    }
 
-	@Override
-	public ISelection getSelection() {
-		return this.selection;
-	}
+    @Override
+    public void setInput(Object input) {
+        this.input = input;
+    }
 
-	@Override
-	public void refresh() {
-	}
+    @Override
+    public ISelection getSelection() {
+        return this.selection;
+    }
 
-	@Override
-	public void setInput(Object input) {
-		this.input = input;
-	}
+    @Override
+    public void refresh() {
+    }
 
-	@Override
-	public void setSelection(ISelection selection, boolean reveal) {
-		this.selection = selection;
-	}
+    @Override
+    public void setSelection(ISelection selection, boolean reveal) {
+        this.selection = selection;
+    }
 
-	public Composite getParent() {
-		return parent;
-	}
+    public Composite getParent() {
+        return parent;
+    }
 
-	public CompareConfiguration getCompareConfiguration() {
-		return compareConfiguration;
-	}
+    public CompareConfiguration getCompareConfiguration() {
+        return compareConfiguration;
+    }
 
 }

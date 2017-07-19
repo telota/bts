@@ -18,19 +18,19 @@ import org.eclipse.xtext.validation.Issue;
  */
 public interface IssueResolutionProvider {
 
-	boolean hasResolutionFor(String issueCode);
+    boolean hasResolutionFor(String issueCode);
 
-	public List<IssueResolution> getResolutions(Issue issue);
+    public List<IssueResolution> getResolutions(Issue issue);
 
-	public static class NullImpl implements IssueResolutionProvider {
+    public static class NullImpl implements IssueResolutionProvider {
 
-		public List<IssueResolution> getResolutions(Issue issue) {
-			return Collections.emptyList();
-		}
+        public List<IssueResolution> getResolutions(Issue issue) {
+            return Collections.emptyList();
+        }
 
-		public boolean hasResolutionFor(String issueCode) {
-			return false;
-		}
+        public boolean hasResolutionFor(String issueCode) {
+            return false;
+        }
 
-	}
+    }
 }

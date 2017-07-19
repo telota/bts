@@ -16,35 +16,32 @@ import org.bbaw.bts.core.services.impl.internal.SearchServiceFactoryHelper;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 
 public class BTSObjectSearchServiceFactoryCore implements
-		BTSObjectSearchServiceFactory {
+        BTSObjectSearchServiceFactory {
 
-	public BTSObjectSearchServiceFactoryCore() {
-		// TODO Auto-generated constructor stub
-	}
+    public BTSObjectSearchServiceFactoryCore() {
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public List<BTSObjectSearchService> getSearchServices() {
-		SearchServiceFactoryHelper helper = ContextInjectionFactory.make(SearchServiceFactoryHelper.class, StaticAccessController.getContext());
-		List<BTSObjectSearchService> services = new Vector<>(7);
-		
-		GenericObjectService<?, ?> service = helper.getCommentService();
-		if (service instanceof BTSObjectSearchService)
-		{
-			services.add((BTSObjectSearchService) service);
-		}
-		
-		service = helper.getUserGroupService();
-		if (service instanceof BTSObjectSearchService)
-		{
-			services.add((BTSObjectSearchService) service);
-		}
-		
-		service = helper.getUserService();
-		if (service instanceof BTSObjectSearchService)
-		{
-			services.add((BTSObjectSearchService) service);
-		}
-		return services;
-	}
-	
+    @Override
+    public List<BTSObjectSearchService> getSearchServices() {
+        SearchServiceFactoryHelper helper = ContextInjectionFactory.make(SearchServiceFactoryHelper.class, StaticAccessController.getContext());
+        List<BTSObjectSearchService> services = new Vector<>(7);
+
+        GenericObjectService<?, ?> service = helper.getCommentService();
+        if (service instanceof BTSObjectSearchService) {
+            services.add((BTSObjectSearchService) service);
+        }
+
+        service = helper.getUserGroupService();
+        if (service instanceof BTSObjectSearchService) {
+            services.add((BTSObjectSearchService) service);
+        }
+
+        service = helper.getUserService();
+        if (service instanceof BTSObjectSearchService) {
+            services.add((BTSObjectSearchService) service);
+        }
+        return services;
+    }
+
 }

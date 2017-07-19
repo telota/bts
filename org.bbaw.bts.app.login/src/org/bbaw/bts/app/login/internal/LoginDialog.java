@@ -44,373 +44,340 @@ import org.eclipse.swt.widgets.Text;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
-public class LoginDialog extends Dialog
-{
+public class LoginDialog extends Dialog {
 
-	protected Composite loginComposite;
+    private final Shell shell;
+    protected Composite loginComposite;
+    private Image titleImage;
 
-	private final Shell shell;
+    private ImageDescriptor imageDescriptor;
 
-	private Image titleImage;
+    private BTSUserController userController;
 
-	private ImageDescriptor imageDescriptor;
+    private Text passwortText;
 
-	private BTSUserController userController;
+    private Text userText;
 
-	private Text passwortText;
+    private Button okButton;
 
-	private Text userText;
+    private Button cancelButton;
 
-	private Button okButton;
+    private BTSUser validUser;
 
-	private Button cancelButton;
+    private Label errorLabel;
 
-	private BTSUser validUser;
+    private Button rememberMeButton;
 
-	private Label errorLabel;
+    private Logger logger;
 
-	private Button rememberMeButton;
+    private boolean restartRequired;
 
-	private Logger logger;
+    public LoginDialog(Shell parentShell, IEclipseContext context,
+                       BTSUserController userController) {
+        super(parentShell);
+        this.shell = parentShell;
+        this.userController = userController;
+        this.logger = context.get(Logger.class);
+    }
 
-	private boolean restartRequired;
+    @Override
+    protected void configureShell(Shell shell) {
+        super.configureShell(shell);
+        shell.setText("BTS Login");
+    }
 
-	public LoginDialog(Shell parentShell, IEclipseContext context,
-			BTSUserController userController)
-	{
-		super(parentShell);
-		this.shell = parentShell;
-		this.userController = userController;
-		this.logger = context.get(Logger.class);
-	}
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        parent.setBackgroundMode(SWT.INHERIT_DEFAULT);
+        parent.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        Composite control = createContentArea(parent);
+        control.setData("org.eclipse.e4.ui.css.id", "LoginDialog");
+        Rectangle controlRect = control.getBounds();
 
-	@Override
-	protected void configureShell(Shell shell)
-	{
-		super.configureShell(shell);
-		shell.setText("BTS Login");
-	}
+        // looks strange in multi monitor environments
+        // Rectangle displayBounds = shell.getDisplay().getBounds();
 
-	@Override
-	protected Control createDialogArea(Composite parent)
-	{
-		parent.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		parent.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		Composite control = createContentArea(parent);
-		control.setData("org.eclipse.e4.ui.css.id", "LoginDialog");
-		Rectangle controlRect = control.getBounds();
+        shell.getDisplay();
+        Monitor primary = Display.getDefault().getPrimaryMonitor();
+        Rectangle displayBounds = primary.getBounds();
 
-		// looks strange in multi monitor environments
-		// Rectangle displayBounds = shell.getDisplay().getBounds();
+        int x = (displayBounds.width - controlRect.width) / 2;
+        int y = (displayBounds.height - controlRect.height) / 2;
+        shell.setBounds(x, y, controlRect.width, controlRect.height);
 
-		shell.getDisplay();
-		Monitor primary = Display.getDefault().getPrimaryMonitor();
-		Rectangle displayBounds = primary.getBounds();
+        return control;
+    }
 
-		int x = (displayBounds.width - controlRect.width) / 2;
-		int y = (displayBounds.height - controlRect.height) / 2;
-		shell.setBounds(x, y, controlRect.width, controlRect.height);
+    protected Composite createContentArea(Composite parent) {
+        Composite composite = new Composite(parent, SWT.NONE);
+        composite.setBackgroundMode(SWT.INHERIT_DEFAULT);
+        composite.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.numColumns = 1;
+        gridLayout.marginHeight = 0;
+        gridLayout.marginWidth = 0;
+        composite.setLayout(gridLayout);
 
-		return control;
-	}
+        if (imageDescriptor == null) {
+            imageDescriptor = imageDescriptorFromURI(URI
+                    .createURI("platform:/plugin/org.bbaw.bts.app.login/images/btsStart.jpg"));
+        }
+        if (imageDescriptor != null) {
+            titleImage = imageDescriptor.createImage();
+            Label imageLabel = new Label(composite, SWT.NONE);
+            imageLabel.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+            GridData data = new GridData();
+            data.horizontalAlignment = GridData.FILL;
+            data.verticalAlignment = GridData.BEGINNING;
+            data.horizontalSpan = 1;
+            imageLabel.setLayoutData(data);
+            imageLabel.setImage(titleImage);
+        }
 
-	protected Composite createContentArea(Composite parent)
-	{
-		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		composite.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 1;
-		gridLayout.marginHeight = 0;
-		gridLayout.marginWidth = 0;
-		composite.setLayout(gridLayout);
+        Composite userPasswortComposite = new Composite(composite, SWT.NONE);
+        userPasswortComposite.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        errorLabel = new Label(userPasswortComposite, SWT.BOLD);
+        errorLabel.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        errorLabel.setText("");
+        GridData gd = new GridData();
+        gd.grabExcessHorizontalSpace = true;
+        gd.horizontalAlignment = GridData.FILL;
+        gd.horizontalSpan = 2;
+        errorLabel.setLayoutData(gd);
+        errorLabel.setForeground(BTSUIConstants.VIEW_FOREGROUND_INVALID_COLOR);
 
-		if (imageDescriptor == null)
-		{
-			imageDescriptor = imageDescriptorFromURI(URI
-					.createURI("platform:/plugin/org.bbaw.bts.app.login/images/btsStart.jpg"));
-		}
-		if (imageDescriptor != null)
-		{
-			titleImage = imageDescriptor.createImage();
-			Label imageLabel = new Label(composite, SWT.NONE);
-			imageLabel.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-			GridData data = new GridData();
-			data.horizontalAlignment = GridData.FILL;
-			data.verticalAlignment = GridData.BEGINNING;
-			data.horizontalSpan = 1;
-			imageLabel.setLayoutData(data);
-			imageLabel.setImage(titleImage);
-		}
+        userPasswortComposite.setData("org.eclipse.e4.ui.css.id", "LoginDialog");
+        GridLayout gridLayout2 = new GridLayout(2, false);
+        gridLayout2.marginHeight = 10;
+        gridLayout2.marginWidth = 30;
+        userPasswortComposite.setLayout(gridLayout2);
+        GridData gridData = new GridData();
+        gridData.grabExcessHorizontalSpace = true;
+        gridData.horizontalAlignment = GridData.FILL;
+        userPasswortComposite.setLayoutData(gridData);
 
-		Composite userPasswortComposite = new Composite(composite, SWT.NONE);
-		userPasswortComposite.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		errorLabel = new Label(userPasswortComposite, SWT.BOLD);
-		errorLabel.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		errorLabel.setText("");
-		GridData gd = new GridData();
-		gd.grabExcessHorizontalSpace = true;
-		gd.horizontalAlignment = GridData.FILL;
-		gd.horizontalSpan = 2;
-		errorLabel.setLayoutData(gd);
-		errorLabel.setForeground(BTSUIConstants.VIEW_FOREGROUND_INVALID_COLOR);
+        Label userLabel = new Label(userPasswortComposite, SWT.RIGHT);
+        userLabel.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        userLabel.setText("User  ");
+        userText = new Text(userPasswortComposite, SWT.BORDER);
+        userText.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        gridData = new GridData();
+        gridData.grabExcessHorizontalSpace = true;
+        gridData.horizontalAlignment = GridData.FILL;
+        userText.setLayoutData(gridData);
+        userText.addModifyListener(new ModifyListener() {
 
-		userPasswortComposite.setData("org.eclipse.e4.ui.css.id", "LoginDialog");
-		GridLayout gridLayout2 = new GridLayout(2, false);
-		gridLayout2.marginHeight = 10;
-		gridLayout2.marginWidth = 30;
-		userPasswortComposite.setLayout(gridLayout2);
-		GridData gridData = new GridData();
-		gridData.grabExcessHorizontalSpace = true;
-		gridData.horizontalAlignment = GridData.FILL;
-		userPasswortComposite.setLayoutData(gridData);
+            @Override
+            public void modifyText(ModifyEvent e) {
+                errorLabel.setText("");
 
-		Label userLabel = new Label(userPasswortComposite, SWT.RIGHT);
-		userLabel.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		userLabel.setText("User  ");
-		userText = new Text(userPasswortComposite, SWT.BORDER);
-		userText.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		gridData = new GridData();
-		gridData.grabExcessHorizontalSpace = true;
-		gridData.horizontalAlignment = GridData.FILL;
-		userText.setLayoutData(gridData);
-		userText.addModifyListener(new ModifyListener()
-		{
+            }
+        });
+        userText.addKeyListener(new KeyListener() {
 
-			@Override
-			public void modifyText(ModifyEvent e)
-			{
-				errorLabel.setText("");
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.keyCode == SWT.TAB) {
+                    passwortText.setFocus();
+                }
 
-			}
-		});
-		userText.addKeyListener(new KeyListener() {
+            }
 
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.keyCode == SWT.TAB) {
-					passwortText.setFocus();
-				}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // TODO Auto-generated method stub
 
-			}
+            }
+        });
+        userText.forceFocus();
 
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
+        Label passwordLabel = new Label(userPasswortComposite, SWT.RIGHT);
+        passwordLabel.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        passwordLabel.setText("Password  ");
+        passwortText = new Text(userPasswortComposite, SWT.PASSWORD | SWT.BORDER);
+        passwortText
+                .setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        gridData = new GridData();
+        gridData.grabExcessHorizontalSpace = true;
+        gridData.horizontalAlignment = GridData.FILL;
+        passwortText.setLayoutData(gridData);
+        passwortText.addModifyListener(new ModifyListener() {
 
-			}
-		});
-		userText.forceFocus();
+            @Override
+            public void modifyText(ModifyEvent e) {
+                errorLabel.setText("");
 
-		Label passwordLabel = new Label(userPasswortComposite, SWT.RIGHT);
-		passwordLabel.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		passwordLabel.setText("Password  ");
-		passwortText = new Text(userPasswortComposite, SWT.PASSWORD | SWT.BORDER);
-		passwortText
-				.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		gridData = new GridData();
-		gridData.grabExcessHorizontalSpace = true;
-		gridData.horizontalAlignment = GridData.FILL;
-		passwortText.setLayoutData(gridData);
-		passwortText.addModifyListener(new ModifyListener()
-		{
+            }
+        });
+        passwortText.addKeyListener(new KeyListener() {
 
-			@Override
-			public void modifyText(ModifyEvent e)
-			{
-				errorLabel.setText("");
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.stateMask == SWT.SHIFT
+                        && e.keyCode == 9) {
+                    userText.setFocus();
+                }
 
-			}
-		});
-		passwortText.addKeyListener(new KeyListener() {
+            }
 
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.stateMask == SWT.SHIFT 
-						&&e.keyCode == 9) {
-					userText.setFocus();
-				}
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // TODO Auto-generated method stub
 
-			}
+            }
+        });
+        rememberMeButton = new Button(userPasswortComposite, SWT.CHECK);
+        rememberMeButton
+                .setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        rememberMeButton.setText("Remember me");
+        rememberMeButton.setLayoutData(new GridData());
+        userPasswortComposite.setTabList(new Control[]{
+                userText, passwortText, rememberMeButton
+        });
+        return composite;
+    }
 
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        parent.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        // create OK and Cancel buttons by default
+        parent.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
-			}
-		});
-		rememberMeButton = new Button(userPasswortComposite, SWT.CHECK);
-		rememberMeButton
-				.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		rememberMeButton.setText("Remember me");
-		rememberMeButton.setLayoutData(new GridData());
-		userPasswortComposite.setTabList(new Control[] {
-				userText, passwortText, rememberMeButton
-		});
-		return composite;
-	}
+        // FIXME add custom buttons
+        // add authentication validation
+        // set return value according to authentication result.
+        // Bundle bundle = FrameworkUtil.getBundle(getClass());
+        // BundleContext bundleContext = bundle.getBundleContext();
+        // IEclipseContext eclipseCtx =
+        // EclipseContextFactory.getServiceContext(bundleContext);
+        // eclipseCtx.set("currentUser", user);
+        okButton = createOkButton(parent, IDialogConstants.OK_ID, "Login", true);
+        okButton.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+        cancelButton = createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+        cancelButton
+                .setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
+    }
 
-	@Override
-	protected void createButtonsForButtonBar(Composite parent)
-	{
-		parent.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		// create OK and Cancel buttons by default
-		parent.setBackgroundMode(SWT.INHERIT_DEFAULT);
+    private Button createOkButton(Composite parent, int id, String label, boolean defaultButton) {
+        // increment the number of columns in the button bar
+        ((GridLayout) parent.getLayout()).numColumns++;
+        Button button = new Button(parent, SWT.PUSH);
+        button.setText(label);
+        button.setFont(JFaceResources.getDialogFont());
+        button.setData(new Integer(id));
+        button.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent event) {
+                if (isValidLogin()) {
+                    logger.info("Login successful");
 
-		// FIXME add custom buttons
-		// add authentication validation
-		// set return value according to authentication result.
-		// Bundle bundle = FrameworkUtil.getBundle(getClass());
-		// BundleContext bundleContext = bundle.getBundleContext();
-		// IEclipseContext eclipseCtx =
-		// EclipseContextFactory.getServiceContext(bundleContext);
-		// eclipseCtx.set("currentUser", user);
-		okButton = createOkButton(parent, IDialogConstants.OK_ID, "Login", true);
-		okButton.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-		cancelButton = createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
-		cancelButton
-				.setBackground(BTSUIConstants.VIEW_BACKGROUND_DESELECTED_COLOR);
-	}
+                    buttonPressed(((Integer) event.widget.getData()).intValue());
+                } else {
+                    showLoginError();
+                }
+            }
 
-	private Button createOkButton(Composite parent, int id, String label, boolean defaultButton)
-	{
-		// increment the number of columns in the button bar
-		((GridLayout) parent.getLayout()).numColumns++;
-		Button button = new Button(parent, SWT.PUSH);
-		button.setText(label);
-		button.setFont(JFaceResources.getDialogFont());
-		button.setData(new Integer(id));
-		button.addSelectionListener(new SelectionAdapter()
-		{
-			public void widgetSelected(SelectionEvent event)
-			{
-				if (isValidLogin())
-				{
-					logger.info("Login successful");
+        });
+        if (defaultButton) {
+            Shell shell = parent.getShell();
+            if (shell != null) {
+                shell.setDefaultButton(button);
+            }
+        }
+        setButtonLayoutData(button);
+        return button;
+    }
 
-					buttonPressed(((Integer) event.widget.getData()).intValue());
-				} else
-				{
-					showLoginError();
-				}
-			}
+    private void showLoginError() {
+        errorLabel.setText("User unknown or password invalid.");
 
-		});
-		if (defaultButton)
-		{
-			Shell shell = parent.getShell();
-			if (shell != null)
-			{
-				shell.setDefaultButton(button);
-			}
-		}
-		setButtonLayoutData(button);
-		return button;
-	}
+    }
 
-	private void showLoginError()
-	{
-		errorLabel.setText("User unknown or password invalid.");
+    private boolean isValidLogin() {
+        String userName = userText.getText().trim();
+        logger.info("Trying to validate user with username: " + userName);
 
-	}
+        String passWord = passwortText.getText().trim();
+        try {
+            if (!userController.setAuthentication(userName, passWord)) {
+                return false;
+            }
+        } catch (BTSDBLocalLoginException e) {
+            logger.info(e);
+            MessageDialog.openInformation(shell, "Restart required", "First time user login on this computer "
+                    + "or credentials updated. Restart of application is required.");
+            try {
+                userController.makeUserLocalDBAdmin(userName, passWord);
+            } catch (Exception e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+                return false;
+            }
+            this.restartRequired = true;
+            ;
+            return true;
+        } catch (Exception e) {
+            logger.info(e);
+            //FIXME abfangen wenn datenbank korrumpiert/nicht installiert/nicht gestartet wurde
+            return false;
+        }
+        QueryBuilder dd;
+        List<BTSUser> users = userController.listAll(userName, passWord);
+        for (BTSUser u : users) {
+            if (userName.equals(u.getUserName())) { // FIXME password checking
+                // && equalsPassword(u,
+                // passWord)) {
+                validUser = u;
+                logger.info("User found: " + u.get_id() + " userName: " + u.getUserName());
+                return true;
+            }
+        }
+        return userController.authenticatedUserIsDBAdmin(userName, passWord);
+    }
 
-	private boolean isValidLogin()
-	{
-		String userName = userText.getText().trim();
-		logger.info("Trying to validate user with username: " + userName);
+    private boolean equalsPassword(BTSUser u, String passWord) {
+        if (u.getPassword() != null) {
+            try {
+                return passWord == StringEncryption.decrypt(null, u.getPassword().getBytes(BTSConstants.ENCODING));
+            } catch (UnsupportedEncodingException | GeneralSecurityException e) {
+                return false;
+            }
 
-		String passWord = passwortText.getText().trim();
-		try {
-			if (!userController.setAuthentication(userName, passWord))
-			{
-				return false;
-			}
-		} catch (BTSDBLocalLoginException e) {
-			logger.info(e); 
-			MessageDialog.openInformation(shell, "Restart required", "First time user login on this computer "
-					+ "or credentials updated. Restart of application is required.");
-			try {
-				userController.makeUserLocalDBAdmin(userName, passWord);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				return false;
-			}
-			this.restartRequired = true;;
-			return true;
-		}catch (Exception e) {
-			logger.info(e); 
-			//FIXME abfangen wenn datenbank korrumpiert/nicht installiert/nicht gestartet wurde
-			return false;
-		}
-		QueryBuilder dd;
-		List<BTSUser> users = userController.listAll(userName, passWord);
-		for (BTSUser u : users) {
-			if (userName.equals(u.getUserName())) { // FIXME password checking
-													// && equalsPassword(u,
-													// passWord)) {
-				validUser = u;
-				logger.info("User found: " + u.get_id() + " userName: " + u.getUserName());
-				return true;
-			}
-		}
-		return userController.authenticatedUserIsDBAdmin(userName, passWord);
-	}
+        }
+        return false;
+    }
 
-	private boolean equalsPassword(BTSUser u, String passWord)
-	{
-		if (u.getPassword() != null)
-		{
-			try
-			{
-				return passWord == StringEncryption.decrypt(null, u.getPassword().getBytes(BTSConstants.ENCODING));
-			} catch (UnsupportedEncodingException | GeneralSecurityException e)
-			{
-				return false;
-			}
+    @Override
+    protected void buttonPressed(int buttonId) {
+        userController.setAuthenticatedUser(validUser);
+        if (rememberMeButton.getSelection()) {
+            userController.setRememberedUser(validUser);
+        } else {
+            userController.setRememberedUser(null);
+        }
 
-		}
-		return false;
-	}
+        super.buttonPressed(buttonId);
+    }
 
-	@Override
-	protected void buttonPressed(int buttonId)
-	{
-		userController.setAuthenticatedUser(validUser);
-		if (rememberMeButton.getSelection()) {
-			userController.setRememberedUser(validUser);
-		} else {
-			userController.setRememberedUser(null);
-		}
+    @Override
+    public boolean close() {
+        if (titleImage != null) {
+            titleImage.dispose();
+        }
+        return super.close();
+    }
 
-		super.buttonPressed(buttonId);
-	}
+    public ImageDescriptor imageDescriptorFromURI(URI iconPath) {
+        try {
+            return ImageDescriptor.createFromURL(new URL(iconPath.toString()));
+        } catch (MalformedURLException e) {
+            System.err.println("iconURI \"" + iconPath.toString()
+                    + "\" is invalid, a \"missing image\" icon will be shown");
+            return ImageDescriptor.getMissingImageDescriptor();
+        }
+    }
 
-	@Override
-	public boolean close()
-	{
-		if (titleImage != null)
-		{
-			titleImage.dispose();
-		}
-		return super.close();
-	}
-
-	public ImageDescriptor imageDescriptorFromURI(URI iconPath)
-	{
-		try
-		{
-			return ImageDescriptor.createFromURL(new URL(iconPath.toString()));
-		} catch (MalformedURLException e)
-		{
-			System.err.println("iconURI \"" + iconPath.toString()
-					+ "\" is invalid, a \"missing image\" icon will be shown");
-			return ImageDescriptor.getMissingImageDescriptor();
-		}
-	}
-
-	public boolean isRestartRequired() {
-		return restartRequired;
-	}
+    public boolean isRestartRequired() {
+        return restartRequired;
+    }
 
 }

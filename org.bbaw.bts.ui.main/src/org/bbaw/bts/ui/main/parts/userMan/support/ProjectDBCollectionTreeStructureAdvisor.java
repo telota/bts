@@ -5,51 +5,40 @@ import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
 import org.eclipse.jface.databinding.viewers.TreeStructureAdvisor;
 
-public class ProjectDBCollectionTreeStructureAdvisor extends TreeStructureAdvisor
-{
-	@Override
-	public Object getParent(Object element)
-	{
-		if (element instanceof BTSProjectDBCollection)
-		{
-			return ((BTSProjectDBCollection) element).eClass().eContainer();
-		} else if (element instanceof BTSDBCollectionRoleDesc)
-		{
-			return ((BTSDBCollectionRoleDesc) element).eClass().eContainer();
-		}
-		//		else if (element instanceof String)
-		//		{
-		//			return ((EString) element).eClass().eContainer();
-		//		}
+public class ProjectDBCollectionTreeStructureAdvisor extends TreeStructureAdvisor {
+    @Override
+    public Object getParent(Object element) {
+        if (element instanceof BTSProjectDBCollection) {
+            return ((BTSProjectDBCollection) element).eClass().eContainer();
+        } else if (element instanceof BTSDBCollectionRoleDesc) {
+            return ((BTSDBCollectionRoleDesc) element).eClass().eContainer();
+        }
+        //		else if (element instanceof String)
+        //		{
+        //			return ((EString) element).eClass().eContainer();
+        //		}
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public Boolean hasChildren(Object element)
-	{
+    @Override
+    public Boolean hasChildren(Object element) {
 
-		if (element instanceof BTSProjectDBCollection)
-		{
-			if (!((BTSProjectDBCollection) element).getRoleDescriptions().isEmpty())
-			{
-				return Boolean.TRUE;
-			}
-		} else if (element instanceof BTSDBCollectionRoleDesc)
-		{
-			if (!((BTSDBCollectionRoleDesc) element).getCachedChildren().isEmpty())
-			{
-				return Boolean.TRUE;
-			}
-		} else if (element instanceof BTSProject)
-		{
-			if (!((BTSProject) element).getDbCollections().isEmpty())
-			{
-				return Boolean.TRUE;
-			}
-		}
+        if (element instanceof BTSProjectDBCollection) {
+            if (!((BTSProjectDBCollection) element).getRoleDescriptions().isEmpty()) {
+                return Boolean.TRUE;
+            }
+        } else if (element instanceof BTSDBCollectionRoleDesc) {
+            if (!((BTSDBCollectionRoleDesc) element).getCachedChildren().isEmpty()) {
+                return Boolean.TRUE;
+            }
+        } else if (element instanceof BTSProject) {
+            if (!((BTSProject) element).getDbCollections().isEmpty()) {
+                return Boolean.TRUE;
+            }
+        }
 
-		return Boolean.FALSE;
-	}
+        return Boolean.FALSE;
+    }
 
 }

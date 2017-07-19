@@ -29,11 +29,11 @@ import java.util.Queue;
 /**
  * A non-blocking queue which automatically evicts elements from the head of the queue when
  * attempting to add new elements onto the queue and it is full.
- *
+ * <p>
  * <p>An evicting queue must be configured with a maximum size. Each time an element is added
  * to a full queue, the queue automatically removes its head element. This is different from
  * conventional bounded queues, which either block or reject new elements when full.
- *
+ * <p>
  * <p>This class is not thread-safe, and does not accept null elements.
  *
  * @author Kurt Alfred Kluever
@@ -43,72 +43,76 @@ import java.util.Queue;
 @GwtIncompatible("java.util.ArrayDeque")
 public final class EvictingQueue<E> extends ForwardingQueue<E> {
 
-  private final Queue<E> delegate;
-  private final int maxSize;
+    private final Queue<E> delegate;
+    private final int maxSize;
 
-  private EvictingQueue(int maxSize) {
-    checkArgument(maxSize >= 0, "maxSize (%s) must >= 0", maxSize);
-    this.delegate = new ArrayDeque<E>(maxSize);
-    this.maxSize = maxSize;
-  }
-
-  /**
-   * Creates and returns a new evicting queue that will hold up to {@code maxSize} elements.
-   *
-   * <p>When {@code maxSize} is zero, elements will be evicted immediately after being added to the
-   * queue.
-   */
-  public static <E> EvictingQueue<E> create(int maxSize) {
-    return new EvictingQueue<E>(maxSize);
-  }
-
-  @Override protected Queue<E> delegate() {
-    return delegate;
-  }
-
-  /**
-   * Adds the given element to this queue. If the queue is currently full, the element at the head
-   * of the queue is evicted to make room.
-   *
-   * @return {@code true} always
-   */
-  @Override public boolean offer(E e) {
-    return add(e);
-  }
-
-  /**
-   * Adds the given element to this queue. If the queue is currently full, the element at the head
-   * of the queue is evicted to make room.
-   *
-   * @return {@code true} always
-   */
-  @Override public boolean add(E e) {
-    checkNotNull(e);  // check before removing
-    if (maxSize == 0) {
-      return true;
+    private EvictingQueue(int maxSize) {
+        checkArgument(maxSize >= 0, "maxSize (%s) must >= 0", maxSize);
+        this.delegate = new ArrayDeque<E>(maxSize);
+        this.maxSize = maxSize;
     }
-    if (size() == maxSize) {
-      delegate.remove();
+
+    /**
+     * Creates and returns a new evicting queue that will hold up to {@code maxSize} elements.
+     * <p>
+     * <p>When {@code maxSize} is zero, elements will be evicted immediately after being added to the
+     * queue.
+     */
+    public static <E> EvictingQueue<E> create(int maxSize) {
+        return new EvictingQueue<E>(maxSize);
     }
-    delegate.add(e);
-    return true;
-  }
 
-  @Override public boolean addAll(Collection<? extends E> collection) {
-    return standardAddAll(collection);
-  }
+    @Override
+    protected Queue<E> delegate() {
+        return delegate;
+    }
 
-  @Override
-  public boolean contains(Object object) {
-    return delegate().contains(checkNotNull(object));
-  }
+    /**
+     * Adds the given element to this queue. If the queue is currently full, the element at the head
+     * of the queue is evicted to make room.
+     *
+     * @return {@code true} always
+     */
+    @Override
+    public boolean offer(E e) {
+        return add(e);
+    }
 
-  @Override
-  public boolean remove(Object object) {
-    return delegate().remove(checkNotNull(object));
-  }
+    /**
+     * Adds the given element to this queue. If the queue is currently full, the element at the head
+     * of the queue is evicted to make room.
+     *
+     * @return {@code true} always
+     */
+    @Override
+    public boolean add(E e) {
+        checkNotNull(e);  // check before removing
+        if (maxSize == 0) {
+            return true;
+        }
+        if (size() == maxSize) {
+            delegate.remove();
+        }
+        delegate.add(e);
+        return true;
+    }
 
-  // TODO(user): Do we want to checkNotNull each element in containsAll, removeAll, and retainAll?
+    @Override
+    public boolean addAll(Collection<? extends E> collection) {
+        return standardAddAll(collection);
+    }
 
-  // TODO(user): Do we want to add EvictingQueue#isFull()?
+    @Override
+    public boolean contains(Object object) {
+        return delegate().contains(checkNotNull(object));
+    }
+
+    @Override
+    public boolean remove(Object object) {
+        return delegate().remove(checkNotNull(object));
+    }
+
+    // TODO(user): Do we want to checkNotNull each element in containsAll, removeAll, and retainAll?
+
+    // TODO(user): Do we want to add EvictingQueue#isFull()?
 }

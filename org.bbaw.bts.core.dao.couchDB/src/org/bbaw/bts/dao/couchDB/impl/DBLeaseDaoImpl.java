@@ -12,56 +12,47 @@ import org.bbaw.bts.dao.couchDB.CouchDBDao;
 import org.lightcouch.CouchDbClient;
 import org.lightcouch.Response;
 
-public class DBLeaseDaoImpl extends CouchDBDao<DBLease, String> implements DBLeaseDao
-{
+public class DBLeaseDaoImpl extends CouchDBDao<DBLease, String> implements DBLeaseDao {
 
-	@Override
-	public boolean removeDBLease(DBLease lease, String path)
-	{
-		CouchDbClient dbClient = connectionProvider.getDBClient(
-				CouchDbClient.class, path);
-		Response resp = null;
-		if (lease.get_rev() != null)
-		{
-			try {
-				resp = dbClient.remove(lease.get_id(), lease.get_rev());
-			} catch (Exception e) {
-				DBLease entity2 = reload(lease.get_id(), path);
-				if (entity2 != null)
-				{
-					lease = entity2;
-					resp = dbClient.remove(lease.get_id(), lease.get_rev());
-				}
-			}
-		}
-		String rev = null;
-		if (resp != null)
-		{
-			rev = resp.getRev();
-		}
-		else
-		{
-			rev = lease.get_rev();
-		}
-		dbClient.purge(path, lease.get_id(), new String[]{rev});
-		return true;
-	}
+    @Override
+    public boolean removeDBLease(DBLease lease, String path) {
+        CouchDbClient dbClient = connectionProvider.getDBClient(
+                CouchDbClient.class, path);
+        Response resp = null;
+        if (lease.get_rev() != null) {
+            try {
+                resp = dbClient.remove(lease.get_id(), lease.get_rev());
+            } catch (Exception e) {
+                DBLease entity2 = reload(lease.get_id(), path);
+                if (entity2 != null) {
+                    lease = entity2;
+                    resp = dbClient.remove(lease.get_id(), lease.get_rev());
+                }
+            }
+        }
+        String rev = null;
+        if (resp != null) {
+            rev = resp.getRev();
+        } else {
+            rev = lease.get_rev();
+        }
+        dbClient.purge(path, lease.get_id(), new String[]{rev});
+        return true;
+    }
 
-	@Override
-	public List<DBLease> list(String path, String objectState)
-	{
-		String viewId = DaoConstants.VIEW_ALL_DBLEASES;
-		if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
-			viewId = DaoConstants.VIEW_ALL_DBLEASES;
-		} 
-		List<String> allDocs = loadDocsFromView(viewId, path, path);
-		List<DBLease> results = loadObjectsFromStrings(allDocs, path);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(viewId, path);
-		}
-		return results;
+    @Override
+    public List<DBLease> list(String path, String objectState) {
+        String viewId = DaoConstants.VIEW_ALL_DBLEASES;
+        if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
+            viewId = DaoConstants.VIEW_ALL_DBLEASES;
+        }
+        List<String> allDocs = loadDocsFromView(viewId, path, path);
+        List<DBLease> results = loadObjectsFromStrings(allDocs, path);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(viewId, path);
+        }
+        return results;
 //		List<String> allDocs = new ArrayList<String>(0);
 //		View view;
 //		CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, path);
@@ -95,49 +86,44 @@ public class DBLeaseDaoImpl extends CouchDBDao<DBLease, String> implements DBLea
 //			}
 //		}
 //		return results;
-	}
+    }
 
-	@Override
-	public DBLease add(DBLease entity, String path)
-	{
-		CouchDbClient dbClient = connectionProvider.getDBClient(
-				CouchDbClient.class, DaoConstants.NOTIFICATION);
-		DBLease found = null;
-		try {
-			found = dbClient.find(DBLeaseImpl.class, entity.get_id());
-		} catch (Exception e) {
-		}
-		if (found != null)
-		{
-			entity.set_rev(found.get_rev());
-		}
-		boolean conflict = false;
-		if (entity.get_rev() == null )
-		{
-			Response re = dbClient.save(entity);
-			entity.set_rev(re.getRev());
+    @Override
+    public DBLease add(DBLease entity, String path) {
+        CouchDbClient dbClient = connectionProvider.getDBClient(
+                CouchDbClient.class, DaoConstants.NOTIFICATION);
+        DBLease found = null;
+        try {
+            found = dbClient.find(DBLeaseImpl.class, entity.get_id());
+        } catch (Exception e) {
+        }
+        if (found != null) {
+            entity.set_rev(found.get_rev());
+        }
+        boolean conflict = false;
+        if (entity.get_rev() == null) {
+            Response re = dbClient.save(entity);
+            entity.set_rev(re.getRev());
 
-			System.out.println(re);
-			return entity;
-		}
-		else
-		{
+            System.out.println(re);
+            return entity;
+        } else {
 //			entity.set_rev(found.get_rev());
-			Response re;
-			try {
-				re = dbClient.update(entity);
-				entity.set_rev(re.getRev());
-				System.out.println(re);
+            Response re;
+            try {
+                re = dbClient.update(entity);
+                entity.set_rev(re.getRev());
+                System.out.println(re);
 
-			} catch (Exception e) {
-				conflict = true;
-				System.out.println(entity);
-				e.printStackTrace();
-			}
-		}
-		if (conflict && found == null) // update conflict due to previous deleted version 
-		{
-			HttpHead head = new HttpHead(dbClient.getDBUri() + entity.get_id());
+            } catch (Exception e) {
+                conflict = true;
+                System.out.println(entity);
+                e.printStackTrace();
+            }
+        }
+        if (conflict && found == null) // update conflict due to previous deleted version
+        {
+            HttpHead head = new HttpHead(dbClient.getDBUri() + entity.get_id());
 
 //			HttpResponse response = dbClient.executeRequest(head);
 //
@@ -147,8 +133,8 @@ public class DBLeaseDaoImpl extends CouchDBDao<DBLease, String> implements DBLea
 //			Params params = null;
 //			found = dbClient.find(DBLeaseImpl.class, entity.get_id(), params);
 
-		}
-		return entity;
+        }
+        return entity;
 
 //		
 //		Map<String, String> options = new HashMap<String, String>();
@@ -191,6 +177,6 @@ public class DBLeaseDaoImpl extends CouchDBDao<DBLease, String> implements DBLea
 //			return (DBLease) resource.getContents().remove(0);
 //		}
 //		return entity;
-	}
+    }
 
 }

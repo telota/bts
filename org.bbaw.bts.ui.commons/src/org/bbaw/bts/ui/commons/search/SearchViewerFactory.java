@@ -39,37 +39,37 @@ import org.eclipse.swt.widgets.Composite;
  */
 public interface SearchViewerFactory {
 
-	/**
-	 * Checks for search viewer for object.
-	 *
-	 * @param <T> the generic type
-	 * @param clazz the clazz
-	 * @return true, if successful
-	 */
-	<T> boolean hasSearchViewerForObject(Class<T> clazz);
-	
-	/**
-	 * Creates a new SearchViewer object.
-	 *
-	 * @param parent the parent
-	 * @param style the style
-	 * @param relationConfig the relation config
-	 * @return the search viewer
-	 */
-	SearchViewer createSearchViewer(Composite parent, int style, BTSConfigItem relationConfig, IEclipseContext context);
-	
-	/**
-	 * Gets the search viewer name.
-	 *
-	 * @return the search viewer name
-	 */
-	String getSearchViewerName();
-	
-	/**
-	 * Gets the search viewer icon.
-	 *
-	 * @return the search viewer icon
-	 */
-	Image getSearchViewerIcon();
+    /**
+     * Checks for search viewer for object.
+     *
+     * @param <T>   the generic type
+     * @param clazz the clazz
+     * @return true, if successful
+     */
+    <T> boolean hasSearchViewerForObject(Class<T> clazz);
+
+    /**
+     * Creates a new SearchViewer object.
+     *
+     * @param parent         the parent
+     * @param style          the style
+     * @param relationConfig the relation config
+     * @return the search viewer
+     */
+    SearchViewer createSearchViewer(Composite parent, int style, BTSConfigItem relationConfig, IEclipseContext context);
+
+    /**
+     * Gets the search viewer name.
+     *
+     * @return the search viewer name
+     */
+    String getSearchViewerName();
+
+    /**
+     * Gets the search viewer icon.
+     *
+     * @return the search viewer icon
+     */
+    Image getSearchViewerIcon();
 
 }

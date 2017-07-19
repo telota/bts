@@ -10,34 +10,30 @@ import org.bbaw.bts.dao.couchDB.CouchDBDao;
 import org.eclipse.e4.core.di.annotations.Creatable;
 
 @Creatable
-public class BTSConfigurationDaoImpl extends CouchDBDao<BTSConfiguration, String> implements BTSConfigurationDao
-{
+public class BTSConfigurationDaoImpl extends CouchDBDao<BTSConfiguration, String> implements BTSConfigurationDao {
 
-	@Override
-	public boolean removeBTSConfiguration(BTSConfiguration btsConfiguration, String path)
-	{
-		super.remove(btsConfiguration, path);
-		return true;
-	}
+    @Override
+    public boolean removeBTSConfiguration(BTSConfiguration btsConfiguration, String path) {
+        super.remove(btsConfiguration, path);
+        return true;
+    }
 
-	@Override
-	public List<BTSConfiguration> list(String path, String objectState)
-	{
-		String viewId = BTSConstants.VIEW_ALL_BTSCONFIGURATIONS;
-		if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
-			viewId = BTSConstants.VIEW_ALL_ACTIVE_BTSCONFIGURATIONS;
-		} else if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_TERMINATED)) {
-			viewId = BTSConstants.VIEW_ALL_TERMINATED_BTSCONFIGURATIONS;
-		}
-		List<String> allDocs = loadDocsFromView(viewId, path, DaoConstants.PROJECT_ADMIN);
-		List<BTSConfiguration> results = loadObjectsFromStrings(allDocs, path);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(viewId, path);
-		}
-		return results;
+    @Override
+    public List<BTSConfiguration> list(String path, String objectState) {
+        String viewId = BTSConstants.VIEW_ALL_BTSCONFIGURATIONS;
+        if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
+            viewId = BTSConstants.VIEW_ALL_ACTIVE_BTSCONFIGURATIONS;
+        } else if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_TERMINATED)) {
+            viewId = BTSConstants.VIEW_ALL_TERMINATED_BTSCONFIGURATIONS;
+        }
+        List<String> allDocs = loadDocsFromView(viewId, path, DaoConstants.PROJECT_ADMIN);
+        List<BTSConfiguration> results = loadObjectsFromStrings(allDocs, path);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(viewId, path);
+        }
+        return results;
 //		List<String> allDocs = new ArrayList<String>(0);
 //		View view;
 //		try
@@ -75,6 +71,6 @@ public class BTSConfigurationDaoImpl extends CouchDBDao<BTSConfiguration, String
 //			registerQueryIdWithInternalRegistry(viewId, path);
 //		}
 //		return results;
-	}
+    }
 
 }

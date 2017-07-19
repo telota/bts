@@ -6,28 +6,28 @@ import java.util.Vector;
 import org.bbaw.bts.btsmodel.BTSObject;
 
 public class BTSRelatingObjectsLoadingEvent {
-	private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
-	
-	private BTSObject object;
+    private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
 
-	public BTSRelatingObjectsLoadingEvent(BTSObject object) {
-		this.object = object;
-	}
+    private BTSObject object;
 
-	public List<BTSObject> getRelatingObjects() {
-		return relatingObjects;
-	}
+    public BTSRelatingObjectsLoadingEvent(BTSObject object) {
+        this.object = object;
+    }
 
-	public void setRelatingObjects(List<BTSObject> relatingObjects) {
-		this.relatingObjects = relatingObjects;
-	}
+    public List<BTSObject> getRelatingObjects() {
+        return relatingObjects;
+    }
 
-	public BTSObject getObject() {
-		return object;
-	}
+    public void setRelatingObjects(List<BTSObject> relatingObjects) {
+        this.relatingObjects = relatingObjects;
+    }
 
-	public void setObject(BTSObject object) {
-		this.object = object;
-	}
+    public BTSObject getObject() {
+        return object;
+    }
+
+    public void setObject(BTSObject object) {
+        this.object = object;
+    }
 
 }

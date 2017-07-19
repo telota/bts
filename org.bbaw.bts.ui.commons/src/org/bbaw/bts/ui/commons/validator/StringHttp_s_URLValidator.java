@@ -44,8 +44,7 @@ import org.eclipse.core.runtime.IStatus;
  *
  * @author Christoph Plutte
  */
-public class StringHttp_s_URLValidator implements IValidator
-{
+public class StringHttp_s_URLValidator implements IValidator {
 
 //	/** The Constant regex. */
 //	private static final String regex = "(https?://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?";
@@ -53,85 +52,81 @@ public class StringHttp_s_URLValidator implements IValidator
 //	/** The Constant patt. */
 //	private static final Pattern patt = Pattern.compile(regex);
 //	
-	/** The Constant error. */
-	private static final String error = "String ist not a valid URL";
-	
-	/** The error message. */
-	private String errorMessage = error;
-	
-	/** The nullable. */
-	private boolean nullable = false;;
+    /**
+     * The Constant error.
+     */
+    private static final String error = "String ist not a valid URL";
 
-	/**
-	 * Instantiates a new string http_s_ url validator.
-	 *
-	 * @param nullable the nullable
-	 */
-	public StringHttp_s_URLValidator(boolean nullable)
-	{
-		this.nullable = nullable;
-	}
+    /**
+     * The error message.
+     */
+    private String errorMessage = error;
 
-	/**
-	 * Instantiates a new string http_s_ url validator.
-	 *
-	 * @param errorMessage the error message
-	 * @param nullable the nullable
-	 */
-	public StringHttp_s_URLValidator(String errorMessage, boolean nullable)
-	{
-		this.nullable = nullable;
-		if (errorMessage != null)
-		{
-			this.errorMessage = errorMessage;
-		}
-	}
+    /**
+     * The nullable.
+     */
+    private boolean nullable = false;
+    ;
 
-	/**
-	 * Instantiates a new string http_s_ url validator.
-	 */
-	public StringHttp_s_URLValidator()
-	{
-	}
+    /**
+     * Instantiates a new string http_s_ url validator.
+     *
+     * @param nullable the nullable
+     */
+    public StringHttp_s_URLValidator(boolean nullable) {
+        this.nullable = nullable;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
-	 */
-	@Override
-	public IStatus validate(Object value)
-	{
-		if (nullable && value == null)
-		{
-			return ValidationStatus.ok();
-		}
-		if (value instanceof String)
-		{
-			String string = (String) value;
-			if (nullable && string.trim().length() == 0)
-			{
-				return ValidationStatus.ok();
-			}
-			try
-			{
-				try {
-					URL url = new URL(string);
-					return ValidationStatus.ok();
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-					return ValidationStatus.error(errorMessage);
-				}
+    /**
+     * Instantiates a new string http_s_ url validator.
+     *
+     * @param errorMessage the error message
+     * @param nullable     the nullable
+     */
+    public StringHttp_s_URLValidator(String errorMessage, boolean nullable) {
+        this.nullable = nullable;
+        if (errorMessage != null) {
+            this.errorMessage = errorMessage;
+        }
+    }
 
-			} catch (RuntimeException e)
-			{
-				return ValidationStatus.error(errorMessage);
-			}
+    /**
+     * Instantiates a new string http_s_ url validator.
+     */
+    public StringHttp_s_URLValidator() {
+    }
 
-		}
-		if (nullable)
-		{
-			return ValidationStatus.ok();
-		}
-		return ValidationStatus.error(errorMessage);
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
+     */
+    @Override
+    public IStatus validate(Object value) {
+        if (nullable && value == null) {
+            return ValidationStatus.ok();
+        }
+        if (value instanceof String) {
+            String string = (String) value;
+            if (nullable && string.trim().length() == 0) {
+                return ValidationStatus.ok();
+            }
+            try {
+                try {
+                    URL url = new URL(string);
+                    return ValidationStatus.ok();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    return ValidationStatus.error(errorMessage);
+                }
+
+            } catch (RuntimeException e) {
+                return ValidationStatus.error(errorMessage);
+            }
+
+        }
+        if (nullable) {
+            return ValidationStatus.ok();
+        }
+        return ValidationStatus.error(errorMessage);
+    }
 
 }

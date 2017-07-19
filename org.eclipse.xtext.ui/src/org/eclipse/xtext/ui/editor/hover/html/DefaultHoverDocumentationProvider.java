@@ -18,11 +18,11 @@ import com.google.inject.Inject;
  */
 public class DefaultHoverDocumentationProvider implements IEObjectHoverDocumentationProvider {
 
-	@Inject
-	protected IEObjectDocumentationProvider documentationProvider;
-	
-	public String getDocumentation(EObject object) {
-		return documentationProvider.getDocumentation(object);
-	}
+    @Inject
+    protected IEObjectDocumentationProvider documentationProvider;
+
+    public String getDocumentation(EObject object) {
+        return documentationProvider.getDocumentation(object);
+    }
 
 }

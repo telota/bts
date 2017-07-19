@@ -16,27 +16,23 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 import org.eclipse.swt.widgets.Shell;
 
-public class CreateNewTextCorpusHandler
-{
+public class CreateNewTextCorpusHandler {
 
-	@Execute
-	public void execute(CorpusNavigatorController corpusNavigatorController, EventBroker eventBroker, 
-			@Named(IServiceConstants.ACTIVE_SHELL) Shell shell)
-	{
-		BTSTextCorpus corpus = corpusNavigatorController.createNewTextCorpus();
-		corpus.setCorpusPrefix(null);
-		NewCorpusObjectDialog dialog = new NewCorpusObjectDialog(shell, corpus);
-		if (dialog.open() == NewCorpusObjectDialog.OK)
-		{
-			corpusNavigatorController.makeAndSaveNewTextCorpus(corpus, dialog.isCorpusSynchronized());
+    @Execute
+    public void execute(CorpusNavigatorController corpusNavigatorController, EventBroker eventBroker,
+                        @Named(IServiceConstants.ACTIVE_SHELL) Shell shell) {
+        BTSTextCorpus corpus = corpusNavigatorController.createNewTextCorpus();
+        corpus.setCorpusPrefix(null);
+        NewCorpusObjectDialog dialog = new NewCorpusObjectDialog(shell, corpus);
+        if (dialog.open() == NewCorpusObjectDialog.OK) {
+            corpusNavigatorController.makeAndSaveNewTextCorpus(corpus, dialog.isCorpusSynchronized());
 
-			eventBroker.post("model_corpus_new_root/asyncEvent", corpus);
-		}
-	}
+            eventBroker.post("model_corpus_new_root/asyncEvent", corpus);
+        }
+    }
 
-	@CanExecute
-	public boolean canExecute(@Active MPart part, @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_CREATE_DBCOLLECTION) Boolean mayEdit)
-	{
-		return part.getElementId().equals(BTSPluginIDs.PART_ID_CORPUS_NAVIGATOR) && mayEdit;
-	}
+    @CanExecute
+    public boolean canExecute(@Active MPart part, @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_CREATE_DBCOLLECTION) Boolean mayEdit) {
+        return part.getElementId().equals(BTSPluginIDs.PART_ID_CORPUS_NAVIGATOR) && mayEdit;
+    }
 }

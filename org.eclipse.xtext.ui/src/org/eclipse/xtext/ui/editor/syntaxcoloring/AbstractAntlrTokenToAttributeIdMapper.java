@@ -17,7 +17,7 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultAntlrTokenToAttributeIdMapper.class)
 public abstract class AbstractAntlrTokenToAttributeIdMapper extends TokenTypeToStringMapper {
 
-	public String getId(int tokenType) {
-		return getMappedValue(tokenType);
-	}
+    public String getId(int tokenType) {
+        return getMappedValue(tokenType);
+    }
 }

@@ -16,52 +16,52 @@ import com.google.inject.Singleton;
  */
 @Singleton
 public class TerminalsTokenTypeToPartitionMapper extends TokenTypeToStringMapper implements ITokenTypeToPartitionTypeMapper, ITokenTypeToPartitionTypeMapperExtension {
-	public final static String COMMENT_PARTITION = "__comment";
-	/**
-	 * @since 2.0
-	 */
-	public final static String SL_COMMENT_PARTITION = "__sl_comment";
-	public final static String STRING_LITERAL_PARTITION = "__string";
-	
-	protected static final String[] SUPPORTED_PARTITIONS = new String[]{
-		COMMENT_PARTITION,
-		SL_COMMENT_PARTITION,
-		STRING_LITERAL_PARTITION,
-		IDocument.DEFAULT_CONTENT_TYPE
-	};
-	
-	public String getPartitionType(int antlrTokenType) {
-		return getMappedValue(antlrTokenType);
-	}
-	
-	@Override
-	protected String calculateId(String tokenName, int tokenType) {
-		if ("RULE_ML_COMMENT".equals(tokenName)) {
-			return COMMENT_PARTITION;
-		} else if ("RULE_SL_COMMENT".equals(tokenName)) {
-			return SL_COMMENT_PARTITION;
-		} else if ("RULE_STRING".equals(tokenName)) {
-			return STRING_LITERAL_PARTITION;
-		}
-		return IDocument.DEFAULT_CONTENT_TYPE;
-	}
+    public final static String COMMENT_PARTITION = "__comment";
+    /**
+     * @since 2.0
+     */
+    public final static String SL_COMMENT_PARTITION = "__sl_comment";
+    public final static String STRING_LITERAL_PARTITION = "__string";
 
-	public String[] getSupportedPartitionTypes() {
-		return SUPPORTED_PARTITIONS;
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public boolean isMultiLineComment(String partitionType) {
-		return COMMENT_PARTITION.equals(partitionType);
-	}
-	
-	/**
-	 * @since 2.4
-	 */
-	public boolean isSingleLineComment(String partitionType) {
-		return SL_COMMENT_PARTITION.equals(partitionType);
-	}
+    protected static final String[] SUPPORTED_PARTITIONS = new String[]{
+            COMMENT_PARTITION,
+            SL_COMMENT_PARTITION,
+            STRING_LITERAL_PARTITION,
+            IDocument.DEFAULT_CONTENT_TYPE
+    };
+
+    public String getPartitionType(int antlrTokenType) {
+        return getMappedValue(antlrTokenType);
+    }
+
+    @Override
+    protected String calculateId(String tokenName, int tokenType) {
+        if ("RULE_ML_COMMENT".equals(tokenName)) {
+            return COMMENT_PARTITION;
+        } else if ("RULE_SL_COMMENT".equals(tokenName)) {
+            return SL_COMMENT_PARTITION;
+        } else if ("RULE_STRING".equals(tokenName)) {
+            return STRING_LITERAL_PARTITION;
+        }
+        return IDocument.DEFAULT_CONTENT_TYPE;
+    }
+
+    public String[] getSupportedPartitionTypes() {
+        return SUPPORTED_PARTITIONS;
+    }
+
+    /**
+     * @since 2.4
+     */
+    public boolean isMultiLineComment(String partitionType) {
+        return COMMENT_PARTITION.equals(partitionType);
+    }
+
+    /**
+     * @since 2.4
+     */
+    public boolean isSingleLineComment(String partitionType) {
+        return SL_COMMENT_PARTITION.equals(partitionType);
+    }
 
 }

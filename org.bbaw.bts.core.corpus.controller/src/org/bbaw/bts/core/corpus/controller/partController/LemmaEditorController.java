@@ -14,13 +14,18 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 
 public interface LemmaEditorController {
 
-	List<BTSObject> getRelatingObjects(BTSLemmaEntry selection, IProgressMonitor monitor);
-	void transformToDocument(BTSTextContent textContent, Document doc, IAnnotationModel model, List<BTSObject> relatingObjects, 
-			Map<String, List<BTSInterTextReference>> relatingObjectsMap,
-			Map<String, List<Object>> lemmaAnnotationMap);
-	boolean save(BTSLemmaEntry lemmaEntry);
-	BTSTextContent updateModelFromTextContent(BTSTextContent textContent,
-			EObject eo, IAnnotationModel am);
-	BTSLemmaEntry findLemmaEntry(String lemmaId, IProgressMonitor monitor);
-	List<BTSLemmaEntry> listInAllInvalidLemmata(IProgressMonitor monitor);
+    List<BTSObject> getRelatingObjects(BTSLemmaEntry selection, IProgressMonitor monitor);
+
+    void transformToDocument(BTSTextContent textContent, Document doc, IAnnotationModel model, List<BTSObject> relatingObjects,
+                             Map<String, List<BTSInterTextReference>> relatingObjectsMap,
+                             Map<String, List<Object>> lemmaAnnotationMap);
+
+    boolean save(BTSLemmaEntry lemmaEntry);
+
+    BTSTextContent updateModelFromTextContent(BTSTextContent textContent,
+                                              EObject eo, IAnnotationModel am);
+
+    BTSLemmaEntry findLemmaEntry(String lemmaId, IProgressMonitor monitor);
+
+    List<BTSLemmaEntry> listInAllInvalidLemmata(IProgressMonitor monitor);
 }

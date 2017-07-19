@@ -32,64 +32,67 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible(emulated = true)
 final class ImmutableMapKeySet<K, V> extends ImmutableSet<K> {
-  private final ImmutableMap<K, V> map;
+    private final ImmutableMap<K, V> map;
 
-  ImmutableMapKeySet(ImmutableMap<K, V> map) {
-    this.map = map;
-  }
-
-  @Override
-  public int size() {
-    return map.size();
-  }
-
-  @Override
-  public UnmodifiableIterator<K> iterator() {
-    return asList().iterator();
-  }
-
-  @Override
-  public boolean contains(@Nullable Object object) {
-    return map.containsKey(object);
-  }
-
-  @Override
-  ImmutableList<K> createAsList() {
-    final ImmutableList<Entry<K, V>> entryList = map.entrySet().asList();
-    return new ImmutableAsList<K>() {
-
-      @Override
-      public K get(int index) {
-        return entryList.get(index).getKey();
-      }
-
-      @Override
-      ImmutableCollection<K> delegateCollection() {
-        return ImmutableMapKeySet.this;
-      }
-
-    };
-  }
-
-  @Override
-  boolean isPartialView() {
-    return true;
-  }
-
-  @GwtIncompatible("serialization")
-  @Override Object writeReplace() {
-    return new KeySetSerializedForm<K>(map);
-  }
-
-  @GwtIncompatible("serialization")
-  private static class KeySetSerializedForm<K> implements Serializable {
-    final ImmutableMap<K, ?> map;
-    KeySetSerializedForm(ImmutableMap<K, ?> map) {
-      this.map = map;
+    ImmutableMapKeySet(ImmutableMap<K, V> map) {
+        this.map = map;
     }
-    Object readResolve() {
-      return map.keySet();
+
+    @Override
+    public int size() {
+        return map.size();
     }
-    private static final long serialVersionUID = 0;
-  }
+
+    @Override
+    public UnmodifiableIterator<K> iterator() {
+        return asList().iterator();
+    }
+
+    @Override
+    public boolean contains(@Nullable Object object) {
+        return map.containsKey(object);
+    }
+
+    @Override
+    ImmutableList<K> createAsList() {
+        final ImmutableList<Entry<K, V>> entryList = map.entrySet().asList();
+        return new ImmutableAsList<K>() {
+
+            @Override
+            public K get(int index) {
+                return entryList.get(index).getKey();
+            }
+
+            @Override
+            ImmutableCollection<K> delegateCollection() {
+                return ImmutableMapKeySet.this;
+            }
+
+        };
+    }
+
+    @Override
+    boolean isPartialView() {
+        return true;
+    }
+
+    @GwtIncompatible("serialization")
+    @Override
+    Object writeReplace() {
+        return new KeySetSerializedForm<K>(map);
+    }
+
+    @GwtIncompatible("serialization")
+    private static class KeySetSerializedForm<K> implements Serializable {
+        private static final long serialVersionUID = 0;
+        final ImmutableMap<K, ?> map;
+
+        KeySetSerializedForm(ImmutableMap<K, ?> map) {
+            this.map = map;
+        }
+
+        Object readResolve() {
+            return map.keySet();
+        }
+    }
 }

@@ -33,138 +33,138 @@ import com.google.inject.name.Named;
  * @author Sebastian Zarnekow
  */
 public abstract class AbstractProjectCreator extends WorkspaceModifyOperation implements IProjectCreator {
-	
-	private IFile result;
-	private IProjectInfo projectInfo;
-	
-	@Inject
-	@Named("file.extensions")
-	private String fileExtension;
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public IFile getResult() {
-		return result;
-	}
-	
-	protected void setResult(IFile result) {
-		this.result = result;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setProjectInfo(IProjectInfo projectInfo) {
-		this.projectInfo = projectInfo;
-	}
-	
-	protected IProjectInfo getProjectInfo() {
-		return projectInfo;
-	}
-	
-	protected String getEncoding() throws CoreException {
-		return ResourcesPlugin.getWorkspace().getRoot().getDefaultCharset();
-	}
-	
-	@Override
-	protected void execute(final IProgressMonitor monitor)
-			throws CoreException, InvocationTargetException, InterruptedException {
-		SubMonitor subMonitor = SubMonitor.convert(monitor, 
-				getCreateModelProjectMessage(), 
-				2);
-		try {
-			final IProject project = createProject(subMonitor.newChild(1));
-			if (project == null)
-				return;
-			enhanceProject(project, subMonitor.newChild(1));
-			IFile modelFile = getModelFile(project);
-			setResult(modelFile);
-		} finally {
-			subMonitor.done();
-		}
-	}
 
-	protected String getCreateModelProjectMessage() {
-		return Messages.AbstractProjectCreator_0 + getProjectInfo().getProjectName();
-	}
-	
-	protected IFile getModelFile(IProject project) throws CoreException {
-		IFolder srcFolder = project.getFolder(getModelFolderName());
-		final String expectedExtension = getPrimaryModelFileExtension();
-		final IFile[] result = new IFile[1];
-		srcFolder.accept(new IResourceVisitor() {
-			public boolean visit(IResource resource) throws CoreException {
-				if (IResource.FILE == resource.getType() && expectedExtension.equals(resource.getFileExtension())) {
-					result[0] = (IFile) resource;
-					return false;
-				}
-				return IResource.FOLDER == resource.getType();
-			}
-		});
-		return result[0];
-	}
-	
-	protected IProject createProject(IProgressMonitor monitor) {
-		ProjectFactory factory = createProjectFactory();
-		configureProjectBuilder(factory);
-		return factory.createProject(monitor, null);
-	}
-	
-	/**
-	 * @deprecated use {@link #configureProjectFactory(ProjectFactory)} instead.
-	 */
-	@Deprecated
-	protected ProjectFactory configureProjectBuilder(ProjectFactory factory) {
-		return configureProjectFactory(factory);
-	}
+    private IFile result;
+    private IProjectInfo projectInfo;
 
-	protected ProjectFactory configureProjectFactory(ProjectFactory factory) {
-		factory.setProjectName(getProjectInfo().getProjectName());
-		factory.addFolders(getAllFolders());
-		factory.addReferencedProjects(getReferencedProjects());
-		factory.addProjectNatures(getProjectNatures());
-		factory.addBuilderIds(getBuilders());
-		return factory;
-	}
-	
-	protected abstract ProjectFactory createProjectFactory();
-	
-	protected void enhanceProject(final IProject project, final IProgressMonitor monitor) throws CoreException {
-	}
+    @Inject
+    @Named("file.extensions")
+    private String fileExtension;
 
-	protected String getPrimaryModelFileExtension() {
-		String result = fileExtension;
-		int idx = result.indexOf(',');
-		if (idx > 0) {
-			return result.substring(0, idx).trim();
-		}
-		return result;
-	}
-	
-	protected abstract String getModelFolderName();
-		
-	protected abstract List<String> getAllFolders();
-	
-	protected List<IProject> getReferencedProjects() {
+    /**
+     * {@inheritDoc}
+     */
+    public IFile getResult() {
+        return result;
+    }
+
+    protected void setResult(IFile result) {
+        this.result = result;
+    }
+
+    protected IProjectInfo getProjectInfo() {
+        return projectInfo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setProjectInfo(IProjectInfo projectInfo) {
+        this.projectInfo = projectInfo;
+    }
+
+    protected String getEncoding() throws CoreException {
+        return ResourcesPlugin.getWorkspace().getRoot().getDefaultCharset();
+    }
+
+    @Override
+    protected void execute(final IProgressMonitor monitor)
+            throws CoreException, InvocationTargetException, InterruptedException {
+        SubMonitor subMonitor = SubMonitor.convert(monitor,
+                getCreateModelProjectMessage(),
+                2);
+        try {
+            final IProject project = createProject(subMonitor.newChild(1));
+            if (project == null)
+                return;
+            enhanceProject(project, subMonitor.newChild(1));
+            IFile modelFile = getModelFile(project);
+            setResult(modelFile);
+        } finally {
+            subMonitor.done();
+        }
+    }
+
+    protected String getCreateModelProjectMessage() {
+        return Messages.AbstractProjectCreator_0 + getProjectInfo().getProjectName();
+    }
+
+    protected IFile getModelFile(IProject project) throws CoreException {
+        IFolder srcFolder = project.getFolder(getModelFolderName());
+        final String expectedExtension = getPrimaryModelFileExtension();
+        final IFile[] result = new IFile[1];
+        srcFolder.accept(new IResourceVisitor() {
+            public boolean visit(IResource resource) throws CoreException {
+                if (IResource.FILE == resource.getType() && expectedExtension.equals(resource.getFileExtension())) {
+                    result[0] = (IFile) resource;
+                    return false;
+                }
+                return IResource.FOLDER == resource.getType();
+            }
+        });
+        return result[0];
+    }
+
+    protected IProject createProject(IProgressMonitor monitor) {
+        ProjectFactory factory = createProjectFactory();
+        configureProjectBuilder(factory);
+        return factory.createProject(monitor, null);
+    }
+
+    /**
+     * @deprecated use {@link #configureProjectFactory(ProjectFactory)} instead.
+     */
+    @Deprecated
+    protected ProjectFactory configureProjectBuilder(ProjectFactory factory) {
+        return configureProjectFactory(factory);
+    }
+
+    protected ProjectFactory configureProjectFactory(ProjectFactory factory) {
+        factory.setProjectName(getProjectInfo().getProjectName());
+        factory.addFolders(getAllFolders());
+        factory.addReferencedProjects(getReferencedProjects());
+        factory.addProjectNatures(getProjectNatures());
+        factory.addBuilderIds(getBuilders());
+        return factory;
+    }
+
+    protected abstract ProjectFactory createProjectFactory();
+
+    protected void enhanceProject(final IProject project, final IProgressMonitor monitor) throws CoreException {
+    }
+
+    protected String getPrimaryModelFileExtension() {
+        String result = fileExtension;
+        int idx = result.indexOf(',');
+        if (idx > 0) {
+            return result.substring(0, idx).trim();
+        }
+        return result;
+    }
+
+    protected abstract String getModelFolderName();
+
+    protected abstract List<String> getAllFolders();
+
+    protected List<IProject> getReferencedProjects() {
         return Collections.emptyList();
     }
 
     protected String[] getProjectNatures() {
-        return new String[] {
-        	JavaCore.NATURE_ID,
-			"org.eclipse.pde.PluginNature", //$NON-NLS-1$
-			XtextProjectHelper.NATURE_ID
-		};
+        return new String[]{
+                JavaCore.NATURE_ID,
+                "org.eclipse.pde.PluginNature", //$NON-NLS-1$
+                XtextProjectHelper.NATURE_ID
+        };
     }
-    
+
     protected String[] getBuilders() {
-    	return new String[]{
-    		JavaCore.BUILDER_ID,
-			"org.eclipse.pde.ManifestBuilder",  //$NON-NLS-1$
-			"org.eclipse.pde.SchemaBuilder", //$NON-NLS-1$
-			XtextProjectHelper.BUILDER_ID
-		};
-	}
-    
+        return new String[]{
+                JavaCore.BUILDER_ID,
+                "org.eclipse.pde.ManifestBuilder",  //$NON-NLS-1$
+                "org.eclipse.pde.SchemaBuilder", //$NON-NLS-1$
+                XtextProjectHelper.BUILDER_ID
+        };
+    }
+
 }

@@ -22,29 +22,29 @@ import java.lang.reflect.Method;
 /**
  * Wraps a single-argument 'handler' method on a specific object, and ensures
  * that only one thread may enter the method at a time.
- *
+ * <p>
  * <p>Beyond synchronization, this class behaves identically to
  * {@link EventHandler}.
  *
  * @author Cliff Biffle
  */
 final class SynchronizedEventHandler extends EventHandler {
-  /**
-   * Creates a new SynchronizedEventHandler to wrap {@code method} on
-   * {@code target}.
-   *
-   * @param target  object to which the method applies.
-   * @param method  handler method.
-   */
-  public SynchronizedEventHandler(Object target, Method method) {
-    super(target, method);
-  }
-
-  @Override
-  public void handleEvent(Object event) throws InvocationTargetException {
-    // https://code.google.com/p/guava-libraries/issues/detail?id=1403
-    synchronized (this) {
-      super.handleEvent(event);
+    /**
+     * Creates a new SynchronizedEventHandler to wrap {@code method} on
+     * {@code target}.
+     *
+     * @param target object to which the method applies.
+     * @param method handler method.
+     */
+    public SynchronizedEventHandler(Object target, Method method) {
+        super(target, method);
     }
-  }
+
+    @Override
+    public void handleEvent(Object event) throws InvocationTargetException {
+        // https://code.google.com/p/guava-libraries/issues/detail?id=1403
+        synchronized (this) {
+            super.handleEvent(event);
+        }
+    }
 }

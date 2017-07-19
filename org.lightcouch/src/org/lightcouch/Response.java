@@ -18,34 +18,35 @@ package org.lightcouch;
 
 /**
  * Represents CouchDB response as a result of a request.
- * @author Ahmed Yehia
  *
+ * @author Ahmed Yehia
  */
 public class Response {
-	private String id;
-	private String rev;
-	
-	// related to bulk response only
-	private String error;
-	private String reason;
+    private String id;
+    private String rev;
 
-	public String getId() {
-		return id;
-	}
+    // related to bulk response only
+    private String error;
+    private String reason;
 
-	public String getRev() {
-		return rev;
-	}
-	
-	public String getError() {
-		return error;
-	}
-	public String getReason() {
-		return reason;
-	}
+    public String getId() {
+        return id;
+    }
 
-	@Override
-	public String toString() {
-		return "Response [id=" + id + ", rev=" + rev + "]";
-	}
+    public String getRev() {
+        return rev;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    @Override
+    public String toString() {
+        return "Response [id=" + id + ", rev=" + rev + "]";
+    }
 }

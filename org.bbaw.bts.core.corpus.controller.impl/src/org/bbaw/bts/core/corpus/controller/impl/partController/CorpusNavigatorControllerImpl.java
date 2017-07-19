@@ -37,59 +37,56 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jface.viewers.ContentViewer;
 import org.elasticsearch.index.query.QueryBuilders;
 
-public class CorpusNavigatorControllerImpl 
-extends AbstractCorpusObjectNavigatorControllerImpl<BTSCorpusObject, String> 
-implements CorpusNavigatorController
-{
-	@Inject
-	private EventBroker eventBroker;
-	@Inject
-	private BTSTextCorpusService textCorpusService;
+public class CorpusNavigatorControllerImpl
+        extends AbstractCorpusObjectNavigatorControllerImpl<BTSCorpusObject, String>
+        implements CorpusNavigatorController {
+    @Inject
+    private EventBroker eventBroker;
+    @Inject
+    private BTSTextCorpusService textCorpusService;
 
-	@Inject
-	private BTSTCObjectService tcObjectService;
+    @Inject
+    private BTSTCObjectService tcObjectService;
 
-	@Inject
-	private CorpusObjectService corpusObjectService;
+    @Inject
+    private CorpusObjectService corpusObjectService;
 
-	@Inject
-	private BTSTextService textService;
+    @Inject
+    private BTSTextService textService;
 
-	@Inject
-	private IDService ids;
+    @Inject
+    private IDService ids;
 
-	@Inject
-	private Backend2ClientUpdateService updateService;
+    @Inject
+    private Backend2ClientUpdateService updateService;
 
-	@Inject
-	private BTSAnnotationService annotationService;
+    @Inject
+    private BTSAnnotationService annotationService;
 
-	@Inject
-	private BTSThsEntryService thsService;
+    @Inject
+    private BTSThsEntryService thsService;
 
-	@Inject
-	private BTSLemmaEntryService wlistService;
+    @Inject
+    private BTSLemmaEntryService wlistService;
 
-	@Inject
-	private PermissionsAndExpressionsEvaluationController permissionController;
-	
-	@Inject
-	private Logger logger;
+    @Inject
+    private PermissionsAndExpressionsEvaluationController permissionController;
 
-	@Override
-	public BTSTextCorpus createNewTextCorpus()
-	{
-		BTSTextCorpus corpus = textCorpusService.createNew();
-		return corpus;
-	}
+    @Inject
+    private Logger logger;
 
-	@Override
-	public BTSTCObject createNewTCObject(BTSCorpusObject parentObject)
-	{
-		BTSTCObject o = tcObjectService.createNewRelationPartOf(parentObject);
+    @Override
+    public BTSTextCorpus createNewTextCorpus() {
+        BTSTextCorpus corpus = textCorpusService.createNew();
+        return corpus;
+    }
 
-		return o;
-	}
+    @Override
+    public BTSTCObject createNewTCObject(BTSCorpusObject parentObject) {
+        BTSTCObject o = tcObjectService.createNewRelationPartOf(parentObject);
+
+        return o;
+    }
 
 //	/*
 //	 * (non-Javadoc)
@@ -136,54 +133,49 @@ implements CorpusNavigatorController
 //
 //	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.bbaw.bts.core.controller.impl.partController.CorpusNavigatorController
-	 * #save(org.bbaw.bts.btsmodel.BTSCorpusObject)
-	 */
-	@Override
-	public void save(BTSCorpusObject o)
-	{
-		corpusObjectService.save(o);
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.bbaw.bts.core.controller.impl.partController.CorpusNavigatorController
+     * #save(org.bbaw.bts.btsmodel.BTSCorpusObject)
+     */
+    @Override
+    public void save(BTSCorpusObject o) {
+        corpusObjectService.save(o);
 
-	}
+    }
 
-	@Override
-	public List<BTSCorpusObject> findChildren(BTSCorpusObject parent,
-			Map<String, BTSQueryResultAbstract> queryResultMap, ContentViewer treeViewer,
-			TreeNodeWrapper parentWrapper, EReference referenceName, IProgressMonitor monitor)
-	{
-		BTSQueryRequest query = new BTSQueryRequest();
+    @Override
+    public List<BTSCorpusObject> findChildren(BTSCorpusObject parent,
+                                              Map<String, BTSQueryResultAbstract> queryResultMap, ContentViewer treeViewer,
+                                              TreeNodeWrapper parentWrapper, EReference referenceName, IProgressMonitor monitor) {
+        BTSQueryRequest query = new BTSQueryRequest();
 
-		query.setQueryId("relations.objectId-" + parent.get_id());
-		query.setQueryBuilder(QueryBuilders.matchQuery("relations.objectId", parent.get_id()));
-		query.setResponseFields(BTSConstants.SEARCH_BASIC_RESPONSE_FIELDS);
-		logger.info(query.getQueryId());
-		if (queryResultMap != null)
-		{
-			BTSQueryResultAbstract qra = new BTSQueryResultAbstract();
-			qra.setViewer(treeViewer);
-			qra.setParentEObject(parentWrapper);
-			qra.setReferenceName(referenceName);
-			qra.setQueryId(query.getQueryId());
-			queryResultMap.put(query.getQueryId(), qra);
-		}
-		List<BTSCorpusObject> children = corpusObjectService.query(query,
-				BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-		logger.info("Number of children found: " + children.size());
-		List<BTSCorpusObject> result = new Vector<BTSCorpusObject>(children.size());
-		for (BTSCorpusObject o : children)
-		{
-			if (!(o instanceof BTSAnnotation))
-			{
-				result.add(o);
-			}
-		}
-		Collections.sort(result, new BTSObjectByNameComparator());
-		return result;
-	}
+        query.setQueryId("relations.objectId-" + parent.get_id());
+        query.setQueryBuilder(QueryBuilders.matchQuery("relations.objectId", parent.get_id()));
+        query.setResponseFields(BTSConstants.SEARCH_BASIC_RESPONSE_FIELDS);
+        logger.info(query.getQueryId());
+        if (queryResultMap != null) {
+            BTSQueryResultAbstract qra = new BTSQueryResultAbstract();
+            qra.setViewer(treeViewer);
+            qra.setParentEObject(parentWrapper);
+            qra.setReferenceName(referenceName);
+            qra.setQueryId(query.getQueryId());
+            queryResultMap.put(query.getQueryId(), qra);
+        }
+        List<BTSCorpusObject> children = corpusObjectService.query(query,
+                BTSConstants.OBJECT_STATE_ACTIVE, monitor);
+        logger.info("Number of children found: " + children.size());
+        List<BTSCorpusObject> result = new Vector<BTSCorpusObject>(children.size());
+        for (BTSCorpusObject o : children) {
+            if (!(o instanceof BTSAnnotation)) {
+                result.add(o);
+            }
+        }
+        Collections.sort(result, new BTSObjectByNameComparator());
+        return result;
+    }
 
 //	@Override
 //	public boolean handleModelUpdate(BTSModelUpdateNotification notification,
@@ -320,146 +312,142 @@ implements CorpusNavigatorController
 //		return result;
 //	}
 
-	@Override
-	public BTSText createNewText(BTSCorpusObject parentObject)
-	{
-		BTSText text = textService.createNewRelationPartOf(parentObject);
-		return text;
-	}
+    @Override
+    public BTSText createNewText(BTSCorpusObject parentObject) {
+        BTSText text = textService.createNewRelationPartOf(parentObject);
+        return text;
+    }
 
-	@Override
-	public BTSAnnotation createNewAnnotation(BTSCorpusObject annotatedObject, String annotationTypePath) {
-		BTSAnnotation anno = annotationService
-				.createNewRelationPartOf(annotatedObject);
-		setObjectTypePath(anno, annotationTypePath);
-		return anno;
-	}
+    @Override
+    public BTSAnnotation createNewAnnotation(BTSCorpusObject annotatedObject, String annotationTypePath) {
+        BTSAnnotation anno = annotationService
+                .createNewRelationPartOf(annotatedObject);
+        setObjectTypePath(anno, annotationTypePath);
+        return anno;
+    }
 
 
-	@Override
-	public BTSCorpusObject find(String id, IProgressMonitor monitor) {
-		BTSCorpusObject o = null;
-		try {
-			o = corpusObjectService.find(id, monitor);
-		} catch (Exception e) {
+    @Override
+    public BTSCorpusObject find(String id, IProgressMonitor monitor) {
+        BTSCorpusObject o = null;
+        try {
+            o = corpusObjectService.find(id, monitor);
+        } catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-		}
-		if (o != null) {
-			return o;
-		} else {
-			try {
-				o = textCorpusService.find(id, monitor);
-			} catch (Exception e) {
+        }
+        if (o != null) {
+            return o;
+        } else {
+            try {
+                o = textCorpusService.find(id, monitor);
+            } catch (Exception e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
-			}
-		}
-		if (o != null) {
-			return o;
-		} else {
-			try {
-				o = thsService.find(id, monitor);
-			} catch (Exception e) {
+            }
+        }
+        if (o != null) {
+            return o;
+        } else {
+            try {
+                o = thsService.find(id, monitor);
+            } catch (Exception e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
-			}
-		}
-		if (o != null) {
-			return o;
-		} else {
-			try {
-				o = wlistService.find(id, monitor);
-			} catch (Exception e) {
-				
-			}
-		}
-		return o;
-	}
+            }
+        }
+        if (o != null) {
+            return o;
+        } else {
+            try {
+                o = wlistService.find(id, monitor);
+            } catch (Exception e) {
 
-	@Override
-	public List<BTSTextCorpus> listTextCorpora(IProgressMonitor monitor) {
-		List<BTSTextCorpus> corpora = new Vector<BTSTextCorpus>();
-		for (BTSTextCorpus c : textCorpusService.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor))
-		{
-			String dbCollectionName = getDBCollectionName(c);
-			if (c.getVisibility().equals(BTSCoreConstants.VISIBILITY_PUBLIC)
-					|| permissionController.authenticatedUserMayReadDBCollection(dbCollectionName)) {
-				checkAndFullyLoad(c, true);
-				corpora.add(c);
-			}
-		}
-		sortBTSTextCorpus(corpora);
-		return corpora;
-	}
+            }
+        }
+        return o;
+    }
 
-	@Override
-	public boolean isWriteable(BTSTextCorpus corpus) {
-		return permissionController.authenticatedUserMayAddToDBCollection(
-				getDBCollectionName(corpus));
-	}
+    @Override
+    public List<BTSTextCorpus> listTextCorpora(IProgressMonitor monitor) {
+        List<BTSTextCorpus> corpora = new Vector<BTSTextCorpus>();
+        for (BTSTextCorpus c : textCorpusService.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor)) {
+            String dbCollectionName = getDBCollectionName(c);
+            if (c.getVisibility().equals(BTSCoreConstants.VISIBILITY_PUBLIC)
+                    || permissionController.authenticatedUserMayReadDBCollection(dbCollectionName)) {
+                checkAndFullyLoad(c, true);
+                corpora.add(c);
+            }
+        }
+        sortBTSTextCorpus(corpora);
+        return corpora;
+    }
 
-	private void sortBTSTextCorpus(List<BTSTextCorpus> list) {
-		Collections.sort(list, new BTSObjectByNameComparator());
-		
-	}
+    @Override
+    public boolean isWriteable(BTSTextCorpus corpus) {
+        return permissionController.authenticatedUserMayAddToDBCollection(
+                getDBCollectionName(corpus));
+    }
 
-	@Override
-	public boolean makeAndSaveNewTextCorpus(BTSTextCorpus corpus, boolean synchronizeCorpus) {
-		return textCorpusService.makeAndSaveNewTextCorpus(corpus, synchronizeCorpus);
-	}
+    private void sortBTSTextCorpus(List<BTSTextCorpus> list) {
+        Collections.sort(list, new BTSObjectByNameComparator());
+
+    }
+
+    @Override
+    public boolean makeAndSaveNewTextCorpus(BTSTextCorpus corpus, boolean synchronizeCorpus) {
+        return textCorpusService.makeAndSaveNewTextCorpus(corpus, synchronizeCorpus);
+    }
 
 
-	@Override
-	public BTSCorpusObject createNew() {
-		return createNewTextCorpus();
-	}
+    @Override
+    public BTSCorpusObject createNew() {
+        return createNewTextCorpus();
+    }
 
-	@Override
-	public String getDisplayName(String id) {
-		return corpusObjectService.getDisplayName(id, null);
-	}
+    @Override
+    public String getDisplayName(String id) {
+        return corpusObjectService.getDisplayName(id, null);
+    }
 
-	
 
-	@Override
-	protected List<BTSCorpusObject> retrieveTypedRootEntries(IProgressMonitor monitor) {
-		List<BTSTextCorpus> list = textCorpusService
-				.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-		List<BTSCorpusObject> result = new Vector<BTSCorpusObject>(list.size());
-		for (BTSTextCorpus t : list)
-		{
-			result.add(t);
-		}
-		return result;
-	}
+    @Override
+    protected List<BTSCorpusObject> retrieveTypedRootEntries(IProgressMonitor monitor) {
+        List<BTSTextCorpus> list = textCorpusService
+                .list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
+        List<BTSCorpusObject> result = new Vector<BTSCorpusObject>(list.size());
+        for (BTSTextCorpus t : list) {
+            result.add(t);
+        }
+        return result;
+    }
 
-	@Override
-	protected List<BTSCorpusObject> executeTypedQuery(BTSQueryRequest query,
-			String objectState, IProgressMonitor monitor) {
-		return corpusObjectService.query(query, objectState, monitor);
-	}
+    @Override
+    protected List<BTSCorpusObject> executeTypedQuery(BTSQueryRequest query,
+                                                      String objectState, IProgressMonitor monitor) {
+        return corpusObjectService.query(query, objectState, monitor);
+    }
 
-	@Override
-	protected BTSCorpusObject typedCreateNew() {
-		return createNewTextCorpus();
-	}
+    @Override
+    protected BTSCorpusObject typedCreateNew() {
+        return createNewTextCorpus();
+    }
 
-	@Override
-	protected List<BTSCorpusObject> typedListEntries(String objectState, IProgressMonitor monitor) {
-		return corpusObjectService.list(objectState, monitor);
-	}
+    @Override
+    protected List<BTSCorpusObject> typedListEntries(String objectState, IProgressMonitor monitor) {
+        return corpusObjectService.list(objectState, monitor);
+    }
 
-	@Override
-	protected List<BTSCorpusObject> retrieveTypedOrphandEntries(Map map,
-			List<BTSFilter> btsFilters, IProgressMonitor monitor) {
-		return corpusObjectService.getOrphanEntries(map, btsFilters, monitor);
-	}
+    @Override
+    protected List<BTSCorpusObject> retrieveTypedOrphandEntries(Map map,
+                                                                List<BTSFilter> btsFilters, IProgressMonitor monitor) {
+        return corpusObjectService.getOrphanEntries(map, btsFilters, monitor);
+    }
 
-	@Override
-	public BTSTextCorpus findTextCorpusByPrefix(String corpusPrefix) {
-		return textCorpusService.findTextCorpusByPrefix(corpusPrefix);
-	}
+    @Override
+    public BTSTextCorpus findTextCorpusByPrefix(String corpusPrefix) {
+        return textCorpusService.findTextCorpusByPrefix(corpusPrefix);
+    }
 
-	
+
 }

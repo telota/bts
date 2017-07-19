@@ -10,92 +10,89 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
 
 public class ElementFigureImpl extends RoundedRectangle implements
-		ElementFigure {
+        ElementFigure {
 
-	private Object modelObject;
+    private Object modelObject;
 
-	private String type;
-	
-	private List<BTSObject> relatingObjects;
-	
-	private List<BTSInterTextReference> interTextReferences;
+    private String type;
 
-	private Color baseBackgroundcolor;
+    private List<BTSObject> relatingObjects;
 
-	public int getLength() {
-		Rectangle rec = getBounds();
-		Double d = rec.getSize().width * 0.7;
-		return d.intValue();
-	}
+    private List<BTSInterTextReference> interTextReferences;
 
-	public Object getModelObject() {
-		return modelObject;
-	}
+    private Color baseBackgroundcolor;
 
-	public void setModelObject(Object modelObject) {
-		this.modelObject = modelObject;
-	}
+    public int getLength() {
+        Rectangle rec = getBounds();
+        Double d = rec.getSize().width * 0.7;
+        return d.intValue();
+    }
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
+    public Object getModelObject() {
+        return modelObject;
+    }
 
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setModelObject(Object modelObject) {
+        this.modelObject = modelObject;
+    }
 
-	public List<BTSObject> getRelatingObjects() {
-		if (relatingObjects == null)
-		{
-			relatingObjects = new Vector<BTSObject>(4);
-		}
-		return relatingObjects;
-	}
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
 
-	public void setRelatingObjects(List<BTSObject> relatingObjects) {
-		this.relatingObjects = relatingObjects;
-	}
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	@Override
-	public void addRelatingObject(BTSObject relatingObject) {
-		if (relatingObject != null && !getRelatingObjects().contains(relatingObject))
-		{
-			getRelatingObjects().add(relatingObject);
-		}
-		
-	}
+    public List<BTSObject> getRelatingObjects() {
+        if (relatingObjects == null) {
+            relatingObjects = new Vector<BTSObject>(4);
+        }
+        return relatingObjects;
+    }
 
-	public List<BTSInterTextReference> getInterTextReferences() {
-		if (interTextReferences == null)
-		{
-			interTextReferences = new Vector<BTSInterTextReference>(4);
-		}
-		return interTextReferences;
-	}
+    public void setRelatingObjects(List<BTSObject> relatingObjects) {
+        this.relatingObjects = relatingObjects;
+    }
 
-	public void setInterTextReferences(List<BTSInterTextReference> interTextReferences) {
-		this.interTextReferences = interTextReferences;
-	}
-	/**
-	 * @param color
-	 */
-	public void setBaseBackgroundColor(Color color) {
-		this.baseBackgroundcolor = color;
-		setBackgroundColor(color);
-		
-	}
+    @Override
+    public void addRelatingObject(BTSObject relatingObject) {
+        if (relatingObject != null && !getRelatingObjects().contains(relatingObject)) {
+            getRelatingObjects().add(relatingObject);
+        }
 
-	/**
-	 * @return the baseBackgroundcolor
-	 */
-	public Color getBaseBackgroundcolor() {
-		return baseBackgroundcolor;
-	}
+    }
+
+    public List<BTSInterTextReference> getInterTextReferences() {
+        if (interTextReferences == null) {
+            interTextReferences = new Vector<BTSInterTextReference>(4);
+        }
+        return interTextReferences;
+    }
+
+    public void setInterTextReferences(List<BTSInterTextReference> interTextReferences) {
+        this.interTextReferences = interTextReferences;
+    }
+
+    /**
+     * @param color
+     */
+    public void setBaseBackgroundColor(Color color) {
+        this.baseBackgroundcolor = color;
+        setBackgroundColor(color);
+
+    }
+
+    /**
+     * @return the baseBackgroundcolor
+     */
+    public Color getBaseBackgroundcolor() {
+        return baseBackgroundcolor;
+    }
 }

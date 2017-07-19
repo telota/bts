@@ -11,20 +11,21 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.MApplication;
 
 public class HieroglypheTypeWriterControllerContextFunction extends
-		ContextFunction {
-	@Inject
-	UserActionCounterService service;
-	@Override
-	public Object compute(IEclipseContext context) {
-		System.out.println("Intitialize HieroglypheTypeWriterController");
-		// Add the new object to the application context
-		MApplication application = context.get(MApplication.class);
-		IEclipseContext ctx = application.getContext();
+        ContextFunction {
+    @Inject
+    UserActionCounterService service;
 
-		HieroglyphTypeWriterController controller = ContextInjectionFactory
-				.make(HieroglyphTypeWriterControllerImpl.class, context);
-		ctx.set(HieroglyphTypeWriterController.class, controller);
+    @Override
+    public Object compute(IEclipseContext context) {
+        System.out.println("Intitialize HieroglypheTypeWriterController");
+        // Add the new object to the application context
+        MApplication application = context.get(MApplication.class);
+        IEclipseContext ctx = application.getContext();
 
-		return controller;
-	}
+        HieroglyphTypeWriterController controller = ContextInjectionFactory
+                .make(HieroglyphTypeWriterControllerImpl.class, context);
+        ctx.set(HieroglyphTypeWriterController.class, controller);
+
+        return controller;
+    }
 }

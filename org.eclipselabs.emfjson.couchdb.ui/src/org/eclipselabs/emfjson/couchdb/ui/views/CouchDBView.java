@@ -44,102 +44,104 @@ import org.eclipselabs.emfjson.resource.JsResourceFactoryImpl;
 
 public class CouchDBView extends ViewPart {
 
-	private TreeViewer viewer;
-	
-	public CouchDBView() {
-		super();
-	}
+    private TreeViewer viewer;
 
-	@Override
-	public void createPartControl(Composite parent) {
-		Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().put("http", new JsResourceFactoryImpl());
-		
-		Action action = new Action() {
-			@Override
-			public void addPropertyChangeListener(IPropertyChangeListener listener) {
-				super.addPropertyChangeListener(listener);
-			}
-			@Override
-			public void removePropertyChangeListener(IPropertyChangeListener listener) {
-				super.removePropertyChangeListener(listener);
-			}
-			@Override
-			public void run() {
-				super.run();
-			}
-		};
-		action.setText("Do Something");
+    public CouchDBView() {
+        super();
+    }
 
-		IActionBars actionBars = getViewSite().getActionBars();
-		IMenuManager dropDownMenu = actionBars.getMenuManager();
-		dropDownMenu.add(action);
+    @Override
+    public void createPartControl(Composite parent) {
+        Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().put("http", new JsResourceFactoryImpl());
 
-		CouchDB cdb = new CouchDB(new ResourceSetImpl());
-		cdb.getDataBases();
+        Action action = new Action() {
+            @Override
+            public void addPropertyChangeListener(IPropertyChangeListener listener) {
+                super.addPropertyChangeListener(listener);
+            }
 
-		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new CouchDBContentProvider());
-		viewer.setLabelProvider(new CouchDBLabelProvider(parent));
-		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				TreeViewer src = (TreeViewer) event.getSource();
-				
-				if (src.getSelection() instanceof TreeSelection) {
-					
-					Object element = ((TreeSelection)src.getSelection()).getFirstElement();
-				
-					if (element instanceof CouchDocument) {
-						CouchDocument doc = (CouchDocument) element;
-						
-						IEditorDescriptor[] editors = PlatformUI.getWorkbench()
-								.getEditorRegistry().getEditors("_.ecore");
-						
-						IEditorDescriptor xmiEditor = null;
-						for (IEditorDescriptor editor: editors){
-							if (editor.getId().equals("org.eclipse.emf.ecore.presentation.EcoreEditorID")){
-								xmiEditor = editor;
-							}
-						}
+            @Override
+            public void removePropertyChangeListener(IPropertyChangeListener listener) {
+                super.removePropertyChangeListener(listener);
+            }
 
-						if (xmiEditor!=null){
-							IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-							
-							CouchDBFileSystem fs = new CouchDBFileSystem();
-							URI uri = URI.create(doc.getURL());
-							IFileStore fileStore = fs.getStore(uri);
-							IEditorInput input = new FileStoreEditorInput(fileStore);
-							
-							try {
-								page.openEditor(input, xmiEditor.getId());
-							} catch (PartInitException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			}
-		});
-		viewer.setAutoExpandLevel(1);
+            @Override
+            public void run() {
+                super.run();
+            }
+        };
+        action.setText("Do Something");
 
-		MenuManager menuMgr = new MenuManager();
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				//				CouchDBView.this.fillContextMenu(manager);
-			}
-		});
+        IActionBars actionBars = getViewSite().getActionBars();
+        IMenuManager dropDownMenu = actionBars.getMenuManager();
+        dropDownMenu.add(action);
 
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
+        CouchDB cdb = new CouchDB(new ResourceSetImpl());
+        cdb.getDataBases();
 
-		viewer.setInput(cdb);
-	}
+        viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+        viewer.setContentProvider(new CouchDBContentProvider());
+        viewer.setLabelProvider(new CouchDBLabelProvider(parent));
+        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                TreeViewer src = (TreeViewer) event.getSource();
 
-	@Override
-	public void setFocus() {
-		viewer.getControl().setFocus();
-	}
+                if (src.getSelection() instanceof TreeSelection) {
+
+                    Object element = ((TreeSelection) src.getSelection()).getFirstElement();
+
+                    if (element instanceof CouchDocument) {
+                        CouchDocument doc = (CouchDocument) element;
+
+                        IEditorDescriptor[] editors = PlatformUI.getWorkbench()
+                                .getEditorRegistry().getEditors("_.ecore");
+
+                        IEditorDescriptor xmiEditor = null;
+                        for (IEditorDescriptor editor : editors) {
+                            if (editor.getId().equals("org.eclipse.emf.ecore.presentation.EcoreEditorID")) {
+                                xmiEditor = editor;
+                            }
+                        }
+
+                        if (xmiEditor != null) {
+                            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+
+                            CouchDBFileSystem fs = new CouchDBFileSystem();
+                            URI uri = URI.create(doc.getURL());
+                            IFileStore fileStore = fs.getStore(uri);
+                            IEditorInput input = new FileStoreEditorInput(fileStore);
+
+                            try {
+                                page.openEditor(input, xmiEditor.getId());
+                            } catch (PartInitException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        viewer.setAutoExpandLevel(1);
+
+        MenuManager menuMgr = new MenuManager();
+        menuMgr.setRemoveAllWhenShown(true);
+        menuMgr.addMenuListener(new IMenuListener() {
+            public void menuAboutToShow(IMenuManager manager) {
+                //				CouchDBView.this.fillContextMenu(manager);
+            }
+        });
+
+        Menu menu = menuMgr.createContextMenu(viewer.getControl());
+        viewer.getControl().setMenu(menu);
+        getSite().registerContextMenu(menuMgr, viewer);
+
+        viewer.setInput(cdb);
+    }
+
+    @Override
+    public void setFocus() {
+        viewer.getControl().setFocus();
+    }
 
 }

@@ -33,29 +33,33 @@ import javax.annotation.Nullable;
 @Beta
 public final class CountingOutputStream extends FilterOutputStream {
 
-  private long count;
+    private long count;
 
-  /**
-   * Wraps another output stream, counting the number of bytes written.
-   *
-   * @param out the output stream to be wrapped
-   */
-  public CountingOutputStream(@Nullable OutputStream out) {
-    super(out);
-  }
+    /**
+     * Wraps another output stream, counting the number of bytes written.
+     *
+     * @param out the output stream to be wrapped
+     */
+    public CountingOutputStream(@Nullable OutputStream out) {
+        super(out);
+    }
 
-  /** Returns the number of bytes written. */
-  public long getCount() {
-    return count;
-  }
+    /**
+     * Returns the number of bytes written.
+     */
+    public long getCount() {
+        return count;
+    }
 
-  @Override public void write(byte[] b, int off, int len) throws IOException {
-    out.write(b, off, len);
-    count += len;
-  }
+    @Override
+    public void write(byte[] b, int off, int len) throws IOException {
+        out.write(b, off, len);
+        count += len;
+    }
 
-  @Override public void write(int b) throws IOException {
-    out.write(b);
-    count++;
-  }
+    @Override
+    public void write(int b) throws IOException {
+        out.write(b);
+        count++;
+    }
 }

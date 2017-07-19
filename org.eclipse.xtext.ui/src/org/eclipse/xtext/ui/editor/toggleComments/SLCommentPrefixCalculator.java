@@ -22,48 +22,48 @@ import org.eclipse.xtext.util.XtextSwitch;
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public class SLCommentPrefixCalculator extends XtextSwitch<Boolean> {
-	private final List<String> result;
+    private final List<String> result;
 
-	protected SLCommentPrefixCalculator(List<String> result) {
-		this.result = result;
-	}
- 
-	@Override
-	public Boolean caseAlternatives(Alternatives object) {
-		boolean result = true;
-		for(AbstractElement elem: object.getElements()) {
-			result &= doSwitch(elem);
-		}
-		return result;
-	}
+    protected SLCommentPrefixCalculator(List<String> result) {
+        this.result = result;
+    }
 
-	@Override
-	public Boolean caseGroup(Group object) {
-		for (AbstractElement elem: object.getElements()) {
-			if (!doSwitch(elem))
-				return false;
-		}
-		return true;
-	}
+    @Override
+    public Boolean caseAlternatives(Alternatives object) {
+        boolean result = true;
+        for (AbstractElement elem : object.getElements()) {
+            result &= doSwitch(elem);
+        }
+        return result;
+    }
 
-	@Override
-	public Boolean caseKeyword(Keyword object) {
-		result.add(object.getValue());
-		return false;
-	}
+    @Override
+    public Boolean caseGroup(Group object) {
+        for (AbstractElement elem : object.getElements()) {
+            if (!doSwitch(elem))
+                return false;
+        }
+        return true;
+    }
 
-	@Override
-	public Boolean caseAbstractNegatedToken(AbstractNegatedToken object) {
-		return false;
-	}
+    @Override
+    public Boolean caseKeyword(Keyword object) {
+        result.add(object.getValue());
+        return false;
+    }
 
-	@Override
-	public Boolean caseUntilToken(UntilToken object) {
-		return false;
-	}
+    @Override
+    public Boolean caseAbstractNegatedToken(AbstractNegatedToken object) {
+        return false;
+    }
 
-	@Override
-	public Boolean caseCharacterRange(CharacterRange object) {
-		return false;
-	}
+    @Override
+    public Boolean caseUntilToken(UntilToken object) {
+        return false;
+    }
+
+    @Override
+    public Boolean caseCharacterRange(CharacterRange object) {
+        return false;
+    }
 }

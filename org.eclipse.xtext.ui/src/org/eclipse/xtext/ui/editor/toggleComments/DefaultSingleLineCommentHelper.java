@@ -26,52 +26,52 @@ import com.google.inject.name.Named;
 @Singleton
 public class DefaultSingleLineCommentHelper implements ISingleLineCommentHelper {
 
-	public static final String SL_COMMENT = "org.eclipse.xtext.ui.editor.DefaultSingleLineCommentHelper.SL_COMMENT"; 
-	
-	@Inject
-	private IGrammarAccess grammarAccess;
-	
-	@Inject(optional=true)
-	@Named(SL_COMMENT)
-	private String singleLineCommentRule = "SL_COMMENT";
-	
-	private String[] result;
-	
-	public String[] getDefaultPrefixes(ISourceViewer sourceViewer, String contentType) {
-		if (result != null)
-			return result;
-		AbstractRule rule = GrammarUtil.findRuleForName(grammarAccess.getGrammar(), singleLineCommentRule);
-		if (rule == null || !(rule instanceof TerminalRule)) {
-			return null;
-		}
-		calculatePrefixes(rule);
-		return this.result;
-	}
+    public static final String SL_COMMENT = "org.eclipse.xtext.ui.editor.DefaultSingleLineCommentHelper.SL_COMMENT";
 
-	protected void calculatePrefixes(AbstractRule rule) {
-		final List<String> result = new ArrayList<String>(3);
-		createCalculator(result).doSwitch(rule.getAlternatives());
-		this.result = result.toArray(new String[result.size()]);
-	}
+    @Inject
+    private IGrammarAccess grammarAccess;
 
-	protected SLCommentPrefixCalculator createCalculator(final List<String> result) {
-		return new SLCommentPrefixCalculator(result);
-	}
+    @Inject(optional = true)
+    @Named(SL_COMMENT)
+    private String singleLineCommentRule = "SL_COMMENT";
 
-	public void setGrammarAccess(IGrammarAccess grammarAccess) {
-		this.grammarAccess = grammarAccess;
-	}
+    private String[] result;
 
-	public IGrammarAccess getGrammarAccess() {
-		return grammarAccess;
-	}
+    public String[] getDefaultPrefixes(ISourceViewer sourceViewer, String contentType) {
+        if (result != null)
+            return result;
+        AbstractRule rule = GrammarUtil.findRuleForName(grammarAccess.getGrammar(), singleLineCommentRule);
+        if (rule == null || !(rule instanceof TerminalRule)) {
+            return null;
+        }
+        calculatePrefixes(rule);
+        return this.result;
+    }
 
-	public void setSingleLineCommentRule(String singleLineCommentRule) {
-		this.singleLineCommentRule = singleLineCommentRule;
-	}
+    protected void calculatePrefixes(AbstractRule rule) {
+        final List<String> result = new ArrayList<String>(3);
+        createCalculator(result).doSwitch(rule.getAlternatives());
+        this.result = result.toArray(new String[result.size()]);
+    }
 
-	public String getSingleLineCommentRule() {
-		return singleLineCommentRule;
-	}
+    protected SLCommentPrefixCalculator createCalculator(final List<String> result) {
+        return new SLCommentPrefixCalculator(result);
+    }
+
+    public IGrammarAccess getGrammarAccess() {
+        return grammarAccess;
+    }
+
+    public void setGrammarAccess(IGrammarAccess grammarAccess) {
+        this.grammarAccess = grammarAccess;
+    }
+
+    public String getSingleLineCommentRule() {
+        return singleLineCommentRule;
+    }
+
+    public void setSingleLineCommentRule(String singleLineCommentRule) {
+        this.singleLineCommentRule = singleLineCommentRule;
+    }
 
 }

@@ -19,31 +19,30 @@ import org.eclipse.xtext.util.Triple;
 
 /**
  * @author Dennis H�bner - Initial contribution and API
- *
  */
 public class TokenTypeDefMasterDetailFieldEditor extends AbstractMasterDetailsFieldEditor {
 
-	TokenTypeDefMasterDetailFieldEditor(String name, String labelText, Composite composite,
-			IPreferenceStore preferenceStore, List<Triple<String, String, TextStyle>> list) {
-		super(name, labelText, composite, preferenceStore, list);
-	}
+    TokenTypeDefMasterDetailFieldEditor(String name, String labelText, Composite composite,
+                                        IPreferenceStore preferenceStore, List<Triple<String, String, TextStyle>> list) {
+        super(name, labelText, composite, preferenceStore, list);
+    }
 
-	@Override
-	protected String label(Object object) {
-		if (object instanceof Triple<?, ?, ?>)
-			return (String) ((Triple<?, ?, ?>) object).getSecond();
-		return object.toString();
-	}
+    @Override
+    protected String label(Object object) {
+        if (object instanceof Triple<?, ?, ?>)
+            return (String) ((Triple<?, ?, ?>) object).getSecond();
+        return object.toString();
+    }
 
-	@Override
-	protected String identifier(Object object) {
-		if (object instanceof Triple<?, ?, ?>)
-			return (String) ((Triple<?, ?, ?>) object).getFirst();
-		return object.toString();
-	}
+    @Override
+    protected String identifier(Object object) {
+        if (object instanceof Triple<?, ?, ?>)
+            return (String) ((Triple<?, ?, ?>) object).getFirst();
+        return object.toString();
+    }
 
-	@Override
-	protected AbstractDetailsPart createDetailsPart() {
-		return new TokenTypeDefDetailsPart(getPreferenceStore());
-	}
+    @Override
+    protected AbstractDetailsPart createDetailsPart() {
+        return new TokenTypeDefDetailsPart(getPreferenceStore());
+    }
 }

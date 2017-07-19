@@ -34,119 +34,118 @@ import com.google.inject.Provider;
 /**
  * Finds all references to renamed elements and dispatches to the {@link IReferenceUpdater}�of the referring languages
  * to calculate the updates.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public class ReferenceUpdaterDispatcher {
 
-	@Inject
-	private IReferenceFinder referenceFinder;
+    @Inject
+    private IReferenceFinder referenceFinder;
 
-	@Inject
-	private IResourceServiceProvider.Registry resourceServiceProviderRegistry;
-	
-	@Inject
-	private Provider<ResourceAccess> resourceAccessProvider;
-	
-	public void createReferenceUpdates(ElementRenameArguments elementRenameArguments, ResourceSet resourceSet,
-			IRefactoringUpdateAcceptor updateAcceptor, IProgressMonitor monitor) {
-		SubMonitor progress = SubMonitor.convert(monitor, "Updating references", 100);
-		ResourceAccess resourceAccess = resourceAccessProvider.get();
-		resourceAccess.registerResourceSet(resourceSet);
-		
-		ReferenceDescriptionAcceptor referenceDescriptionAcceptor = createFindReferenceAcceptor(updateAcceptor);
-		referenceFinder.findAllReferences(elementRenameArguments.getRenamedElementURIs(), 
-				resourceAccess,
-				referenceDescriptionAcceptor, progress.newChild(2));
-		Multimap<IReferenceUpdater, IReferenceDescription> updater2descriptions = referenceDescriptionAcceptor
-				.getReferenceUpdater2ReferenceDescriptions();
-		SubMonitor updaterProgress = progress.newChild(98).setWorkRemaining(updater2descriptions.keySet().size());
-		for (IReferenceUpdater referenceUpdater : updater2descriptions.keySet()) {
-			createReferenceUpdates(referenceUpdater, elementRenameArguments,
-					updater2descriptions.get(referenceUpdater), updateAcceptor, updaterProgress);
-		}
-	}
+    @Inject
+    private IResourceServiceProvider.Registry resourceServiceProviderRegistry;
 
-	protected void createReferenceUpdates(IReferenceUpdater referenceUpdater,
-			ElementRenameArguments elementRenameArguments, Iterable<IReferenceDescription> referenceDescriptions,
-			IRefactoringUpdateAcceptor updateAcceptor, SubMonitor updaterProgress) {
-		if (updaterProgress.isCanceled())
-			return;
-		referenceUpdater.createReferenceUpdates(elementRenameArguments, referenceDescriptions, updateAcceptor,
-				updaterProgress.newChild(1));
-	}
+    @Inject
+    private Provider<ResourceAccess> resourceAccessProvider;
 
-	protected ReferenceDescriptionAcceptor createFindReferenceAcceptor(IRefactoringUpdateAcceptor updateAcceptor) {
-		return new ReferenceDescriptionAcceptor(resourceServiceProviderRegistry, updateAcceptor.getRefactoringStatus());
-	}
+    public void createReferenceUpdates(ElementRenameArguments elementRenameArguments, ResourceSet resourceSet,
+                                       IRefactoringUpdateAcceptor updateAcceptor, IProgressMonitor monitor) {
+        SubMonitor progress = SubMonitor.convert(monitor, "Updating references", 100);
+        ResourceAccess resourceAccess = resourceAccessProvider.get();
+        resourceAccess.registerResourceSet(resourceSet);
 
-	public static class ReferenceDescriptionAcceptor implements IAcceptor<IReferenceDescription> {
+        ReferenceDescriptionAcceptor referenceDescriptionAcceptor = createFindReferenceAcceptor(updateAcceptor);
+        referenceFinder.findAllReferences(elementRenameArguments.getRenamedElementURIs(),
+                resourceAccess,
+                referenceDescriptionAcceptor, progress.newChild(2));
+        Multimap<IReferenceUpdater, IReferenceDescription> updater2descriptions = referenceDescriptionAcceptor
+                .getReferenceUpdater2ReferenceDescriptions();
+        SubMonitor updaterProgress = progress.newChild(98).setWorkRemaining(updater2descriptions.keySet().size());
+        for (IReferenceUpdater referenceUpdater : updater2descriptions.keySet()) {
+            createReferenceUpdates(referenceUpdater, elementRenameArguments,
+                    updater2descriptions.get(referenceUpdater), updateAcceptor, updaterProgress);
+        }
+    }
 
-		private Map<IResourceServiceProvider, IReferenceUpdater> provider2updater = newHashMap();
-		private Multimap<IReferenceUpdater, IReferenceDescription> updater2refs = HashMultimap.create();
+    protected void createReferenceUpdates(IReferenceUpdater referenceUpdater,
+                                          ElementRenameArguments elementRenameArguments, Iterable<IReferenceDescription> referenceDescriptions,
+                                          IRefactoringUpdateAcceptor updateAcceptor, SubMonitor updaterProgress) {
+        if (updaterProgress.isCanceled())
+            return;
+        referenceUpdater.createReferenceUpdates(elementRenameArguments, referenceDescriptions, updateAcceptor,
+                updaterProgress.newChild(1));
+    }
 
-		private StatusWrapper status;
-		private final Registry resourceServiceProviderRegistry;
+    protected ReferenceDescriptionAcceptor createFindReferenceAcceptor(IRefactoringUpdateAcceptor updateAcceptor) {
+        return new ReferenceDescriptionAcceptor(resourceServiceProviderRegistry, updateAcceptor.getRefactoringStatus());
+    }
 
-		public ReferenceDescriptionAcceptor(IResourceServiceProvider.Registry resourceServiceProviderRegistry,
-				StatusWrapper status) {
-			this.resourceServiceProviderRegistry = resourceServiceProviderRegistry;
-			this.status = status;
-		}
+    public static class ReferenceDescriptionAcceptor implements IAcceptor<IReferenceDescription> {
 
-		public void accept(IReferenceDescription referenceDescription) {
-			if (referenceDescription.getSourceEObjectUri() == null
-					|| referenceDescription.getTargetEObjectUri() == null
-					|| referenceDescription.getEReference() == null) {
-				handleCorruptReferenceDescription(referenceDescription, status);
-			} else {
-				URI sourceResourceURI = referenceDescription.getSourceEObjectUri().trimFragment();
-				IReferenceUpdater referenceUpdater = getReferenceUpdater(sourceResourceURI);
-				if (referenceUpdater == null)
-					handleNoReferenceUpdater(sourceResourceURI, status);
-				else
-					updater2refs.put(referenceUpdater, referenceDescription);
-			}
-		}
+        private final Registry resourceServiceProviderRegistry;
+        private Map<IResourceServiceProvider, IReferenceUpdater> provider2updater = newHashMap();
+        private Multimap<IReferenceUpdater, IReferenceDescription> updater2refs = HashMultimap.create();
+        private StatusWrapper status;
 
-		protected void handleNoReferenceUpdater(URI sourceResourceURI, StatusWrapper status) {
-			status.add(WARNING,
-					"References from {0} will not be updated as the language has not registered an IReferenceUpdater",
-					sourceResourceURI);
-		}
+        public ReferenceDescriptionAcceptor(IResourceServiceProvider.Registry resourceServiceProviderRegistry,
+                                            StatusWrapper status) {
+            this.resourceServiceProviderRegistry = resourceServiceProviderRegistry;
+            this.status = status;
+        }
 
-		protected void handleCorruptReferenceDescription(IReferenceDescription referenceDescription,
-				StatusWrapper status) {
-			status.add(ERROR,
-					"Xtext index contains invalid entries. It is suggested to perform a workspace refresh and a clean build.");
-		}
+        public void accept(IReferenceDescription referenceDescription) {
+            if (referenceDescription.getSourceEObjectUri() == null
+                    || referenceDescription.getTargetEObjectUri() == null
+                    || referenceDescription.getEReference() == null) {
+                handleCorruptReferenceDescription(referenceDescription, status);
+            } else {
+                URI sourceResourceURI = referenceDescription.getSourceEObjectUri().trimFragment();
+                IReferenceUpdater referenceUpdater = getReferenceUpdater(sourceResourceURI);
+                if (referenceUpdater == null)
+                    handleNoReferenceUpdater(sourceResourceURI, status);
+                else
+                    updater2refs.put(referenceUpdater, referenceDescription);
+            }
+        }
 
-		protected IReferenceUpdater getReferenceUpdater(URI sourceResourceURI) {
-			//TODO Why do we cache the IReferenceUpdater here?
-			IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry
-					.getResourceServiceProvider(sourceResourceURI);
-			if (resourceServiceProvider == null)
-				return null;
-			IReferenceUpdater referenceUpdater = provider2updater.get(resourceServiceProvider);
-			if (referenceUpdater == null) {
-				referenceUpdater = resourceServiceProvider.get(OptionalReferenceUpdaterProxy.class).get();
-				if (referenceUpdater != null)
-					provider2updater.put(resourceServiceProvider, referenceUpdater);
-			}
-			return referenceUpdater;
-		}
+        protected void handleNoReferenceUpdater(URI sourceResourceURI, StatusWrapper status) {
+            status.add(WARNING,
+                    "References from {0} will not be updated as the language has not registered an IReferenceUpdater",
+                    sourceResourceURI);
+        }
 
-		public Multimap<IReferenceUpdater, IReferenceDescription> getReferenceUpdater2ReferenceDescriptions() {
-			return updater2refs;
-		}
-	}
+        protected void handleCorruptReferenceDescription(IReferenceDescription referenceDescription,
+                                                         StatusWrapper status) {
+            status.add(ERROR,
+                    "Xtext index contains invalid entries. It is suggested to perform a workspace refresh and a clean build.");
+        }
 
-	protected static class OptionalReferenceUpdaterProxy {
-		@Inject(optional = true)
-		private IReferenceUpdater referenceUpdater;
+        protected IReferenceUpdater getReferenceUpdater(URI sourceResourceURI) {
+            //TODO Why do we cache the IReferenceUpdater here?
+            IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry
+                    .getResourceServiceProvider(sourceResourceURI);
+            if (resourceServiceProvider == null)
+                return null;
+            IReferenceUpdater referenceUpdater = provider2updater.get(resourceServiceProvider);
+            if (referenceUpdater == null) {
+                referenceUpdater = resourceServiceProvider.get(OptionalReferenceUpdaterProxy.class).get();
+                if (referenceUpdater != null)
+                    provider2updater.put(resourceServiceProvider, referenceUpdater);
+            }
+            return referenceUpdater;
+        }
 
-		public IReferenceUpdater get() {
-			return referenceUpdater;
-		}
-	}
+        public Multimap<IReferenceUpdater, IReferenceDescription> getReferenceUpdater2ReferenceDescriptions() {
+            return updater2refs;
+        }
+    }
+
+    protected static class OptionalReferenceUpdaterProxy {
+        @Inject(optional = true)
+        private IReferenceUpdater referenceUpdater;
+
+        public IReferenceUpdater get() {
+            return referenceUpdater;
+        }
+    }
 }

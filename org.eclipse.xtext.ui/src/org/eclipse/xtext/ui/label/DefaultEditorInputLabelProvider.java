@@ -20,30 +20,30 @@ import com.google.inject.Inject;
  */
 public class DefaultEditorInputLabelProvider extends DeclarativeLabelProvider {
 
-	private static final Logger LOG = Logger.getLogger(DefaultEditorInputLabelProvider.class);
+    private static final Logger LOG = Logger.getLogger(DefaultEditorInputLabelProvider.class);
 
-	@Inject 
-	private DefaultEditorImageUtil imageUtil;
-	
-	public String text(IStorageEditorInput editorInput) {
-		try {
-			return editorInput.getStorage().getFullPath().lastSegment();
-		} catch (CoreException e) {
-			LOG.error("Error resolving IStorage from IStorageEditorInput", e);
-		}
-		return null;
-	}
+    @Inject
+    private DefaultEditorImageUtil imageUtil;
 
-	public String text(URIEditorInput editorInput) {
-		return editorInput.getURI().lastSegment();
-	}
+    public String text(IStorageEditorInput editorInput) {
+        try {
+            return editorInput.getStorage().getFullPath().lastSegment();
+        } catch (CoreException e) {
+            LOG.error("Error resolving IStorage from IStorageEditorInput", e);
+        }
+        return null;
+    }
 
-	public ImageDescriptor image(IStorageEditorInput editorInput) {
-		return imageUtil.getDefaultEditorImageDescriptor(text(editorInput));
-	}
+    public String text(URIEditorInput editorInput) {
+        return editorInput.getURI().lastSegment();
+    }
 
-	public ImageDescriptor image(URIEditorInput editorInput) {
-		return imageUtil.getDefaultEditorImageDescriptor(text(editorInput));
-	}
+    public ImageDescriptor image(IStorageEditorInput editorInput) {
+        return imageUtil.getDefaultEditorImageDescriptor(text(editorInput));
+    }
+
+    public ImageDescriptor image(URIEditorInput editorInput) {
+        return imageUtil.getDefaultEditorImageDescriptor(text(editorInput));
+    }
 
 }

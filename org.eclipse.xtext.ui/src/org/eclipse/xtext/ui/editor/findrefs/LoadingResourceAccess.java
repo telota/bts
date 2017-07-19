@@ -28,29 +28,29 @@ import com.google.inject.Inject;
  */
 public class LoadingResourceAccess implements IReferenceFinder.ILocalResourceAccess {
 
-	@Inject
-	private IResourceSetProvider resourceSetProvider;
-	
-	@Inject
-	private IStorage2UriMapper storage2UriMapper;
-	
-	public <R> R readOnly(URI targetURI, IUnitOfWork<R, ResourceSet> work) {
-		Iterable<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(targetURI.trimFragment());
-		Iterator<Pair<IStorage, IProject>> iterator = storages.iterator();
-		while(iterator.hasNext()) {
-			Pair<IStorage, IProject> pair = iterator.next();
-			IProject project = pair.getSecond();
-			if (project != null) {
-				ResourceSet resourceSet = resourceSetProvider.get(project);
-				if(resourceSet != null)
-					resourceSet.getResource(targetURI, true);
-					try {
-						return work.exec(resourceSet);
-					} catch (Exception e) {
-						throw new WrappedException(e);
-					}
-			}
-		}
-		return null;
-	}
+    @Inject
+    private IResourceSetProvider resourceSetProvider;
+
+    @Inject
+    private IStorage2UriMapper storage2UriMapper;
+
+    public <R> R readOnly(URI targetURI, IUnitOfWork<R, ResourceSet> work) {
+        Iterable<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(targetURI.trimFragment());
+        Iterator<Pair<IStorage, IProject>> iterator = storages.iterator();
+        while (iterator.hasNext()) {
+            Pair<IStorage, IProject> pair = iterator.next();
+            IProject project = pair.getSecond();
+            if (project != null) {
+                ResourceSet resourceSet = resourceSetProvider.get(project);
+                if (resourceSet != null)
+                    resourceSet.getResource(targetURI, true);
+                try {
+                    return work.exec(resourceSet);
+                } catch (Exception e) {
+                    throw new WrappedException(e);
+                }
+            }
+        }
+        return null;
+    }
 }

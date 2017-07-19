@@ -14,19 +14,19 @@ import org.eclipse.swt.widgets.Display;
  */
 public class DisplayRunHelper {
 
-	public static void runSyncInDisplayThread(Runnable runnable) {
-		if (Display.getCurrent() == null) {
-			Display.getDefault().syncExec(runnable);
-		} else {
-			runnable.run();
-		}
-	}
+    public static void runSyncInDisplayThread(Runnable runnable) {
+        if (Display.getCurrent() == null) {
+            Display.getDefault().syncExec(runnable);
+        } else {
+            runnable.run();
+        }
+    }
 
-	public static void runAsyncInDisplayThread(Runnable runnable) {
-		if (Display.getCurrent() == null) {
-			Display.getDefault().asyncExec(runnable);
-		} else {
-			runnable.run();
-		}
-	}
+    public static void runAsyncInDisplayThread(Runnable runnable) {
+        if (Display.getCurrent() == null) {
+            Display.getDefault().asyncExec(runnable);
+        } else {
+            runnable.run();
+        }
+    }
 }

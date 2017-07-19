@@ -78,395 +78,398 @@ import com.google.inject.Provider;
  * A typical usage pattern looks like this:
  * <pre>
  * EmbeddedEditorFactory editorFactory;
- * 
+ *
  * EmbeddedEditor editor = editorFactory
  *    .newEditor(resourceProvider)
  *    .showErrorAndWarningAnnotations()
  *    .withParent(parentComposite);
  * EmbeddedEditorModelAccess model = editor.createPartialEditor();
- * // work with the model 
+ * // work with the model
  * </pre>
- * 
- * @since 2.2
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
+ * @since 2.2
  */
 public class EmbeddedEditorFactory {
 
-	private static CompositeRuler cpAnnotationRuler;
+    private static CompositeRuler cpAnnotationRuler;
 
-	private static OverviewRuler cporuler;
+    private static OverviewRuler cporuler;
 
-	@Inject
-	private Provider<Builder> builderProvider;
-	
-	public static class Builder {
-		
-		/** The width of the vertical ruler. */
-		protected static final int VERTICAL_RULER_WIDTH = 12;
-		
-		@Inject
-		protected XtextSourceViewer.Factory sourceViewerFactory;
+    @Inject
+    private Provider<Builder> builderProvider;
 
-		@Inject
-		protected Provider<XtextSourceViewerConfiguration> sourceViewerConfigurationProvider;
+    public static CompositeRuler getCpAnnotationRuler() {
+        return cpAnnotationRuler;
+    }
 
-		@Inject
-		protected Provider<XtextDocument> documentProvider;
+    public static void setCpAnnotationRuler(CompositeRuler cpAnnotationRuler) {
+        EmbeddedEditorFactory.cpAnnotationRuler = cpAnnotationRuler;
+    }
 
-		@Inject
-		protected Provider<IDocumentPartitioner> documentPartitionerProvider;
+    public static void setCPORuler(OverviewRuler oruler) {
+        EmbeddedEditorFactory.cporuler = oruler;
 
-		@Inject
-		protected IResourceValidator resourceValidator;
+    }
 
-		@Inject
-		protected IPreferenceStoreAccess preferenceStoreAccess;
-		
-		@Inject
-		protected IssueResolutionProvider issueResolutionProvider;
-		
-		@Inject
-		protected ICharacterPairMatcher characterPairMatcher;
-		
-		@Inject
-		protected EmbeddedEditorActions.Factory actionFactory;
-		
-		@Inject
-		protected HighlightingHelper highlightingHelper;
+    public static OverviewRuler getOverViewRuler() {
+        return cporuler;
 
-		protected IEditedResourceProvider resourceProvider;
-		protected String[] annotationTypes;
-//		protected Boolean lineNumbers;
+    }
+
+    public Builder newEditor(IEditedResourceProvider resourceProvider) {
+        if (resourceProvider == null)
+            throw new IllegalArgumentException("resourceProvider may not be null");
+        Builder result = getBuilderProvider().get();
+        result.setResourceProvider(resourceProvider);
+        return result;
+    }
+
+    protected Provider<Builder> getBuilderProvider() {
+        return builderProvider;
+    }
+
+    public void setBuilderProvider(Provider<Builder> builderProvider) {
+        this.builderProvider = builderProvider;
+    }
+
+    public static class Builder {
+
+        /**
+         * The width of the vertical ruler.
+         */
+        protected static final int VERTICAL_RULER_WIDTH = 12;
+
+        @Inject
+        protected XtextSourceViewer.Factory sourceViewerFactory;
+
+        @Inject
+        protected Provider<XtextSourceViewerConfiguration> sourceViewerConfigurationProvider;
+
+        @Inject
+        protected Provider<XtextDocument> documentProvider;
+
+        @Inject
+        protected Provider<IDocumentPartitioner> documentPartitionerProvider;
+
+        @Inject
+        protected IResourceValidator resourceValidator;
+
+        @Inject
+        protected IPreferenceStoreAccess preferenceStoreAccess;
+
+        @Inject
+        protected IssueResolutionProvider issueResolutionProvider;
+
+        @Inject
+        protected ICharacterPairMatcher characterPairMatcher;
+
+        @Inject
+        protected EmbeddedEditorActions.Factory actionFactory;
+
+        @Inject
+        protected HighlightingHelper highlightingHelper;
+
+        protected IEditedResourceProvider resourceProvider;
+        protected String[] annotationTypes;
+        //		protected Boolean lineNumbers;
 //		protected Boolean folding;
-		protected Boolean readonly;
-		protected boolean editorBuild;
-		protected IValidationIssueProcessor issueProcessor;
+        protected Boolean readonly;
+        protected boolean editorBuild;
+        protected IValidationIssueProcessor issueProcessor;
 
-		
-		public Builder showErrorAndWarningAnnotations() {
-			return showAnnotations("org.eclipse.xtext.ui.editor.error", "org.eclipse.xtext.ui.editor.warning");
-		}
-		
-		public Builder showAnnotations(String... annotationTypes) {
-			if (this.annotationTypes != null)
-				throw new IllegalStateException();
-			if (annotationTypes == null)
-				throw new IllegalArgumentException();
-			this.annotationTypes = annotationTypes;
-			return this;
-		}
-//		public Builder showLineNumbers() {
+
+        public Builder showErrorAndWarningAnnotations() {
+            return showAnnotations("org.eclipse.xtext.ui.editor.error", "org.eclipse.xtext.ui.editor.warning");
+        }
+
+        public Builder showAnnotations(String... annotationTypes) {
+            if (this.annotationTypes != null)
+                throw new IllegalStateException();
+            if (annotationTypes == null)
+                throw new IllegalArgumentException();
+            this.annotationTypes = annotationTypes;
+            return this;
+        }
+
+        //		public Builder showLineNumbers() {
 //			if (lineNumbers != null)
 //				throw new IllegalStateException();
 //			this.lineNumbers = true;
 //			return this;
 //		}
-		public Builder processIssuesBy(IValidationIssueProcessor issueProcessor) {
-			if (this.issueProcessor != null)
-				throw new IllegalStateException();
-			if (issueProcessor == null)
-				throw new IllegalArgumentException();
-			this.issueProcessor = issueProcessor;
-			return this;
-		}
-//		public Builder enableFolding() {
+        public Builder processIssuesBy(IValidationIssueProcessor issueProcessor) {
+            if (this.issueProcessor != null)
+                throw new IllegalStateException();
+            if (issueProcessor == null)
+                throw new IllegalArgumentException();
+            this.issueProcessor = issueProcessor;
+            return this;
+        }
+
+        //		public Builder enableFolding() {
 //			if (folding != null)
 //				throw new IllegalStateException();
 //			this.folding = true;
 //			return this;
 //		}
-		public Builder readOnly() {
-			if (readonly != null)
-				throw new IllegalStateException();
-			this.readonly = true;
-			return this;
-		}
-		public Builder withResourceValidator(IResourceValidator resourceValidator) {
-			this.resourceValidator = resourceValidator;
-			return this;
-		}
-		public EmbeddedEditor withParent(final Composite parent) {
-			if (editorBuild)
-				throw new IllegalStateException();
-			editorBuild = true;
+        public Builder readOnly() {
+            if (readonly != null)
+                throw new IllegalStateException();
+            this.readonly = true;
+            return this;
+        }
+
+        public Builder withResourceValidator(IResourceValidator resourceValidator) {
+            this.resourceValidator = resourceValidator;
+            return this;
+        }
+
+        public EmbeddedEditor withParent(final Composite parent) {
+            if (editorBuild)
+                throw new IllegalStateException();
+            editorBuild = true;
 //			/*fProjectionSupport =*/installProjectionSupport(this.fSourceViewer);
-			final CompositeRuler annotationRuler;
-			if (annotationTypes != null && annotationTypes.length != 0) {
-				annotationRuler = new CompositeRuler();
-			} else {
-				annotationRuler = null;
-			}
-			//cp
-			setCpAnnotationRuler(annotationRuler);
-			DefaultMarkerAnnotationAccess myAnnotation = new
-					DefaultMarkerAnnotationAccess();
-			ISharedTextColors sharedColors = EditorsUI.getSharedTextColors();
-			OverviewRuler oruler = new OverviewRuler(myAnnotation, 12, sharedColors);
+            final CompositeRuler annotationRuler;
+            if (annotationTypes != null && annotationTypes.length != 0) {
+                annotationRuler = new CompositeRuler();
+            } else {
+                annotationRuler = null;
+            }
+            //cp
+            setCpAnnotationRuler(annotationRuler);
+            DefaultMarkerAnnotationAccess myAnnotation = new
+                    DefaultMarkerAnnotationAccess();
+            ISharedTextColors sharedColors = EditorsUI.getSharedTextColors();
+            OverviewRuler oruler = new OverviewRuler(myAnnotation, 12, sharedColors);
 
-			setCPORuler(oruler);
-			
-			//end cp
-			final XtextSourceViewer viewer = this.sourceViewerFactory.createSourceViewer(
-					parent, 
-					annotationRuler, 
-					oruler, // overviewRuler
-					true, // showAnnotationOverview 
-					SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-			
-			final XtextSourceViewerConfiguration viewerConfiguration = this.sourceViewerConfigurationProvider.get();
-			viewer.configure(viewerConfiguration);
+            setCPORuler(oruler);
 
-			// squiggles for markers and other decorations
-			final SourceViewerDecorationSupport viewerDecorationSupport = new SourceViewerDecorationSupport(
-					viewer, 
-					null, // overviewRuler 
-					new DefaultMarkerAnnotationAccess() {
-						@Override
-						public int getLayer(Annotation annotation) {
-							if (annotation.isMarkedDeleted()) {
-								return IAnnotationAccessExtension.DEFAULT_LAYER;
-							}
-							return super.getLayer(annotation);
-						}
-					}, 
-					getSharedColors());
-			MarkerAnnotationPreferences annotationPreferences = new MarkerAnnotationPreferences();
-			Iterator<AnnotationPreference> e = Iterators.filter(annotationPreferences.getAnnotationPreferences().iterator(), AnnotationPreference.class);
-			while (e.hasNext()) {
-				viewerDecorationSupport.setAnnotationPreference(e.next());
-			}
-			if (characterPairMatcher != null) {
-				viewerDecorationSupport.setCharacterPairMatcher(characterPairMatcher);
-				viewerDecorationSupport.setMatchingCharacterPainterPreferenceKeys(BracketMatchingPreferencesInitializer.IS_ACTIVE_KEY,
-						BracketMatchingPreferencesInitializer.COLOR_KEY);
-			}
-			viewerDecorationSupport.install(this.preferenceStoreAccess.getPreferenceStore());
-			
-			
-			final XtextDocument document = this.documentProvider.get();
-			
-			IDocumentPartitioner partitioner = this.documentPartitionerProvider.get();
-			partitioner.connect(document);
-			document.setDocumentPartitioner(partitioner);
+            //end cp
+            final XtextSourceViewer viewer = this.sourceViewerFactory.createSourceViewer(
+                    parent,
+                    annotationRuler,
+                    oruler, // overviewRuler
+                    true, // showAnnotationOverview
+                    SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 
-			final EmbeddedEditorActions actions = initializeActions(viewer);
-			parent.addDisposeListener(new DisposeListener() {
-				public void widgetDisposed(DisposeEvent e) {
-					viewerDecorationSupport.dispose();
-					highlightingHelper.uninstall();
-				}
-			});
-			final EmbeddedEditor result = new EmbeddedEditor(
-					document, viewer, viewerConfiguration, resourceProvider, new Runnable() {
-						public void run() {
-							afterCreatePartialEditor(viewer, document, annotationRuler, actions);
-							highlightingHelper.install(viewerConfiguration, viewer);
-						}
-					});
-			viewer.setEditable(!Boolean.TRUE.equals(readonly));
-			viewer.getContentAssistantFacade().addCompletionListener(new ICompletionListener() {
-				
-				private Button defaultButton;
+            final XtextSourceViewerConfiguration viewerConfiguration = this.sourceViewerConfigurationProvider.get();
+            viewer.configure(viewerConfiguration);
 
-				public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {
-				}
-				
-				public void assistSessionStarted(ContentAssistEvent event) {
-					defaultButton = parent.getShell().getDefaultButton();
-					parent.getShell().setDefaultButton(null);
-				}
-				
-				public void assistSessionEnded(ContentAssistEvent event) {
-					parent.getShell().setDefaultButton(defaultButton);
-					defaultButton = null;
-				}
-			});
-			ValidationJob job = new ValidationJob(this.resourceValidator, document, new IValidationIssueProcessor() {
-				private AnnotationIssueProcessor annotationIssueProcessor;
+            // squiggles for markers and other decorations
+            final SourceViewerDecorationSupport viewerDecorationSupport = new SourceViewerDecorationSupport(
+                    viewer,
+                    null, // overviewRuler
+                    new DefaultMarkerAnnotationAccess() {
+                        @Override
+                        public int getLayer(Annotation annotation) {
+                            if (annotation.isMarkedDeleted()) {
+                                return IAnnotationAccessExtension.DEFAULT_LAYER;
+                            }
+                            return super.getLayer(annotation);
+                        }
+                    },
+                    getSharedColors());
+            MarkerAnnotationPreferences annotationPreferences = new MarkerAnnotationPreferences();
+            Iterator<AnnotationPreference> e = Iterators.filter(annotationPreferences.getAnnotationPreferences().iterator(), AnnotationPreference.class);
+            while (e.hasNext()) {
+                viewerDecorationSupport.setAnnotationPreference(e.next());
+            }
+            if (characterPairMatcher != null) {
+                viewerDecorationSupport.setCharacterPairMatcher(characterPairMatcher);
+                viewerDecorationSupport.setMatchingCharacterPainterPreferenceKeys(BracketMatchingPreferencesInitializer.IS_ACTIVE_KEY,
+                        BracketMatchingPreferencesInitializer.COLOR_KEY);
+            }
+            viewerDecorationSupport.install(this.preferenceStoreAccess.getPreferenceStore());
 
-				public void processIssues(List<Issue> issues, IProgressMonitor monitor) {
-					IValidationIssueProcessor issueProcessor = Builder.this.issueProcessor;
-					if (issueProcessor != null) {
-						issueProcessor.processIssues(issues, monitor);
-					}
-					if (this.annotationIssueProcessor == null) {
-						this.annotationIssueProcessor = new AnnotationIssueProcessor(document, viewer.getAnnotationModel(), new IssueResolutionProvider() {
 
-							public boolean hasResolutionFor(String issueCode) {
-								return issueResolutionProvider.hasResolutionFor(issueCode);
-							}
+            final XtextDocument document = this.documentProvider.get();
 
-							public List<IssueResolution> getResolutions(Issue issue) {
-								List<IssueResolution> resolutions = issueResolutionProvider.getResolutions(issue);
-								List<IssueResolution> result = Lists.transform(resolutions, new Function<IssueResolution, IssueResolution>() {
+            IDocumentPartitioner partitioner = this.documentPartitionerProvider.get();
+            partitioner.connect(document);
+            document.setDocumentPartitioner(partitioner);
 
-									public IssueResolution apply(final IssueResolution input) {
-										IssueResolution result = new IssueResolution(
-												input.getLabel(), 
-												input.getDescription(), 
-												input.getImage(), 
-												new IModificationContext() {
-													public IXtextDocument getXtextDocument(URI uri) {
-														if (uri.trimFragment().equals(document.getResourceURI()))
-															return document;
-														return input.getModificationContext().getXtextDocument(uri);
-													}
-													
-													public IXtextDocument getXtextDocument() {
-														IModificationContext original = input.getModificationContext();
-														if (original instanceof IssueModificationContext) {
-															URI uri = ((IssueModificationContext) original).getIssue().getUriToProblem();
-															return getXtextDocument(uri);
-														}
-														return original.getXtextDocument();
-													}
-												}, 
-												input.getModification());
-										return result;
-									}
-								});
-								return result;
-							}
-							
-						});
-					}
-					if (this.annotationIssueProcessor != null) {
-						this.annotationIssueProcessor.processIssues(issues, monitor);
-					}
-				}
-			}, CheckMode.FAST_ONLY);
-			document.setValidationJob(job);
+            final EmbeddedEditorActions actions = initializeActions(viewer);
+            parent.addDisposeListener(new DisposeListener() {
+                public void widgetDisposed(DisposeEvent e) {
+                    viewerDecorationSupport.dispose();
+                    highlightingHelper.uninstall();
+                }
+            });
+            final EmbeddedEditor result = new EmbeddedEditor(
+                    document, viewer, viewerConfiguration, resourceProvider, new Runnable() {
+                public void run() {
+                    afterCreatePartialEditor(viewer, document, annotationRuler, actions);
+                    highlightingHelper.install(viewerConfiguration, viewer);
+                }
+            });
+            viewer.setEditable(!Boolean.TRUE.equals(readonly));
+            viewer.getContentAssistantFacade().addCompletionListener(new ICompletionListener() {
 
-			Control control = viewer.getControl();
-			GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
-			control.setLayoutData(data);
-			return result;
-		}
-		
-		protected void afterCreatePartialEditor(XtextSourceViewer viewer, XtextDocument document, CompositeRuler verticalRuler, 
-				final EmbeddedEditorActions actions) {
-			if (verticalRuler != null && annotationTypes != null && annotationTypes.length > 0) {
-				AnnotationRulerColumn annotationRulerColumn = new AnnotationRulerColumn(VERTICAL_RULER_WIDTH, new DefaultMarkerAnnotationAccess() {//(viewer.getAnnotationModel(), VERTICAL_RULER_WIDTH, new DefaultMarkerAnnotationAccess() {
-					@Override
-					public int getLayer(Annotation annotation) {
-						if (annotation.isMarkedDeleted()) {
-							return IAnnotationAccessExtension.DEFAULT_LAYER;
-						}
-						return super.getLayer(annotation);
-					}
-				});
-				for(String annotationType: annotationTypes)
-					annotationRulerColumn.addAnnotationType(annotationType);
-				verticalRuler.addDecorator(1, annotationRulerColumn);
-			}
+                private Button defaultButton;
 
-			final OperationHistoryListener listener = installUndoRedoSupport(viewer, document, actions);
-			viewer.getControl().addDisposeListener(new DisposeListener() {
-				public void widgetDisposed(DisposeEvent e) {
-					uninstallUndoRedoSupport(listener);
-				}
-			});
-			viewer.addTextListener(new ITextListener() {
-				public void textChanged(TextEvent event) {
-					if (event.getDocumentEvent() != null) {
-						actions.updateAllActions();
-					}
-				}
-			});
-			viewer.addSelectionChangedListener(new ISelectionChangedListener() {
-				public void selectionChanged(SelectionChangedEvent event) {
-					actions.updateSelectionDependentActions();
-				}
-			});
-			viewer.getUndoManager().reset();
-		}
+                public void selectionChanged(ICompletionProposal proposal, boolean smartToggle) {
+                }
 
-		protected void updateUndoAction(EmbeddedEditorActions actions) {
-			actions.updateAction(ITextEditorActionConstants.UNDO);
-		}
+                public void assistSessionStarted(ContentAssistEvent event) {
+                    defaultButton = parent.getShell().getDefaultButton();
+                    parent.getShell().setDefaultButton(null);
+                }
 
-		protected void uninstallUndoRedoSupport(OperationHistoryListener listener) {
-			//XXX cp uncommented not necessary since undoredo update are done by textlistener on textviewer
+                public void assistSessionEnded(ContentAssistEvent event) {
+                    parent.getShell().setDefaultButton(defaultButton);
+                    defaultButton = null;
+                }
+            });
+            ValidationJob job = new ValidationJob(this.resourceValidator, document, new IValidationIssueProcessor() {
+                private AnnotationIssueProcessor annotationIssueProcessor;
+
+                public void processIssues(List<Issue> issues, IProgressMonitor monitor) {
+                    IValidationIssueProcessor issueProcessor = Builder.this.issueProcessor;
+                    if (issueProcessor != null) {
+                        issueProcessor.processIssues(issues, monitor);
+                    }
+                    if (this.annotationIssueProcessor == null) {
+                        this.annotationIssueProcessor = new AnnotationIssueProcessor(document, viewer.getAnnotationModel(), new IssueResolutionProvider() {
+
+                            public boolean hasResolutionFor(String issueCode) {
+                                return issueResolutionProvider.hasResolutionFor(issueCode);
+                            }
+
+                            public List<IssueResolution> getResolutions(Issue issue) {
+                                List<IssueResolution> resolutions = issueResolutionProvider.getResolutions(issue);
+                                List<IssueResolution> result = Lists.transform(resolutions, new Function<IssueResolution, IssueResolution>() {
+
+                                    public IssueResolution apply(final IssueResolution input) {
+                                        IssueResolution result = new IssueResolution(
+                                                input.getLabel(),
+                                                input.getDescription(),
+                                                input.getImage(),
+                                                new IModificationContext() {
+                                                    public IXtextDocument getXtextDocument(URI uri) {
+                                                        if (uri.trimFragment().equals(document.getResourceURI()))
+                                                            return document;
+                                                        return input.getModificationContext().getXtextDocument(uri);
+                                                    }
+
+                                                    public IXtextDocument getXtextDocument() {
+                                                        IModificationContext original = input.getModificationContext();
+                                                        if (original instanceof IssueModificationContext) {
+                                                            URI uri = ((IssueModificationContext) original).getIssue().getUriToProblem();
+                                                            return getXtextDocument(uri);
+                                                        }
+                                                        return original.getXtextDocument();
+                                                    }
+                                                },
+                                                input.getModification());
+                                        return result;
+                                    }
+                                });
+                                return result;
+                            }
+
+                        });
+                    }
+                    if (this.annotationIssueProcessor != null) {
+                        this.annotationIssueProcessor.processIssues(issues, monitor);
+                    }
+                }
+            }, CheckMode.FAST_ONLY);
+            document.setValidationJob(job);
+
+            Control control = viewer.getControl();
+            GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+            control.setLayoutData(data);
+            return result;
+        }
+
+        protected void afterCreatePartialEditor(XtextSourceViewer viewer, XtextDocument document, CompositeRuler verticalRuler,
+                                                final EmbeddedEditorActions actions) {
+            if (verticalRuler != null && annotationTypes != null && annotationTypes.length > 0) {
+                AnnotationRulerColumn annotationRulerColumn = new AnnotationRulerColumn(VERTICAL_RULER_WIDTH, new DefaultMarkerAnnotationAccess() {//(viewer.getAnnotationModel(), VERTICAL_RULER_WIDTH, new DefaultMarkerAnnotationAccess() {
+                    @Override
+                    public int getLayer(Annotation annotation) {
+                        if (annotation.isMarkedDeleted()) {
+                            return IAnnotationAccessExtension.DEFAULT_LAYER;
+                        }
+                        return super.getLayer(annotation);
+                    }
+                });
+                for (String annotationType : annotationTypes)
+                    annotationRulerColumn.addAnnotationType(annotationType);
+                verticalRuler.addDecorator(1, annotationRulerColumn);
+            }
+
+            final OperationHistoryListener listener = installUndoRedoSupport(viewer, document, actions);
+            viewer.getControl().addDisposeListener(new DisposeListener() {
+                public void widgetDisposed(DisposeEvent e) {
+                    uninstallUndoRedoSupport(listener);
+                }
+            });
+            viewer.addTextListener(new ITextListener() {
+                public void textChanged(TextEvent event) {
+                    if (event.getDocumentEvent() != null) {
+                        actions.updateAllActions();
+                    }
+                }
+            });
+            viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+                public void selectionChanged(SelectionChangedEvent event) {
+                    actions.updateSelectionDependentActions();
+                }
+            });
+            viewer.getUndoManager().reset();
+        }
+
+        protected void updateUndoAction(EmbeddedEditorActions actions) {
+            actions.updateAction(ITextEditorActionConstants.UNDO);
+        }
+
+        protected void uninstallUndoRedoSupport(OperationHistoryListener listener) {
+            //XXX cp uncommented not necessary since undoredo update are done by textlistener on textviewer
 //			IOperationHistory operationHistory = PlatformUI.getWorkbench().getOperationSupport().getOperationHistory();
 //			operationHistory.removeOperationHistoryListener(listener);
-		}
+        }
 
-		protected OperationHistoryListener installUndoRedoSupport(SourceViewer viewer, IDocument document, final EmbeddedEditorActions actions) {
-			IDocumentUndoManager undoManager = DocumentUndoManagerRegistry.getDocumentUndoManager(document);
-			final IUndoContext context = undoManager.getUndoContext();
-			
-			// XXX cp uncommented
-			
+        protected OperationHistoryListener installUndoRedoSupport(SourceViewer viewer, IDocument document, final EmbeddedEditorActions actions) {
+            IDocumentUndoManager undoManager = DocumentUndoManagerRegistry.getDocumentUndoManager(document);
+            final IUndoContext context = undoManager.getUndoContext();
+
+            // XXX cp uncommented
+
 //			IOperationHistory operationHistory = PlatformUI.getWorkbench().getOperationSupport().getOperationHistory();
-			OperationHistoryListener operationHistoryListener = new OperationHistoryListener(context, new IUpdate() {
-				public void update() {
-					actions.updateAction(ITextEditorActionConstants.REDO);
-					actions.updateAction(ITextEditorActionConstants.UNDO);
-				}
-			});
-			viewer.addTextListener(new ITextListener() {
-				
-				public void textChanged(TextEvent event) {
-					actions.updateAction(ITextEditorActionConstants.REDO);
-					actions.updateAction(ITextEditorActionConstants.UNDO);
-					
-				}
-			});
-//			
+            OperationHistoryListener operationHistoryListener = new OperationHistoryListener(context, new IUpdate() {
+                public void update() {
+                    actions.updateAction(ITextEditorActionConstants.REDO);
+                    actions.updateAction(ITextEditorActionConstants.UNDO);
+                }
+            });
+            viewer.addTextListener(new ITextListener() {
+
+                public void textChanged(TextEvent event) {
+                    actions.updateAction(ITextEditorActionConstants.REDO);
+                    actions.updateAction(ITextEditorActionConstants.UNDO);
+
+                }
+            });
+//
 //			operationHistory.addOperationHistoryListener(operationHistoryListener);
-			return operationHistoryListener;
-		}
+            return operationHistoryListener;
+        }
 
-		protected void setResourceProvider(IEditedResourceProvider resourceProvider) {
-			this.resourceProvider = resourceProvider;
-		}
-		
-		protected ISharedTextColors getSharedColors() {
-			return EditorsUI.getSharedTextColors();
-		}
+        protected void setResourceProvider(IEditedResourceProvider resourceProvider) {
+            this.resourceProvider = resourceProvider;
+        }
 
-		protected EmbeddedEditorActions initializeActions(final SourceViewer viewer) {
-			return actionFactory.createActions(viewer);
-		}
+        protected ISharedTextColors getSharedColors() {
+            return EditorsUI.getSharedTextColors();
+        }
 
-		
-		
-	}
-	
-	public Builder newEditor(IEditedResourceProvider resourceProvider) {
-		if (resourceProvider == null)
-			throw new IllegalArgumentException("resourceProvider may not be null");
-		Builder result = getBuilderProvider().get();
-		result.setResourceProvider(resourceProvider);
-		return result;
-	}
+        protected EmbeddedEditorActions initializeActions(final SourceViewer viewer) {
+            return actionFactory.createActions(viewer);
+        }
 
 
-	
-
-	protected Provider<Builder> getBuilderProvider() {
-		return builderProvider;
-	}
-
-	public void setBuilderProvider(Provider<Builder> builderProvider) {
-		this.builderProvider = builderProvider;
-	}
-
-
-	public static CompositeRuler getCpAnnotationRuler() {
-		return cpAnnotationRuler;
-	}
-	public static void setCPORuler(OverviewRuler oruler) {
-		EmbeddedEditorFactory.cporuler = oruler;
-		
-	}
-	public static OverviewRuler getOverViewRuler() {
-		return cporuler;
-		
-	}
-
-	public static void setCpAnnotationRuler(CompositeRuler cpAnnotationRuler) {
-		EmbeddedEditorFactory.cpAnnotationRuler = cpAnnotationRuler;
-	}
+    }
 
 }

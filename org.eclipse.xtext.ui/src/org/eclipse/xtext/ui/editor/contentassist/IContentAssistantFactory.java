@@ -16,6 +16,6 @@ import org.eclipse.jface.text.source.SourceViewerConfiguration;
  */
 public interface IContentAssistantFactory {
 
-	IContentAssistant createConfiguredAssistant(SourceViewerConfiguration configuration, ISourceViewer sourceViewer);
-	
+    IContentAssistant createConfiguredAssistant(SourceViewerConfiguration configuration, ISourceViewer sourceViewer);
+
 }

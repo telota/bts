@@ -34,65 +34,65 @@ import com.google.inject.Provider;
  */
 public class StatefulResourceDescription extends AbstractResourceDescription {
 
-	private URI uri;
-	private ImmutableList<IEObjectDescription> exported;
-	private final Provider<IResourceDescription> snapShotProvider;
-	
-	public StatefulResourceDescription(IResourceDescription original, Provider<IResourceDescription> snapShotProvider) {
-		this.snapShotProvider = snapShotProvider;
-		this.uri = original.getURI();
-		this.exported = copyExportedObjects(original);
-	}
+    private final Provider<IResourceDescription> snapShotProvider;
+    private URI uri;
+    private ImmutableList<IEObjectDescription> exported;
 
-	protected ImmutableList<IEObjectDescription> copyExportedObjects(IResourceDescription original) {
-		return ImmutableList.copyOf(Iterables.filter(Iterables.transform(original.getExportedObjects(), new Function<IEObjectDescription, IEObjectDescription>() {
-			public IEObjectDescription apply(IEObjectDescription from) {
-				if (from == null)
-					return null;
-				EObject proxy = from.getEObjectOrProxy();
-				if (proxy == null)
-					return null;
-				if (proxy.eIsProxy())
-					return from;
-				InternalEObject result = (InternalEObject) EcoreUtil.create(from.getEClass());
-				result.eSetProxyURI(EcoreUtil.getURI(from.getEObjectOrProxy()));
-				Map<String, String> userData = null;
-				for(String key: from.getUserDataKeys()) {
-					if (userData == null) {
-						userData = Maps.newHashMapWithExpectedSize(2);
-					}
-					userData.put(key, from.getUserData(key));
-				}
-				return EObjectDescription.create(from.getName(), result, userData);
-			}
-		}), Predicates.notNull()));
-	}
+    public StatefulResourceDescription(IResourceDescription original, Provider<IResourceDescription> snapShotProvider) {
+        this.snapShotProvider = snapShotProvider;
+        this.uri = original.getURI();
+        this.exported = copyExportedObjects(original);
+    }
 
-	@Override
-	protected List<IEObjectDescription> computeExportedObjects() {
-		return exported;
-	}
-	
-	public Iterable<QualifiedName> getImportedNames() {
-		IResourceDescription snapShot = snapShotProvider.get();
-		if (snapShot != null)
-			return snapShot.getImportedNames();
-		return Collections.emptyList();
-	}
+    protected ImmutableList<IEObjectDescription> copyExportedObjects(IResourceDescription original) {
+        return ImmutableList.copyOf(Iterables.filter(Iterables.transform(original.getExportedObjects(), new Function<IEObjectDescription, IEObjectDescription>() {
+            public IEObjectDescription apply(IEObjectDescription from) {
+                if (from == null)
+                    return null;
+                EObject proxy = from.getEObjectOrProxy();
+                if (proxy == null)
+                    return null;
+                if (proxy.eIsProxy())
+                    return from;
+                InternalEObject result = (InternalEObject) EcoreUtil.create(from.getEClass());
+                result.eSetProxyURI(EcoreUtil.getURI(from.getEObjectOrProxy()));
+                Map<String, String> userData = null;
+                for (String key : from.getUserDataKeys()) {
+                    if (userData == null) {
+                        userData = Maps.newHashMapWithExpectedSize(2);
+                    }
+                    userData.put(key, from.getUserData(key));
+                }
+                return EObjectDescription.create(from.getName(), result, userData);
+            }
+        }), Predicates.notNull()));
+    }
 
-	public Iterable<IReferenceDescription> getReferenceDescriptions() {
-		// find references was triggered - use up-to-date reference descriptions
-		// the content of this copied description is updated as soon as the exported
-		// objects of a resource change thus the default algorithm of the find 
-		// references UI for the display string should work
-		IResourceDescription snapShot = snapShotProvider.get();
-		if (snapShot != null)
-			return snapShot.getReferenceDescriptions();
-		return Collections.emptyList();
-	}
+    @Override
+    protected List<IEObjectDescription> computeExportedObjects() {
+        return exported;
+    }
 
-	public URI getURI() {
-		return uri;
-	}
+    public Iterable<QualifiedName> getImportedNames() {
+        IResourceDescription snapShot = snapShotProvider.get();
+        if (snapShot != null)
+            return snapShot.getImportedNames();
+        return Collections.emptyList();
+    }
+
+    public Iterable<IReferenceDescription> getReferenceDescriptions() {
+        // find references was triggered - use up-to-date reference descriptions
+        // the content of this copied description is updated as soon as the exported
+        // objects of a resource change thus the default algorithm of the find
+        // references UI for the display string should work
+        IResourceDescription snapShot = snapShotProvider.get();
+        if (snapShot != null)
+            return snapShot.getReferenceDescriptions();
+        return Collections.emptyList();
+    }
+
+    public URI getURI() {
+        return uri;
+    }
 
 }

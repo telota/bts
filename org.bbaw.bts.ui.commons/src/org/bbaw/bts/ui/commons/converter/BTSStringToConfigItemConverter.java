@@ -38,67 +38,69 @@ import org.eclipse.jface.viewers.Viewer;
 
 /**
  * The Class BTSStringToConfigItemConverter implements Converter and converts String-objects to BTSConfigItem-objects.
- * 
+ * <p>
  * In the constructor this converter expects a reference to the viewer which holds the BTSConfigItems amongst which the target BTSConfigItem
  * should be selected.
  */
 public class BTSStringToConfigItemConverter implements IConverter {
 
-	/** The viewer. */
-	private Viewer viewer;
+    /**
+     * The viewer.
+     */
+    private Viewer viewer;
 
-	/**
-	 * Instantiates a new BTS string to config item converter.
-	 *
-	 * @param viewer the viewer
-	 */
-	public BTSStringToConfigItemConverter(Viewer viewer) {
-		Assert.isNotNull(viewer);
-		this.viewer = viewer;
-	}
+    /**
+     * Instantiates a new BTS string to config item converter.
+     *
+     * @param viewer the viewer
+     */
+    public BTSStringToConfigItemConverter(Viewer viewer) {
+        Assert.isNotNull(viewer);
+        this.viewer = viewer;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#getFromType()
-	 */
-	@Override
-	public Object getFromType() {
-		return String.class;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#getFromType()
+     */
+    @Override
+    public Object getFromType() {
+        return String.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#getToType()
-	 */
-	@Override
-	public Object getToType() {
-		return BTSConfigItem.class;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#getToType()
+     */
+    @Override
+    public Object getToType() {
+        return BTSConfigItem.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#convert(java.lang.Object)
-	 */
-	@Override
-	public Object convert(Object fromObject) {
-		if (fromObject instanceof String) {
-			Object input = viewer.getInput();
-			if (input instanceof BTSConfigItem) {
-				for (BTSConfig i : ((BTSConfig) input).getChildren()) {
-					if (i instanceof BTSConfigItem
-							&& fromObject
-									.equals(((BTSConfigItem) i).getValue())) {
-						return i;
-					}
-				}
-				BTSConfigItem cci = BtsmodelFactory.eINSTANCE
-						.createBTSConfigItem();
-				cci.setLabel(BtsmodelFactory.eINSTANCE.createBTSTranslations());
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#convert(java.lang.Object)
+     */
+    @Override
+    public Object convert(Object fromObject) {
+        if (fromObject instanceof String) {
+            Object input = viewer.getInput();
+            if (input instanceof BTSConfigItem) {
+                for (BTSConfig i : ((BTSConfig) input).getChildren()) {
+                    if (i instanceof BTSConfigItem
+                            && fromObject
+                            .equals(((BTSConfigItem) i).getValue())) {
+                        return i;
+                    }
+                }
+                BTSConfigItem cci = BtsmodelFactory.eINSTANCE
+                        .createBTSConfigItem();
+                cci.setLabel(BtsmodelFactory.eINSTANCE.createBTSTranslations());
 
-				cci.getLabel().setTranslation((String) fromObject, "en");
-				cci.setValue((String) fromObject);
-				((BTSConfig) input).getChildren().add(cci);
-				return cci;
-			}
+                cci.getLabel().setTranslation((String) fromObject, "en");
+                cci.setValue((String) fromObject);
+                ((BTSConfig) input).getChildren().add(cci);
+                return cci;
+            }
 
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 }

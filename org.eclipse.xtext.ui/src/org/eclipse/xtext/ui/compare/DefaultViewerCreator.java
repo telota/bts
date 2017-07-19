@@ -21,32 +21,32 @@ import com.google.inject.Provider;
  * @author Michael Clay - Initial contribution and API
  */
 public class DefaultViewerCreator implements IViewerCreator {
-	@Inject
-	protected Provider<DefaultContentViewer> contentViewerProvider;
-	@Inject
-	protected Provider<DefaultMergeEditor> mergeEditorProvider;
-	@Inject
-	protected StreamContentDocumentProvider documentProvider;
-	@Inject
-	protected Provider<XtextSourceViewerConfiguration> sourceViewerConfigurationProvider;
+    @Inject
+    protected Provider<DefaultContentViewer> contentViewerProvider;
+    @Inject
+    protected Provider<DefaultMergeEditor> mergeEditorProvider;
+    @Inject
+    protected StreamContentDocumentProvider documentProvider;
+    @Inject
+    protected Provider<XtextSourceViewerConfiguration> sourceViewerConfigurationProvider;
 
-	public Viewer createViewer(Composite parent, CompareConfiguration compareConfiguration) {
-		if (compareConfiguration == null) {
-			return createContentViever(parent, compareConfiguration);
-		}
-		return createMergeViewer(parent, compareConfiguration);
-	}
+    public Viewer createViewer(Composite parent, CompareConfiguration compareConfiguration) {
+        if (compareConfiguration == null) {
+            return createContentViever(parent, compareConfiguration);
+        }
+        return createMergeViewer(parent, compareConfiguration);
+    }
 
-	protected Viewer createMergeViewer(Composite parent, CompareConfiguration compareConfiguration) {
-		compareConfiguration.setProperty(DefaultMergeEditor.PROVIDER, mergeEditorProvider);
-		return new DefaultMergeViewer(parent, SWT.NULL, compareConfiguration, documentProvider,
-				sourceViewerConfigurationProvider);
-	}
+    protected Viewer createMergeViewer(Composite parent, CompareConfiguration compareConfiguration) {
+        compareConfiguration.setProperty(DefaultMergeEditor.PROVIDER, mergeEditorProvider);
+        return new DefaultMergeViewer(parent, SWT.NULL, compareConfiguration, documentProvider,
+                sourceViewerConfigurationProvider);
+    }
 
-	protected Viewer createContentViever(Composite parent, CompareConfiguration compareConfiguration) {
-		DefaultContentViewer defaultContentViewer = contentViewerProvider.get();
-		defaultContentViewer.init(parent, compareConfiguration);
-		return defaultContentViewer;
-	}
+    protected Viewer createContentViever(Composite parent, CompareConfiguration compareConfiguration) {
+        DefaultContentViewer defaultContentViewer = contentViewerProvider.get();
+        defaultContentViewer.init(parent, compareConfiguration);
+        return defaultContentViewer;
+    }
 
 }

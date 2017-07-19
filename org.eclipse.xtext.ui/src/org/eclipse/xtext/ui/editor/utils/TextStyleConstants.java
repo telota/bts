@@ -13,20 +13,19 @@ import org.eclipse.swt.graphics.RGB;
 
 /**
  * @author Dennis H�bner - Initial contribution and API
- * 
  */
 public class TextStyleConstants {
 
-	public final static RGB DEFAULT_COLOR = new RGB(0, 0, 0);
-	public final static RGB DEFAULT_BACKGROUNDCOLOR = new RGB(255, 255, 255);
-	public static final String DEFAULT_FONT_NAME = JFaceResources.TEXT_FONT;
+    public final static RGB DEFAULT_COLOR = new RGB(0, 0, 0);
+    public final static RGB DEFAULT_BACKGROUNDCOLOR = new RGB(255, 255, 255);
+    public static final String DEFAULT_FONT_NAME = JFaceResources.TEXT_FONT;
 
-	public final static RGB KEYWORD_COLOR = new RGB(127, 0, 85);
+    public final static RGB KEYWORD_COLOR = new RGB(127, 0, 85);
 
-	public final static RGB COMMENT_COLOR = new RGB(63, 127, 95);
-	public final static RGB STRING_COLOR = new RGB(42, 0, 255);
+    public final static RGB COMMENT_COLOR = new RGB(63, 127, 95);
+    public final static RGB STRING_COLOR = new RGB(42, 0, 255);
 
-	public final static RGB NUMBER_COLOR = new RGB(125, 125, 125);
-	public static final RGB MULTILINE_COMMENT_COLOR = new RGB(33, 97, 65);
+    public final static RGB NUMBER_COLOR = new RGB(125, 125, 125);
+    public static final RGB MULTILINE_COMMENT_COLOR = new RGB(33, 97, 65);
 
 }

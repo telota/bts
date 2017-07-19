@@ -19,69 +19,66 @@ import org.eclipse.swt.widgets.Shell;
 
 public class RelatedObjectGroupAnnotation extends RelatedObjectGroup {
 
-	@Inject
-	public RelatedObjectGroupAnnotation(Composite parent, BTSObject object) {
-		super(parent, object);
-	}
+    @Inject
+    public RelatedObjectGroupAnnotation(Composite parent, BTSObject object) {
+        super(parent, object);
+    }
 
-	@Override
-	protected void addButtons(Composite composite) {
-		Label editButton = new Label(composite, SWT.PUSH);
-		editButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_EDIT));
-		if (mayEdit())
-		{
-			editButton.setToolTipText("Edit Annotation");
-		}
-		else
-		{
-			editButton.setToolTipText("Open Annotation");
-		}
-		editButton.setLayoutData(new RowData());
-		editButton.addMouseListener(new MouseAdapter() {
+    @Override
+    protected void addButtons(Composite composite) {
+        Label editButton = new Label(composite, SWT.PUSH);
+        editButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_EDIT));
+        if (mayEdit()) {
+            editButton.setToolTipText("Edit Annotation");
+        } else {
+            editButton.setToolTipText("Open Annotation");
+        }
+        editButton.setLayoutData(new RowData());
+        editButton.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mouseDown(MouseEvent e) {
-				
-				Label l = (Label) e.getSource();
-				l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-			}
+            @Override
+            public void mouseDown(MouseEvent e) {
 
-			@Override
-			public void mouseUp(MouseEvent e) {
-				Label l = (Label) e.getSource();
-				l.setBackground(l.getParent().getBackground());
-				editObject();
-			}
-		});
+                Label l = (Label) e.getSource();
+                l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+            }
 
-	}
+            @Override
+            public void mouseUp(MouseEvent e) {
+                Label l = (Label) e.getSource();
+                l.setBackground(l.getParent().getBackground());
+                editObject();
+            }
+        });
 
-	protected void editObject() {
-		IEclipseContext child = context.createChild();
-		child.set(BTSObject.class, (BTSObject) getObject());
-		child.set(Shell.class, new Shell());
-		
-		PassportEditorDialog dialog = ContextInjectionFactory.make(
-				PassportEditorDialog.class, child);
-		dialog.setEditable(mayEdit());
+    }
 
-		if (dialog.open() == SWT.OK)
-			refreshContent((BTSObject) getObject());
+    protected void editObject() {
+        IEclipseContext child = context.createChild();
+        child.set(BTSObject.class, (BTSObject) getObject());
+        child.set(Shell.class, new Shell());
 
-		child.dispose();
-		
-	}
+        PassportEditorDialog dialog = ContextInjectionFactory.make(
+                PassportEditorDialog.class, child);
+        dialog.setEditable(mayEdit());
 
-	private void refreshContent(BTSObject object) {
-		setExpandItemTitle(object.getName());
-	}
+        if (dialog.open() == SWT.OK)
+            refreshContent((BTSObject) getObject());
 
-	@Override
-	protected void fillContentComposite(Composite composite) {
-		
-		setExpandBarIcon(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_ANNOTATION));
-		setExpandBarBackground(BTSUIConstants.COLOR_WIHTE);
-		refreshContent((BTSObject) getObject());
-	}
+        child.dispose();
+
+    }
+
+    private void refreshContent(BTSObject object) {
+        setExpandItemTitle(object.getName());
+    }
+
+    @Override
+    protected void fillContentComposite(Composite composite) {
+
+        setExpandBarIcon(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_ANNOTATION));
+        setExpandBarBackground(BTSUIConstants.COLOR_WIHTE);
+        refreshContent((BTSObject) getObject());
+    }
 
 }

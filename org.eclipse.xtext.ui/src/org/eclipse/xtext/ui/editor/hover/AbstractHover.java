@@ -30,50 +30,50 @@ import org.eclipse.xtext.ui.editor.ISourceViewerAware;
  */
 public abstract class AbstractHover implements ITextHover, ITextHoverExtension, ITextHoverExtension2, ISourceViewerAware {
 
-	protected ISourceViewer sourceViewer;
+    protected ISourceViewer sourceViewer;
 
-	public void setSourceViewer(ISourceViewer sourceViewer) {
-		this.sourceViewer = sourceViewer;		
-	}
+    public void setSourceViewer(ISourceViewer sourceViewer) {
+        this.sourceViewer = sourceViewer;
+    }
 
-	public IDocument getDocument() {
-		return sourceViewer.getDocument();
-	}
-
-
-	/**
-	 *@deprecated Use {@link #getHoverInfo2(ITextViewer, IRegion)} instead
-	 */
-	@Deprecated
-	public String getHoverInfo(final ITextViewer textViewer, final IRegion hoverRegion) {
-		Object o = getHoverInfo2(textViewer, hoverRegion);
-		if (o!=null)
-			return o.toString();
-		return null;
-	}
-
-	public int getLineNumber (final ITextViewer textViewer, final IRegion hoverRegion) throws BadLocationException {
-		return textViewer.getDocument().getLineOfOffset(hoverRegion.getOffset());
-	}
+    public IDocument getDocument() {
+        return sourceViewer.getDocument();
+    }
 
 
-	public IRegion getHoverRegion(final ITextViewer textViewer, final int offset) {
-		final Point selection = textViewer.getSelectedRange();
-		if (selection.x <= offset && offset < selection.x + selection.y)
-			return new Region(selection.x, selection.y);
-		return new Region(offset, 0);
-	}
-	
-	/*
-	 * @see ITextHoverExtension#getHoverControlCreator()
-	 * @since 3.0
-	 */
-	public IInformationControlCreator getHoverControlCreator() {
-		return new IInformationControlCreator() {
-			public IInformationControl createInformationControl(Shell parent) {
-				return new DefaultInformationControl(parent, EditorsUI.getTooltipAffordanceString());
-			}
-		};
-	}
+    /**
+     * @deprecated Use {@link #getHoverInfo2(ITextViewer, IRegion)} instead
+     */
+    @Deprecated
+    public String getHoverInfo(final ITextViewer textViewer, final IRegion hoverRegion) {
+        Object o = getHoverInfo2(textViewer, hoverRegion);
+        if (o != null)
+            return o.toString();
+        return null;
+    }
+
+    public int getLineNumber(final ITextViewer textViewer, final IRegion hoverRegion) throws BadLocationException {
+        return textViewer.getDocument().getLineOfOffset(hoverRegion.getOffset());
+    }
+
+
+    public IRegion getHoverRegion(final ITextViewer textViewer, final int offset) {
+        final Point selection = textViewer.getSelectedRange();
+        if (selection.x <= offset && offset < selection.x + selection.y)
+            return new Region(selection.x, selection.y);
+        return new Region(offset, 0);
+    }
+
+    /*
+     * @see ITextHoverExtension#getHoverControlCreator()
+     * @since 3.0
+     */
+    public IInformationControlCreator getHoverControlCreator() {
+        return new IInformationControlCreator() {
+            public IInformationControl createInformationControl(Shell parent) {
+                return new DefaultInformationControl(parent, EditorsUI.getTooltipAffordanceString());
+            }
+        };
+    }
 
 }

@@ -34,48 +34,50 @@ package org.bbaw.bts.btsmodel;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>BTS Configuration</b></em>'.
  * <!-- end-user-doc -->
- *
+ * <p>
  * <!-- begin-model-doc -->
  * BTSConfiguration is the parent object used to hold project configuration.
  * All configuration details are stored in the children list inherited from BTSConfig.
  * <!-- end-model-doc -->
- *
+ * <p>
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.bbaw.bts.btsmodel.BTSConfiguration#getProvider <em>Provider</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSConfiguration#getProvider <em>Provider</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSConfiguration()
  * @model
  * @generated
+ * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSConfiguration()
  */
 public interface BTSConfiguration extends BTSConfig, BTSObject {
-	/**
-	 * Returns the value of the '<em><b>Provider</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Provider</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Provider</em>' attribute.
-	 * @see #setProvider(String)
-	 * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSConfiguration_Provider()
-	 * @model
-	 * @generated
-	 */
-	String getProvider();
+    /**
+     * Returns the value of the '<em><b>Provider</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Provider</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>Provider</em>' attribute.
+     * @model
+     * @generated
+     * @see #setProvider(String)
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSConfiguration_Provider()
+     */
+    String getProvider();
 
-	/**
-	 * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSConfiguration#getProvider <em>Provider</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Provider</em>' attribute.
-	 * @see #getProvider()
-	 * @generated
-	 */
-	void setProvider(String value);
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSConfiguration#getProvider <em>Provider</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Provider</em>' attribute.
+     * @generated
+     * @see #getProvider()
+     */
+    void setProvider(String value);
 
 } // BTSConfiguration

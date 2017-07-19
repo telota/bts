@@ -36,63 +36,63 @@ import com.google.inject.Inject;
  */
 public class ReferenceQueryExecutor {
 
-	@Inject
-	private IStorage2UriMapper storage2UriMapper;
+    @Inject
+    private IStorage2UriMapper storage2UriMapper;
 
-	@Inject
-	private IQualifiedNameProvider qualifiedNameProvider;
+    @Inject
+    private IQualifiedNameProvider qualifiedNameProvider;
 
-	@Inject
-	private IQualifiedNameConverter qualifiedNameConverter;
+    @Inject
+    private IQualifiedNameConverter qualifiedNameConverter;
 
-	@Inject
-	private ReferenceQuery referenceQuery;
+    @Inject
+    private ReferenceQuery referenceQuery;
 
-	protected Iterable<URI> getTargetURIs(EObject primaryTarget) {
-		return singleton(EcoreUtil2.getPlatformResourceOrNormalizedURI(primaryTarget));
-	}
+    protected Iterable<URI> getTargetURIs(EObject primaryTarget) {
+        return singleton(EcoreUtil2.getPlatformResourceOrNormalizedURI(primaryTarget));
+    }
 
-	public String getLabel(EObject primaryTarget) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(getLabelPrefix());
-		builder.append(getElementName(primaryTarget));
-		String resourceName = getResourceName(primaryTarget);
-		if (resourceName != null) {
-			builder.append(Messages.FindReferencesHandler_1).append(resourceName)
-					.append(Messages.FindReferencesHandler_2);
-		}
-		return builder.toString();
-	}
+    public String getLabel(EObject primaryTarget) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getLabelPrefix());
+        builder.append(getElementName(primaryTarget));
+        String resourceName = getResourceName(primaryTarget);
+        if (resourceName != null) {
+            builder.append(Messages.FindReferencesHandler_1).append(resourceName)
+                    .append(Messages.FindReferencesHandler_2);
+        }
+        return builder.toString();
+    }
 
-	protected String getLabelPrefix() {
-		return Messages.FindReferencesHandler_labelPrefix;
-	}
+    protected String getLabelPrefix() {
+        return Messages.FindReferencesHandler_labelPrefix;
+    }
 
-	protected String getElementName(EObject primaryTarget) {
-		QualifiedName qualifiedName = qualifiedNameProvider.getFullyQualifiedName(primaryTarget);
-		if (qualifiedName != null) {
-			return qualifiedNameConverter.toString(qualifiedName);
-		}
-		String simpleName = SimpleAttributeResolver.NAME_RESOLVER.getValue(primaryTarget);
-		return (simpleName != null) ? simpleName : primaryTarget.eResource().getURIFragment(primaryTarget);
-	}
+    protected String getElementName(EObject primaryTarget) {
+        QualifiedName qualifiedName = qualifiedNameProvider.getFullyQualifiedName(primaryTarget);
+        if (qualifiedName != null) {
+            return qualifiedNameConverter.toString(qualifiedName);
+        }
+        String simpleName = SimpleAttributeResolver.NAME_RESOLVER.getValue(primaryTarget);
+        return (simpleName != null) ? simpleName : primaryTarget.eResource().getURIFragment(primaryTarget);
+    }
 
-	protected String getResourceName(EObject primaryTarget) {
-		Iterator<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(EcoreUtil.getURI(primaryTarget))
-				.iterator();
-		return (storages.hasNext()) ? storages.next().getFirst().getFullPath().toString() : null;
-	}
+    protected String getResourceName(EObject primaryTarget) {
+        Iterator<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(EcoreUtil.getURI(primaryTarget))
+                .iterator();
+        return (storages.hasNext()) ? storages.next().getFirst().getFullPath().toString() : null;
+    }
 
-	protected Predicate<IReferenceDescription> getFilter(EObject primaryTarget) {
-		return Predicates.alwaysTrue();
-	}
+    protected Predicate<IReferenceDescription> getFilter(EObject primaryTarget) {
+        return Predicates.alwaysTrue();
+    }
 
-	public void init(EObject target) {
-		referenceQuery.init(getTargetURIs(target), getFilter(target), getLabel(target));
-	}
+    public void init(EObject target) {
+        referenceQuery.init(getTargetURIs(target), getFilter(target), getLabel(target));
+    }
 
-	public void execute() {
-		NewSearchUI.activateSearchResultView();
-		NewSearchUI.runQueryInBackground(referenceQuery);
-	}
+    public void execute() {
+        NewSearchUI.activateSearchResultView();
+        NewSearchUI.runQueryInBackground(referenceQuery);
+    }
 }

@@ -33,26 +33,25 @@ import org.eclipse.swt.graphics.Font;
 
 /**
  * The Interface BTSFontManager provides controller layer access to fonts.
- * 
+ * <p>
  * Implementations should provide font from locally hold font files such ass ttf.
  *
  * @author Christoph Plutte
  */
-public interface BTSFontManager
-{
+public interface BTSFontManager {
 
-	/**
-	 * Gets the font by its name from local file without installing it into the operating system.
-	 *
-	 * @param fontName the font name
-	 * @return the font
-	 */
-	Font getFont(String fontName);
+    /**
+     * Gets the font by its name from local file without installing it into the operating system.
+     *
+     * @param fontName the font name
+     * @return the font
+     */
+    Font getFont(String fontName);
 
-	/**
-	 * Gets the available font names.
-	 *
-	 * @return the available font names
-	 */
-	String[] getAvailableFontNames();
+    /**
+     * Gets the available font names.
+     *
+     * @return the available font names
+     */
+    String[] getAvailableFontNames();
 }

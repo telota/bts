@@ -13,21 +13,21 @@ import org.eclipse.jface.text.source.TextInvocationContext;
 /**
  * Adds the option to suppress the selection of the error region to the
  * {@link org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext context}.
- * 
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  * @since 2.0
  */
 public class QuickAssistInvocationContext extends TextInvocationContext {
 
-	private final boolean suppressSelection;
+    private final boolean suppressSelection;
 
-	public QuickAssistInvocationContext(ISourceViewer sourceViewer, int offset, int length, boolean suppressSelection) {
-		super(sourceViewer, offset, length);
-		this.suppressSelection = suppressSelection;
-	}
+    public QuickAssistInvocationContext(ISourceViewer sourceViewer, int offset, int length, boolean suppressSelection) {
+        super(sourceViewer, offset, length);
+        this.suppressSelection = suppressSelection;
+    }
 
-	public boolean isSuppressSelection() {
-		return suppressSelection;
-	}
+    public boolean isSuppressSelection() {
+        return suppressSelection;
+    }
 
 }

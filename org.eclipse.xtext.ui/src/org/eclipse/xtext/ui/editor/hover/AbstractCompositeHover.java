@@ -25,80 +25,80 @@ import org.eclipse.xtext.ui.editor.ISourceViewerAware;
  * The CompositeHover is a hover which delegates calls to a list of hovers. It iterates through this list of hovers and
  * chooses the first one which provides a region in getHoverRegion(). Override the method createHovers() to configure
  * the list of hovers.
- * 
+ *
  * @author Christoph Kulla - Initial contribution and API
  * @author Holger Schill
  */
 public abstract class AbstractCompositeHover implements ITextHover, ITextHoverExtension, ITextHoverExtension2,
-		ISourceViewerAware {
+        ISourceViewerAware {
 
-	private List<ITextHover> hovers;
-	private ITextHover currentHover;
+    private List<ITextHover> hovers;
+    private ITextHover currentHover;
 
-	public AbstractCompositeHover() {
-		super();
-	}
+    public AbstractCompositeHover() {
+        super();
+    }
 
-	public List<ITextHover> getHovers() {
-		if (hovers == null)
-			hovers = createHovers();
-		return hovers;
-	}
+    public List<ITextHover> getHovers() {
+        if (hovers == null)
+            hovers = createHovers();
+        return hovers;
+    }
 
-	abstract protected List<ITextHover> createHovers();
+    abstract protected List<ITextHover> createHovers();
 
-	public void setSourceViewer(ISourceViewer sourceViewer) {
-		if (getHovers() != null) {
-			for (ITextHover hover : getHovers()) {
-				if (hover instanceof ISourceViewerAware)
-					((ISourceViewerAware) hover).setSourceViewer(sourceViewer);
-			}
-		}
-	}
+    public void setSourceViewer(ISourceViewer sourceViewer) {
+        if (getHovers() != null) {
+            for (ITextHover hover : getHovers()) {
+                if (hover instanceof ISourceViewerAware)
+                    ((ISourceViewerAware) hover).setSourceViewer(sourceViewer);
+            }
+        }
+    }
 
-	public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
-		if (getHovers() != null) {
-			for (ITextHover hover : getHovers()) {
-				IRegion region = hover.getHoverRegion(textViewer, offset);
-				if (region != null) {
-					// We always take the first that answers with a region
-					// In org.eclipse.xtext.ui.editor.hover.DefaultCompositeHover.createHovers() the AnnotationWithQuickFixesHover 
-					// is always the first and answers with a region only when there is a problemmarker
-					// In all other cases an instance of org.eclipse.xtext.ui.editor.hover.DispatchingEObjectTextHover is the next in the order.
-					currentHover = hover;
-					return region;
-				}
-			}
-		}
-		currentHover = null;
-		return null;
-	}
+    public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
+        if (getHovers() != null) {
+            for (ITextHover hover : getHovers()) {
+                IRegion region = hover.getHoverRegion(textViewer, offset);
+                if (region != null) {
+                    // We always take the first that answers with a region
+                    // In org.eclipse.xtext.ui.editor.hover.DefaultCompositeHover.createHovers() the AnnotationWithQuickFixesHover
+                    // is always the first and answers with a region only when there is a problemmarker
+                    // In all other cases an instance of org.eclipse.xtext.ui.editor.hover.DispatchingEObjectTextHover is the next in the order.
+                    currentHover = hover;
+                    return region;
+                }
+            }
+        }
+        currentHover = null;
+        return null;
+    }
 
-	@Deprecated
-	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
-		// should never be called
-		if (currentHover != null) {
-			return currentHover.getHoverInfo(textViewer, hoverRegion);
-		}
-		return null;
-	}
+    @Deprecated
+    public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
+        // should never be called
+        if (currentHover != null) {
+            return currentHover.getHoverInfo(textViewer, hoverRegion);
+        }
+        return null;
+    }
 
-	@SuppressWarnings("deprecation")
-	public Object getHoverInfo2(ITextViewer textViewer, IRegion hoverRegion) {
-		if (currentHover != null) {
-			if (currentHover instanceof ITextHoverExtension2)
-				return ((ITextHoverExtension2) currentHover).getHoverInfo2(textViewer, hoverRegion);
-			else {
-				return currentHover.getHoverInfo(textViewer, hoverRegion);
-			}
-		}
-		return null;
-	}
+    @SuppressWarnings("deprecation")
+    public Object getHoverInfo2(ITextViewer textViewer, IRegion hoverRegion) {
+        if (currentHover != null) {
+            if (currentHover instanceof ITextHoverExtension2)
+                return ((ITextHoverExtension2) currentHover).getHoverInfo2(textViewer, hoverRegion);
+            else {
+                return currentHover.getHoverInfo(textViewer, hoverRegion);
+            }
+        }
+        return null;
+    }
 
-	public IInformationControlCreator getHoverControlCreator() {
-		if (currentHover instanceof ITextHoverExtension)
-			return ((ITextHoverExtension) currentHover).getHoverControlCreator();
-		return null;
-	}
+    public IInformationControlCreator getHoverControlCreator() {
+        if (currentHover instanceof ITextHoverExtension)
+            return ((ITextHoverExtension) currentHover).getHoverControlCreator();
+        return null;
+    }
 
 }

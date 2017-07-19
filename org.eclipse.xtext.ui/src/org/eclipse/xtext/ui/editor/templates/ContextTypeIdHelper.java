@@ -18,16 +18,16 @@ import org.eclipse.xtext.ParserRule;
  */
 public class ContextTypeIdHelper {
 
-	public String getId(AbstractElement element) {
-		if (!(element instanceof Keyword))
-			throw new IllegalArgumentException("Unsupported context element: " + element);
-		return GrammarUtil.getGrammar(element).getName()+".kw_"+((Keyword) element).getValue();
-	}
+    public String getId(AbstractElement element) {
+        if (!(element instanceof Keyword))
+            throw new IllegalArgumentException("Unsupported context element: " + element);
+        return GrammarUtil.getGrammar(element).getName() + ".kw_" + ((Keyword) element).getValue();
+    }
 
-	public String getId(AbstractRule rule) {
-		if (!(rule instanceof ParserRule))
-			throw new IllegalArgumentException("Unsupported context rule: " + rule);
-		return GrammarUtil.getGrammar(rule).getName()+"."+rule.getName();
-	}
+    public String getId(AbstractRule rule) {
+        if (!(rule instanceof ParserRule))
+            throw new IllegalArgumentException("Unsupported context rule: " + rule);
+        return GrammarUtil.getGrammar(rule).getName() + "." + rule.getName();
+    }
 
 }

@@ -12,116 +12,116 @@ import org.eclipse.core.runtime.IStatus;
 
 /**
  * Initially copied from Jdt.
- * 
+ *
  * @author Michael Clay
  * @since 2.1
  */
 public class StatusInfo implements IStatus {
 
-	public static final IStatus OK_STATUS = new StatusInfo();
+    public static final IStatus OK_STATUS = new StatusInfo();
 
-	private String fStatusMessage;
-	private int fSeverity;
+    private String fStatusMessage;
+    private int fSeverity;
 
-	public StatusInfo() {
-		this(OK, null);
-	}
+    public StatusInfo() {
+        this(OK, null);
+    }
 
-	public StatusInfo(int severity, String message) {
-		fStatusMessage = message;
-		fSeverity = severity;
-	}
+    public StatusInfo(int severity, String message) {
+        fStatusMessage = message;
+        fSeverity = severity;
+    }
 
-	public boolean isOK() {
-		return fSeverity == IStatus.OK;
-	}
+    public boolean isOK() {
+        return fSeverity == IStatus.OK;
+    }
 
-	public boolean isWarning() {
-		return fSeverity == IStatus.WARNING;
-	}
+    public boolean isWarning() {
+        return fSeverity == IStatus.WARNING;
+    }
 
-	public boolean isInfo() {
-		return fSeverity == IStatus.INFO;
-	}
+    public void setWarning(String warningMessage) {
+        Assert.isNotNull(warningMessage);
+        fStatusMessage = warningMessage;
+        fSeverity = IStatus.WARNING;
+    }
 
-	public boolean isError() {
-		return fSeverity == IStatus.ERROR;
-	}
+    public boolean isInfo() {
+        return fSeverity == IStatus.INFO;
+    }
 
-	public String getMessage() {
-		return fStatusMessage;
-	}
+    public void setInfo(String infoMessage) {
+        Assert.isNotNull(infoMessage);
+        fStatusMessage = infoMessage;
+        fSeverity = IStatus.INFO;
+    }
 
-	public void setError(String errorMessage) {
-		Assert.isNotNull(errorMessage);
-		fStatusMessage = errorMessage;
-		fSeverity = IStatus.ERROR;
-	}
+    public boolean isError() {
+        return fSeverity == IStatus.ERROR;
+    }
 
-	public void setWarning(String warningMessage) {
-		Assert.isNotNull(warningMessage);
-		fStatusMessage = warningMessage;
-		fSeverity = IStatus.WARNING;
-	}
+    public void setError(String errorMessage) {
+        Assert.isNotNull(errorMessage);
+        fStatusMessage = errorMessage;
+        fSeverity = IStatus.ERROR;
+    }
 
-	public void setInfo(String infoMessage) {
-		Assert.isNotNull(infoMessage);
-		fStatusMessage = infoMessage;
-		fSeverity = IStatus.INFO;
-	}
+    public String getMessage() {
+        return fStatusMessage;
+    }
 
-	public void setOK() {
-		fStatusMessage = null;
-		fSeverity = IStatus.OK;
-	}
+    public void setOK() {
+        fStatusMessage = null;
+        fSeverity = IStatus.OK;
+    }
 
-	public boolean matches(int severityMask) {
-		return (fSeverity & severityMask) != 0;
-	}
+    public boolean matches(int severityMask) {
+        return (fSeverity & severityMask) != 0;
+    }
 
-	public boolean isMultiStatus() {
-		return false;
-	}
+    public boolean isMultiStatus() {
+        return false;
+    }
 
-	public int getSeverity() {
-		return fSeverity;
-	}
+    public int getSeverity() {
+        return fSeverity;
+    }
 
-	public String getPlugin() {
-		//FIXME pull from DefaultuiModule
-		return "org.eclipse.xtext.ui";
-	}
+    public String getPlugin() {
+        //FIXME pull from DefaultuiModule
+        return "org.eclipse.xtext.ui";
+    }
 
-	public Throwable getException() {
-		return null;
-	}
+    public Throwable getException() {
+        return null;
+    }
 
-	public int getCode() {
-		return fSeverity;
-	}
+    public int getCode() {
+        return fSeverity;
+    }
 
-	public IStatus[] getChildren() {
-		return new IStatus[0];
-	}
+    public IStatus[] getChildren() {
+        return new IStatus[0];
+    }
 
-	@Override
-	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		buf.append("StatusInfo "); //$NON-NLS-1$
-		if (fSeverity == OK) {
-			buf.append("OK"); //$NON-NLS-1$
-		} else if (fSeverity == ERROR) {
-			buf.append("ERROR"); //$NON-NLS-1$
-		} else if (fSeverity == WARNING) {
-			buf.append("WARNING"); //$NON-NLS-1$
-		} else if (fSeverity == INFO) {
-			buf.append("INFO"); //$NON-NLS-1$
-		} else {
-			buf.append("severity="); //$NON-NLS-1$
-			buf.append(fSeverity);
-		}
-		buf.append(": "); //$NON-NLS-1$
-		buf.append(fStatusMessage);
-		return buf.toString();
-	}
+    @Override
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("StatusInfo "); //$NON-NLS-1$
+        if (fSeverity == OK) {
+            buf.append("OK"); //$NON-NLS-1$
+        } else if (fSeverity == ERROR) {
+            buf.append("ERROR"); //$NON-NLS-1$
+        } else if (fSeverity == WARNING) {
+            buf.append("WARNING"); //$NON-NLS-1$
+        } else if (fSeverity == INFO) {
+            buf.append("INFO"); //$NON-NLS-1$
+        } else {
+            buf.append("severity="); //$NON-NLS-1$
+            buf.append(fSeverity);
+        }
+        buf.append(": "); //$NON-NLS-1$
+        buf.append(fStatusMessage);
+        return buf.toString();
+    }
 }

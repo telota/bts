@@ -28,11 +28,12 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public class ComputationException extends RuntimeException {
-  /**
-   * Creates a new instance with the given cause.
-   */
-  public ComputationException(@Nullable Throwable cause) {
-    super(cause);
-  }
-  private static final long serialVersionUID = 0;
+    private static final long serialVersionUID = 0;
+
+    /**
+     * Creates a new instance with the given cause.
+     */
+    public ComputationException(@Nullable Throwable cause) {
+        super(cause);
+    }
 }

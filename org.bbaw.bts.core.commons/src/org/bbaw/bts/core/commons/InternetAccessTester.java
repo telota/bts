@@ -4,25 +4,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class InternetAccessTester
-{
+public class InternetAccessTester {
 
-	public static boolean accessToURLExists(URL url)
-	{
+    public static boolean accessToURLExists(URL url) {
 
-		try
-		{
-			if (url == null)
-			{
-				url = new URL("http://www.bbaw.de");
-			}
-			URLConnection connection = url.openConnection();
+        try {
+            if (url == null) {
+                url = new URL("http://www.bbaw.de");
+            }
+            URLConnection connection = url.openConnection();
 
-			return true;
-		} catch (IOException e)
-		{
-			return false;
-		}
-	}
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 
 }

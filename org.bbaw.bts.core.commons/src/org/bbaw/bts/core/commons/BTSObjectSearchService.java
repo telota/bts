@@ -36,20 +36,20 @@ package org.bbaw.bts.core.commons;
  * @author Christoph Plutte
  */
 public interface BTSObjectSearchService {
-	
-	/**
-	 * Gets the name of served class.
-	 *
-	 * @return the name of served class
-	 */
-	String getNameOfServedClass();
-	
-	/**
-	 * Gets the served class.
-	 *
-	 * @param <T> the generic type
-	 * @return the served class
-	 */
-	<T> Class<T> getServedClass();
+
+    /**
+     * Gets the name of served class.
+     *
+     * @return the name of served class
+     */
+    String getNameOfServedClass();
+
+    /**
+     * Gets the served class.
+     *
+     * @param <T> the generic type
+     * @return the served class
+     */
+    <T> Class<T> getServedClass();
 
 }

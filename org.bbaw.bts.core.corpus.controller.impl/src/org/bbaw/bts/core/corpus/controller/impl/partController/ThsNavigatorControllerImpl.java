@@ -14,53 +14,52 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-public class ThsNavigatorControllerImpl extends AbstractCorpusObjectNavigatorControllerImpl<BTSThsEntry, String> 
-implements ThsNavigatorController {
+public class ThsNavigatorControllerImpl extends AbstractCorpusObjectNavigatorControllerImpl<BTSThsEntry, String>
+        implements ThsNavigatorController {
 
-	@Inject
-	private BTSThsEntryService thsService;
-	
-	@Override
-	protected List<BTSThsEntry> retrieveTypedRootEntries(IProgressMonitor monitor) {
-		return thsService.listRootEntries(monitor);
-	}
+    @Inject
+    private BTSThsEntryService thsService;
 
-	@Override
-	protected List<BTSThsEntry> executeTypedQuery(BTSQueryRequest query,
-			String objectState, IProgressMonitor monitor) {
-		return thsService.query(query, objectState, monitor);
-	}
+    @Override
+    protected List<BTSThsEntry> retrieveTypedRootEntries(IProgressMonitor monitor) {
+        return thsService.listRootEntries(monitor);
+    }
 
-	@Override
-	protected BTSThsEntry typedCreateNew() {
-		return thsService.createNew();
-	}
+    @Override
+    protected List<BTSThsEntry> executeTypedQuery(BTSQueryRequest query,
+                                                  String objectState, IProgressMonitor monitor) {
+        return thsService.query(query, objectState, monitor);
+    }
 
-	@Override
-	protected List<BTSThsEntry> typedListEntries(String objectState, IProgressMonitor monitor) {
-		return thsService.list(objectState, monitor);
-	}
+    @Override
+    protected BTSThsEntry typedCreateNew() {
+        return thsService.createNew();
+    }
 
-	@Override
-	protected List<BTSThsEntry> retrieveTypedOrphandEntries(Map map,
-			List<BTSFilter> btsFilters, IProgressMonitor monitor) {
-		return thsService.getOrphanEntries(map, btsFilters, monitor);
-	}
+    @Override
+    protected List<BTSThsEntry> typedListEntries(String objectState, IProgressMonitor monitor) {
+        return thsService.list(objectState, monitor);
+    }
 
-	@Override
-	public BTSThsEntry find(String id, IProgressMonitor monitor) {
-		return thsService.find(id, monitor);
-	}
+    @Override
+    protected List<BTSThsEntry> retrieveTypedOrphandEntries(Map map,
+                                                            List<BTSFilter> btsFilters, IProgressMonitor monitor) {
+        return thsService.getOrphanEntries(map, btsFilters, monitor);
+    }
 
-	@Override
-	public BTSAnnotation createNewAnnotation(BTSThsEntry annotatedObject, String annotationTypePath) {
-		BTSAnnotation anno = thsService
-				.createNewAnnotationRelationPartOf(annotatedObject);
-		setObjectTypePath(anno, annotationTypePath);
+    @Override
+    public BTSThsEntry find(String id, IProgressMonitor monitor) {
+        return thsService.find(id, monitor);
+    }
 
-		return anno;
-	}
+    @Override
+    public BTSAnnotation createNewAnnotation(BTSThsEntry annotatedObject, String annotationTypePath) {
+        BTSAnnotation anno = thsService
+                .createNewAnnotationRelationPartOf(annotatedObject);
+        setObjectTypePath(anno, annotationTypePath);
 
+        return anno;
+    }
 
 
 }

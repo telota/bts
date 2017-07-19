@@ -9,11 +9,9 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Sentence Item No Ambivalence</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getSentenceItemNoAmbivalence()
  * @model
  * @generated
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getSentenceItemNoAmbivalence()
  */
-public interface SentenceItemNoAmbivalence extends EObject
-{
+public interface SentenceItemNoAmbivalence extends EObject {
 } // SentenceItemNoAmbivalence

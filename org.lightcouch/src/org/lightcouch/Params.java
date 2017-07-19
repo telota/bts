@@ -23,54 +23,53 @@ import java.util.List;
 
 /**
  * Query parameters to append to find requests.
- * <p>Example: 
+ * <p>Example:
  * <pre>
  * dbClient.find(Foo.class, "doc-id", new Params().revsInfo().attachments());
- * 
+ *
  * @see CouchDbClient#find(Class, String, Params)
  * @author Ahmed Yehia
- * 
  */
 public class Params {
 
-	private List<String> params = new ArrayList<String>();
+    private List<String> params = new ArrayList<String>();
 
-	public Params revsInfo() {
-		params.add("revs_info=true");
-		return this;
-	}
+    public Params revsInfo() {
+        params.add("revs_info=true");
+        return this;
+    }
 
-	public Params attachments() {
-		params.add("attachments=true");
-		return this;
-	}
+    public Params attachments() {
+        params.add("attachments=true");
+        return this;
+    }
 
-	public Params revisions() {
-		params.add("revs=true");
-		return this;
-	}
+    public Params revisions() {
+        params.add("revs=true");
+        return this;
+    }
 
-	public Params rev(String rev) {
-		params.add(format("rev=%s", rev));
-		return this;
-	}
+    public Params rev(String rev) {
+        params.add(format("rev=%s", rev));
+        return this;
+    }
 
-	public Params conflicts() {
-		params.add("conflicts=true");
-		return this;
-	}
+    public Params conflicts() {
+        params.add("conflicts=true");
+        return this;
+    }
 
-	public Params localSeq() {
-		params.add("local_seq=true");
-		return this;
-	}
+    public Params localSeq() {
+        params.add("local_seq=true");
+        return this;
+    }
 
-	public Params addParam(String name, Object value) {
-		params.add(format("%s=%s", name, value));
-		return this;
-	}
+    public Params addParam(String name, Object value) {
+        params.add(format("%s=%s", name, value));
+        return this;
+    }
 
-	public List<String> getParams() {
-		return params.isEmpty() ? null : params;
-	}
+    public List<String> getParams() {
+        return params.isEmpty() ? null : params;
+    }
 }

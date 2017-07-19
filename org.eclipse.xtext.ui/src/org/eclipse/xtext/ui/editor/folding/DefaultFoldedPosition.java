@@ -15,91 +15,92 @@ import org.eclipse.jface.text.Region;
 /**
  * Default implementation of folded position. It uses a relative offset to determine the
  * significant content and its length.
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public class DefaultFoldedPosition extends FoldedPosition {
 
-	static final int UNSET = -1;
-	
-	private final int contentStart;
-	private final int contentLength;
+    static final int UNSET = -1;
 
-	public DefaultFoldedPosition(int offset, int length, int contentStart, int contentLength) {
-		super(offset, length);
-		this.contentStart = contentStart;
-		this.contentLength = contentLength;
-	}
-	
-	public IRegion[] computeProjectionRegions(IDocument document) throws BadLocationException {
-		if (contentStart == UNSET) {
-			int line= document.getLineOfOffset(offset);
-			int offset= document.getLineOffset(line + 1);
-	
-			int length= this.length - (offset - this.offset);
-			if (length > 0) {
-				return new IRegion[] {
-					new Region(offset, length)
-				};
-			}
-			return null;
-		} else {
-			int firstLine = document.getLineOfOffset(offset);
-			int captionLine = document.getLineOfOffset(offset + contentStart);
-			int captionEndLine = document.getLineOfOffset(offset + contentStart + contentLength);
-			int lastLine = document.getLineOfOffset(offset + length) - 1;
-			IRegion preRegion;
-			if (firstLine < captionLine) {
-				int preOffset= document.getLineOffset(firstLine);
-				IRegion preEndLineInfo= document.getLineInformation(captionLine);
-				int preEnd= preEndLineInfo.getOffset();
-				preRegion= new Region(preOffset, preEnd - preOffset);
-			} else {
-				preRegion= null;
-			}
-			if (captionEndLine < lastLine) {
-				int postOffset= document.getLineOffset(captionLine + 1);
-				IRegion postRegion= new Region(postOffset, offset + length - postOffset);
+    private final int contentStart;
+    private final int contentLength;
 
-				if (preRegion == null)
-					return new IRegion[] { postRegion };
+    public DefaultFoldedPosition(int offset, int length, int contentStart, int contentLength) {
+        super(offset, length);
+        this.contentStart = contentStart;
+        this.contentLength = contentLength;
+    }
 
-				return new IRegion[] { preRegion, postRegion };
-			}
+    public IRegion[] computeProjectionRegions(IDocument document) throws BadLocationException {
+        if (contentStart == UNSET) {
+            int line = document.getLineOfOffset(offset);
+            int offset = document.getLineOffset(line + 1);
 
-			if (preRegion != null)
-				return new IRegion[] { preRegion };
+            int length = this.length - (offset - this.offset);
+            if (length > 0) {
+                return new IRegion[]{
+                        new Region(offset, length)
+                };
+            }
+            return null;
+        } else {
+            int firstLine = document.getLineOfOffset(offset);
+            int captionLine = document.getLineOfOffset(offset + contentStart);
+            int captionEndLine = document.getLineOfOffset(offset + contentStart + contentLength);
+            int lastLine = document.getLineOfOffset(offset + length) - 1;
+            IRegion preRegion;
+            if (firstLine < captionLine) {
+                int preOffset = document.getLineOffset(firstLine);
+                IRegion preEndLineInfo = document.getLineInformation(captionLine);
+                int preEnd = preEndLineInfo.getOffset();
+                preRegion = new Region(preOffset, preEnd - preOffset);
+            } else {
+                preRegion = null;
+            }
+            if (captionEndLine < lastLine) {
+                int postOffset = document.getLineOffset(captionLine + 1);
+                IRegion postRegion = new Region(postOffset, offset + length - postOffset);
 
-			return null;
-		}
-	}
+                if (preRegion == null)
+                    return new IRegion[]{postRegion};
 
-	public int computeCaptionOffset(IDocument document) throws BadLocationException {
-		if (contentStart == UNSET) {
-			return 0;
-		}
-		return contentStart;
-	}
+                return new IRegion[]{preRegion, postRegion};
+            }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + contentLength;
-		result = prime * result + contentStart;
-		return result;
-	}
+            if (preRegion != null)
+                return new IRegion[]{preRegion};
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DefaultFoldedPosition other = (DefaultFoldedPosition) obj;
-		if (contentLength != other.contentLength)
-			return false;
+            return null;
+        }
+    }
+
+    public int computeCaptionOffset(IDocument document) throws BadLocationException {
+        if (contentStart == UNSET) {
+            return 0;
+        }
+        return contentStart;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + contentLength;
+        result = prime * result + contentStart;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        DefaultFoldedPosition other = (DefaultFoldedPosition) obj;
+        if (contentLength != other.contentLength)
+            return false;
         return contentStart == other.contentStart;
     }
 

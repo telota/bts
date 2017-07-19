@@ -18,19 +18,19 @@ import com.google.inject.Inject;
  */
 public abstract class AbstractTokenScanner implements ITokenScanner {
 
-	@Inject
-	private ITextAttributeProvider textAttributeProvider;
-	
-	public void setTextAttributeProvider(ITextAttributeProvider textAttributeProvider) {
-		this.textAttributeProvider = textAttributeProvider;
-	}
+    @Inject
+    private ITextAttributeProvider textAttributeProvider;
 
-	public ITextAttributeProvider getTextAttributeProvider() {
-		return textAttributeProvider;
-	}
-	
-	protected TextAttribute getAttribute(String id) {
-		return textAttributeProvider.getAttribute(id);
-	}
+    public ITextAttributeProvider getTextAttributeProvider() {
+        return textAttributeProvider;
+    }
+
+    public void setTextAttributeProvider(ITextAttributeProvider textAttributeProvider) {
+        this.textAttributeProvider = textAttributeProvider;
+    }
+
+    protected TextAttribute getAttribute(String id) {
+        return textAttributeProvider.getAttribute(id);
+    }
 
 }

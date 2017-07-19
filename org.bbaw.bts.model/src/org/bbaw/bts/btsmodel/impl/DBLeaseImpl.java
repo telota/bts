@@ -49,491 +49,498 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getPath <em>Path</em>}</li>
- *   <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getObjectId <em>Object Id</em>}</li>
- *   <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getUserId <em>User Id</em>}</li>
- *   <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getTimeStamp <em>Time Stamp</em>}</li>
- *   <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getObject <em>Object</em>}</li>
- *   <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getActive <em>Active</em>}</li>
- *   <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getBtsUUID <em>Bts UUID</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getPath <em>Path</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getObjectId <em>Object Id</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getUserId <em>User Id</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getTimeStamp <em>Time Stamp</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getObject <em>Object</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getActive <em>Active</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.impl.DBLeaseImpl#getBtsUUID <em>Bts UUID</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DBLeaseImpl extends BTSDBBaseObjectImpl implements DBLease
-{
-	/**
-	 * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPath()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String PATH_EDEFAULT = null;
+public class DBLeaseImpl extends BTSDBBaseObjectImpl implements DBLease {
+    /**
+     * The default value of the '{@link #getPath() <em>Path</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getPath()
+     */
+    protected static final String PATH_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getObjectId() <em>Object Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getObjectId()
+     */
+    protected static final String OBJECT_ID_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getUserId() <em>User Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getUserId()
+     */
+    protected static final String USER_ID_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getTimeStamp()
+     */
+    protected static final Date TIME_STAMP_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getActive() <em>Active</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getActive()
+     */
+    protected static final Boolean ACTIVE_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getBtsUUID() <em>Bts UUID</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getBtsUUID()
+     */
+    protected static final String BTS_UUID_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getPath()
+     */
+    protected String path = PATH_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getObjectId() <em>Object Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getObjectId()
+     */
+    protected String objectId = OBJECT_ID_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getUserId() <em>User Id</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getUserId()
+     */
+    protected String userId = USER_ID_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getTimeStamp()
+     */
+    protected Date timeStamp = TIME_STAMP_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getObject() <em>Object</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getObject()
+     */
+    protected BTSDBBaseObject object;
+    /**
+     * The cached value of the '{@link #getActive() <em>Active</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getActive()
+     */
+    protected Boolean active = ACTIVE_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getBtsUUID() <em>Bts UUID</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getBtsUUID()
+     */
+    protected String btsUUID = BTS_UUID_EDEFAULT;
 
-	/**
-	 * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPath()
-	 * @generated
-	 * @ordered
-	 */
-	protected String path = PATH_EDEFAULT;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generatedNot
+     */
+    public DBLeaseImpl() {
+        super();
+    }
 
-	/**
-	 * The default value of the '{@link #getObjectId() <em>Object Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getObjectId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String OBJECT_ID_EDEFAULT = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BtsmodelPackage.Literals.DB_LEASE;
+    }
 
-	/**
-	 * The cached value of the '{@link #getObjectId() <em>Object Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getObjectId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String objectId = OBJECT_ID_EDEFAULT;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public String getPath() {
+        return path;
+    }
 
-	/**
-	 * The default value of the '{@link #getUserId() <em>User Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUserId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String USER_ID_EDEFAULT = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setPath(String newPath) {
+        String oldPath = path;
+        path = newPath;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__PATH, oldPath, path));
+    }
 
-	/**
-	 * The cached value of the '{@link #getUserId() <em>User Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUserId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String userId = USER_ID_EDEFAULT;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public String getObjectId() {
+        return objectId;
+    }
 
-	/**
-	 * The default value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTimeStamp()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date TIME_STAMP_EDEFAULT = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setObjectId(String newObjectId) {
+        String oldObjectId = objectId;
+        objectId = newObjectId;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__OBJECT_ID, oldObjectId, objectId));
+    }
 
-	/**
-	 * The cached value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTimeStamp()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date timeStamp = TIME_STAMP_EDEFAULT;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public String getUserId() {
+        return userId;
+    }
 
-	/**
-	 * The cached value of the '{@link #getObject() <em>Object</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getObject()
-	 * @generated
-	 * @ordered
-	 */
-	protected BTSDBBaseObject object;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setUserId(String newUserId) {
+        String oldUserId = userId;
+        userId = newUserId;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__USER_ID, oldUserId, userId));
+    }
 
-	/**
-	 * The default value of the '{@link #getActive() <em>Active</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getActive()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Boolean ACTIVE_EDEFAULT = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
 
-	/**
-	 * The cached value of the '{@link #getActive() <em>Active</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getActive()
-	 * @generated
-	 * @ordered
-	 */
-	protected Boolean active = ACTIVE_EDEFAULT;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setTimeStamp(Date newTimeStamp) {
+        Date oldTimeStamp = timeStamp;
+        timeStamp = newTimeStamp;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__TIME_STAMP, oldTimeStamp, timeStamp));
+    }
 
-	/**
-	 * The default value of the '{@link #getBtsUUID() <em>Bts UUID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBtsUUID()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String BTS_UUID_EDEFAULT = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public BTSDBBaseObject getObject() {
+        if (object != null && object.eIsProxy()) {
+            InternalEObject oldObject = (InternalEObject) object;
+            object = (BTSDBBaseObject) eResolveProxy(oldObject);
+            if (object != oldObject) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, BtsmodelPackage.DB_LEASE__OBJECT, oldObject, object));
+            }
+        }
+        return object;
+    }
 
-	/**
-	 * The cached value of the '{@link #getBtsUUID() <em>Bts UUID</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBtsUUID()
-	 * @generated
-	 * @ordered
-	 */
-	protected String btsUUID = BTS_UUID_EDEFAULT;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setObject(BTSDBBaseObject newObject) {
+        BTSDBBaseObject oldObject = object;
+        object = newObject;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__OBJECT, oldObject, object));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generatedNot
-	 */
-	public DBLeaseImpl()
-	{
-		super();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public BTSDBBaseObject basicGetObject() {
+        return object;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass()
-	{
-		return BtsmodelPackage.Literals.DB_LEASE;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public Boolean getActive() {
+        return active;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getPath()
-	{
-		return path;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setActive(Boolean newActive) {
+        Boolean oldActive = active;
+        active = newActive;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__ACTIVE, oldActive, active));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPath(String newPath)
-	{
-		String oldPath = path;
-		path = newPath;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__PATH, oldPath, path));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public String getBtsUUID() {
+        return btsUUID;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getObjectId()
-	{
-		return objectId;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setBtsUUID(String newBtsUUID) {
+        String oldBtsUUID = btsUUID;
+        btsUUID = newBtsUUID;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__BTS_UUID, oldBtsUUID, btsUUID));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setObjectId(String newObjectId)
-	{
-		String oldObjectId = objectId;
-		objectId = newObjectId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__OBJECT_ID, oldObjectId, objectId));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case BtsmodelPackage.DB_LEASE__PATH:
+                return getPath();
+            case BtsmodelPackage.DB_LEASE__OBJECT_ID:
+                return getObjectId();
+            case BtsmodelPackage.DB_LEASE__USER_ID:
+                return getUserId();
+            case BtsmodelPackage.DB_LEASE__TIME_STAMP:
+                return getTimeStamp();
+            case BtsmodelPackage.DB_LEASE__OBJECT:
+                if (resolve) return getObject();
+                return basicGetObject();
+            case BtsmodelPackage.DB_LEASE__ACTIVE:
+                return getActive();
+            case BtsmodelPackage.DB_LEASE__BTS_UUID:
+                return getBtsUUID();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getUserId()
-	{
-		return userId;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case BtsmodelPackage.DB_LEASE__PATH:
+                setPath((String) newValue);
+                return;
+            case BtsmodelPackage.DB_LEASE__OBJECT_ID:
+                setObjectId((String) newValue);
+                return;
+            case BtsmodelPackage.DB_LEASE__USER_ID:
+                setUserId((String) newValue);
+                return;
+            case BtsmodelPackage.DB_LEASE__TIME_STAMP:
+                setTimeStamp((Date) newValue);
+                return;
+            case BtsmodelPackage.DB_LEASE__OBJECT:
+                setObject((BTSDBBaseObject) newValue);
+                return;
+            case BtsmodelPackage.DB_LEASE__ACTIVE:
+                setActive((Boolean) newValue);
+                return;
+            case BtsmodelPackage.DB_LEASE__BTS_UUID:
+                setBtsUUID((String) newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setUserId(String newUserId)
-	{
-		String oldUserId = userId;
-		userId = newUserId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__USER_ID, oldUserId, userId));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case BtsmodelPackage.DB_LEASE__PATH:
+                setPath(PATH_EDEFAULT);
+                return;
+            case BtsmodelPackage.DB_LEASE__OBJECT_ID:
+                setObjectId(OBJECT_ID_EDEFAULT);
+                return;
+            case BtsmodelPackage.DB_LEASE__USER_ID:
+                setUserId(USER_ID_EDEFAULT);
+                return;
+            case BtsmodelPackage.DB_LEASE__TIME_STAMP:
+                setTimeStamp(TIME_STAMP_EDEFAULT);
+                return;
+            case BtsmodelPackage.DB_LEASE__OBJECT:
+                setObject((BTSDBBaseObject) null);
+                return;
+            case BtsmodelPackage.DB_LEASE__ACTIVE:
+                setActive(ACTIVE_EDEFAULT);
+                return;
+            case BtsmodelPackage.DB_LEASE__BTS_UUID:
+                setBtsUUID(BTS_UUID_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Date getTimeStamp()
-	{
-		return timeStamp;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case BtsmodelPackage.DB_LEASE__PATH:
+                return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
+            case BtsmodelPackage.DB_LEASE__OBJECT_ID:
+                return OBJECT_ID_EDEFAULT == null ? objectId != null : !OBJECT_ID_EDEFAULT.equals(objectId);
+            case BtsmodelPackage.DB_LEASE__USER_ID:
+                return USER_ID_EDEFAULT == null ? userId != null : !USER_ID_EDEFAULT.equals(userId);
+            case BtsmodelPackage.DB_LEASE__TIME_STAMP:
+                return TIME_STAMP_EDEFAULT == null ? timeStamp != null : !TIME_STAMP_EDEFAULT.equals(timeStamp);
+            case BtsmodelPackage.DB_LEASE__OBJECT:
+                return object != null;
+            case BtsmodelPackage.DB_LEASE__ACTIVE:
+                return ACTIVE_EDEFAULT == null ? active != null : !ACTIVE_EDEFAULT.equals(active);
+            case BtsmodelPackage.DB_LEASE__BTS_UUID:
+                return BTS_UUID_EDEFAULT == null ? btsUUID != null : !BTS_UUID_EDEFAULT.equals(btsUUID);
+        }
+        return super.eIsSet(featureID);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTimeStamp(Date newTimeStamp)
-	{
-		Date oldTimeStamp = timeStamp;
-		timeStamp = newTimeStamp;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__TIME_STAMP, oldTimeStamp, timeStamp));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public BTSDBBaseObject getObject() {
-		if (object != null && object.eIsProxy()) {
-			InternalEObject oldObject = (InternalEObject)object;
-			object = (BTSDBBaseObject)eResolveProxy(oldObject);
-			if (object != oldObject) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BtsmodelPackage.DB_LEASE__OBJECT, oldObject, object));
-			}
-		}
-		return object;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public BTSDBBaseObject basicGetObject() {
-		return object;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setObject(BTSDBBaseObject newObject) {
-		BTSDBBaseObject oldObject = object;
-		object = newObject;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__OBJECT, oldObject, object));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Boolean getActive() {
-		return active;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setActive(Boolean newActive) {
-		Boolean oldActive = active;
-		active = newActive;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__ACTIVE, oldActive, active));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getBtsUUID() {
-		return btsUUID;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBtsUUID(String newBtsUUID) {
-		String oldBtsUUID = btsUUID;
-		btsUUID = newBtsUUID;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, BtsmodelPackage.DB_LEASE__BTS_UUID, oldBtsUUID, btsUUID));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID) {
-			case BtsmodelPackage.DB_LEASE__PATH:
-				return getPath();
-			case BtsmodelPackage.DB_LEASE__OBJECT_ID:
-				return getObjectId();
-			case BtsmodelPackage.DB_LEASE__USER_ID:
-				return getUserId();
-			case BtsmodelPackage.DB_LEASE__TIME_STAMP:
-				return getTimeStamp();
-			case BtsmodelPackage.DB_LEASE__OBJECT:
-				if (resolve) return getObject();
-				return basicGetObject();
-			case BtsmodelPackage.DB_LEASE__ACTIVE:
-				return getActive();
-			case BtsmodelPackage.DB_LEASE__BTS_UUID:
-				return getBtsUUID();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID) {
-			case BtsmodelPackage.DB_LEASE__PATH:
-				setPath((String)newValue);
-				return;
-			case BtsmodelPackage.DB_LEASE__OBJECT_ID:
-				setObjectId((String)newValue);
-				return;
-			case BtsmodelPackage.DB_LEASE__USER_ID:
-				setUserId((String)newValue);
-				return;
-			case BtsmodelPackage.DB_LEASE__TIME_STAMP:
-				setTimeStamp((Date)newValue);
-				return;
-			case BtsmodelPackage.DB_LEASE__OBJECT:
-				setObject((BTSDBBaseObject)newValue);
-				return;
-			case BtsmodelPackage.DB_LEASE__ACTIVE:
-				setActive((Boolean)newValue);
-				return;
-			case BtsmodelPackage.DB_LEASE__BTS_UUID:
-				setBtsUUID((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID) {
-			case BtsmodelPackage.DB_LEASE__PATH:
-				setPath(PATH_EDEFAULT);
-				return;
-			case BtsmodelPackage.DB_LEASE__OBJECT_ID:
-				setObjectId(OBJECT_ID_EDEFAULT);
-				return;
-			case BtsmodelPackage.DB_LEASE__USER_ID:
-				setUserId(USER_ID_EDEFAULT);
-				return;
-			case BtsmodelPackage.DB_LEASE__TIME_STAMP:
-				setTimeStamp(TIME_STAMP_EDEFAULT);
-				return;
-			case BtsmodelPackage.DB_LEASE__OBJECT:
-				setObject((BTSDBBaseObject)null);
-				return;
-			case BtsmodelPackage.DB_LEASE__ACTIVE:
-				setActive(ACTIVE_EDEFAULT);
-				return;
-			case BtsmodelPackage.DB_LEASE__BTS_UUID:
-				setBtsUUID(BTS_UUID_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID) {
-			case BtsmodelPackage.DB_LEASE__PATH:
-				return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
-			case BtsmodelPackage.DB_LEASE__OBJECT_ID:
-				return OBJECT_ID_EDEFAULT == null ? objectId != null : !OBJECT_ID_EDEFAULT.equals(objectId);
-			case BtsmodelPackage.DB_LEASE__USER_ID:
-				return USER_ID_EDEFAULT == null ? userId != null : !USER_ID_EDEFAULT.equals(userId);
-			case BtsmodelPackage.DB_LEASE__TIME_STAMP:
-				return TIME_STAMP_EDEFAULT == null ? timeStamp != null : !TIME_STAMP_EDEFAULT.equals(timeStamp);
-			case BtsmodelPackage.DB_LEASE__OBJECT:
-				return object != null;
-			case BtsmodelPackage.DB_LEASE__ACTIVE:
-				return ACTIVE_EDEFAULT == null ? active != null : !ACTIVE_EDEFAULT.equals(active);
-			case BtsmodelPackage.DB_LEASE__BTS_UUID:
-				return BTS_UUID_EDEFAULT == null ? btsUUID != null : !BTS_UUID_EDEFAULT.equals(btsUUID);
-		}
-		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString()
-	{
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (path: ");
-		result.append(path);
-		result.append(", objectId: ");
-		result.append(objectId);
-		result.append(", userId: ");
-		result.append(userId);
-		result.append(", timeStamp: ");
-		result.append(timeStamp);
-		result.append(", active: ");
-		result.append(active);
-		result.append(", btsUUID: ");
-		result.append(btsUUID);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (path: ");
+        result.append(path);
+        result.append(", objectId: ");
+        result.append(objectId);
+        result.append(", userId: ");
+        result.append(userId);
+        result.append(", timeStamp: ");
+        result.append(timeStamp);
+        result.append(", active: ");
+        result.append(active);
+        result.append(", btsUUID: ");
+        result.append(btsUUID);
+        result.append(')');
+        return result.toString();
+    }
 
 } //DBLeaseImpl

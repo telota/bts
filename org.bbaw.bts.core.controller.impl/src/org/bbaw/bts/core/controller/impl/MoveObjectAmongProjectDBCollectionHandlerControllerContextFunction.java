@@ -7,20 +7,18 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.model.application.MApplication;
 
-public class MoveObjectAmongProjectDBCollectionHandlerControllerContextFunction extends ContextFunction
-{
-	@Override
-	public Object compute(IEclipseContext context)
-	{
-		System.out.println("Intitialize MoveObjectAmongProjectDBCollectionHandlerController");
-		// Add the new object to the application context
-		MApplication application = context.get(MApplication.class);
-		IEclipseContext ctx = application.getContext();
+public class MoveObjectAmongProjectDBCollectionHandlerControllerContextFunction extends ContextFunction {
+    @Override
+    public Object compute(IEclipseContext context) {
+        System.out.println("Intitialize MoveObjectAmongProjectDBCollectionHandlerController");
+        // Add the new object to the application context
+        MApplication application = context.get(MApplication.class);
+        IEclipseContext ctx = application.getContext();
 
-		MoveObjectAmongProjectDBCollectionHandlerController controller = ContextInjectionFactory.make(
-				MoveObjectAmongProjectDBCollectionHandlerControllerImpl.class, context);
-		ctx.set(MoveObjectAmongProjectDBCollectionHandlerController.class, controller);
+        MoveObjectAmongProjectDBCollectionHandlerController controller = ContextInjectionFactory.make(
+                MoveObjectAmongProjectDBCollectionHandlerControllerImpl.class, context);
+        ctx.set(MoveObjectAmongProjectDBCollectionHandlerController.class, controller);
 
-		return controller;
-	}
+        return controller;
+    }
 }

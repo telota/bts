@@ -19,35 +19,35 @@ import org.eclipse.core.runtime.CoreException;
  * @author Michael Clay - Initial contribution and API
  */
 public class StreamContentAccessorDelegate implements IStreamContentAccessor, IResourceProvider {
-	private IStreamContentAccessor streamContentAccessor;
-	private IResourceProvider resourceProvider;
+    private IStreamContentAccessor streamContentAccessor;
+    private IResourceProvider resourceProvider;
 
-	public StreamContentAccessorDelegate(IStreamContentAccessor streamContentAccessor,
-			IResourceProvider resourceProvider) {
-		super();
-		Assert.isNotNull(streamContentAccessor, "parameter 'streamContentAccessor' must not be null");
-		Assert.isNotNull(resourceProvider, "parameter 'resourceProvider' must not be null");
-		this.streamContentAccessor = streamContentAccessor;
-		this.resourceProvider = resourceProvider;
-	}
+    public StreamContentAccessorDelegate(IStreamContentAccessor streamContentAccessor,
+                                         IResourceProvider resourceProvider) {
+        super();
+        Assert.isNotNull(streamContentAccessor, "parameter 'streamContentAccessor' must not be null");
+        Assert.isNotNull(resourceProvider, "parameter 'resourceProvider' must not be null");
+        this.streamContentAccessor = streamContentAccessor;
+        this.resourceProvider = resourceProvider;
+    }
 
-	public InputStream getContents() throws CoreException {
-		return streamContentAccessor.getContents();
-	}
+    public InputStream getContents() throws CoreException {
+        return streamContentAccessor.getContents();
+    }
 
-	@Override
-	public boolean equals(Object object) {
-		return streamContentAccessor.equals(object);
-	}
+    @Override
+    public boolean equals(Object object) {
+        return streamContentAccessor.equals(object);
+    }
 
-	@Override
-	public int hashCode() {
-		return streamContentAccessor.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return streamContentAccessor.hashCode();
+    }
 
-	public IResource getResource() {
-		return resourceProvider.getResource();
-	}
+    public IResource getResource() {
+        return resourceProvider.getResource();
+    }
 
 }
 

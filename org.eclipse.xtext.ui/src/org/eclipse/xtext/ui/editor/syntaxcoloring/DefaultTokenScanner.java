@@ -16,28 +16,28 @@ import org.eclipse.jface.text.rules.Token;
  */
 public class DefaultTokenScanner extends AbstractTokenScanner {
 
-	private int length;
-	private boolean tokenReturned;
+    private int length;
+    private boolean tokenReturned;
 
-	public int getTokenLength() {
-		return length;
-	}
+    public int getTokenLength() {
+        return length;
+    }
 
-	public int getTokenOffset() {
-		return 0;
-	}
+    public int getTokenOffset() {
+        return 0;
+    }
 
-	public IToken nextToken() {
-		if (!tokenReturned) {
-			tokenReturned = true;
-			return new Token(getAttribute(DefaultHighlightingConfiguration.DEFAULT_ID));
-		}
-		return Token.EOF;
-	}
+    public IToken nextToken() {
+        if (!tokenReturned) {
+            tokenReturned = true;
+            return new Token(getAttribute(DefaultHighlightingConfiguration.DEFAULT_ID));
+        }
+        return Token.EOF;
+    }
 
-	public void setRange(IDocument document, int offset, int length) {
-		this.length = length;
-		this.tokenReturned = false;
-	}
+    public void setRange(IDocument document, int offset, int length) {
+        this.length = length;
+        this.tokenReturned = false;
+    }
 
 }

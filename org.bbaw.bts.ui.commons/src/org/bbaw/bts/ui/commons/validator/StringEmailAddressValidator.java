@@ -42,94 +42,92 @@ import org.eclipse.core.runtime.IStatus;
  *
  * @author Christoph Plutte
  */
-public class StringEmailAddressValidator implements IValidator
-{
+public class StringEmailAddressValidator implements IValidator {
 
-	/** The Constant regex. */
-	private static final String regex = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
-			+ "[A-Za-z0-9-_]+(\\.[_A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-	
-	/** The Constant patt. */
-	private static final Pattern patt = Pattern.compile(regex);
-	
-	/** The Constant error. */
-	private static final String error = "String ist not a valid email address";
-	
-	/** The error message. */
-	private String errorMessage = error;
-	
-	/** The nullable. */
-	private boolean nullable = false;;
+    /**
+     * The Constant regex.
+     */
+    private static final String regex = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-_]+(\\.[_A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
-	/**
-	 * Instantiates a new string email address validator.
-	 *
-	 * @param nullable true if stirng may be null
-	 */
-	public StringEmailAddressValidator(boolean nullable)
-	{
-		this.nullable = nullable;
-	}
+    /**
+     * The Constant patt.
+     */
+    private static final Pattern patt = Pattern.compile(regex);
 
-	/**
-	 * Instantiates a new string email address validator.
-	 *
-	 * @param errorMessage the error message
-	 * @param nullable the nullable
-	 */
-	public StringEmailAddressValidator(String errorMessage, boolean nullable)
-	{
-		this.nullable = nullable;
-		if (errorMessage != null)
-		{
-			this.errorMessage = errorMessage;
-		}
-	}
+    /**
+     * The Constant error.
+     */
+    private static final String error = "String ist not a valid email address";
 
-	/**
-	 * Instantiates a new string email address validator.
-	 */
-	public StringEmailAddressValidator()
-	{
-	}
+    /**
+     * The error message.
+     */
+    private String errorMessage = error;
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
-	 */
-	@Override
-	public IStatus validate(Object value)
-	{
-		if (nullable && value == null)
-		{
-			return ValidationStatus.ok();
-		}
-		if (value instanceof String)
-		{
-			String string = (String) value;
-			if (nullable && string.trim().length() == 0)
-			{
-				return ValidationStatus.ok();
-			}
-			try
-			{
-				Matcher matcher = patt.matcher(string);
-				if (matcher.matches())
-				{
-					return ValidationStatus.ok();
-				}
-				return ValidationStatus.error(errorMessage);
+    /**
+     * The nullable.
+     */
+    private boolean nullable = false;
+    ;
 
-			} catch (RuntimeException e)
-			{
-				return ValidationStatus.error(errorMessage);
-			}
+    /**
+     * Instantiates a new string email address validator.
+     *
+     * @param nullable true if stirng may be null
+     */
+    public StringEmailAddressValidator(boolean nullable) {
+        this.nullable = nullable;
+    }
 
-		}
-		if (nullable)
-		{
-			return ValidationStatus.ok();
-		}
-		return ValidationStatus.error(errorMessage);
-	}
+    /**
+     * Instantiates a new string email address validator.
+     *
+     * @param errorMessage the error message
+     * @param nullable     the nullable
+     */
+    public StringEmailAddressValidator(String errorMessage, boolean nullable) {
+        this.nullable = nullable;
+        if (errorMessage != null) {
+            this.errorMessage = errorMessage;
+        }
+    }
+
+    /**
+     * Instantiates a new string email address validator.
+     */
+    public StringEmailAddressValidator() {
+    }
+
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.validation.IValidator#validate(java.lang.Object)
+     */
+    @Override
+    public IStatus validate(Object value) {
+        if (nullable && value == null) {
+            return ValidationStatus.ok();
+        }
+        if (value instanceof String) {
+            String string = (String) value;
+            if (nullable && string.trim().length() == 0) {
+                return ValidationStatus.ok();
+            }
+            try {
+                Matcher matcher = patt.matcher(string);
+                if (matcher.matches()) {
+                    return ValidationStatus.ok();
+                }
+                return ValidationStatus.error(errorMessage);
+
+            } catch (RuntimeException e) {
+                return ValidationStatus.error(errorMessage);
+            }
+
+        }
+        if (nullable) {
+            return ValidationStatus.ok();
+        }
+        return ValidationStatus.error(errorMessage);
+    }
 
 }

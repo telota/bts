@@ -15,20 +15,20 @@ import org.eclipse.xtext.AbstractElement;
  */
 public abstract class LookAheadTerminal {
 
-	private Token token;
-	
-	public abstract boolean matches(AbstractElement element);
-	
-	public Token getToken() {
-		return token;
-	}
-	
-	public void setToken(Token token) {
-		this.token = token;
-	}
-	
-	@Override
-	public String toString() {
-		return "LookAheadTerminal: " + token.toString();
-	}
+    private Token token;
+
+    public abstract boolean matches(AbstractElement element);
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return "LookAheadTerminal: " + token.toString();
+    }
 }

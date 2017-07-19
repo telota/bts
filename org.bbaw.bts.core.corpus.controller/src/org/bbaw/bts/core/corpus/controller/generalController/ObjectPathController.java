@@ -7,13 +7,13 @@ import org.bbaw.bts.btsmodel.BTSObject;
 
 public interface ObjectPathController {
 
-	BTSObject[] loadFullPath(BTSObject[] objects,
-			Map<String, List<BTSObject>> pathCache);
+    BTSObject[] loadFullPath(BTSObject[] objects,
+                             Map<String, List<BTSObject>> pathCache);
 
-	BTSObject[] loadFullPathThs(BTSObject[] objects,
-			Map<String, List<BTSObject>> pathCache);
+    BTSObject[] loadFullPathThs(BTSObject[] objects,
+                                Map<String, List<BTSObject>> pathCache);
 
-	BTSObject[] loadFullPathLemma(BTSObject[] objects,
-			Map<String, List<BTSObject>> pathCache);
+    BTSObject[] loadFullPathLemma(BTSObject[] objects,
+                                  Map<String, List<BTSObject>> pathCache);
 
 }

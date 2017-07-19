@@ -7,11 +7,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface DBManagerPartController {
 
-	List<DBCollectionStatusInformation> getDBCollectionStatusInformations(IProgressMonitor monitor);
+    List<DBCollectionStatusInformation> getDBCollectionStatusInformations(IProgressMonitor monitor);
 
-	boolean reIndex(String dbCollectionName, IProgressMonitor monitor);
+    boolean reIndex(String dbCollectionName, IProgressMonitor monitor);
 
-	DBCollectionStatusInformation getDBCollectionStatusInformation(
-			String dbCollectionName, IProgressMonitor monitor);
+    DBCollectionStatusInformation getDBCollectionStatusInformation(
+            String dbCollectionName, IProgressMonitor monitor);
 
 }

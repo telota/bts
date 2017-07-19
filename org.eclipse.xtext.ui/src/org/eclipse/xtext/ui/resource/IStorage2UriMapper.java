@@ -18,29 +18,32 @@ import org.eclipse.xtext.util.Pair;
 /**
  * A bi directional mapping service that allows to find the EMF {@link URI} for an {@link IStorage}
  * and vice versa.
+ *
  * @author Sven Efftinge - Initial contribution and API
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IStorage2UriMapper {
 
-	/**
-	 * Find the storages that can be mapped to the given URI. It will typically 
-	 * be only one {@link IStorage} associated with one {@link IProject} but 
-	 * in the case that the same external class folder or jar is referenced in 
-	 * multiple projects multiple {@link IStorage}s are returned.
-	 * @param uri the {@link URI}. May not be <code>null</code>.
-	 * @return IStorages corresponding to the given URI. Never <code>null</code>. 
-	 */
-	Iterable<Pair<IStorage, IProject>> getStorages(URI uri);
+    /**
+     * Find the storages that can be mapped to the given URI. It will typically
+     * be only one {@link IStorage} associated with one {@link IProject} but
+     * in the case that the same external class folder or jar is referenced in
+     * multiple projects multiple {@link IStorage}s are returned.
+     *
+     * @param uri the {@link URI}. May not be <code>null</code>.
+     * @return IStorages corresponding to the given URI. Never <code>null</code>.
+     */
+    Iterable<Pair<IStorage, IProject>> getStorages(URI uri);
 
-	/**
-	 * Returns the URI for the given {@link IStorage} or <code>null</code> if not valid URI exists.
-	 * @return returns the URI for the given {@link IStorage} or <code>null</code>. 
-	 */
-	URI getUri(IStorage storage);
+    /**
+     * Returns the URI for the given {@link IStorage} or <code>null</code> if not valid URI exists.
+     *
+     * @return returns the URI for the given {@link IStorage} or <code>null</code>.
+     */
+    URI getUri(IStorage storage);
 
-	/**
-	 * @since 2.4
-	 */
-	Map<URI, IStorage> getAllEntries(IContainer container);
+    /**
+     * @since 2.4
+     */
+    Map<URI, IStorage> getAllEntries(IContainer container);
 }

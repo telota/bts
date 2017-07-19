@@ -14,77 +14,77 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 
 public class ObjectSelectionProposalProvider implements
-		IContentProposalProvider {
+        IContentProposalProvider {
 
-	private GeneralBTSObjectController gernalObjectController;
-	private BTSConfig configItem;
-	private List<BTSObject> list;
-	private Comparator<IContentProposal> comparator;
-	private BTSObject object;
+    private GeneralBTSObjectController gernalObjectController;
+    private BTSConfig configItem;
+    private List<BTSObject> list;
+    private Comparator<IContentProposal> comparator;
+    private BTSObject object;
 
-	public ObjectSelectionProposalProvider(
-			GeneralBTSObjectController passportEditorController,
-			BTSConfig configItem,
-			BTSObject object) {
-		this.gernalObjectController = passportEditorController;
-		this.setConfigItem(configItem);
-		this.object = object;
-	}
+    public ObjectSelectionProposalProvider(
+            GeneralBTSObjectController passportEditorController,
+            BTSConfig configItem,
+            BTSObject object) {
+        this.gernalObjectController = passportEditorController;
+        this.setConfigItem(configItem);
+        this.object = object;
+    }
 
-	@Override
-	public IContentProposal[] getProposals(String contents, int position) {
-		if (contents.length() > 1) {
-			list = loadList(contents);
-		}
+    @Override
+    public IContentProposal[] getProposals(String contents, int position) {
+        if (contents.length() > 1) {
+            list = loadList(contents);
+        }
 
-		List<ContentProposal> partialList = new Vector<ContentProposal>();
-		if (list != null && !list.isEmpty()) {
-			for (BTSObject o : list) {
-				if (o.getName() != null && o.getName().startsWith(contents)
-						|| o.get_id().equals(contents)) {
-					String desc = o.getName() + "\n" + o.get_id() + "\n" + o.getDBCollectionKey();
-					ContentProposal p = new ContentProposal(o.get_id(), o.getName(), desc);
-					partialList.add(p);
-				}
-			}
+        List<ContentProposal> partialList = new Vector<ContentProposal>();
+        if (list != null && !list.isEmpty()) {
+            for (BTSObject o : list) {
+                if (o.getName() != null && o.getName().startsWith(contents)
+                        || o.get_id().equals(contents)) {
+                    String desc = o.getName() + "\n" + o.get_id() + "\n" + o.getDBCollectionKey();
+                    ContentProposal p = new ContentProposal(o.get_id(), o.getName(), desc);
+                    partialList.add(p);
+                }
+            }
 
-			Collections.sort(partialList, getComparator());
-		}
-		return partialList.toArray(new IContentProposal[partialList.size()]);
-	}
+            Collections.sort(partialList, getComparator());
+        }
+        return partialList.toArray(new IContentProposal[partialList.size()]);
+    }
 
-	private Comparator<IContentProposal> getComparator() {
-		if (comparator == null) {
-			comparator = new Comparator<IContentProposal>() {
+    private Comparator<IContentProposal> getComparator() {
+        if (comparator == null) {
+            comparator = new Comparator<IContentProposal>() {
 
-				@Override
-				public int compare(IContentProposal p1, IContentProposal p2) {
-					if (p1 != null && p2 != null) {
-						if (p1.getLabel() != null) {
-							return p1.getLabel().compareTo(p2.getLabel());
-						}
-					}
-					return 0;
-				}
+                @Override
+                public int compare(IContentProposal p1, IContentProposal p2) {
+                    if (p1 != null && p2 != null) {
+                        if (p1.getLabel() != null) {
+                            return p1.getLabel().compareTo(p2.getLabel());
+                        }
+                    }
+                    return 0;
+                }
 
-			};
-		}
-		return comparator;
-	}
+            };
+        }
+        return comparator;
+    }
 
-	private List<BTSObject> loadList(final String contents) {
+    private List<BTSObject> loadList(final String contents) {
 
-		return gernalObjectController.getObjectProposalsFor(
-				(BTSConfigItem) configItem, contents, object, null);
+        return gernalObjectController.getObjectProposalsFor(
+                (BTSConfigItem) configItem, contents, object, null);
 
-	}
+    }
 
-	public BTSConfig getConfigItem() {
-		return configItem;
-	}
+    public BTSConfig getConfigItem() {
+        return configItem;
+    }
 
-	public void setConfigItem(BTSConfig configItem) {
-		this.configItem = configItem;
-	}
+    public void setConfigItem(BTSConfig configItem) {
+        this.configItem = configItem;
+    }
 
 }

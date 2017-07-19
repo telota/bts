@@ -36,16 +36,15 @@ import org.bbaw.bts.btsmodel.BTSUserGroup;
  *
  * @author Christoph Plutte
  */
-public interface BTSUserGroupDao extends GenericDao<BTSUserGroup, String>
-{
+public interface BTSUserGroupDao extends GenericDao<BTSUserGroup, String> {
 
-	/**
-	 * Removes the bts user group.
-	 *
-	 * @param userGroup the user group
-	 * @param path the path
-	 * @return true, if successful
-	 */
-	boolean removeBTSUserGroup(BTSUserGroup userGroup, String path);
+    /**
+     * Removes the bts user group.
+     *
+     * @param userGroup the user group
+     * @param path      the path
+     * @return true, if successful
+     */
+    boolean removeBTSUserGroup(BTSUserGroup userGroup, String path);
 
 }

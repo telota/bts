@@ -20,22 +20,22 @@ import com.google.inject.Inject;
  */
 public class AbstractStorage2UriMapperClient {
 
-	@Inject
-	private IStorage2UriMapper mapper;
-	
-	protected URI getUri(IStorage file) {
-		return mapper.getUri(file);
-	}
-	
-	protected Iterable<Pair<IStorage, IProject>> getStorages(URI uri) {
-		return mapper.getStorages(uri);
-	}
-	
-	public void setMapper(IStorage2UriMapper mapper) {
-		this.mapper = mapper;
-	}
-	
-	public IStorage2UriMapper getMapper() {
-		return mapper;
-	}
+    @Inject
+    private IStorage2UriMapper mapper;
+
+    protected URI getUri(IStorage file) {
+        return mapper.getUri(file);
+    }
+
+    protected Iterable<Pair<IStorage, IProject>> getStorages(URI uri) {
+        return mapper.getStorages(uri);
+    }
+
+    public IStorage2UriMapper getMapper() {
+        return mapper;
+    }
+
+    public void setMapper(IStorage2UriMapper mapper) {
+        this.mapper = mapper;
+    }
 }

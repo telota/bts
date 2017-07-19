@@ -23,28 +23,28 @@ import org.eclipse.xtext.ui.internal.XtextPluginImages;
  */
 public class XtextMarkerAnnotationImageProvider implements IAnnotationImageProvider {
 
-	public ImageDescriptor getImageDescriptor(String imageDescritporId) {
-		return null;
-	}
+    public ImageDescriptor getImageDescriptor(String imageDescritporId) {
+        return null;
+    }
 
-	public String getImageDescriptorId(Annotation annotation) {
-		return null;
-	}
+    public String getImageDescriptorId(Annotation annotation) {
+        return null;
+    }
 
-	public Image getManagedImage(Annotation annotation) {
-		return getImages(annotation).get(annotation.getType());
-	}
+    public Image getManagedImage(Annotation annotation) {
+        return getImages(annotation).get(annotation.getType());
+    }
 
-	private Map<String, Image> getImages(Annotation annotation) {
-		if(annotation.isMarkedDeleted())
-			return XtextPluginImages.getAnnotationImagesDeleted();
-		else {
-			if (annotation instanceof MarkerAnnotation) {
-				MarkerAnnotation ma = (MarkerAnnotation) annotation;
-				if(ma.isQuickFixableStateSet() && ma.isQuickFixable())
-					return XtextPluginImages.getAnnotationImagesFixable();
-			}
-			return XtextPluginImages.getAnnotationImagesNonfixable();
-		}
-	}
+    private Map<String, Image> getImages(Annotation annotation) {
+        if (annotation.isMarkedDeleted())
+            return XtextPluginImages.getAnnotationImagesDeleted();
+        else {
+            if (annotation instanceof MarkerAnnotation) {
+                MarkerAnnotation ma = (MarkerAnnotation) annotation;
+                if (ma.isQuickFixableStateSet() && ma.isQuickFixable())
+                    return XtextPluginImages.getAnnotationImagesFixable();
+            }
+            return XtextPluginImages.getAnnotationImagesNonfixable();
+        }
+    }
 }

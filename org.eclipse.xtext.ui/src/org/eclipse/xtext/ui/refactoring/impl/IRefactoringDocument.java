@@ -14,21 +14,21 @@ import org.eclipse.text.edits.TextEdit;
 import com.google.inject.ImplementedBy;
 
 /**
- * Abstraction over an open document or a text file that is affected by a refactoring. 
- *  
+ * Abstraction over an open document or a text file that is affected by a refactoring.
+ *
  * @author Jan Koehnlein - Initial contribution and API
  */
 public interface IRefactoringDocument {
 
-	Change createChange(String name, TextEdit textEdit);
-	
-	URI getURI();
-	
-	String getOriginalContents();
+    Change createChange(String name, TextEdit textEdit);
 
-	@ImplementedBy(DefaultRefactoringDocumentProvider.class)
-	static interface Provider {
-		IRefactoringDocument get(URI resourceURI, StatusWrapper status);
-	}
+    URI getURI();
+
+    String getOriginalContents();
+
+    @ImplementedBy(DefaultRefactoringDocumentProvider.class)
+    static interface Provider {
+        IRefactoringDocument get(URI resourceURI, StatusWrapper status);
+    }
 
 }

@@ -20,76 +20,76 @@ import com.google.inject.Inject;
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 public abstract class AbstractDirtyStateAwareEditorCallback implements IXtextEditorCallback, IDirtyStateEditorSupportClient {
-	
-	@Inject
-	private DirtyStateEditorSupport editorSupport;
-	
-	private XtextEditor currentEditor;
-	
-	public void afterCreatePartControl(final XtextEditor editor) {
-		if (this.currentEditor != editor)
-			throw new IllegalStateException("different instances of editor were given.");
-		editorSupport.initializeDirtyStateSupport(this);
-	}
-	
-	public void beforeDispose(XtextEditor editor) {
-		if (this.currentEditor != editor)
-			throw new IllegalStateException("different instances of editor were given.");
-		editorSupport.removeDirtyStateSupport(this);
-		this.currentEditor = null;
-	}
-	
-	public void afterSave(XtextEditor editor) {
-		if (this.currentEditor != editor)
-			throw new IllegalStateException("different instances of editor were given.");
-		editorSupport.markEditorClean(this);
-	}
-	
-	public boolean onValidateEditorInputState(XtextEditor editor) {
-		if (this.currentEditor != editor)
-			throw new IllegalStateException("different instances of editor were given.");
-		return editorSupport.isEditingPossible(this);
-	}
-	
-	public void beforeSetInput(XtextEditor editor) {
-		if (this.currentEditor != null) {
-			editorSupport.removeDirtyStateSupport(this);
-		}
-	}
-	
-	public void afterSetInput(XtextEditor editor) {
-		if (this.currentEditor != null) {
-			if (this.currentEditor != editor)
-				throw new IllegalStateException("different instances of editor were given.");
-			editorSupport.initializeDirtyStateSupport(this);
-		} else {
-			this.currentEditor = editor;
-		}
-	}
-	
-	public boolean isDirty() {
-		return currentEditor.isDirty();
-	}
-	
-	public IXtextDocument getDocument() {
-		return currentEditor.getDocument();
-	}
-	
-	public void addVerifyListener(VerifyListener listener) {
-		ISourceViewer sourceViewer = currentEditor.getInternalSourceViewer();
-		StyledText widget = sourceViewer.getTextWidget();
-		widget.addVerifyListener(listener);
-	}
 
-	public Shell getShell() {
-		return currentEditor.getEditorSite().getShell();
-	}
+    @Inject
+    private DirtyStateEditorSupport editorSupport;
 
-	public void removeVerifyListener(VerifyListener listener) {
-		ISourceViewer sourceViewer = currentEditor.getInternalSourceViewer();
-		StyledText widget = sourceViewer.getTextWidget();
-		if (widget != null)
-			widget.removeVerifyListener(listener);
-	}
-	
+    private XtextEditor currentEditor;
+
+    public void afterCreatePartControl(final XtextEditor editor) {
+        if (this.currentEditor != editor)
+            throw new IllegalStateException("different instances of editor were given.");
+        editorSupport.initializeDirtyStateSupport(this);
+    }
+
+    public void beforeDispose(XtextEditor editor) {
+        if (this.currentEditor != editor)
+            throw new IllegalStateException("different instances of editor were given.");
+        editorSupport.removeDirtyStateSupport(this);
+        this.currentEditor = null;
+    }
+
+    public void afterSave(XtextEditor editor) {
+        if (this.currentEditor != editor)
+            throw new IllegalStateException("different instances of editor were given.");
+        editorSupport.markEditorClean(this);
+    }
+
+    public boolean onValidateEditorInputState(XtextEditor editor) {
+        if (this.currentEditor != editor)
+            throw new IllegalStateException("different instances of editor were given.");
+        return editorSupport.isEditingPossible(this);
+    }
+
+    public void beforeSetInput(XtextEditor editor) {
+        if (this.currentEditor != null) {
+            editorSupport.removeDirtyStateSupport(this);
+        }
+    }
+
+    public void afterSetInput(XtextEditor editor) {
+        if (this.currentEditor != null) {
+            if (this.currentEditor != editor)
+                throw new IllegalStateException("different instances of editor were given.");
+            editorSupport.initializeDirtyStateSupport(this);
+        } else {
+            this.currentEditor = editor;
+        }
+    }
+
+    public boolean isDirty() {
+        return currentEditor.isDirty();
+    }
+
+    public IXtextDocument getDocument() {
+        return currentEditor.getDocument();
+    }
+
+    public void addVerifyListener(VerifyListener listener) {
+        ISourceViewer sourceViewer = currentEditor.getInternalSourceViewer();
+        StyledText widget = sourceViewer.getTextWidget();
+        widget.addVerifyListener(listener);
+    }
+
+    public Shell getShell() {
+        return currentEditor.getEditorSite().getShell();
+    }
+
+    public void removeVerifyListener(VerifyListener listener) {
+        ISourceViewer sourceViewer = currentEditor.getInternalSourceViewer();
+        StyledText widget = sourceViewer.getTextWidget();
+        if (widget != null)
+            widget.removeVerifyListener(listener);
+    }
+
 }

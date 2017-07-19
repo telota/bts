@@ -36,10 +36,9 @@ import org.bbaw.bts.btsmodel.BTSNamedTypedObject;
  * A representation of the model object '<em><b>BTS Sentence Item</b></em>'.
  * <!-- end-user-doc -->
  *
- *
- * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSSentenceItem()
  * @model interface="true" abstract="true"
  * @generated
+ * @see org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage#getBTSSentenceItem()
  */
 public interface BTSSentenceItem extends BTSNamedTypedObject {
 } // BTSSentenceItem

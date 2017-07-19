@@ -8,20 +8,21 @@
 package org.eclipse.xtext.ui.refactoring.impl;
 
 import java.text.MessageFormat;
+
 /**
  * @author Holger Schill - Initial contribution and API
  */
 public class Messages {
 
-	public static String format(String message, Object object) {
-		return MessageFormat.format(message, new Object[] { object });
-	}
+    private Messages() {
+        // Not for instantiation
+    }
 
-	public static String format(String message, Object[] objects) {
-		return MessageFormat.format(message, objects);
-	}
+    public static String format(String message, Object object) {
+        return MessageFormat.format(message, new Object[]{object});
+    }
 
-	private Messages() {
-		// Not for instantiation
-	}
+    public static String format(String message, Object[] objects) {
+        return MessageFormat.format(message, objects);
+    }
 }

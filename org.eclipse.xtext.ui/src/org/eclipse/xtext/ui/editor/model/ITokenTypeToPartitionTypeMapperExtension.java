@@ -17,28 +17,30 @@ import com.google.inject.ImplementedBy;
  * Extension to {@link ITokenTypeToPartitionTypeMapper} that allow to query
  * for the characteristics of a given partition type, e.g. whether it is
  * a comment or not.
- * 
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  * @since 2.4
  */
 @ImplementedBy(TerminalsTokenTypeToPartitionMapper.class)
 public interface ITokenTypeToPartitionTypeMapperExtension {
 
-	/**
-	 * Returns true of the given partitionType is to be treated as 
-	 * as a multi line comment.
-	 * @see DefaultFoldingRegionProvider#computeCommentFolding
-	 * @see XtextEditor SmartLineStartAction in XtextEditor
-	 * @see XtextSpellingReconcileStrategy
-	 */
-	boolean isMultiLineComment(String partitionType);
-	
-	/**
-	 * Returns true of the given partitionType is to be treated as 
-	 * as a single line comment.
-	 * @see XtextEditor SmartLineStartAction in XtextEditor
-	 * @see XtextSpellingReconcileStrategy
-	 */
-	boolean isSingleLineComment(String partitionType);
-	
+    /**
+     * Returns true of the given partitionType is to be treated as
+     * as a multi line comment.
+     *
+     * @see DefaultFoldingRegionProvider#computeCommentFolding
+     * @see XtextEditor SmartLineStartAction in XtextEditor
+     * @see XtextSpellingReconcileStrategy
+     */
+    boolean isMultiLineComment(String partitionType);
+
+    /**
+     * Returns true of the given partitionType is to be treated as
+     * as a single line comment.
+     *
+     * @see XtextEditor SmartLineStartAction in XtextEditor
+     * @see XtextSpellingReconcileStrategy
+     */
+    boolean isSingleLineComment(String partitionType);
+
 }

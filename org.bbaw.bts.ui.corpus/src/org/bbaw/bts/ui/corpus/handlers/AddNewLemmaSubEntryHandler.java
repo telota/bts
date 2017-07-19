@@ -1,4 +1,3 @@
- 
 package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
@@ -17,23 +16,23 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 
 public class AddNewLemmaSubEntryHandler {
-	@Execute
-	public void execute(@Active MPart part,
-			LemmaNavigatorController lemmaController, EventBroker eventBroker) {
-		BTSLemmaEntry entry = lemmaController.createNew();
-		entry.setName("Lemma Subentry");
-		eventBroker.post("model_lemma_add/asyncEvent", entry);
-	}
+    @Execute
+    public void execute(@Active MPart part,
+                        LemmaNavigatorController lemmaController, EventBroker eventBroker) {
+        BTSLemmaEntry entry = lemmaController.createNew();
+        entry.setName("Lemma Subentry");
+        eventBroker.post("model_lemma_add/asyncEvent", entry);
+    }
 
-	@CanExecute
-	public boolean canExecute(
-			@Active MPart part,
-			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
-		if (selection != null && selection instanceof BTSLemmaEntry) {
-			return part.getElementId().equals(
-					BTSPluginIDs.PART_ID_LEMMA_NAVIGATOR);
-		}
-		return false;
-	}
-		
+    @CanExecute
+    public boolean canExecute(
+            @Active MPart part,
+            @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
+        if (selection != null && selection instanceof BTSLemmaEntry) {
+            return part.getElementId().equals(
+                    BTSPluginIDs.PART_ID_LEMMA_NAVIGATOR);
+        }
+        return false;
+    }
+
 }

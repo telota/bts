@@ -14,27 +14,26 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class DestroyedVersFrontierMarkerImpl extends VersMarkerImpl implements DestroyedVersFrontierMarker
-{
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected DestroyedVersFrontierMarkerImpl()
-  {
-    super();
-  }
+public class DestroyedVersFrontierMarkerImpl extends VersMarkerImpl implements DestroyedVersFrontierMarker {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected DestroyedVersFrontierMarkerImpl() {
+        super();
+    }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  protected EClass eStaticClass()
-  {
-    return EgyDslPackage.Literals.DESTROYED_VERS_FRONTIER_MARKER;
-  }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return EgyDslPackage.Literals.DESTROYED_VERS_FRONTIER_MARKER;
+    }
 
 } //DestroyedVersFrontierMarkerImpl

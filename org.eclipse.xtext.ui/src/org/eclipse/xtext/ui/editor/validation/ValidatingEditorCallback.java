@@ -20,36 +20,36 @@ import com.google.inject.Inject;
  * @author Michael Clay
  */
 public class ValidatingEditorCallback extends AbstractDirtyStateAwareEditorCallback {
-	@Inject
-	private IResourceValidator resourceValidator;
-	
-	@Inject 
-	private MarkerCreator markerCreator;
-	
-	@Inject
-	private MarkerTypeProvider markerTypeProvider;
+    @Inject
+    private IResourceValidator resourceValidator;
 
-	@Override
-	public void afterCreatePartControl(XtextEditor editor) {
-		super.afterCreatePartControl(editor);
-		if (editor.isEditable()) {
-			ValidationJob validationJob = newValidationJob(editor);
-			validationJob.schedule();
-		}
-	}
+    @Inject
+    private MarkerCreator markerCreator;
 
-	@Override
-	public void afterSave(XtextEditor editor) {
-		super.afterSave(editor);
-		if (editor.isEditable()) {
-			ValidationJob validationJob = newValidationJob(editor);
-			validationJob.schedule();
-		}
-	}
+    @Inject
+    private MarkerTypeProvider markerTypeProvider;
 
-	private ValidationJob newValidationJob(XtextEditor editor) {
-		MarkerIssueProcessor markerIssueProcessor = new MarkerIssueProcessor(editor.getResource(), markerCreator, markerTypeProvider);
-		ValidationJob validationJob = new ValidationJob(resourceValidator, editor.getDocument(), markerIssueProcessor, CheckMode.NORMAL_AND_FAST);
-		return validationJob;
-	}
+    @Override
+    public void afterCreatePartControl(XtextEditor editor) {
+        super.afterCreatePartControl(editor);
+        if (editor.isEditable()) {
+            ValidationJob validationJob = newValidationJob(editor);
+            validationJob.schedule();
+        }
+    }
+
+    @Override
+    public void afterSave(XtextEditor editor) {
+        super.afterSave(editor);
+        if (editor.isEditable()) {
+            ValidationJob validationJob = newValidationJob(editor);
+            validationJob.schedule();
+        }
+    }
+
+    private ValidationJob newValidationJob(XtextEditor editor) {
+        MarkerIssueProcessor markerIssueProcessor = new MarkerIssueProcessor(editor.getResource(), markerCreator, markerTypeProvider);
+        ValidationJob validationJob = new ValidationJob(resourceValidator, editor.getDocument(), markerIssueProcessor, CheckMode.NORMAL_AND_FAST);
+        return validationJob;
+    }
 }

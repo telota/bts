@@ -33,66 +33,65 @@ import com.google.inject.Inject;
  * cross reference serializers {@link CrossReferenceSerializer}�and
  * {@link org.eclipse.xtext.serializer.tokens.CrossReferenceSerializer} as we have to preserve the syntax of the
  * original cross-reference, e.g. short-cut syntax for a getter call.
- * 
+ *
  * @author Jan Koehnlein - Initial contribution and API
- * 
  * @since 2.4
  */
 public class RefactoringCrossReferenceSerializer {
 
-	private static final Logger log = Logger.getLogger(RefactoringCrossReferenceSerializer.class);
-	
-	@Inject
-	@SerializerScopeProviderBinding
-	private IScopeProvider scopeProvider;
+    private static final Logger log = Logger.getLogger(RefactoringCrossReferenceSerializer.class);
 
-	@Inject
-	private IValueConverterService valueConverter;
+    @Inject
+    @SerializerScopeProviderBinding
+    private IScopeProvider scopeProvider;
 
-	@Inject
-	private LinkingHelper linkingHelper;
+    @Inject
+    private IValueConverterService valueConverter;
 
-	@Inject
-	private IQualifiedNameConverter qualifiedNameConverter;
+    @Inject
+    private LinkingHelper linkingHelper;
 
-	public String getCrossRefText(EObject owner, CrossReference crossref, EObject target,
-			RefTextEvaluator refTextEvaluator, ITextRegion linkTextRegion, StatusWrapper status) {
-		try {
-			final EReference ref = GrammarUtil.getReference(crossref, owner.eClass());
-			final IScope scope = scopeProvider.getScope(owner, ref);
-			if (scope == null) {
-				throw new IllegalStateException("Could not create scope for the given cross reference.");
-			}
-			String ruleName = linkingHelper.getRuleNameFrom(crossref);
+    @Inject
+    private IQualifiedNameConverter qualifiedNameConverter;
 
-			Iterable<IEObjectDescription> descriptionsForCrossRef = scope.getElements(target);
-			String bestRefText = null;
-			for (IEObjectDescription desc : descriptionsForCrossRef) {
-				try {
-					String unconvertedRefText = qualifiedNameConverter.toString(desc.getName());
-					String convertedRefText = valueConverter.toString(unconvertedRefText, ruleName);
-					if (refTextEvaluator.isValid(desc) && (bestRefText == null || refTextEvaluator.isBetterThan(convertedRefText, bestRefText)))
-						bestRefText = convertedRefText;
-				} catch (ValueConverterException e) {
-					status.add(RefactoringStatus.WARNING,
-							"Missconfigured language: New reference text has invalid syntax.", owner, linkTextRegion);
-				}
-			}
-			if (bestRefText == null)
-				status.add(RefactoringStatus.ERROR, "Refactoring introduces a name conflict.", owner, linkTextRegion);
-			return bestRefText;
+    public String getCrossRefText(EObject owner, CrossReference crossref, EObject target,
+                                  RefTextEvaluator refTextEvaluator, ITextRegion linkTextRegion, StatusWrapper status) {
+        try {
+            final EReference ref = GrammarUtil.getReference(crossref, owner.eClass());
+            final IScope scope = scopeProvider.getScope(owner, ref);
+            if (scope == null) {
+                throw new IllegalStateException("Could not create scope for the given cross reference.");
+            }
+            String ruleName = linkingHelper.getRuleNameFrom(crossref);
 
-		} catch (Exception exc) {
-			log.error(exc.getMessage(), exc);
-			status.add(ERROR, exc.getMessage(), owner, linkTextRegion);
-			return null;
-		}
-	}
-	
-	public static interface RefTextEvaluator {
-		
-		boolean isBetterThan(String newText, String currentText);
-		
-		boolean isValid(IEObjectDescription target);
-	}
+            Iterable<IEObjectDescription> descriptionsForCrossRef = scope.getElements(target);
+            String bestRefText = null;
+            for (IEObjectDescription desc : descriptionsForCrossRef) {
+                try {
+                    String unconvertedRefText = qualifiedNameConverter.toString(desc.getName());
+                    String convertedRefText = valueConverter.toString(unconvertedRefText, ruleName);
+                    if (refTextEvaluator.isValid(desc) && (bestRefText == null || refTextEvaluator.isBetterThan(convertedRefText, bestRefText)))
+                        bestRefText = convertedRefText;
+                } catch (ValueConverterException e) {
+                    status.add(RefactoringStatus.WARNING,
+                            "Missconfigured language: New reference text has invalid syntax.", owner, linkTextRegion);
+                }
+            }
+            if (bestRefText == null)
+                status.add(RefactoringStatus.ERROR, "Refactoring introduces a name conflict.", owner, linkTextRegion);
+            return bestRefText;
+
+        } catch (Exception exc) {
+            log.error(exc.getMessage(), exc);
+            status.add(ERROR, exc.getMessage(), owner, linkTextRegion);
+            return null;
+        }
+    }
+
+    public static interface RefTextEvaluator {
+
+        boolean isBetterThan(String newText, String currentText);
+
+        boolean isValid(IEObjectDescription target);
+    }
 }

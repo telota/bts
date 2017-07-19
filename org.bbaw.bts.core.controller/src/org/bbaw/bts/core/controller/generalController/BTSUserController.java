@@ -38,84 +38,105 @@ import org.bbaw.bts.btsmodel.BTSUserGroup;
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-/** UserController manages all view access to user objects and usergroup objects.
- * @author Christoph Plutte
+/**
+ * UserController manages all view access to user objects and usergroup objects.
  *
+ * @author Christoph Plutte
  */
 public interface BTSUserController {
 
-	/** Gets the display name of a user by its user id.
-	 * @param userId
-	 * @return
-	 */
-	String getUserDisplayName(String userId);
+    /**
+     * Gets the display name of a user by its user id.
+     *
+     * @param userId
+     * @return
+     */
+    String getUserDisplayName(String userId);
 
-	/** Checks whether the given user is authorized to connect to database, if so it authenticates it.
-	 * @param validUser user to authenticate.
-	 * @return true if user is authorized.
-	 */
-	boolean setAuthenticatedUser(BTSUser validUser);
+    /**
+     * Checks whether the given user is authorized to connect to database, if so it authenticates it.
+     *
+     * @param validUser user to authenticate.
+     * @return true if user is authorized.
+     */
+    boolean setAuthenticatedUser(BTSUser validUser);
 
-	/**Checks whether the given username and password is authorized to connect to database, if so it authenticates it.
-	 * @param userName 
-	 * @param passWord
-	 * @return true if user is authorized.
-	 */
-	boolean setAuthentication(String userName, String passWord);
+    /**
+     * Checks whether the given username and password is authorized to connect to database, if so it authenticates it.
+     *
+     * @param userName
+     * @param passWord
+     * @return true if user is authorized.
+     */
+    boolean setAuthentication(String userName, String passWord);
 
-	/** Querys db for given query and returns list of matching users.
-	 * @param query
-	 * @return
-	 */
-	List<BTSUser> query(BTSQueryRequest query, IProgressMonitor monitor);
+    /**
+     * Querys db for given query and returns list of matching users.
+     *
+     * @param query
+     * @return
+     */
+    List<BTSUser> query(BTSQueryRequest query, IProgressMonitor monitor);
 
-	/** Find user by id.
-	 * @param id
-	 * @return
-	 */
-	BTSUser findUser(String id, IProgressMonitor monitor);
+    /**
+     * Find user by id.
+     *
+     * @param id
+     * @return
+     */
+    BTSUser findUser(String id, IProgressMonitor monitor);
 
-	/** Find usergroup by id.
-	 * @param id
-	 * @return
-	 */
-	BTSUserGroup findUserGroup(String id, IProgressMonitor monitor);
+    /**
+     * Find usergroup by id.
+     *
+     * @param id
+     * @return
+     */
+    BTSUserGroup findUserGroup(String id, IProgressMonitor monitor);
 
-	/** Find user or usergroup by id. If id matches to user this is returned, if id matches to usergroup the latter is returned.
-	 * @param id
-	 * @return
-	 */
-	BTSObject findUserOrUserGroup(String id, IProgressMonitor monitor);
+    /**
+     * Find user or usergroup by id. If id matches to user this is returned, if id matches to usergroup the latter is returned.
+     *
+     * @param id
+     * @return
+     */
+    BTSObject findUserOrUserGroup(String id, IProgressMonitor monitor);
 
-	/** Sets the given user to be remembered in rememberMe function, storing user credentials for next login in a secure manner.
-	 * @param validUser
-	 */
-	void setRememberedUser(BTSUser validUser);
-	
-	/** list all users.
-	 * @return
-	 */
-	List<BTSUser> listAll(IProgressMonitor monitor);
-	
-	/** List all users without requiring previous authentication of an authorized user. This method can be used to check whether the
-	 * given credentials are valid.
-	 * @param userName
-	 * @param passWord
-	 * @return
-	 */
-	List<BTSUser> listAll(String userName, String passWord);
-	
-	
-	boolean removeUserUserGroup(BTSObject object, List<BTSProject> projects);
+    /**
+     * Sets the given user to be remembered in rememberMe function, storing user credentials for next login in a secure manner.
+     *
+     * @param validUser
+     */
+    void setRememberedUser(BTSUser validUser);
 
-	boolean authenticatedUserIsDBAdmin(String userName, String password);
+    /**
+     * list all users.
+     *
+     * @return
+     */
+    List<BTSUser> listAll(IProgressMonitor monitor);
 
-	boolean isValidAuthentication(String userName, String passWord);
+    /**
+     * List all users without requiring previous authentication of an authorized user. This method can be used to check whether the
+     * given credentials are valid.
+     *
+     * @param userName
+     * @param passWord
+     * @return
+     */
+    List<BTSUser> listAll(String userName, String passWord);
 
-	boolean checkAndChangeDBAdminPassword(String userName, String newPassword);
 
-	void makeUserLocalDBAdmin(String userName, String passWord) throws Exception;
+    boolean removeUserUserGroup(BTSObject object, List<BTSProject> projects);
 
-	void stopDBAndRestartApplication();
+    boolean authenticatedUserIsDBAdmin(String userName, String password);
+
+    boolean isValidAuthentication(String userName, String passWord);
+
+    boolean checkAndChangeDBAdminPassword(String userName, String newPassword);
+
+    void makeUserLocalDBAdmin(String userName, String passWord) throws Exception;
+
+    void stopDBAndRestartApplication();
 
 }

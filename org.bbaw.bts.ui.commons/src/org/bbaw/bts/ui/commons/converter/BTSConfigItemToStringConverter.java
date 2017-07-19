@@ -37,30 +37,30 @@ import org.eclipse.core.databinding.conversion.IConverter;
  */
 public class BTSConfigItemToStringConverter implements IConverter {
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#getToType()
-	 */
-	@Override
-	public Object getToType() {
-		return String.class;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#getToType()
+     */
+    @Override
+    public Object getToType() {
+        return String.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#getFromType()
-	 */
-	@Override
-	public Object getFromType() {
-		return BTSConfigItem.class;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#getFromType()
+     */
+    @Override
+    public Object getFromType() {
+        return BTSConfigItem.class;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.core.databinding.conversion.IConverter#convert(java.lang.Object)
-	 */
-	@Override
-	public Object convert(Object fromObject) {
-		if (fromObject instanceof BTSConfigItem) {
-			return ((BTSConfigItem) fromObject).getValue();
-		}
-		return null;
-	}
+    /* (non-Javadoc)
+     * @see org.eclipse.core.databinding.conversion.IConverter#convert(java.lang.Object)
+     */
+    @Override
+    public Object convert(Object fromObject) {
+        if (fromObject instanceof BTSConfigItem) {
+            return ((BTSConfigItem) fromObject).getValue();
+        }
+        return null;
+    }
 }

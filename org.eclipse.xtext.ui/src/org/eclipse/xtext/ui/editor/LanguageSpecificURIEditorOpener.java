@@ -43,89 +43,89 @@ import com.google.inject.name.Named;
  */
 public class LanguageSpecificURIEditorOpener implements IURIEditorOpener {
 
-	private static final Logger logger = Logger.getLogger(LanguageSpecificURIEditorOpener.class);
+    private static final Logger logger = Logger.getLogger(LanguageSpecificURIEditorOpener.class);
 
-	@Inject
-	private ILocationInFileProvider locationProvider;
+    @Inject
+    private ILocationInFileProvider locationProvider;
 
-	@Inject
-	private IStorage2UriMapper mapper;
+    @Inject
+    private IStorage2UriMapper mapper;
 
-	@Inject
-	@Named(Constants.LANGUAGE_NAME)
-	private String editorID;
+    @Inject
+    @Named(Constants.LANGUAGE_NAME)
+    private String editorID;
 
-	@Inject(optional = true)
-	private IWorkbench workbench;
+    @Inject(optional = true)
+    private IWorkbench workbench;
 
-	public void setLocationProvider(ILocationInFileProvider locationProvider) {
-		this.locationProvider = locationProvider;
-	}
+    public ILocationInFileProvider getLocationProvider() {
+        return locationProvider;
+    }
 
-	public ILocationInFileProvider getLocationProvider() {
-		return locationProvider;
-	}
+    public void setLocationProvider(ILocationInFileProvider locationProvider) {
+        this.locationProvider = locationProvider;
+    }
 
-	public IEditorPart open(URI uri, boolean select) {
-		return open(uri, null, -1, select);
-	}
+    public IEditorPart open(URI uri, boolean select) {
+        return open(uri, null, -1, select);
+    }
 
-	public IEditorPart open(URI uri, EReference crossReference, int indexInList, boolean select) {
-		Iterator<Pair<IStorage, IProject>> storages = mapper.getStorages(uri.trimFragment()).iterator();
-		if (storages != null && storages.hasNext()) {
-			try {
-				IStorage storage = storages.next().getFirst();
-				// TODO we should create a JarEntryEditorInput if storage is a NonJavaResource from jdt to match the editor input used when double clicking on the same resource in a jar.
-				IEditorInput editorInput = (storage instanceof IFile) ? new FileEditorInput((IFile) storage)
-						: new XtextReadonlyEditorInput(storage);
-				IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
-				IEditorPart editor = IDE.openEditor(activePage, editorInput, editorID);
-				selectAndReveal(editor, uri, crossReference, indexInList, select);
-				return EditorUtils.getXtextEditor(editor);
-			} catch (WrappedException e) {
-				logger.error("Error while opening editor part for EMF URI '" + uri + "'", e.getCause());
-			} catch (PartInitException partInitException) {
-				logger.error("Error while opening editor part for EMF URI '" + uri + "'", partInitException);
-			}
-		}
-		return null;
-	}
+    public IEditorPart open(URI uri, EReference crossReference, int indexInList, boolean select) {
+        Iterator<Pair<IStorage, IProject>> storages = mapper.getStorages(uri.trimFragment()).iterator();
+        if (storages != null && storages.hasNext()) {
+            try {
+                IStorage storage = storages.next().getFirst();
+                // TODO we should create a JarEntryEditorInput if storage is a NonJavaResource from jdt to match the editor input used when double clicking on the same resource in a jar.
+                IEditorInput editorInput = (storage instanceof IFile) ? new FileEditorInput((IFile) storage)
+                        : new XtextReadonlyEditorInput(storage);
+                IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
+                IEditorPart editor = IDE.openEditor(activePage, editorInput, editorID);
+                selectAndReveal(editor, uri, crossReference, indexInList, select);
+                return EditorUtils.getXtextEditor(editor);
+            } catch (WrappedException e) {
+                logger.error("Error while opening editor part for EMF URI '" + uri + "'", e.getCause());
+            } catch (PartInitException partInitException) {
+                logger.error("Error while opening editor part for EMF URI '" + uri + "'", partInitException);
+            }
+        }
+        return null;
+    }
 
-	protected void selectAndReveal(IEditorPart openEditor, final URI uri, final EReference crossReference,
-			final int indexInList, final boolean select) {
-		final XtextEditor xtextEditor = EditorUtils.getXtextEditor(openEditor);
-		if (xtextEditor != null) {
-			xtextEditor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
-				@Override
-				public void process(XtextResource resource) throws Exception {
-					if (resource != null) {
-						EObject object = findEObjectByURI(uri, resource);
-						if (object != null) {
-							ITextRegion location = (crossReference != null) ? locationProvider
-									.getSignificantTextRegion(object, crossReference, indexInList)
-									: locationProvider.getSignificantTextRegion(object);
-							if (select)
-								xtextEditor.selectAndReveal(location.getOffset(), location.getLength());
-						}
-					}
-				}
-			});
-		}
-	}
+    protected void selectAndReveal(IEditorPart openEditor, final URI uri, final EReference crossReference,
+                                   final int indexInList, final boolean select) {
+        final XtextEditor xtextEditor = EditorUtils.getXtextEditor(openEditor);
+        if (xtextEditor != null) {
+            xtextEditor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
+                @Override
+                public void process(XtextResource resource) throws Exception {
+                    if (resource != null) {
+                        EObject object = findEObjectByURI(uri, resource);
+                        if (object != null) {
+                            ITextRegion location = (crossReference != null) ? locationProvider
+                                    .getSignificantTextRegion(object, crossReference, indexInList)
+                                    : locationProvider.getSignificantTextRegion(object);
+                            if (select)
+                                xtextEditor.selectAndReveal(location.getOffset(), location.getLength());
+                        }
+                    }
+                }
+            });
+        }
+    }
 
-	
-	/**
-	 * @since 2.2
-	 */
-	protected EObject findEObjectByURI(final URI uri, XtextResource resource) {
-		if (uri.fragment() != null){
-			try {
-				EObject result = resource.getEObject(uri.fragment());
-				return result;
-			} catch (WrappedException e){
-				logger.error("Error while resolving EObject with URI '" + uri + "'" , e.getCause());
-			}
-		}
-		return null;
-	}
+
+    /**
+     * @since 2.2
+     */
+    protected EObject findEObjectByURI(final URI uri, XtextResource resource) {
+        if (uri.fragment() != null) {
+            try {
+                EObject result = resource.getEObject(uri.fragment());
+                return result;
+            } catch (WrappedException e) {
+                logger.error("Error while resolving EObject with URI '" + uri + "'", e.getCause());
+            }
+        }
+        return null;
+    }
 }

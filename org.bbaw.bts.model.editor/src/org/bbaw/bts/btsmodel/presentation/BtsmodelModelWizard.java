@@ -116,559 +116,564 @@ import org.eclipse.ui.PartInitException;
  * This is a simple wizard for creating a new model file.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ *
  * @generated
  */
-public class BtsmodelModelWizard extends Wizard implements INewWizard
-{
-	/**
-	 * The supported extensions for created files.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final List<String> FILE_EXTENSIONS =
-		Collections.unmodifiableList(Arrays.asList(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelEditorFilenameExtensions").split("\\s*,\\s*")));
+public class BtsmodelModelWizard extends Wizard implements INewWizard {
+    /**
+     * The supported extensions for created files.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public static final List<String> FILE_EXTENSIONS =
+            Collections.unmodifiableList(Arrays.asList(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelEditorFilenameExtensions").split("\\s*,\\s*")));
 
-	/**
-	 * A formatted list of supported file extensions, suitable for display.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final String FORMATTED_FILE_EXTENSIONS =
-		BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+    /**
+     * A formatted list of supported file extensions, suitable for display.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public static final String FORMATTED_FILE_EXTENSIONS =
+            BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
 
-	/**
-	 * This caches an instance of the model package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected BtsmodelPackage btsmodelPackage = BtsmodelPackage.eINSTANCE;
+    /**
+     * This caches an instance of the model package.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BtsmodelPackage btsmodelPackage = BtsmodelPackage.eINSTANCE;
 
-	/**
-	 * This caches an instance of the model factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected BtsmodelFactory btsmodelFactory = btsmodelPackage.getBtsmodelFactory();
+    /**
+     * This caches an instance of the model factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BtsmodelFactory btsmodelFactory = btsmodelPackage.getBtsmodelFactory();
 
-	/**
-	 * This is the file creation page.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected BtsmodelModelWizardNewFileCreationPage newFileCreationPage;
+    /**
+     * This is the file creation page.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BtsmodelModelWizardNewFileCreationPage newFileCreationPage;
 
-	/**
-	 * This is the initial object creation page.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected BtsmodelModelWizardInitialObjectCreationPage initialObjectCreationPage;
+    /**
+     * This is the initial object creation page.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BtsmodelModelWizardInitialObjectCreationPage initialObjectCreationPage;
 
-	/**
-	 * Remember the selection during initialization for populating the default container.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected IStructuredSelection selection;
+    /**
+     * Remember the selection during initialization for populating the default container.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected IStructuredSelection selection;
 
-	/**
-	 * Remember the workbench during initialization.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected IWorkbench workbench;
+    /**
+     * Remember the workbench during initialization.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected IWorkbench workbench;
 
-	/**
-	 * Caches the names of the types that can be created as the root object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected List<String> initialObjectNames;
+    /**
+     * Caches the names of the types that can be created as the root object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected List<String> initialObjectNames;
 
-	/**
-	 * This just records the information.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void init(IWorkbench workbench, IStructuredSelection selection)
-	{
-		this.workbench = workbench;
-		this.selection = selection;
-		setWindowTitle(BTSModelEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-		setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(BTSModelEditorPlugin.INSTANCE.getImage("full/wizban/NewBtsmodel")));
-	}
+    /**
+     * This just records the information.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void init(IWorkbench workbench, IStructuredSelection selection) {
+        this.workbench = workbench;
+        this.selection = selection;
+        setWindowTitle(BTSModelEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
+        setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(BTSModelEditorPlugin.INSTANCE.getImage("full/wizban/NewBtsmodel")));
+    }
 
-	/**
-	 * Returns the names of the types that can be created as the root object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected Collection<String> getInitialObjectNames()
-	{
-		if (initialObjectNames == null) {
-			initialObjectNames = new ArrayList<String>();
-			for (EClassifier eClassifier : btsmodelPackage.getEClassifiers()) {
-				if (eClassifier instanceof EClass) {
-					EClass eClass = (EClass)eClassifier;
-					if (!eClass.isAbstract()) {
-						initialObjectNames.add(eClass.getName());
-					}
-				}
-			}
-			Collections.sort(initialObjectNames, CommonPlugin.INSTANCE.getComparator());
-		}
-		return initialObjectNames;
-	}
+    /**
+     * Returns the names of the types that can be created as the root object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected Collection<String> getInitialObjectNames() {
+        if (initialObjectNames == null) {
+            initialObjectNames = new ArrayList<String>();
+            for (EClassifier eClassifier : btsmodelPackage.getEClassifiers()) {
+                if (eClassifier instanceof EClass) {
+                    EClass eClass = (EClass) eClassifier;
+                    if (!eClass.isAbstract()) {
+                        initialObjectNames.add(eClass.getName());
+                    }
+                }
+            }
+            Collections.sort(initialObjectNames, CommonPlugin.INSTANCE.getComparator());
+        }
+        return initialObjectNames;
+    }
 
-	/**
-	 * Create a new model.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected EObject createInitialModel()
-	{
-		EClass eClass = (EClass)btsmodelPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
-		EObject rootObject = btsmodelFactory.create(eClass);
-		return rootObject;
-	}
+    /**
+     * Create a new model.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected EObject createInitialModel() {
+        EClass eClass = (EClass) btsmodelPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
+        EObject rootObject = btsmodelFactory.create(eClass);
+        return rootObject;
+    }
 
-	/**
-	 * Do the work after everything is specified.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean performFinish()
-	{
-		try {
-			// Remember the file.
-			//
-			final IFile modelFile = getModelFile();
+    /**
+     * Do the work after everything is specified.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public boolean performFinish() {
+        try {
+            // Remember the file.
+            //
+            final IFile modelFile = getModelFile();
 
-			// Do the work within an operation.
-			//
-			WorkspaceModifyOperation operation =
-				new WorkspaceModifyOperation() {
-					@Override
-					protected void execute(IProgressMonitor progressMonitor) {
-						try {
-							// Create a resource set
-							//
-							ResourceSet resourceSet = new ResourceSetImpl();
+            // Do the work within an operation.
+            //
+            WorkspaceModifyOperation operation =
+                    new WorkspaceModifyOperation() {
+                        @Override
+                        protected void execute(IProgressMonitor progressMonitor) {
+                            try {
+                                // Create a resource set
+                                //
+                                ResourceSet resourceSet = new ResourceSetImpl();
 
-							// Get the URI of the model file.
-							//
-							URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
+                                // Get the URI of the model file.
+                                //
+                                URI fileURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
 
-							// Create a resource for this file.
-							//
-							Resource resource = resourceSet.createResource(fileURI);
+                                // Create a resource for this file.
+                                //
+                                Resource resource = resourceSet.createResource(fileURI);
 
-							// Add the initial model object to the contents.
-							//
-							EObject rootObject = createInitialModel();
-							if (rootObject != null) {
-								resource.getContents().add(rootObject);
-							}
+                                // Add the initial model object to the contents.
+                                //
+                                EObject rootObject = createInitialModel();
+                                if (rootObject != null) {
+                                    resource.getContents().add(rootObject);
+                                }
 
-							// Save the contents of the resource to the file system.
-							//
-							Map<Object, Object> options = new HashMap<Object, Object>();
-							options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
-							resource.save(options);
-						}
-						catch (Exception exception) {
-							BTSModelEditorPlugin.INSTANCE.log(exception);
-						}
-						finally {
-							progressMonitor.done();
-						}
-					}
-				};
+                                // Save the contents of the resource to the file system.
+                                //
+                                Map<Object, Object> options = new HashMap<Object, Object>();
+                                options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
+                                resource.save(options);
+                            } catch (Exception exception) {
+                                BTSModelEditorPlugin.INSTANCE.log(exception);
+                            } finally {
+                                progressMonitor.done();
+                            }
+                        }
+                    };
 
-			getContainer().run(false, false, operation);
+            getContainer().run(false, false, operation);
 
-			// Select the new file resource in the current view.
-			//
-			IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
-			IWorkbenchPage page = workbenchWindow.getActivePage();
-			final IWorkbenchPart activePart = page.getActivePart();
-			if (activePart instanceof ISetSelectionTarget) {
-				final ISelection targetSelection = new StructuredSelection(modelFile);
-				getShell().getDisplay().asyncExec
-					(new Runnable() {
-						 public void run() {
-							 ((ISetSelectionTarget)activePart).selectReveal(targetSelection);
-						 }
-					 });
-			}
+            // Select the new file resource in the current view.
+            //
+            IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+            IWorkbenchPage page = workbenchWindow.getActivePage();
+            final IWorkbenchPart activePart = page.getActivePart();
+            if (activePart instanceof ISetSelectionTarget) {
+                final ISelection targetSelection = new StructuredSelection(modelFile);
+                getShell().getDisplay().asyncExec
+                        (new Runnable() {
+                            public void run() {
+                                ((ISetSelectionTarget) activePart).selectReveal(targetSelection);
+                            }
+                        });
+            }
 
-			// Open an editor on the new file.
-			//
-			try {
-				page.openEditor
-					(new FileEditorInput(modelFile),
-					 workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());					 	 
-			}
-			catch (PartInitException exception) {
-				MessageDialog.openError(workbenchWindow.getShell(), BTSModelEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
-				return false;
-			}
+            // Open an editor on the new file.
+            //
+            try {
+                page.openEditor
+                        (new FileEditorInput(modelFile),
+                                workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
+            } catch (PartInitException exception) {
+                MessageDialog.openError(workbenchWindow.getShell(), BTSModelEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+                return false;
+            }
 
-			return true;
-		}
-		catch (Exception exception) {
-			BTSModelEditorPlugin.INSTANCE.log(exception);
-			return false;
-		}
-	}
+            return true;
+        } catch (Exception exception) {
+            BTSModelEditorPlugin.INSTANCE.log(exception);
+            return false;
+        }
+    }
 
-	/**
-	 * This is the one page of the wizard.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public class BtsmodelModelWizardNewFileCreationPage extends WizardNewFileCreationPage
-	{
-		/**
-		 * Pass in the selection.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public BtsmodelModelWizardNewFileCreationPage(String pageId, IStructuredSelection selection)
-		{
-			super(pageId, selection);
-		}
+    /**
+     * The framework calls this to create the contents of the wizard.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public void addPages() {
+        // Create a page, set the title, and the initial model file name.
+        //
+        newFileCreationPage = new BtsmodelModelWizardNewFileCreationPage("Whatever", selection);
+        newFileCreationPage.setTitle(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelModelWizard_label"));
+        newFileCreationPage.setDescription(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelModelWizard_description"));
+        newFileCreationPage.setFileName(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
+        addPage(newFileCreationPage);
 
-		/**
-		 * The framework calls this to see if the file is correct.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		@Override
-		protected boolean validatePage()
-		{
-			if (super.validatePage()) {
-				String extension = new Path(getFileName()).getFileExtension();
-				if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
-					String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
-					setErrorMessage(BTSModelEditorPlugin.INSTANCE.getString(key, new Object [] { FORMATTED_FILE_EXTENSIONS }));
-					return false;
-				}
-				return true;
-			}
-			return false;
-		}
+        // Try and get the resource selection to determine a current directory for the file dialog.
+        //
+        if (selection != null && !selection.isEmpty()) {
+            // Get the resource...
+            //
+            Object selectedElement = selection.iterator().next();
+            if (selectedElement instanceof IResource) {
+                // Get the resource parent, if its a file.
+                //
+                IResource selectedResource = (IResource) selectedElement;
+                if (selectedResource.getType() == IResource.FILE) {
+                    selectedResource = selectedResource.getParent();
+                }
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public IFile getModelFile()
-		{
-			return ResourcesPlugin.getWorkspace().getRoot().getFile(getContainerFullPath().append(getFileName()));
-		}
-	}
+                // This gives us a directory...
+                //
+                if (selectedResource instanceof IFolder || selectedResource instanceof IProject) {
+                    // Set this for the container.
+                    //
+                    newFileCreationPage.setContainerFullPath(selectedResource.getFullPath());
 
-	/**
-	 * This is the page where the type of object to create is selected.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public class BtsmodelModelWizardInitialObjectCreationPage extends WizardPage
-	{
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		protected Combo initialObjectField;
+                    // Make up a unique new name here.
+                    //
+                    String defaultModelBaseFilename = BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelEditorFilenameDefaultBase");
+                    String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
+                    String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
+                    for (int i = 1; ((IContainer) selectedResource).findMember(modelFilename) != null; ++i) {
+                        modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension;
+                    }
+                    newFileCreationPage.setFileName(modelFilename);
+                }
+            }
+        }
+        initialObjectCreationPage = new BtsmodelModelWizardInitialObjectCreationPage("Whatever2");
+        initialObjectCreationPage.setTitle(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelModelWizard_label"));
+        initialObjectCreationPage.setDescription(BTSModelEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
+        addPage(initialObjectCreationPage);
+    }
 
-		/**
-		 * @generated
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 */
-		protected List<String> encodings;
+    /**
+     * Get the file from the page.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public IFile getModelFile() {
+        return newFileCreationPage.getModelFile();
+    }
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		protected Combo encodingField;
+    /**
+     * This is the one page of the wizard.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public class BtsmodelModelWizardNewFileCreationPage extends WizardNewFileCreationPage {
+        /**
+         * Pass in the selection.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        public BtsmodelModelWizardNewFileCreationPage(String pageId, IStructuredSelection selection) {
+            super(pageId, selection);
+        }
 
-		/**
-		 * Pass in the selection.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public BtsmodelModelWizardInitialObjectCreationPage(String pageId)
-		{
-			super(pageId);
-		}
+        /**
+         * The framework calls this to see if the file is correct.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        @Override
+        protected boolean validatePage() {
+            if (super.validatePage()) {
+                String extension = new Path(getFileName()).getFileExtension();
+                if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
+                    String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" : "_WARN_FilenameExtension";
+                    setErrorMessage(BTSModelEditorPlugin.INSTANCE.getString(key, new Object[]{FORMATTED_FILE_EXTENSIONS}));
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public void createControl(Composite parent)
-		{
-			Composite composite = new Composite(parent, SWT.NONE); {
-				GridLayout layout = new GridLayout();
-				layout.numColumns = 1;
-				layout.verticalSpacing = 12;
-				composite.setLayout(layout);
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        public IFile getModelFile() {
+            return ResourcesPlugin.getWorkspace().getRoot().getFile(getContainerFullPath().append(getFileName()));
+        }
+    }
 
-				GridData data = new GridData();
-				data.verticalAlignment = GridData.FILL;
-				data.grabExcessVerticalSpace = true;
-				data.horizontalAlignment = GridData.FILL;
-				composite.setLayoutData(data);
-			}
+    /**
+     * This is the page where the type of object to create is selected.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public class BtsmodelModelWizardInitialObjectCreationPage extends WizardPage {
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        protected Combo initialObjectField;
 
-			Label containerLabel = new Label(composite, SWT.LEFT);
-			{
-				containerLabel.setText(BTSModelEditorPlugin.INSTANCE.getString("_UI_ModelObject"));
+        /**
+         * @generated <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         */
+        protected List<String> encodings;
 
-				GridData data = new GridData();
-				data.horizontalAlignment = GridData.FILL;
-				containerLabel.setLayoutData(data);
-			}
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        protected Combo encodingField;
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        protected ModifyListener validator =
+                new ModifyListener() {
+                    public void modifyText(ModifyEvent e) {
+                        setPageComplete(validatePage());
+                    }
+                };
 
-			initialObjectField = new Combo(composite, SWT.BORDER);
-			{
-				GridData data = new GridData();
-				data.horizontalAlignment = GridData.FILL;
-				data.grabExcessHorizontalSpace = true;
-				initialObjectField.setLayoutData(data);
-			}
+        /**
+         * Pass in the selection.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        public BtsmodelModelWizardInitialObjectCreationPage(String pageId) {
+            super(pageId);
+        }
 
-			for (String objectName : getInitialObjectNames()) {
-				initialObjectField.add(getLabel(objectName));
-			}
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        public void createControl(Composite parent) {
+            Composite composite = new Composite(parent, SWT.NONE);
+            {
+                GridLayout layout = new GridLayout();
+                layout.numColumns = 1;
+                layout.verticalSpacing = 12;
+                composite.setLayout(layout);
 
-			if (initialObjectField.getItemCount() == 1) {
-				initialObjectField.select(0);
-			}
-			initialObjectField.addModifyListener(validator);
+                GridData data = new GridData();
+                data.verticalAlignment = GridData.FILL;
+                data.grabExcessVerticalSpace = true;
+                data.horizontalAlignment = GridData.FILL;
+                composite.setLayoutData(data);
+            }
 
-			Label encodingLabel = new Label(composite, SWT.LEFT);
-			{
-				encodingLabel.setText(BTSModelEditorPlugin.INSTANCE.getString("_UI_XMLEncoding"));
+            Label containerLabel = new Label(composite, SWT.LEFT);
+            {
+                containerLabel.setText(BTSModelEditorPlugin.INSTANCE.getString("_UI_ModelObject"));
 
-				GridData data = new GridData();
-				data.horizontalAlignment = GridData.FILL;
-				encodingLabel.setLayoutData(data);
-			}
-			encodingField = new Combo(composite, SWT.BORDER);
-			{
-				GridData data = new GridData();
-				data.horizontalAlignment = GridData.FILL;
-				data.grabExcessHorizontalSpace = true;
-				encodingField.setLayoutData(data);
-			}
+                GridData data = new GridData();
+                data.horizontalAlignment = GridData.FILL;
+                containerLabel.setLayoutData(data);
+            }
 
-			for (String encoding : getEncodings()) {
-				encodingField.add(encoding);
-			}
+            initialObjectField = new Combo(composite, SWT.BORDER);
+            {
+                GridData data = new GridData();
+                data.horizontalAlignment = GridData.FILL;
+                data.grabExcessHorizontalSpace = true;
+                initialObjectField.setLayoutData(data);
+            }
 
-			encodingField.select(0);
-			encodingField.addModifyListener(validator);
+            for (String objectName : getInitialObjectNames()) {
+                initialObjectField.add(getLabel(objectName));
+            }
 
-			setPageComplete(validatePage());
-			setControl(composite);
-		}
+            if (initialObjectField.getItemCount() == 1) {
+                initialObjectField.select(0);
+            }
+            initialObjectField.addModifyListener(validator);
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		protected ModifyListener validator =
-			new ModifyListener() {
-				public void modifyText(ModifyEvent e) {
-					setPageComplete(validatePage());
-				}
-			};
+            Label encodingLabel = new Label(composite, SWT.LEFT);
+            {
+                encodingLabel.setText(BTSModelEditorPlugin.INSTANCE.getString("_UI_XMLEncoding"));
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		protected boolean validatePage()
-		{
-			return getInitialObjectName() != null && getEncodings().contains(encodingField.getText());
-		}
+                GridData data = new GridData();
+                data.horizontalAlignment = GridData.FILL;
+                encodingLabel.setLayoutData(data);
+            }
+            encodingField = new Combo(composite, SWT.BORDER);
+            {
+                GridData data = new GridData();
+                data.horizontalAlignment = GridData.FILL;
+                data.grabExcessHorizontalSpace = true;
+                encodingField.setLayoutData(data);
+            }
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		@Override
-		public void setVisible(boolean visible)
-		{
-			super.setVisible(visible);
-			if (visible) {
-				if (initialObjectField.getItemCount() == 1) {
-					initialObjectField.clearSelection();
-					encodingField.setFocus();
-				}
-				else {
-					encodingField.clearSelection();
-					initialObjectField.setFocus();
-				}
-			}
-		}
+            for (String encoding : getEncodings()) {
+                encodingField.add(encoding);
+            }
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public String getInitialObjectName()
-		{
-			String label = initialObjectField.getText();
+            encodingField.select(0);
+            encodingField.addModifyListener(validator);
 
-			for (String name : getInitialObjectNames()) {
-				if (getLabel(name).equals(label)) {
-					return name;
-				}
-			}
-			return null;
-		}
+            setPageComplete(validatePage());
+            setControl(composite);
+        }
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public String getEncoding()
-		{
-			return encodingField.getText();
-		}
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        protected boolean validatePage() {
+            return getInitialObjectName() != null && getEncodings().contains(encodingField.getText());
+        }
 
-		/**
-		 * Returns the label for the specified type name.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		protected String getLabel(String typeName)
-		{
-			try {
-				return BTSModelEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type");
-			}
-			catch(MissingResourceException mre) {
-				BTSModelEditorPlugin.INSTANCE.log(mre);
-			}
-			return typeName;
-		}
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        @Override
+        public void setVisible(boolean visible) {
+            super.setVisible(visible);
+            if (visible) {
+                if (initialObjectField.getItemCount() == 1) {
+                    initialObjectField.clearSelection();
+                    encodingField.setFocus();
+                } else {
+                    encodingField.clearSelection();
+                    initialObjectField.setFocus();
+                }
+            }
+        }
 
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		protected Collection<String> getEncodings()
-		{
-			if (encodings == null) {
-				encodings = new ArrayList<String>();
-				for (StringTokenizer stringTokenizer = new StringTokenizer(BTSModelEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) {
-					encodings.add(stringTokenizer.nextToken());
-				}
-			}
-			return encodings;
-		}
-	}
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        public String getInitialObjectName() {
+            String label = initialObjectField.getText();
 
-	/**
-	 * The framework calls this to create the contents of the wizard.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-		@Override
-	public void addPages()
-	{
-		// Create a page, set the title, and the initial model file name.
-		//
-		newFileCreationPage = new BtsmodelModelWizardNewFileCreationPage("Whatever", selection);
-		newFileCreationPage.setTitle(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelModelWizard_label"));
-		newFileCreationPage.setDescription(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelModelWizard_description"));
-		newFileCreationPage.setFileName(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
-		addPage(newFileCreationPage);
+            for (String name : getInitialObjectNames()) {
+                if (getLabel(name).equals(label)) {
+                    return name;
+                }
+            }
+            return null;
+        }
 
-		// Try and get the resource selection to determine a current directory for the file dialog.
-		//
-		if (selection != null && !selection.isEmpty()) {
-			// Get the resource...
-			//
-			Object selectedElement = selection.iterator().next();
-			if (selectedElement instanceof IResource) {
-				// Get the resource parent, if its a file.
-				//
-				IResource selectedResource = (IResource)selectedElement;
-				if (selectedResource.getType() == IResource.FILE) {
-					selectedResource = selectedResource.getParent();
-				}
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        public String getEncoding() {
+            return encodingField.getText();
+        }
 
-				// This gives us a directory...
-				//
-				if (selectedResource instanceof IFolder || selectedResource instanceof IProject) {
-					// Set this for the container.
-					//
-					newFileCreationPage.setContainerFullPath(selectedResource.getFullPath());
+        /**
+         * Returns the label for the specified type name.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        protected String getLabel(String typeName) {
+            try {
+                return BTSModelEditPlugin.INSTANCE.getString("_UI_" + typeName + "_type");
+            } catch (MissingResourceException mre) {
+                BTSModelEditorPlugin.INSTANCE.log(mre);
+            }
+            return typeName;
+        }
 
-					// Make up a unique new name here.
-					//
-					String defaultModelBaseFilename = BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelEditorFilenameDefaultBase");
-					String defaultModelFilenameExtension = FILE_EXTENSIONS.get(0);
-					String modelFilename = defaultModelBaseFilename + "." + defaultModelFilenameExtension;
-					for (int i = 1; ((IContainer)selectedResource).findMember(modelFilename) != null; ++i) {
-						modelFilename = defaultModelBaseFilename + i + "." + defaultModelFilenameExtension;
-					}
-					newFileCreationPage.setFileName(modelFilename);
-				}
-			}
-		}
-		initialObjectCreationPage = new BtsmodelModelWizardInitialObjectCreationPage("Whatever2");
-		initialObjectCreationPage.setTitle(BTSModelEditorPlugin.INSTANCE.getString("_UI_BtsmodelModelWizard_label"));
-		initialObjectCreationPage.setDescription(BTSModelEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
-		addPage(initialObjectCreationPage);
-	}
-
-	/**
-	 * Get the file from the page.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public IFile getModelFile()
-	{
-		return newFileCreationPage.getModelFile();
-	}
+        /**
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         *
+         * @generated
+         */
+        protected Collection<String> getEncodings() {
+            if (encodings == null) {
+                encodings = new ArrayList<String>();
+                for (StringTokenizer stringTokenizer = new StringTokenizer(BTSModelEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) {
+                    encodings.add(stringTokenizer.nextToken());
+                }
+            }
+            return encodings;
+        }
+    }
 
 }

@@ -18,7 +18,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 
 /**
  * Browser input for XtextHtmlHover.
- * 
+ *
  * @since 2.3
  */
 
@@ -29,58 +29,54 @@ import org.eclipse.jface.viewers.ILabelProvider;
 
 public class XtextBrowserInformationControlInput extends BrowserInformationControlInput {
 
-	private final EObject fElement;
-	private final String fHtml;
-	private final ILabelProvider fLabelProvider;
+    private final EObject fElement;
+    private final String fHtml;
+    private final ILabelProvider fLabelProvider;
 
-	/**
-	 * Creates a new browser information control input.
-	 * 
-	 * @param previous
-	 *            previous input, or <code>null</code> if none available
-	 * @param element
-	 *            the element, or <code>null</code> if none available
-	 * @param html
-	 *            HTML contents, must not be null
-	 * @param labelProvider
-	 *            used to determinate the input name {@link #getInputName()}.
-	 */
-	public XtextBrowserInformationControlInput(XtextBrowserInformationControlInput previous, EObject element,
-			String html, ILabelProvider labelProvider) {
-		super(previous);
-		Assert.isNotNull(html);
-		fElement = element;
-		fHtml = html;
-		fLabelProvider = labelProvider;
-	}
+    /**
+     * Creates a new browser information control input.
+     *
+     * @param previous      previous input, or <code>null</code> if none available
+     * @param element       the element, or <code>null</code> if none available
+     * @param html          HTML contents, must not be null
+     * @param labelProvider used to determinate the input name {@link #getInputName()}.
+     */
+    public XtextBrowserInformationControlInput(XtextBrowserInformationControlInput previous, EObject element,
+                                               String html, ILabelProvider labelProvider) {
+        super(previous);
+        Assert.isNotNull(html);
+        fElement = element;
+        fHtml = html;
+        fLabelProvider = labelProvider;
+    }
 
-	/**
-	 * @since 2.3
-	 */
-	@Override
-	public int getLeadingImageWidth() {
-		return 16;
-	}
-	
-	public EObject getElement() {
-		return fElement;
-	}
+    /**
+     * @since 2.3
+     */
+    @Override
+    public int getLeadingImageWidth() {
+        return 16;
+    }
 
-	@Override
-	public String getHtml() {
-		return fHtml;
-	}
+    public EObject getElement() {
+        return fElement;
+    }
 
-	@Override
-	public Object getInputElement() {
-		return fElement;
-	}
+    @Override
+    public String getHtml() {
+        return fHtml;
+    }
 
-	@Override
-	public String getInputName() {
-		if (fLabelProvider == null)
-			return "no label provider";
-		return fLabelProvider.getText(fElement);
-	}
+    @Override
+    public Object getInputElement() {
+        return fElement;
+    }
+
+    @Override
+    public String getInputName() {
+        if (fLabelProvider == null)
+            return "no label provider";
+        return fLabelProvider.getText(fElement);
+    }
 
 }

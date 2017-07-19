@@ -16,26 +16,25 @@ import org.eclipse.osgi.util.NLS;
  */
 public final class AstSelectionMessages extends NLS {
 
-	private static final String BUNDLE_NAME = AstSelectionMessages.class.getName();
+    private static final String BUNDLE_NAME = AstSelectionMessages.class.getName();
+    public static String AstSelectNext_label;
+    public static String AstSelectNext_tooltip;
+    public static String AstSelectNext_description;
+    public static String AstSelectPrevious_label;
+    public static String AstSelectPrevious_tooltip;
+    public static String AstSelectPrevious_description;
+    public static String AstSelectEnclosing_label;
+    public static String AstSelectEnclosing_tooltip;
+    public static String AstSelectEnclosing_description;
+    public static String AstSelectLast_label;
+    public static String AstSelectLast_tooltip;
+    public static String AstSelectLast_description;
 
-	private AstSelectionMessages() {
-		// Do not instantiate
-	}
+    static {
+        NLS.initializeMessages(BUNDLE_NAME, AstSelectionMessages.class);
+    }
 
-	public static String AstSelectNext_label;
-	public static String AstSelectNext_tooltip;
-	public static String AstSelectNext_description;
-	public static String AstSelectPrevious_label;
-	public static String AstSelectPrevious_tooltip;
-	public static String AstSelectPrevious_description;
-	public static String AstSelectEnclosing_label;
-	public static String AstSelectEnclosing_tooltip;
-	public static String AstSelectEnclosing_description;
-	public static String AstSelectLast_label;
-	public static String AstSelectLast_tooltip;
-	public static String AstSelectLast_description;
-
-	static {
-		NLS.initializeMessages(BUNDLE_NAME, AstSelectionMessages.class);
-	}
+    private AstSelectionMessages() {
+        // Do not instantiate
+    }
 }

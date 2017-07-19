@@ -22,51 +22,51 @@ import org.eclipse.xtext.ui.util.IssueUtil;
  */
 public class XtextResourceMarkerAnnotationModel extends ResourceMarkerAnnotationModel {
 
-	private final IssueResolutionProvider issueResolutionProvider;
-	private final IssueUtil issueUtil;
-	private boolean connected;
+    private final IssueResolutionProvider issueResolutionProvider;
+    private final IssueUtil issueUtil;
+    private boolean connected;
 
-	public XtextResourceMarkerAnnotationModel(IFile file, IssueResolutionProvider issueResolutionProvider, IssueUtil markerUtil) {
-		super(file);
-		this.issueResolutionProvider = issueResolutionProvider;
-		this.issueUtil = markerUtil;
-	}
+    public XtextResourceMarkerAnnotationModel(IFile file, IssueResolutionProvider issueResolutionProvider, IssueUtil markerUtil) {
+        super(file);
+        this.issueResolutionProvider = issueResolutionProvider;
+        this.issueUtil = markerUtil;
+    }
 
-	@Override
-	protected MarkerAnnotation createMarkerAnnotation(IMarker marker) {
-		MarkerAnnotation annotation = super.createMarkerAnnotation(marker);
-		String issueCode = issueUtil.getCode(annotation);
-		annotation.setQuickFixable(issueResolutionProvider.hasResolutionFor(issueCode));
-		return annotation;
-	}
-	
-	public void fireAnnotationChangedEvent(Annotation annotation) {
-		queueAnnotationChanged(annotation);
-		fireQueuedEvents();
-	}
-	
-	public void queueAnnotationChanged(Annotation annotation) {
-		synchronized (getLockObject()) {
-			getAnnotationModelEvent().annotationChanged(annotation);
-		}
-	}
-	
-	public void fireQueuedEvents() {
-		fireModelChanged();
-	}
+    @Override
+    protected MarkerAnnotation createMarkerAnnotation(IMarker marker) {
+        MarkerAnnotation annotation = super.createMarkerAnnotation(marker);
+        String issueCode = issueUtil.getCode(annotation);
+        annotation.setQuickFixable(issueResolutionProvider.hasResolutionFor(issueCode));
+        return annotation;
+    }
 
-	@Override
-	protected void connected() {
-		super.connected();
-		this.connected = true;
-	}
+    public void fireAnnotationChangedEvent(Annotation annotation) {
+        queueAnnotationChanged(annotation);
+        fireQueuedEvents();
+    }
 
-	@Override
-	public void updateMarkers(IDocument document) throws CoreException {
-		if (!this.connected) {
-			return;
-		}
-		super.updateMarkers(document);
-	}
+    public void queueAnnotationChanged(Annotation annotation) {
+        synchronized (getLockObject()) {
+            getAnnotationModelEvent().annotationChanged(annotation);
+        }
+    }
+
+    public void fireQueuedEvents() {
+        fireModelChanged();
+    }
+
+    @Override
+    protected void connected() {
+        super.connected();
+        this.connected = true;
+    }
+
+    @Override
+    public void updateMarkers(IDocument document) throws CoreException {
+        if (!this.connected) {
+            return;
+        }
+        super.updateMarkers(document);
+    }
 
 }

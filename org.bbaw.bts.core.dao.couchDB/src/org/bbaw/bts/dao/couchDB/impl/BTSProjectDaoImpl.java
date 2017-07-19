@@ -21,37 +21,33 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 @Creatable
-public class BTSProjectDaoImpl extends CouchDBDao<BTSProject, String> implements BTSProjectDao
-{
+public class BTSProjectDaoImpl extends CouchDBDao<BTSProject, String> implements BTSProjectDao {
 
-	@Inject
-	protected DBConnectionProvider connectionProvider;
+    @Inject
+    protected DBConnectionProvider connectionProvider;
 
-	@Override
-	public boolean removeBTSProject(BTSProject btsProject)
-	{
-		super.remove(btsProject, DaoConstants.ADMIN);
-		return true;
-	}
+    @Override
+    public boolean removeBTSProject(BTSProject btsProject) {
+        super.remove(btsProject, DaoConstants.ADMIN);
+        return true;
+    }
 
-	@Override
-	public List<BTSProject> list(String path, String objectState)
-	{
-		String viewId = BTSConstants.VIEW_ALL_BTSPROJECTS;
-		if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
-			viewId = BTSConstants.VIEW_ALL_ACTIVE_BTSPROJECTS;
-		} else if (objectState != null
-				&& objectState.equals(BTSConstants.OBJECT_STATE_TERMINATED)) {
-			viewId = BTSConstants.VIEW_ALL_TERMINATED_BTSPROJECTS;
-		}
-		List<String> allDocs = loadDocsFromView(viewId, path, path);
-		List<BTSProject> results = loadObjectsFromStrings(allDocs, path);
-		if (!results.isEmpty())
-		{
-			registerQueryIdWithInternalRegistry(viewId, path);
-		}
-		return results;
+    @Override
+    public List<BTSProject> list(String path, String objectState) {
+        String viewId = BTSConstants.VIEW_ALL_BTSPROJECTS;
+        if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_ACTIVE)) {
+            viewId = BTSConstants.VIEW_ALL_ACTIVE_BTSPROJECTS;
+        } else if (objectState != null
+                && objectState.equals(BTSConstants.OBJECT_STATE_TERMINATED)) {
+            viewId = BTSConstants.VIEW_ALL_TERMINATED_BTSPROJECTS;
+        }
+        List<String> allDocs = loadDocsFromView(viewId, path, path);
+        List<BTSProject> results = loadObjectsFromStrings(allDocs, path);
+        if (!results.isEmpty()) {
+            registerQueryIdWithInternalRegistry(viewId, path);
+        }
+        return results;
 //		List<String> allDocs = new ArrayList<String>(0);
 //		View view;
 //		CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, path);
@@ -90,7 +86,7 @@ public class BTSProjectDaoImpl extends CouchDBDao<BTSProject, String> implements
 //			registerQueryIdWithInternalRegistry(viewId, path);
 //		}
 //		return results;
-	}
+    }
 
 //	@Override
 //	public void add(BTSProject entity, String path)
@@ -149,59 +145,51 @@ public class BTSProjectDaoImpl extends CouchDBDao<BTSProject, String> implements
 //		}
 //	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public BTSProject find(String key, String path)
-	{
-		URI uri = URI.createURI(getLocalDBURL() + DaoConstants.ADMIN + key.toString());
-		Resource resource = connectionProvider.getEmfResourceSet().getResource(uri, true);
-		if (resource.getContents().size() > 0)
-		{
-			Object o = resource.getContents().get(0);
-			if (o instanceof BTSProject)
-			{
-				return (BTSProject) o;
-			}
-		}
-		return null;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public BTSProject find(String key, String path) {
+        URI uri = URI.createURI(getLocalDBURL() + DaoConstants.ADMIN + key.toString());
+        Resource resource = connectionProvider.getEmfResourceSet().getResource(uri, true);
+        if (resource.getContents().size() > 0) {
+            Object o = resource.getContents().get(0);
+            if (o instanceof BTSProject) {
+                return (BTSProject) o;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public void addAuthorisation(BTSProjectDBCollection coll, String prefix)
-	{
-		if (!coll.getRoleDescriptions().isEmpty())
-		{
-			CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, coll.getCollectionName());
-			Gson gson = dbClient.getGson();
+    @Override
+    public void addAuthorisation(BTSProjectDBCollection coll, String prefix) {
+        if (!coll.getRoleDescriptions().isEmpty()) {
+            CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, coll.getCollectionName());
+            Gson gson = dbClient.getGson();
 
-			String json = "{ ";
-			json += "\"_id\":\"_security\",";
-			for (int i = 0; i < coll.getRoleDescriptions().size(); i++)
-			{
-				BTSDBCollectionRoleDesc desc = coll.getRoleDescriptions().get(i);
-				json += "\"" + desc.getRoleName() + "\": { \"names\" : " + gson.toJson(desc.getUserNames()) + ",";
-				json += " \"roles\" : " + gson.toJson(desc.getUserRoles()) + "}";
-				if (i < coll.getRoleDescriptions().size() - 1)
-				{
-					json += ",";
-				}
-			}
-			json += "}";
-			JsonObject jsonobj = dbClient.getGson().fromJson(json, JsonObject.class);
-			System.out.println(json);
-			dbClient.save(jsonobj);
-		} else
-		{
-			//remove _security
-			CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, coll.getCollectionName());
-			try {
-				dbClient.remove("_security", "0");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            String json = "{ ";
+            json += "\"_id\":\"_security\",";
+            for (int i = 0; i < coll.getRoleDescriptions().size(); i++) {
+                BTSDBCollectionRoleDesc desc = coll.getRoleDescriptions().get(i);
+                json += "\"" + desc.getRoleName() + "\": { \"names\" : " + gson.toJson(desc.getUserNames()) + ",";
+                json += " \"roles\" : " + gson.toJson(desc.getUserRoles()) + "}";
+                if (i < coll.getRoleDescriptions().size() - 1) {
+                    json += ",";
+                }
+            }
+            json += "}";
+            JsonObject jsonobj = dbClient.getGson().fromJson(json, JsonObject.class);
+            System.out.println(json);
+            dbClient.save(jsonobj);
+        } else {
+            //remove _security
+            CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, coll.getCollectionName());
+            try {
+                dbClient.remove("_security", "0");
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
-		}
+        }
 
-	}
+    }
 }

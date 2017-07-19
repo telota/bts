@@ -26,100 +26,100 @@ import com.google.inject.Inject;
  */
 public class PartitionTokenScanner implements IPartitionTokenScanner {
 
-	/**
-	 * Iterator that is aware of the fact that the tokens are ordered. As soon as 
-	 * the last token in the given {@code overlapRegion} was returned, no other 
-	 * tokens are requested from {@code base}.
-	 * @since 2.1
-	 */
-	protected static class RangedIterator extends AbstractIterator<ILexerTokenRegion> {
+    private Iterator<ILexerTokenRegion> tokens;
+    private int currentPartitionOffset = 0;
+    private ILexerTokenRegion nextToken = null;
+    @Inject
+    private ITokenTypeToPartitionTypeMapper mapper;
+    private int currentPartitionLength;
 
-		private final Iterator<ILexerTokenRegion> delegate;
-		
-		private final IRegion overlapRegion;
+    public void setMapper(ITokenTypeToPartitionTypeMapper mapper) {
+        this.mapper = mapper;
+    }
 
-		protected RangedIterator(Iterable<ILexerTokenRegion> base, IRegion overlapRegion) {
-			this.overlapRegion = overlapRegion;
-			this.delegate = base.iterator();
-		}
-		
-		@Override
-		protected ILexerTokenRegion computeNext() {
-			while(delegate.hasNext()) {
-				ILexerTokenRegion candidate = delegate.next();
-				if (overlapRegion.getOffset() + overlapRegion.getLength() < candidate.getOffset())
-					return endOfData();
-				if (TextUtilities.overlaps(overlapRegion, candidate))
-					return candidate;
-			}
-			return endOfData();
-		}
-		
-	}
-	
-	private Iterator<ILexerTokenRegion> tokens;
-	private int currentPartitionOffset = 0;
-	private ILexerTokenRegion nextToken = null;
+    public void setRange(IDocument document, int offset, int length) {
+        setPartialRange(document, offset, length, null, 0);
+    }
 
-	@Inject
-	private ITokenTypeToPartitionTypeMapper mapper;
-	private int currentPartitionLength;
-	
-	public void setMapper(ITokenTypeToPartitionTypeMapper mapper) {
-		this.mapper = mapper;
-	}
+    public void setPartialRange(IDocument document, int offset, int length, String contentType, int partitionOffset) {
+        int overlapOffset = partitionOffset;
+        int overlapLength = offset + length - partitionOffset;
+        tokens = new RangedIterator(getTokens(document), new Region(overlapOffset, overlapLength));
+        this.currentPartitionOffset = overlapOffset;
+        this.currentPartitionLength = 0;
+        this.nextToken = tokens.hasNext() ? tokens.next() : null;
+    }
 
-	public void setRange(IDocument document, int offset, int length) {
-		setPartialRange(document, offset, length, null, 0);
-	}
+    protected Iterable<ILexerTokenRegion> getTokens(IDocument document) {
+        return ((XtextDocument) document).getTokens();
+    }
 
-	public void setPartialRange(IDocument document, int offset, int length, String contentType, int partitionOffset) {
-		int overlapOffset = partitionOffset;
-		int overlapLength = offset + length - partitionOffset;
-		tokens = new RangedIterator(getTokens(document), new Region(overlapOffset, overlapLength));
-		this.currentPartitionOffset = overlapOffset;
-		this.currentPartitionLength = 0;
-		this.nextToken = tokens.hasNext()?tokens.next():null;
-	}
+    public IToken nextToken() {
+        if (nextToken == null) {
+            return Token.EOF;
+        }
+        currentPartitionOffset = nextToken.getOffset();
+        currentPartitionLength = nextToken.getLength();
+        String tokenPartition = mapper.getPartitionType(nextToken.getLexerTokenType());
+        while (tokens.hasNext()) {
+            nextToken = tokens.next();
+            String partitionOfNext = mapper.getPartitionType(nextToken.getLexerTokenType());
+            currentPartitionLength = nextToken.getOffset() - currentPartitionOffset;
+            if (!partitionOfNext.equals(tokenPartition) || !shouldMergePartitions(tokenPartition)) {
+                return new Token(tokenPartition);
+            }
+        }
+        if (nextToken != null)
+            currentPartitionLength = nextToken.getOffset() + nextToken.getLength() - currentPartitionOffset;
+        nextToken = null;
+        return new Token(tokenPartition);
+    }
 
-	protected Iterable<ILexerTokenRegion> getTokens(IDocument document) {
-		return ((XtextDocument) document).getTokens();
-	}
+    /**
+     * @since 2.1
+     */
+    protected boolean shouldMergePartitions(String contentType) {
+        return IDocument.DEFAULT_CONTENT_TYPE.equals(contentType);
+    }
 
-	public IToken nextToken() {
-		if (nextToken==null) {
-			return Token.EOF;
-		}
-		currentPartitionOffset = nextToken.getOffset();
-		currentPartitionLength = nextToken.getLength();
-		String tokenPartition = mapper.getPartitionType(nextToken.getLexerTokenType());
-		while (tokens.hasNext()) {
-			nextToken = tokens.next();
-			String partitionOfNext = mapper.getPartitionType(nextToken.getLexerTokenType());
-			currentPartitionLength = nextToken.getOffset()-currentPartitionOffset;
-			if (!partitionOfNext.equals(tokenPartition) || !shouldMergePartitions(tokenPartition)) {
-				return new Token(tokenPartition);
-			}
-		}
-		if (nextToken != null)
-			currentPartitionLength = nextToken.getOffset() + nextToken.getLength() - currentPartitionOffset; 
-		nextToken = null;
-		return new Token(tokenPartition);
-	}
-	
-	/**
-	 * @since 2.1
-	 */
-	protected boolean shouldMergePartitions(String contentType) {
-		return IDocument.DEFAULT_CONTENT_TYPE.equals(contentType);
-	}
+    public int getTokenOffset() {
+        return currentPartitionOffset;
+    }
 
-	public int getTokenOffset() {
-		return currentPartitionOffset;
-	}
+    public int getTokenLength() {
+        return currentPartitionLength;
+    }
 
-	public int getTokenLength() {
-		return currentPartitionLength;
-	}
+    /**
+     * Iterator that is aware of the fact that the tokens are ordered. As soon as
+     * the last token in the given {@code overlapRegion} was returned, no other
+     * tokens are requested from {@code base}.
+     *
+     * @since 2.1
+     */
+    protected static class RangedIterator extends AbstractIterator<ILexerTokenRegion> {
+
+        private final Iterator<ILexerTokenRegion> delegate;
+
+        private final IRegion overlapRegion;
+
+        protected RangedIterator(Iterable<ILexerTokenRegion> base, IRegion overlapRegion) {
+            this.overlapRegion = overlapRegion;
+            this.delegate = base.iterator();
+        }
+
+        @Override
+        protected ILexerTokenRegion computeNext() {
+            while (delegate.hasNext()) {
+                ILexerTokenRegion candidate = delegate.next();
+                if (overlapRegion.getOffset() + overlapRegion.getLength() < candidate.getOffset())
+                    return endOfData();
+                if (TextUtilities.overlaps(overlapRegion, candidate))
+                    return candidate;
+            }
+            return endOfData();
+        }
+
+    }
 
 }

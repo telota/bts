@@ -18,20 +18,20 @@ import com.google.inject.Inject;
  */
 public class XtextHyperlink extends AbstractHyperlink {
 
-	private URI uri;
-	@Inject 
-	private IURIEditorOpener uriEditorOpener;
-	
-	public void open() {
-		uriEditorOpener.open(getURI(), true);
-	}
+    private URI uri;
+    @Inject
+    private IURIEditorOpener uriEditorOpener;
 
-	public URI getURI() {
-		return uri;
-	}
-	
-	public void setURI(URI uri) {
-		this.uri = uri;
-	}
+    public void open() {
+        uriEditorOpener.open(getURI(), true);
+    }
+
+    public URI getURI() {
+        return uri;
+    }
+
+    public void setURI(URI uri) {
+        this.uri = uri;
+    }
 
 }

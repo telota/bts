@@ -6,25 +6,24 @@ import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSPassportEntry;
 
-public interface CorpusObjectService extends GenericCorpusObjectService<BTSCorpusObject, String>
-{
+public interface CorpusObjectService extends GenericCorpusObjectService<BTSCorpusObject, String> {
 
-	List<BTSCorpusObject> getRootBTSCorpusObjects();
+    List<BTSCorpusObject> getRootBTSCorpusObjects();
 
-	List<BTSPassportEntry> getPassportEntryProposals(BTSQueryRequest query);
+    List<BTSPassportEntry> getPassportEntryProposals(BTSQueryRequest query);
 
-	String[] getActive_corpora(String projecPrefix);
+    String[] getActive_corpora(String projecPrefix);
 
-	/**
-	 * @param object
-	 * @param annotationTypePath
-	 */
-	void setObjectTypePath(BTSCorpusObject object, String annotationTypePath);
+    /**
+     * @param object
+     * @param annotationTypePath
+     */
+    void setObjectTypePath(BTSCorpusObject object, String annotationTypePath);
 
-	/**
-	 * @param object
-	 * @return
-	 */
-	String getAllPassportDataAsString(BTSCorpusObject object);
-	
+    /**
+     * @param object
+     * @return
+     */
+    String getAllPassportDataAsString(BTSCorpusObject object);
+
 }

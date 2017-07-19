@@ -33,20 +33,20 @@ import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
 
 // TODO: Auto-generated Javadoc
+
 /**
  * The Interface Backend2ClientUpdateService.
  *
  * @author Christoph Plutte
  */
-public interface Backend2ClientUpdateService
-{
+public interface Backend2ClientUpdateService {
 
-	/**
-	 * Start listening2 updates.
-	 *
-	 * @param project the project
-	 */
-	void startListening2Updates(BTSProject project);
+    /**
+     * Start listening2 updates.
+     *
+     * @param project the project
+     */
+    void startListening2Updates(BTSProject project);
 
-	void startListening2Updates(BTSProjectDBCollection coll);
+    void startListening2Updates(BTSProjectDBCollection coll);
 }

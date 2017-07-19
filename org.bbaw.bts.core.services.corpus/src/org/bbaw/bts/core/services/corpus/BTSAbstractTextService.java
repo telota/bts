@@ -8,11 +8,11 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 public interface BTSAbstractTextService extends
-GenericCorpusObjectService<BTSAbstractText, String> {
+        GenericCorpusObjectService<BTSAbstractText, String> {
 
-	BTSAnnotation createNewAnnotationRelationPartOf(
-			BTSCorpusObject annotatedObject);
+    BTSAnnotation createNewAnnotationRelationPartOf(
+            BTSCorpusObject annotatedObject);
 
-	List<BTSAbstractText> listRootEntries(IProgressMonitor monitor);
+    List<BTSAbstractText> listRootEntries(IProgressMonitor monitor);
 
 }

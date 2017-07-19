@@ -50,217 +50,216 @@ import com.google.inject.Provider;
  */
 public class DefaultQuickfixProvider extends AbstractDeclarativeQuickfixProvider {
 
-	private static final Logger logger = Logger.getLogger(DefaultQuickfixProvider.class);
-	
-	@Inject
-	private ISimilarityMatcher similarityMatcher;
+    private static final Logger logger = Logger.getLogger(DefaultQuickfixProvider.class);
 
-	@Inject
-	private IssueModificationContext.Factory modificationContextFactory;
+    @Inject
+    private ISimilarityMatcher similarityMatcher;
 
-	@Inject
-	private Provider<IssueResolutionAcceptor> issueResolutionAcceptorProvider;
+    @Inject
+    private IssueModificationContext.Factory modificationContextFactory;
 
-	@Inject
-	private IScopeProvider scopeProvider;
-	
-	@Inject
-	private IQualifiedNameConverter qualifiedNameConverter;
-	
-	@Inject
-	private ICaseInsensitivityHelper caseInsensitivityHelper;
-	
-	@Inject
-	private CrossRefResolutionConverter converter;
+    @Inject
+    private Provider<IssueResolutionAcceptor> issueResolutionAcceptorProvider;
 
-	/**
-	 *
-	 * Can be sub classed to supress usage of value converter for e.g. operators.
-	 *
-	 * @since 2.4
-	 */
-	public static class CrossRefResolutionConverter {
-		@Inject
-		private IValueConverterService valueConverter;
+    @Inject
+    private IScopeProvider scopeProvider;
 
-		public String convertToString(String replacement, String ruleName) {
-			return valueConverter.toString(replacement, ruleName);
-		}
-	}
+    @Inject
+    private IQualifiedNameConverter qualifiedNameConverter;
 
-	private CrossReference findCrossReference(EObject context, INode node) {
-		if (node == null || (node.hasDirectSemanticElement() && context.equals(node.getSemanticElement())))
-			return null;
+    @Inject
+    private ICaseInsensitivityHelper caseInsensitivityHelper;
 
-		EObject grammarElement = node.getGrammarElement();
-		if (grammarElement instanceof CrossReference) {
-			return (CrossReference) grammarElement;
-		} else
-			return findCrossReference(context, node.getParent());
-	}
+    @Inject
+    private CrossRefResolutionConverter converter;
 
-	public List<IssueResolution> getResolutionsForLinkingIssue(final Issue issue) {
-		final IssueResolutionAcceptor issueResolutionAcceptor = issueResolutionAcceptorProvider.get();
-		createLinkingIssueResolutions(issue, issueResolutionAcceptor);
-		return issueResolutionAcceptor.getIssueResolutions();
-	}
+    private CrossReference findCrossReference(EObject context, INode node) {
+        if (node == null || (node.hasDirectSemanticElement() && context.equals(node.getSemanticElement())))
+            return null;
 
-	public void createLinkingIssueResolutions(final Issue issue, final IssueResolutionAcceptor issueResolutionAcceptor) {
-		final IModificationContext modificationContext = modificationContextFactory.createModificationContext(issue);
-		final IXtextDocument xtextDocument = modificationContext.getXtextDocument();
-		if (xtextDocument == null)
-			return;
-		xtextDocument.readOnly(new IUnitOfWork.Void<XtextResource>() {
-			@Override
-			public void process(XtextResource state) throws Exception {
-				EObject target = state.getEObject(issue.getUriToProblem().fragment());
-				EReference reference = getUnresolvedEReference(issue, target);
-				if (reference == null)
-					return;
-				fixUnresolvedReference(issue, xtextDocument, target, reference);
-			}
+        EObject grammarElement = node.getGrammarElement();
+        if (grammarElement instanceof CrossReference) {
+            return (CrossReference) grammarElement;
+        } else
+            return findCrossReference(context, node.getParent());
+    }
 
-			protected void fixUnresolvedReference(final Issue issue, final IXtextDocument xtextDocument,
-					EObject target, EReference reference) throws BadLocationException {
-				boolean caseInsensitive = caseInsensitivityHelper.isIgnoreCase(reference);
-				EObject crossReferenceTerminal = getCrossReference(issue, target);
-				String ruleName = null;
-				Keyword keyword = null;
-				if (crossReferenceTerminal instanceof RuleCall) {
-					RuleCall ruleCall = (RuleCall) crossReferenceTerminal;
-					ruleName = ruleCall.getRule().getName();
-				} else if (crossReferenceTerminal instanceof Keyword) {
-					keyword = (Keyword) crossReferenceTerminal;
-				}
-				String issueString = xtextDocument.get(issue.getOffset(), issue.getLength());
-				IScope scope = scopeProvider.getScope(target, reference);
-				List<IEObjectDescription> discardedDescriptions = Lists.newArrayList();
-				Set<String> qualifiedNames = Sets.newHashSet();
-				int addedDescriptions = 0;
-				int checkedDescriptions = 0;
-				for (IEObjectDescription referableElement : queryScope(scope)) {
-					String referableElementQualifiedName = qualifiedNameConverter.toString(referableElement.getQualifiedName());
-					if (similarityMatcher.isSimilar(issueString, qualifiedNameConverter.toString(referableElement.getName()))) {
-						addedDescriptions++;
-						createResolution(issueString, referableElement, ruleName, keyword, caseInsensitive);
-						qualifiedNames.add(referableElementQualifiedName);
-					} else {
-						if (qualifiedNames.add(referableElementQualifiedName))
-							discardedDescriptions.add(referableElement);
-					}
-					checkedDescriptions++;
-					if (checkedDescriptions>100)
-						break;
-				}
-				if (discardedDescriptions.size() + addedDescriptions <= 5) {
-					for(IEObjectDescription referableElement: discardedDescriptions) {
-						createResolution(issueString, referableElement, ruleName, keyword, caseInsensitive);
-					}
-				}
-			}
+    public List<IssueResolution> getResolutionsForLinkingIssue(final Issue issue) {
+        final IssueResolutionAcceptor issueResolutionAcceptor = issueResolutionAcceptorProvider.get();
+        createLinkingIssueResolutions(issue, issueResolutionAcceptor);
+        return issueResolutionAcceptor.getIssueResolutions();
+    }
 
-			protected AbstractElement getCrossReference(final Issue issue, EObject target) {
-				final ICompositeNode node = NodeModelUtils.getNode(target);
-				if (node == null)
-					throw new IllegalStateException("Cannot happen since we found a reference");
-				ICompositeNode rootNode = node.getRootNode();
-				ILeafNode leaf = NodeModelUtils.findLeafNodeAtOffset(rootNode, issue.getOffset());
-				CrossReference crossReference = findCrossReference(target, leaf);
-				return crossReference.getTerminal();
-			}
+    public void createLinkingIssueResolutions(final Issue issue, final IssueResolutionAcceptor issueResolutionAcceptor) {
+        final IModificationContext modificationContext = modificationContextFactory.createModificationContext(issue);
+        final IXtextDocument xtextDocument = modificationContext.getXtextDocument();
+        if (xtextDocument == null)
+            return;
+        xtextDocument.readOnly(new IUnitOfWork.Void<XtextResource>() {
+            @Override
+            public void process(XtextResource state) throws Exception {
+                EObject target = state.getEObject(issue.getUriToProblem().fragment());
+                EReference reference = getUnresolvedEReference(issue, target);
+                if (reference == null)
+                    return;
+                fixUnresolvedReference(issue, xtextDocument, target, reference);
+            }
 
-			public void createResolution(String issueString, IEObjectDescription solution, String ruleName, Keyword keyword, boolean caseInsensitive) {
-				String replacement = qualifiedNameConverter.toString(solution.getName());
-				String replaceLabel = fixCrossReferenceLabel(issueString, replacement);
-				if (keyword != null) {
-					if (caseInsensitive && !replacement.equalsIgnoreCase(keyword.getValue()))
-						return;
-					if (!caseInsensitive && !replacement.equals(keyword.getValue()))
-						return;
-				} else if (ruleName != null) {
-					replacement = converter.convertToString(replacement, ruleName);
-				} else {
-					logger.error("either keyword or ruleName have to present", new IllegalStateException());
-				}
-				issueResolutionAcceptor.accept(issue, replaceLabel, replaceLabel, fixCrossReferenceImage(
-						issueString, replacement), new ReplaceModification(issue, replacement));
-			}
+            protected void fixUnresolvedReference(final Issue issue, final IXtextDocument xtextDocument,
+                                                  EObject target, EReference reference) throws BadLocationException {
+                boolean caseInsensitive = caseInsensitivityHelper.isIgnoreCase(reference);
+                EObject crossReferenceTerminal = getCrossReference(issue, target);
+                String ruleName = null;
+                Keyword keyword = null;
+                if (crossReferenceTerminal instanceof RuleCall) {
+                    RuleCall ruleCall = (RuleCall) crossReferenceTerminal;
+                    ruleName = ruleCall.getRule().getName();
+                } else if (crossReferenceTerminal instanceof Keyword) {
+                    keyword = (Keyword) crossReferenceTerminal;
+                }
+                String issueString = xtextDocument.get(issue.getOffset(), issue.getLength());
+                IScope scope = scopeProvider.getScope(target, reference);
+                List<IEObjectDescription> discardedDescriptions = Lists.newArrayList();
+                Set<String> qualifiedNames = Sets.newHashSet();
+                int addedDescriptions = 0;
+                int checkedDescriptions = 0;
+                for (IEObjectDescription referableElement : queryScope(scope)) {
+                    String referableElementQualifiedName = qualifiedNameConverter.toString(referableElement.getQualifiedName());
+                    if (similarityMatcher.isSimilar(issueString, qualifiedNameConverter.toString(referableElement.getName()))) {
+                        addedDescriptions++;
+                        createResolution(issueString, referableElement, ruleName, keyword, caseInsensitive);
+                        qualifiedNames.add(referableElementQualifiedName);
+                    } else {
+                        if (qualifiedNames.add(referableElementQualifiedName))
+                            discardedDescriptions.add(referableElement);
+                    }
+                    checkedDescriptions++;
+                    if (checkedDescriptions > 100)
+                        break;
+                }
+                if (discardedDescriptions.size() + addedDescriptions <= 5) {
+                    for (IEObjectDescription referableElement : discardedDescriptions) {
+                        createResolution(issueString, referableElement, ruleName, keyword, caseInsensitive);
+                    }
+                }
+            }
 
-		});
-	}
-	
-	protected Iterable<IEObjectDescription> queryScope(IScope scope) {
-		return scope.getAllElements();
-	}
+            protected AbstractElement getCrossReference(final Issue issue, EObject target) {
+                final ICompositeNode node = NodeModelUtils.getNode(target);
+                if (node == null)
+                    throw new IllegalStateException("Cannot happen since we found a reference");
+                ICompositeNode rootNode = node.getRootNode();
+                ILeafNode leaf = NodeModelUtils.findLeafNodeAtOffset(rootNode, issue.getOffset());
+                CrossReference crossReference = findCrossReference(target, leaf);
+                return crossReference.getTerminal();
+            }
 
-	protected EReference getUnresolvedEReference(final Issue issue, EObject target) {
-		final ICompositeNode node = NodeModelUtils.getNode(target);
-		if (node==null)
-			return null;
-		ICompositeNode rootNode = node.getRootNode();
-		ILeafNode leaf = NodeModelUtils.findLeafNodeAtOffset(rootNode, issue.getOffset());
-		CrossReference crossReference = findCrossReference(target, leaf);
-		if (crossReference != null) {
-			return  GrammarUtil.getReference(crossReference, target.eClass());
-		}
-		return null;
-	}
+            public void createResolution(String issueString, IEObjectDescription solution, String ruleName, Keyword keyword, boolean caseInsensitive) {
+                String replacement = qualifiedNameConverter.toString(solution.getName());
+                String replaceLabel = fixCrossReferenceLabel(issueString, replacement);
+                if (keyword != null) {
+                    if (caseInsensitive && !replacement.equalsIgnoreCase(keyword.getValue()))
+                        return;
+                    if (!caseInsensitive && !replacement.equals(keyword.getValue()))
+                        return;
+                } else if (ruleName != null) {
+                    replacement = converter.convertToString(replacement, ruleName);
+                } else {
+                    logger.error("either keyword or ruleName have to present", new IllegalStateException());
+                }
+                issueResolutionAcceptor.accept(issue, replaceLabel, replaceLabel, fixCrossReferenceImage(
+                        issueString, replacement), new ReplaceModification(issue, replacement));
+            }
 
-	protected String fixCrossReferenceLabel(String issueString, String replacement) {
-		return Messages.DefaultQuickfixProvider_changeTo + replacement + Messages.DefaultQuickfixProvider_1;
-	}
+        });
+    }
 
-	protected String fixCrossReferenceImage(String issueString, String replacement) {
-		return ""; //$NON-NLS-1$
-	}
+    protected Iterable<IEObjectDescription> queryScope(IScope scope) {
+        return scope.getAllElements();
+    }
 
-	@Override
-	public List<IssueResolution> getResolutions(Issue issue) {
-		StopWatch stopWatch = new StopWatch(logger);
-		try {
-			if (Diagnostic.LINKING_DIAGNOSTIC.equals(issue.getCode())) {
-				List<IssueResolution> result = new ArrayList<IssueResolution>();
-				result.addAll(getResolutionsForLinkingIssue(issue));
-				result.addAll(super.getResolutions(issue));
-				return result;
-			} else
-				return super.getResolutions(issue);
-		} finally {
-			stopWatch.resetAndLog("#getResolutions");			
-		}
-		
-	}
+    protected EReference getUnresolvedEReference(final Issue issue, EObject target) {
+        final ICompositeNode node = NodeModelUtils.getNode(target);
+        if (node == null)
+            return null;
+        ICompositeNode rootNode = node.getRootNode();
+        ILeafNode leaf = NodeModelUtils.findLeafNodeAtOffset(rootNode, issue.getOffset());
+        CrossReference crossReference = findCrossReference(target, leaf);
+        if (crossReference != null) {
+            return GrammarUtil.getReference(crossReference, target.eClass());
+        }
+        return null;
+    }
 
-	@Override
-	public boolean hasResolutionFor(String issueCode) {
-		return Diagnostic.LINKING_DIAGNOSTIC.equals(issueCode) || super.hasResolutionFor(issueCode);
-	}
+    protected String fixCrossReferenceLabel(String issueString, String replacement) {
+        return Messages.DefaultQuickfixProvider_changeTo + replacement + Messages.DefaultQuickfixProvider_1;
+    }
 
-	/**
-	 * @since 2.0
-	 */
-	protected IssueModificationContext.Factory getModificationContextFactory() {
-		return modificationContextFactory;
-	}
+    protected String fixCrossReferenceImage(String issueString, String replacement) {
+        return ""; //$NON-NLS-1$
+    }
 
-	/**
-	 * @since 2.0
-	 */
-	protected IScopeProvider getScopeProvider() {
-		return scopeProvider;
-	}
+    @Override
+    public List<IssueResolution> getResolutions(Issue issue) {
+        StopWatch stopWatch = new StopWatch(logger);
+        try {
+            if (Diagnostic.LINKING_DIAGNOSTIC.equals(issue.getCode())) {
+                List<IssueResolution> result = new ArrayList<IssueResolution>();
+                result.addAll(getResolutionsForLinkingIssue(issue));
+                result.addAll(super.getResolutions(issue));
+                return result;
+            } else
+                return super.getResolutions(issue);
+        } finally {
+            stopWatch.resetAndLog("#getResolutions");
+        }
 
-	/**
-	 * @since 2.0
-	 */
-	protected IQualifiedNameConverter getQualifiedNameConverter() {
-		return qualifiedNameConverter;
-	}
+    }
 
-	/**
-	 * @since 2.0
-	 */
-	protected ISimilarityMatcher getSimilarityMatcher() {
-		return similarityMatcher;
-	}
+    @Override
+    public boolean hasResolutionFor(String issueCode) {
+        return Diagnostic.LINKING_DIAGNOSTIC.equals(issueCode) || super.hasResolutionFor(issueCode);
+    }
+
+    /**
+     * @since 2.0
+     */
+    protected IssueModificationContext.Factory getModificationContextFactory() {
+        return modificationContextFactory;
+    }
+
+    /**
+     * @since 2.0
+     */
+    protected IScopeProvider getScopeProvider() {
+        return scopeProvider;
+    }
+
+    /**
+     * @since 2.0
+     */
+    protected IQualifiedNameConverter getQualifiedNameConverter() {
+        return qualifiedNameConverter;
+    }
+
+    /**
+     * @since 2.0
+     */
+    protected ISimilarityMatcher getSimilarityMatcher() {
+        return similarityMatcher;
+    }
+
+    /**
+     * Can be sub classed to supress usage of value converter for e.g. operators.
+     *
+     * @since 2.4
+     */
+    public static class CrossRefResolutionConverter {
+        @Inject
+        private IValueConverterService valueConverter;
+
+        public String convertToString(String replacement, String ruleName) {
+            return valueConverter.toString(replacement, ruleName);
+        }
+    }
 }

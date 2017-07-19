@@ -10,13 +10,12 @@ package org.eclipse.xtext.ui.preferences;
 import org.eclipse.core.runtime.IStatus;
 
 /**
- * 
  * Initially copied from Jdt.
- * 
+ *
  * @author Michael Clay
  * @since 2.1
  */
 public interface IStatusChangeListener {
 
-	void statusChanged(IStatus status);
+    void statusChanged(IStatus status);
 }

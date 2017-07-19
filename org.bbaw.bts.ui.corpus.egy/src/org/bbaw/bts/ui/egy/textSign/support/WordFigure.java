@@ -8,69 +8,66 @@ import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.swt.graphics.Color;
 
-public class WordFigure extends ElementFigureImpl
-{
-	public static Color classColor = BTSUIConstants.VIEW_FOREGROUND_DESELECTED_COLOR;//new Color(null, 255, 255, 206);
-	private CompartementImageFigure attributeFigure = new CompartementImageFigure();
+public class WordFigure extends ElementFigureImpl {
+    public static Color classColor = BTSUIConstants.VIEW_FOREGROUND_DESELECTED_COLOR;//new Color(null, 255, 255, 206);
+    int imageWidth;
+    private CompartementImageFigure attributeFigure = new CompartementImageFigure();
+    private String mdc;
+    private ImageFigure imageFigure;
 
-	private String mdc;
-	int imageWidth;
-	private ImageFigure imageFigure;
-	public WordFigure(Label name)
-	{
-		ToolbarLayout layout = new ToolbarLayout();
-		setLayoutManager(layout);
-		layout.setSpacing(20);
-		setBackgroundColor(classColor);
-		setOpaque(true);
-		setBorder(new MarginBorder(3));
+    public WordFigure(Label name) {
+        ToolbarLayout layout = new ToolbarLayout();
+        setLayoutManager(layout);
+        layout.setSpacing(20);
+        setBackgroundColor(classColor);
+        setOpaque(true);
+        setBorder(new MarginBorder(3));
 
-		add(name);
-	}
+        add(name);
+    }
 
-	public CompartementImageFigure getAttributesCompartment()
-	{
-		return attributeFigure;
-	}
+    public CompartementImageFigure getAttributesCompartment() {
+        return attributeFigure;
+    }
 
-	@Override
-	public void add(IFigure figure, Object constraint, int index) {
-		if (figure instanceof ImageFigure) {
-			if (((ImageFigure) figure).getImage() != null) {
-				imageWidth = ((ImageFigure) figure).getImage().getBounds().width;
-			}
-		}
-		super.add(figure, constraint, index);
-	}
+    @Override
+    public void add(IFigure figure, Object constraint, int index) {
+        if (figure instanceof ImageFigure) {
+            if (((ImageFigure) figure).getImage() != null) {
+                imageWidth = ((ImageFigure) figure).getImage().getBounds().width;
+            }
+        }
+        super.add(figure, constraint, index);
+    }
 
-	@Override
-	public int getLength() {
-		if (imageFigure != null && imageWidth > 0) {
-			return imageWidth + 6;
-		} else {
-			return super.getLength();
-		}
-	}
+    @Override
+    public int getLength() {
+        if (imageFigure != null && imageWidth > 0) {
+            return imageWidth + 6;
+        } else {
+            return super.getLength();
+        }
+    }
 
-	public int getImageWidth() {
-		return imageWidth;
-	}
+    public int getImageWidth() {
+        return imageWidth;
+    }
 
-	public String getMdc() {
-		return mdc;
-	}
+    public String getMdc() {
+        return mdc;
+    }
 
-	public void setMdc(String mdc) {
-		this.mdc = mdc;
-	}
+    public void setMdc(String mdc) {
+        this.mdc = mdc;
+    }
 
-	public void setImageFigure(ImageFigure imageFigure) {
-		this.imageFigure = imageFigure;
-		
-	}
+    public ImageFigure getImageFigure() {
+        return imageFigure;
+    }
 
-	public ImageFigure getImageFigure() {
-		return imageFigure;
-	}
+    public void setImageFigure(ImageFigure imageFigure) {
+        this.imageFigure = imageFigure;
+
+    }
 
 }

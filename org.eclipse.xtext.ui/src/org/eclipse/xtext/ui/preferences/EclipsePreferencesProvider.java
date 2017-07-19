@@ -29,49 +29,49 @@ import com.google.inject.Inject;
  * @author Sven Efftinge - Initial contribution and API
  */
 public class EclipsePreferencesProvider implements IPreferenceValuesProvider {
-	
-	private final static Logger log = Logger.getLogger(EclipsePreferencesProvider.class);
-	@Inject IPreferenceStoreAccess access;
-	
-	public IPreferenceValues getPreferenceValues(Resource context) {
-		final IProject project = getProject(context);
-		final IPreferenceStore store = project != null ?
-			access.getContextPreferenceStore(project) :
-			access.getPreferenceStore();
-		
-		@SuppressWarnings("deprecation")
-		final Map<String, String> computingMap = new MapMaker().makeComputingMap(
-				new Function<String, String>() {
-					public String apply(String input) {
-						return store.getString(input);
-					}
-				});
-		
-		return new IPreferenceValues() {
-			public String getPreference(PreferenceKey key) {
-				try {
-					final String string = computingMap.get(key.getId());
-					return org.eclipse.jface.preference.IPreferenceStore.STRING_DEFAULT_DEFAULT.equals(string) ? key.getDefaultValue() : string;
-				} catch (Exception e) {
-					log.error("Error getting preference for key '"+key.getId()+"'.", e);
-					return key.getDefaultValue();
-				}
-			}
-		};
-	}
 
-	private IProject getProject(Resource resource) {
-		URI uri = resource.getURI();
-		if (uri.isPlatformResource()) {
-			final IProject project = getWorkspaceRoot().getProject(uri.segment(1));
-			if (project.isAccessible())
-				return project;
-		}
-		return null;
-	}
+    private final static Logger log = Logger.getLogger(EclipsePreferencesProvider.class);
+    @Inject
+    IPreferenceStoreAccess access;
 
-	private IWorkspaceRoot getWorkspaceRoot() {
-		return ResourcesPlugin.getWorkspace().getRoot();
-	}
+    public IPreferenceValues getPreferenceValues(Resource context) {
+        final IProject project = getProject(context);
+        final IPreferenceStore store = project != null ?
+                access.getContextPreferenceStore(project) :
+                access.getPreferenceStore();
+
+        @SuppressWarnings("deprecation") final Map<String, String> computingMap = new MapMaker().makeComputingMap(
+                new Function<String, String>() {
+                    public String apply(String input) {
+                        return store.getString(input);
+                    }
+                });
+
+        return new IPreferenceValues() {
+            public String getPreference(PreferenceKey key) {
+                try {
+                    final String string = computingMap.get(key.getId());
+                    return org.eclipse.jface.preference.IPreferenceStore.STRING_DEFAULT_DEFAULT.equals(string) ? key.getDefaultValue() : string;
+                } catch (Exception e) {
+                    log.error("Error getting preference for key '" + key.getId() + "'.", e);
+                    return key.getDefaultValue();
+                }
+            }
+        };
+    }
+
+    private IProject getProject(Resource resource) {
+        URI uri = resource.getURI();
+        if (uri.isPlatformResource()) {
+            final IProject project = getWorkspaceRoot().getProject(uri.segment(1));
+            if (project.isAccessible())
+                return project;
+        }
+        return null;
+    }
+
+    private IWorkspaceRoot getWorkspaceRoot() {
+        return ResourcesPlugin.getWorkspace().getRoot();
+    }
 
 }

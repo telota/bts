@@ -37,145 +37,135 @@ import org.eclipse.swt.widgets.MenuItem;
 
 public class AbstractComparePart {
 
-	@Inject
-	@Named("compareObject")
-	protected BTSDBBaseObject object;
-	@Inject
-	protected CompareObjectsController compareObjectsController;
-	protected ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-	protected ISelectionChangedListener leftSelectionListener;
-	protected BTSDBBaseObject selectedRightVersion;
-	protected CTabFolder tabFolder;
-	@Inject
-	private Logger logger;
-	@Inject
-	private IEclipseContext context;
-	@Inject
-	private IExtensionRegistry registry;
-	protected List<CompareViewer> compareViewers;
-	protected boolean leftEditable;
-	protected boolean rightEditable;
-	protected Menu leftContextMenu;
-	protected TreeNodeWrapper compareRevInput;
+    @Inject
+    @Named("compareObject")
+    protected BTSDBBaseObject object;
+    @Inject
+    protected CompareObjectsController compareObjectsController;
+    protected ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+            ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+    protected ISelectionChangedListener leftSelectionListener;
+    protected BTSDBBaseObject selectedRightVersion;
+    protected CTabFolder tabFolder;
+    protected List<CompareViewer> compareViewers;
+    protected boolean leftEditable;
+    protected boolean rightEditable;
+    protected Menu leftContextMenu;
+    protected TreeNodeWrapper compareRevInput;
+    @Inject
+    private Logger logger;
+    @Inject
+    private IEclipseContext context;
+    @Inject
+    private IExtensionRegistry registry;
 
-	public AbstractComparePart() {
-		super();
-	}
+    public AbstractComparePart() {
+        super();
+    }
 
-	protected void fillListContextMenu(Menu parent) {
-		 final MenuItem item = new MenuItem(parent, SWT.PUSH);
-		 item.setText("Remove Conflicting Revision");
-
-		
-	}
-
-	protected void loadRightVersion(BTSDBBaseObject selectedRightVersion2) {
-		for (CompareViewer viewer : compareViewers)
-		{
-			viewer.load(object, leftEditable, selectedRightVersion2, rightEditable);
-		}
-		
-	}
-
-	protected void loadInput() {
-
-	}
-
-	protected List<CompareViewerFactory> loadViewerFactories() {
-		if (registry == null)
-		{
-			registry = ((IExtensionRegistry) context.get(IExtensionRegistry.class.getName()));
-		}
-		IExtensionPoint[] points = registry.getExtensionPoints();
-		for (IExtensionPoint p : points)
-		{
-			logger.info(p.getUniqueIdentifier());
-		}
-		IConfigurationElement[] config = registry
-				.getConfigurationElementsFor("org.bbaw.bts.ui.commons.compareViewerFactory");
-	
-		logger.info("extension registry number of elements " + config);
-		logger.info("extension registry number of elements " + config.length);
-	
-		List<CompareViewerFactory> compareViewerFactories = new Vector<CompareViewerFactory>(config.length);
-		for (IConfigurationElement e : config)
-		{
-			logger.info("extension registry element " + e.getName());
-	
-			Object o = null;
-			try {
-				o = e.createExecutableExtension("class");
-				if (o instanceof CompareViewerFactory)
-				{
-					CompareViewerFactory cvf = (CompareViewerFactory) o;
-					if (cvf.hasViewerForObject(object.getClass()))
-					{
-						compareViewerFactories.add(cvf);
-					}
-				}
-			} catch (CoreException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-		}
-		return compareViewerFactories;
-	}
+    protected void fillListContextMenu(Menu parent) {
+        final MenuItem item = new MenuItem(parent, SWT.PUSH);
+        item.setText("Remove Conflicting Revision");
 
 
-	@PreDestroy
-	public void preDestroy() {
-		for (CompareViewer viewer : compareViewers)
-		{
-			if (viewer != null)
-			{
-				viewer.dispose();
-			}
-		}
-	}
+    }
 
-	@Focus
-	public void onFocus() {
-		//TODO Your code here
-	}
+    protected void loadRightVersion(BTSDBBaseObject selectedRightVersion2) {
+        for (CompareViewer viewer : compareViewers) {
+            viewer.load(object, leftEditable, selectedRightVersion2, rightEditable);
+        }
 
-	@Persist
-	public void save() {
-		//TODO Your code here
-	}
+    }
 
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
+    protected void loadInput() {
 
-	protected List<TreeNodeWrapper> loadNodes(List<BTSDBBaseObject> conflictObjects) {
-		List<TreeNodeWrapper> nodes = new Vector<TreeNodeWrapper>(conflictObjects.size());
-		for (Object o : conflictObjects)
-		{
-			TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-			tn.setObject((BTSObject) o);
-			nodes.add(tn);
-		}
-		return nodes;
-	}
-	protected void loadCompareViewers() {
-		List<CompareViewerFactory> compareViewerFactories = loadViewerFactories();
-		compareViewers = new Vector<CompareViewer>(compareViewerFactories.size());
-		for (CompareViewerFactory cvf : compareViewerFactories)
-		{
-			CTabItem tabItem = new CTabItem(tabFolder, SWT.None);
-			tabItem.setText(cvf.getCompareViewerName());
-			tabItem.setImage(cvf.getCompareViewerIcon());
-			Composite c = new Composite(tabFolder, SWT.NONE);
-			tabItem.setControl(c);
-			CompareViewer viewer = cvf.createViewer(c, SWT.NONE);
-			if (viewer != null)
-			{
-				compareViewers.add(viewer);
-			}
-		}
-		
-	}
+    }
+
+    protected List<CompareViewerFactory> loadViewerFactories() {
+        if (registry == null) {
+            registry = ((IExtensionRegistry) context.get(IExtensionRegistry.class.getName()));
+        }
+        IExtensionPoint[] points = registry.getExtensionPoints();
+        for (IExtensionPoint p : points) {
+            logger.info(p.getUniqueIdentifier());
+        }
+        IConfigurationElement[] config = registry
+                .getConfigurationElementsFor("org.bbaw.bts.ui.commons.compareViewerFactory");
+
+        logger.info("extension registry number of elements " + config);
+        logger.info("extension registry number of elements " + config.length);
+
+        List<CompareViewerFactory> compareViewerFactories = new Vector<CompareViewerFactory>(config.length);
+        for (IConfigurationElement e : config) {
+            logger.info("extension registry element " + e.getName());
+
+            Object o = null;
+            try {
+                o = e.createExecutableExtension("class");
+                if (o instanceof CompareViewerFactory) {
+                    CompareViewerFactory cvf = (CompareViewerFactory) o;
+                    if (cvf.hasViewerForObject(object.getClass())) {
+                        compareViewerFactories.add(cvf);
+                    }
+                }
+            } catch (CoreException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+        }
+        return compareViewerFactories;
+    }
+
+
+    @PreDestroy
+    public void preDestroy() {
+        for (CompareViewer viewer : compareViewers) {
+            if (viewer != null) {
+                viewer.dispose();
+            }
+        }
+    }
+
+    @Focus
+    public void onFocus() {
+        //TODO Your code here
+    }
+
+    @Persist
+    public void save() {
+        //TODO Your code here
+    }
+
+    public void dispose() {
+        // TODO Auto-generated method stub
+
+    }
+
+    protected List<TreeNodeWrapper> loadNodes(List<BTSDBBaseObject> conflictObjects) {
+        List<TreeNodeWrapper> nodes = new Vector<TreeNodeWrapper>(conflictObjects.size());
+        for (Object o : conflictObjects) {
+            TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+            tn.setObject((BTSObject) o);
+            nodes.add(tn);
+        }
+        return nodes;
+    }
+
+    protected void loadCompareViewers() {
+        List<CompareViewerFactory> compareViewerFactories = loadViewerFactories();
+        compareViewers = new Vector<CompareViewer>(compareViewerFactories.size());
+        for (CompareViewerFactory cvf : compareViewerFactories) {
+            CTabItem tabItem = new CTabItem(tabFolder, SWT.None);
+            tabItem.setText(cvf.getCompareViewerName());
+            tabItem.setImage(cvf.getCompareViewerIcon());
+            Composite c = new Composite(tabFolder, SWT.NONE);
+            tabItem.setControl(c);
+            CompareViewer viewer = cvf.createViewer(c, SWT.NONE);
+            if (viewer != null) {
+                compareViewers.add(viewer);
+            }
+        }
+
+    }
 }

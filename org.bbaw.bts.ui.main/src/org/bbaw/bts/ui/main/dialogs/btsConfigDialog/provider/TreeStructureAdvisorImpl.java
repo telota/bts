@@ -5,44 +5,34 @@ import org.bbaw.bts.btsmodel.BTSConfigItem;
 import org.bbaw.bts.btsmodel.BTSConfiguration;
 import org.eclipse.jface.databinding.viewers.TreeStructureAdvisor;
 
-public class TreeStructureAdvisorImpl extends TreeStructureAdvisor
-{
-	@Override
-	public Object getParent(Object element)
-	{
-		if (element instanceof BTSConfigItem)
-		{
-			// return ((BTSConfigItem) element).getParent();
-		}
+public class TreeStructureAdvisorImpl extends TreeStructureAdvisor {
+    @Override
+    public Object getParent(Object element) {
+        if (element instanceof BTSConfigItem) {
+            // return ((BTSConfigItem) element).getParent();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	public Boolean hasChildren(Object element)
-	{
-		if (element instanceof BTSConfig)
-		{
-			if (((BTSConfig) element).getChildren().size() > 0)
-			{
-				return Boolean.TRUE;
-			}
+    @Override
+    public Boolean hasChildren(Object element) {
+        if (element instanceof BTSConfig) {
+            if (((BTSConfig) element).getChildren().size() > 0) {
+                return Boolean.TRUE;
+            }
 
-		} else if (element instanceof BTSConfiguration)
-		{
-			if (((BTSConfiguration) element).getChildren().size() > 0)
-			{
-				return Boolean.TRUE;
-			}
+        } else if (element instanceof BTSConfiguration) {
+            if (((BTSConfiguration) element).getChildren().size() > 0) {
+                return Boolean.TRUE;
+            }
 
-		} else if (element instanceof BTSConfigItem)
-		{
-			if (((BTSConfigItem) element).getChildren().size() > 0)
-			{
-				return Boolean.TRUE;
-			}
+        } else if (element instanceof BTSConfigItem) {
+            if (((BTSConfigItem) element).getChildren().size() > 0) {
+                return Boolean.TRUE;
+            }
 
-		}
-		return super.hasChildren(element);
-	}
+        }
+        return super.hasChildren(element);
+    }
 }

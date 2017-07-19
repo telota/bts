@@ -12,24 +12,21 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.swt.widgets.Shell;
 
-public class EditConfigurationHandler
-{
+public class EditConfigurationHandler {
 
-	@Optional
-	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell, IEclipseContext context)
-	{
-		BTSConfigurationDialog dialog = ContextInjectionFactory.make(BTSConfigurationDialog.class, context);
-		context.set(BTSConfigurationDialog.class, dialog);
+    @Optional
+    @Execute
+    public void execute(@Named(IServiceConstants.ACTIVE_SHELL) final Shell shell, IEclipseContext context) {
+        BTSConfigurationDialog dialog = ContextInjectionFactory.make(BTSConfigurationDialog.class, context);
+        context.set(BTSConfigurationDialog.class, dialog);
 
-		if (dialog.open() == dialog.OK)
-		{
-		}
-	}
+        if (dialog.open() == dialog.OK) {
+        }
+    }
 
-	@CanExecute
-	public boolean canExecute(@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT_CONFIG) Boolean mayEdit) {
-		return (mayEdit != null && mayEdit.booleanValue());
-	}
+    @CanExecute
+    public boolean canExecute(@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT_CONFIG) Boolean mayEdit) {
+        return (mayEdit != null && mayEdit.booleanValue());
+    }
 
 }

@@ -39,14 +39,14 @@ import org.bbaw.bts.btsmodel.UserActionCounter;
  * @author Christoph Plutte
  */
 public interface UserActionCounterDao extends
-		GenericDao<UserActionCounter, String> {
+        GenericDao<UserActionCounter, String> {
 
-	/**
-	 * Lists UserActionCounter-objects which id starts with the given prefix.
-	 *
-	 * @param prefix the prefix
-	 * @param indexName the index name
-	 * @return the list counters that match given prefix
-	 */
-	List<UserActionCounter> autocomplete(String prefix, String indexName);
+    /**
+     * Lists UserActionCounter-objects which id starts with the given prefix.
+     *
+     * @param prefix    the prefix
+     * @param indexName the index name
+     * @return the list counters that match given prefix
+     */
+    List<UserActionCounter> autocomplete(String prefix, String indexName);
 }

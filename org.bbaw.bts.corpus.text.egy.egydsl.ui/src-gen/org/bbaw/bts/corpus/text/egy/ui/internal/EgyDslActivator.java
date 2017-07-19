@@ -19,77 +19,77 @@ import com.google.inject.Module;
 
 /**
  * This class was generated. Customizations should only happen in a newly
- * introduced subclass. 
+ * introduced subclass.
  */
 public class EgyDslActivator extends AbstractUIPlugin {
-	
-	public static final String ORG_BBAW_BTS_CORPUS_TEXT_EGY_EGYDSL = "org.bbaw.bts.corpus.text.egy.EgyDsl";
-	
-	private static final Logger logger = Logger.getLogger(EgyDslActivator.class);
-	
-	private static EgyDslActivator INSTANCE;
-	
-	private Map<String, Injector> injectors = Collections.synchronizedMap(Maps.<String, Injector> newHashMapWithExpectedSize(1));
-	
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		INSTANCE = this;
-	}
-	
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		injectors.clear();
-		INSTANCE = null;
-		super.stop(context);
-	}
-	
-	public static EgyDslActivator getInstance() {
-		return INSTANCE;
-	}
-	
-	public Injector getInjector(String language) {
-		synchronized (injectors) {
-			Injector injector = injectors.get(language);
-			if (injector == null) {
-				injectors.put(language, injector = createInjector(language));
-			}
-			return injector;
-		}
-	}
-	
-	protected Injector createInjector(String language) {
-		try {
-			Module runtimeModule = getRuntimeModule(language);
-			Module sharedStateModule = getSharedStateModule();
-			Module uiModule = getUiModule(language);
-			Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule, uiModule);
-			return Guice.createInjector(mergedModule);
-		} catch (Exception e) {
-			logger.error("Failed to create injector for " + language);
-			logger.error(e.getMessage(), e);
-			throw new RuntimeException("Failed to create injector for " + language, e);
-		}
-	}
 
-	protected Module getRuntimeModule(String grammar) {
-		if (ORG_BBAW_BTS_CORPUS_TEXT_EGY_EGYDSL.equals(grammar)) {
-			return new org.bbaw.bts.corpus.text.egy.EgyDslRuntimeModule();
-		}
-		
-		throw new IllegalArgumentException(grammar);
-	}
-	
-	protected Module getUiModule(String grammar) {
-		if (ORG_BBAW_BTS_CORPUS_TEXT_EGY_EGYDSL.equals(grammar)) {
-			return new org.bbaw.bts.corpus.text.egy.ui.EgyDslUiModule(this);
-		}
-		
-		throw new IllegalArgumentException(grammar);
-	}
-	
-	protected Module getSharedStateModule() {
-		return new SharedStateModule();
-	}
-	
+    public static final String ORG_BBAW_BTS_CORPUS_TEXT_EGY_EGYDSL = "org.bbaw.bts.corpus.text.egy.EgyDsl";
+
+    private static final Logger logger = Logger.getLogger(EgyDslActivator.class);
+
+    private static EgyDslActivator INSTANCE;
+
+    private Map<String, Injector> injectors = Collections.synchronizedMap(Maps.<String, Injector>newHashMapWithExpectedSize(1));
+
+    public static EgyDslActivator getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        INSTANCE = this;
+    }
+
+    @Override
+    public void stop(BundleContext context) throws Exception {
+        injectors.clear();
+        INSTANCE = null;
+        super.stop(context);
+    }
+
+    public Injector getInjector(String language) {
+        synchronized (injectors) {
+            Injector injector = injectors.get(language);
+            if (injector == null) {
+                injectors.put(language, injector = createInjector(language));
+            }
+            return injector;
+        }
+    }
+
+    protected Injector createInjector(String language) {
+        try {
+            Module runtimeModule = getRuntimeModule(language);
+            Module sharedStateModule = getSharedStateModule();
+            Module uiModule = getUiModule(language);
+            Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule, uiModule);
+            return Guice.createInjector(mergedModule);
+        } catch (Exception e) {
+            logger.error("Failed to create injector for " + language);
+            logger.error(e.getMessage(), e);
+            throw new RuntimeException("Failed to create injector for " + language, e);
+        }
+    }
+
+    protected Module getRuntimeModule(String grammar) {
+        if (ORG_BBAW_BTS_CORPUS_TEXT_EGY_EGYDSL.equals(grammar)) {
+            return new org.bbaw.bts.corpus.text.egy.EgyDslRuntimeModule();
+        }
+
+        throw new IllegalArgumentException(grammar);
+    }
+
+    protected Module getUiModule(String grammar) {
+        if (ORG_BBAW_BTS_CORPUS_TEXT_EGY_EGYDSL.equals(grammar)) {
+            return new org.bbaw.bts.corpus.text.egy.ui.EgyDslUiModule(this);
+        }
+
+        throw new IllegalArgumentException(grammar);
+    }
+
+    protected Module getSharedStateModule() {
+        return new SharedStateModule();
+    }
+
 }

@@ -24,90 +24,90 @@ import com.google.inject.name.Named;
  */
 public class DefaultContentAssistantFactory implements IContentAssistantFactory {
 
-	@Inject(optional = true)
-	private IContentAssistProcessor contentAssistProcessor;
-	
-	@Inject(optional=true)
-	private IDialogSettings dialogSettings;
-	
-	@Inject(optional=true)
-	@Named("xtext.enable.styledLables")
-	private boolean enableStyledLabels = true;
-	
-	public IContentAssistant createConfiguredAssistant(SourceViewerConfiguration configuration,
-			ISourceViewer sourceViewer) {
-		ContentAssistant assistant = createAssistant();
-		configureContentAssistant(assistant, configuration, sourceViewer);
-		return assistant;
-	}
+    @Inject(optional = true)
+    private IContentAssistProcessor contentAssistProcessor;
 
-	protected ContentAssistant createAssistant() {
-		return new ContentAssistant();
-	}
-	
-	protected void configureContentAssistant(ContentAssistant assistant, SourceViewerConfiguration configuration, ISourceViewer sourceViewer) {
-		configureDefaults(assistant, configuration, sourceViewer);
-		loadPreferences(assistant);
-	}
+    @Inject(optional = true)
+    private IDialogSettings dialogSettings;
 
-	protected void loadPreferences(ContentAssistant assistant) {
-		// TODO load CA preferences
-	}
+    @Inject(optional = true)
+    @Named("xtext.enable.styledLables")
+    private boolean enableStyledLabels = true;
 
-	private void configureDefaults(ContentAssistant assistant, SourceViewerConfiguration configuration, ISourceViewer sourceViewer) {
-		setAutoInsert(assistant);
-		setAutoActivation(assistant);
-		setContentAssistProcessor(assistant, configuration, sourceViewer);
-		setInformationControlCreator(assistant, configuration, sourceViewer);
-		setDialogSettings(assistant);
-		setColoredLabels(assistant);
-	}
+    public IContentAssistant createConfiguredAssistant(SourceViewerConfiguration configuration,
+                                                       ISourceViewer sourceViewer) {
+        ContentAssistant assistant = createAssistant();
+        configureContentAssistant(assistant, configuration, sourceViewer);
+        return assistant;
+    }
 
-	private void setDialogSettings(ContentAssistant assistant) {
-		if (dialogSettings != null)
-			assistant.setRestoreCompletionProposalSize(dialogSettings);
-	}
-	
-	private void setInformationControlCreator(ContentAssistant assistant, SourceViewerConfiguration configuration,
-			ISourceViewer sourceViewer) {
-		if (configuration != null && sourceViewer != null)
-			assistant.setInformationControlCreator(configuration.getInformationControlCreator(sourceViewer));
-	}
+    protected ContentAssistant createAssistant() {
+        return new ContentAssistant();
+    }
 
-	protected void setAutoInsert(ContentAssistant assistant) {
-		assistant.enableAutoInsert(true);
-	}
-	
-	protected void setAutoActivation(ContentAssistant assistant) {
-		if (contentAssistProcessor != null) {
-			boolean activated = contentAssistProcessor.getCompletionProposalAutoActivationCharacters() != null;
-			assistant.enableAutoActivation(activated);
-		}
-	}
-	
-	protected void setContentAssistProcessor(ContentAssistant assistant, SourceViewerConfiguration configuration, ISourceViewer sourceViewer) {
-		if (contentAssistProcessor != null) {
-			for(String contentType: configuration.getConfiguredContentTypes(sourceViewer)) {
-				assistant.setContentAssistProcessor(contentAssistProcessor, contentType);
-			}
-			if (contentAssistProcessor instanceof ICompletionListener) {
-				assistant.setRepeatedInvocationMode(true);
-				assistant.setStatusLineVisible(true);
-				assistant.addCompletionListener((ICompletionListener) contentAssistProcessor);
-			}
-		}
-	}
+    protected void configureContentAssistant(ContentAssistant assistant, SourceViewerConfiguration configuration, ISourceViewer sourceViewer) {
+        configureDefaults(assistant, configuration, sourceViewer);
+        loadPreferences(assistant);
+    }
 
-	public void setDialogSettings(IDialogSettings dialogSettings) {
-		this.dialogSettings = dialogSettings;
-	}
+    protected void loadPreferences(ContentAssistant assistant) {
+        // TODO load CA preferences
+    }
 
-	public IDialogSettings getDialogSettings() {
-		return dialogSettings;
-	}
-	
-	protected void setColoredLabels(ContentAssistant assistant) {
-		assistant.enableColoredLabels(enableStyledLabels);
-	}
-	
+    private void configureDefaults(ContentAssistant assistant, SourceViewerConfiguration configuration, ISourceViewer sourceViewer) {
+        setAutoInsert(assistant);
+        setAutoActivation(assistant);
+        setContentAssistProcessor(assistant, configuration, sourceViewer);
+        setInformationControlCreator(assistant, configuration, sourceViewer);
+        setDialogSettings(assistant);
+        setColoredLabels(assistant);
+    }
+
+    private void setDialogSettings(ContentAssistant assistant) {
+        if (dialogSettings != null)
+            assistant.setRestoreCompletionProposalSize(dialogSettings);
+    }
+
+    private void setInformationControlCreator(ContentAssistant assistant, SourceViewerConfiguration configuration,
+                                              ISourceViewer sourceViewer) {
+        if (configuration != null && sourceViewer != null)
+            assistant.setInformationControlCreator(configuration.getInformationControlCreator(sourceViewer));
+    }
+
+    protected void setAutoInsert(ContentAssistant assistant) {
+        assistant.enableAutoInsert(true);
+    }
+
+    protected void setAutoActivation(ContentAssistant assistant) {
+        if (contentAssistProcessor != null) {
+            boolean activated = contentAssistProcessor.getCompletionProposalAutoActivationCharacters() != null;
+            assistant.enableAutoActivation(activated);
+        }
+    }
+
+    protected void setContentAssistProcessor(ContentAssistant assistant, SourceViewerConfiguration configuration, ISourceViewer sourceViewer) {
+        if (contentAssistProcessor != null) {
+            for (String contentType : configuration.getConfiguredContentTypes(sourceViewer)) {
+                assistant.setContentAssistProcessor(contentAssistProcessor, contentType);
+            }
+            if (contentAssistProcessor instanceof ICompletionListener) {
+                assistant.setRepeatedInvocationMode(true);
+                assistant.setStatusLineVisible(true);
+                assistant.addCompletionListener((ICompletionListener) contentAssistProcessor);
+            }
+        }
+    }
+
+    public IDialogSettings getDialogSettings() {
+        return dialogSettings;
+    }
+
+    public void setDialogSettings(IDialogSettings dialogSettings) {
+        this.dialogSettings = dialogSettings;
+    }
+
+    protected void setColoredLabels(ContentAssistant assistant) {
+        assistant.enableColoredLabels(enableStyledLabels);
+    }
+
 }

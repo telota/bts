@@ -12,21 +12,18 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
-public class EditProjectHandler
-{
+public class EditProjectHandler {
 
-	@Execute
-	public void execute(IEclipseContext context, BTSProjectService projectService,
-			@Named(BTSCoreConstants.MAIN_PROJECT) @Optional BTSProject project)
-	{
+    @Execute
+    public void execute(IEclipseContext context, BTSProjectService projectService,
+                        @Named(BTSCoreConstants.MAIN_PROJECT) @Optional BTSProject project) {
 
-		NewProjectWizard wizard = new NewProjectWizard(project, projectService);
-		WizardDialog dialog = new WizardDialog(new Shell(), wizard);
-		if (dialog.open() == dialog.OK)
-		{
-			System.out.println("project edited.");
+        NewProjectWizard wizard = new NewProjectWizard(project, projectService);
+        WizardDialog dialog = new WizardDialog(new Shell(), wizard);
+        if (dialog.open() == dialog.OK) {
+            System.out.println("project edited.");
 
-		}
-	}
+        }
+    }
 
 }

@@ -8,7 +8,8 @@
 package org.eclipse.xtext.ui.editor.model;
 
 /**
- * TODO: Move to dedicated deprecated source folder / remove entirely 
+ * TODO: Move to dedicated deprecated source folder / remove entirely
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
  */
 @Deprecated

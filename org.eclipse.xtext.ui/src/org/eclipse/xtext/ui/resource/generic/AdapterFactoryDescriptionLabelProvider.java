@@ -8,12 +8,12 @@ import com.google.inject.Inject;
 
 public class AdapterFactoryDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
 
-	@Inject
-	private AdapterFactoryLabelProvider delegate;
-	
-	@Override
-	public Object image(IEObjectDescription element) {
-		return delegate.getImage(element.getEObjectOrProxy());
-	}
-	
+    @Inject
+    private AdapterFactoryLabelProvider delegate;
+
+    @Override
+    public Object image(IEObjectDescription element) {
+        return delegate.getImage(element.getEObjectOrProxy());
+    }
+
 }

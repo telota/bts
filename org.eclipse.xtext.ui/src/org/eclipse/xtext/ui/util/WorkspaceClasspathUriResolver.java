@@ -25,7 +25,7 @@ public class WorkspaceClasspathUriResolver extends JdtClasspathUriResolver {
 
     @Override
     public URI resolve(Object context, URI classpathUri) {
-        if(!(context instanceof IResource)) {
+        if (!(context instanceof IResource)) {
             throw new IllegalArgumentException("Context must implement IResource");
         }
         IResource resource = (IResource) context;
@@ -34,9 +34,9 @@ public class WorkspaceClasspathUriResolver extends JdtClasspathUriResolver {
                 IProject project = resource.getProject();
                 IJavaProject javaProject = JavaCore.create(project);
                 URI result = findResourceInWorkspace(javaProject, classpathUri);
- 				if (classpathUri.fragment() != null)
- 					result = result.appendFragment(classpathUri.fragment());
- 				return result;
+                if (classpathUri.fragment() != null)
+                    result = result.appendFragment(classpathUri.fragment());
+                return result;
             }
         } catch (Exception exc) {
             throw new ClasspathUriResolutionException(exc);

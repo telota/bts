@@ -31,55 +31,58 @@ import com.google.inject.TypeLiteral;
  */
 public interface IOutlineContribution extends IPreferenceStoreInitializer {
 
-	@Retention(RUNTIME)
-	@Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
-	@BindingAnnotation
-	public @interface All {}
-	
-	@Retention(RUNTIME)
-	@Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
-	@BindingAnnotation
-	public @interface Sort {}
+    void register(OutlinePage outlinePage);
 
-	@Retention(RUNTIME)
-	@Target( { ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD })
-	@BindingAnnotation
-	public @interface LinkWithEditor {}
+    void deregister(OutlinePage outlinePage);
 
-	void register(OutlinePage outlinePage);
+    @Retention(RUNTIME)
+    @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+    @BindingAnnotation
+    public @interface All {
+    }
 
-	void deregister(OutlinePage outlinePage);
-	
-	class Composite implements IOutlineContribution {
-		
-		private List<IOutlineContribution> contributions;
-		
-		@Inject
-		protected void initialize(Injector injector) {
+    @Retention(RUNTIME)
+    @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+    @BindingAnnotation
+    public @interface Sort {
+    }
+
+    @Retention(RUNTIME)
+    @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+    @BindingAnnotation
+    public @interface LinkWithEditor {
+    }
+
+    class Composite implements IOutlineContribution {
+
+        private List<IOutlineContribution> contributions;
+
+        @Inject
+        protected void initialize(Injector injector) {
             contributions = Lists.newArrayList();
-			List<Binding<IOutlineContribution>> bindings = injector.findBindingsByType(TypeLiteral
-					.get(IOutlineContribution.class));
-			for (Binding<IOutlineContribution> binding : bindings) {
-				contributions.add(injector.getInstance(binding.getKey()));
-			}
-		}
-		
-		public void register(OutlinePage outlinePage) {
-			for(IOutlineContribution contribution: contributions)
-				contribution.register(outlinePage);
-			TreeViewer treeViewer = outlinePage.getTreeViewer();
-			if(!treeViewer.getTree().isDisposed()) 
-				treeViewer.refresh();
-		}
-		
-		public void deregister(OutlinePage outlinePage) {
-			for(IOutlineContribution contribution: contributions)
-				contribution.deregister(outlinePage);
-		}
-		
-		public void initialize(IPreferenceStoreAccess access) {
-			for(IOutlineContribution contribution: contributions)
-				contribution.initialize(access);
-		}
-	}
+            List<Binding<IOutlineContribution>> bindings = injector.findBindingsByType(TypeLiteral
+                    .get(IOutlineContribution.class));
+            for (Binding<IOutlineContribution> binding : bindings) {
+                contributions.add(injector.getInstance(binding.getKey()));
+            }
+        }
+
+        public void register(OutlinePage outlinePage) {
+            for (IOutlineContribution contribution : contributions)
+                contribution.register(outlinePage);
+            TreeViewer treeViewer = outlinePage.getTreeViewer();
+            if (!treeViewer.getTree().isDisposed())
+                treeViewer.refresh();
+        }
+
+        public void deregister(OutlinePage outlinePage) {
+            for (IOutlineContribution contribution : contributions)
+                contribution.deregister(outlinePage);
+        }
+
+        public void initialize(IPreferenceStoreAccess access) {
+            for (IOutlineContribution contribution : contributions)
+                contribution.initialize(access);
+        }
+    }
 }

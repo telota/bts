@@ -35,485 +35,486 @@ import org.eclipselabs.emfjson.internal.JSONSave;
 
 /**
  * CouchDB, A simple client client for CouchDB Server.
- * 
- * 
- * @author ghillairet
  *
+ * @author ghillairet
  */
 public class CouchDB {
 
-	public static JsonNode getContent(URI uri) {
-		JsonNode node = null;
-		
-		setAuthenticator(uri);
-		
-		HttpURLConnection connection = null;
-		try {
-			connection = getGetConnection(uri);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			if (connection != null && connection.getResponseCode() == 200) {
-				node = getRootNode(connection.getInputStream());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		if (uri.userInfo() != null) {
-			Authenticator.setDefault(null);
-		}
-		
-		return node;
-	}
+    private static final String rev = "_rev";
+    private static final String allDbs = "_all_dbs";
+    private static final String allDocs = "_all_docs";
+    private static final String POST = "POST";
+    private static final String PUT = "PUT";
+    private static final String DELETE = "DELETE";
 
-	public static HttpURLConnection getGetConnection(URI uri) throws IOException {
-		URL url = null;
-		try {
-			url = new URL(uri.toString());
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		if (url != null) {
-			return (HttpURLConnection) url.openConnection();
-		} else {
-			return null;
-		}
-	}
+    public static JsonNode getContent(URI uri) {
+        JsonNode node = null;
 
-	public static HttpURLConnection getConnection(URI uri, String type) throws MalformedURLException, IOException {
-		final HttpURLConnection connection = (HttpURLConnection) new URL(uri.toString()).openConnection();
+        setAuthenticator(uri);
 
-		connection.setDoOutput(true);
-		connection.setRequestMethod(type);
-		connection.setRequestProperty("Content-Type", "application/json");
+        HttpURLConnection connection = null;
+        try {
+            connection = getGetConnection(uri);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return connection;
-	}
+        try {
+            if (connection != null && connection.getResponseCode() == 200) {
+                node = getRootNode(connection.getInputStream());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	public static boolean isCouchDbService(URI uri) {		
-		final URI baseURI = uri.trimSegments(uri.segmentCount());
-		boolean isCouchDB = false;
-		setAuthenticator(uri);
-		
-		try {
-			HttpURLConnection connection = getGetConnection(baseURI);
-			InputStream inStream = connection.getInputStream();
-			try {
-				JsonNode node = getRootNode(inStream);
-				isCouchDB = node.has("couchdb");
-			} catch (Exception e){
-				return false;
-			} finally {
-				
-				if (uri.userInfo() != null) {
-					Authenticator.setDefault(null);
-				}
-				
-				inStream.close();
-				connection.disconnect();
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
-		
-		if (uri.userInfo() != null) {
-			Authenticator.setDefault(null);
-		}
-		
-		return isCouchDB;
-	}
+        if (uri.userInfo() != null) {
+            Authenticator.setDefault(null);
+        }
 
-	public static void createDataBase(URI uri) {
-		setAuthenticator(uri);
-		
-		HttpURLConnection connection;
-		try {
-			String db = uri.segments()[0];
-			URI baseURI = uri.trimSegments(uri.segmentCount());
+        return node;
+    }
 
-			connection = getGetConnection(baseURI.appendSegment(db));
-			connection.setDoOutput(true);
-			connection.setRequestMethod(PUT);
+    public static HttpURLConnection getGetConnection(URI uri) throws IOException {
+        URL url = null;
+        try {
+            url = new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        if (url != null) {
+            return (HttpURLConnection) url.openConnection();
+        } else {
+            return null;
+        }
+    }
 
-			if(checkResponse(connection.getInputStream()) == 0) {
-				throw new IllegalArgumentException("Could not create database on "+uri);
-			}
+    public static HttpURLConnection getConnection(URI uri, String type) throws MalformedURLException, IOException {
+        final HttpURLConnection connection = (HttpURLConnection) new URL(uri.toString()).openConnection();
 
-			connection.disconnect();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		if (uri.userInfo() != null) {
-			Authenticator.setDefault(null);
-		}
-	}
+        connection.setDoOutput(true);
+        connection.setRequestMethod(type);
+        connection.setRequestProperty("Content-Type", "application/json");
 
-	public static int checkDataBase(URI uri) {
-		final String[] segments = uri.segments();
-		int result = 0;
-		
-		if (segments.length == 0) {
-			throw new IllegalArgumentException();
-		} else {
-			
-			setAuthenticator(uri);
-			
-			String database = segments[0];
-			URI baseURI = uri.trimSegments(uri.segmentCount());
-			
-			HttpURLConnection connection = null;
-			try {
-				connection = getGetConnection(baseURI.appendSegment(allDbs));
-				connection.setAllowUserInteraction(true);
-				connection.setRequestProperty("Authorization", "Basic");
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-				return 0;
-			} catch (IOException e) {
-				e.printStackTrace();
-				return 0;
-			}
+        return connection;
+    }
 
-			InputStream inputStream = null;
-			try {
-				inputStream = connection.getInputStream();
-			} catch (IOException e) {
-				e.printStackTrace();
-				return 0;
-			}
+    public static boolean isCouchDbService(URI uri) {
+        final URI baseURI = uri.trimSegments(uri.segmentCount());
+        boolean isCouchDB = false;
+        setAuthenticator(uri);
 
-			JsonNode node = getRootNode(inputStream);
+        try {
+            HttpURLConnection connection = getGetConnection(baseURI);
+            InputStream inStream = connection.getInputStream();
+            try {
+                JsonNode node = getRootNode(inStream);
+                isCouchDB = node.has("couchdb");
+            } catch (Exception e) {
+                return false;
+            } finally {
 
-			if (node != null) {
-				if (node.isArray()) {
-					for (Iterator<JsonNode> it = node.getElements(); it.hasNext() && result == 0;) {
-						JsonNode n = it.next();
+                if (uri.userInfo() != null) {
+                    Authenticator.setDefault(null);
+                }
 
-						if (database.equalsIgnoreCase(n.getTextValue())) {
-							result = 1;
-						}
-					}
-				}
-			}
-		}
-		return result;
-	}
+                inStream.close();
+                connection.disconnect();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	public static String[] getListOfDatabases(String url) {
-		URI uri = URI.createURI(url);
-		try {
-			
-			setAuthenticator(uri);
-			
-			HttpURLConnection connection = getGetConnection(uri.appendSegment(allDbs));
-			JsonNode node = getRootNode(connection.getInputStream());
+        if (uri.userInfo() != null) {
+            Authenticator.setDefault(null);
+        }
 
-			if (uri.userInfo() != null) {
-				Authenticator.setDefault(null);
-			}
-			
-			if (node != null) {
-				
-				if (node.isArray()) {
-					
-					String[] result = new String[1];
-					
-					for (Iterator<JsonNode> it = node.getElements(); it.hasNext();) {
-						JsonNode n = it.next();
-						String value = n.getTextValue();
-					
-						if (!value.startsWith("_")){
-							result[result.length-1] = value;
-						
-							if (it.hasNext()) {
-								result = Arrays.copyOf(result, result.length+1);
-							}
-						}
-					}
-					
-					return result;
-				}
-			}
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        return isCouchDB;
+    }
 
-		return null;
-	}
+    public static void createDataBase(URI uri) {
+        setAuthenticator(uri);
 
-	public static JsonNode getListOfDocuments(String url) {
-		URI uri = URI.createURI(url);
-		try {
-			
-			setAuthenticator(uri);
-			
-			HttpURLConnection connection = getGetConnection(uri.appendSegment(allDocs));
-			JsonNode node = getRootNode(connection.getInputStream());
+        HttpURLConnection connection;
+        try {
+            String db = uri.segments()[0];
+            URI baseURI = uri.trimSegments(uri.segmentCount());
 
-			if (uri.userInfo() != null) {
-				Authenticator.setDefault(null);
-			}
-			
-			if (node != null) {
-				if (node.isObject()) {
-					return node.get("rows");
-				}
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            connection = getGetConnection(baseURI.appendSegment(db));
+            connection.setDoOutput(true);
+            connection.setRequestMethod(PUT);
 
-		return null;
-	}
+            if (checkResponse(connection.getInputStream()) == 0) {
+                throw new IllegalArgumentException("Could not create database on " + uri);
+            }
 
-	public static URI getDocumentURI(URI baseURI, InputStream inStream) throws JsonParseException, JsonMappingException, IOException {
-		final JsonNode rootNode = getRootNode(inStream);
+            connection.disconnect();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		URI result = null;
-		if (rootNode.isObject()) {
-			JsonNode okNode = rootNode.findValue("ok");
+        if (uri.userInfo() != null) {
+            Authenticator.setDefault(null);
+        }
+    }
 
-			if (okNode.getBooleanValue()) {
-				JsonNode idNode = rootNode.findValue("id");
-				
-				//plutte added check if baseURI not already ends with id
-				if (!baseURI.path().endsWith(idNode.getTextValue()))
-				{
-					result = baseURI.appendSegment(idNode.getTextValue());
-				}
-				else
-				{
-					result = baseURI;
-				}
-			}
-		}
-		return result;
-	}
+    public static int checkDataBase(URI uri) {
+        final String[] segments = uri.segments();
+        int result = 0;
 
-	public static String getLastRevisionID(URI uri) {
-		try {
-			HttpURLConnection connection = getGetConnection(uri);
-			JsonNode node = getRootNode(connection.getInputStream());
-			return node.findValue(rev).getTextValue();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+        if (segments.length == 0) {
+            throw new IllegalArgumentException();
+        } else {
 
-	public static URI createOrUpdateDocument(URI uri, JSONSave writer, JsonNode current) {
-		if (current.isArray() && current.getElements().hasNext()) {
-			throw new IllegalArgumentException("Document Root must be an Object");
-		}
-		if (isUpdate(uri)) {
-			return updateDocument(uri, writer, current);
-		} else {
-			return createDocument(uri, writer, current);
-		}
-	}
+            setAuthenticator(uri);
 
-	public static void delete(URI uri) {
-		if (checkDataBase(uri) == 1) {
-			String[] segments = uri.segments();
-			if (segments.length < 3) {
-				HttpURLConnection connection;
-				try {
-					connection = getConnection(uri, DELETE);
-					connection.connect();
-					int code = connection.getResponseCode();
-					if (code == 200) {
-						connection.getInputStream();
-					}
-					connection.disconnect();
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}	
-	}
+            String database = segments[0];
+            URI baseURI = uri.trimSegments(uri.segmentCount());
 
-	public static JsonParser getJsonParser(InputStream inStream) {
-		final JsonFactory jsonFactory = new JsonFactory();  
-		JsonParser jp = null;
-		try {
-			jp = jsonFactory.createJsonParser(inStream);
-		} catch (JsonParseException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		return jp;
-	}
+            HttpURLConnection connection = null;
+            try {
+                connection = getGetConnection(baseURI.appendSegment(allDbs));
+                connection.setAllowUserInteraction(true);
+                connection.setRequestProperty("Authorization", "Basic");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return 0;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
 
-	private static URI updateDocument(URI uri, JSONSave writer, JsonNode current) {
-		final String lastRevision = getLastRevisionID(uri);
-		if (current.isObject()) {
-			((ObjectNode)current).put(rev, lastRevision);
-		}
+            InputStream inputStream = null;
+            try {
+                inputStream = connection.getInputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
 
-		HttpURLConnection connection;
-		try {
-			connection = getConnection(uri, PUT);
-			OutputStream output = null;
-			try {
-				output = connection.getOutputStream();
-				writer.writeValue(output, current);
-			} finally {
-				if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
-			}
-			try {
-				if (connection.getResponseCode() >= 400) {
-					System.err.println(connection.getResponseMessage());
-					System.err.println(getRootNode(connection.getErrorStream()));
-					throw new HTTPException(connection.getResponseCode());
-				} else {
-					return uri;
-				}
-			} catch (JsonParseException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            JsonNode node = getRootNode(inputStream);
 
-		return uri;
-	}
+            if (node != null) {
+                if (node.isArray()) {
+                    for (Iterator<JsonNode> it = node.getElements(); it.hasNext() && result == 0; ) {
+                        JsonNode n = it.next();
 
-	private static URI createDocument(URI uri, JSONSave writer, JsonNode current) {
-		HttpURLConnection connection = null;
-		try {
-			connection = getConnection(uri, uri.segmentCount() == 1 ? POST : PUT);
-			OutputStream output = null;
-			try {
-				if (current != null && current.isObject()) {
-					output = connection.getOutputStream();
-					writer.writeValue(output, current);
-				} else {
-					output = connection.getOutputStream();
-					writer.writeValue(output, emptyNode());
-				}
-			} finally {
-				if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
-			}
-			try {
-				if (connection.getResponseCode() >= 400) {
-					System.err.println(connection.getResponseMessage());
-					System.err.println(getRootNode(connection.getErrorStream()));
-					throw new HTTPException(connection.getResponseCode());
-				} else {
-					return getDocumentURI(uri, connection.getInputStream());
-				}
-			} catch (JsonParseException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+                        if (database.equalsIgnoreCase(n.getTextValue())) {
+                            result = 1;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
-		return null;
-	}
+    public static String[] getListOfDatabases(String url) {
+        URI uri = URI.createURI(url);
+        try {
 
-	private static boolean isUpdate(URI uri) {
-		if (uri.segmentCount() > 1) {
-			try {
-				HttpURLConnection connection = getGetConnection(uri);
-				if (connection.getResponseCode() == 200) {
-					return true;
-				}
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
+            setAuthenticator(uri);
 
-	private static void setAuthenticator(URI uri) {
-		if (uri.userInfo() != null) {
-			final String username = uri.userInfo().split(":")[0];
-			final String password = uri.userInfo().split(":")[1];
+            HttpURLConnection connection = getGetConnection(uri.appendSegment(allDbs));
+            JsonNode node = getRootNode(connection.getInputStream());
 
-			Authenticator.setDefault(new Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(username, password.toCharArray());
-				}
-			});
-			
-		}
-	}
-	
-	private static int checkResponse(InputStream inStream) {
-		try {
-			JsonNode node = getRootNode(inStream);
-			if (node != null && node.isObject()) {
-				return node.findValue("ok") != null ? 1 : 0;
-			}
-		} finally {
-			try {
-				inStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return 0;
-	}
+            if (uri.userInfo() != null) {
+                Authenticator.setDefault(null);
+            }
 
-	private static JsonNode getRootNode(InputStream inStream) {
-		final JsonParser parser = getJsonParser(inStream);
-		final ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.readValue(parser, JsonNode.class);
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+            if (node != null) {
 
-	private static JsonNode emptyNode() {
-		ObjectMapper mapper = new ObjectMapper();
-		return mapper.createObjectNode();
-	}
+                if (node.isArray()) {
 
-	private static final String rev = "_rev";
-	private static final String allDbs = "_all_dbs";
-	private static final String allDocs = "_all_docs";
-	private static final String POST = "POST";
-	private static final String PUT = "PUT";
-	private static final String DELETE = "DELETE";
+                    String[] result = new String[1];
+
+                    for (Iterator<JsonNode> it = node.getElements(); it.hasNext(); ) {
+                        JsonNode n = it.next();
+                        String value = n.getTextValue();
+
+                        if (!value.startsWith("_")) {
+                            result[result.length - 1] = value;
+
+                            if (it.hasNext()) {
+                                result = Arrays.copyOf(result, result.length + 1);
+                            }
+                        }
+                    }
+
+                    return result;
+                }
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static JsonNode getListOfDocuments(String url) {
+        URI uri = URI.createURI(url);
+        try {
+
+            setAuthenticator(uri);
+
+            HttpURLConnection connection = getGetConnection(uri.appendSegment(allDocs));
+            JsonNode node = getRootNode(connection.getInputStream());
+
+            if (uri.userInfo() != null) {
+                Authenticator.setDefault(null);
+            }
+
+            if (node != null) {
+                if (node.isObject()) {
+                    return node.get("rows");
+                }
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static URI getDocumentURI(URI baseURI, InputStream inStream) throws JsonParseException, JsonMappingException, IOException {
+        final JsonNode rootNode = getRootNode(inStream);
+
+        URI result = null;
+        if (rootNode.isObject()) {
+            JsonNode okNode = rootNode.findValue("ok");
+
+            if (okNode.getBooleanValue()) {
+                JsonNode idNode = rootNode.findValue("id");
+
+                //plutte added check if baseURI not already ends with id
+                if (!baseURI.path().endsWith(idNode.getTextValue())) {
+                    result = baseURI.appendSegment(idNode.getTextValue());
+                } else {
+                    result = baseURI;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static String getLastRevisionID(URI uri) {
+        try {
+            HttpURLConnection connection = getGetConnection(uri);
+            JsonNode node = getRootNode(connection.getInputStream());
+            return node.findValue(rev).getTextValue();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static URI createOrUpdateDocument(URI uri, JSONSave writer, JsonNode current) {
+        if (current.isArray() && current.getElements().hasNext()) {
+            throw new IllegalArgumentException("Document Root must be an Object");
+        }
+        if (isUpdate(uri)) {
+            return updateDocument(uri, writer, current);
+        } else {
+            return createDocument(uri, writer, current);
+        }
+    }
+
+    public static void delete(URI uri) {
+        if (checkDataBase(uri) == 1) {
+            String[] segments = uri.segments();
+            if (segments.length < 3) {
+                HttpURLConnection connection;
+                try {
+                    connection = getConnection(uri, DELETE);
+                    connection.connect();
+                    int code = connection.getResponseCode();
+                    if (code == 200) {
+                        connection.getInputStream();
+                    }
+                    connection.disconnect();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static JsonParser getJsonParser(InputStream inStream) {
+        final JsonFactory jsonFactory = new JsonFactory();
+        JsonParser jp = null;
+        try {
+            jp = jsonFactory.createJsonParser(inStream);
+        } catch (JsonParseException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return jp;
+    }
+
+    private static URI updateDocument(URI uri, JSONSave writer, JsonNode current) {
+        final String lastRevision = getLastRevisionID(uri);
+        if (current.isObject()) {
+            ((ObjectNode) current).put(rev, lastRevision);
+        }
+
+        HttpURLConnection connection;
+        try {
+            connection = getConnection(uri, PUT);
+            OutputStream output = null;
+            try {
+                output = connection.getOutputStream();
+                writer.writeValue(output, current);
+            } finally {
+                if (output != null) try {
+                    output.close();
+                } catch (IOException logOrIgnore) {
+                }
+            }
+            try {
+                if (connection.getResponseCode() >= 400) {
+                    System.err.println(connection.getResponseMessage());
+                    System.err.println(getRootNode(connection.getErrorStream()));
+                    throw new HTTPException(connection.getResponseCode());
+                } else {
+                    return uri;
+                }
+            } catch (JsonParseException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return uri;
+    }
+
+    private static URI createDocument(URI uri, JSONSave writer, JsonNode current) {
+        HttpURLConnection connection = null;
+        try {
+            connection = getConnection(uri, uri.segmentCount() == 1 ? POST : PUT);
+            OutputStream output = null;
+            try {
+                if (current != null && current.isObject()) {
+                    output = connection.getOutputStream();
+                    writer.writeValue(output, current);
+                } else {
+                    output = connection.getOutputStream();
+                    writer.writeValue(output, emptyNode());
+                }
+            } finally {
+                if (output != null) try {
+                    output.close();
+                } catch (IOException logOrIgnore) {
+                }
+            }
+            try {
+                if (connection.getResponseCode() >= 400) {
+                    System.err.println(connection.getResponseMessage());
+                    System.err.println(getRootNode(connection.getErrorStream()));
+                    throw new HTTPException(connection.getResponseCode());
+                } else {
+                    return getDocumentURI(uri, connection.getInputStream());
+                }
+            } catch (JsonParseException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private static boolean isUpdate(URI uri) {
+        if (uri.segmentCount() > 1) {
+            try {
+                HttpURLConnection connection = getGetConnection(uri);
+                if (connection.getResponseCode() == 200) {
+                    return true;
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    private static void setAuthenticator(URI uri) {
+        if (uri.userInfo() != null) {
+            final String username = uri.userInfo().split(":")[0];
+            final String password = uri.userInfo().split(":")[1];
+
+            Authenticator.setDefault(new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password.toCharArray());
+                }
+            });
+
+        }
+    }
+
+    private static int checkResponse(InputStream inStream) {
+        try {
+            JsonNode node = getRootNode(inStream);
+            if (node != null && node.isObject()) {
+                return node.findValue("ok") != null ? 1 : 0;
+            }
+        } finally {
+            try {
+                inStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    private static JsonNode getRootNode(InputStream inStream) {
+        final JsonParser parser = getJsonParser(inStream);
+        final ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(parser, JsonNode.class);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static JsonNode emptyNode() {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.createObjectNode();
+    }
 }

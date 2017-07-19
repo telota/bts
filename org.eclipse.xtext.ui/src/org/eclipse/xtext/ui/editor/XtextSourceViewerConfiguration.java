@@ -45,137 +45,140 @@ import com.google.inject.Provider;
  */
 public class XtextSourceViewerConfiguration extends TextSourceViewerConfiguration {
 
-	@Inject
-	private IContentAssistantFactory contentAssistantFactory;
+    @Inject
+    private IContentAssistantFactory contentAssistantFactory;
 
-	@Inject
-	private IHyperlinkDetector detector;
+    @Inject
+    private IHyperlinkDetector detector;
 
-	@Inject
-	private Provider<IReconciler> reconcilerProvider;
+    @Inject
+    private Provider<IReconciler> reconcilerProvider;
 
-	@Inject
-	private Provider<IPresentationDamager> damagerProvider;
-	
-	@Inject
-	private Provider<IPresentationRepairer> repairerProvider;
-	
-	@Inject(optional=true)
-	private IContentFormatterFactory contentFormatterFactory;
-	
-	@Inject(optional=true)
-	private ISingleLineCommentHelper singleLineCommentHelper;
-	
-	@Inject
-	private Provider<XtextQuickAssistAssistant> quickAssistAssistentProvider;
-	
-	@Inject
-	private Provider<XtextPresentationReconciler> presentationReconcilerProvider;
-	
-	@Inject
-	private ITokenTypeToPartitionTypeMapper partitionTypesMapper;
-	
-	@Inject
-	private Provider<IAnnotationHover> annotationHoverProvider;
+    @Inject
+    private Provider<IPresentationDamager> damagerProvider;
 
-	@Inject
-	private Provider<ITextHover> textHoverProvider;
+    @Inject
+    private Provider<IPresentationRepairer> repairerProvider;
 
-	private IEditorPart  editor;
+    @Inject(optional = true)
+    private IContentFormatterFactory contentFormatterFactory;
 
-	/**
-	 * @since 2.4
-	 */
-	public IEditorPart getEditor() {
-		return editor;
-	}
-	/**
-	 * @since 2.4
-	 */
-	public void setEditor(IEditorPart editor) {
-		this.editor = editor;
-	}
+    @Inject(optional = true)
+    private ISingleLineCommentHelper singleLineCommentHelper;
 
-	@Override
-	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
-		IAnnotationHover hover = annotationHoverProvider.get();
-		if (hover instanceof ISourceViewerAware) {
-			((ISourceViewerAware) hover).setSourceViewer(sourceViewer);
-		}
-		return hover;
-	}
-	
-	@Override
-	public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
-		ITextHover hover = textHoverProvider.get();
-		if (hover instanceof ISourceViewerAware) {
-			((ISourceViewerAware) hover).setSourceViewer(sourceViewer);
-		}
-		return hover;
-	}
+    @Inject
+    private Provider<XtextQuickAssistAssistant> quickAssistAssistentProvider;
 
-	@Inject(optional = true)
-	private IQuickAssistAssistant quickAssistant;
+    @Inject
+    private Provider<XtextPresentationReconciler> presentationReconcilerProvider;
 
-	@Override
-	public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
-		return contentAssistantFactory.createConfiguredAssistant(this, sourceViewer);
-	}
+    @Inject
+    private ITokenTypeToPartitionTypeMapper partitionTypesMapper;
 
-	@Override
-	public IReconciler getReconciler(ISourceViewer sourceViewer) {
-		IReconciler reconciler = reconcilerProvider.get();
-		return reconciler;
-	}
+    @Inject
+    private Provider<IAnnotationHover> annotationHoverProvider;
 
-	@Override
-	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
-		XtextPresentationReconciler reconciler = getPresentationReconcilerProvider().get();
-		reconciler.setDocumentPartitioning(getDocumentPartitioning(sourceViewer));
-		IPresentationRepairer repairer = repairerProvider.get();
-		IPresentationDamager damager = damagerProvider.get();
-		String[] types = partitionTypesMapper.getSupportedPartitionTypes();
-		for (String partitionType : types) {
-			reconciler.setRepairer(repairer, partitionType);
-			reconciler.setDamager(damager, partitionType);
-		}
-		return reconciler;
-	}
-	
-	@Override
-	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
-		return partitionTypesMapper.getSupportedPartitionTypes();
-	}
+    @Inject
+    private Provider<ITextHover> textHoverProvider;
 
-	protected String getDocumentPartitioning(ISourceViewer sourceViewer) {
-		return getConfiguredDocumentPartitioning(sourceViewer);
-	}
+    private IEditorPart editor;
+    @Inject(optional = true)
+    private IQuickAssistAssistant quickAssistant;
+    @Inject
+    private AbstractEditStrategyProvider editStrategyProvider;
+    @Inject
+    private DoubleClickStrategyProvider doubleClickStrategyProvider;
 
-	@Override
-	public IHyperlinkDetector[] getHyperlinkDetectors(ISourceViewer sourceViewer) {
-		List<IHyperlinkDetector> detectors = new LinkedList<IHyperlinkDetector>();
-		IHyperlinkDetector[] inheritedDetectors = super.getHyperlinkDetectors(sourceViewer);
-		if (inheritedDetectors != null) {
-			for (final IHyperlinkDetector detector : inheritedDetectors) {
-				detectors.add(new IHyperlinkDetector() {
-					public IHyperlink[] detectHyperlinks(ITextViewer textViewer, IRegion region,
-							boolean canShowMultipleHyperlinks) {
-						try {
-							return detector.detectHyperlinks(textViewer, region, canShowMultipleHyperlinks);
-						}
-						catch (Throwable e) {
-							// fail safe hyperlink detector - prevent others
-							// from failing
-						}
-						return null;
-					}
+    /**
+     * @since 2.4
+     */
+    public IEditorPart getEditor() {
+        return editor;
+    }
 
-				});
-			}
-		}
-		detectors.add(detector);
-		return detectors.toArray(new IHyperlinkDetector[detectors.size()]);
-	}
+    /**
+     * @since 2.4
+     */
+    public void setEditor(IEditorPart editor) {
+        this.editor = editor;
+    }
+
+    @Override
+    public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
+        IAnnotationHover hover = annotationHoverProvider.get();
+        if (hover instanceof ISourceViewerAware) {
+            ((ISourceViewerAware) hover).setSourceViewer(sourceViewer);
+        }
+        return hover;
+    }
+
+    @Override
+    public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
+        ITextHover hover = textHoverProvider.get();
+        if (hover instanceof ISourceViewerAware) {
+            ((ISourceViewerAware) hover).setSourceViewer(sourceViewer);
+        }
+        return hover;
+    }
+
+    @Override
+    public IContentAssistant getContentAssistant(ISourceViewer sourceViewer) {
+        return contentAssistantFactory.createConfiguredAssistant(this, sourceViewer);
+    }
+
+    @Override
+    public IReconciler getReconciler(ISourceViewer sourceViewer) {
+        IReconciler reconciler = reconcilerProvider.get();
+        return reconciler;
+    }
+
+    @Override
+    public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
+        XtextPresentationReconciler reconciler = getPresentationReconcilerProvider().get();
+        reconciler.setDocumentPartitioning(getDocumentPartitioning(sourceViewer));
+        IPresentationRepairer repairer = repairerProvider.get();
+        IPresentationDamager damager = damagerProvider.get();
+        String[] types = partitionTypesMapper.getSupportedPartitionTypes();
+        for (String partitionType : types) {
+            reconciler.setRepairer(repairer, partitionType);
+            reconciler.setDamager(damager, partitionType);
+        }
+        return reconciler;
+    }
+
+    @Override
+    public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
+        return partitionTypesMapper.getSupportedPartitionTypes();
+    }
+
+    protected String getDocumentPartitioning(ISourceViewer sourceViewer) {
+        return getConfiguredDocumentPartitioning(sourceViewer);
+    }
+
+    @Override
+    public IHyperlinkDetector[] getHyperlinkDetectors(ISourceViewer sourceViewer) {
+        List<IHyperlinkDetector> detectors = new LinkedList<IHyperlinkDetector>();
+        IHyperlinkDetector[] inheritedDetectors = super.getHyperlinkDetectors(sourceViewer);
+        if (inheritedDetectors != null) {
+            for (final IHyperlinkDetector detector : inheritedDetectors) {
+                detectors.add(new IHyperlinkDetector() {
+                    public IHyperlink[] detectHyperlinks(ITextViewer textViewer, IRegion region,
+                                                         boolean canShowMultipleHyperlinks) {
+                        try {
+                            return detector.detectHyperlinks(textViewer, region, canShowMultipleHyperlinks);
+                        } catch (Throwable e) {
+                            // fail safe hyperlink detector - prevent others
+                            // from failing
+                        }
+                        return null;
+                    }
+
+                });
+            }
+        }
+        detectors.add(detector);
+        return detectors.toArray(new IHyperlinkDetector[detectors.size()]);
+    }
 
     @Override
     public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {
@@ -187,55 +190,50 @@ public class XtextSourceViewerConfiguration extends TextSourceViewerConfiguratio
         return null;
     }
 
-	@Override
-	public IContentFormatter getContentFormatter(ISourceViewer sourceViewer) {
-		if (contentFormatterFactory != null)
-			return contentFormatterFactory.createConfiguredFormatter(this, sourceViewer);
-		return super.getContentFormatter(sourceViewer);
-	}
-	
-	@Override
-	public String[] getDefaultPrefixes(ISourceViewer sourceViewer, String contentType) {
-		if (singleLineCommentHelper != null)
-			return singleLineCommentHelper.getDefaultPrefixes(sourceViewer, contentType);
-		return super.getDefaultPrefixes(sourceViewer, contentType);
-	}
+    @Override
+    public IContentFormatter getContentFormatter(ISourceViewer sourceViewer) {
+        if (contentFormatterFactory != null)
+            return contentFormatterFactory.createConfiguredFormatter(this, sourceViewer);
+        return super.getContentFormatter(sourceViewer);
+    }
 
-	public void setSingleLineCommentHelper(ISingleLineCommentHelper singleLineCommentHelper) {
-		this.singleLineCommentHelper = singleLineCommentHelper;
-	}
+    @Override
+    public String[] getDefaultPrefixes(ISourceViewer sourceViewer, String contentType) {
+        if (singleLineCommentHelper != null)
+            return singleLineCommentHelper.getDefaultPrefixes(sourceViewer, contentType);
+        return super.getDefaultPrefixes(sourceViewer, contentType);
+    }
 
-	public ISingleLineCommentHelper getSingleLineCommentHelper() {
-		return singleLineCommentHelper;
-	}
+    public ISingleLineCommentHelper getSingleLineCommentHelper() {
+        return singleLineCommentHelper;
+    }
 
-	public void setPresentationReconcilerProvider(Provider<XtextPresentationReconciler> presentationReconcilerProvider) {
-		this.presentationReconcilerProvider = presentationReconcilerProvider;
-	}
+    public void setSingleLineCommentHelper(ISingleLineCommentHelper singleLineCommentHelper) {
+        this.singleLineCommentHelper = singleLineCommentHelper;
+    }
 
-	public Provider<XtextPresentationReconciler> getPresentationReconcilerProvider() {
-		return presentationReconcilerProvider;
-	}
-	
-	@Inject
-	private AbstractEditStrategyProvider editStrategyProvider ;
-	
-	@Override
-	public IAutoEditStrategy[] getAutoEditStrategies(ISourceViewer sourceViewer, String contentType) {
-		List<IAutoEditStrategy> strategies = editStrategyProvider.getStrategies(sourceViewer, contentType);
-		return strategies.toArray(new IAutoEditStrategy[strategies.size()]);
-	}
-	
-	@Inject
-	private DoubleClickStrategyProvider doubleClickStrategyProvider;
-	@Override
-	public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer, String contentType) {
-		return doubleClickStrategyProvider.getStrategy(sourceViewer, contentType, getConfiguredDocumentPartitioning(sourceViewer));
-	}
+    public Provider<XtextPresentationReconciler> getPresentationReconcilerProvider() {
+        return presentationReconcilerProvider;
+    }
 
-	void setPreferenceStore(IPreferenceStore preferenceStore) {
-		this.fPreferenceStore = preferenceStore;
-	}
+    public void setPresentationReconcilerProvider(Provider<XtextPresentationReconciler> presentationReconcilerProvider) {
+        this.presentationReconcilerProvider = presentationReconcilerProvider;
+    }
 
-	
+    @Override
+    public IAutoEditStrategy[] getAutoEditStrategies(ISourceViewer sourceViewer, String contentType) {
+        List<IAutoEditStrategy> strategies = editStrategyProvider.getStrategies(sourceViewer, contentType);
+        return strategies.toArray(new IAutoEditStrategy[strategies.size()]);
+    }
+
+    @Override
+    public ITextDoubleClickStrategy getDoubleClickStrategy(ISourceViewer sourceViewer, String contentType) {
+        return doubleClickStrategyProvider.getStrategy(sourceViewer, contentType, getConfiguredDocumentPartitioning(sourceViewer));
+    }
+
+    void setPreferenceStore(IPreferenceStore preferenceStore) {
+        this.fPreferenceStore = preferenceStore;
+    }
+
+
 }

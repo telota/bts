@@ -6,9 +6,9 @@ import org.bbaw.bts.btsmodel.BTSIDReservationObject;
 
 public interface RemoteBTSIDReservationObjectDao {
 
-	boolean save(String collectionName,
-			List<BTSIDReservationObject> reserationObjects);
+    boolean save(String collectionName,
+                 List<BTSIDReservationObject> reserationObjects);
 
-	String findLastID(String collectionName, String prefix);
+    String findLastID(String collectionName, String prefix);
 
 }

@@ -25,74 +25,74 @@ import com.google.inject.Inject;
  */
 public abstract class AbstractJavaProjectsState extends AbstractAllContainersState implements IElementChangedListener {
 
-	@Inject
-	private IJdtHelper jdtHelper;
-	
-	@Override
-	protected void registerAsListener() {
-		super.registerAsListener();
-		JavaCore.addElementChangedListener(this);
-	}
-	
-	@Override
-	public void unregisterAsListener() {
-		JavaCore.removeElementChangedListener(this);
-		super.unregisterAsListener();
-	}
+    @Inject
+    private IJdtHelper jdtHelper;
 
-	public void elementChanged(ElementChangedEvent event) {
-		if (event.getDelta() != null) {
-			if (isAffectingPackageFragmentRoots(event.getDelta())) {
-				initialize();
-			}
-		}
-	}
+    @Override
+    protected void registerAsListener() {
+        super.registerAsListener();
+        JavaCore.addElementChangedListener(this);
+    }
 
-	private boolean isAffectingPackageFragmentRoots(IJavaElementDelta delta) {
-		IJavaElement element = delta.getElement();
-		if (element instanceof IPackageFragmentRoot) {
-			if (delta.getKind() == IJavaElementDelta.REMOVED
-				|| delta.getKind() == IJavaElementDelta.ADDED
-				|| (delta.getFlags() & IJavaElementDelta.F_REORDER) != 0
-				|| (delta.getFlags() & IJavaElementDelta.F_REMOVED_FROM_CLASSPATH) != 0
-				|| (delta.getFlags() & IJavaElementDelta.F_ADDED_TO_CLASSPATH) != 0
-				|| (((IPackageFragmentRoot) element).isExternal() && (delta.getFlags() & // external folders change
-						(IJavaElementDelta.F_CONTENT 
-								| IJavaElementDelta.F_SOURCEATTACHED 
-								| IJavaElementDelta.F_SOURCEDETACHED)) == delta.getFlags())) {
-				return true;
-			}
-		} else if (element instanceof IJavaModel) {
-			return isAffectingPackageFragmentRoots(delta.getAffectedChildren());
-		} else if (element instanceof IJavaProject) {
-			if ((delta.getFlags() & IJavaElementDelta.F_CLASSPATH_CHANGED) != 0 ||
-					(delta.getFlags() & IJavaElementDelta.F_RESOLVED_CLASSPATH_CHANGED) != 0)
-				return true;
-			return isAffectingPackageFragmentRoots(delta.getAffectedChildren());
-		}
-		return false;
-	}
-	
-	private boolean isAffectingPackageFragmentRoots(IJavaElementDelta[] affectedChildren) {
-		for (IJavaElementDelta delta : affectedChildren) {
-			if (isAffectingPackageFragmentRoots(delta))
-				return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * @since 2.1
-	 */
-	@Override
-	protected boolean isIgnoredResource(IResource resource) {
-		return jdtHelper.isFromOutputPath(resource);
-	}
-	
-	/**
-	 * @noreference This method is not intended to be referenced by clients.
-	 */
-	public void setJdtHelper(IJdtHelper jdtHelper) {
-		this.jdtHelper = jdtHelper;
-	}
+    @Override
+    public void unregisterAsListener() {
+        JavaCore.removeElementChangedListener(this);
+        super.unregisterAsListener();
+    }
+
+    public void elementChanged(ElementChangedEvent event) {
+        if (event.getDelta() != null) {
+            if (isAffectingPackageFragmentRoots(event.getDelta())) {
+                initialize();
+            }
+        }
+    }
+
+    private boolean isAffectingPackageFragmentRoots(IJavaElementDelta delta) {
+        IJavaElement element = delta.getElement();
+        if (element instanceof IPackageFragmentRoot) {
+            if (delta.getKind() == IJavaElementDelta.REMOVED
+                    || delta.getKind() == IJavaElementDelta.ADDED
+                    || (delta.getFlags() & IJavaElementDelta.F_REORDER) != 0
+                    || (delta.getFlags() & IJavaElementDelta.F_REMOVED_FROM_CLASSPATH) != 0
+                    || (delta.getFlags() & IJavaElementDelta.F_ADDED_TO_CLASSPATH) != 0
+                    || (((IPackageFragmentRoot) element).isExternal() && (delta.getFlags() & // external folders change
+                    (IJavaElementDelta.F_CONTENT
+                            | IJavaElementDelta.F_SOURCEATTACHED
+                            | IJavaElementDelta.F_SOURCEDETACHED)) == delta.getFlags())) {
+                return true;
+            }
+        } else if (element instanceof IJavaModel) {
+            return isAffectingPackageFragmentRoots(delta.getAffectedChildren());
+        } else if (element instanceof IJavaProject) {
+            if ((delta.getFlags() & IJavaElementDelta.F_CLASSPATH_CHANGED) != 0 ||
+                    (delta.getFlags() & IJavaElementDelta.F_RESOLVED_CLASSPATH_CHANGED) != 0)
+                return true;
+            return isAffectingPackageFragmentRoots(delta.getAffectedChildren());
+        }
+        return false;
+    }
+
+    private boolean isAffectingPackageFragmentRoots(IJavaElementDelta[] affectedChildren) {
+        for (IJavaElementDelta delta : affectedChildren) {
+            if (isAffectingPackageFragmentRoots(delta))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * @since 2.1
+     */
+    @Override
+    protected boolean isIgnoredResource(IResource resource) {
+        return jdtHelper.isFromOutputPath(resource);
+    }
+
+    /**
+     * @noreference This method is not intended to be referenced by clients.
+     */
+    public void setJdtHelper(IJdtHelper jdtHelper) {
+        this.jdtHelper = jdtHelper;
+    }
 }

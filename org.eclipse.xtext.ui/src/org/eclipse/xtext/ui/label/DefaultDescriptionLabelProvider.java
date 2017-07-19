@@ -25,61 +25,61 @@ import com.google.inject.Inject;
  */
 public class DefaultDescriptionLabelProvider extends DeclarativeLabelProvider {
 
-	@Inject
-	private IStorage2UriMapper storage2UriMapper;
+    @Inject
+    private IStorage2UriMapper storage2UriMapper;
 
-	@Inject
-	private DefaultEditorImageUtil imageUtil;
+    @Inject
+    private DefaultEditorImageUtil imageUtil;
 
-	public Object image(IEObjectDescription element) {
-		return image(element.getEClass());
-	}
+    public Object image(IEObjectDescription element) {
+        return image(element.getEClass());
+    }
 
-	public Object image(IResourceDescription element) {
-		return getImageForURI(element.getURI());
-	}
+    public Object image(IResourceDescription element) {
+        return getImageForURI(element.getURI());
+    }
 
-	/**
-	 * This method is only invoked if the containerEObjectURI of the {@link IReferenceDescription} is null, i.e. the
-	 * reference is owned by an element without any indexed container.
-	 * 
-	 * @since 2.1
-	 */
-	public Object image(IReferenceDescription referenceDescription) {
-		if (referenceDescription.getSourceEObjectUri() != null)
-			return getImageForURI(referenceDescription.getSourceEObjectUri());
-		return null;
-	}
+    /**
+     * This method is only invoked if the containerEObjectURI of the {@link IReferenceDescription} is null, i.e. the
+     * reference is owned by an element without any indexed container.
+     *
+     * @since 2.1
+     */
+    public Object image(IReferenceDescription referenceDescription) {
+        if (referenceDescription.getSourceEObjectUri() != null)
+            return getImageForURI(referenceDescription.getSourceEObjectUri());
+        return null;
+    }
 
-	/**
-	 * @since 2.1
-	 */
-	protected Object getImageForURI(URI uri) {
-		String fileName = uri.lastSegment();
-		return imageUtil.getDefaultEditorImageDescriptor(fileName);
-	}
+    /**
+     * @since 2.1
+     */
+    protected Object getImageForURI(URI uri) {
+        String fileName = uri.lastSegment();
+        return imageUtil.getDefaultEditorImageDescriptor(fileName);
+    }
 
-	public Object text(IEObjectDescription element) {
-		return element.getQualifiedName() + " - " + element.getEClass().getName();
-	}
+    public Object text(IEObjectDescription element) {
+        return element.getQualifiedName() + " - " + element.getEClass().getName();
+    }
 
-	public Object text(IResourceDescription element) {
-		Iterator<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(element.getURI()).iterator();
-		if (storages.hasNext()) {
-			IStorage storage = storages.next().getFirst();
-			return storage.getFullPath().toString();
-		}
-		return null;
-	}
+    public Object text(IResourceDescription element) {
+        Iterator<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(element.getURI()).iterator();
+        if (storages.hasNext()) {
+            IStorage storage = storages.next().getFirst();
+            return storage.getFullPath().toString();
+        }
+        return null;
+    }
 
-	/**
-	 * This method is only invoked if the containerEObjectURI of the {@link IReferenceDescription} is null, i.e. the
-	 * reference is owned by an element without any indexed container.
-	 * 
-	 * @since 2.1
-	 */
-	public Object text(IReferenceDescription referenceDescription) {
-		return "<unnamed>";
-	}
+    /**
+     * This method is only invoked if the containerEObjectURI of the {@link IReferenceDescription} is null, i.e. the
+     * reference is owned by an element without any indexed container.
+     *
+     * @since 2.1
+     */
+    public Object text(IReferenceDescription referenceDescription) {
+        return "<unnamed>";
+    }
 
 }

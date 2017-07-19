@@ -34,30 +34,29 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 /**
  * A factory for creating DAO objects.
  */
-public interface DAOFactory
-{
+public interface DAOFactory {
 
-	/**
-	 * Gets the factory name.
-	 *
-	 * @return the factory name
-	 */
-	String getFactoryName();
+    /**
+     * Gets the factory name.
+     *
+     * @return the factory name
+     */
+    String getFactoryName();
 
-	/**
-	 * Gets the factory description.
-	 *
-	 * @return the factory description
-	 */
-	String getFactoryDescription();
+    /**
+     * Gets the factory description.
+     *
+     * @return the factory description
+     */
+    String getFactoryDescription();
 
-	/**
-	 * Creates a new DAO object.
-	 *
-	 * @param <T> the generic type
-	 * @param clazz the clazz
-	 * @param context the context
-	 * @return the t
-	 */
-	<T> T createDao(Class<T> clazz, IEclipseContext context);
+    /**
+     * Creates a new DAO object.
+     *
+     * @param <T>     the generic type
+     * @param clazz   the clazz
+     * @param context the context
+     * @return the t
+     */
+    <T> T createDao(Class<T> clazz, IEclipseContext context);
 }

@@ -21,46 +21,46 @@ import com.google.inject.Inject;
  */
 public class DefaultEObjectLabelProvider extends DeclarativeLabelProvider {
 
-	public DefaultEObjectLabelProvider() {
-		super();
-	}
+    public DefaultEObjectLabelProvider() {
+        super();
+    }
 
-	@Inject
-	public DefaultEObjectLabelProvider(AdapterFactoryLabelProvider delegate) {
-		super(delegate);
-	}
+    @Inject
+    public DefaultEObjectLabelProvider(AdapterFactoryLabelProvider delegate) {
+        super(delegate);
+    }
 
-	@Override
-	protected Object doGetText(Object element) {
-		Object text = super.doGetText(element);
-		if(text != null) {
-			return text;
-		}
-		if(element instanceof EObject) {
-			EObject eObject = (EObject) element;
-			EStructuralFeature labelFeature = getLabelFeature(eObject.eClass());
-			if(labelFeature != null) {
-				return eObject.eGet(labelFeature);
-			}
-		}
-		return null;
-	}
-	
-	protected EStructuralFeature getLabelFeature(EClass eClass) {
-		EAttribute result = null;
-		for (EAttribute eAttribute : eClass.getEAllAttributes()) {
-			if (!eAttribute.isMany() && eAttribute.getEType().getInstanceClass() != FeatureMap.Entry.class) {
-				if ("name".equalsIgnoreCase(eAttribute.getName())) {
-					result = eAttribute;
-					break;
-				} else if (result == null) {
-					result = eAttribute;
-				} else if (eAttribute.getEAttributeType().getInstanceClass() == String.class
-						&& result.getEAttributeType().getInstanceClass() != String.class) {
-					result = eAttribute;
-				}
-			}
-		}
-		return result;
-	}
+    @Override
+    protected Object doGetText(Object element) {
+        Object text = super.doGetText(element);
+        if (text != null) {
+            return text;
+        }
+        if (element instanceof EObject) {
+            EObject eObject = (EObject) element;
+            EStructuralFeature labelFeature = getLabelFeature(eObject.eClass());
+            if (labelFeature != null) {
+                return eObject.eGet(labelFeature);
+            }
+        }
+        return null;
+    }
+
+    protected EStructuralFeature getLabelFeature(EClass eClass) {
+        EAttribute result = null;
+        for (EAttribute eAttribute : eClass.getEAllAttributes()) {
+            if (!eAttribute.isMany() && eAttribute.getEType().getInstanceClass() != FeatureMap.Entry.class) {
+                if ("name".equalsIgnoreCase(eAttribute.getName())) {
+                    result = eAttribute;
+                    break;
+                } else if (result == null) {
+                    result = eAttribute;
+                } else if (eAttribute.getEAttributeType().getInstanceClass() == String.class
+                        && result.getEAttributeType().getInstanceClass() != String.class) {
+                    result = eAttribute;
+                }
+            }
+        }
+        return result;
+    }
 }

@@ -14,16 +14,17 @@ import com.google.inject.ImplementedBy;
 /**
  * The {@link IValidationJobScheduler scheduler} is used to decide about an initially
  * triggered validation for a freshly opened {@link IXtextDocument document}.
- * @see ValidationJobScheduler
+ *
  * @author Sebastian Zarnekow - Initial contribution and API
+ * @see ValidationJobScheduler
  * @since 2.1
  */
 @ImplementedBy(ValidationJobScheduler.class)
 public interface IValidationJobScheduler {
 
-	/**
-	 * Optionally triggers the validation on the given {@link IXtextDocument document}
-	 */
-	void scheduleInitialValidation(IXtextDocument document);
-	
+    /**
+     * Optionally triggers the validation on the given {@link IXtextDocument document}
+     */
+    void scheduleInitialValidation(IXtextDocument document);
+
 }
