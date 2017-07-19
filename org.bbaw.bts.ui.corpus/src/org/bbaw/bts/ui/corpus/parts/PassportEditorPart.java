@@ -588,7 +588,7 @@ public class PassportEditorPart {
 				false, 1, 1));
 		lblSubtype.setText("Subtype");
 
-		subtypeCMB_Main = new Combo(compTBTM_Main, SWT.NONE | SWT.READ_ONLY);
+		subtypeCMB_Main = new Combo(compTBTM_Main, SWT.READ_ONLY);
 		subtypeCMB_Main.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 3, 1));
 		subtypeCMB_Main_viewer = new ComboViewer(subtypeCMB_Main);
@@ -976,8 +976,6 @@ public class PassportEditorPart {
 			}
 		};
 		job.schedule(LOADING_DELAY);
-		return;
-
 	}
 	
 	public void setInputObjectDirect(BTSCorpusObject object)

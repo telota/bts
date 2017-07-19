@@ -80,7 +80,6 @@
       <sourceFolder url="file://$MODULE_DIR$/org.lightcouch/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.lightcouch/designdocs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/schema" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/e4-src" isTestSource="false" />
@@ -188,6 +187,7 @@
       <sourceFolder url="file://$MODULE_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/org.lightcouch/designdocs" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/bts.transform.ui/xtend-gen" />
       <excludeFolder url="file://$MODULE_DIR$/com.google.guava" />
@@ -260,6 +260,7 @@
       <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.feature/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson/target" />
+      <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/designdocs" />
       <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/lib" />
       <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/target" />

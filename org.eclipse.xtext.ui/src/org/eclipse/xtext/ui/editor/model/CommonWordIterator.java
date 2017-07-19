@@ -123,11 +123,8 @@ public class CommonWordIterator extends BreakIterator {
 
 		if (isWhitespace(offset, exclusiveEnd))
 			return false;
-		if (isDelimiter(offset, exclusiveEnd))
-			return false;
-
-		return true;
-	}
+        return !isDelimiter(offset, exclusiveEnd);
+    }
 
 	/**
 	 * Returns <code>true</code> if the given sequence into the underlying text represents a delimiter,

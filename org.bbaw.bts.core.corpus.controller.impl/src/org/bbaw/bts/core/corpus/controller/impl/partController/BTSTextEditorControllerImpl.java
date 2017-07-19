@@ -499,8 +499,6 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 				(BTSIdentifiableItem) amCase);
 
 		model.addAnnotation(annotation, pos);
-		return;
-
 	}
 
 	private void appendAmbivalenceItem(BTSIdentifiableItem item,

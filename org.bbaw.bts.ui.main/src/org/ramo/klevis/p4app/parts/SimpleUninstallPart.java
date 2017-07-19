@@ -176,7 +176,6 @@ public class SimpleUninstallPart {
 		if (selection.length == 0) {
 			MessageDialog.openWarning((Shell) parent, "Warning",
 					"Please select at least one");
-			return;
 		} else {
 
 			List<IInstallableUnit> listToUninstall = new ArrayList<IInstallableUnit>();

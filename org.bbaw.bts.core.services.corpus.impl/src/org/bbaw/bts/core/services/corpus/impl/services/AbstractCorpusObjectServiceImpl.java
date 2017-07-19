@@ -242,13 +242,9 @@ implements GenericCorpusObjectService<E, K>{
 	
 	public boolean checkAndFullyLoad(BTSCorpusObject object, boolean checkForConflicts)
 	{
-		if (object.eResource() == null || object.get_rev() == null)
-		{
-			return true;
-		}
-		return false;
-		
-	}
+        return object.eResource() == null || object.get_rev() == null;
+
+    }
 	
 	@Override
 	public String[] getActive_corpora(String projecPrefix) {
@@ -287,20 +283,12 @@ implements GenericCorpusObjectService<E, K>{
 	protected boolean isCurrentDBCollectionContextThs()
 	{
 		String dbContext = getCurrentDBCollectionContext();
-		if (dbContext != null && dbContext.endsWith(BTSCorpusConstants.THS))
-		{
-			return true;
-		}
-		return false;
-	}
+        return dbContext != null && dbContext.endsWith(BTSCorpusConstants.THS);
+    }
 	
 	protected boolean isCurrentDBCollectionContextLemma()
 	{
 		String dbContext = getCurrentDBCollectionContext();
-		if (dbContext != null && dbContext.endsWith(BTSCorpusConstants.WLIST))
-		{
-			return true;
-		}
-		return false;
-	}
+        return dbContext != null && dbContext.endsWith(BTSCorpusConstants.WLIST);
+    }
 }

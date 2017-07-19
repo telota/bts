@@ -192,11 +192,7 @@ public class CouchDBIndexHelper {
 	                .setSource(docString)
 	                .execute()
 	                .actionGet();
-	            if (monitor != null)
-	            {
-	            	monitor.worked(1);
-	            	if (monitor.isCanceled()) return;
-	            }
-	        return;
+            if (monitor != null)
+                monitor.worked(1);
 	    }
 }

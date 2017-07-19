@@ -51,10 +51,7 @@ public class CouchDBContentProvider implements ITreeContentProvider {
 
 	@Override
 	public boolean hasChildren(Object element) {
-		if (element instanceof CouchDatabase) {
-			return true;
-		}
-		return false;
-	}
+        return element instanceof CouchDatabase;
+    }
 
 }

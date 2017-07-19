@@ -205,7 +205,6 @@ public class PasswordChangeDialog extends TitleAreaDialog {
 			// set new Authentication
 			userController.setAuthentication(authenticatedUser.getUserName(), newPassword);
 		}
-		return;		
 	}
 
 	private void showLoginError()

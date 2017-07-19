@@ -5,6 +5,7 @@ import org.eclipse.draw2d.Label;
 
 public class TypedLabel extends Label{
 	
+	@SuppressWarnings("PointlessBitwiseExpression")
 	public static final int LEMMA = 1<<0;
 	
 	public static final int FLEXION = 1<<1;

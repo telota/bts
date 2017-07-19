@@ -189,10 +189,8 @@ public class RenameLinkedMode {
 
 			Shell editorShell = editor.getSite().getShell();
 			Shell activeShell = editorShell.getDisplay().getActiveShell();
-			if (editorShell == activeShell)
-				return true;
-			return false;
-		}
+            return editorShell == activeShell;
+        }
 
 		public boolean isOriginator(DocumentEvent event, IRegion subjectRegion) {
 			return false; // leave on external modification outside positions

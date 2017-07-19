@@ -1676,12 +1676,8 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 						i = new Integer(w.getFlexCode());
 					} catch (NumberFormatException e) {
 					}
-					if (i != null && i.intValue() == defaultFlexion)
-					{
-						return true;
-					}
-					return false;
-				}
+                    return i != null && i.intValue() == defaultFlexion;
+                }
 			}
 		}
 		return false;

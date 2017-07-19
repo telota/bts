@@ -167,10 +167,8 @@ public class TreeViewerNavigator {
 
 	private boolean hasMatches(TreeItem item) {
 		Object element = item.getData();
-		if (element == null)
-			return false;
-		return true;//page.getDisplayedMatchCount(element) > 0;
-	}
+        return element != null;
+    }
 
 	private TreeItem getCurrentItem(boolean forward) {
 		Tree tree = viewer.getTree();

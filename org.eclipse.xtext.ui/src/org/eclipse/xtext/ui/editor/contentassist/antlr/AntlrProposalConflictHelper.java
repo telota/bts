@@ -61,10 +61,8 @@ public class AntlrProposalConflictHelper extends ProposalConflictHelper {
 		if (!equalTokenSequence(getProposalLexer(), getCombinedLexer()))
 			return true;
 		Token lastToken = getProposalLexer().nextToken();
-		if (!lastToken.equals(Token.EOF_TOKEN))
-			return true;
-		return false;
-	}
+        return !lastToken.equals(Token.EOF_TOKEN);
+    }
 
 	protected boolean equalTokenSequence(TokenSource first, TokenSource second) {
 		Token token = null;

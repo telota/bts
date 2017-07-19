@@ -356,10 +356,7 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
 			}
 		}
 		if (!currentTextOccurrences.isEmpty())
-		{
 			processTextPath(text, currentTextOccurrences);
-		}
-		return;
 	}
 
 	/**
@@ -561,14 +558,9 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
 			}
 		}
 		if (before)
-		{
 			occurrence.setCoTextBefore(sentences);
-		}
 		else
-		{
 			occurrence.setCoTextAfter(sentences);
-		}
-		return;
 	}
 
 	/* (non-Javadoc)

@@ -51,10 +51,8 @@ public class LightweightPosition implements Comparable<LightweightPosition>{
 			if (getClass() != obj.getClass())
 				return false;
 			IntToStringArray other = (IntToStringArray) obj;
-			if (timestamp != other.timestamp)
-				return false;
-			return true;
-		}
+            return timestamp == other.timestamp;
+        }
 		
 		@Override
 		public String toString() {
@@ -118,10 +116,8 @@ public class LightweightPosition implements Comparable<LightweightPosition>{
 			return false;
 		if (offset != other.offset)
 			return false;
-		if (timestamp != other.timestamp)
-			return false;
-		return true;
-	}
+        return timestamp == other.timestamp;
+    }
 	
 	@Override
 	public String toString() {

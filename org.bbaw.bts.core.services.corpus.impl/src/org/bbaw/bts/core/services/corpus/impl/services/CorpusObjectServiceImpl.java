@@ -713,7 +713,6 @@ implements 	CorpusObjectService, BTSObjectSearchService, MoveObjectAmongProjectD
 				object.setName(entries[2]);
 			}
 		}
-		return;
 	}
 
 

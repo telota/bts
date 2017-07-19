@@ -200,12 +200,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
 		Object o = activePart.getObject();
 		StructuredViewerProvider part;
 		// see if part has a StructuredViewer
-		if (o instanceof StructuredViewerProvider)
-		{
-			return true;
-		}
-		
-		return false;
-		
+		return o instanceof StructuredViewerProvider;
+
 	}
 }

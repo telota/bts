@@ -156,10 +156,8 @@ public abstract class AbstractContentProposalProvider implements IContentProposa
 			return false;
 		if (!context.getMatcher().isCandidateMatchingPrefix(proposal, prefix))
 			return false;
-		if (conflictHelper.existsConflict(proposal, context))
-			return false;
-		return true;
-	}
+        return !conflictHelper.existsConflict(proposal, context);
+    }
 
 	protected ConfigurableCompletionProposal doCreateProposal(String proposal, StyledString displayString, Image image,
 			int priority, ContentAssistContext context) {

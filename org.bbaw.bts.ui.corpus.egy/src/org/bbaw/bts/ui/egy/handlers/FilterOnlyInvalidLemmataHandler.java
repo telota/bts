@@ -84,12 +84,7 @@ public class FilterOnlyInvalidLemmataHandler {
 		Object o = activePart.getObject();
 		LemmaNavigator part;
 		// see if part has a StructuredViewer
-		if (o instanceof LemmaNavigator)
-		{
-			return true;
-		}
-		
-		return false;
-		
-	}
+        return o instanceof LemmaNavigator;
+
+    }
 }

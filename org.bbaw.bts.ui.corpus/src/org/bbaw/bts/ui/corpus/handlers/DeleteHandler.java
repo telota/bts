@@ -32,17 +32,9 @@ public class DeleteHandler {
 		if (selection instanceof EObject) {
 			EditingDomain ed = editingDomainController.getEditingDomain((EObject)
 										selection);
-			if (false && ed != null) {
-				Command command = SetCommand.create(ed, selection,
-						BtsmodelPackage.ADMINISTRATIV_DATA_OBJECT__STATE,
-						BTSConstants.OBJECT_STATE_TERMINATED);
-				ed.getCommandStack().execute(command);
 
-			}
-			else {
-				((AdministrativDataObject) selection)
+			((AdministrativDataObject) selection)
 						.setState(BTSConstants.OBJECT_STATE_TERMINATED);
-			}
 			//General Command Controller... save!
 			commandController.save((BTSDBBaseObject) selection);
 			if (activePart != null)

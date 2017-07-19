@@ -849,11 +849,6 @@ public class UserManagementPart
 				treeNode.getParent().getChildren().remove(treeNode);
 			}	
 		}
-		else
-		{
-			return;
-		}
-			
 	}
 
 	private void deleteUserOrGroup(TreeNodeWrapper treeNode) {
@@ -1059,12 +1054,8 @@ public class UserManagementPart
 			@Override
 			public boolean select(Viewer viewer, Object parentElement, Object element)
 			{
-				if (element instanceof BTSDBCollectionRoleDesc
-						&& "members".equals(((BTSDBCollectionRoleDesc) element).getRoleName()))
-				{
-					return false;
-				}
-				return true;
+				return !(element instanceof BTSDBCollectionRoleDesc)
+						|| !"members".equals(((BTSDBCollectionRoleDesc) element).getRoleName());
 			}
 		});
 		roles_selectionListener = new ISelectionChangedListener()
@@ -1481,7 +1472,7 @@ public class UserManagementPart
 		lblSelectUser.setText("Select User");
 		lblSelectUser.pack();
 
-		roles_rolesDesc_users_comboViewer = new ComboViewer(grpAssignUser, SWT.NONE | SWT.READ_ONLY);
+		roles_rolesDesc_users_comboViewer = new ComboViewer(grpAssignUser, SWT.READ_ONLY);
 		roles_rolesDesc_users_comboViewer.getCombo().setLayoutData(
 				new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
@@ -1541,7 +1532,7 @@ public class UserManagementPart
 		lblSelectUserGroup.setText("Select Group");
 		lblSelectUserGroup.pack();
 
-		roles_rolesDesc_group_comboViewer = new ComboViewer(grpAssignUserGroup, SWT.NONE | SWT.READ_ONLY);
+		roles_rolesDesc_group_comboViewer = new ComboViewer(grpAssignUserGroup, SWT.READ_ONLY);
 		roles_rolesDesc_group_comboViewer.getCombo().setLayoutData(
 				new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		roles_rolesDesc_group_comboViewer.setContentProvider(new ObservableListContentProvider());
@@ -2444,7 +2435,7 @@ public class UserManagementPart
 
 		groupSelectUser_Group.setText("Select User");
 
-		users_groupMembers_groups_comboViewer = new ComboViewer(groupSelectUser_Group, SWT.NONE | SWT.READ_ONLY);
+		users_groupMembers_groups_comboViewer = new ComboViewer(groupSelectUser_Group, SWT.READ_ONLY);
 		users_groupMembers_groups_comboViewer.getCombo().setLayoutData(
 				new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
@@ -2599,7 +2590,7 @@ public class UserManagementPart
 	public void save(MDirtyable dirty)
 	{
 		manageDirtyObjects(selectedProject, null);
-		boolean internalDirty = dirty != null ? dirty.isDirty() : true;
+		boolean internalDirty = dirty == null || dirty.isDirty();
 		if (!dirtyUsers.isEmpty())
 		{
 			if (!userManagerController.saveUsers(dirtyUsers))

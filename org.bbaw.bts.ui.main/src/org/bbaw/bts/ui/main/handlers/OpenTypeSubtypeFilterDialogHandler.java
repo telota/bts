@@ -107,13 +107,9 @@ public class OpenTypeSubtypeFilterDialogHandler {
 	}
 	private boolean filterPathIsEmpty(TypeSubtypeViewerFilter filter2) {
 		// TODO check if filter path is empty
-		if (filter2.getInputPath() == null || filter2.getInputPath().getOwnerReferencedTypesStringList().isEmpty()
-				|| filter2.getInputPath().getOwnerReferencedTypesStringList().contains("ANY"))
-		{
-			return true;
-		}
-		return false;
-	}
+        return filter2.getInputPath() == null || filter2.getInputPath().getOwnerReferencedTypesStringList().isEmpty()
+                || filter2.getInputPath().getOwnerReferencedTypesStringList().contains("ANY");
+    }
 	@CanExecute
 	public boolean canExecute(@Active MPart activePart) {
 		
@@ -122,14 +118,9 @@ public class OpenTypeSubtypeFilterDialogHandler {
 		// true if active part has a StructuredViewer
 		Object o = activePart.getObject();
 		// see if part has a StructuredViewer
-		if (o instanceof StructuredViewerProvider)
-		{
-			return true;
-		}
-		
-		return false;
-		
-	}
+        return o instanceof StructuredViewerProvider;
+
+    }
 	
 	private TypeSubtypeViewerFilter makeFilter(IEclipseContext context) throws InstantiationException, IllegalAccessException {
 		TypeSubtypeViewerFilter filter =  ContextInjectionFactory.make(TypeSubtypeViewerFilter.class, context);

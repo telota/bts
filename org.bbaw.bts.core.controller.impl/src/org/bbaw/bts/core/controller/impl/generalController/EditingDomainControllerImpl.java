@@ -177,21 +177,17 @@ public class EditingDomainControllerImpl implements EditingDomainController {
 			Object object) {
 		List<Object> lastSelectedObjects = getLastSelectedObjects();
 		int index = lastSelectedObjects.indexOf(object);
-		if (index == BTSCoreConstants.LAST_SELECTED_LIST_SIZE - 1) {
-			// selected object is last selected one
-			return;
-		} else if (index == -1) // list does not contain object
+		if (index == -1) // list does not contain object
 		{
 			lastSelectedObjects.add(object);
 			if (lastSelectedObjects.size() > BTSCoreConstants.LAST_SELECTED_LIST_SIZE) {
 				Object old = lastSelectedObjects.remove(0);
 				map.remove(old);
 			}
-		} else {
+		} else if (index != BTSCoreConstants.LAST_SELECTED_LIST_SIZE - 1) {
 			lastSelectedObjects.remove(index);
 			lastSelectedObjects.add(object);
-		}
-
+		} // else selected object is last selected one{
 	}
 
 	@Override

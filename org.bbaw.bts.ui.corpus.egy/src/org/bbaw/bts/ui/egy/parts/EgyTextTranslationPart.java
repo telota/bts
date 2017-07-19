@@ -548,10 +548,7 @@ public class EgyTextTranslationPart {
 	@Inject
 	public void setSelection(
 			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSIdentifiableItem selection) {
-		if (selection == null) {
-			// do nothing
-			return;
-		} else if (selection != null && !selection.equals(selectedTextItem)) {
+		if (selection != null && !selection.equals(selectedTextItem)) {
 
 			if (selection instanceof BTSCorpusObject) {
 				

@@ -658,15 +658,14 @@ public class ApplicationStartupControllerImpl implements
 								@Override
 								public void run() {
 									boolean ok = true;
-									for (BTSProject project : projects) {
+									if (projects.size() > 0) {
+										BTSProject project = projects.get(0);
 										try {
 											if (!dbManager.checkDBIndexing(project,
 													monitor))
 												ok = false;
-											break;
 										} catch (URISyntaxException e) {
 											ok = false;
-											break;
 										}
 									}
 									

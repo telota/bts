@@ -42,10 +42,7 @@ public class OpenSearchQueryDialogHandler {
 	@CanExecute
 	public boolean canExecute(@Active MPart activePart) {
 		Object o = activePart.getObject();
-		if (o instanceof SearchViewer) {
-			return true;
-		}
-		return false;
+		return o instanceof SearchViewer;
 
 	}
 

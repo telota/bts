@@ -91,16 +91,9 @@ public class LoginRememberMePage extends FieldEditorPreferencePage {
 		} catch (StorageException e1) {
 			e1.printStackTrace();
 		}
-		if (rememberedUsername != null
+		return rememberedUsername != null
 				&& !"".equals(rememberedUsername)
-				&& rememberedPass != null)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+				&& rememberedPass != null;
 	}
 	
 	@Override

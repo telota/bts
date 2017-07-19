@@ -27,9 +27,8 @@ public class BTSCorpusLabelProvider implements IBaseLabelProvider, ITableLabelPr
 	@Override
 	public boolean isLabelProperty(Object element, String property)
 	{
-		if (property.equals("name")) return true;
-		return false;
-	}
+        return property.equals("name");
+    }
 
 	@Override
 	public void removeListener(ILabelProviderListener listener)

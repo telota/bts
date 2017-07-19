@@ -681,11 +681,8 @@ public class CouchDBManager implements DBManager {
 		if (!m.matches()) {
 			return false;
 		}
-		if (doc.getReplicationState() != null
-				&& doc.getReplicationState().equals("error")) {
-			return false;
-		}
-		return true;
+		return doc.getReplicationState() == null
+				|| !doc.getReplicationState().equals("error");
 	}
 
 	private boolean isValidReplicationFromRemote(ReplicatorDocument doc,
@@ -703,11 +700,8 @@ public class CouchDBManager implements DBManager {
 		if (!m.matches()) {
 			return false;
 		}
-		if (doc.getReplicationState() != null
-				&& doc.getReplicationState().equals("error")) {
-			return false;
-		}
-		return true;
+		return doc.getReplicationState() == null
+				|| !doc.getReplicationState().equals("error");
 	}
 
 	@Override
@@ -788,20 +782,11 @@ public class CouchDBManager implements DBManager {
 		// be more tolerant with differences in update sequences with
 		// notification collection
 		if (DaoConstants.NOTIFICATION.equals(collection)) {
-			if (indexUpdateSeq + NOTIFICATION_INDEX_UPDATE_DELAY < dbUpdateSeq) {
-				return false;
-			} else {
-				return true;
-			}
+			return indexUpdateSeq + NOTIFICATION_INDEX_UPDATE_DELAY >= dbUpdateSeq;
 		}
 
 		// all other collections
-		if (indexUpdateSeq + MAX_INDEX_UPDATE_DELAY < dbUpdateSeq) {
-			return false;
-		} else {
-			return true;
-		}
-
+		return indexUpdateSeq + MAX_INDEX_UPDATE_DELAY >= dbUpdateSeq;
 	}
 
 	private boolean createIndex(String collection, Client esClient,

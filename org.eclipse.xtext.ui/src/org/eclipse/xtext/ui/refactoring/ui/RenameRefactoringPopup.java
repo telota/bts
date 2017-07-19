@@ -425,10 +425,8 @@ public class RenameRefactoringPopup implements IWidgetTokenKeeper, IWidgetTokenK
 		if (popup == null || popup.isDisposed())
 			return false;
 		Shell activeShell = popup.getDisplay().getActiveShell();
-		if (popup == activeShell)
-			return true;
-		return false;
-	}
+        return popup == activeShell;
+    }
 
 	protected void activateEditor() {
 		editor.getSite().getShell().setActive();

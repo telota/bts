@@ -189,14 +189,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
 
 	protected void internalSetSelection(Object internalSelection) {
 		evaluateDbContext(internalSelection);
-		if (evaluationService.acquireLockOptimistic(internalSelection))
-		{
-			otherLocked = false;
-		}
-		else
-		{
-			otherLocked = true;
-		}
+        otherLocked = !evaluationService.acquireLockOptimistic(internalSelection);
 		hasLock = otherLocked;
 		evaluateSelectionPermissionsAndExpressions(internalSelection);
 		
@@ -307,13 +300,9 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
 	}
 
 	private boolean evaluateUserContextRoleDisallowsTranscribing() {
-		if (userContextRole == null 
-				|| userContextRole.equals(BTSCoreConstants.USER_ROLE_GUESTS))
-		{
-			return true;
-		}
-		return false;
-	}
+        return userContextRole == null
+                || userContextRole.equals(BTSCoreConstants.USER_ROLE_GUESTS);
+    }
 
 	private void evaluateUserContextRole() {
 		userContextRole = BTSCoreConstants.USER_ROLE_GUESTS;
@@ -495,14 +484,10 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
 	}
 
 	private boolean evaluateUserContextRoleDisallowsEditing() {
-		if (userContextRole == null 
-				|| userContextRole.equals(BTSCoreConstants.USER_ROLE_GUESTS)
-				|| userContextRole.equals(BTSCoreConstants.USER_ROLE_TRANSCRIBERS))
-		{
-			return true;
-		}
-		return false;
-	}
+        return userContextRole == null
+                || userContextRole.equals(BTSCoreConstants.USER_ROLE_GUESTS)
+                || userContextRole.equals(BTSCoreConstants.USER_ROLE_TRANSCRIBERS);
+    }
 
 	@Override
 	public boolean authenticatedUserMayEditObject(BTSObject object) {

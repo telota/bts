@@ -43,14 +43,7 @@ public class PassportInheritFromParentHandler {
 			EditingDomainController editingDomainController) {
 		this.editingDomain = editingDomainController.getEditingDomain(selection);
 		BTSCorpusObject parent = null;
-		if (forced != null && "true".equals(forced))
-		{
-			forcedBoolean = true;
-		}
-		else
-		{
-			forcedBoolean = false;
-		}
+        forcedBoolean = forced != null && "true".equals(forced);
 		for (BTSRelation rel : selection.getRelations())
 		{
 			if (rel.getObjectId() != null && !"".equals(rel.getObjectId()) && BTSCoreConstants.BASIC_RELATIONS_PARTOF.equals(rel.getType()))
@@ -115,12 +108,8 @@ public class PassportInheritFromParentHandler {
 		
 	}
 	private boolean filterAttributes(String name) {
-		if ("_id".equals(name) || "_rev".equals(name))
-		{
-			return false;
-		}
-		return true;
-	}
+        return !"_id".equals(name) && !"_rev".equals(name);
+    }
 	private void mergeReferenceContent(BTSPassportEntryItem targetEntry,
 			BTSPassportEntryItem sourceEntry, EReference ref, CompoundCommand compoundCommand) {
 		Object value = sourceEntry.eGet(ref);
@@ -235,9 +224,6 @@ public class PassportInheritFromParentHandler {
 	public boolean canExecute(
 			@Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSCorpusObject selection,
 			@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) Boolean mayEdit) {
-		if (mayEdit != null && mayEdit.booleanValue() && selection != null && selection instanceof BTSCorpusObject && !selection.getRelations().isEmpty()) {
-			return true;
-		}
-		return false;
-	}
+        return mayEdit != null && mayEdit.booleanValue() && selection != null && selection instanceof BTSCorpusObject && !selection.getRelations().isEmpty();
+    }
 }

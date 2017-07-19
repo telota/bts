@@ -100,10 +100,8 @@ public class DefaultFoldedPosition extends FoldedPosition {
 		DefaultFoldedPosition other = (DefaultFoldedPosition) obj;
 		if (contentLength != other.contentLength)
 			return false;
-		if (contentStart != other.contentStart)
-			return false;
-		return true;
-	}
+        return contentStart == other.contentStart;
+    }
 
 
 }

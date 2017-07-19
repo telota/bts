@@ -100,18 +100,12 @@ public class XtextSpellingReconcileStrategy extends SpellingReconcileStrategy {
 			if (partitionMapperExtension.isMultiLineComment(type) || partitionMapperExtension.isSingleLineComment(type)) {
 				return true;
 			}
-			if (STRING_LITERAL_PARTITION.equals(type)) {
-				return true;
-			}
-			return false;
-		}
-		if (STRING_LITERAL_PARTITION.equals(type)
-				|| SL_COMMENT_PARTITION.equals(type)
-				|| COMMENT_PARTITION.equals(type)) {
-			return true;
-		}
-		return false;
-	}
+            return STRING_LITERAL_PARTITION.equals(type);
+        }
+        return STRING_LITERAL_PARTITION.equals(type)
+                || SL_COMMENT_PARTITION.equals(type)
+                || COMMENT_PARTITION.equals(type);
+    }
 
 	protected boolean isSpellingEnabled() {
 		return spellingProblemCollector != null && EditorsUI.getPreferenceStore().getBoolean(SpellingService.PREFERENCE_SPELLING_ENABLED);

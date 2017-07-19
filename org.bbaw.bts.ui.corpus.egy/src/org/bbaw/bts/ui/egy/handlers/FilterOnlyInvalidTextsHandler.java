@@ -83,12 +83,7 @@ public class FilterOnlyInvalidTextsHandler {
 		Object o = activePart.getObject();
 		CorpusNavigatorPart part;
 		// see if part has a StructuredViewer
-		if (o instanceof CorpusNavigatorPart)
-		{
-			return true;
-		}
-		
-		return false;
-		
-	}
+        return o instanceof CorpusNavigatorPart;
+
+    }
 }

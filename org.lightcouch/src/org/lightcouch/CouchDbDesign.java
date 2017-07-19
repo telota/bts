@@ -186,11 +186,11 @@ public class CouchDbDesign
 		{ // validate_doc_update
 			String validateDocPath = format("%s%s/", rootPath, VALIDATE_DOC);
 			List<String> dirList = listResources(validateDocPath);
-			for (String file : dirList)
-			{
+			// only one validate_doc_update file
+			if (dirList.size() > 0) {
+				String file = dirList.get(0);
 				String contents = readFile(format("/%s%s", validateDocPath, file));
 				dd.setValidateDocUpdate(contents);
-				break; // only one validate_doc_update file
 			}
 		} // /validate_doc_update
 		Map<String, MapReduce> views = null;

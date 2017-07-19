@@ -153,19 +153,14 @@ public class BTSUserDaoImpl extends CouchDBDao<BTSUser, String> implements BTSUs
 		ArrayList<BTSUser> results = new ArrayList<BTSUser>();
 		for (String jo : allDocs)
 		{
-//			System.out.println(jo);
-			if (true)
-			{
-				
-				try {
-					URI uri = URI.createURI(getLocalDBURL(userName, passWord) + "/" + path + "/"
-							+ extractIdFromObjectString(jo));
-					Resource resource = connectionProvider.getEmfResourceSet().createResource(uri);
-					fillResource(resource, jo);
-					results.add((BTSUser) resource.getContents().get(0));
-				} catch (Exception e) {
-					logger.error(e);
-				}
+			try {
+				URI uri = URI.createURI(getLocalDBURL(userName, passWord) + "/" + path + "/"
+						+ extractIdFromObjectString(jo));
+				Resource resource = connectionProvider.getEmfResourceSet().createResource(uri);
+				fillResource(resource, jo);
+				results.add((BTSUser) resource.getContents().get(0));
+			} catch (Exception e) {
+				logger.error(e);
 			}
 		}
 		if (!results.isEmpty())

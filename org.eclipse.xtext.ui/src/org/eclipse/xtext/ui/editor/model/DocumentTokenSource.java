@@ -74,10 +74,8 @@ public class DocumentTokenSource {
 			TokenInfo other = (TokenInfo) obj;
 			if (length != other.length)
 				return false;
-			if (type != other.type)
-				return false;
-			return true;
-		}
+            return type == other.type;
+        }
 
 		@Override
 		public String toString() {

@@ -202,10 +202,7 @@ public class TextViewerMoveLinesAction extends TextViewerAction {
 		// the new selection will cover the entire lines being moved, except for the last line's
 		// delimiter. The exception to this rule is an empty last line, which will stay covered
 		// including its delimiter
-		if (delim != null && document.getLineLength(endLine) == delim.length())
-			fAddDelimiter= true;
-		else
-			fAddDelimiter= false;
+        fAddDelimiter = delim != null && document.getLineLength(endLine) == delim.length();
 
 		return new TextSelection(document, low, high - low);
 	}
@@ -242,7 +239,7 @@ public class TextViewerMoveLinesAction extends TextViewerAction {
 	 * <code>null</code>, <code>false</code> otherwise
 	 */
 	private boolean isWhitespace(String string) {
-		return string == null ? true : string.trim().length() == 0;
+		return string == null || string.trim().length() == 0;
 	}
 
 	@Override
@@ -342,7 +339,6 @@ public class TextViewerMoveLinesAction extends TextViewerAction {
 			selectAndReveal(viewer, selOffset, selLength);
 		} catch (BadLocationException x) {
 			// won't happen without concurrent modification - bail out
-			return;
 		}
 	}
 

@@ -32,13 +32,9 @@ public class BTSLemmaEntryNameTranslationViewerFilter extends ViewerFilter {
 		}
 		
 		String translation = getTranslationString(lemma);
-		if (translation != null && translation.contains(filterText))
-		{
-			return true;
-		}
-		
-		return false;
-	}
+        return translation != null && translation.contains(filterText);
+
+    }
 
 	public void setFilterString(String filterText) {
 		this.filterText = filterText;

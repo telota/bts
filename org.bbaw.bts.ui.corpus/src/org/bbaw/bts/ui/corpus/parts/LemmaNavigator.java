@@ -322,11 +322,8 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
 					}
 					else if (tn.getLabel().equals(BTSConstants.ORPHANS_NODE_LABEL))
 					{
-						if (true || !tn.isChildrenLoaded())
-						{
-							tn.setChildrenLoaded(true);
-							loadOrphans(parentControl, treeViewer, tn);
-						}
+						tn.setChildrenLoaded(true);
+						loadOrphans(parentControl, treeViewer, tn);
 					}
 					if (selection instanceof TreeSelection)
 					{

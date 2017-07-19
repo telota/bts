@@ -23,6 +23,8 @@ import org.eclipse.xtext.util.Pair;
 
 import com.google.inject.Inject;
 
+import java.util.Iterator;
+
 /**
  * @author Jan Koehnlein - Initial contribution and API
  * @since 2.3
@@ -56,10 +58,9 @@ public class PreferenceStoreWhitespaceInformationProvider implements IWhitespace
 		if (uri.isPlatformResource()) {
 			project = workspace.getRoot().getProject(uri.segment(1));
 		} else {
-			for (Pair<IStorage, IProject> storage : storage2UriMapper.getStorages(uri)) {
-				project = storage.getSecond();
-				break;
-			}
+			Iterator<Pair<IStorage, IProject>> it = storage2UriMapper.getStorages(uri).iterator();
+			if (it.hasNext())
+				project = it.next().getSecond();
 		}
 		if (project != null) {
 			String result = getLineSeparatorPreference(new ProjectScope(project));

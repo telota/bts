@@ -464,7 +464,6 @@ public class TreeNodeWrapperItemProvider extends ItemProviderAdapter implements 
 										fireNotifyChanged(new ViewerNotification(
 												notification, parent, true,
 												true));
-										return;
 									}
 								}
 					}

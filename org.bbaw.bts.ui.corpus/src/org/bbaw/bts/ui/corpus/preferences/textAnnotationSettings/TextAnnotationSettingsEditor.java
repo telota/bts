@@ -142,7 +142,7 @@ public class TextAnnotationSettingsEditor extends Composite {
 				false, 1, 1));
 		lblSubtype.setText("Subtype");
 
-		Combo subtypeCMB_Main = new Combo(this, SWT.NONE | SWT.READ_ONLY);
+		Combo subtypeCMB_Main = new Combo(this, SWT.READ_ONLY);
 		subtypeCMB_Main.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 		subtypeCMB_Main_viewer = new ComboViewer(subtypeCMB_Main);
@@ -293,9 +293,7 @@ public class TextAnnotationSettingsEditor extends Composite {
 			cci.setValue(inputString);
 			((BTSConfig) input).getChildren().add(cci);
 			viewer.setSelection(new StructuredSelection( cci));
-			return;
 		}
-		
 	}
 
 	/**

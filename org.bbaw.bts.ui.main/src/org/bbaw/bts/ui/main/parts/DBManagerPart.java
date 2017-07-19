@@ -234,7 +234,6 @@ public class DBManagerPart {
 			}
 		});
 		loadInformations();
-		return;
 	}
 	
 	private void reindexAll() {

@@ -586,7 +586,7 @@ public class ConfigurableCompletionProposal implements
 				return hover.getHoverInfo(eObject, viewer, null);
 			}
 		}
-		return additionalProposalInfo != null ? additionalProposalInfo : null;
+		return additionalProposalInfo;
 	}
 	
 	@Override

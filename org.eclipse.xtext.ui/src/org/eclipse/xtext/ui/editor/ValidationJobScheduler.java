@@ -65,11 +65,8 @@ public class ValidationJobScheduler implements IValidationJobScheduler {
 	}
 
 	protected boolean isDirty(URI uri) {
-		if (dirtyStateManager.hasContent(uri)) {
-			return true;
-		}
-		return false;
-	}
+        return dirtyStateManager.hasContent(uri);
+    }
 
 	protected IDirtyStateManager getDirtyStateManager() {
 		return dirtyStateManager;

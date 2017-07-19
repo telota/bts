@@ -352,10 +352,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 	@Inject
 	public void setSelection(
 			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) final BTSObject selection) {
-		if (selection == null) {
-			// do nothing
-			return;
-		} else if (selection != null && !selection.equals(selectedLemmaEntry)) {
+		if (selection != null && !selection.equals(selectedLemmaEntry)) {
 			if (selection instanceof BTSCorpusObject) {
 				if (processLemmaAnnotionsJob != null)
 				{
@@ -401,6 +398,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 			}
 		}
 	}
+
 	private void makePartActive(boolean activate) {
 	embeddedEditor.getViewer().setEditable(activate);
 	embeddedEditor.getViewer().getTextWidget().setEnabled(activate);

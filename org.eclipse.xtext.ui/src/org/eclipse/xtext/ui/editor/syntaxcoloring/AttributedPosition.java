@@ -46,7 +46,7 @@ public class AttributedPosition extends Position {
 
 		TextAttribute textAttribute = attribute;
 		int style = textAttribute.getStyle();
-		int fontStyle = style & (SWT.ITALIC | SWT.BOLD | SWT.NORMAL);
+		int fontStyle = style & (SWT.ITALIC | SWT.BOLD);
 		StyleRange styleRange = new StyleRange(getOffset(), len, textAttribute.getForeground(),
 				textAttribute.getBackground(), fontStyle);
 		styleRange.strikeout = (style & TextAttribute.STRIKETHROUGH) != 0;

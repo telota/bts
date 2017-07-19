@@ -331,11 +331,7 @@ public class TextAnnotationsPart implements IBTSEditor {
 			}
 		}
 	}
-	/**
-	 * @param annotations
-	 * @param b
-	 * @param object
-	 */
+
 	private void processSelection(List<BTSObject> annotations) {
 		
 		textAnnotatationEditor.setSelectedAnnotations(annotations, true);
@@ -361,10 +357,7 @@ public class TextAnnotationsPart implements IBTSEditor {
 	@Inject
 	public void setSelection(
 			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSIdentifiableItem selection) {
-		if (selection == null) {
-			// do nothing
-			return;
-		} else if (selection != null && !selection.equals(selectedTextItem)) {
+		if (selection != null && !selection.equals(selectedTextItem)) {
 
 			if (selection instanceof BTSCorpusObject) // concered by selection event
 			{

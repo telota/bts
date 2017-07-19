@@ -106,11 +106,8 @@ public class MarkerResolutionGenerator extends AbstractIssueResolutionProviderAd
 			}
 
 			private boolean referringToSameIssue(Annotation annotation, IMarker marker) {
-				if(getIssueUtil().refersToSameIssue(marker, annotation)) {
-					return true;
-				}
-				return false;
-			}
+                return getIssueUtil().refersToSameIssue(marker, annotation);
+            }
 		});
 	}
 

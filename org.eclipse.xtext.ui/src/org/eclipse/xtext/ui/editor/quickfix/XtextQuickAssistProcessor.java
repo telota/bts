@@ -72,12 +72,9 @@ public class XtextQuickAssistProcessor extends AbstractIssueResolutionProviderAd
 			return markerAnnotation.isQuickFixable();
 		}
 
-		if (annotation instanceof SpellingAnnotation) {
-			return true;
-		}
+        return annotation instanceof SpellingAnnotation;
 
-		return false;
-	}
+    }
 
 	public boolean canAssist(IQuickAssistInvocationContext invocationContext) {
 		return false;

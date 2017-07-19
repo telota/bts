@@ -38,11 +38,7 @@ public class ClearTokenDataHandler {
 	public boolean canExecute(
 			@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) Boolean mayEdit,
 			@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_TRANSCRIBE) Boolean mayTranscribe) {
-		if ((mayEdit != null && mayEdit.booleanValue()) || (mayTranscribe != null && mayTranscribe.booleanValue()))
-		{
-			return true;
-		}
-		return false;
-	}	
+        return (mayEdit != null && mayEdit.booleanValue()) || (mayTranscribe != null && mayTranscribe.booleanValue());
+    }
 		
 }

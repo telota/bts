@@ -410,7 +410,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
 		lblSelectUser.pack();
 
 		roles_rolesDesc_users_comboViewer = new ComboViewer(grpAssignUser,
-				SWT.NONE | SWT.READ_ONLY);
+                SWT.READ_ONLY);
 		roles_rolesDesc_users_comboViewer.getCombo().setLayoutData(
 				new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
@@ -490,7 +490,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
 		lblSelectUserGroup.pack();
 
 		roles_rolesDesc_group_comboViewer = new ComboViewer(grpAssignUserGroup,
-				SWT.NONE | SWT.READ_ONLY);
+				SWT.READ_ONLY);
 		roles_rolesDesc_group_comboViewer.getCombo().setLayoutData(
 				new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		roles_rolesDesc_group_comboViewer

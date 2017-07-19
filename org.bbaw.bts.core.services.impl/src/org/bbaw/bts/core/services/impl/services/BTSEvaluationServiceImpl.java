@@ -1021,12 +1021,9 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService
 	}
 
 	private boolean lockIsOwnedByAuthUser(DBLease lease) {
-		if (lease.getBtsUUID() != null && lease.getBtsUUID().equals(getBtsUUID())
-				&& authenticatedUser.get_id().equals(lease.getUserId())) {
-			return true;
-		}
-		return false;
-	}
+        return lease.getBtsUUID() != null && lease.getBtsUUID().equals(getBtsUUID())
+                && authenticatedUser.get_id().equals(lease.getUserId());
+    }
 
 	@Override
 	public boolean authenticatedUserIsDBAdmin(boolean remoteDBAdmin) {

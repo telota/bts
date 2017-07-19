@@ -104,7 +104,6 @@ public class AnnotationToolbarItemCreator {
 		} catch (BackingStoreException e) {
 			e.printStackTrace();
 		}
-		return;
 	}
 
 	/**

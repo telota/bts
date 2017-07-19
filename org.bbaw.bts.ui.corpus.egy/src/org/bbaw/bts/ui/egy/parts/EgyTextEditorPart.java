@@ -471,9 +471,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 					int oldSelection = tabSelection;
 					tabSelection = tabFolder.getSelectionIndex();
 					boolean canSwitch = true;
-					if (tabSelection == oldSelection) {
-						return;
-					} else {
+					if (tabSelection != oldSelection) {
 						// update model from old selection editor
 						switch (oldSelection) {
 						case 0: {
@@ -573,7 +571,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 				{
 
 					embeddedEditorParentComp = new Composite(tabFolder,
-							SWT.NONE | SWT.BORDER);
+                            SWT.BORDER);
 					embeddedEditorParentComp.setLayout(new GridLayout());
 					((GridLayout) embeddedEditorParentComp.getLayout()).marginHeight = 0;
 					((GridLayout) embeddedEditorParentComp.getLayout()).marginWidth = 0;
@@ -785,8 +783,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 				CTabItem signTextTab = new CTabItem(tabFolder, SWT.NONE);
 				signTextTab.setText("Sign Text Editor");
 				{
-					Composite plainTextComp = new Composite(tabFolder, SWT.NONE
-							| SWT.BORDER);
+					Composite plainTextComp = new Composite(tabFolder, SWT.BORDER);
 					plainTextComp.setLayout(new GridLayout());
 					((GridLayout) plainTextComp.getLayout()).marginHeight = 0;
 					((GridLayout) plainTextComp.getLayout()).marginWidth = 0;
@@ -1364,7 +1361,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 					}
 					lemmaAnnotationMap = null;
 
-					return;
 				}
 			};
 			new ProgressMonitorDialog(parentShell).run(true, true, op);
@@ -2003,10 +1999,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	@Inject
 	public void setSelection(
 			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSIdentifiableItem selection) {
-		if (selection == null || parent == null || parent.isDisposed()) {
-			// do nothing
-			return;
-		} else if (selection != null && !selection.equals(selectedTextItem)) {
+		if (selection != null && parent != null && !parent.isDisposed() && !selection.equals(selectedTextItem)) {
 
 			if (selection instanceof BTSCorpusObject) // concered by selection event
 			{
