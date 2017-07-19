@@ -79,20 +79,11 @@ public class TextAnnotationsPart implements IBTSEditor {
 
     public static final String PART_ID = "org.fuberlin.bts.ui.corpus.egy.annotations.TextAnnotationsPart";
     protected String queryId;
-    /**
-     * The context.
-     */
     @Inject
     IEclipseContext context;
-    /**
-     * The dirty.
-     */
     @Optional
     @Inject
     private MDirtyable dirty;
-    /**
-     * The text editor controller.
-     */
     @Inject
     private BTSTextEditorController textEditorController;
     @Inject
@@ -100,41 +91,20 @@ public class TextAnnotationsPart implements IBTSEditor {
     private String lang;
     @Inject
     private AnnotationPartController annotationPartController;
-    /**
-     * The sync.
-     */
     @Inject
     private UISynchronize sync;
-    /**
-     * The event broker.
-     */
     @Inject
     private EventBroker eventBroker;
-    /**
-     * The context service.
-     */
     @Inject
     private EContextService contextService;
-    /**
-     * The part service.
-     */
     @Inject
     private EPartService partService;
-    /**
-     * The editing domain controller.
-     */
     @Inject
     private EditingDomainController editingDomainController;
-    /**
-     * The selection service.
-     */
     @Inject
     private ESelectionService selectionService;
     private TextAnnotationsComposite textAnnotatationEditor;
     private MPart part;
-    /**
-     * The parent shell.
-     */
     @Optional
     @Inject
     @Active
@@ -147,20 +117,8 @@ public class TextAnnotationsPart implements IBTSEditor {
     private List<BTSObject> relatingObjects;
     private Map<String, List<BTSInterTextReference>> relatingObjectsMap;
     private BTSRelatingObjectsLoadingEvent relatingObjectsEvent;
-
-    /**
-     * The editing domain.
-     */
     private EditingDomain editingDomain;
-
-    /**
-     * The command stack listener.
-     */
     private CommandStackListener commandStackListener;
-
-    /**
-     * The local command cache set.
-     */
     private Set<Command> localCommandCacheSet = new HashSet<Command>();
 
 
@@ -269,11 +227,6 @@ public class TextAnnotationsPart implements IBTSEditor {
 
     }
 
-    /**
-     * Event received relating objects loaded events.
-     *
-     * @param event the event
-     */
     @SuppressWarnings({"restriction", "rawtypes"})
     @Inject
     @Optional
@@ -329,22 +282,10 @@ public class TextAnnotationsPart implements IBTSEditor {
 
     }
 
-
-    /**
-     * Gets the editing domain.
-     *
-     * @param editingObject the editing object
-     * @return the editing domain
-     */
     private EditingDomain getEditingDomain(EObject editingObject) {
         return editingDomainController.getEditingDomain(editingObject);
     }
 
-    /**
-     * Sets the selection.
-     *
-     * @param selection the new selection
-     */
     @Inject
     public void setSelection(
             @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSIdentifiableItem selection) {
@@ -396,21 +337,17 @@ public class TextAnnotationsPart implements IBTSEditor {
 
     private void setSentenceTranslation(BTSSenctence selection, boolean b) {
         // TODO Auto-generated method stub
-
     }
 
 
     private void setSentenceTranslation(BTSWord selection) {
         // TODO Auto-generated method stub
-
     }
 
 
     private void purgeCache() {
         // TODO Auto-generated method stub
-
     }
-
 
     private void loadInput(BTSCorpusObject selection) {
         if (selection instanceof BTSText) {
@@ -640,11 +577,6 @@ public class TextAnnotationsPart implements IBTSEditor {
 
     }
 
-    /**
-     * Gets the command stack listener.
-     *
-     * @return the command stack listener
-     */
     private CommandStackListener getCommandStackListener() {
         if (commandStackListener == null) {
             commandStackListener = new CommandStackListener() {
@@ -684,12 +616,7 @@ public class TextAnnotationsPart implements IBTSEditor {
         return commandStackListener;
     }
 
-
-    /**
-     *
-     */
     protected void setDirtyInternal() {
         // TODO Auto-generated method stub
-
     }
 }
