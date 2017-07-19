@@ -18,7 +18,7 @@ public interface GenericCorpusObjectService<E extends BTSCorpusObject, K extends
 
     boolean checkAndFullyLoad(BTSCorpusObject object, boolean checkForConflicts);
 
-    public String[] getActive_corpora(String projecPrefix);
+    String[] getActive_corpora(String projecPrefix);
 
-    public String[] getActiveLemmaLists();
+    String[] getActiveLemmaLists();
 }

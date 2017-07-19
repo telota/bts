@@ -49,7 +49,7 @@ public class BTSThsEntryServiceImpl
     @Override
     public List<BTSThsEntry> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                         String objectState, IProgressMonitor monitor) {
-        List<BTSThsEntry> objects = new Vector<BTSThsEntry>();
+        List<BTSThsEntry> objects = new Vector<>();
         objects.addAll(thsEntryDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(objects);
     }
@@ -116,7 +116,7 @@ public class BTSThsEntryServiceImpl
 
     @Override
     public List<BTSThsEntry> list(String objectState, IProgressMonitor monitor) {
-        List<BTSThsEntry> entries = new Vector<BTSThsEntry>();
+        List<BTSThsEntry> entries = new Vector<>();
         for (String p : getActiveThss()) {
             try {
                 entries.addAll(thsEntryDao.list(p + BTSCorpusConstants.THS,
@@ -130,7 +130,7 @@ public class BTSThsEntryServiceImpl
     @Override
     public List<BTSThsEntry> query(BTSQueryRequest query, String objectState,
                                    boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSThsEntry> objects = new Vector<BTSThsEntry>();
+        List<BTSThsEntry> objects = new Vector<>();
         for (String p : getActiveThss()) {
 
             try {
@@ -152,7 +152,7 @@ public class BTSThsEntryServiceImpl
 
     @Override
     public List<BTSThsEntry> listRootEntries(IProgressMonitor monitor) {
-        List<BTSThsEntry> entries = new Vector<BTSThsEntry>();
+        List<BTSThsEntry> entries = new Vector<>();
         for (String p : getActiveProjects()) {
             entries.addAll(thsEntryDao.list(p + BTSCorpusConstants.THS,
                     DaoConstants.VIEW_THS_ROOT_ENTRIES, BTSConstants.OBJECT_STATE_ACTIVE));
@@ -207,7 +207,7 @@ public class BTSThsEntryServiceImpl
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveThss()) {
 
             try {

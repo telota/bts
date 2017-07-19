@@ -7,6 +7,7 @@ import org.bbaw.bts.ui.main.dialogs.StatusMessageDialog;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.jface.window.Window;
 
 public class OpenStatusMessagesDialogHandler {
     @Inject
@@ -22,7 +23,7 @@ public class OpenStatusMessagesDialogHandler {
                 dialog, child);
         dialog.create();
 
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
         }
     }
 

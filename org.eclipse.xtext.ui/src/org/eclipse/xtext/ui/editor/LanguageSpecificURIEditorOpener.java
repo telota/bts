@@ -120,8 +120,7 @@ public class LanguageSpecificURIEditorOpener implements IURIEditorOpener {
     protected EObject findEObjectByURI(final URI uri, XtextResource resource) {
         if (uri.fragment() != null) {
             try {
-                EObject result = resource.getEObject(uri.fragment());
-                return result;
+                return resource.getEObject(uri.fragment());
             } catch (WrappedException e) {
                 logger.error("Error while resolving EObject with URI '" + uri + "'", e.getCause());
             }

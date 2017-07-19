@@ -47,7 +47,7 @@ public abstract class PassportEntryEditorComposite extends Composite {
         Assert.isNotNull(parentEntryGroup);
         Assert.isNotNull(groupConfig);
 
-        List<BTSPassportEntry> entries = new Vector<BTSPassportEntry>();
+        List<BTSPassportEntry> entries = new Vector<>();
         for (BTSPassportEntry group : parentEntryGroup.getChildren()) {
             if (group.getType() != null
                     && group.getType().equals(groupConfig.getValue())) {

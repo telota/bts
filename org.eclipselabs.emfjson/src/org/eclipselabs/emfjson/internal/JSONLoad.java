@@ -48,7 +48,7 @@ import org.eclipselabs.emfjson.common.ModelUtil;
  */
 public class JSONLoad {
 
-    private final Map<String, String> nsMap = new HashMap<String, String>();
+    private final Map<String, String> nsMap = new HashMap<>();
     private JsonNode rootNode;
     private EClass rootClass;
     private ResourceSet resourceSet;
@@ -362,7 +362,7 @@ public class JSONLoad {
         if (this.resourceSet == null) {
             this.resourceSet = resourceSet;
         }
-        final Collection<EObject> result = new Vector<EObject>();
+        final Collection<EObject> result = new Vector<>();
 
         if (this.rootNode.isArray()) {
 

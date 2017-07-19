@@ -39,7 +39,7 @@ public class JavaProjectFactory extends ProjectFactory {
             try {
                 subMonitor.subTask(Messages.JavaProjectFactory_ConfigureJavaProject + projectName);
                 IJavaProject javaProject = JavaCore.create(project);
-                List<IClasspathEntry> classpathEntries = new ArrayList<IClasspathEntry>();
+                List<IClasspathEntry> classpathEntries = new ArrayList<>();
                 for (final IProject referencedProject : project.getReferencingProjects()) {
                     final IClasspathEntry referencedProjectClasspathEntry = JavaCore.newProjectEntry(referencedProject
                             .getFullPath());

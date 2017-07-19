@@ -113,7 +113,7 @@ public class BTSTextCorpusServiceImpl extends AbstractCorpusObjectServiceImpl<BT
 
     @Override
     public List<BTSTextCorpus> list(String objectState, IProgressMonitor monitor) {
-        List<BTSTextCorpus> list = new Vector<BTSTextCorpus>();
+        List<BTSTextCorpus> list = new Vector<>();
         for (String p : getActiveProjects()) {
             try {
                 list.addAll(textCorpusDao.list(p + BTSCorpusConstants.CORPUS,
@@ -145,7 +145,7 @@ public class BTSTextCorpusServiceImpl extends AbstractCorpusObjectServiceImpl<BT
     @Override
     public List<BTSTextCorpus> query(BTSQueryRequest query, String objectState,
                                      boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSTextCorpus> objects = new Vector<BTSTextCorpus>();
+        List<BTSTextCorpus> objects = new Vector<>();
         for (String p : getActiveProjects()) {
 
             objects.addAll(textCorpusDao.query(query, p
@@ -170,7 +170,7 @@ public class BTSTextCorpusServiceImpl extends AbstractCorpusObjectServiceImpl<BT
     @Override
     public List<BTSTextCorpus> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                           String objectState, IProgressMonitor monitor) {
-        List<BTSTextCorpus> objects = new Vector<BTSTextCorpus>();
+        List<BTSTextCorpus> objects = new Vector<>();
         objects.addAll(textCorpusDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(objects);
     }
@@ -267,7 +267,7 @@ public class BTSTextCorpusServiceImpl extends AbstractCorpusObjectServiceImpl<BT
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveProjects()) {
 
             objects.addAll(textCorpusDao.queryAsJsonString(query, p

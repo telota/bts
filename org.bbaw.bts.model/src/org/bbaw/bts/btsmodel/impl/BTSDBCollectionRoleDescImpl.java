@@ -163,7 +163,7 @@ public class BTSDBCollectionRoleDescImpl extends BTSIdentifiableItemImpl impleme
      */
     public EList<String> getUserNames() {
         if (userNames == null) {
-            userNames = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTSDB_COLLECTION_ROLE_DESC__USER_NAMES);
+            userNames = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTSDB_COLLECTION_ROLE_DESC__USER_NAMES);
         }
         return userNames;
     }
@@ -176,7 +176,7 @@ public class BTSDBCollectionRoleDescImpl extends BTSIdentifiableItemImpl impleme
      */
     public EList<String> getUserRoles() {
         if (userRoles == null) {
-            userRoles = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTSDB_COLLECTION_ROLE_DESC__USER_ROLES);
+            userRoles = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTSDB_COLLECTION_ROLE_DESC__USER_ROLES);
         }
         return userRoles;
     }
@@ -189,7 +189,7 @@ public class BTSDBCollectionRoleDescImpl extends BTSIdentifiableItemImpl impleme
      */
     public EList<Object> getCachedChildren() {
         if (cachedChildren == null) {
-            cachedChildren = new EDataTypeUniqueEList<Object>(Object.class, this, BtsmodelPackage.BTSDB_COLLECTION_ROLE_DESC__CACHED_CHILDREN);
+            cachedChildren = new EDataTypeUniqueEList<>(Object.class, this, BtsmodelPackage.BTSDB_COLLECTION_ROLE_DESC__CACHED_CHILDREN);
         }
         return cachedChildren;
     }
@@ -238,7 +238,7 @@ public class BTSDBCollectionRoleDescImpl extends BTSIdentifiableItemImpl impleme
                 return;
             case BtsmodelPackage.BTSDB_COLLECTION_ROLE_DESC__CACHED_CHILDREN:
                 getCachedChildren().clear();
-                getCachedChildren().addAll((Collection<? extends Object>) newValue);
+                getCachedChildren().addAll((Collection<?>) newValue);
                 return;
         }
         super.eSet(featureID, newValue);

@@ -26,7 +26,7 @@ public final class ContextInformationComputer implements IUnitOfWork<IContextInf
     private final Collection<IContextInformation> information;
     public ContextInformationComputer(State state, ITextViewer viewer, int offset) {
         super();
-        this.information = new LinkedHashSet<IContextInformation>();
+        this.information = new LinkedHashSet<>();
         this.state = state;
         this.offset = offset;
         this.viewer = viewer;

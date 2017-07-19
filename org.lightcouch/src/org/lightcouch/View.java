@@ -164,7 +164,7 @@ public class View {
         try {
             Reader reader = new InputStreamReader(instream = queryForStream(), StandardCharsets.UTF_8);
             JsonArray jsonArray = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("rows");
-            List<T> list = new ArrayList<T>();
+            List<T> list = new ArrayList<>();
             for (JsonElement jsonElem : jsonArray) {
                 JsonElement elem = jsonElem.getAsJsonObject();
                 if (Boolean.TRUE.equals(this.includeDocs)) {
@@ -194,7 +194,7 @@ public class View {
         try {
             Reader reader = new InputStreamReader(instream = queryForStream(), StandardCharsets.UTF_8);
             JsonObject json = new JsonParser().parse(reader).getAsJsonObject();
-            ViewResult<K, V, T> vr = new ViewResult<K, V, T>();
+            ViewResult<K, V, T> vr = new ViewResult<>();
             vr.setTotalRows(getElementAsLong(json, "total_rows"));
             vr.setOffset(getElementAsInt(json, "offset"));
             vr.setUpdateSeq(getElementAsLong(json, "update_seq"));
@@ -334,8 +334,8 @@ public class View {
             startKeyDocId(startKeyDocId);
         }
         // init page, query view
-        Page<T> page = new Page<T>();
-        List<T> pageList = new ArrayList<T>();
+        Page<T> page = new Page<>();
+        List<T> pageList = new ArrayList<>();
         ViewResult<String, String, T> vr = queryView(String.class, String.class, classOfT);
         List<ViewResult<String, String, T>.Rows> rows = vr.getRows();
         int resultRows = rows.size();
@@ -393,8 +393,8 @@ public class View {
         startKey(currentStartKey);
         startKeyDocId(currentStartKeyDocId);
         // init page, query view
-        Page<T> page = new Page<T>();
-        List<T> pageList = new ArrayList<T>();
+        Page<T> page = new Page<>();
+        List<T> pageList = new ArrayList<>();
         ViewResult<String, String, T> vr = queryView(String.class, String.class, classOfT);
         List<ViewResult<String, String, T>.Rows> rows = vr.getRows();
         int resultRows = rows.size();
@@ -610,7 +610,7 @@ public class View {
         try {
             Reader reader = new InputStreamReader(instream = queryForStream(), StandardCharsets.UTF_8);
             JsonArray jsonArray = new JsonParser().parse(reader).getAsJsonObject().getAsJsonArray("rows");
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             for (JsonElement jsonElem : jsonArray) {
                 JsonElement elem = jsonElem.getAsJsonObject();
                 if (Boolean.TRUE.equals(this.includeDocs)) {

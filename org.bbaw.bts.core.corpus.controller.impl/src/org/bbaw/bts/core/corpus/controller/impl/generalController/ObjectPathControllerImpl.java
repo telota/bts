@@ -44,7 +44,7 @@ public class ObjectPathControllerImpl implements ObjectPathController {
                                                Map<String, List<BTSObject>> pathCache, GenericObjectService service) {
         if (objects[0] == null) return objects;
         BTSObject object = objects[0];
-        List<BTSObject> fullPath = new Vector<BTSObject>();
+        List<BTSObject> fullPath = new Vector<>();
 
         fullPath = findFullSingleParentPath(object, service);
 
@@ -57,7 +57,7 @@ public class ObjectPathControllerImpl implements ObjectPathController {
     }
 
     private List<BTSObject> findFullSingleParentPath(BTSObject object, GenericObjectService service) {
-        List<BTSObject> fullPath = new Vector<BTSObject>();
+        List<BTSObject> fullPath = new Vector<>();
         List<BTSObject> parents = null; //= findParents(object);
         int counter = 0;
         do {
@@ -75,7 +75,7 @@ public class ObjectPathControllerImpl implements ObjectPathController {
     }
 
     private List<BTSObject> findParents(BTSObject object, GenericObjectService service) {
-        List<BTSObject> parents = new Vector<BTSObject>();
+        List<BTSObject> parents = new Vector<>();
         for (BTSRelation rel : object.getRelations().subList(0, Math.min(object.getRelations().size(), 12))) {
             if ("partOf".equals(rel.getType())) {
                 Object o = null;
@@ -113,7 +113,7 @@ public class ObjectPathControllerImpl implements ObjectPathController {
 
         query.setQueryId("relations.objectId-" + objectId);
         List<BTSCorpusObject> rawParents = service.query(query, BTSConstants.OBJECT_STATE_ACTIVE, false, null);
-        List<BTSObject> parents = new Vector<BTSObject>();
+        List<BTSObject> parents = new Vector<>();
         for (BTSCorpusObject o : rawParents.subList(0, Math.min(rawParents.size(), 12))) {
             for (BTSRelation rel : o.getRelations()) {
                 if (!"partOf".equals(rel.getType()) && rel.getObjectId().equals(objectId)) {

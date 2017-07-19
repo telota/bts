@@ -35,11 +35,10 @@ public class AbstractDeclarativeQuickfixProvider implements IssueResolutionProvi
         return new Predicate<Method>() {
             public boolean apply(Method input) {
                 Fix annotation = input.getAnnotation(Fix.class);
-                boolean result = annotation != null && issueCode.equals(annotation.value())
+                return annotation != null && issueCode.equals(annotation.value())
                         && input.getParameterTypes().length == 2 && Void.TYPE == input.getReturnType()
                         && input.getParameterTypes()[0].isAssignableFrom(Issue.class)
                         && input.getParameterTypes()[1].isAssignableFrom(IssueResolutionAcceptor.class);
-                return result;
             }
         };
     }

@@ -56,7 +56,7 @@ public class XtextDocument extends Document implements IXtextDocument {
         }
     };
     private static final Logger log = Logger.getLogger(XtextDocument.class);
-    private final List<IXtextModelListener> modelListeners = new ArrayList<IXtextModelListener>();
+    private final List<IXtextModelListener> modelListeners = new ArrayList<>();
     private final ListenerList xtextDocumentObservers = new ListenerList(ListenerList.IDENTITY);
     private final XtextDocumentLocker stateAccess = createDocumentLocker();
     private DocumentTokenSource tokenSource;
@@ -97,7 +97,7 @@ public class XtextDocument extends Document implements IXtextDocument {
     public <T> T modify(IUnitOfWork<T, XtextResource> work) {
         // do a dummy read only, to make sure any scheduled changes get applied.
         readOnly(noWork);
-        IUnitOfWork<T, XtextResource> reconcilingUnitOfWork = new ReconcilingUnitOfWork<T>(work, this, composer);
+        IUnitOfWork<T, XtextResource> reconcilingUnitOfWork = new ReconcilingUnitOfWork<>(work, this, composer);
         return internalModify(reconcilingUnitOfWork);
     }
 

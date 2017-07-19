@@ -58,8 +58,7 @@ public class WorkspaceEncodingProvider implements IEncodingProvider {
                     }
                 }
                 try {
-                    String result = storage.getSecond().getDefaultCharset(true);
-                    return result;
+                    return storage.getSecond().getDefaultCharset(true);
                 } catch (CoreException e) {
                     LOG.error("Error getting project's default encoding", e);
                 }

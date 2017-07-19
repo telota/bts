@@ -116,7 +116,7 @@ public class EgyTextTranslationPart {
     /**
      * The model annotation map.
      */
-    private Map<String, BTSModelAnnotation> modelAnnotationMap = new HashMap<String, BTSModelAnnotation>();
+    private Map<String, BTSModelAnnotation> modelAnnotationMap = new HashMap<>();
 
     /**
      * The painter.
@@ -126,7 +126,7 @@ public class EgyTextTranslationPart {
     /**
      * The highlighted annotations.
      */
-    private List<BTSModelAnnotation> highlightedAnnotations = new Vector<BTSModelAnnotation>(
+    private List<BTSModelAnnotation> highlightedAnnotations = new Vector<>(
             4);
 
     private BTSTextSelectionEvent btsTextEvent = null;
@@ -279,7 +279,7 @@ public class EgyTextTranslationPart {
 
     private void processSelection(List<BTSModelAnnotation> annotations,
                                   boolean b, BTSTextSelectionEvent btsEvent) {
-        List<BTSModelAnnotation> sentenceAnnotations = new Vector<BTSModelAnnotation>(
+        List<BTSModelAnnotation> sentenceAnnotations = new Vector<>(
                 annotations.size());
         if (!annotations.isEmpty()) {
             for (BTSModelAnnotation ma : annotations) {
@@ -288,9 +288,9 @@ public class EgyTextTranslationPart {
                 }
             }
         }
-        List<BTSModelAnnotation> deHighlightedAnnotations = new Vector<BTSModelAnnotation>(
+        List<BTSModelAnnotation> deHighlightedAnnotations = new Vector<>(
                 highlightedAnnotations.size());
-        List<BTSModelAnnotation> toBeHighlightedAnnotations = new Vector<BTSModelAnnotation>();
+        List<BTSModelAnnotation> toBeHighlightedAnnotations = new Vector<>();
         // substract annotations that are already highlighted from those the selected annotations
         toBeHighlightedAnnotations.addAll(sentenceAnnotations);
         toBeHighlightedAnnotations.removeAll(highlightedAnnotations);
@@ -420,13 +420,13 @@ public class EgyTextTranslationPart {
                                                                    int end, BTSTextSelectionEvent btsEvent) {
         Iterator<Annotation> it = textViewer.getAnnotationModel()
                 .getAnnotationIterator();
-        List<BTSModelAnnotation> annotations = new Vector<BTSModelAnnotation>(4);
-        Map<Integer, List<BTSModelAnnotation>> annotationOffsetMap = new HashMap<Integer, List<BTSModelAnnotation>>(4);
+        List<BTSModelAnnotation> annotations = new Vector<>(4);
+        Map<Integer, List<BTSModelAnnotation>> annotationOffsetMap = new HashMap<>(4);
         BTSSentenceItem startItem = null;
         int startItemOffeset = 0;
         BTSSentenceItem endItem = null;
         int endItemOffeset = 0;
-        List<BTSSentenceItem> textItems = new Vector<BTSSentenceItem>();
+        List<BTSSentenceItem> textItems = new Vector<>();
         while (it.hasNext()) {
             Annotation a = (Annotation) it.next();
             if (a instanceof BTSModelAnnotation) {
@@ -439,7 +439,7 @@ public class EgyTextTranslationPart {
                         || (pos.getOffset() >= start && pos.getOffset() <= end)) {
                     List<BTSModelAnnotation> list = annotationOffsetMap.get(pos.getOffset());
                     if (list == null) {
-                        list = new ArrayList<BTSModelAnnotation>(2);
+                        list = new ArrayList<>(2);
                         annotationOffsetMap.put(pos.getOffset(), list);
                     }
                     list.add((BTSModelAnnotation) a);
@@ -460,7 +460,7 @@ public class EgyTextTranslationPart {
         }
 
         // sort keys and add annotations to annotationslist according to the order of their offset
-        List<Integer> offsets = new ArrayList<Integer>(annotationOffsetMap.size());
+        List<Integer> offsets = new ArrayList<>(annotationOffsetMap.size());
         offsets.addAll(annotationOffsetMap.keySet());
         Collections.sort(offsets);
         for (Integer i : offsets) {
@@ -684,7 +684,7 @@ public class EgyTextTranslationPart {
             }
             observableSentences.clear();
         } else {
-            observableSentences = new Vector<IObservableValue<?>>();
+            observableSentences = new Vector<>();
         }
     }
 

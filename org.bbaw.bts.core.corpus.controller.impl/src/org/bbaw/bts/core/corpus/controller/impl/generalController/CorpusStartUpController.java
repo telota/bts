@@ -66,8 +66,7 @@ public class CorpusStartUpController implements ExtensionStartUpController {
                     && main_corpus_key != null
                     && cor.getCorpusPrefix() != null
                     && main_corpus_key.endsWith(cor.getCorpusPrefix())) {
-                BTSTextCorpus main_corpus = cor;
-                context.modify(BTSPluginIDs.PREF_MAIN_CORPUS, main_corpus);
+                context.modify(BTSPluginIDs.PREF_MAIN_CORPUS, cor);
                 break;
             }
         }

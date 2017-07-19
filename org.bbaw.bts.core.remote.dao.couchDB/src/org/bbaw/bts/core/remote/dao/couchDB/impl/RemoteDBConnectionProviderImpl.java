@@ -63,7 +63,7 @@ public class RemoteDBConnectionProviderImpl implements RemoteDBConnectionProvide
         Map<String, CouchDbClient> clients = (Map<String, CouchDbClient>) context
                 .get(RemoteDaoConstants.DB_CLIENT_POOL_MAP);
         if (clients == null) {
-            clients = new HashMap<String, CouchDbClient>(10);
+            clients = new HashMap<>(10);
         }
         CouchDbClient dbClient = clients.get(path);
         if (user == null || password == null) {
@@ -126,7 +126,7 @@ public class RemoteDBConnectionProviderImpl implements RemoteDBConnectionProvide
     public ResourceSet getEmfResourceSet() {
         ResourceSet set = (ResourceSet) context.get(RemoteDaoConstants.RESOURCE_SET);
         if (set == null) {
-            Map<URI, Resource> uriResourceMap = new HashMap<URI, Resource>();
+            Map<URI, Resource> uriResourceMap = new HashMap<>();
             set = new ResourceSetImpl();
             set.getURIConverter().getURIHandlers().add(0, new CouchDBHandler());
             ((ResourceSetImpl) set).setURIResourceMap(uriResourceMap);
@@ -151,7 +151,7 @@ public class RemoteDBConnectionProviderImpl implements RemoteDBConnectionProvide
         Map<String, CouchDbClient> clients = (Map<String, CouchDbClient>) context
                 .get(RemoteDaoConstants.DB_CLIENT_POOL_MAP);
         if (clients == null) {
-            clients = new HashMap<String, CouchDbClient>(10);
+            clients = new HashMap<>(10);
         }
         CouchDbClient dbClient = clients.get(path);
         if (dbClient == null) {

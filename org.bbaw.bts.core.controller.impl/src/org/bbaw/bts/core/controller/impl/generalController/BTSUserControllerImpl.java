@@ -74,7 +74,7 @@ public class BTSUserControllerImpl implements BTSUserController {
     @Override
     public boolean setAuthenticatedUser(BTSUser validUser) {
         workbenchContext.modify(BTSCoreConstants.AUTHENTICATED_USER, validUser);
-        List<BTSUserGroup> groups = new Vector<BTSUserGroup>(4);
+        List<BTSUserGroup> groups = new Vector<>(4);
 
         if (validUser != null) {
             for (String id : validUser.getGroupIds()) {

@@ -279,7 +279,7 @@ public abstract class BTSTextSentenceItemImpl extends BTSNamedTypedObjectImpl im
      */
     public EList<String> getRevisions() {
         if (revisions == null) {
-            revisions = new EDataTypeUniqueEList<String>(String.class, this, BtsCorpusModelPackage.BTS_TEXT_SENTENCE_ITEM__REVISIONS);
+            revisions = new EDataTypeUniqueEList<>(String.class, this, BtsCorpusModelPackage.BTS_TEXT_SENTENCE_ITEM__REVISIONS);
         }
         return revisions;
     }

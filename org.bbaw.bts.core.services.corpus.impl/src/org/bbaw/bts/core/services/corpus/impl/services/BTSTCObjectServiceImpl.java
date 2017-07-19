@@ -99,7 +99,7 @@ public class BTSTCObjectServiceImpl extends AbstractCorpusObjectServiceImpl<BTST
 
     @Override
     public List<BTSTCObject> list(String objectState, IProgressMonitor monitor) {
-        List<BTSTCObject> objects = new Vector<BTSTCObject>();
+        List<BTSTCObject> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 objects.addAll(bTSTCObjectDao.list(c, objectState));
@@ -111,7 +111,7 @@ public class BTSTCObjectServiceImpl extends AbstractCorpusObjectServiceImpl<BTST
     @Override
     public List<BTSTCObject> query(BTSQueryRequest query, String objectState,
                                    boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSTCObject> objects = new Vector<BTSTCObject>();
+        List<BTSTCObject> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 objects.addAll(bTSTCObjectDao.query(query, c, c, objectState,
@@ -134,7 +134,7 @@ public class BTSTCObjectServiceImpl extends AbstractCorpusObjectServiceImpl<BTST
     @Override
     public List<BTSTCObject> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                         String objectState, IProgressMonitor monitor) {
-        List<BTSTCObject> objects = new Vector<BTSTCObject>();
+        List<BTSTCObject> objects = new Vector<>();
         objects.addAll(bTSTCObjectDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(objects);
     }
@@ -187,7 +187,7 @@ public class BTSTCObjectServiceImpl extends AbstractCorpusObjectServiceImpl<BTST
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 objects.addAll(bTSTCObjectDao.queryAsJsonString(query, c, c, objectState,

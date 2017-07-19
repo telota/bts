@@ -71,7 +71,7 @@ public class ValidationJob extends Job {
     }
 
     public List<Issue> createIssues(final IProgressMonitor monitor) {
-        final List<Issue> issues = xtextDocument
+        return xtextDocument
                 .readOnly(new IUnitOfWork<List<Issue>, XtextResource>() {
                     public List<Issue> exec(XtextResource resource) throws Exception {
                         if (resource == null || resource.isValidationDisabled())
@@ -83,7 +83,6 @@ public class ValidationJob extends Job {
                         });
                     }
                 });
-        return issues;
     }
 
     protected IResourceValidator getResourceValidator() {

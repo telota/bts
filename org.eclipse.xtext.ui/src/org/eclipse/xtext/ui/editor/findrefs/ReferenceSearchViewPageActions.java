@@ -15,7 +15,7 @@ import org.eclipse.xtext.ui.internal.XtextPluginImages;
  */
 public interface ReferenceSearchViewPageActions {
 
-    public static class ShowNext extends Action {
+    class ShowNext extends Action {
 
         private ReferenceSearchViewPage page;
 
@@ -32,7 +32,7 @@ public interface ReferenceSearchViewPageActions {
         }
     }
 
-    public static class ShowPrevious extends Action {
+    class ShowPrevious extends Action {
 
         private ReferenceSearchViewPage page;
 
@@ -49,7 +49,7 @@ public interface ReferenceSearchViewPageActions {
         }
     }
 
-    public static class ExpandAll extends Action {
+    class ExpandAll extends Action {
         private ReferenceSearchViewPage page;
 
         public ExpandAll(ReferenceSearchViewPage page) {
@@ -65,7 +65,7 @@ public interface ReferenceSearchViewPageActions {
         }
     }
 
-    public static class CollapseAll extends Action {
+    class CollapseAll extends Action {
         private ReferenceSearchViewPage page;
 
         public CollapseAll(ReferenceSearchViewPage page) {

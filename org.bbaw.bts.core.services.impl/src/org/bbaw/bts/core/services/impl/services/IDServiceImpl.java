@@ -100,7 +100,7 @@ public class IDServiceImpl implements IDService {
                 GROUPS);
         // creating UUID
         UUID uid = UUID.fromString(uuid);
-        id = uid.randomUUID().toString();
+        id = UUID.randomUUID().toString();
         id = id.replace("-", "");
 
         // encode Base32 to reduce size
@@ -258,10 +258,6 @@ public class IDServiceImpl implements IDService {
         {
             try {
                 return remoteIDReservationDAO.findLastID(collectionName, prefix);
-            } catch (BTSRemoteDBException e) {
-                e.printStackTrace();
-                StatusMessage m = BtsviewmodelFactory.eINSTANCE.createRemoteDBConnnectionFailedMessage();
-                eventBroker.post("status_info/error", m);
             } catch (Exception e) {
                 e.printStackTrace();
                 StatusMessage m = BtsviewmodelFactory.eINSTANCE.createRemoteDBConnnectionFailedMessage();
@@ -279,7 +275,7 @@ public class IDServiceImpl implements IDService {
     private List<BTSIDReservationObject> makeReservationObjects(
             String btsUUID2, String userName, String dbCollectionName, String prefix, int step, int amount,
             String lastID) {
-        List<BTSIDReservationObject> result = new Vector<BTSIDReservationObject>(amount);
+        List<BTSIDReservationObject> result = new Vector<>(amount);
         for (int i = 0; i < amount; i++) {
             BTSIDReservationObject ro = BtsmodelFactory.eINSTANCE.createBTSIDReservationObject();
             ro.setBtsUUID(btsUUID2);
@@ -296,8 +292,7 @@ public class IDServiceImpl implements IDService {
         String suffix = lastID.substring(prefix.length(), lastID.length());
         int lastIDSuffix = new Integer(suffix);
         int newIDSuffix = lastIDSuffix + step;
-        String newID = new String(prefix + new Integer(newIDSuffix).toString());
-        return newID;
+        return new String(prefix + new Integer(newIDSuffix).toString());
     }
 
     private BTSIDReservationObject getTopReservationObject(

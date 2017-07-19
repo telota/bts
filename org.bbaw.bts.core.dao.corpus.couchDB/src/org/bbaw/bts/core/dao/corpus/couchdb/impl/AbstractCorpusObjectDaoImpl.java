@@ -64,7 +64,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
 
     protected List<E> loadPartialObjectsFromStrings(List<String> allDocs,
                                                     String dbPath) {
-        List<E> results = new Vector<E>(allDocs.size());
+        List<E> results = new Vector<>(allDocs.size());
         Map<URI, Resource> cache = getObjectCache();
 
         for (String jo : allDocs) {
@@ -205,7 +205,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
             String sourceAsString) {
         Matcher m = lemmaTranslationsPattern.matcher(sourceAsString);
         if (m.find()) {
-            List<BTSTranslation> translations = new Vector<BTSTranslation>();
+            List<BTSTranslation> translations = new Vector<>();
             String allTranslations = m.group(2);
             if (allTranslations == null || allTranslations.trim().length() == 0)
                 return null;
@@ -249,7 +249,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
     private List<BTSWord> extractWordsFromObjectString(String sourceAsString) {
         Matcher m = wordsPattern.matcher(sourceAsString);
         if (m.find()) {
-            List<BTSWord> words = new Vector<BTSWord>();
+            List<BTSWord> words = new Vector<>();
             String allWords = m.group(2);
             if (allWords == null || allWords.trim().length() == 0)
                 return null;
@@ -284,7 +284,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
             String sourceAsString) {
         Matcher m = relationsPattern.matcher(sourceAsString);
         if (m.find()) {
-            List<BTSRelation> relations = new Vector<BTSRelation>();
+            List<BTSRelation> relations = new Vector<>();
             String allRelations = m.group(2);
             if (allRelations == null || allRelations.trim().length() == 0)
                 return null;

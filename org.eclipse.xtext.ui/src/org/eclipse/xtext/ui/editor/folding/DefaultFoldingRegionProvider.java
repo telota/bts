@@ -133,12 +133,7 @@ public class DefaultFoldingRegionProvider implements IFoldingRegionProvider {
                     }
                 }
             }
-        } catch (BadLocationException e) {
-            log.error(e, e);
-        } catch (BadPartitioningException e) {
-            log.error(e, e);
-        } catch (AssertionFailedException e) {
-            // partioning failed
+        } catch (BadLocationException | AssertionFailedException | BadPartitioningException e) {
             log.error(e, e);
         }
     }

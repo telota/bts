@@ -66,7 +66,6 @@ public class StringHttp_s_URLValidator implements IValidator {
      * The nullable.
      */
     private boolean nullable = false;
-    ;
 
     /**
      * Instantiates a new string http_s_ url validator.

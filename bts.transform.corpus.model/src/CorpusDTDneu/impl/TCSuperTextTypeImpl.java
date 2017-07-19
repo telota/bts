@@ -230,7 +230,7 @@ public class TCSuperTextTypeImpl extends MinimalEObjectImpl.Container implements
      */
     public EList<TCPictureType> getTCPicture() {
         if (tCPicture == null) {
-            tCPicture = new EObjectContainmentEList<TCPictureType>(TCPictureType.class, this, CorpusDTDneuPackage.TC_SUPER_TEXT_TYPE__TC_PICTURE);
+            tCPicture = new EObjectContainmentEList<>(TCPictureType.class, this, CorpusDTDneuPackage.TC_SUPER_TEXT_TYPE__TC_PICTURE);
         }
         return tCPicture;
     }
@@ -243,7 +243,7 @@ public class TCSuperTextTypeImpl extends MinimalEObjectImpl.Container implements
      */
     public EList<String> getTCNotebook() {
         if (tCNotebook == null) {
-            tCNotebook = new EDataTypeEList<String>(String.class, this, CorpusDTDneuPackage.TC_SUPER_TEXT_TYPE__TC_NOTEBOOK);
+            tCNotebook = new EDataTypeEList<>(String.class, this, CorpusDTDneuPackage.TC_SUPER_TEXT_TYPE__TC_NOTEBOOK);
         }
         return tCNotebook;
     }
@@ -256,7 +256,7 @@ public class TCSuperTextTypeImpl extends MinimalEObjectImpl.Container implements
      */
     public EList<TCTextType> getTCText() {
         if (tCText == null) {
-            tCText = new EObjectContainmentEList<TCTextType>(TCTextType.class, this, CorpusDTDneuPackage.TC_SUPER_TEXT_TYPE__TC_TEXT);
+            tCText = new EObjectContainmentEList<>(TCTextType.class, this, CorpusDTDneuPackage.TC_SUPER_TEXT_TYPE__TC_TEXT);
         }
         return tCText;
     }

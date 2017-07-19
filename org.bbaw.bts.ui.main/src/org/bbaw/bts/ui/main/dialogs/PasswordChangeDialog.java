@@ -186,7 +186,7 @@ public class PasswordChangeDialog extends TitleAreaDialog {
     protected void save() {
         String newPassword = newPasswordText.getText().trim();
         user.setPassword(newPassword);
-        Set<BTSUser> users = new HashSet<BTSUser>(1);
+        Set<BTSUser> users = new HashSet<>(1);
         users.add(user);
         userManagerController.saveUsers(users);
         if (authenticatedUserIsAdmin) {

@@ -64,7 +64,7 @@ public class BTSLemmaEntryDaoImpl extends AbstractCorpusObjectDaoImpl<BTSLemmaEn
                     is, "UTF-8"), lemmaListSize);
             String line = null;
             Map<URI, Resource> cache = getObjectCache();
-            results = new Vector<BTSLemmaEntry>(lemmaListSize);
+            results = new Vector<>(lemmaListSize);
             BTSLemmaEntry entry;
             // ignore the first line containing metadata
             line = reader.readLine();
@@ -78,7 +78,7 @@ public class BTSLemmaEntryDaoImpl extends AbstractCorpusObjectDaoImpl<BTSLemmaEn
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Vector<BTSLemmaEntry>(0);
+        return new Vector<>(0);
     }
 
     @Override

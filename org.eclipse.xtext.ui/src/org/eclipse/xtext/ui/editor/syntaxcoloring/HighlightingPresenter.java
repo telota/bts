@@ -60,7 +60,7 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
     /**
      * UI's current highlighted positions - can contain <code>null</code> elements
      */
-    private List<AttributedPosition> fPositions = new ArrayList<AttributedPosition>();
+    private List<AttributedPosition> fPositions = new ArrayList<>();
     /**
      * <code>true</code> if the current reconcile is canceled.
      */
@@ -171,12 +171,11 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
         if (isCanceled())
             return null;
 
-        Runnable runnable = new Runnable() {
+        return new Runnable() {
             public void run() {
                 updatePresentation(textPresentation, added, removed);
             }
         };
-        return runnable;
     }
 
     public Runnable createSimpleUpdateRunnable() {
@@ -235,7 +234,7 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
 				 * removed on the fly. The second of two is the list of added positions. The result
 				 * is stored in newPositions.
 				 */
-                List<AttributedPosition> newPositions = new ArrayList<AttributedPosition>(newSize);
+                List<AttributedPosition> newPositions = new ArrayList<>(newSize);
                 AttributedPosition position = null;
                 AttributedPosition addedPosition = null;
                 for (int i = 0, j = 0, n = oldPositions.size(), m = addedPositions.length; i < n || position != null
@@ -278,10 +277,7 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
                 }
                 fPositions = newPositions;
             }
-        } catch (BadPositionCategoryException e) {
-            // Should not happen
-            log.debug(e.getMessage(), e);
-        } catch (BadLocationException e) {
+        } catch (BadPositionCategoryException | BadLocationException e) {
             // Should not happen
             log.debug(e.getMessage(), e);
         }
@@ -391,7 +387,7 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
         int i = computeIndexAtOffset(fPositions, region.getOffset());
         int n = computeIndexAtOffset(fPositions, region.getOffset() + region.getLength());
         if (n - i > 2) {
-            List<StyleRange> ranges = new ArrayList<StyleRange>(n - i);
+            List<StyleRange> ranges = new ArrayList<>(n - i);
             for (; i < n; i++) {
                 AttributedPosition position = fPositions.get(i);
                 if (!position.isDeleted())
@@ -561,10 +557,7 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
         String positionCategory = getPositionCategory();
         try {
             document.addPosition(positionCategory, position);
-        } catch (BadLocationException e) {
-            // Should not happen
-            log.debug(e.getMessage(), e);
-        } catch (BadPositionCategoryException e) {
+        } catch (BadLocationException | BadPositionCategoryException e) {
             // Should not happen
             log.debug(e.getMessage(), e);
         }

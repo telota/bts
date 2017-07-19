@@ -69,7 +69,7 @@ public class AnnotationPartControllerImpl implements AnnotationPartController {
         query.setDbPath(dbcollectionContext);
 
         System.out.println(query.getQueryId());
-        List<BTSObject> children = new Vector<BTSObject>();
+        List<BTSObject> children = new Vector<>();
         List<BTSCorpusObject> obs;
         if (object instanceof BTSThsEntry) {
             query.setDbPath(object.getDBCollectionKey());

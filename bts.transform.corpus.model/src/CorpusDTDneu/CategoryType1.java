@@ -291,7 +291,7 @@ public enum CategoryType1 implements Enumerator {
      *
      * @generated
      */
-    private CategoryType1(int value, String name, String literal) {
+    CategoryType1(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;

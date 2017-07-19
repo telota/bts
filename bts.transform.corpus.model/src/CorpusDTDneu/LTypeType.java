@@ -123,7 +123,7 @@ public enum LTypeType implements Enumerator {
      *
      * @generated
      */
-    private LTypeType(int value, String name, String literal) {
+    LTypeType(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;

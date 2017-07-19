@@ -37,7 +37,7 @@ public class BTSStatusMessageServiceImpl implements BTSStatusMessageService {
 
     private void checkListSize(List<StatusMessage> messages) {
         if (messages != null && messages.size() > BTSCoreConstants.STATUS_MESSAGE_LIST_SIZE) {
-            List<StatusMessage> toRemove = new ArrayList<StatusMessage>();
+            List<StatusMessage> toRemove = new ArrayList<>();
             for (int i = BTSCoreConstants.STATUS_MESSAGE_LIST_SIZE - 1; i < messages.size(); i++) {
                 toRemove.add(messages.get(i));
             }

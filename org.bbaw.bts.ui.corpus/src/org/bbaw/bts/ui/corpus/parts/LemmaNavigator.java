@@ -121,11 +121,11 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
     private Logger logger;
     private TreeViewer mainTreeViewer;
     private StructuredSelection selection;
-    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<String, BTSQueryResultAbstract>();
-    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<String, List<TreeNodeWrapper>>();
+    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<>();
+    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<>();
     private ISelectionChangedListener selectionListener;
     private Composite composite;
-    private Map<Control, Map> cachingMap = new HashMap<Control, Map>();
+    private Map<Control, Map> cachingMap = new HashMap<>();
     private TreeNodeWrapper mainRootNode;
     private CTabFolder tabFolder;
     private CTabItem mainTabItem;
@@ -277,7 +277,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                             lemmaNavigatorController.checkAndFullyLoad((BTSCorpusObject) o, true);
 
                             if (!tn.isChildrenLoaded() || tn.getChildren().isEmpty()) {
-                                List<TreeNodeWrapper> parents = new Vector<TreeNodeWrapper>(1);
+                                List<TreeNodeWrapper> parents = new Vector<>(1);
                                 parents.add(tn);
                                 tn.setChildrenLoaded(true);
                                 loadChildren(parents, false, parentControl);
@@ -310,7 +310,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                     }
                     if (selection instanceof TreeSelection) {
                         TreeSelection ts = (TreeSelection) selection;
-                        List<BTSObject> path = new ArrayList<BTSObject>(4);
+                        List<BTSObject> path = new ArrayList<>(4);
 
                         for (Object o : ts.getPaths()) {
 
@@ -381,12 +381,10 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
-    }
+	}
 
     private void loadInput(final Control parentControl,
                            final TreeViewer treeViewer, final TreeNodeWrapper rootNode,
@@ -464,12 +462,10 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
-    }
+	}
 
     private void openInPassportEditorDialog(
             ISelection sel) {
@@ -540,13 +536,11 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
-    }
+	}
 
     protected void storeIntoMap(final List<BTSLemmaEntry> children,
                                 final Control parentControl, final boolean cacheViewerInput) {
@@ -586,7 +580,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
         List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
                 .get_id());
         if (list == null) {
-            list = new Vector<TreeNodeWrapper>(1);
+            list = new Vector<>(1);
         }
         if (!list.contains(tn)) {
             list.add(tn);
@@ -694,7 +688,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
 
     @Override
     public List<Map> getScatteredCashMaps() {
-        final List<Map> maps = new Vector<Map>(1);
+        final List<Map> maps = new Vector<>(1);
         for (Map map : cachingMap.values()) {
             maps.add(map);
         }
@@ -794,7 +788,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                         throws InvocationTargetException, InterruptedException {
                     List<BTSLemmaEntry> obs;
                     if (objects != null && !objects.isEmpty()) {
-                        obs = new Vector<BTSLemmaEntry>(objects.size());
+                        obs = new Vector<>(objects.size());
                         for (BTSCorpusObject o : objects) {
                             if (o instanceof BTSLemmaEntry) {
                                 obs.add((BTSLemmaEntry) o);
@@ -832,13 +826,11 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
-    }
+	}
 
     public void setInputList(List<BTSCorpusObject> objects, String queryName) {
         if (objects == null) {
@@ -886,7 +878,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
 
     private List<BTSLemmaEntry> filterObjects(List<BTSLemmaEntry> objs,
                                               StructuredViewer viewer) {
-        List<BTSLemmaEntry> filtered = new Vector<BTSLemmaEntry>();
+        List<BTSLemmaEntry> filtered = new Vector<>();
         for (BTSLemmaEntry e : objs) {
             if (isFiltered(e, viewer)) {
                 filtered.add(e);

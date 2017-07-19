@@ -35,7 +35,6 @@ public class InstallNewSoftwareHandler {
         new SimpleInstallPart(installNewSoftwareService, agem, workbench).createControls(shell2);
 
         shell2.open();
-        ;
 
 
     }

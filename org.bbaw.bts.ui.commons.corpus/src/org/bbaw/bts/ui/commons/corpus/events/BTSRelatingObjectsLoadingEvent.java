@@ -6,7 +6,7 @@ import java.util.Vector;
 import org.bbaw.bts.btsmodel.BTSObject;
 
 public class BTSRelatingObjectsLoadingEvent {
-    private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
+    private List<BTSObject> relatingObjects = new Vector<>(4);
 
     private BTSObject object;
 

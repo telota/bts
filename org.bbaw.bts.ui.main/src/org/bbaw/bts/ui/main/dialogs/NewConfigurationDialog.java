@@ -127,7 +127,7 @@ public class NewConfigurationDialog extends TitleAreaDialog {
 
     private DataBindingContext initializeBindings() {
 
-        ArrayList<BTSConfiguration> configurations = new ArrayList<BTSConfiguration>();
+        ArrayList<BTSConfiguration> configurations = new ArrayList<>();
         List<BTSConfiguration> list = configurationController
                 .listConfigurations(null);
 
@@ -178,7 +178,7 @@ public class NewConfigurationDialog extends TitleAreaDialog {
             }
         });
 
-        configProviderSet = new HashSet<String>();
+        configProviderSet = new HashSet<>();
         for (BTSConfiguration c : list) {
             if (c.getProvider() != null) {
                 configProviderSet.add(c.getProvider());

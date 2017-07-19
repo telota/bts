@@ -41,7 +41,7 @@ public class FilterOnlyIncompleteTextsHandler {
                 @Override
                 public void run(IProgressMonitor monitor)
                         throws InvocationTargetException, InterruptedException {
-                    final List<BTSCorpusObject> obs = new Vector<BTSCorpusObject>();
+                    final List<BTSCorpusObject> obs = new Vector<>();
                     monitor.beginTask("Load all texts", IProgressMonitor.UNKNOWN);
                     List<BTSText> texts = textController.listInAllInCompleteTexts(monitor);
 
@@ -58,10 +58,8 @@ public class FilterOnlyIncompleteTextsHandler {
                 }
             };
             new ProgressMonitorDialog(shell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
 

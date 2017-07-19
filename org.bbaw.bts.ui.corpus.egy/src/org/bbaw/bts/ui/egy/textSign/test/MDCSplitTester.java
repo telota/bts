@@ -46,7 +46,7 @@ public class MDCSplitTester {
      * @return An array of Strings
      */
     public static String[] splitAndKeep(String input, String regex, int offset) {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
         int pos = 0;

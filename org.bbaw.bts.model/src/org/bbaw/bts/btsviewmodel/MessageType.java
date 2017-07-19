@@ -290,7 +290,7 @@ public enum MessageType implements Enumerator {
      *
      * @generated
      */
-    private MessageType(int value, String name, String literal) {
+    MessageType(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;

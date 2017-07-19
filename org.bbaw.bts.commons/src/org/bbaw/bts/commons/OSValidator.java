@@ -4,7 +4,6 @@ public class OSValidator {
 
     public static String osName;
 
-    ;
     public static OSType osType;
 
     static {
@@ -21,8 +20,6 @@ public class OSValidator {
     public static boolean isWindows() {
         return osType == OSType.WINDOWS;
     }
-
-    ;
 
     public static boolean isMac() {
         return osType == OSType.MAC;

@@ -204,7 +204,7 @@ public class DefaultQuickfixProvider extends AbstractDeclarativeQuickfixProvider
         StopWatch stopWatch = new StopWatch(logger);
         try {
             if (Diagnostic.LINKING_DIAGNOSTIC.equals(issue.getCode())) {
-                List<IssueResolution> result = new ArrayList<IssueResolution>();
+                List<IssueResolution> result = new ArrayList<>();
                 result.addAll(getResolutionsForLinkingIssue(issue));
                 result.addAll(super.getResolutions(issue));
                 return result;

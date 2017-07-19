@@ -1279,21 +1279,19 @@ public class DocumentRootItemProvider
      */
     @Override
     public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-        Object childFeature = feature;
-        Object childObject = child;
 
         boolean qualify =
-                childFeature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DEPICTION ||
-                        childFeature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LANGUAGE ||
-                        childFeature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__OBJECT_TYPE ||
-                        childFeature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PROVENANCE ||
-                        childFeature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__SCRIPT ||
-                        childFeature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TEXT_TYPE;
+                feature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DEPICTION ||
+                        feature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LANGUAGE ||
+                        feature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__OBJECT_TYPE ||
+                        feature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PROVENANCE ||
+                        feature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__SCRIPT ||
+                        feature == CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TEXT_TYPE;
 
         if (qualify) {
             return getString
                     ("_UI_CreateChild_text2",
-                            new Object[]{getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner)});
+                            new Object[]{getTypeText(child), getFeatureText(feature), getTypeText(owner)});
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

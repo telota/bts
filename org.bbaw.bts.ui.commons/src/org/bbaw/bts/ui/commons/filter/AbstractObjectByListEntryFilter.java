@@ -18,7 +18,7 @@ public abstract class AbstractObjectByListEntryFilter extends ViewerFilter imple
 
     public List<Object> getObjects() {
         if (objects == null) {
-            objects = new Vector<Object>(4);
+            objects = new Vector<>(4);
         }
         return objects;
     }

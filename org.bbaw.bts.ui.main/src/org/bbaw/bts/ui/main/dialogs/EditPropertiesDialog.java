@@ -62,9 +62,9 @@ public class EditPropertiesDialog extends TitleAreaDialog {
     }
 
     private void loadProperties(Map<String, String> inputPorperties) {
-        properties = new ArrayList<List<String>>(inputPorperties.size());
+        properties = new ArrayList<>(inputPorperties.size());
         for (String k : inputPorperties.keySet()) {
-            List<String> prop = new ArrayList<String>(2);
+            List<String> prop = new ArrayList<>(2);
             prop.add(k);
             if (inputPorperties.get(k) != null) {
                 prop.add(inputPorperties.get(k));
@@ -117,7 +117,7 @@ public class EditPropertiesDialog extends TitleAreaDialog {
         // Add a new person when the user clicks button
         newProperty.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {
-                List<String> prop = new ArrayList<String>(2);
+                List<String> prop = new ArrayList<>(2);
                 prop.add("key");
                 prop.add("value");
                 properties.add(prop);
@@ -168,7 +168,7 @@ public class EditPropertiesDialog extends TitleAreaDialog {
     }
 
     public Map<String, String> getProperties() {
-        Map<String, String> props = new HashMap<String, String>(properties.size());
+        Map<String, String> props = new HashMap<>(properties.size());
         for (List<String> prop : properties) {
             if (prop.get(0) != null && !"".equals(prop.get(0).trim())
                     && prop.get(1) != null && !"".equals(prop.get(1).trim())) {

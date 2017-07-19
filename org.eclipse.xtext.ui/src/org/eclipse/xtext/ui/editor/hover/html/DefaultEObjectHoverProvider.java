@@ -103,8 +103,7 @@ public class DefaultEObjectHoverProvider implements IEObjectHoverProvider {
             HTMLPrinter.insertPageProlog(buffer, 0, getStyleSheet());
             HTMLPrinter.addPageEpilog(buffer);
             html = buffer.toString();
-            XtextBrowserInformationControlInput browserInput = new XtextBrowserInformationControlInput(previous, element, html, labelProvider);
-            return browserInput;
+            return new XtextBrowserInformationControlInput(previous, element, html, labelProvider);
         }
         return null;
     }

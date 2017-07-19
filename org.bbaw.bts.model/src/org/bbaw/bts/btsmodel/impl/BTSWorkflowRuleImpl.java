@@ -193,7 +193,7 @@ public class BTSWorkflowRuleImpl extends BTSIdentifiableItemImpl implements BTSW
      */
     public EList<BTSWorkflowRuleItem> getSubRules() {
         if (subRules == null) {
-            subRules = new EObjectContainmentEList<BTSWorkflowRuleItem>(BTSWorkflowRuleItem.class, this, BtsmodelPackage.BTS_WORKFLOW_RULE__SUB_RULES);
+            subRules = new EObjectContainmentEList<>(BTSWorkflowRuleItem.class, this, BtsmodelPackage.BTS_WORKFLOW_RULE__SUB_RULES);
         }
         return subRules;
     }
@@ -206,7 +206,7 @@ public class BTSWorkflowRuleImpl extends BTSIdentifiableItemImpl implements BTSW
      */
     public EList<String> getActions() {
         if (actions == null) {
-            actions = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_WORKFLOW_RULE__ACTIONS);
+            actions = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_WORKFLOW_RULE__ACTIONS);
         }
         return actions;
     }

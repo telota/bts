@@ -55,43 +55,35 @@ public class RemoteDaoFactoryCouchDB implements RemoteDAOFactory {
     }
 
     private RemoteBTSIDReservationObjectDao getRemoteBTSIDReservationObjectDao(IEclipseContext context) {
-        RemoteBTSIDReservationObjectDao dao = ContextInjectionFactory.make(RemoteBTSIDReservationObjectDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(RemoteBTSIDReservationObjectDaoImpl.class, context);
     }
 
     private RemoteDBManager getDBManager(IEclipseContext context) {
-        RemoteDBManager manager = ContextInjectionFactory.make(RemoteDBManagerImpl.class, context);
-        return manager;
+        return ContextInjectionFactory.make(RemoteDBManagerImpl.class, context);
     }
 
     private RemoteDBConnectionProvider getDBConnectionProvider(IEclipseContext context) {
-        RemoteDBConnectionProvider dao = ContextInjectionFactory.make(RemoteDBConnectionProviderImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(RemoteDBConnectionProviderImpl.class, context);
     }
 
     private RemoteGeneralPurposeDao getGeneralPurposeDao(IEclipseContext context) {
-        RemoteGeneralPurposeDao dao = ContextInjectionFactory.make(RemoteGeneralPurposeDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(RemoteGeneralPurposeDaoImpl.class, context);
 
     }
 
     private RemoteDBLeaseDao getDBLeaseDao(IEclipseContext context) {
-        RemoteDBLeaseDao dao = ContextInjectionFactory.make(RemoteDBLeaseDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(RemoteDBLeaseDaoImpl.class, context);
     }
 
     private RemoteBTSProjectDao getBTSProjectDao(IEclipseContext context) {
-        RemoteBTSProjectDao dao = ContextInjectionFactory.make(RemoteBTSProjectDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(RemoteBTSProjectDaoImpl.class, context);
     }
 
     private RemoteBTSUserDao getBTSUserDao(IEclipseContext context) {
-        RemoteBTSUserDao dao = ContextInjectionFactory.make(RemoteBTSUserDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(RemoteBTSUserDaoImpl.class, context);
     }
 
     private RemoteBTSUserGroupDao getBTSUserGroupDao(IEclipseContext context) {
-        RemoteBTSUserGroupDao dao = ContextInjectionFactory.make(RemoteBTSUserGroupDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(RemoteBTSUserGroupDaoImpl.class, context);
     }
 }

@@ -43,7 +43,7 @@ public class PerspectiveLabelProvider extends LabelProvider implements ITableLab
     /**
      * List of all Image objects this label provider is responsible for.
      */
-    private HashMap<ImageDescriptor, Image> imageCache = new HashMap<ImageDescriptor, Image>(5);
+    private HashMap<ImageDescriptor, Image> imageCache = new HashMap<>(5);
 
     /**
      * Indicates whether the default perspective is visually marked.

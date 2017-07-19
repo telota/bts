@@ -190,9 +190,9 @@ public class HieroglyphTypeWriterControllerImpl implements
     public void updateGraphicSelectionCounter(String beforeImageMdC,
                                               String newMdC) {
         StringTokenizer oldtok = new StringTokenizer(beforeImageMdC, ":-<>*");
-        Set<String> oldMap = new HashSet<String>();
+        Set<String> oldMap = new HashSet<>();
         StringTokenizer newtok = new StringTokenizer(newMdC, ":-<>*");
-        List<String> toAdd = new Vector<String>();
+        List<String> toAdd = new Vector<>();
 
         while (oldtok.hasMoreTokens()) {
             oldMap.add(oldtok.nextToken());

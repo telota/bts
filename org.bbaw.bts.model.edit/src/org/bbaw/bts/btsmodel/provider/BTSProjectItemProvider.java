@@ -252,7 +252,7 @@ public class BTSProjectItemProvider extends BTSObjectItemProvider {
     @Override
     public Collection<?> getElements(Object object) {
         if (object instanceof BTSProject) {
-            List<BTSProject> pros = new Vector<BTSProject>(1);
+            List<BTSProject> pros = new Vector<>(1);
             pros.add((BTSProject) object);
             return pros;
         }

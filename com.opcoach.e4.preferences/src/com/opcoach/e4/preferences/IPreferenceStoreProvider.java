@@ -22,6 +22,6 @@ public interface IPreferenceStoreProvider {
     /**
      * Must be implemented to return a preference store
      */
-    public IPreferenceStore getPreferenceStore();
+    IPreferenceStore getPreferenceStore();
 
 }

@@ -14,6 +14,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 public class OpenCompareDialogHandler {
@@ -28,7 +29,7 @@ public class OpenCompareDialogHandler {
                 CompareDialog.class, child);
         // context.set(UserManagementDialog.class, dialog);
 
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
         }
     }
 

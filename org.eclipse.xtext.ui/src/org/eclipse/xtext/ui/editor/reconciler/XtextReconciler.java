@@ -75,7 +75,7 @@ public class XtextReconciler extends Job implements IReconciler {
     @Inject
     private XtextReconcilerDebugger debugger;
 
-    private LinkedBlockingQueue<DocumentEvent> pendingChanges = new LinkedBlockingQueue<DocumentEvent>();
+    private LinkedBlockingQueue<DocumentEvent> pendingChanges = new LinkedBlockingQueue<>();
 
     @Inject
     public XtextReconciler(XtextDocumentReconcileStrategy strategy) {

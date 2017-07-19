@@ -288,8 +288,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public BausteinPassageType createBausteinPassageType() {
-        BausteinPassageTypeImpl bausteinPassageType = new BausteinPassageTypeImpl();
-        return bausteinPassageType;
+        return new BausteinPassageTypeImpl();
     }
 
     /**
@@ -299,8 +298,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public DateThsType createDateThsType() {
-        DateThsTypeImpl dateThsType = new DateThsTypeImpl();
-        return dateThsType;
+        return new DateThsTypeImpl();
     }
 
     /**
@@ -310,8 +308,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public DateType createDateType() {
-        DateTypeImpl dateType = new DateTypeImpl();
-        return dateType;
+        return new DateTypeImpl();
     }
 
     /**
@@ -321,8 +318,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public DocumentRoot createDocumentRoot() {
-        DocumentRootImpl documentRoot = new DocumentRootImpl();
-        return documentRoot;
+        return new DocumentRootImpl();
     }
 
     /**
@@ -332,8 +328,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgyPunctuationType createEgyPunctuationType() {
-        EgyPunctuationTypeImpl egyPunctuationType = new EgyPunctuationTypeImpl();
-        return egyPunctuationType;
+        return new EgyPunctuationTypeImpl();
     }
 
     /**
@@ -343,8 +338,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgySentType createEgySentType() {
-        EgySentTypeImpl egySentType = new EgySentTypeImpl();
-        return egySentType;
+        return new EgySentTypeImpl();
     }
 
     /**
@@ -354,8 +348,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgySubTxtType createEgySubTxtType() {
-        EgySubTxtTypeImpl egySubTxtType = new EgySubTxtTypeImpl();
-        return egySubTxtType;
+        return new EgySubTxtTypeImpl();
     }
 
     /**
@@ -365,8 +358,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgySzenarioType createEgySzenarioType() {
-        EgySzenarioTypeImpl egySzenarioType = new EgySzenarioTypeImpl();
-        return egySzenarioType;
+        return new EgySzenarioTypeImpl();
     }
 
     /**
@@ -376,8 +368,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgyTB1Type createEgyTB1Type() {
-        EgyTB1TypeImpl egyTB1Type = new EgyTB1TypeImpl();
-        return egyTB1Type;
+        return new EgyTB1TypeImpl();
     }
 
     /**
@@ -387,8 +378,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgyTB3EndType createEgyTB3EndType() {
-        EgyTB3EndTypeImpl egyTB3EndType = new EgyTB3EndTypeImpl();
-        return egyTB3EndType;
+        return new EgyTB3EndTypeImpl();
     }
 
     /**
@@ -398,8 +388,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgyTB3StartType createEgyTB3StartType() {
-        EgyTB3StartTypeImpl egyTB3StartType = new EgyTB3StartTypeImpl();
-        return egyTB3StartType;
+        return new EgyTB3StartTypeImpl();
     }
 
     /**
@@ -409,8 +398,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgyTxtCorpusType createEgyTxtCorpusType() {
-        EgyTxtCorpusTypeImpl egyTxtCorpusType = new EgyTxtCorpusTypeImpl();
-        return egyTxtCorpusType;
+        return new EgyTxtCorpusTypeImpl();
     }
 
     /**
@@ -420,8 +408,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgyTxtType createEgyTxtType() {
-        EgyTxtTypeImpl egyTxtType = new EgyTxtTypeImpl();
-        return egyTxtType;
+        return new EgyTxtTypeImpl();
     }
 
     /**
@@ -431,8 +418,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public EgyWordType createEgyWordType() {
-        EgyWordTypeImpl egyWordType = new EgyWordTypeImpl();
-        return egyWordType;
+        return new EgyWordTypeImpl();
     }
 
     /**
@@ -442,8 +428,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public FormattingElementType createFormattingElementType() {
-        FormattingElementTypeImpl formattingElementType = new FormattingElementTypeImpl();
-        return formattingElementType;
+        return new FormattingElementTypeImpl();
     }
 
     /**
@@ -453,8 +438,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public GlossePassageType createGlossePassageType() {
-        GlossePassageTypeImpl glossePassageType = new GlossePassageTypeImpl();
-        return glossePassageType;
+        return new GlossePassageTypeImpl();
     }
 
     /**
@@ -464,8 +448,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public GlosseType createGlosseType() {
-        GlosseTypeImpl glosseType = new GlosseTypeImpl();
-        return glosseType;
+        return new GlosseTypeImpl();
     }
 
     /**
@@ -475,8 +458,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public LanguagePassageType createLanguagePassageType() {
-        LanguagePassageTypeImpl languagePassageType = new LanguagePassageTypeImpl();
-        return languagePassageType;
+        return new LanguagePassageTypeImpl();
     }
 
     /**
@@ -486,8 +468,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public LeipzigPassageType createLeipzigPassageType() {
-        LeipzigPassageTypeImpl leipzigPassageType = new LeipzigPassageTypeImpl();
-        return leipzigPassageType;
+        return new LeipzigPassageTypeImpl();
     }
 
     /**
@@ -497,8 +478,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public LineCountType createLineCountType() {
-        LineCountTypeImpl lineCountType = new LineCountTypeImpl();
-        return lineCountType;
+        return new LineCountTypeImpl();
     }
 
     /**
@@ -508,8 +488,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public NoteType createNoteType() {
-        NoteTypeImpl noteType = new NoteTypeImpl();
-        return noteType;
+        return new NoteTypeImpl();
     }
 
     /**
@@ -519,8 +498,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public PassportDataItem createPassportDataItem() {
-        PassportDataItemImpl passportDataItem = new PassportDataItemImpl();
-        return passportDataItem;
+        return new PassportDataItemImpl();
     }
 
     /**
@@ -530,8 +508,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public PassportDataItemType createPassportDataItemType() {
-        PassportDataItemTypeImpl passportDataItemType = new PassportDataItemTypeImpl();
-        return passportDataItemType;
+        return new PassportDataItemTypeImpl();
     }
 
     /**
@@ -541,8 +518,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public PicturesTableType createPicturesTableType() {
-        PicturesTableTypeImpl picturesTableType = new PicturesTableTypeImpl();
-        return picturesTableType;
+        return new PicturesTableTypeImpl();
     }
 
     /**
@@ -552,8 +528,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public PictureType createPictureType() {
-        PictureTypeImpl pictureType = new PictureTypeImpl();
-        return pictureType;
+        return new PictureTypeImpl();
     }
 
     /**
@@ -563,8 +538,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public PunctuationType createPunctuationType() {
-        PunctuationTypeImpl punctuationType = new PunctuationTypeImpl();
-        return punctuationType;
+        return new PunctuationTypeImpl();
     }
 
     /**
@@ -574,8 +548,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCArrangementType createTCArrangementType() {
-        TCArrangementTypeImpl tcArrangementType = new TCArrangementTypeImpl();
-        return tcArrangementType;
+        return new TCArrangementTypeImpl();
     }
 
     /**
@@ -585,8 +558,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCCaptionType createTCCaptionType() {
-        TCCaptionTypeImpl tcCaptionType = new TCCaptionTypeImpl();
-        return tcCaptionType;
+        return new TCCaptionTypeImpl();
     }
 
     /**
@@ -596,8 +568,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCGroupType createTCGroupType() {
-        TCGroupTypeImpl tcGroupType = new TCGroupTypeImpl();
-        return tcGroupType;
+        return new TCGroupTypeImpl();
     }
 
     /**
@@ -607,8 +578,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCHeaderType createTCHeaderType() {
-        TCHeaderTypeImpl tcHeaderType = new TCHeaderTypeImpl();
-        return tcHeaderType;
+        return new TCHeaderTypeImpl();
     }
 
     /**
@@ -618,8 +588,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCLocationType createTCLocationType() {
-        TCLocationTypeImpl tcLocationType = new TCLocationTypeImpl();
-        return tcLocationType;
+        return new TCLocationTypeImpl();
     }
 
     /**
@@ -629,8 +598,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCObjectType createTCObjectType() {
-        TCObjectTypeImpl tcObjectType = new TCObjectTypeImpl();
-        return tcObjectType;
+        return new TCObjectTypeImpl();
     }
 
     /**
@@ -640,8 +608,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCObjPartType createTCObjPartType() {
-        TCObjPartTypeImpl tcObjPartType = new TCObjPartTypeImpl();
-        return tcObjPartType;
+        return new TCObjPartTypeImpl();
     }
 
     /**
@@ -651,8 +618,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCPassportType createTCPassportType() {
-        TCPassportTypeImpl tcPassportType = new TCPassportTypeImpl();
-        return tcPassportType;
+        return new TCPassportTypeImpl();
     }
 
     /**
@@ -662,8 +628,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCPictureType createTCPictureType() {
-        TCPictureTypeImpl tcPictureType = new TCPictureTypeImpl();
-        return tcPictureType;
+        return new TCPictureTypeImpl();
     }
 
     /**
@@ -673,8 +638,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCSceneType createTCSceneType() {
-        TCSceneTypeImpl tcSceneType = new TCSceneTypeImpl();
-        return tcSceneType;
+        return new TCSceneTypeImpl();
     }
 
     /**
@@ -684,8 +648,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCSuperTextType createTCSuperTextType() {
-        TCSuperTextTypeImpl tcSuperTextType = new TCSuperTextTypeImpl();
-        return tcSuperTextType;
+        return new TCSuperTextTypeImpl();
     }
 
     /**
@@ -695,8 +658,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public TCTextType createTCTextType() {
-        TCTextTypeImpl tcTextType = new TCTextTypeImpl();
-        return tcTextType;
+        return new TCTextTypeImpl();
     }
 
     /**
@@ -706,8 +668,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public ThsEntryType createThsEntryType() {
-        ThsEntryTypeImpl thsEntryType = new ThsEntryTypeImpl();
-        return thsEntryType;
+        return new ThsEntryTypeImpl();
     }
 
     /**
@@ -717,8 +678,7 @@ public class CorpusDTDneuFactoryImpl extends EFactoryImpl implements CorpusDTDne
      * @generated
      */
     public WorkType createWorkType() {
-        WorkTypeImpl workType = new WorkTypeImpl();
-        return workType;
+        return new WorkTypeImpl();
     }
 
     /**

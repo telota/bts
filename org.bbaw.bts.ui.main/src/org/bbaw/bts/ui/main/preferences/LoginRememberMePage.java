@@ -130,10 +130,7 @@ public class LoginRememberMePage extends FieldEditorPreferencePage {
                 rememberedMe.put("remembered", rememberedPass, true);
                 rememberedMe.flush();
 //				logger.info("Remember me set.");
-            } catch (StorageException e) {
-                e.printStackTrace();
-//				logger.error(e);
-            } catch (IOException e) {
+            } catch (StorageException | IOException e) {
                 e.printStackTrace();
 //				logger.error(e);
             }

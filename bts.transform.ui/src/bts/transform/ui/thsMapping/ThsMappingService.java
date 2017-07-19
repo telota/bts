@@ -21,8 +21,6 @@ public class ThsMappingService {
         }
         try {
             PROPERTIES.load(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

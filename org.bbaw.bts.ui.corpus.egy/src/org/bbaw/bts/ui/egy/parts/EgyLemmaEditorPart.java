@@ -146,11 +146,11 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
     private BTSTextXtextEditedResourceProvider xtextResourceProvider = new BTSTextXtextEditedResourceProvider();
     private Map<String, BTSModelAnnotation> modelAnnotationMap;
     private BTSTextContent textContent;
-    private List<BTSModelAnnotation> highlightedAnnotations = new Vector<BTSModelAnnotation>(4);
+    private List<BTSModelAnnotation> highlightedAnnotations = new Vector<>(4);
     @Inject
     private EditingDomainController editingDomainController;
     private CommandStackListener commandStackListener;
-    private Set<Command> localCommandCacheSet = new HashSet<Command>();
+    private Set<Command> localCommandCacheSet = new HashSet<>();
     private TranslationEditorComposite lemmaTranslate_Editor;
     private HashMap<String, List<Object>> lemmaAnnotationMap;
     private Job processLemmaAnnotionsJob;
@@ -438,11 +438,11 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 //			}
 //			return;
 //		}
-        modelAnnotationMap = new HashMap<String, BTSModelAnnotation>();
-        relatingObjectsAnnotationMap = new HashMap<EObject, List<BTSModelAnnotation>>();
+        modelAnnotationMap = new HashMap<>();
+        relatingObjectsAnnotationMap = new HashMap<>();
         Document doc = new Document();
         AnnotationModel tempAnnotationModel = new AnnotationModel();
-        lemmaAnnotationMap = new HashMap<String, List<Object>>();
+        lemmaAnnotationMap = new HashMap<>();
         lemmaEditorController.transformToDocument(textContent, doc, tempAnnotationModel, relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
 
         String textString = doc.get();
@@ -562,7 +562,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
     }
 
     protected void processSelection(List<BTSModelAnnotation> annotations, boolean postSelection, BTSTextSelectionEvent btsEvent) {
-        List<BTSModelAnnotation> relatingObjectsAnnotations = new Vector<BTSModelAnnotation>(annotations.size());
+        List<BTSModelAnnotation> relatingObjectsAnnotations = new Vector<>(annotations.size());
         for (BTSModelAnnotation ma : annotations) {
             if (ma != null && ma instanceof BTSLemmaAnnotation
                     && ma.getModel() != null
@@ -594,7 +594,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
             }
 
         }
-        List<BTSModelAnnotation> deHighlightedAnnotations = new Vector<BTSModelAnnotation>(highlightedAnnotations.size());
+        List<BTSModelAnnotation> deHighlightedAnnotations = new Vector<>(highlightedAnnotations.size());
 
         deHighlightedAnnotations.addAll(highlightedAnnotations);
         deHighlightedAnnotations.removeAll(relatingObjectsAnnotations);
@@ -604,7 +604,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 
             highlightAnnotations(relatingObjectsAnnotations, true);
 
-            List<BTSObject> relSelObjects = new Vector<BTSObject>(annotations.size());
+            List<BTSObject> relSelObjects = new Vector<>(annotations.size());
             for (BTSModelAnnotation a : relatingObjectsAnnotations) {
                 if (a instanceof BTSAnnotationAnnotation) {
                     relSelObjects.add((BTSObject) ((BTSAnnotationAnnotation) a).getRelatingObject());
@@ -643,12 +643,12 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
     private List<BTSModelAnnotation> getModelAnnotationAtSelection(int start, int end, BTSTextSelectionEvent btsEvent) {
         Iterator it = embeddedEditor.getViewer().getAnnotationModel()
                 .getAnnotationIterator();
-        List<BTSModelAnnotation> annotations = new Vector<BTSModelAnnotation>(4);
+        List<BTSModelAnnotation> annotations = new Vector<>(4);
         BTSSentenceItem startItem = null;
         int startItemOffeset = 0;
         BTSSentenceItem endItem = null;
         int endItemOffeset = 0;
-        List<BTSSentenceItem> textItems = new Vector<BTSSentenceItem>();
+        List<BTSSentenceItem> textItems = new Vector<>();
         while (it.hasNext()) {
             Annotation a = (Annotation) it.next();
             if (a instanceof BTSModelAnnotation) {
@@ -765,7 +765,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
                                                   BTSModelAnnotation ma) {
         List<BTSModelAnnotation> l = relatingObjectsAnnotationMap.get(object);
         if (l == null) {
-            l = new Vector<BTSModelAnnotation>(2);
+            l = new Vector<>(2);
             relatingObjectsAnnotationMap.put(object, l);
         }
         l.add(ma);
@@ -859,7 +859,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
             // due to containment of words
 //			updateModelFromTranscription();
             if (textContent != null && !textContent.getTextItems().isEmpty()) {
-                List<BTSSentenceItem> items = new Vector<BTSSentenceItem>();
+                List<BTSSentenceItem> items = new Vector<>();
                 for (BTSTextItems sen : textContent.getTextItems()) {
                     if (sen instanceof BTSSenctence) {
                         items.addAll(((BTSSenctence) sen).getSentenceItems());
@@ -1016,7 +1016,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
             @EventTopic("event_relating_objects/*") Object event) {
 
         if (event != null && event instanceof List) {
-            List<BTSModelAnnotation> annotations = new Vector<BTSModelAnnotation>(((List) event).size());
+            List<BTSModelAnnotation> annotations = new Vector<>(((List) event).size());
             for (Object o : (List) event) {
                 if (o instanceof BTSObject) {
                     List<BTSModelAnnotation> a = relatingObjectsAnnotationMap.get(o);

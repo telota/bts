@@ -55,8 +55,6 @@ public class CouchDB {
         HttpURLConnection connection = null;
         try {
             connection = getGetConnection(uri);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,7 +88,7 @@ public class CouchDB {
         }
     }
 
-    public static HttpURLConnection getConnection(URI uri, String type) throws MalformedURLException, IOException {
+    public static HttpURLConnection getConnection(URI uri, String type) throws IOException {
         final HttpURLConnection connection = (HttpURLConnection) new URL(uri.toString()).openConnection();
 
         connection.setDoOutput(true);
@@ -122,8 +120,6 @@ public class CouchDB {
                 inStream.close();
                 connection.disconnect();
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,8 +148,6 @@ public class CouchDB {
             }
 
             connection.disconnect();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -181,9 +175,6 @@ public class CouchDB {
                 connection = getGetConnection(baseURI.appendSegment(allDbs));
                 connection.setAllowUserInteraction(true);
                 connection.setRequestProperty("Authorization", "Basic");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return 0;
             } catch (IOException e) {
                 e.printStackTrace();
                 return 0;
@@ -250,8 +241,6 @@ public class CouchDB {
                 }
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -277,8 +266,6 @@ public class CouchDB {
                     return node.get("rows");
                 }
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -286,7 +273,7 @@ public class CouchDB {
         return null;
     }
 
-    public static URI getDocumentURI(URI baseURI, InputStream inStream) throws JsonParseException, JsonMappingException, IOException {
+    public static URI getDocumentURI(URI baseURI, InputStream inStream) throws IOException {
         final JsonNode rootNode = getRootNode(inStream);
 
         URI result = null;
@@ -312,8 +299,6 @@ public class CouchDB {
             HttpURLConnection connection = getGetConnection(uri);
             JsonNode node = getRootNode(connection.getInputStream());
             return node.findValue(rev).getTextValue();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -344,8 +329,6 @@ public class CouchDB {
                         connection.getInputStream();
                     }
                     connection.disconnect();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -358,8 +341,6 @@ public class CouchDB {
         JsonParser jp = null;
         try {
             jp = jsonFactory.createJsonParser(inStream);
-        } catch (JsonParseException e1) {
-            e1.printStackTrace();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -393,15 +374,9 @@ public class CouchDB {
                 } else {
                     return uri;
                 }
-            } catch (JsonParseException e) {
-                e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -436,15 +411,9 @@ public class CouchDB {
                 } else {
                     return getDocumentURI(uri, connection.getInputStream());
                 }
-            } catch (JsonParseException e) {
-                e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -459,8 +428,6 @@ public class CouchDB {
                 if (connection.getResponseCode() == 200) {
                     return true;
                 }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -503,10 +470,6 @@ public class CouchDB {
         final ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(parser, JsonNode.class);
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -38,7 +38,7 @@ public class TextAttributeProvider implements ITextAttributeProvider, IHighlight
                                  IPreferenceStoreAccess preferenceStoreAccess, PreferenceStoreAccessor prefStoreAccessor) {
         this.highlightingConfig = highlightingConfig;
         this.preferencesAccessor = prefStoreAccessor;
-        this.attributes = new HashMap<String, TextAttribute>();
+        this.attributes = new HashMap<>();
         preferenceStoreAccess.getPreferenceStore().addPropertyChangeListener(this);
         initialize();
     }

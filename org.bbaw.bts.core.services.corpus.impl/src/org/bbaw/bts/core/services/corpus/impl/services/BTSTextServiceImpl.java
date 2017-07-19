@@ -136,7 +136,7 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
 
     @Override
     public List<BTSText> list(String objectState, IProgressMonitor monitor) {
-        List<BTSText> texts = new Vector<BTSText>();
+        List<BTSText> texts = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 texts.addAll(textDao.list(c, objectState));
@@ -149,7 +149,7 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
     @Override
     public List<BTSText> query(BTSQueryRequest query, String objectState,
                                boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSText> objects = new Vector<BTSText>();
+        List<BTSText> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 objects.addAll(textDao.query(query, c, c, objectState,
@@ -204,7 +204,7 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
     @Override
     public List<BTSText> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                     String objectState, IProgressMonitor monitor) {
-        List<BTSText> objects = new Vector<BTSText>();
+        List<BTSText> objects = new Vector<>();
         objects.addAll(textDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(objects);
     }
@@ -251,14 +251,14 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
     public List<WordFormOccurrenceGroup> queryForWordFormOccurrenceGroups(BTSQueryRequest query,
                                                                           IProgressMonitor monitor) {
         List<BTSText> texts = query(query, BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-        Map<String, WordFormOccurrenceGroup> occurrenceGroupsMap = new HashMap<String, WordFormOccurrenceGroup>(3);
+        Map<String, WordFormOccurrenceGroup> occurrenceGroupsMap = new HashMap<>(3);
 
         // find every occurrence in each text
         for (BTSText text : texts) {
             findOccurrencesWithinText(text, query, occurrenceGroupsMap);
         }
 
-        List<WordFormOccurrenceGroup> groups = new Vector<WordFormOccurrenceGroup>(3);
+        List<WordFormOccurrenceGroup> groups = new Vector<>(3);
 
         for (String type : occurrenceGroupsMap.keySet()) {
             groups.add(occurrenceGroupsMap.get(type));
@@ -276,7 +276,7 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
         if (text.getTextContent() == null || text.getTextContent().getTextItems().isEmpty()) {
             return;
         }
-        List<WordFormOccurrence> currentTextOccurrences = new Vector<WordFormOccurrence>(3);
+        List<WordFormOccurrence> currentTextOccurrences = new Vector<>(3);
         WordFormOccurrence occurrence;
         for (int i = 0; i < text.getTextContent().getTextItems().size(); i++) {
             BTSTextItems item = text.getTextContent().getTextItems().get(i);
@@ -453,7 +453,7 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
      * @return
      */
     private void processCoText(BTSText text, int sentenceIndex, int cotextindex, boolean before, WordFormOccurrence occurrence) {
-        List<BTSSenctence> sentences = new Vector<BTSSenctence>(Math.abs(cotextindex));
+        List<BTSSenctence> sentences = new Vector<>(Math.abs(cotextindex));
 
         int i = sentenceIndex;
         while (sentences.size() < Math.abs(cotextindex)) {
@@ -505,7 +505,7 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 objects.addAll(textDao.queryAsJsonString(query, c, c, objectState,

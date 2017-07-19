@@ -19,7 +19,7 @@ import org.eclipse.core.resources.IProject;
 public interface IProjectFactoryContributor {
     void contributeFiles(IProject project, IFileCreator fileWriter);
 
-    public interface IFileCreator {
+    interface IFileCreator {
         IFile writeToFile(CharSequence chars, String fileName);
     }
 }

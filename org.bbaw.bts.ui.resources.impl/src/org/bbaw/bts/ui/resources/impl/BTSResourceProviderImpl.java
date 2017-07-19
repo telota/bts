@@ -110,7 +110,7 @@ public class BTSResourceProviderImpl extends BasicResourceProvider implements
         Object o = eclipseContext.get("url_image_map");
         Map<URL, Image> map;
         if (o == null || !(o instanceof Map<?, ?>)) {
-            map = new HashMap<URL, Image>();
+            map = new HashMap<>();
             eclipseContext.set("url_image_map", map);
         } else {
             map = (Map<URL, Image>) o;

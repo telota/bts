@@ -80,7 +80,6 @@ public class MoveObjectAmongProjectDBCollectionHandlerControllerImpl implements
     @Override
     public BTSFilter getMoveDBCollectionFilter(BTSDBBaseObject selection) {
         // get filter from move service
-        BTSFilter moveDBCollectionFilter = generalMoveService.getMoveDBCollectionFilter(selection);
-        return moveDBCollectionFilter;
+        return generalMoveService.getMoveDBCollectionFilter(selection);
     }
 }

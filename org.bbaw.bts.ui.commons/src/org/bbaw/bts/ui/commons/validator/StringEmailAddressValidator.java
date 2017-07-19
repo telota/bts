@@ -69,7 +69,6 @@ public class StringEmailAddressValidator implements IValidator {
      * The nullable.
      */
     private boolean nullable = false;
-    ;
 
     /**
      * Instantiates a new string email address validator.

@@ -23,19 +23,19 @@ public interface IXtextBrowserInformationControl extends IInformationControl {
     /**
      * @noreference This method is not intended to be referenced by clients.
      */
-    public BrowserInformationControlInput getInput();
+    BrowserInformationControlInput getInput();
 
-    public void setInput(Object input);
+    void setInput(Object input);
 
-    public void notifyDelayedInputChange(Object object);
+    void notifyDelayedInputChange(Object object);
 
-    public void dispose();
+    void dispose();
 
-    public void addLocationListener(LocationListener createLocationListener);
+    void addLocationListener(LocationListener createLocationListener);
 
-    public boolean hasDelayedInputChangeListener();
+    boolean hasDelayedInputChangeListener();
 
-    public void addInputChangeListener(IInputChangedListener inputChangeListener);
+    void addInputChangeListener(IInputChangedListener inputChangeListener);
 
 
 }

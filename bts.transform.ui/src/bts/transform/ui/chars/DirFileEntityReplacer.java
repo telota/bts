@@ -55,7 +55,9 @@ public class DirFileEntityReplacer {
     }
 
     private static String loadFilePrefix() {
-        String prefix = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
+        /* FIXME possibly convert to UNIX line endings? */
+        /* FIXME put this XML into a resource */
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
                 "<!-- copyright:\r\n" +
                 "Altaegyptisches Woerterbuch,\r\n" +
                 "Berlin-Brandenburgische Akademie der Wissenschaften\r\n" +
@@ -514,6 +516,5 @@ public class DirFileEntityReplacer {
                 "<!ATTLIST GlossePassage Script CDATA #REQUIRED >\r\n" +
                 "\r\n" +
                 "]>";
-        return prefix;
     }
 }

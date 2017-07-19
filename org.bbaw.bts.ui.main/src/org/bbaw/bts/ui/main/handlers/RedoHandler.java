@@ -26,8 +26,7 @@ public class RedoHandler {
     public boolean canExecute(
             @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_CAN_REDO) String canRedo,
             @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) Boolean mayEdit) {
-        boolean can = (canRedo != null && canRedo.equals("true") && mayEdit != null && mayEdit.booleanValue());
-        return can;
+        return (canRedo != null && canRedo.equals("true") && mayEdit != null && mayEdit.booleanValue());
     }
 
 }

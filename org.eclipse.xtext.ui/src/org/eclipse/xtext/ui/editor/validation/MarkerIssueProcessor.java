@@ -56,9 +56,7 @@ public class MarkerIssueProcessor implements IValidationIssueProcessor {
             new AddMarkersOperation(resource, issues, ImmutableSet.of(MarkerTypes.FAST_VALIDATION,
                     MarkerTypes.NORMAL_VALIDATION, MarkerTypes.EXPENSIVE_VALIDATION), true, // delete existing markers
                     markerCreator, markerTypeProvider).run(monitor);
-        } catch (InvocationTargetException e) {
-            log.error("Could not create marker.", e);
-        } catch (InterruptedException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             log.error("Could not create marker.", e);
         }
     }

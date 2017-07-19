@@ -334,7 +334,7 @@ public class BtsmodelActionBarContributor
      * @generated
      */
     protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors, ISelection selection) {
-        Collection<IAction> actions = new ArrayList<IAction>();
+        Collection<IAction> actions = new ArrayList<>();
         if (descriptors != null) {
             for (Object descriptor : descriptors) {
                 actions.add(new CreateChildAction(activeEditorPart, selection, descriptor));
@@ -352,7 +352,7 @@ public class BtsmodelActionBarContributor
      * @generated
      */
     protected Collection<IAction> generateCreateSiblingActions(Collection<?> descriptors, ISelection selection) {
-        Collection<IAction> actions = new ArrayList<IAction>();
+        Collection<IAction> actions = new ArrayList<>();
         if (descriptors != null) {
             for (Object descriptor : descriptors) {
                 actions.add(new CreateSiblingAction(activeEditorPart, selection, descriptor));

@@ -292,7 +292,7 @@ public class SearchSelectObjectDialog extends TitleAreaDialog implements
         logger.info("extension registry number of elements " + config);
         logger.info("extension registry number of elements " + config.length);
 
-        List<SearchViewerFactory> searchViewerFactories = new Vector<SearchViewerFactory>(
+        List<SearchViewerFactory> searchViewerFactories = new Vector<>(
                 config.length);
         for (IConfigurationElement e : config) {
             logger.info("extension registry element " + e.getName());

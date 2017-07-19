@@ -45,16 +45,15 @@ public class BundleClasspathUriResolver implements IClasspathUriResolver {
 
 
     private URI findResourceInBundle(Bundle bundle, URI classpathUri)
-            throws MalformedURLException, IOException {
+            throws IOException {
         Path fullPath = new Path(classpathUri.path());
         if (bundle != null) {
             String projectRelativePath = "/" + fullPath;
             URL resourceUrl = bundle.getResource(projectRelativePath);
             if (resourceUrl != null) {
                 URL resolvedUrl = FileLocator.resolve(resourceUrl);
-                URI normalizedURI = URI.createURI(
+                return URI.createURI(
                         resolvedUrl.toString(), true);
-                return normalizedURI;
             }
         }
         return classpathUri;

@@ -37,7 +37,7 @@ public class ObjectSelectionProposalProvider implements
             list = loadList(contents);
         }
 
-        List<ContentProposal> partialList = new Vector<ContentProposal>();
+        List<ContentProposal> partialList = new Vector<>();
         if (list != null && !list.isEmpty()) {
             for (BTSObject o : list) {
                 if (o.getName() != null && o.getName().startsWith(contents)

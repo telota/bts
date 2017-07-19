@@ -30,7 +30,7 @@ public class BTSCorpusRemovableContentProvider implements IRemovableContentProvi
 
     private List<BTSCorpusObject> getCorpusObjects() {
         if (corpusObjects == null) {
-            corpusObjects = new Vector<BTSCorpusObject>(3);
+            corpusObjects = new Vector<>(3);
         }
         return corpusObjects;
     }

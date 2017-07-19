@@ -39,7 +39,7 @@ public interface IXtextSearchFilter {
      */
     boolean reject(IEObjectDescription element);
 
-    public static class Registry {
+    class Registry {
 
         public static final String EXTENSION_POINT_ID = Activator.PLUGIN_ID + ".searchFilter";
         public static final String FILTER = "filter";

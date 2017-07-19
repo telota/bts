@@ -155,7 +155,7 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
     // boolean if selection is cached and can be loaded when gui becomes visible or constructed
     private boolean selectionCached;
     private EditingDomain editingDomain;
-    private Set<Command> localCommandCacheSet = new HashSet<Command>();
+    private Set<Command> localCommandCacheSet = new HashSet<>();
     private BTSCorpusObject corpusObject;
     private CommandStackListener commandStackListener;
     private MPart part;
@@ -518,9 +518,8 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
 
     private void shiftGlyphSelection(int i) {
         BTSGraphic oldGlyphe = selectedGlyphe;
-        int selectedGlypheIndex = oldGlyphe != null ? wordGraphics
+        int newSelectedGlypheIndex = oldGlyphe != null ? wordGraphics
                 .indexOf(oldGlyphe) : 0;
-        int newSelectedGlypheIndex = selectedGlypheIndex;
         if (i == 1000) // jump to end of line
         {
             newSelectedGlypheIndex = wordGraphics.size() - 1;
@@ -969,15 +968,13 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
     private String removeSelectionMarker(String normalizedMdC) {
         Pattern p = Pattern.compile("\\" + MDC_MARKER);
         Matcher m = p.matcher(normalizedMdC);
-        String result = m.replaceAll("");
-        return result;
+        return m.replaceAll("");
     }
 
     private String removeIgnoreMarker(String normalizedMdC) {
         Pattern p = Pattern.compile(MDC_IGNORE);
         Matcher m = p.matcher(normalizedMdC);
-        String result = m.replaceAll("");
-        return result;
+        return m.replaceAll("");
     }
 
     private String transformWordToMdCString(BTSWord word, int selectedGlyphIndex) {
@@ -1071,7 +1068,7 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
 
     @Override
     public List<Map> getScatteredCashMaps() {
-        final List<Map> maps = new Vector<Map>(1);
+        final List<Map> maps = new Vector<>(1);
         maps.add(hieroglyphSelectionCounterCacheMap);
         return maps;
     }

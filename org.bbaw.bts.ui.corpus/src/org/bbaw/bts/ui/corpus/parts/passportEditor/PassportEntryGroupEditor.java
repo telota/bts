@@ -80,7 +80,7 @@ public class PassportEntryGroupEditor extends PassportEntryEditorComposite {
 
 
     private boolean isGroup;
-    private Map<BTSConfigItem, PassportEntryEditorComposite> groupMap = new HashMap<BTSConfigItem, PassportEntryEditorComposite>();
+    private Map<BTSConfigItem, PassportEntryEditorComposite> groupMap = new HashMap<>();
 
     @Inject
     public PassportEntryGroupEditor(Composite parent) {

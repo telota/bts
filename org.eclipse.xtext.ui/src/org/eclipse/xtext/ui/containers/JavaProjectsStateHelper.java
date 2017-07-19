@@ -59,8 +59,7 @@ public class JavaProjectsStateHelper extends AbstractStorage2UriMapperClient {
         if (javaElement != null) {
             IJavaProject project = javaElement.getJavaProject();
             if (isAccessibleXtextProject(project.getProject())) {
-                List<String> rootHandles = getPackageFragmentRootHandles(project);
-                return rootHandles;
+                return getPackageFragmentRootHandles(project);
             }
             return Collections.emptyList();
         }

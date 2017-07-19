@@ -143,10 +143,8 @@ public class CheckTextDialog extends TitleAreaDialog {
                 }
             };
             new ProgressMonitorDialog(getShell()).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
     }

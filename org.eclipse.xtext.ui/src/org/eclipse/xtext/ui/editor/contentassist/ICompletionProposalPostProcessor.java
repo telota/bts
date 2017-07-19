@@ -19,7 +19,7 @@ public interface ICompletionProposalPostProcessor {
 
     ICompletionProposal[] postProcess(ICompletionProposal[] proposals);
 
-    public class NullProcessor implements ICompletionProposalPostProcessor {
+    class NullProcessor implements ICompletionProposalPostProcessor {
 
         public ICompletionProposal[] postProcess(ICompletionProposal[] proposals) {
             return proposals;

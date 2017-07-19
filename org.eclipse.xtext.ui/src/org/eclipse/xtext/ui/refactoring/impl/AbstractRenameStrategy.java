@@ -45,8 +45,7 @@ public abstract class AbstractRenameStrategy implements DefaultRenameStrategyPro
     }
 
     public RefactoringStatus validateNewName(String newName) {
-        RefactoringStatus status = new RefactoringStatus();
-        return status;
+        return new RefactoringStatus();
     }
 
     public void applyDeclarationChange(String newName, ResourceSet resourceSet) {

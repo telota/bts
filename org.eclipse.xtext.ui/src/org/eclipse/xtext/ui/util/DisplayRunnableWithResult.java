@@ -17,8 +17,8 @@ public abstract class DisplayRunnableWithResult<T> {
 
     public T syncExec() {
         if (Display.getCurrent() == null) {
-            final Wrapper<T> resultWrapper = new Wrapper<T>();
-            final Wrapper<Exception> exceptionWrapper = new Wrapper<Exception>();
+            final Wrapper<T> resultWrapper = new Wrapper<>();
+            final Wrapper<Exception> exceptionWrapper = new Wrapper<>();
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     try {

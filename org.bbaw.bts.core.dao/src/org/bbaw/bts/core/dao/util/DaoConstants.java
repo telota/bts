@@ -50,7 +50,6 @@ public class DaoConstants {
      * The Constant VIEW_ALL_BTSLISTENTRIES.
      */
     public static final String VIEW_ALL_BTSLISTENTRIES = "lemma/all_lemmaentry_objects";
-    ;
 
     /**
      * The Constant VIEW_ALL_BTSTCOBJECTS.

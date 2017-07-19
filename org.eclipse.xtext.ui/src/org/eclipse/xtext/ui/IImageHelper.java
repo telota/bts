@@ -27,7 +27,7 @@ public interface IImageHelper {
      * @since 2.4
      */
     @ImplementedBy(IImageHelper.NullImageHelper.class)
-    public interface IImageDescriptorHelper {
+    interface IImageDescriptorHelper {
         ImageDescriptor getImageDescriptor(String name);
 
         ImageDescriptor getImageDescriptor(Image image);

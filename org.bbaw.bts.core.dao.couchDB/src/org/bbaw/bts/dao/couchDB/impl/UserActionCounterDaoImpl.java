@@ -31,7 +31,7 @@ public class UserActionCounterDaoImpl extends
         } catch (ElasticsearchException e) {
             e.printStackTrace();
         }
-        List<UserActionCounter> counters = new Vector<UserActionCounter>();
+        List<UserActionCounter> counters = new Vector<>();
         if (response != null) {
             while (response.getSuggest().iterator().hasNext()) {
                 counters.add((UserActionCounter) response.getSuggest()

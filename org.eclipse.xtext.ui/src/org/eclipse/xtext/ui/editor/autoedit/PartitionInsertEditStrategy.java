@@ -36,8 +36,7 @@ public class PartitionInsertEditStrategy extends AbstractEditStrategy {
         if (left.length() >= command.text.length() && command.text.length() > 0 && left.endsWith(command.text)) {
             ITypedRegion partition = document.getPartition(command.offset);
             if (command.offset != 0 && partition.getLength() == 0 && document.getLength() != 0) {
-                ITypedRegion precedingPartition = document.getPartition(command.offset - 1);
-                partition = precedingPartition;
+                partition = document.getPartition(command.offset - 1);
             }
             if (partition.getOffset() + partition.getLength() >= command.offset + right.length()) {
                 if (!left.equals(right) && right.equals(document.get(command.offset, right.length())))

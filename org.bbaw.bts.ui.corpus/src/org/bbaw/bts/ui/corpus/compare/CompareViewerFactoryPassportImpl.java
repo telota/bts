@@ -42,8 +42,7 @@ public class CompareViewerFactoryPassportImpl implements CompareViewerFactory {
 
     @Override
     public Image getCompareViewerIcon() {
-        Image i = resourceProvider.getImage(Display.getDefault(), BTSResourceProvider.IMG_PASSPORT);
-        return i;
+        return resourceProvider.getImage(Display.getDefault(), BTSResourceProvider.IMG_PASSPORT);
     }
 
 }

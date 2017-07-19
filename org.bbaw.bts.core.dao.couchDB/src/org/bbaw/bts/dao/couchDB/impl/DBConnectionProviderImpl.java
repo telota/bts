@@ -87,7 +87,7 @@ public class DBConnectionProviderImpl implements DBConnectionProvider {
         }
         Map<String, CouchDbClient> clients = (Map<String, CouchDbClient>) context.get(DaoConstants.DB_CLIENT_POOL_MAP);
         if (clients == null) {
-            clients = new HashMap<String, CouchDbClient>(10);
+            clients = new HashMap<>(10);
             context.set(DaoConstants.DB_CLIENT_POOL_MAP, clients);
         }
         CouchDbClient dbClient = clients.get(path);
@@ -410,7 +410,7 @@ public class DBConnectionProviderImpl implements DBConnectionProvider {
                 context.set(ResourceSet.class, set);
 //				uriResourceMap = ContextInjectionFactory.make(ScatteredCachingMapService.class,
 //						context);
-                uriResourceMap = new HashMap<URI, Resource>();
+                uriResourceMap = new HashMap<>();
                 ((ResourceSetImpl) set).setURIResourceMap(uriResourceMap);
                 context.set(DaoConstants.RESOURCE_SET, set);
             } catch (Exception e) {
@@ -452,7 +452,7 @@ public class DBConnectionProviderImpl implements DBConnectionProvider {
 
         Map<String, CouchDbClient> clients = (Map<String, CouchDbClient>) context.get(DaoConstants.DB_CLIENT_POOL_MAP);
         if (clients == null) {
-            clients = new HashMap<String, CouchDbClient>(10);
+            clients = new HashMap<>(10);
             context.set(DaoConstants.DB_CLIENT_POOL_MAP, clients);
         }
         CouchDbClient dbClient = clients.get(path);
@@ -481,7 +481,7 @@ public class DBConnectionProviderImpl implements DBConnectionProvider {
         }
         Map<String, CouchDbClient> clients = (Map<String, CouchDbClient>) context.get(DaoConstants.DB_CLIENT_POOL_MAP);
         if (clients == null) {
-            clients = new HashMap<String, CouchDbClient>(10);
+            clients = new HashMap<>(10);
             context.set(DaoConstants.DB_CLIENT_POOL_MAP, clients);
         }
         CouchDbClient dbClient = clients.get(path);

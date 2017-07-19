@@ -48,7 +48,7 @@ public class AstSelectionProvider {
     @Inject
     private ICommentAssociater commentAssociater;
 
-    private Stack<ITextRegion> selectionHistory = new Stack<ITextRegion>();
+    private Stack<ITextRegion> selectionHistory = new Stack<>();
 
     public ITextRegion selectLast(XtextResource resource, ITextRegion currentEditorSelection) {
         if (selectionHistory.isEmpty()) {

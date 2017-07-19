@@ -217,7 +217,7 @@ public class NewCorpusObjectDialog extends TitleAreaDialog {
 
         btnCheckButton.setEnabled(permisionsController.authenticatedUserMaySyncDBColl(corpusPrefixTxt.getText()));
 
-        corpusPrefixSet = new HashSet<String>();
+        corpusPrefixSet = new HashSet<>();
         List<BTSTextCorpus> allCorpora = corpusNavigatorController.listTextCorpora(null);
         for (BTSTextCorpus c : allCorpora) {
             if (c.getCorpusPrefix() != null && c.getProject().equals(object.getProject())) {

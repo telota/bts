@@ -1,17 +1,5 @@
 package org.bbaw.bts.core.services.corpus.impl.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
-import javax.inject.Inject;
-
 import org.bbaw.bts.btsmodel.BTSConfig;
 import org.bbaw.bts.btsmodel.BTSConfigItem;
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
@@ -20,34 +8,18 @@ import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.commons.BTSObjectSearchService;
 import org.bbaw.bts.core.commons.MoveObjectAmongProjectDBCollectionsService;
 import org.bbaw.bts.core.commons.corpus.BTSCorpusConstants;
-import org.bbaw.bts.core.commons.corpus.CorpusUtils;
 import org.bbaw.bts.core.commons.corpus.comparator.BTSPassportEntryComparator;
 import org.bbaw.bts.core.dao.GeneralPurposeDao;
 import org.bbaw.bts.core.dao.corpus.CorpusObjectDao;
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.core.services.BTSConfigurationService;
-import org.bbaw.bts.core.services.corpus.BTSAnnotationService;
-import org.bbaw.bts.core.services.corpus.BTSImageService;
-import org.bbaw.bts.core.services.corpus.BTSLemmaEntryService;
-import org.bbaw.bts.core.services.corpus.BTSTCObjectService;
-import org.bbaw.bts.core.services.corpus.BTSTextCorpusService;
-import org.bbaw.bts.core.services.corpus.BTSTextService;
-import org.bbaw.bts.core.services.corpus.BTSThsEntryService;
-import org.bbaw.bts.core.services.corpus.CorpusObjectService;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSImage;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSPassportEntry;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSPassportEntryGroup;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSPassportEntryItem;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSTCObject;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSText;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSTextCorpus;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
+import org.bbaw.bts.core.services.corpus.*;
+import org.bbaw.bts.corpus.btsCorpusModel.*;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.extensions.Preference;
+
+import javax.inject.Inject;
+import java.util.*;
 
 public class CorpusObjectServiceImpl
         extends AbstractCorpusObjectServiceImpl<BTSCorpusObject, String>
@@ -97,7 +69,7 @@ public class CorpusObjectServiceImpl
 
 
     public String[] getActive_corpora(String projecPrefix) {
-        List<String> arr = new ArrayList<String>(4);
+        List<String> arr = new ArrayList<>(4);
         for (String s : active_corpora.split(BTSCoreConstants.SPLIT_PATTERN)) {
             if (s.startsWith(projecPrefix) && s.trim().length() > 0 && !arr.contains(s)) {
                 arr.add(s);
@@ -207,7 +179,7 @@ public class CorpusObjectServiceImpl
 
     @Override
     public List<BTSCorpusObject> list(String objectState, IProgressMonitor monitor) {
-        List<BTSCorpusObject> objects = new Vector<BTSCorpusObject>();
+        List<BTSCorpusObject> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 if (monitor != null && monitor.isCanceled()) {
@@ -226,7 +198,7 @@ public class CorpusObjectServiceImpl
     }
 
     public List<BTSCorpusObject> getRootBTSCorpusObjects() {
-        List<BTSCorpusObject> objects = new Vector<BTSCorpusObject>();
+        List<BTSCorpusObject> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 objects.addAll(corpusObjectDao.getRootBTSCorpusObjects(c));
@@ -237,7 +209,7 @@ public class CorpusObjectServiceImpl
 
     public List<BTSCorpusObject> findByQueryId(String searchId, String dbPath,
                                                String objectState) {
-        List<BTSCorpusObject> objects = new Vector<BTSCorpusObject>();
+        List<BTSCorpusObject> objects = new Vector<>();
 
         if (dbPath != null) {
             objects.addAll(corpusObjectDao.findByQueryId(searchId, dbPath,
@@ -255,7 +227,7 @@ public class CorpusObjectServiceImpl
     }
 
     private List<BTSCorpusObject> find(BTSQueryRequest query, String objectState) {
-        List<BTSCorpusObject> objects = new Vector<BTSCorpusObject>();
+        List<BTSCorpusObject> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 objects.addAll(corpusObjectDao.query(query, c, c, objectState,
@@ -285,7 +257,7 @@ public class CorpusObjectServiceImpl
     @Override
     public List<BTSCorpusObject> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                             String objectState, IProgressMonitor monitor) {
-        List<BTSCorpusObject> objects = new Vector<BTSCorpusObject>();
+        List<BTSCorpusObject> objects = new Vector<>();
         if (monitor != null && monitor.isCanceled()) {
             return objects;
         }
@@ -296,7 +268,7 @@ public class CorpusObjectServiceImpl
     @Override
     public List<BTSPassportEntry> getPassportEntryProposals(
             BTSQueryRequest query) {
-        List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
+        List<BTSPassportEntry> result = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)
                     ) {
@@ -315,8 +287,8 @@ public class CorpusObjectServiceImpl
 
     private List<BTSPassportEntry> selectDistinctValues(
             List<BTSPassportEntry> result) {
-        Set<String> selected = new HashSet<String>(result.size());
-        List<BTSPassportEntry> distinctResult = new Vector<BTSPassportEntry>();
+        Set<String> selected = new HashSet<>(result.size());
+        List<BTSPassportEntry> distinctResult = new Vector<>();
 
         for (BTSPassportEntry entry : result) {
             if (!selected.contains(entry.getValue())) {
@@ -332,7 +304,7 @@ public class CorpusObjectServiceImpl
     public List<BTSCorpusObject> query(BTSQueryRequest query,
                                        String objectState,
                                        boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSCorpusObject> objects = new Vector<BTSCorpusObject>();
+        List<BTSCorpusObject> objects = new Vector<>();
         if (query.getDbPath() != null && query.getDbPath().endsWith(BTSCorpusConstants.THS)) {
             for (String p : getActiveProjects()) {
                 try {
@@ -431,7 +403,7 @@ public class CorpusObjectServiceImpl
     @Override
     public List<BTSCorpusObject> listRootEntries(IProgressMonitor monitor) {
         List<BTSTextCorpus> corpora = textCorpusService.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-        List<BTSCorpusObject> roots = new Vector<BTSCorpusObject>(corpora.size());
+        List<BTSCorpusObject> roots = new Vector<>(corpora.size());
         for (BTSTextCorpus tc : corpora) {
             if (monitor != null && monitor.isCanceled()) {
                 return roots;
@@ -543,7 +515,7 @@ public class CorpusObjectServiceImpl
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
 
         if (query.getDbPath() != null && query.getDbPath().endsWith(BTSCorpusConstants.THS)) {
             for (String p : getActiveProjects()) {
@@ -604,10 +576,9 @@ public class CorpusObjectServiceImpl
      */
     @Override
     public void setObjectTypePath(BTSCorpusObject object, String annotationTypePath) {
-        if (annotationTypePath == null) return;
-        else if (!annotationTypePath.startsWith(BTSConstants.ANNOTATION)) return;
-        else if (annotationTypePath.equals(BTSConstants.ANNOTATION)) return;
-        else {
+        if (annotationTypePath != null
+                && !annotationTypePath.startsWith(BTSConstants.ANNOTATION)
+                && !annotationTypePath.equals(BTSConstants.ANNOTATION)) {
             String[] entries = annotationTypePath.split("\\.");
             if (entries.length > 1) {
                 object.setType(entries[1]);
@@ -663,7 +634,7 @@ public class CorpusObjectServiceImpl
         if (o != null && o instanceof Map<?, ?>) {
             cache = (Map<String, String>) o;
         } else {
-            cache = new HashMap<String, String>();
+            cache = new HashMap<>();
             for (BTSConfig c : configService.getPassportCategories(null)) {
                 if (c instanceof BTSConfigItem) {
                     BTSConfigItem child = (BTSConfigItem) c;

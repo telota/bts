@@ -22,14 +22,14 @@ import org.eclipse.xtext.util.PolymorphicDispatcher.ErrorHandler;
 public class DeclarativeLabelProvider extends AbstractLabelProvider {
 
 
-    private final PolymorphicDispatcher<Object> textDispatcher = new PolymorphicDispatcher<Object>("text", 1, 1,
+    private final PolymorphicDispatcher<Object> textDispatcher = new PolymorphicDispatcher<>("text", 1, 1,
             Collections.singletonList(this), new ErrorHandler<Object>() {
         public Object handle(Object[] params, Throwable e) {
             return handleTextError(params, e);
         }
     });
 
-    private final PolymorphicDispatcher<Object> imageDispatcher = new PolymorphicDispatcher<Object>("image", 1, 1,
+    private final PolymorphicDispatcher<Object> imageDispatcher = new PolymorphicDispatcher<>("image", 1, 1,
             Collections.singletonList(this), new ErrorHandler<Object>() {
         public Object handle(Object[] params, Throwable e) {
             return handleImageError(params, e);

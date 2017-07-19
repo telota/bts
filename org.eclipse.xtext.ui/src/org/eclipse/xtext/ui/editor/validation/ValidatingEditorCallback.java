@@ -49,7 +49,6 @@ public class ValidatingEditorCallback extends AbstractDirtyStateAwareEditorCallb
 
     private ValidationJob newValidationJob(XtextEditor editor) {
         MarkerIssueProcessor markerIssueProcessor = new MarkerIssueProcessor(editor.getResource(), markerCreator, markerTypeProvider);
-        ValidationJob validationJob = new ValidationJob(resourceValidator, editor.getDocument(), markerIssueProcessor, CheckMode.NORMAL_AND_FAST);
-        return validationJob;
+        return new ValidationJob(resourceValidator, editor.getDocument(), markerIssueProcessor, CheckMode.NORMAL_AND_FAST);
     }
 }

@@ -17,7 +17,7 @@ public abstract class DisplayRunnable {
 
     public void syncExec() {
         if (Display.getCurrent() == null) {
-            final Wrapper<Exception> exceptionWrapper = new Wrapper<Exception>();
+            final Wrapper<Exception> exceptionWrapper = new Wrapper<>();
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     try {

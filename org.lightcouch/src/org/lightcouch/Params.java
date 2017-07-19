@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class Params {
 
-    private List<String> params = new ArrayList<String>();
+    private List<String> params = new ArrayList<>();
 
     public Params revsInfo() {
         params.add("revs_info=true");

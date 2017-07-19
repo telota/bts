@@ -224,7 +224,7 @@ public class BTSPassportEntryItemImpl extends BTSPassportEntryImpl implements BT
      */
     public EList<BTSExternalReference> getExternalReferences() {
         if (externalReferences == null) {
-            externalReferences = new EObjectContainmentEList<BTSExternalReference>(BTSExternalReference.class, this, BtsCorpusModelPackage.BTS_PASSPORT_ENTRY_ITEM__EXTERNAL_REFERENCES);
+            externalReferences = new EObjectContainmentEList<>(BTSExternalReference.class, this, BtsCorpusModelPackage.BTS_PASSPORT_ENTRY_ITEM__EXTERNAL_REFERENCES);
         }
         return externalReferences;
     }

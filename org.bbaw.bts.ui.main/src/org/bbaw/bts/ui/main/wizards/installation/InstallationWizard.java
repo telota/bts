@@ -152,9 +152,7 @@ public class InstallationWizard extends Wizard {
             auth.put("password", localAdminP, true);
             auth.flush();
             success = true;
-        } catch (StorageException e) {
-            logger.error(e);
-        } catch (IOException e) {
+        } catch (StorageException | IOException e) {
             logger.error(e);
         } catch (SecurityException e) {
 
@@ -308,14 +306,14 @@ public class InstallationWizard extends Wizard {
             logger.info("Installation wizard, startupController.initializeLocalUser suceccessful: "
                     + success);
             // monitor.worked(25);
-            Set<BTSUser> users = new HashSet<BTSUser>(1);
+            Set<BTSUser> users = new HashSet<>(1);
             users.add(user);
             userManagerController.saveUsers(users);
             userController.setAuthenticatedUser(user);
 
             // user group
             BTSUserGroup usergroup = createUserPage.getUserGroup();
-            Set<BTSUserGroup> usergroups = new HashSet<BTSUserGroup>(1);
+            Set<BTSUserGroup> usergroups = new HashSet<>(1);
             usergroups.add(usergroup);
             userManagerController.saveUserGroups(usergroups);
             setLocalProject(true);

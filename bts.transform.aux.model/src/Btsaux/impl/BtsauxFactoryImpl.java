@@ -101,8 +101,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public AugroupsType createAugroupsType() {
-        AugroupsTypeImpl augroupsType = new AugroupsTypeImpl();
-        return augroupsType;
+        return new AugroupsTypeImpl();
     }
 
     /**
@@ -112,8 +111,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public AuthorizationType createAuthorizationType() {
-        AuthorizationTypeImpl authorizationType = new AuthorizationTypeImpl();
-        return authorizationType;
+        return new AuthorizationTypeImpl();
     }
 
     /**
@@ -123,8 +121,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public AuthorsType createAuthorsType() {
-        AuthorsTypeImpl authorsType = new AuthorsTypeImpl();
-        return authorsType;
+        return new AuthorsTypeImpl();
     }
 
     /**
@@ -134,8 +131,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public BwlenglType createBwlenglType() {
-        BwlenglTypeImpl bwlenglType = new BwlenglTypeImpl();
-        return bwlenglType;
+        return new BwlenglTypeImpl();
     }
 
     /**
@@ -145,8 +141,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public BwllinkType createBwllinkType() {
-        BwllinkTypeImpl bwllinkType = new BwllinkTypeImpl();
-        return bwllinkType;
+        return new BwllinkTypeImpl();
     }
 
     /**
@@ -156,8 +151,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public BwllistType createBwllistType() {
-        BwllistTypeImpl bwllistType = new BwllistTypeImpl();
-        return bwllistType;
+        return new BwllistTypeImpl();
     }
 
     /**
@@ -167,8 +161,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public DocumentRoot createDocumentRoot() {
-        DocumentRootImpl documentRoot = new DocumentRootImpl();
-        return documentRoot;
+        return new DocumentRootImpl();
     }
 
     /**
@@ -178,8 +171,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public StupidXMLType createStupidXMLType() {
-        StupidXMLTypeImpl stupidXMLType = new StupidXMLTypeImpl();
-        return stupidXMLType;
+        return new StupidXMLTypeImpl();
     }
 
     /**
@@ -189,8 +181,7 @@ public class BtsauxFactoryImpl extends EFactoryImpl implements BtsauxFactory {
      * @generated
      */
     public ThsdataType createThsdataType() {
-        ThsdataTypeImpl thsdataType = new ThsdataTypeImpl();
-        return thsdataType;
+        return new ThsdataTypeImpl();
     }
 
     /**

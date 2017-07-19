@@ -32,7 +32,7 @@ public class MergingHighlightedPositionAcceptor implements IHighlightedPositionA
 
     public MergingHighlightedPositionAcceptor(ISemanticHighlightingCalculator delegate) {
         this.delegate = delegate;
-        this.positions = new ArrayList<LightweightPosition>(50);
+        this.positions = new ArrayList<>(50);
         initialize();
     }
 

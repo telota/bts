@@ -38,6 +38,7 @@ import org.eclipse.ui.texteditor.MoveLinesAction;
  * @author Sebastian Zarnekow - Initial contribution and API
  * @since 2.3
  */
+@SuppressWarnings("ALL")
 public class TextViewerMoveLinesAction extends TextViewerAction {
 
 	/* configuration variables - define what this action does */

@@ -34,7 +34,7 @@ public class GeneralPurposeDaoImpl extends CouchDBDao<BTSDBBaseObject, String> i
                     .setQuery(query.getQueryBuilder())
                     .setFrom(0).setSize(60).setExplain(true).execute()
                     .actionGet();
-            List<SearchHit> result = new Vector<SearchHit>();
+            List<SearchHit> result = new Vector<>();
             for (SearchHit hit : response.getHits()) {
                 result.add(hit);
             }
@@ -45,7 +45,7 @@ public class GeneralPurposeDaoImpl extends CouchDBDao<BTSDBBaseObject, String> i
                     .setIndices(indexName).setTypes(indexType)
                     .setSearchType(SearchType.QUERY_AND_FETCH).execute()
                     .actionGet();
-            List<SearchHit> result = new Vector<SearchHit>();
+            List<SearchHit> result = new Vector<>();
             for (SearchHit hit : response.getHits()) {
                 result.add(hit);
             }

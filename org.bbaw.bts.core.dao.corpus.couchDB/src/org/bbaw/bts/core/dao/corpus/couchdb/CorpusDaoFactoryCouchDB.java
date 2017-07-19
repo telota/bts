@@ -60,50 +60,41 @@ public class CorpusDaoFactoryCouchDB implements DAOFactory {
 
 
     private BTSAbstractTextDao getBTSAbstractTextDao(IEclipseContext context) {
-        BTSAbstractTextDao dao = ContextInjectionFactory.make(BTSAbstractTextDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSAbstractTextDaoImpl.class, context);
     }
 
     private CorpusObjectDao getCorpusObjectDao(IEclipseContext context) {
-        CorpusObjectDao dao = ContextInjectionFactory.make(CorpusObjectDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(CorpusObjectDaoImpl.class, context);
     }
 
     private BTSThsEntryDao getBTSThsEntryDao(IEclipseContext context) {
-        BTSThsEntryDao dao = ContextInjectionFactory.make(BTSThsEntryDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSThsEntryDaoImpl.class, context);
     }
 
 
     private BTSAnnotationDao getBTSAnnotationDao(IEclipseContext context) {
-        BTSAnnotationDao dao = ContextInjectionFactory.make(BTSAnnotationDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSAnnotationDaoImpl.class, context);
     }
 
 
     private BTSImageDao getBTSImageDao(IEclipseContext context) {
-        BTSImageDao dao = ContextInjectionFactory.make(BTSImageDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSImageDaoImpl.class, context);
     }
 
     private BTSLemmaEntryDao getBTSLemmaEntryDao(IEclipseContext context) {
-        BTSLemmaEntryDao dao = ContextInjectionFactory.make(BTSLemmaEntryDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSLemmaEntryDaoImpl.class, context);
     }
 
     private BTSTCObjectDao getBTSTCObjectDao(IEclipseContext context) {
-        BTSTCObjectDao dao = ContextInjectionFactory.make(BTSTCObjectDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSTCObjectDaoImpl.class, context);
     }
 
     private BTSTextCorpusDao getBTSTextCorpusDao(IEclipseContext context) {
-        BTSTextCorpusDao dao = ContextInjectionFactory.make(BTSTextCorpusDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSTextCorpusDaoImpl.class, context);
     }
 
     private BTSTextDao getBTSTextDao(IEclipseContext context) {
-        BTSTextDao dao = ContextInjectionFactory.make(BTSTextDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSTextDaoImpl.class, context);
     }
 
 }

@@ -286,7 +286,7 @@ public abstract class BTSDBBaseObjectImpl extends BTSIdentifiableItemImpl implem
      */
     public EList<String> getUpdaters() {
         if (updaters == null) {
-            updaters = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTSDB_BASE_OBJECT__UPDATERS);
+            updaters = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTSDB_BASE_OBJECT__UPDATERS);
         }
         return updaters;
     }
@@ -299,7 +299,7 @@ public abstract class BTSDBBaseObjectImpl extends BTSIdentifiableItemImpl implem
      */
     public EList<String> getReaders() {
         if (readers == null) {
-            readers = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTSDB_BASE_OBJECT__READERS);
+            readers = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTSDB_BASE_OBJECT__READERS);
         }
         return readers;
     }
@@ -335,7 +335,7 @@ public abstract class BTSDBBaseObjectImpl extends BTSIdentifiableItemImpl implem
      */
     public EList<String> getConflictingRevs() {
         if (conflictingRevs == null) {
-            conflictingRevs = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTSDB_BASE_OBJECT__CONFLICTING_REVS);
+            conflictingRevs = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTSDB_BASE_OBJECT__CONFLICTING_REVS);
         }
         return conflictingRevs;
     }

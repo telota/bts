@@ -544,8 +544,7 @@ public class ParserBasedContentAssistContextFactory extends AbstractContentAssis
         }
 
         protected boolean canBeCalledAfter(AbstractRule rule, final EObject previousGrammarElement, String previousText, final EObject nextGrammarElement) {
-            Boolean result = createCallHierachyHelper(previousGrammarElement, previousText, nextGrammarElement).doSwitch(rule);
-            return result;
+            return createCallHierachyHelper(previousGrammarElement, previousText, nextGrammarElement).doSwitch(rule);
         }
 
         protected ParserBasedContentAssistContextFactory.CallHierarchyHelper createCallHierachyHelper(
@@ -765,7 +764,7 @@ public class ParserBasedContentAssistContextFactory extends AbstractContentAssis
      */
     public static class CallHierarchyHelper extends XtextSwitch<Boolean> {
         private final EObject nextGrammarElement;
-        private Set<AbstractRule> visiting = new HashSet<AbstractRule>();
+        private Set<AbstractRule> visiting = new HashSet<>();
         private Map<AbstractRule, Boolean> visited = Maps.newHashMapWithExpectedSize(4);
         private EObject grammarElement;
         private EObject queuedGrammarElement;
@@ -954,8 +953,7 @@ public class ParserBasedContentAssistContextFactory extends AbstractContentAssis
         public Boolean caseEnumLiteralDeclaration(EnumLiteralDeclaration object) {
             if (!checkFurther(object))
                 return result;
-            Boolean result = doSwitch(object.getLiteral());
-            return result;
+            return doSwitch(object.getLiteral());
         }
     }
 }

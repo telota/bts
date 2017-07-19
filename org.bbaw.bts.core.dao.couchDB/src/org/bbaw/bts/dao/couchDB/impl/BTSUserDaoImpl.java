@@ -130,7 +130,7 @@ public class BTSUserDaoImpl extends CouchDBDao<BTSUser, String> implements BTSUs
         // List<JsonObject> allDocs =
         // connectionProvider.getDBClient(CouchDbClient.class, path)
         // .view(viewId).includeDocs(true).query(JsonObject.class);
-        List<String> allDocs = new ArrayList<String>(0);
+        List<String> allDocs = new ArrayList<>(0);
         View view;
         try {
             view = connectionProvider.getDBClient(CouchDbClient.class, path, userName, passWord)
@@ -145,7 +145,7 @@ public class BTSUserDaoImpl extends CouchDBDao<BTSUser, String> implements BTSUs
                     .view(viewId);
             allDocs = view.includeDocs(true).query();
         }
-        ArrayList<BTSUser> results = new ArrayList<BTSUser>();
+        ArrayList<BTSUser> results = new ArrayList<>();
         for (String jo : allDocs) {
             try {
                 URI uri = URI.createURI(getLocalDBURL(userName, passWord) + "/" + path + "/"
@@ -277,7 +277,7 @@ public class BTSUserDaoImpl extends CouchDBDao<BTSUser, String> implements BTSUs
         if (name == null || !entity.getUserName().equals(name)) return false;
 
         // roles == groups
-        Set<String> roles = new HashSet<String>(entity.getGroupIds().size());
+        Set<String> roles = new HashSet<>(entity.getGroupIds().size());
         for (JsonElement role : jso.getAsJsonArray("roles")) {
             String r = role.getAsString();
             roles.add(r);

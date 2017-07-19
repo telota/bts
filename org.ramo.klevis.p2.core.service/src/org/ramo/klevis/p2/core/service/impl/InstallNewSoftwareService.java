@@ -101,14 +101,13 @@ public class InstallNewSoftwareService implements IInstallNewSoftwareService {
 
         IQueryResult<IInstallableUnit> query = loadRepository.query(
                 createQuery, nullProgressMonitor);
-        List<IInstallableUnit> list = toList(query);
 
-        return list;
+        return toList(query);
 
     }
 
     private List<IInstallableUnit> toList(IQueryResult<IInstallableUnit> query) {
-        List<IInstallableUnit> list = new ArrayList<IInstallableUnit>();
+        List<IInstallableUnit> list = new ArrayList<>();
         for (IInstallableUnit iInstallableUnit : query) {
 
             System.out.println(iInstallableUnit);
@@ -309,8 +308,7 @@ public class InstallNewSoftwareService implements IInstallNewSoftwareService {
 
         IQueryResult<IInstallableUnit> query = loadRepository.query(
                 createQuery, nullProgressMonitor);
-        List<IInstallableUnit> list = toList(query);
-        return list;
+        return toList(query);
     }
 
     @Override

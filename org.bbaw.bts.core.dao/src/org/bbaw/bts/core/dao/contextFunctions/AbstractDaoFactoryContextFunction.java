@@ -18,7 +18,7 @@ public abstract class AbstractDaoFactoryContextFunction extends ContextFunction 
     protected DAOFactory[] loadDaoFactory(IEclipseContext context, String factoryName) throws CoreException {
         IConfigurationElement[] config = ((IExtensionRegistry) context.get(IExtensionRegistry.class.getName()))
                 .getConfigurationElementsFor(DaoConstants.DAO_FACTORY_EXTENSION_POINT_ID);
-        List<DAOFactory> factories = new Vector<DAOFactory>(4);
+        List<DAOFactory> factories = new Vector<>(4);
         for (IConfigurationElement e : config) {
             final Object o = e.createExecutableExtension("class");
             if (o instanceof DAOFactory

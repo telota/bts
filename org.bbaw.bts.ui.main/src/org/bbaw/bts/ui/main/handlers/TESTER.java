@@ -7,6 +7,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.extensions.Preference;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -24,7 +25,7 @@ public class TESTER {
 
         Wizard w = new InstallationWizard(context, startupController, null, null);
         WizardDialog dialog = new WizardDialog(new Shell(), w);
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             System.out.println("new project created.");
 
         }

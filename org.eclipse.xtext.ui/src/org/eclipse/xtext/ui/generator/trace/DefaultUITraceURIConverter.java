@@ -67,8 +67,6 @@ public class DefaultUITraceURIConverter extends DefaultTraceURIConverter {
                                 return computeTraceURI(uri, javaProject);
                         }
                     }
-                } catch (JavaModelException e) {
-                    LOG.error(e);
                 } catch (CoreException e) {
                     LOG.error(e);
                 }

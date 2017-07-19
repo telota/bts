@@ -27,7 +27,7 @@ public interface IRefactoringDocument {
     String getOriginalContents();
 
     @ImplementedBy(DefaultRefactoringDocumentProvider.class)
-    static interface Provider {
+    interface Provider {
         IRefactoringDocument get(URI resourceURI, StatusWrapper status);
     }
 

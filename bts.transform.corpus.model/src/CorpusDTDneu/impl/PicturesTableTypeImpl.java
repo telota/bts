@@ -74,7 +74,7 @@ public class PicturesTableTypeImpl extends MinimalEObjectImpl.Container implemen
      */
     public EList<PictureType> getPicture() {
         if (picture == null) {
-            picture = new EObjectContainmentEList<PictureType>(PictureType.class, this, CorpusDTDneuPackage.PICTURES_TABLE_TYPE__PICTURE);
+            picture = new EObjectContainmentEList<>(PictureType.class, this, CorpusDTDneuPackage.PICTURES_TABLE_TYPE__PICTURE);
         }
         return picture;
     }

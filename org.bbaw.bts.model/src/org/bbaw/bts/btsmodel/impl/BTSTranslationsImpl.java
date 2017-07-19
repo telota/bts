@@ -96,7 +96,7 @@ public class BTSTranslationsImpl extends MinimalEObjectImpl.Container implements
      */
     public EList<BTSTranslation> getTranslations() {
         if (translations == null) {
-            translations = new EObjectContainmentEList<BTSTranslation>(BTSTranslation.class, this, BtsmodelPackage.BTS_TRANSLATIONS__TRANSLATIONS);
+            translations = new EObjectContainmentEList<>(BTSTranslation.class, this, BtsmodelPackage.BTS_TRANSLATIONS__TRANSLATIONS);
         }
         return translations;
     }
@@ -169,7 +169,7 @@ public class BTSTranslationsImpl extends MinimalEObjectImpl.Container implements
      * @generatedNOT
      */
     public EList<String> getLanguages() {
-        EList<String> langs = new BasicEList<String>();
+        EList<String> langs = new BasicEList<>();
         if (translations == null) {
             return langs;
         }

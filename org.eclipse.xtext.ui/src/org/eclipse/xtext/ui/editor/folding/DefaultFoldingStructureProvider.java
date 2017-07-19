@@ -120,7 +120,7 @@ public class DefaultFoldingStructureProvider implements IFoldingStructureProvide
     @SuppressWarnings("unchecked")
     protected Annotation[] mergeFoldingRegions(Collection<FoldedPosition> foldedPositions,
                                                ProjectionAnnotationModel projectionAnnotationModel) {
-        List<Annotation> deletions = new ArrayList<Annotation>();
+        List<Annotation> deletions = new ArrayList<>();
         for (Iterator<Annotation> iterator = projectionAnnotationModel.getAnnotationIterator(); iterator.hasNext(); ) {
             Annotation annotation = iterator.next();
             if (annotation instanceof ProjectionAnnotation) {

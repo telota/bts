@@ -27,17 +27,16 @@ public class BTSIDReservationObjectDaoImpl extends CouchDBDao<BTSIDReservationOb
         String viewId = BTSConstants.VIEW_ID_RESERVATION_OBJECTS;
 
         List<String> allDocs = loadDocsFromView(viewId, path, "id_reservation", btsUUID, btsUUID);
-        List<BTSIDReservationObject> results = loadObjectsFromStrings(allDocs, path);
 
         // filter oder mit params im view!
-        return results;
+        return loadObjectsFromStrings(allDocs, path);
     }
 
 
     @Override
     public boolean save(String collectionName,
                         List<BTSIDReservationObject> reserationObjects) {
-        Set<BTSIDReservationObject> objects = new HashSet<BTSIDReservationObject>(reserationObjects.size());
+        Set<BTSIDReservationObject> objects = new HashSet<>(reserationObjects.size());
         objects.addAll(reserationObjects);
         return addMultiple(objects, collectionName);
     }
@@ -59,7 +58,7 @@ public class BTSIDReservationObjectDaoImpl extends CouchDBDao<BTSIDReservationOb
             allDocs = view.includeDocs(false).startKey(prefix + 0).reduce(false).query();
 
         }
-        List<Integer> ids = new Vector<Integer>(allDocs.size());
+        List<Integer> ids = new Vector<>(allDocs.size());
         for (String doc : allDocs) {
             Matcher m = VALUE_PATTERN.matcher(doc);
             if (m.find()) {

@@ -31,7 +31,7 @@ public interface IXtextDocumentContentObserver extends IDocumentListener {
      * Releases all read locks on the document held by the current thread, acquires a write lock
      * and executes the {@link IUnitOfWork} in it. Then re-acquires the read locks.
      */
-    public interface Processor {
+    interface Processor {
         <T> T process(IUnitOfWork<T, XtextResource> transaction);
     }
 

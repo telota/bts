@@ -18,7 +18,7 @@ public interface ITemplateAcceptor {
 
     boolean canAcceptMoreTemplates();
 
-    public class Delegate implements ITemplateAcceptor {
+    class Delegate implements ITemplateAcceptor {
 
         private ITemplateAcceptor delegate;
 

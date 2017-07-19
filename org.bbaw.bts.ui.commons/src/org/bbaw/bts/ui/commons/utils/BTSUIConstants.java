@@ -50,7 +50,6 @@ public class BTSUIConstants {
      */
     public static final String EVENT_TEXT_SELECTION_NEXT = "event_text_selection/next";
 
-    ;
     /**
      * The Constant EVENT_TEXT_SELECTION_PREVIOUS.
      */

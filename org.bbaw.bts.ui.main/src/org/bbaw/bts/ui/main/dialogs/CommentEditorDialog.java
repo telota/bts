@@ -65,7 +65,7 @@ public class CommentEditorDialog extends TitleAreaDialog {
     private Text txtCommentId;
     private Text txtTitletxt;
     private CommandStackListener commandStackListener;
-    private Set<Command> localCommandCacheSet = new HashSet<Command>();
+    private Set<Command> localCommandCacheSet = new HashSet<>();
     private boolean dirty;
     private Composite container;
     private Composite innerCompositeRelations;

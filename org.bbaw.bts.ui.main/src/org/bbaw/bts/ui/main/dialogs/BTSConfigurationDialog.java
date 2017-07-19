@@ -173,7 +173,7 @@ public class BTSConfigurationDialog extends TitleAreaDialog {
     private Text newCGroupText_ConfigurationEdit;
     private ToolItem config_ToolUndo;
     private ToolItem config_ToolRedo;
-    private Map<BTSConfig, EditingDomain> editingDomainMap = new HashMap<BTSConfig, EditingDomain>();
+    private Map<BTSConfig, EditingDomain> editingDomainMap = new HashMap<>();
     private ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
             ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
     private ObjectTypeSelectionTreeComposite ownerTypeSelector;
@@ -443,7 +443,7 @@ public class BTSConfigurationDialog extends TitleAreaDialog {
         });
         treeViewer.setSorter(new BTSObjectByNameViewerSorter(true));
         // Create sample data
-        configurations = new ArrayList<BTSConfiguration>();
+        configurations = new ArrayList<>();
 
         List<BTSConfiguration> list = configurationController
                 .listConfigurations(null);

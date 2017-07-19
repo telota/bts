@@ -200,12 +200,11 @@ public abstract class E4TemplatePreferencePage extends PreferencePage implements
      * @return the grid data
      */
     private static GridData getButtonGridData(Button button) {
-        GridData data = new GridData(GridData.FILL_HORIZONTAL);
         // TODO replace SWTUtil
 //		data.widthHint= SWTUtil.getButtonWidthHint(button);
 //		data.heightHint= SWTUtil.getButtonHeightHint(button);
 
-        return data;
+        return new GridData(GridData.FILL_HORIZONTAL);
     }
 
     /**
@@ -712,8 +711,6 @@ public abstract class E4TemplatePreferencePage extends PreferencePage implements
             fTableViewer.setAllChecked(false);
             fTableViewer.setCheckedElements(getEnabledTemplates());
 
-        } catch (FileNotFoundException e) {
-            openReadErrorDialog(e);
         } catch (IOException e) {
             openReadErrorDialog(e);
         }
@@ -991,11 +988,10 @@ public abstract class E4TemplatePreferencePage extends PreferencePage implements
          * @return the grid data
          */
         private static GridData getButtonGridData(Button button) {
-            GridData data = new GridData(GridData.FILL_HORIZONTAL);
             // TODO get some button hints.
 //			data.heightHint= SWTUtil.getButtonHeightHint(button);
 
-            return data;
+            return new GridData(GridData.FILL_HORIZONTAL);
         }
 
         private static Label createLabel(Composite parent, String name) {

@@ -88,11 +88,7 @@ final class CouchDbUtil {
      * @return A JSON element as a String, or null if not found.
      */
     public static String getElement(JsonObject j, String e) {
-        String result = (j.get(e) == null) ? null : j.get(e).getAsString();
-
-        //FIXME cplutte comment logging out
-//		log.error("String getElement " + result);
-        return result;
+        return (j.get(e) == null) ? null : j.get(e).getAsString();
     }
 
     public static long getElementAsLong(JsonObject j, String e) {
@@ -110,8 +106,6 @@ final class CouchDbUtil {
      * basically a brute-force implementation. Works for regular files and also
      * JARs.
      *
-     * @param clazz Any java class that lives in the same place as the resources
-     *              you want.
      * @param path  Should end with "/", but not start with one.
      * @return Just the name of each member item, not the full paths.
      * @author Greg Briggs
@@ -137,7 +131,7 @@ final class CouchDbUtil {
                 String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!"));
                 JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"));
                 Enumeration<JarEntry> entries = jar.entries();
-                Set<String> result = new HashSet<String>();
+                Set<String> result = new HashSet<>();
                 while (entries.hasMoreElements()) {
                     String name = entries.nextElement().getName();
                     if (name.startsWith(path)) {
@@ -151,7 +145,7 @@ final class CouchDbUtil {
                         }
                     }
                 }
-                return new ArrayList<String>(result);
+                return new ArrayList<>(result);
             }
             return null;
         } catch (Exception e) {

@@ -80,9 +80,7 @@ public class NavigatorParametrizedFilterHandler {
             isContained = false;
             try {
                 filter = makeFilter(clazz, context);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         } else {

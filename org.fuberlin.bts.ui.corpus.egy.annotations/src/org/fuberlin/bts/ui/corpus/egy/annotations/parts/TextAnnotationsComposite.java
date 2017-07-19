@@ -181,7 +181,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     @Inject
     private PassportConfigurationController passportConfigurationController;
     private Integer showTransLangMask = 0;
-    private List<ElementFigure> selectedElements = new Vector<ElementFigure>();
+    private List<ElementFigure> selectedElements = new Vector<>();
     private Composite parentComposite;
     private FlowLayout layout;
     private Figure container;
@@ -190,7 +190,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     private Adapter notifier;
     private boolean notifyWords = true;
     private LineFigure sentenceLineFigure;
-    private Map<String, List<LineFigure>> annotationslineMap = new HashMap<String, List<LineFigure>>();
+    private Map<String, List<LineFigure>> annotationslineMap = new HashMap<>();
     private MouseListener elementSelectionListener;
     private int cachedIndex;
     private MouseMotionListener mouseMotionListener;
@@ -201,7 +201,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     private HashMap<String, List<ElementFigure>> relatingObjectFigureMap;
     private BTSTextContent textContent;
     private BTSObject btsObject;
-    private List<Image> imageList = new Vector<Image>(1000);
+    private List<Image> imageList = new Vector<>(1000);
     private boolean enabled;
     private Composite buttonComposite;
     private Button toBeginningButton;
@@ -219,9 +219,9 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     private Label sentenceIndexLabel;
     private HashMap<BTSObject, PositionCache> annotationPositionMap;
     private Comparator annotationsByPositionLengthSorter;
-    private Map<String, ElementFigure> annotationBaseFigureEndMap = new HashMap<String, ElementFigure>();
-    private Map<String, ElementFigure> annotationBaseFigureStartMap = new HashMap<String, ElementFigure>();
-    private Map<LineFigure, Integer> lineFigureEndIndexMap = new HashMap<LineFigure, Integer>();
+    private Map<String, ElementFigure> annotationBaseFigureEndMap = new HashMap<>();
+    private Map<String, ElementFigure> annotationBaseFigureStartMap = new HashMap<>();
+    private Map<LineFigure, Integer> lineFigureEndIndexMap = new HashMap<>();
     private Map<String, ElementFigure> annotationFigureMap = new HashMap<>();
     private Map<String, Boolean> filterMap;
     private EclipsePreferences annotationSettings;
@@ -579,8 +579,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     private int getCurrentIndex() {
         if (!selectedElements.isEmpty()) {
             ElementFigure first = selectedElements.get(0);
-            int currentIndex = sentenceLineFigure.getChildren().indexOf(first);
-            return currentIndex;
+            return sentenceLineFigure.getChildren().indexOf(first);
         }
         return 0;
     }
@@ -690,8 +689,6 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
             figure = (ElementFigure) sentenceLineFigure
                     .getChildren()
                     .get(newIndex);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
@@ -699,7 +696,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     }
 
     private MouseListener makeElementSelectionListener() {
-        MouseListener listener = new MouseListener() {
+        return new MouseListener() {
 
             @Override
             public void mousePressed(MouseEvent me) {
@@ -739,7 +736,6 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
             }
 
         };
-        return listener;
     }
 
     protected void updateFigureFromWord(Notification notification) {
@@ -752,7 +748,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
         }
         if (word != null) {
             IFigure rect = (IFigure) wordMap.get(word.get_id());
-            List<ElementFigure> els = new ArrayList<ElementFigure>();
+            List<ElementFigure> els = new ArrayList<>();
             els.add((ElementFigure) rect);
             refreshFigureFromModel(els, word);
         }
@@ -816,7 +812,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
                 showTransLangMask |= 1 << i;
             }
         }
-        continuingRelatingObjects = new Vector<BTSObject>();
+        continuingRelatingObjects = new Vector<>();
 
         container = new Figure();
 
@@ -833,7 +829,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
         container.addKeyListener(keyListener);
 
 
-        wordMap = new HashMap<String, IFigure>();
+        wordMap = new HashMap<>();
         BTSTextItems item = textContent.getTextItems().get(selectedSentence);
         if (item instanceof BTSSenctence) {
             BTSSenctence sentence = (BTSSenctence) item;
@@ -948,14 +944,14 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
         }
 
         // sort groups according to sortkeys in config for types and subtypes
-        Map<String, List<BTSObject>> annotationsGroups = new HashMap<String, List<BTSObject>>();
+        Map<String, List<BTSObject>> annotationsGroups = new HashMap<>();
         for (BTSObject o : annotations) {
             List<BTSObject> groupAnnos;
             String expandedObjectType = processExpandedObjectType(o);
             if (annotationsGroups.containsKey(expandedObjectType)) {
                 groupAnnos = annotationsGroups.get(expandedObjectType);
             } else {
-                groupAnnos = new Vector<BTSObject>();
+                groupAnnos = new Vector<>();
                 annotationsGroups.put(expandedObjectType, groupAnnos);
             }
             groupAnnos.add(o);
@@ -1248,7 +1244,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     private void updateAnnotationsPostionMap(BTSObject relatingObject, ElementFigure beginFigure,
                                              ElementFigure endFigure) {
         if (annotationPositionMap == null) {
-            annotationPositionMap = new HashMap<BTSObject, PositionCache>();
+            annotationPositionMap = new HashMap<>();
         }
         PositionCache cache = annotationPositionMap.get(relatingObject);
         if (cache == null) {
@@ -1286,11 +1282,11 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     private void updateRelatingObjectFigureMap(String relatingObjectID,
                                                ElementFigure itemFigure) {
         if (relatingObjectFigureMap == null) {
-            relatingObjectFigureMap = new HashMap<String, List<ElementFigure>>();
+            relatingObjectFigureMap = new HashMap<>();
         }
         List<ElementFigure> list = relatingObjectFigureMap.get(relatingObjectID);
         if (list == null) {
-            list = new Vector<ElementFigure>(4);
+            list = new Vector<>(4);
             relatingObjectFigureMap.put(relatingObjectID, list);
         }
         if (!list.contains(itemFigure)) {

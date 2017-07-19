@@ -77,7 +77,7 @@ public class UserActionCounterServiceImpl extends
 
     @Override
     public List<UserActionCounter> list(String objectState, IProgressMonitor monitor) {
-        List<UserActionCounter> counters = new Vector<UserActionCounter>();
+        List<UserActionCounter> counters = new Vector<>();
         counters.addAll(counterDao.list(BTSCoreConstants.LOCAL, objectState));
         return counters;
     }
@@ -85,7 +85,7 @@ public class UserActionCounterServiceImpl extends
     @Override
     public List<UserActionCounter> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                               String objectState, IProgressMonitor monitor) {
-        List<UserActionCounter> counters = new Vector<UserActionCounter>();
+        List<UserActionCounter> counters = new Vector<>();
         counters.addAll(counterDao.listChunks(chunkSize, chunkIds, BTSCoreConstants.LOCAL, objectState));
         return counters;
     }
@@ -106,7 +106,7 @@ public class UserActionCounterServiceImpl extends
     @Override
     public List<UserActionCounter> query(BTSQueryRequest query,
                                          String objectState, boolean registerQuery, IProgressMonitor monitor) {
-        List<UserActionCounter> counters = new Vector<UserActionCounter>();
+        List<UserActionCounter> counters = new Vector<>();
         counters.addAll(counterDao.query(query, BTSCoreConstants.LOCAL,
                 BTSCoreConstants.LOCAL, objectState, registerQuery));
         return counters;
@@ -114,7 +114,7 @@ public class UserActionCounterServiceImpl extends
 
     @Override
     public List<UserActionCounter> getCountersForPrefix(String code) {
-        List<UserActionCounter> counters = new Vector<UserActionCounter>();
+        List<UserActionCounter> counters = new Vector<>();
 
         BTSQueryRequest query = new BTSQueryRequest();
         query.setQueryBuilder(QueryBuilders.prefixQuery("_id", code));
@@ -130,7 +130,7 @@ public class UserActionCounterServiceImpl extends
             @Override
             protected IStatus run(IProgressMonitor monitor) {
                 // TODO Auto-generated method stub
-                Set<UserActionCounter> toSave = new HashSet<UserActionCounter>(counters.size());
+                Set<UserActionCounter> toSave = new HashSet<>(counters.size());
                 for (String id : counters) {
                     UserActionCounter counter = find(id, null);
                     if (counter == null) {
@@ -164,7 +164,7 @@ public class UserActionCounterServiceImpl extends
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> counters = new Vector<String>();
+        List<String> counters = new Vector<>();
         counters.addAll(counterDao.queryAsJsonString(query, BTSCoreConstants.LOCAL,
                 BTSCoreConstants.LOCAL, objectState, false));
         return counters;

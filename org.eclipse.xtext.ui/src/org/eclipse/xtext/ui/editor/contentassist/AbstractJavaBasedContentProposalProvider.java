@@ -63,7 +63,7 @@ public abstract class AbstractJavaBasedContentProposalProvider extends AbstractC
     private Set<List<Object>> handledArguments;
 
     protected AbstractJavaBasedContentProposalProvider() {
-        dispatchers = new HashMap<String, PolymorphicDispatcher<Void>>();
+        dispatchers = new HashMap<>();
     }
 
     @Override

@@ -435,8 +435,7 @@ public class BtsmodelFactoryImpl extends EFactoryImpl implements BtsmodelFactory
      * @generated
      */
     public UserActionCounter createUserActionCounter() {
-        UserActionCounterImpl userActionCounter = new UserActionCounterImpl();
-        return userActionCounter;
+        return new UserActionCounterImpl();
     }
 
     /**
@@ -446,8 +445,7 @@ public class BtsmodelFactoryImpl extends EFactoryImpl implements BtsmodelFactory
      * @generated
      */
     public Map.Entry<String, EList<String>> createStringToStringListMap() {
-        StringToStringListMapImpl stringToStringListMap = new StringToStringListMapImpl();
-        return stringToStringListMap;
+        return new StringToStringListMapImpl();
     }
 
     /**
@@ -457,8 +455,7 @@ public class BtsmodelFactoryImpl extends EFactoryImpl implements BtsmodelFactory
      * @generated
      */
     public Map createStringToStringMap() {
-        StringToStringMapImpl stringToStringMap = new StringToStringMapImpl();
-        return stringToStringMap;
+        return new StringToStringMapImpl();
     }
 
     /**
@@ -468,8 +465,7 @@ public class BtsmodelFactoryImpl extends EFactoryImpl implements BtsmodelFactory
      * @generated
      */
     public BTSIDReservationObject createBTSIDReservationObject() {
-        BTSIDReservationObjectImpl btsidReservationObject = new BTSIDReservationObjectImpl();
-        return btsidReservationObject;
+        return new BTSIDReservationObjectImpl();
     }
 
     /**

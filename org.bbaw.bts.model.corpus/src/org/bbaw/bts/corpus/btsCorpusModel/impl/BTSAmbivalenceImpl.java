@@ -95,7 +95,7 @@ public class BTSAmbivalenceImpl extends BTSTextSentenceItemImpl implements BTSAm
      */
     public EList<BTSLemmaCase> getCases() {
         if (cases == null) {
-            cases = new EObjectContainmentEList<BTSLemmaCase>(BTSLemmaCase.class, this, BtsCorpusModelPackage.BTS_AMBIVALENCE__CASES);
+            cases = new EObjectContainmentEList<>(BTSLemmaCase.class, this, BtsCorpusModelPackage.BTS_AMBIVALENCE__CASES);
         }
         return cases;
     }

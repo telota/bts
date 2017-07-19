@@ -65,7 +65,7 @@ public class CrossReferenceTemplateVariableResolver extends AbstractTemplateVari
                 castedContext.getContentAssistContext().getCurrentModel(), reference);
         Iterable<IEObjectDescription> linkingCandidates = queryScope(scope);
 
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
         for (IEObjectDescription eObjectDescription : linkingCandidates) {
             names.add(qualifiedNameConverter.toString(eObjectDescription.getName()));
         }

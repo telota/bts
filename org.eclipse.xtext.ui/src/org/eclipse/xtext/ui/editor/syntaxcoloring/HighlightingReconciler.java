@@ -43,7 +43,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
     /**
      * Background job's added highlighted positions
      */
-    private final List<AttributedPosition> addedPositions = new ArrayList<AttributedPosition>();
+    private final List<AttributedPosition> addedPositions = new ArrayList<>();
     /**
      * Reconcile operation lock.
      *
@@ -69,7 +69,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
     /**
      * Background job's removed highlighted positions
      */
-    private List<AttributedPosition> removedPositions = new ArrayList<AttributedPosition>();
+    private List<AttributedPosition> removedPositions = new ArrayList<>();
     /**
      * Number of removed positions
      */
@@ -101,7 +101,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
         acceptor.provideHighlightingFor(resource, this);
 //		calculator.provideHighlightingFor(resource, this);
         List<AttributedPosition> oldPositions = removedPositions;
-        List<AttributedPosition> newPositions = new ArrayList<AttributedPosition>(removedPositionCount);
+        List<AttributedPosition> newPositions = new ArrayList<>(removedPositionCount);
         for (int i = 0, n = oldPositions.size(); i < n; i++) {
             AttributedPosition current = oldPositions.get(i);
             if (current != null)

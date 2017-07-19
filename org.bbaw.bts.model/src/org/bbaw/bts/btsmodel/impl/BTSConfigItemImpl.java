@@ -297,7 +297,7 @@ public class BTSConfigItemImpl extends BTSConfigImpl implements BTSConfigItem {
      */
     protected String abbreviation = ABBREVIATION_EDEFAULT;
 
-    private List<PropertyChangeListener> propertyChangeListeners = new ArrayList<PropertyChangeListener>();
+    private List<PropertyChangeListener> propertyChangeListeners = new ArrayList<>();
 
     private Map<String, List<String>> ownerTypesMap;
 
@@ -609,7 +609,7 @@ public class BTSConfigItemImpl extends BTSConfigImpl implements BTSConfigItem {
      */
     public EList<BTSWorkflowRuleItem> getRules() {
         if (rules == null) {
-            rules = new EObjectContainmentEList<BTSWorkflowRuleItem>(BTSWorkflowRuleItem.class, this, BtsmodelPackage.BTS_CONFIG_ITEM__RULES);
+            rules = new EObjectContainmentEList<>(BTSWorkflowRuleItem.class, this, BtsmodelPackage.BTS_CONFIG_ITEM__RULES);
         }
         return rules;
     }
@@ -642,7 +642,7 @@ public class BTSConfigItemImpl extends BTSConfigImpl implements BTSConfigItem {
      */
     public EList<String> getOwnerReferencedTypesStringList() {
         if (ownerReferencedTypesStringList == null) {
-            ownerReferencedTypesStringList = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_CONFIG_ITEM__OWNER_REFERENCED_TYPES_STRING_LIST);
+            ownerReferencedTypesStringList = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_CONFIG_ITEM__OWNER_REFERENCED_TYPES_STRING_LIST);
         }
         return ownerReferencedTypesStringList;
     }
@@ -677,7 +677,7 @@ public class BTSConfigItemImpl extends BTSConfigImpl implements BTSConfigItem {
      */
     public Map<String, List<String>> getOwnerTypesMap() {
         if (ownerTypesMap == null || ownerTypesMap.isEmpty() || ownerTypesMap.size() != ownerReferencedTypesStringList.size()) {
-            ownerTypesMap = new HashMap<String, List<String>>();
+            ownerTypesMap = new HashMap<>();
             fillOwnerTypesMap();
         }
         return ownerTypesMap;
@@ -697,7 +697,7 @@ public class BTSConfigItemImpl extends BTSConfigImpl implements BTSConfigItem {
     private void fillOwnerTypesMap() {
         for (String owner : getOwnerReferencedTypesStringList()) {
             if (owner.contains(BTSConstants.OWNER_REFERENCED_TYPES_SEPERATOR)) {
-                EList<String> refList = new BasicEList<String>();
+                EList<String> refList = new BasicEList<>();
                 String own = owner.split(BTSConstants.OWNER_REFERENCED_TYPES_SEPERATOR)[0];
                 String refs = owner.split(BTSConstants.OWNER_REFERENCED_TYPES_SEPERATOR)[1];
                 if (refs.contains(BTSConstants.OWNER_REFERENCED_TYPES_LIST_SEPERATOR)) {

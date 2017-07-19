@@ -90,7 +90,7 @@ public class BtsCorpusModelItemProviderAdapterFactory extends BtsCorpusModelAdap
      *
      * @generated
      */
-    protected Collection<Object> supportedTypes = new ArrayList<Object>();
+    protected Collection<Object> supportedTypes = new ArrayList<>();
     /**
      * This keeps track of the one adapter used for all {@link org.bbaw.bts.corpus.btsCorpusModel.BTSTCObject} instances.
      * <!-- begin-user-doc -->

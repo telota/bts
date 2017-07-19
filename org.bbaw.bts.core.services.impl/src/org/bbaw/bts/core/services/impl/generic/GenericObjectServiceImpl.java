@@ -241,8 +241,8 @@ public abstract class GenericObjectServiceImpl<E extends BTSDBBaseObject, K exte
         if (!fetchFromRemote) {
             return generalPurposeDao.listAvailableRevisions(object.get_id(), object.getDBCollectionKey());
         } else {
-            List<DBRevision> revisions = new Vector<DBRevision>();
-            Map<String, DBRevision> localRevs = new HashMap<String, DBRevision>();
+            List<DBRevision> revisions = new Vector<>();
+            Map<String, DBRevision> localRevs = new HashMap<>();
 
             try {
                 revisions.addAll(generalPurposeDao.listAvailableRevisions(object.get_id(), object.getDBCollectionKey()));
@@ -292,7 +292,7 @@ public abstract class GenericObjectServiceImpl<E extends BTSDBBaseObject, K exte
 
     protected String[] getAllProjects() {
         List<BTSProject> projects = projectDao.list(BTSCoreConstants.ADMIN, BTSConstants.OBJECT_STATE_ACTIVE);
-        List<String> projectPrefixes = new Vector<String>(projects.size());
+        List<String> projectPrefixes = new Vector<>(projects.size());
 
         if (projects != null) {
             for (BTSProject p : projects) {

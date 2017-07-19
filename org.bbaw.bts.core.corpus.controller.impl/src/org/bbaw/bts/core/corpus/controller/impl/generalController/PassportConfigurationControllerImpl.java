@@ -48,7 +48,7 @@ public class PassportConfigurationControllerImpl implements
     @Override
     public List<BTSConfig> getFilteredChildren(BTSConfigItem configItem,
                                                BTSCorpusObject corpusObject) {
-        List<BTSConfig> filteredChildren = new Vector<BTSConfig>();
+        List<BTSConfig> filteredChildren = new Vector<>();
         for (BTSConfig child : configItem.getChildren()) {
             if (child instanceof BTSConfigItem) {
                 if (configService.objectTypesPathsContainsObjectype(
@@ -158,7 +158,7 @@ public class PassportConfigurationControllerImpl implements
             BTSCorpusObject corpusObject, BTSConfigItem itemConfig) {
         BTSObjectTypeSubtypeViewerFilter filter = new BTSObjectTypeSubtypeViewerFilter();
         List<String> strings = configService.getListOfReferencedObjectTypeSubtypesOfObject(corpusObject, itemConfig);
-        List<Object> obj = new Vector<Object>(strings.size());
+        List<Object> obj = new Vector<>(strings.size());
         obj.addAll(strings);
         filter.setObjects(obj);
         return filter;
@@ -213,7 +213,7 @@ public class PassportConfigurationControllerImpl implements
         Assert.isNotNull(parentEntryGroup);
         Assert.isNotNull(groupConfig);
 
-        List<BTSPassportEntry> entries = new Vector<BTSPassportEntry>();
+        List<BTSPassportEntry> entries = new Vector<>();
         for (BTSPassportEntry group : parentEntryGroup.getChildren()) {
             if (group.getType() != null
                     && group.getType().equals(groupConfig.getValue())) {

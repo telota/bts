@@ -59,7 +59,7 @@ public class BTSObjectTypeSubtypeViewerFilter extends AbstractObjectByListEntryF
 
     private Set<String> getStringFilterSet() {
         if (stringFilterSet == null) {
-            stringFilterSet = new HashSet<String>();
+            stringFilterSet = new HashSet<>();
             List<?> obs = getObjects();
             for (Object o : obs) {
                 if (o instanceof String) {

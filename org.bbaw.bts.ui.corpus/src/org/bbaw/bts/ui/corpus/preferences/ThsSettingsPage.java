@@ -129,9 +129,9 @@ public class ThsSettingsPage extends FieldEditorPreferencePage {
 
         projects = projectController.listProjects(null);
         comboViewer.setInput(projects);
-        List<BTSProject> availableProjects = new Vector<BTSProject>(1);
+        List<BTSProject> availableProjects = new Vector<>(1);
 
-        List<BTSProject> chosenProjects = new Vector<BTSProject>(1);
+        List<BTSProject> chosenProjects = new Vector<>(1);
         if (active_thsLists != null && active_thsLists.trim().length() > 0) {
             String[] pros = active_thsLists.split("\\|");
 
@@ -187,7 +187,7 @@ public class ThsSettingsPage extends FieldEditorPreferencePage {
     }
 
     private List<String> getActiveProjectSelectionsAsStringList() {
-        List<String> prefixes = new Vector<String>();
+        List<String> prefixes = new Vector<>();
         if (chrosenProvider == null) {
             return prefixes;
         }

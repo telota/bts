@@ -33,7 +33,7 @@ public class PerspectiveContentProvider implements IStructuredContentProvider {
 
     @Override
     public Object[] getElements(Object element) {
-        List<MPerspective> perspectives = new ArrayList<MPerspective>(5);
+        List<MPerspective> perspectives = new ArrayList<>(5);
 
         if (element instanceof MWindow)
             addElementsFrom((MWindow) element, perspectives);

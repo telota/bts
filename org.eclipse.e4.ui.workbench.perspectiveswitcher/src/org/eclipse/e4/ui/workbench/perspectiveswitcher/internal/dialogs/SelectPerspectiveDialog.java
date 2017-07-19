@@ -212,7 +212,7 @@ public class SelectPerspectiveDialog extends Dialog implements
 
     @Override
     protected void okPressed() {
-        HashMap<String, Object> parameters = new HashMap<String, Object>(2);
+        HashMap<String, Object> parameters = new HashMap<>(2);
         parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID,
                 ((MPerspective) selection).getElementId());
         parameters.put(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW,

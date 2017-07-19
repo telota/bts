@@ -125,11 +125,11 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
     private Logger logger;
     private TreeViewer mainTreeViewer;
     private StructuredSelection selection;
-    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<String, BTSQueryResultAbstract>();
-    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<String, List<TreeNodeWrapper>>();
+    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<>();
+    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<>();
     private ISelectionChangedListener selectionListener;
     private Composite composite;
-    private Map<Control, Map> cachingMap = new HashMap<Control, Map>();
+    private Map<Control, Map> cachingMap = new HashMap<>();
     private TreeNodeWrapper mainRootNode;
     private CTabFolder tabFolder;
     private CTabItem mainTabItem;
@@ -292,7 +292,7 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
 
                         }
                         if (!tn.isChildrenLoaded() || tn.getChildren().isEmpty()) {
-                            List<TreeNodeWrapper> parents = new Vector<TreeNodeWrapper>(1);
+                            List<TreeNodeWrapper> parents = new Vector<>(1);
                             parents.add(tn);
                             tn.setChildrenLoaded(true);
                             loadChildren(parents, false, parentControl);
@@ -323,7 +323,7 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
                     }
                     if (selection instanceof TreeSelection) {
                         TreeSelection ts = (TreeSelection) selection;
-                        List<BTSObject> path = new ArrayList<BTSObject>(4);
+                        List<BTSObject> path = new ArrayList<>(4);
 
                         for (Object o : ts.getPaths()) {
 
@@ -398,10 +398,8 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
     }
@@ -485,10 +483,8 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
     }
@@ -560,10 +556,8 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
     }
@@ -606,7 +600,7 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
         List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
                 .get_id());
         if (list == null) {
-            list = new Vector<TreeNodeWrapper>(1);
+            list = new Vector<>(1);
         }
         if (!list.contains(tn)) {
             list.add(tn);
@@ -717,7 +711,7 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
 
     @Override
     public List<Map> getScatteredCashMaps() {
-        final List<Map> maps = new Vector<Map>(1);
+        final List<Map> maps = new Vector<>(1);
         for (Map map : cachingMap.values()) {
             maps.add(map);
         }
@@ -842,10 +836,8 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
     }
@@ -886,7 +878,7 @@ public class ATextNavigatorPart extends NavigatorPart implements ScatteredCachin
 
     private List<BTSAbstractText> filterObjects(List<BTSAbstractText> objs,
                                                 StructuredViewer viewer) {
-        List<BTSAbstractText> filtered = new Vector<BTSAbstractText>();
+        List<BTSAbstractText> filtered = new Vector<>();
         for (BTSAbstractText e : objs) {
             if (isFiltered(e, viewer)) {
                 filtered.add(e);

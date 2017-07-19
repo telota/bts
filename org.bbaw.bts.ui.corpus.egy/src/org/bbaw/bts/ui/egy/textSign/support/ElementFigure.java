@@ -22,13 +22,13 @@ public interface ElementFigure extends IFigure {
 
     String AMBIVALENCE_END = "AMBIVALENCE_END";
 
-    public int getLength();
+    int getLength();
 
-    public Object getModelObject();
+    Object getModelObject();
 
-    public void setModelObject(Object modelObject);
+    void setModelObject(Object modelObject);
 
-    public String getType();
+    String getType();
 
     void setType(String type);
 

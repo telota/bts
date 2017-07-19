@@ -25,7 +25,7 @@ public class BTSCommentServiceImpl extends GenericObjectServiceImpl<BTSComment, 
     @Override
     public List<BTSComment> query(BTSQueryRequest query, String objectState,
                                   boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSComment> objects = new Vector<BTSComment>();
+        List<BTSComment> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             try {
                 objects.addAll(commentDao.query(query, p + BTSCoreConstants.ADMIN_SUFFIX, p
@@ -91,7 +91,7 @@ public class BTSCommentServiceImpl extends GenericObjectServiceImpl<BTSComment, 
 
     @Override
     public List<BTSComment> list(String objectState, IProgressMonitor monitor) {
-        List<BTSComment> comments = new Vector<BTSComment>();
+        List<BTSComment> comments = new Vector<>();
         for (String p : getActiveProjects()) {
             comments.addAll(commentDao.list(p
                     + BTSCoreConstants.ADMIN_SUFFIX, objectState));
@@ -108,7 +108,7 @@ public class BTSCommentServiceImpl extends GenericObjectServiceImpl<BTSComment, 
     @Override
     public List<BTSComment> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                        String objectState, IProgressMonitor monitor) {
-        List<BTSComment> comments = new Vector<BTSComment>();
+        List<BTSComment> comments = new Vector<>();
         comments.addAll(commentDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(comments);
     }
@@ -149,7 +149,7 @@ public class BTSCommentServiceImpl extends GenericObjectServiceImpl<BTSComment, 
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             try {
                 objects.addAll(commentDao.queryAsJsonString(query, p + BTSCoreConstants.ADMIN_SUFFIX, p

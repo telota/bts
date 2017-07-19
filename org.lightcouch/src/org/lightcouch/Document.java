@@ -62,7 +62,7 @@ public class Document {
 
     public void addAttachment(String name, Attachment attachment) {
         if (attachments == null)
-            attachments = new HashMap<String, Attachment>();
+            attachments = new HashMap<>();
         attachments.put(name, attachment);
     }
 

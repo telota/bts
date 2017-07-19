@@ -35,7 +35,7 @@ public class PassportEditorPartControllerImpl
             text = "";
         }
 
-        List<FilterBuilder> filters = new ArrayList<FilterBuilder>(
+        List<FilterBuilder> filters = new ArrayList<>(
                 entryPath.size());
         for (int i = 0; i < entryPath.size() - 1; i++) {
             field += ".children";

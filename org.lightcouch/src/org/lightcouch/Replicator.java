@@ -126,7 +126,7 @@ public class Replicator {
             Reader reader = new InputStreamReader(instream = dbc.get(uri));
             JsonArray jsonArray = new JsonParser().parse(reader)
                     .getAsJsonObject().getAsJsonArray("rows");
-            List<ReplicatorDocument> list = new ArrayList<ReplicatorDocument>();
+            List<ReplicatorDocument> list = new ArrayList<>();
             for (JsonElement jsonElem : jsonArray) {
                 JsonElement elem = jsonElem.getAsJsonObject().get("doc");
                 if (!getElement(elem.getAsJsonObject(), "_id").startsWith("_design")) { // skip design docs

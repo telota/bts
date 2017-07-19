@@ -70,7 +70,7 @@ public abstract class AbstractTextEditorLogic {
     }
 
     protected void configureEditorDrawingStrategies(OverviewRuler oruler) {
-        annotationStrategySet = new HashSet<String>();
+        annotationStrategySet = new HashSet<>();
 
         // set basic rulers
         if (oruler != null) {

@@ -52,7 +52,7 @@ public class CompoundRelationsEditorComposite extends Composite {
     private BTSResourceProvider resourceProvider;
     @Inject
     private BTSObject object;
-    private Map<String, BTSConfigItem> relationConfigCache = new HashMap<String, BTSConfigItem>();
+    private Map<String, BTSConfigItem> relationConfigCache = new HashMap<>();
 
     private List<BTSConfigItem> cachedRelationConfigs;
 
@@ -145,7 +145,7 @@ public class CompoundRelationsEditorComposite extends Composite {
 
     private List<BTSConfigItem> listAllRelationConfigs() {
         if (cachedRelationConfigs == null) {
-            cachedRelationConfigs = new Vector<BTSConfigItem>();
+            cachedRelationConfigs = new Vector<>();
             addToListRecursively(configurationController
                     .getRelationsConfigItem());
 

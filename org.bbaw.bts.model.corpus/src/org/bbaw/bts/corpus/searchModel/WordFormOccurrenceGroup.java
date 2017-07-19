@@ -102,7 +102,7 @@ public class WordFormOccurrenceGroup {
     public void addOccurrence(WordFormOccurrence occurrence) {
         if (occurrence == null) return;
         if (this.occurrences == null) {
-            this.occurrences = new Vector<WordFormOccurrence>();
+            this.occurrences = new Vector<>();
         }
         this.occurrences.add(occurrence);
     }

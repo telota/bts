@@ -226,7 +226,7 @@ public class BtsmodelModelWizard extends Wizard implements INewWizard {
      */
     protected Collection<String> getInitialObjectNames() {
         if (initialObjectNames == null) {
-            initialObjectNames = new ArrayList<String>();
+            initialObjectNames = new ArrayList<>();
             for (EClassifier eClassifier : btsmodelPackage.getEClassifiers()) {
                 if (eClassifier instanceof EClass) {
                     EClass eClass = (EClass) eClassifier;
@@ -249,8 +249,7 @@ public class BtsmodelModelWizard extends Wizard implements INewWizard {
      */
     protected EObject createInitialModel() {
         EClass eClass = (EClass) btsmodelPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
-        EObject rootObject = btsmodelFactory.create(eClass);
-        return rootObject;
+        return btsmodelFactory.create(eClass);
     }
 
     /**
@@ -295,7 +294,7 @@ public class BtsmodelModelWizard extends Wizard implements INewWizard {
 
                                 // Save the contents of the resource to the file system.
                                 //
-                                Map<Object, Object> options = new HashMap<Object, Object>();
+                                Map<Object, Object> options = new HashMap<>();
                                 options.put(XMLResource.OPTION_ENCODING, initialObjectCreationPage.getEncoding());
                                 resource.save(options);
                             } catch (Exception exception) {
@@ -667,7 +666,7 @@ public class BtsmodelModelWizard extends Wizard implements INewWizard {
          */
         protected Collection<String> getEncodings() {
             if (encodings == null) {
-                encodings = new ArrayList<String>();
+                encodings = new ArrayList<>();
                 for (StringTokenizer stringTokenizer = new StringTokenizer(BTSModelEditorPlugin.INSTANCE.getString("_UI_XMLEncodingChoices")); stringTokenizer.hasMoreTokens(); ) {
                     encodings.add(stringTokenizer.nextToken());
                 }

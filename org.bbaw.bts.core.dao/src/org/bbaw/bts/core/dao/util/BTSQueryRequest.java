@@ -65,7 +65,7 @@ public class BTSQueryRequest {
     private boolean fuzzy;
 
     public BTSQueryRequest() {
-        this.requestFields = new HashSet<String>();
+        this.requestFields = new HashSet<>();
     }
 
     public BTSQueryRequest(String searchString) {
@@ -206,7 +206,7 @@ public class BTSQueryRequest {
 
     public void setResponseFields(String[] responseFieldsArray) {
         if (responseFields == null) {
-            responseFields = new Vector<String>();
+            responseFields = new Vector<>();
         }
         this.responseFields.clear();
         if (responseFieldsArray != null) {
@@ -218,7 +218,7 @@ public class BTSQueryRequest {
 
     public void addResponseFields(String responseFieldName) {
         if (responseFields == null) {
-            responseFields = new Vector<String>();
+            responseFields = new Vector<>();
         }
         if (!responseFields.contains(responseFieldName)) {
             responseFields.add(responseFieldName);

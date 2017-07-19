@@ -12,6 +12,7 @@ import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
 import org.bbaw.bts.ui.commons.compare.CompareViewer;
 import org.bbaw.bts.ui.commons.viewerSorter.AdministrativDataObjectRevisionTimeStampViewerSorter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -212,7 +213,7 @@ public class ComparePart extends AbstractComparePart {
         MessageDialog dialog = new MessageDialog(new Shell(), "Replace with selected revision", null,
                 messeage, MessageDialog.QUESTION, new String[]{"Replace",
                 "Cancel"}, 1);
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             BTSDBBaseObject replaced = compareObjectsController.replaceCurrentWithRevision(object, revision);
             refreshCompareViewers(replaced, revision);
 //				TreeNodeWrapper delTn = null;
@@ -263,10 +264,8 @@ public class ComparePart extends AbstractComparePart {
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
 

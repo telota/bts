@@ -96,7 +96,7 @@ public class BTSTextContentImpl extends MinimalEObjectImpl.Container implements 
      */
     public EList<BTSTextItems> getTextItems() {
         if (textItems == null) {
-            textItems = new EObjectContainmentEList<BTSTextItems>(BTSTextItems.class, this, BtsCorpusModelPackage.BTS_TEXT_CONTENT__TEXT_ITEMS);
+            textItems = new EObjectContainmentEList<>(BTSTextItems.class, this, BtsCorpusModelPackage.BTS_TEXT_CONTENT__TEXT_ITEMS);
         }
         return textItems;
     }

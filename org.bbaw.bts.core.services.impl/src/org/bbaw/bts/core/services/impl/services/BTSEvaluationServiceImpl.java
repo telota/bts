@@ -202,7 +202,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
     @Override
     public <T extends BTSDBBaseObject> List<T> filter(List<T> objects) {
         if (objects == null) return null;
-        List<T> filtered = new Vector<T>(objects.size());
+        List<T> filtered = new Vector<>(objects.size());
         int suppressed = 0;
         for (T o : objects) {
             if (isVisibleToUser(o)) {
@@ -297,7 +297,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
     }
 
     private void loadDBCollectionCache() {
-        dbCollectionCache = new HashMap<String, BTSProjectDBCollection>();
+        dbCollectionCache = new HashMap<>();
         projectService = context.get(BTSProjectService.class);
         List<BTSProject> projects = projectService.list(BTSConstants.OBJECT_STATE_ACTIVE, null);
         for (BTSProject project : projects) {
@@ -351,7 +351,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
     }
 
     private List<BTSUserGroup> getUserGroupsOfUser(BTSUser user) {
-        List<BTSUserGroup> groups = new Vector<BTSUserGroup>(4);
+        List<BTSUserGroup> groups = new Vector<>(4);
 
         if (userGroupService == null) {
             userGroupService = context.get(BTSUserGroupService.class);
@@ -476,8 +476,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
     }
 
     private BTSUser getUser(String userId) {
-        BTSUser user = userDao.find(userId, "admin");
-        return user;
+        return userDao.find(userId, "admin");
     }
 
     private void checkAndRenewLease(DBLease lease) {
@@ -561,8 +560,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
         Date local = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime();
         Long difference = getSystemClockDifference(local);
         long system = local.getTime();
-        Date now = new Date(system + difference);
-        return now;
+        return new Date(system + difference);
     }
 
     private Long getSystemClockDifference(Date local) {
@@ -650,7 +648,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
         if (m != null && m instanceof Map<?, ?>) {
             return (Map<String, DBLease>) m;
         } else {
-            Map<String, DBLease> map = new HashMap<String, DBLease>();
+            Map<String, DBLease> map = new HashMap<>();
             fillLockingMap(map);
             context.set(BTSCoreConstants.LOCKING_MAP_KEY, map);
             return map;

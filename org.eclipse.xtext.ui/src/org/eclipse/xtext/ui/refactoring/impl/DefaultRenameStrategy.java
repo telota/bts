@@ -95,8 +95,7 @@ public class DefaultRenameStrategy extends AbstractRenameStrategy {
     }
 
     protected TextEdit getDeclarationTextEdit(String newName) {
-        String text = newName;
-        return new ReplaceEdit(originalNameRegion.getOffset(), originalNameRegion.getLength(), text);
+        return new ReplaceEdit(originalNameRegion.getOffset(), originalNameRegion.getLength(), newName);
     }
 
     protected String getNameAsText(String nameAsValue) {

@@ -15,13 +15,9 @@ public class BTSObjectByNameViewerSorter extends ViewerSorter {
     public BTSObjectByNameViewerSorter() {
     }
 
-    ;
-
     public BTSObjectByNameViewerSorter(boolean forceSortKey) {
         this.forceSortKey = forceSortKey;
     }
-
-    ;
 
 
     @Override

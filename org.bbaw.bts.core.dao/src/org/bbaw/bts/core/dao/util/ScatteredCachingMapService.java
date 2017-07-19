@@ -71,7 +71,7 @@ public class ScatteredCachingMapService implements Map<URI, Resource> {
     /**
      * The configuration map.
      */
-    private Map<URI, Resource> configurationMap = new HashMap<URI, Resource>();
+    private Map<URI, Resource> configurationMap = new HashMap<>();
 
     /**
      * The model service.
@@ -108,12 +108,12 @@ public class ScatteredCachingMapService implements Map<URI, Resource> {
     /**
      * The notification map.
      */
-    private Map<URI, Resource> notificationMap = new HashMap<URI, Resource>();
+    private Map<URI, Resource> notificationMap = new HashMap<>();
 
     /**
      * The eclassmap.
      */
-    private Map<URI, Resource> eclassmap = new HashMap<URI, Resource>();
+    private Map<URI, Resource> eclassmap = new HashMap<>();
 
     /* (non-Javadoc)
      * @see java.util.Map#clear()
@@ -397,8 +397,7 @@ public class ScatteredCachingMapService implements Map<URI, Resource> {
      */
     @Override
     public Collection<Resource> values() {
-        Collection<Resource> cols = new Vector<Resource>(0);
-        return cols;
+        return new Vector<>(0);
 
     }
 

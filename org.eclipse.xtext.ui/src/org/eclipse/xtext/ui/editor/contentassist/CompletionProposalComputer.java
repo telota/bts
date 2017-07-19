@@ -28,7 +28,7 @@ public class CompletionProposalComputer implements IUnitOfWork<ICompletionPropos
 
     public CompletionProposalComputer(State state, ITextViewer viewer, int offset) {
         super();
-        this.proposals = new LinkedHashSet<ICompletionProposal>(30);
+        this.proposals = new LinkedHashSet<>(30);
         this.state = state;
         this.viewer = viewer;
         this.offset = offset;

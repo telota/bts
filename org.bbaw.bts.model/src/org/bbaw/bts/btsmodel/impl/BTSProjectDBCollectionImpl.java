@@ -262,7 +262,7 @@ public class BTSProjectDBCollectionImpl extends BTSIdentifiableItemImpl implemen
      */
     public EList<BTSDBCollectionRoleDesc> getRoleDescriptions() {
         if (roleDescriptions == null) {
-            roleDescriptions = new EObjectContainmentEList<BTSDBCollectionRoleDesc>(BTSDBCollectionRoleDesc.class, this, BtsmodelPackage.BTS_PROJECT_DB_COLLECTION__ROLE_DESCRIPTIONS);
+            roleDescriptions = new EObjectContainmentEList<>(BTSDBCollectionRoleDesc.class, this, BtsmodelPackage.BTS_PROJECT_DB_COLLECTION__ROLE_DESCRIPTIONS);
         }
         return roleDescriptions;
     }
@@ -275,7 +275,7 @@ public class BTSProjectDBCollectionImpl extends BTSIdentifiableItemImpl implemen
      */
     public EList<String> getPropertyStrings() {
         if (propertyStrings == null) {
-            propertyStrings = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_PROJECT_DB_COLLECTION__PROPERTY_STRINGS);
+            propertyStrings = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_PROJECT_DB_COLLECTION__PROPERTY_STRINGS);
         }
         return propertyStrings;
     }
@@ -289,7 +289,7 @@ public class BTSProjectDBCollectionImpl extends BTSIdentifiableItemImpl implemen
      */
     public Map<String, String> getProperties() {
         if (properties == null) {
-            properties = new HashMap<String, String>(4);
+            properties = new HashMap<>(4);
             for (String s : getPropertyStrings()) {
                 String[] prop = s.split("=");
                 if (prop != null) {

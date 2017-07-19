@@ -102,15 +102,13 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
 
     @Override
     public List<BTSUser> list(String objectState, IProgressMonitor monitor) {
-        List<BTSUser> users = userDao.list(BTSCoreConstants.ADMIN, objectState);
-        return users;
+        return userDao.list(BTSCoreConstants.ADMIN, objectState);
     }
 
     @Override
     public List<BTSUser> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                     String objectState, IProgressMonitor monitor) {
-        List<BTSUser> users = userDao.listChunks(chunkSize, chunkIds, BTSCoreConstants.ADMIN, objectState);
-        return users;
+        return userDao.listChunks(chunkSize, chunkIds, BTSCoreConstants.ADMIN, objectState);
     }
 
     @Override
@@ -157,9 +155,7 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
             auth.flush();
             success = true;
             return true;
-        } catch (StorageException e) {
-            logger.error(e);
-        } catch (IOException e) {
+        } catch (StorageException | IOException e) {
             logger.error(e);
         } catch (SecurityException e) {
 
@@ -209,8 +205,7 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
     @Override
     public List<BTSUser> listAll(String objectState, String userName,
                                  String passWord) {
-        List<BTSUser> users = userDao.list(BTSCoreConstants.ADMIN, objectState, userName, passWord);
-        return users;
+        return userDao.list(BTSCoreConstants.ADMIN, objectState, userName, passWord);
     }
 
     @Override
@@ -231,7 +226,7 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
     @Override
     public List<BTSObject> getUserOrphans(List<BTSFilter> btsFilters, List<BTSObject> rootEntries, IProgressMonitor monitor) {
         List<BTSUser> allEntries = list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-        List<BTSUser> allFilteredEntries = new Vector<BTSUser>();
+        List<BTSUser> allFilteredEntries = new Vector<>();
         for (BTSUser e : allEntries) {
             if (isVisible(e, btsFilters)) {
                 allFilteredEntries.add(e);
@@ -239,7 +234,7 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
         }
 
         // load and cache root entries
-        Set<String> allRootEntriesSet = new HashSet<String>(rootEntries.size());
+        Set<String> allRootEntriesSet = new HashSet<>(rootEntries.size());
         for (BTSObject e : rootEntries) {
             if (isVisible(e, btsFilters)) {
                 allRootEntriesSet.add(e.get_id());
@@ -249,13 +244,13 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
         // init caches
 
         // potential root nodes
-        Map<String, CacheTreeNode> roots = new HashMap<String, CacheTreeNode>();
+        Map<String, CacheTreeNode> roots = new HashMap<>();
         // all nodes
-        Map<String, CacheTreeNode> allNodes = new HashMap<String, CacheTreeNode>();
+        Map<String, CacheTreeNode> allNodes = new HashMap<>();
         // nodes that await a holder, key = id of holder
-        Map<String, List<CacheTreeNode>> awaitingHolder = new HashMap<String, List<CacheTreeNode>>();
+        Map<String, List<CacheTreeNode>> awaitingHolder = new HashMap<>();
         // nodes that provide hold to children, key = id of child
-        Map<String, List<CacheTreeNode>> providingHold = new HashMap<String, List<CacheTreeNode>>();
+        Map<String, List<CacheTreeNode>> providingHold = new HashMap<>();
 
         // iterate over all entries
         for (BTSUser e : allFilteredEntries) {
@@ -302,7 +297,7 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
                 }
             }
         }
-        List<BTSObject> orphans = new Vector<BTSObject>();
+        List<BTSObject> orphans = new Vector<>();
         for (CacheTreeNode tn : roots.values()) {
             if (allRootEntriesSet != null && allRootEntriesSet.contains(tn.getId())) {
                 // tn is rootnode and shown in viewer
@@ -317,7 +312,7 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
                           String key, Map<String, List<CacheTreeNode>> map) {
         List<CacheTreeNode> list = map.get(key);
         if (list == null) {
-            list = new Vector<CacheTreeNode>(4);
+            list = new Vector<>(4);
             map.put(key, list);
         }
         list.add(tn);
@@ -385,9 +380,8 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = userDao.queryAsJsonString(query, BTSCoreConstants.ADMIN,
+        return userDao.queryAsJsonString(query, BTSCoreConstants.ADMIN,
                 BTSCoreConstants.ADMIN, objectState, false);
-        return objects;
     }
 
 }

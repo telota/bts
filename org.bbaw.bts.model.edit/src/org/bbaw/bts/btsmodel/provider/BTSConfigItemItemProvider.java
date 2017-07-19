@@ -593,17 +593,15 @@ public class BTSConfigItemItemProvider extends BTSConfigItemProvider {
      */
     @Override
     public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-        Object childFeature = feature;
-        Object childObject = child;
 
         boolean qualify =
-                childFeature == BtsmodelPackage.Literals.BTS_CONFIG_ITEM__LABEL ||
-                        childFeature == BtsmodelPackage.Literals.BTS_CONFIG_ITEM__DESCRIPTION;
+                feature == BtsmodelPackage.Literals.BTS_CONFIG_ITEM__LABEL ||
+                        feature == BtsmodelPackage.Literals.BTS_CONFIG_ITEM__DESCRIPTION;
 
         if (qualify) {
             return getString
                     ("_UI_CreateChild_text2",
-                            new Object[]{getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner)});
+                            new Object[]{getTypeText(child), getFeatureText(feature), getTypeText(owner)});
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

@@ -74,11 +74,11 @@ public class OutlineFilterAndSorter {
         return filters.remove(filter);
     }
 
-    public static interface IComparator extends Comparator<IOutlineNode> {
+    public interface IComparator extends Comparator<IOutlineNode> {
         boolean isEnabled();
     }
 
-    public static interface IFilter extends Predicate<IOutlineNode> {
+    public interface IFilter extends Predicate<IOutlineNode> {
         boolean isEnabled();
     }
 }

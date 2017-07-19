@@ -33,7 +33,7 @@ public interface IXtextEditorCallback {
 
     boolean onValidateEditorInputState(XtextEditor editor);
 
-    public static class NullImpl implements IXtextEditorCallback {
+    class NullImpl implements IXtextEditorCallback {
 
         public void beforeSetInput(XtextEditor xtextEditor) {
         }

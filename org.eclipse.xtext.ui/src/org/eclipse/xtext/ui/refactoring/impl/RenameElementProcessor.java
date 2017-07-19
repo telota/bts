@@ -153,8 +153,7 @@ public class RenameElementProcessor extends AbstractRenameProcessor {
 
     protected IRenameStrategy createRenameElementStrategy(EObject targetElement,
                                                           IRenameElementContext renameElementContext) throws NoSuchStrategyException {
-        IRenameStrategy result = strategyProvider.get(targetElement, renameElementContext);
-        return result;
+        return strategyProvider.get(targetElement, renameElementContext);
     }
 
     public IRenameStrategy getRenameElementStrategy() {
@@ -264,10 +263,9 @@ public class RenameElementProcessor extends AbstractRenameProcessor {
     @Override
     public RefactoringParticipant[] loadParticipants(RefactoringStatus status, SharableParticipants sharedParticipants)
             throws CoreException {
-        RenameParticipant[] renameParticipants = ParticipantManager.loadRenameParticipants(status, this,
+        return ParticipantManager.loadRenameParticipants(status, this,
                 renameElementContext, new RenameArguments(newName, true),
                 new String[]{XtextProjectHelper.NATURE_ID}, sharedParticipants);
-        return renameParticipants;
     }
 
     protected void handleException(Exception exc, StatusWrapper status) {

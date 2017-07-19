@@ -523,7 +523,7 @@ public class BTSConfigurationImpl extends BTSConfigImpl implements BTSConfigurat
      */
     public EList<String> getRevisions() {
         if (revisions == null) {
-            revisions = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_CONFIGURATION__REVISIONS);
+            revisions = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_CONFIGURATION__REVISIONS);
         }
         return revisions;
     }
@@ -674,7 +674,7 @@ public class BTSConfigurationImpl extends BTSConfigImpl implements BTSConfigurat
      */
     public EList<String> getUpdaters() {
         if (updaters == null) {
-            updaters = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_CONFIGURATION__UPDATERS);
+            updaters = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_CONFIGURATION__UPDATERS);
         }
         return updaters;
     }
@@ -687,7 +687,7 @@ public class BTSConfigurationImpl extends BTSConfigImpl implements BTSConfigurat
      */
     public EList<String> getReaders() {
         if (readers == null) {
-            readers = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_CONFIGURATION__READERS);
+            readers = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_CONFIGURATION__READERS);
         }
         return readers;
     }
@@ -723,7 +723,7 @@ public class BTSConfigurationImpl extends BTSConfigImpl implements BTSConfigurat
      */
     public EList<String> getConflictingRevs() {
         if (conflictingRevs == null) {
-            conflictingRevs = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_CONFIGURATION__CONFLICTING_REVS);
+            conflictingRevs = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_CONFIGURATION__CONFLICTING_REVS);
         }
         return conflictingRevs;
     }
@@ -897,7 +897,7 @@ public class BTSConfigurationImpl extends BTSConfigImpl implements BTSConfigurat
      */
     public EList<BTSRelation> getRelations() {
         if (relations == null) {
-            relations = new EObjectContainmentEList<BTSRelation>(BTSRelation.class, this, BtsmodelPackage.BTS_CONFIGURATION__RELATIONS);
+            relations = new EObjectContainmentEList<>(BTSRelation.class, this, BtsmodelPackage.BTS_CONFIGURATION__RELATIONS);
         }
         return relations;
     }
@@ -933,7 +933,7 @@ public class BTSConfigurationImpl extends BTSConfigImpl implements BTSConfigurat
      */
     public EList<BTSExternalReference> getExternalReferences() {
         if (externalReferences == null) {
-            externalReferences = new EObjectContainmentEList<BTSExternalReference>(BTSExternalReference.class, this, BtsmodelPackage.BTS_CONFIGURATION__EXTERNAL_REFERENCES);
+            externalReferences = new EObjectContainmentEList<>(BTSExternalReference.class, this, BtsmodelPackage.BTS_CONFIGURATION__EXTERNAL_REFERENCES);
         }
         return externalReferences;
     }
@@ -991,8 +991,7 @@ public class BTSConfigurationImpl extends BTSConfigImpl implements BTSConfigurat
      */
     public BTSRevision getRevision(int revisionIndex) {
         String rev = getRevisions().get(revisionIndex);
-        BTSRevision revision = BtsmodelFactory.eINSTANCE.createBTSRevision(rev);
-        return revision;
+        return BtsmodelFactory.eINSTANCE.createBTSRevision(rev);
     }
 
     /**
@@ -1003,8 +1002,7 @@ public class BTSConfigurationImpl extends BTSConfigImpl implements BTSConfigurat
      */
     public BTSRevision getLastRevision() {
         String rev = getRevisions().get(getRevisions().size() - 1);
-        BTSRevision revision = BtsmodelFactory.eINSTANCE.createBTSRevision(rev);
-        return revision;
+        return BtsmodelFactory.eINSTANCE.createBTSRevision(rev);
     }
 
     /**

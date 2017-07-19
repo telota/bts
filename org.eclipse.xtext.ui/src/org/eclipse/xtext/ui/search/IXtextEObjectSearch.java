@@ -29,7 +29,7 @@ public interface IXtextEObjectSearch {
 
     Iterable<IEObjectDescription> findMatches(String searchPattern, String typeSearchPattern);
 
-    public static class Default implements IXtextEObjectSearch {
+    class Default implements IXtextEObjectSearch {
         @Inject
         private IResourceDescriptions resourceDescriptions;
 

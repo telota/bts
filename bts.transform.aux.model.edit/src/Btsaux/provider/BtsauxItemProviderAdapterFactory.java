@@ -59,7 +59,7 @@ public class BtsauxItemProviderAdapterFactory extends BtsauxAdapterFactory imple
      *
      * @generated
      */
-    protected Collection<Object> supportedTypes = new ArrayList<Object>();
+    protected Collection<Object> supportedTypes = new ArrayList<>();
     /**
      * This keeps track of the one adapter used for all {@link Btsaux.AugroupsType} instances.
      * <!-- begin-user-doc -->

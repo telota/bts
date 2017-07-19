@@ -214,11 +214,10 @@ public class BTSRevisionImpl extends BTSIdentifiableItemImpl implements BTSRevis
      * @generatedNOT
      */
     public String toRevisionString() {
-        String rev = "" + getRef() + BTSConstants.REVISION_STRING_SEPARATOR +
+        return "" + getRef() + BTSConstants.REVISION_STRING_SEPARATOR +
                 BTSConstants.ADMIN_DATE_FORMAT.format(getTimeStamp())
                 + BTSConstants.REVISION_STRING_SEPARATOR
                 + getUserId();
-        return rev;
     }
 
     /**

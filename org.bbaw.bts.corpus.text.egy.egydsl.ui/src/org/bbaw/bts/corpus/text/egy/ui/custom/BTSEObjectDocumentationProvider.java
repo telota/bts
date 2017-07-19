@@ -60,7 +60,7 @@ public class BTSEObjectDocumentationProvider implements
         if (textViewer == null) return null;
         Iterator it = textViewer.getAnnotationModel()
                 .getAnnotationIterator();
-        List<Annotation> annotations = new Vector<Annotation>(4);
+        List<Annotation> annotations = new Vector<>(4);
         IEclipseContext context = StaticAccessController.getContext();
         BTSTextEditorController controller = context.get(BTSTextEditorController.class);
         while (it.hasNext()) {

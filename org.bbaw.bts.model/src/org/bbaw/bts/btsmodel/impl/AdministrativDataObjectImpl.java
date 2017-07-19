@@ -207,7 +207,7 @@ public abstract class AdministrativDataObjectImpl extends BTSObservableObjectImp
      */
     public EList<String> getRevisions() {
         if (revisions == null) {
-            revisions = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.ADMINISTRATIV_DATA_OBJECT__REVISIONS);
+            revisions = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.ADMINISTRATIV_DATA_OBJECT__REVISIONS);
         }
         return revisions;
     }
@@ -243,8 +243,7 @@ public abstract class AdministrativDataObjectImpl extends BTSObservableObjectImp
     public BTSRevision getRevision(int revisionIndex) {
         if (revisionIndex >= getRevisions().size()) return null;
         String rev = getRevisions().get(revisionIndex);
-        BTSRevision revision = BtsmodelFactory.eINSTANCE.createBTSRevision(rev);
-        return revision;
+        return BtsmodelFactory.eINSTANCE.createBTSRevision(rev);
     }
 
     /**
@@ -256,8 +255,7 @@ public abstract class AdministrativDataObjectImpl extends BTSObservableObjectImp
     public BTSRevision getLastRevision() {
         if (getRevisions().size() == 0) return null;
         String rev = getRevisions().get(getRevisions().size() - 1);
-        BTSRevision revision = BtsmodelFactory.eINSTANCE.createBTSRevision(rev);
-        return revision;
+        return BtsmodelFactory.eINSTANCE.createBTSRevision(rev);
     }
 
     /**

@@ -12,6 +12,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -78,7 +79,7 @@ public class ProjectCollectionPage extends WizardPage {
             public void widgetSelected(SelectionEvent e) {
                 BTSProjectDBCollection collection = BtsmodelFactory.eINSTANCE.createBTSProjectDBCollection();
                 Dialog collectionDialog = new EditDBCollectionDialog(getShell(), collection);
-                if (collectionDialog.open() == collectionDialog.OK) {
+                if (collectionDialog.open() == Window.OK) {
                     project.getDbCollections().add(collection);
                     tableViewer.refresh();
                 }
@@ -106,7 +107,7 @@ public class ProjectCollectionPage extends WizardPage {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 Dialog collectionDialog = new EditDBCollectionDialog(getShell(), selectedCollection);
-                if (collectionDialog.open() == collectionDialog.OK) {
+                if (collectionDialog.open() == Window.OK) {
                     tableViewer.update(selectedCollection, null);
                 }
 
@@ -121,7 +122,7 @@ public class ProjectCollectionPage extends WizardPage {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 EditPropertiesDialog collectionDialog = new EditPropertiesDialog(getShell(), selectedCollection.getProperties());
-                if (collectionDialog.open() == collectionDialog.OK) {
+                if (collectionDialog.open() == Window.OK) {
                     selectedCollection.setProperties(collectionDialog.getProperties());
                 }
 

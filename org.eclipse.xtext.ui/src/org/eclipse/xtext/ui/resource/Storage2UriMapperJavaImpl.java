@@ -140,8 +140,7 @@ public class Storage2UriMapperJavaImpl extends Storage2UriMapperImpl implements 
         if (isCachable) {
             return getCachedData(root);
         }
-        PackageFragmentRootData data = initializeData(root);
-        return data;
+        return initializeData(root);
     }
 
     private PackageFragmentRootData getCachedData(IPackageFragmentRoot root) {

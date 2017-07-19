@@ -44,7 +44,7 @@ public class TypeSubtypeViewerFilter extends ViewerFilter {
 
     private Map<String, List<String>> loadMap() {
         if (inputPath == null) {
-            return new HashMap<String, List<String>>();
+            return new HashMap<>();
         }
         return inputPath.getOwnerTypesMap();
     }

@@ -49,7 +49,7 @@ public class RemoteBTSProjectDaoImpl extends RemoteCouchDBDao<BTSProject, String
     @Override
     public List<BTSProject> list(String path, String username, String password) {
         View view;
-        List<String> allDocs = new Vector<String>();
+        List<String> allDocs = new Vector<>();
         CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, path, username, password);
         try {
 

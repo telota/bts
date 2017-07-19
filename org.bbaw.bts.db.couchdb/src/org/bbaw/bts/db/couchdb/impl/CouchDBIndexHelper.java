@@ -37,7 +37,7 @@ public class CouchDBIndexHelper {
                                           int seq) {
         ChangesResult cr = dbClient.changes().includeDocs(true).since(new Integer(seq).toString()).getChanges();
         List<Row> rows = cr.getResults();
-        List<String> lines = new Vector<String>(rows.size());
+        List<String> lines = new Vector<>(rows.size());
 
         for (Row row : rows) {
             lines.add(row.getDoc().toString());

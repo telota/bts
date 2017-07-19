@@ -43,7 +43,7 @@ public class DefaultTextEditComposer extends EContentAdapter implements ITextEdi
     private int resourceSize;
     private boolean resourceChanged;
 
-    private Collection<EObject> modifiedObjects = new LinkedHashSet<EObject>();
+    private Collection<EObject> modifiedObjects = new LinkedHashSet<>();
 
     private boolean recording = false;
 

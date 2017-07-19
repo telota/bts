@@ -338,10 +338,10 @@ public class EmbeddedEditorFactory {
 
                             public List<IssueResolution> getResolutions(Issue issue) {
                                 List<IssueResolution> resolutions = issueResolutionProvider.getResolutions(issue);
-                                List<IssueResolution> result = Lists.transform(resolutions, new Function<IssueResolution, IssueResolution>() {
+                                return Lists.transform(resolutions, new Function<IssueResolution, IssueResolution>() {
 
                                     public IssueResolution apply(final IssueResolution input) {
-                                        IssueResolution result = new IssueResolution(
+                                        return new IssueResolution(
                                                 input.getLabel(),
                                                 input.getDescription(),
                                                 input.getImage(),
@@ -362,10 +362,8 @@ public class EmbeddedEditorFactory {
                                                     }
                                                 },
                                                 input.getModification());
-                                        return result;
                                     }
                                 });
-                                return result;
                             }
 
                         });

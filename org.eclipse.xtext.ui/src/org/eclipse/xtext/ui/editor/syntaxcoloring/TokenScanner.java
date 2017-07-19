@@ -54,8 +54,7 @@ public class TokenScanner extends AbstractTokenScanner {
 
     protected IToken createToken(ILexerTokenRegion currentToken) {
         String id = tokenIdMapper.getId(currentToken.getLexerTokenType());
-        Token token = new Token(getAttribute(id));
-        return token;
+        return new Token(getAttribute(id));
     }
 
     public int getTokenOffset() {

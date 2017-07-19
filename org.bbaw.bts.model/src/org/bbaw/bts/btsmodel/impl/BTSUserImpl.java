@@ -378,7 +378,7 @@ public class BTSUserImpl extends BTSObjectImpl implements BTSUser {
      */
     public EList<String> getGroupIds() {
         if (groupIds == null) {
-            groupIds = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_USER__GROUP_IDS);
+            groupIds = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_USER__GROUP_IDS);
         }
         return groupIds;
     }

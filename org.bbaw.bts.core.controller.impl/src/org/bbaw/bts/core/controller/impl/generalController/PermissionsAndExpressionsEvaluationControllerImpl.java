@@ -102,7 +102,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
 
     private boolean hasLock = false;
 
-    private Set<Object> deselectedQueue = new HashSet<Object>();
+    private Set<Object> deselectedQueue = new HashSet<>();
 
     @Inject
     private BTSProjectService projecService;
@@ -642,7 +642,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
 
     private BTSProjectDBCollection getDBCollection(String dbCollectionName) {
         if (dbCollectionCache == null) {
-            dbCollectionCache = new HashMap<String, BTSProjectDBCollection>();
+            dbCollectionCache = new HashMap<>();
             for (BTSProject project : getAllProjects()) {
                 for (BTSProjectDBCollection c : project.getDbCollections()) {
                     if (c.getCollectionName() != null) {

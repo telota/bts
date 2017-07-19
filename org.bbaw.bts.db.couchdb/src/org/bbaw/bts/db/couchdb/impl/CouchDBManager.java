@@ -307,7 +307,7 @@ public class CouchDBManager implements DBManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Map<String, ReplicatorDocument> map = new HashMap<String, ReplicatorDocument>();
+        Map<String, ReplicatorDocument> map = new HashMap<>();
         if (docs != null && !docs.isEmpty()) {
             for (ReplicatorDocument doc : docs) {
                 map.put(doc.getId(), doc);
@@ -318,7 +318,7 @@ public class CouchDBManager implements DBManager {
 
     private List<ReplicatorDocument> getReplicatorDocumentsByProject(
             BTSProject project) {
-        List<ReplicatorDocument> docs = new Vector<ReplicatorDocument>();
+        List<ReplicatorDocument> docs = new Vector<>();
         CouchDbClient client = connectionProvider.getDBClient(
                 CouchDbClient.class, "admin");
         for (BTSProjectDBCollection collection : project.getDbCollections()) {
@@ -828,7 +828,7 @@ public class CouchDBManager implements DBManager {
                                             final Logger logger) {
         TimeValue bulkFlushInterval = TimeValue.parseTimeValue("5s",
                 TimeValue.timeValueSeconds(5));
-        BulkProcessor bulkProcessor = BulkProcessor
+        return BulkProcessor
                 .builder(client, new BulkProcessor.Listener() {
                     @Override
                     public void beforeBulk(long executionId, BulkRequest request) {
@@ -870,7 +870,6 @@ public class CouchDBManager implements DBManager {
                     }
                 }).setBulkActions(100).setConcurrentRequests(1)
                 .setFlushInterval(bulkFlushInterval).build();
-        return bulkProcessor;
     }
 
     private void updateRiverIndexUpdateSeq(String collection, Client esClient2,
@@ -1075,10 +1074,9 @@ public class CouchDBManager implements DBManager {
     }
 
     private boolean existsIndex(Client esClient2, String indexName) {
-        boolean hasIndex = esClient2.admin().indices()
+        return esClient2.admin().indices()
                 .exists(new IndicesExistsRequest(indexName)).actionGet()
                 .isExists();
-        return hasIndex;
     }
 
     @Override
@@ -1895,10 +1893,10 @@ public class CouchDBManager implements DBManager {
             monitor.beginTask("Load DB Collection Information...",
                     allDBs.size());
         }
-        List<DBCollectionStatusInformation> dbCollectionInfos = new Vector<DBCollectionStatusInformation>(
-                allDBs.size());
-        Map<String, DBCollectionStatusInformation> infoMap = new HashMap<String, DBCollectionStatusInformation>(
-                allDBs.size());
+        List<DBCollectionStatusInformation> dbCollectionInfos = new Vector<>(
+				allDBs.size());
+        Map<String, DBCollectionStatusInformation> infoMap = new HashMap<>(
+				allDBs.size());
         Object o = context.get("DBCollectionStatusInformationMap");
         Map<String, DBCollectionStatusInformation> cachedInfoMap = null;
 
@@ -1908,8 +1906,8 @@ public class CouchDBManager implements DBManager {
             } catch (Exception e) {
             }
         } else {
-            cachedInfoMap = new HashMap<String, DBCollectionStatusInformation>(
-                    allDBs.size());
+            cachedInfoMap = new HashMap<>(
+					allDBs.size());
             context.set("DBCollectionStatusInformationMap", cachedInfoMap);
         }
         for (String db : allDBs) {
@@ -1995,14 +1993,9 @@ public class CouchDBManager implements DBManager {
             } else {
                 info.setIndexDocCount(is.getTotal().docs.getCount());
             }
-        } catch (ElasticsearchException e) {
-            info.setIndexDocCount(-1);
-            logger.error(e, "Error loading IndexStats of index " + db);
         } catch (Exception e) {
             info.setIndexDocCount(-1);
             logger.error(e, "Error loading IndexStats of index " + db);
-        } finally {
-
         }
 
         try {
@@ -2024,12 +2017,6 @@ public class CouchDBManager implements DBManager {
                     info.setIndexUpdateSeq(lastSeq);
                 }
             }
-        } catch (ElasticsearchParseException e) {
-            logger.error(e,
-                    "Error loading last_seq value from _river of index " + db);
-        } catch (ElasticsearchException e) {
-            logger.error(e,
-                    "Error loading last_seq value from _river of index " + db);
         } catch (Exception e) {
             logger.error(e,
                     "Error loading last_seq value from _river of index " + db);
@@ -2083,9 +2070,6 @@ public class CouchDBManager implements DBManager {
             createIndex(dbCollectionName, esClient, monitor);
             return true;
 
-        } catch (ElasticsearchException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -2102,8 +2086,6 @@ public class CouchDBManager implements DBManager {
                     .actionGet().isAcknowledged();
         } catch (IndexMissingException e) {
             // index non-existing, do nothing
-        } catch (ElasticsearchException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2119,8 +2101,6 @@ public class CouchDBManager implements DBManager {
             }
         } catch (IndexMissingException e) {
             // index non-existing, do nothing
-        } catch (ElasticsearchException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2137,8 +2117,6 @@ public class CouchDBManager implements DBManager {
             }
         } catch (IndexMissingException e) {
             // index non-existing, do nothing
-        } catch (ElasticsearchException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2184,9 +2162,8 @@ public class CouchDBManager implements DBManager {
         if (cachedInfoMap != null && cachedInfoMap.get(dbCollection) != null) {
             cachedInfo = cachedInfoMap.get(dbCollection);
         }
-        DBCollectionStatusInformation info = loadDBCollectionStatusInformationInternal(
+        return loadDBCollectionStatusInformationInternal(
                 dbCollection, cachedInfo, monitor, docFrom, docTo);
-        return info;
     }
 
     @Override

@@ -83,9 +83,8 @@ public class DefaultRenameSupport implements IRenameSupport {
 
         protected DefaultRenameSupport getDefaultRenameSupport(IRenameElementContext renameElementContext) {
             try {
-                DefaultRenameSupport renameSupport = globalServiceProvider.findService(
+                return globalServiceProvider.findService(
                         renameElementContext.getTargetElementURI(), DefaultRenameSupport.class);
-                return renameSupport;
             } catch (Exception e) {
                 LOG.error("Error getting refactoring components from declaring language", e);
             }

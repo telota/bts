@@ -49,7 +49,7 @@ public class BTSAbstractTextServiceImpl
     @Override
     public List<BTSAbstractText> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                             String objectState, IProgressMonitor monitor) {
-        List<BTSAbstractText> objects = new Vector<BTSAbstractText>();
+        List<BTSAbstractText> objects = new Vector<>();
         objects.addAll(atextDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(objects);
     }
@@ -116,7 +116,7 @@ public class BTSAbstractTextServiceImpl
 
     @Override
     public List<BTSAbstractText> list(String objectState, IProgressMonitor monitor) {
-        List<BTSAbstractText> entries = new Vector<BTSAbstractText>();
+        List<BTSAbstractText> entries = new Vector<>();
         for (String p : getActiveProjects()) {
             try {
                 entries.addAll(atextDao.list(p + BTSCorpusConstants.ATEXT,
@@ -130,7 +130,7 @@ public class BTSAbstractTextServiceImpl
     @Override
     public List<BTSAbstractText> query(BTSQueryRequest query, String objectState,
                                        boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSAbstractText> objects = new Vector<BTSAbstractText>();
+        List<BTSAbstractText> objects = new Vector<>();
         for (String p : getActiveProjects()) {
 
             try {
@@ -152,7 +152,7 @@ public class BTSAbstractTextServiceImpl
 
     @Override
     public List<BTSAbstractText> listRootEntries(IProgressMonitor monitor) {
-        List<BTSAbstractText> entries = new Vector<BTSAbstractText>();
+        List<BTSAbstractText> entries = new Vector<>();
         for (String p : getActiveProjects()) {
             entries.addAll(atextDao.list(p + BTSCorpusConstants.ATEXT,
                     DaoConstants.VIEW_ATEXT_ROOT_ENTRIES, BTSConstants.OBJECT_STATE_ACTIVE));
@@ -207,7 +207,7 @@ public class BTSAbstractTextServiceImpl
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveProjects()) {
 
             try {

@@ -24,13 +24,11 @@ public class MoveObjectsAmongProjectDBCollectionsServiceFactoryCorpus implements
 
     @Override
     public BTSFilter getMoveObjectAmongProjectDBCollectionsFilter(Object object) {
-        BTSFilter filter = makeFilter(object);
-        return filter;
+        return makeFilter(object);
     }
 
     private BTSFilter makeFilter(Object object) {
-        BTSFilter filter = new InternalMoveObjectDBCollectionCorpusFilter(object);
-        return filter;
+        return new InternalMoveObjectDBCollectionCorpusFilter(object);
     }
 
     @Override

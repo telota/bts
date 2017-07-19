@@ -83,7 +83,7 @@ public class TreeNodeWrapperItemProvider extends ItemProviderAdapter implements 
             .toStyle();
     // EcoreItemProviderAdapterFactory factory = new
     // EcoreItemProviderAdapterFactory();
-    private Map<Object, Set<TreeNodeWrapper>> realItemMap = new HashMap<Object, Set<TreeNodeWrapper>>();
+    private Map<Object, Set<TreeNodeWrapper>> realItemMap = new HashMap<>();
 
     /**
      * This constructs an instance from a factory and a notifier. <!--
@@ -367,8 +367,7 @@ public class TreeNodeWrapperItemProvider extends ItemProviderAdapter implements 
 
         IItemLabelProvider realItemItemprovider = getRealItemItemProvider(treeNodeWrapper, realItem);
         String suffix = treeNodeWrapper.isChildrenLoaded() ? " (" + getChildren(object).size() + ")" : " (?)";
-        String label = realItemItemprovider.getText(realItem) + suffix;
-        return label;
+        return realItemItemprovider.getText(realItem) + suffix;
     }
 
     /**

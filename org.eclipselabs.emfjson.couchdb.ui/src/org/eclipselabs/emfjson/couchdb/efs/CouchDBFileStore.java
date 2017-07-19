@@ -70,8 +70,6 @@ public class CouchDBFileStore extends FileStore {
         InputStream inStream = null;
         try {
             inStream = uri.toURL().openConnection().getInputStream();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

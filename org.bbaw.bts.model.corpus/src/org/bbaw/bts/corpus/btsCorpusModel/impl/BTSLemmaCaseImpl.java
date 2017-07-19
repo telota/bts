@@ -96,7 +96,7 @@ public class BTSLemmaCaseImpl extends BTSNamedTypedObjectImpl implements BTSLemm
      */
     public EList<BTSAmbivalenceItem> getScenario() {
         if (scenario == null) {
-            scenario = new EObjectContainmentEList<BTSAmbivalenceItem>(BTSAmbivalenceItem.class, this, BtsCorpusModelPackage.BTS_LEMMA_CASE__SCENARIO);
+            scenario = new EObjectContainmentEList<>(BTSAmbivalenceItem.class, this, BtsCorpusModelPackage.BTS_LEMMA_CASE__SCENARIO);
         }
         return scenario;
     }

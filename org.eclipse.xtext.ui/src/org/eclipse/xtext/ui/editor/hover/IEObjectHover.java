@@ -19,6 +19,6 @@ import org.eclipse.jface.text.ITextViewer;
  */
 public interface IEObjectHover {
 
-    public Object getHoverInfo(final EObject eObject, final ITextViewer textViewer, final IRegion hoverRegion);
+    Object getHoverInfo(final EObject eObject, final ITextViewer textViewer, final IRegion hoverRegion);
 
 }

@@ -51,7 +51,7 @@ public class ConfigurationPage extends FieldEditorPreferencePage {
     private BTSConfigurationController configurationController;
     private BTSConfiguration activeConfiguration;
     private TreeNodeWrapper root;
-    private List<BTSConfiguration> configurations = new Vector<BTSConfiguration>();
+    private List<BTSConfiguration> configurations = new Vector<>();
 
     /**
      * Create the preference page.

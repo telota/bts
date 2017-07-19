@@ -294,8 +294,7 @@ public class BtsCorpusModelFactoryImpl extends EFactoryImpl implements BtsCorpus
      * @generated
      */
     public BTSGraphic createBTSGraphic() {
-        BTSGraphicImpl btsGraphic = new BTSGraphicImpl();
-        return btsGraphic;
+        return new BTSGraphicImpl();
     }
 
     /**
@@ -349,8 +348,7 @@ public class BtsCorpusModelFactoryImpl extends EFactoryImpl implements BtsCorpus
      * @generated
      */
     public BTSPassportEntryItem createBTSPassportEntryItem() {
-        BTSPassportEntryItemImpl btsPassportEntryItem = new BTSPassportEntryItemImpl();
-        return btsPassportEntryItem;
+        return new BTSPassportEntryItemImpl();
     }
 
     /**
@@ -360,8 +358,7 @@ public class BtsCorpusModelFactoryImpl extends EFactoryImpl implements BtsCorpus
      * @generated
      */
     public BTSAbstractText createBTSAbstractText() {
-        BTSAbstractTextImpl btsAbstractText = new BTSAbstractTextImpl();
-        return btsAbstractText;
+        return new BTSAbstractTextImpl();
     }
 
     /**
@@ -371,8 +368,7 @@ public class BtsCorpusModelFactoryImpl extends EFactoryImpl implements BtsCorpus
      * @generated
      */
     public BTSAbstractParagraph createBTSAbstractParagraph() {
-        BTSAbstractParagraphImpl btsAbstractParagraph = new BTSAbstractParagraphImpl();
-        return btsAbstractParagraph;
+        return new BTSAbstractParagraphImpl();
     }
 
     /**

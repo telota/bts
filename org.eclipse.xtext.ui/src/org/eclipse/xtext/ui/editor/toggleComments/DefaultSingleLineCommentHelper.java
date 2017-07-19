@@ -49,7 +49,7 @@ public class DefaultSingleLineCommentHelper implements ISingleLineCommentHelper 
     }
 
     protected void calculatePrefixes(AbstractRule rule) {
-        final List<String> result = new ArrayList<String>(3);
+        final List<String> result = new ArrayList<>(3);
         createCalculator(result).doSwitch(rule.getAlternatives());
         this.result = result.toArray(new String[result.size()]);
     }

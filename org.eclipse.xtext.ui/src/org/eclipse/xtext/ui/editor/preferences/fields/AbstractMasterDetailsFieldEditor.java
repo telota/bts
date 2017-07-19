@@ -78,7 +78,7 @@ public abstract class AbstractMasterDetailsFieldEditor extends FieldEditor {
         if (masterList == null) {
             masterList = new List(parent, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL | SWT.H_SCROLL);
             masterList.setFont(parent.getFont());
-            java.util.List<String> names = new ArrayList<String>();
+            java.util.List<String> names = new ArrayList<>();
             for (Object ttd : items) {
                 if (label(ttd) != null)
                     names.add(label(ttd));
@@ -175,8 +175,7 @@ public abstract class AbstractMasterDetailsFieldEditor extends FieldEditor {
      */
     private Object selectedObject() {
         int selectionIndex = masterList.getSelectionIndex();
-        Object tokenTypeDef = items.get(selectionIndex);
-        return tokenTypeDef;
+        return items.get(selectionIndex);
     }
 
 }

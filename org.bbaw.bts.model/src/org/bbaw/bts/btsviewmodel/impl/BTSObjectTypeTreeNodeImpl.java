@@ -155,7 +155,7 @@ public class BTSObjectTypeTreeNodeImpl extends MinimalEObjectImpl.Container impl
      */
     public EList<BTSObjectTypeTreeNode> getChildren() {
         if (children == null) {
-            children = new EObjectContainmentEList<BTSObjectTypeTreeNode>(BTSObjectTypeTreeNode.class, this, BtsviewmodelPackage.BTS_OBJECT_TYPE_TREE_NODE__CHILDREN);
+            children = new EObjectContainmentEList<>(BTSObjectTypeTreeNode.class, this, BtsviewmodelPackage.BTS_OBJECT_TYPE_TREE_NODE__CHILDREN);
         }
         return children;
     }

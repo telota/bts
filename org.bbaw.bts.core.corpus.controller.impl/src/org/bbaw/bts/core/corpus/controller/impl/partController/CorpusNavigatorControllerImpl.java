@@ -77,15 +77,13 @@ public class CorpusNavigatorControllerImpl
 
     @Override
     public BTSTextCorpus createNewTextCorpus() {
-        BTSTextCorpus corpus = textCorpusService.createNew();
-        return corpus;
+        return textCorpusService.createNew();
     }
 
     @Override
     public BTSTCObject createNewTCObject(BTSCorpusObject parentObject) {
-        BTSTCObject o = tcObjectService.createNewRelationPartOf(parentObject);
 
-        return o;
+        return tcObjectService.createNewRelationPartOf(parentObject);
     }
 
 //	/*
@@ -167,7 +165,7 @@ public class CorpusNavigatorControllerImpl
         List<BTSCorpusObject> children = corpusObjectService.query(query,
                 BTSConstants.OBJECT_STATE_ACTIVE, monitor);
         logger.info("Number of children found: " + children.size());
-        List<BTSCorpusObject> result = new Vector<BTSCorpusObject>(children.size());
+        List<BTSCorpusObject> result = new Vector<>(children.size());
         for (BTSCorpusObject o : children) {
             if (!(o instanceof BTSAnnotation)) {
                 result.add(o);
@@ -314,8 +312,7 @@ public class CorpusNavigatorControllerImpl
 
     @Override
     public BTSText createNewText(BTSCorpusObject parentObject) {
-        BTSText text = textService.createNewRelationPartOf(parentObject);
-        return text;
+        return textService.createNewRelationPartOf(parentObject);
     }
 
     @Override
@@ -370,7 +367,7 @@ public class CorpusNavigatorControllerImpl
 
     @Override
     public List<BTSTextCorpus> listTextCorpora(IProgressMonitor monitor) {
-        List<BTSTextCorpus> corpora = new Vector<BTSTextCorpus>();
+        List<BTSTextCorpus> corpora = new Vector<>();
         for (BTSTextCorpus c : textCorpusService.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor)) {
             String dbCollectionName = getDBCollectionName(c);
             if (c.getVisibility().equals(BTSCoreConstants.VISIBILITY_PUBLIC)
@@ -415,7 +412,7 @@ public class CorpusNavigatorControllerImpl
     protected List<BTSCorpusObject> retrieveTypedRootEntries(IProgressMonitor monitor) {
         List<BTSTextCorpus> list = textCorpusService
                 .list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-        List<BTSCorpusObject> result = new Vector<BTSCorpusObject>(list.size());
+        List<BTSCorpusObject> result = new Vector<>(list.size());
         for (BTSTextCorpus t : list) {
             result.add(t);
         }

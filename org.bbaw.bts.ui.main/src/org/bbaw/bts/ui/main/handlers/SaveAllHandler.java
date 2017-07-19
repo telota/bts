@@ -18,8 +18,7 @@ public class SaveAllHandler {
     public boolean canExecute(
             EPartService partService,
             @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object selection) {
-        boolean can = !partService.getDirtyParts().isEmpty();
-        return can;
+        return !partService.getDirtyParts().isEmpty();
     }
 
 }

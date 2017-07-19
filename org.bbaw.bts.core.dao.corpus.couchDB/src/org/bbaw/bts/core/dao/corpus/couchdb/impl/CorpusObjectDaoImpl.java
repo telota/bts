@@ -191,7 +191,7 @@ public class CorpusObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSCorpusOb
                     // // Filter
                     .setFrom(0).setSize(60).setExplain(true).execute()
                     .actionGet();
-            List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
+            List<BTSPassportEntry> result = new Vector<>();
             for (SearchHit hit : response.getHits()) {
                 result.addAll(transformHitToPassportEntry(hit, query));
             }
@@ -202,7 +202,7 @@ public class CorpusObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSCorpusOb
                     .setIndices(indexName).setTypes(indexType)
                     .setSearchType(SearchType.QUERY_AND_FETCH).execute()
                     .actionGet();
-            List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
+            List<BTSPassportEntry> result = new Vector<>();
             for (SearchHit hit : response.getHits()) {
                 result.addAll(transformHitToPassportEntry(hit, query));
             }
@@ -213,7 +213,7 @@ public class CorpusObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSCorpusOb
 
     private List<BTSPassportEntry> transformHitToPassportEntry(SearchHit hit,
                                                                BTSQueryRequest query) {
-        List<BTSPassportEntry> result = new Vector<BTSPassportEntry>();
+        List<BTSPassportEntry> result = new Vector<>();
         Map source = hit.getSource();
         Map pp = (Map) source.get("passport");
 
@@ -224,7 +224,7 @@ public class CorpusObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSCorpusOb
 
     private Collection<? extends BTSPassportEntry> transfromFromPPEntryMap(
             Map map, BTSQueryRequest query) {
-        List<BTSPassportEntry> result = new Vector<BTSPassportEntry>(1);
+        List<BTSPassportEntry> result = new Vector<>(1);
 
         if (map.containsKey(DaoConstants.ID_STRING)) {
             BTSPassportEntryItem item = BtsCorpusModelFactory.eINSTANCE.createBTSPassportEntryItem();

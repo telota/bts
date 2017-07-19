@@ -256,8 +256,7 @@ public class DefaultMergeViewer extends TextMergeViewer {
         @SuppressWarnings("unchecked")
         Provider<DefaultMergeEditor> mergeEditorProvider = (Provider<DefaultMergeEditor>) getCompareConfiguration()
                 .getProperty(DefaultMergeEditor.PROVIDER);
-        DefaultMergeEditor mergeEditor = mergeEditorProvider.get();
-        return mergeEditor;
+        return mergeEditorProvider.get();
     }
 
     protected IWorkbenchPartSite getSite() {

@@ -194,6 +194,7 @@ public interface BTSConfigItem extends BTSConfig, BTSObservableObject, BTSIdenti
      * @see #setIgnore(boolean)
      * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSConfigItem_Ignore()
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean isIgnore();
 
     /**

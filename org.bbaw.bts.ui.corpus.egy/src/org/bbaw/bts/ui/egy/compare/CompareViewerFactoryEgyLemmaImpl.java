@@ -42,8 +42,7 @@ public class CompareViewerFactoryEgyLemmaImpl implements CompareViewerFactory {
 
     @Override
     public Image getCompareViewerIcon() {
-        Image i = resourceProvider.getImage(Display.getDefault(), BTSResourceProvider.IMG_LEMMA);
-        return i;
+        return resourceProvider.getImage(Display.getDefault(), BTSResourceProvider.IMG_LEMMA);
     }
 
 }

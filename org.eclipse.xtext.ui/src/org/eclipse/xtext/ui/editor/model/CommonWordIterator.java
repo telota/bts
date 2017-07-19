@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.Assert;
 /*
  * @see org.eclipse.jdt.internal.ui.text.JavaWordIterator
   */
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class CommonWordIterator extends BreakIterator {
 
     /**

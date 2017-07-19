@@ -16,7 +16,7 @@ public interface IFollowElementAcceptor {
 
     void accept(AbstractElement element);
 
-    public static class NullSafeElementAcceptor implements IFollowElementAcceptor {
+    class NullSafeElementAcceptor implements IFollowElementAcceptor {
 
         private final IFollowElementAcceptor decorated;
 

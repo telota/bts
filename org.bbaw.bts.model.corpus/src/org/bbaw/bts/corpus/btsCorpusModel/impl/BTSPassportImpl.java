@@ -191,7 +191,7 @@ public class BTSPassportImpl extends MinimalEObjectImpl.Container implements BTS
      */
     public EList<BTSPassportEntry> getChildren() {
         if (children == null) {
-            children = new EObjectContainmentEList<BTSPassportEntry>(BTSPassportEntry.class, this, BtsCorpusModelPackage.BTS_PASSPORT__CHILDREN);
+            children = new EObjectContainmentEList<>(BTSPassportEntry.class, this, BtsCorpusModelPackage.BTS_PASSPORT__CHILDREN);
         }
         return children;
     }
@@ -227,7 +227,7 @@ public class BTSPassportImpl extends MinimalEObjectImpl.Container implements BTS
      */
     public EList<BTSTranslations> getDescriptions() {
         if (descriptions == null) {
-            descriptions = new EObjectContainmentEList<BTSTranslations>(BTSTranslations.class, this, BtsCorpusModelPackage.BTS_PASSPORT__DESCRIPTIONS);
+            descriptions = new EObjectContainmentEList<>(BTSTranslations.class, this, BtsCorpusModelPackage.BTS_PASSPORT__DESCRIPTIONS);
         }
         return descriptions;
     }
@@ -241,8 +241,7 @@ public class BTSPassportImpl extends MinimalEObjectImpl.Container implements BTS
     public BTSPassportEntry getPassportEntryByPath(String path) {
         if (path == null) return null;
         String[] pathEntries = path.split(">>");
-        BTSPassportEntry entry = findPassportEntryRecursively(this.getChildren(), pathEntries, 0);
-        return entry;
+        return findPassportEntryRecursively(this.getChildren(), pathEntries, 0);
 
     }
 

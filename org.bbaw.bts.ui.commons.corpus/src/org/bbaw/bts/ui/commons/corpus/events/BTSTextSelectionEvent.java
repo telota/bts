@@ -15,12 +15,12 @@ import org.eclipse.swt.widgets.Event;
 
 public class BTSTextSelectionEvent extends Event {
 
-    private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
-    private List<Annotation> textAnnotations = new Vector<Annotation>(4);
+    private List<BTSObject> relatingObjects = new Vector<>(4);
+    private List<Annotation> textAnnotations = new Vector<>(4);
 
-    private List<BTSInterTextReference> interTextReferences = new Vector<BTSInterTextReference>(4);
+    private List<BTSInterTextReference> interTextReferences = new Vector<>(4);
 
-    private List<BTSIdentifiableItem> selectedItems = new Vector<BTSIdentifiableItem>(4);
+    private List<BTSIdentifiableItem> selectedItems = new Vector<>(4);
 
     private String startId;
 

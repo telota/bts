@@ -18,8 +18,6 @@ public class JSONUtil {
         JsonParser jp = null;
         try {
             jp = jsonFactory.createJsonParser(url);
-        } catch (JsonParseException e1) {
-            e1.printStackTrace();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -31,8 +29,6 @@ public class JSONUtil {
         JsonParser jp = null;
         try {
             jp = jsonFactory.createJsonParser(inStream);
-        } catch (JsonParseException e1) {
-            e1.printStackTrace();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -46,10 +42,6 @@ public class JSONUtil {
         if (jp != null) {
             try {
                 rootNode = mapper.readValue(jp, JsonNode.class);
-            } catch (JsonParseException e1) {
-                e1.printStackTrace();
-            } catch (JsonMappingException e1) {
-                e1.printStackTrace();
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

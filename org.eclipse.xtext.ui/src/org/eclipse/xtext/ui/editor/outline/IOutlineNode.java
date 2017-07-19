@@ -54,7 +54,7 @@ public interface IOutlineNode extends IAdaptable, IReadAccess<EObject> {
      * @see BackgroundOutlineTreeProvider
      * @since 2.4
      */
-    public interface Extension {
+    interface Extension {
 
         ImageDescriptor getImageDescriptor();
     }

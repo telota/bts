@@ -95,7 +95,7 @@ public class AbstractComparePart {
         logger.info("extension registry number of elements " + config);
         logger.info("extension registry number of elements " + config.length);
 
-        List<CompareViewerFactory> compareViewerFactories = new Vector<CompareViewerFactory>(config.length);
+        List<CompareViewerFactory> compareViewerFactories = new Vector<>(config.length);
         for (IConfigurationElement e : config) {
             logger.info("extension registry element " + e.getName());
 
@@ -143,7 +143,7 @@ public class AbstractComparePart {
     }
 
     protected List<TreeNodeWrapper> loadNodes(List<BTSDBBaseObject> conflictObjects) {
-        List<TreeNodeWrapper> nodes = new Vector<TreeNodeWrapper>(conflictObjects.size());
+        List<TreeNodeWrapper> nodes = new Vector<>(conflictObjects.size());
         for (Object o : conflictObjects) {
             TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
             tn.setObject((BTSObject) o);
@@ -154,7 +154,7 @@ public class AbstractComparePart {
 
     protected void loadCompareViewers() {
         List<CompareViewerFactory> compareViewerFactories = loadViewerFactories();
-        compareViewers = new Vector<CompareViewer>(compareViewerFactories.size());
+        compareViewers = new Vector<>(compareViewerFactories.size());
         for (CompareViewerFactory cvf : compareViewerFactories) {
             CTabItem tabItem = new CTabItem(tabFolder, SWT.None);
             tabItem.setText(cvf.getCompareViewerName());

@@ -120,7 +120,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
 
     @Override
     public List<BTSConfiguration> list(String objectState, IProgressMonitor monitor) {
-        List<BTSConfiguration> configs = new Vector<BTSConfiguration>();
+        List<BTSConfiguration> configs = new Vector<>();
         for (String p : getAllProjects()) {
             configs.addAll(configurationDao.list(p
                     + BTSCoreConstants.ADMIN_SUFFIX, objectState));
@@ -132,7 +132,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
     @Override
     public List<BTSConfiguration> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                              String objectState, IProgressMonitor monitor) {
-        List<BTSConfiguration> configs = new Vector<BTSConfiguration>();
+        List<BTSConfiguration> configs = new Vector<>();
         configs.addAll(configurationDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(configs);
     }
@@ -215,7 +215,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
     @Override
     public List<BTSConfiguration> query(BTSQueryRequest query,
                                         String objectState, boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSConfiguration> objects = new Vector<BTSConfiguration>();
+        List<BTSConfiguration> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             objects.addAll(configurationDao.query(query, p + BTSCoreConstants.ADMIN_SUFFIX, p
                             + BTSCoreConstants.ADMIN_SUFFIX, objectState,
@@ -641,7 +641,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
         BTSConfigItem typesCI = getObjectTypesConfigItem();
         BTSConfigItem typeClone = BtsmodelFactory.eINSTANCE
                 .createBTSConfigItem();
-        List<BTSConfig> children = new Vector<BTSConfig>();
+        List<BTSConfig> children = new Vector<>();
         boolean found = false;
         if (typesCI != null && typesCI.getChildren() != null) {
             for (BTSConfig c : typesCI.getChildren()) {
@@ -765,7 +765,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
 
         BTSConfigItem subtypeClone = BtsmodelFactory.eINSTANCE
                 .createBTSConfigItem();
-        List<BTSConfig> children = new Vector<BTSConfig>();
+        List<BTSConfig> children = new Vector<>();
 
         boolean found = false;
         if (typesCI != null && typesCI.getChildren() != null) {
@@ -840,7 +840,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
     @Override
     public List<BTSConfigItem> getPassportCategories(BTSObject object) {
         BTSConfigItem passportCI = getActivePassportConfigItem();
-        List<BTSConfigItem> categories = new ArrayList<BTSConfigItem>();
+        List<BTSConfigItem> categories = new ArrayList<>();
         if (passportCI != null && passportCI.getChildren() != null) {
             for (BTSConfig c : passportCI.getChildren()) {
                 if (c instanceof BTSConfigItem) {
@@ -1020,7 +1020,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
 
     private Map<String, String> getTypeSubtypeAbbreviationLabelMap() {
         if (typeSubtypeAbbreviationLabelMap == null) {
-            typeSubtypeAbbreviationLabelMap = new HashMap<String, String>();
+            typeSubtypeAbbreviationLabelMap = new HashMap<>();
             context.set(BTSCoreConstants.CONTEXT_TYPE_SUBTYEPE_ABBREVIATION_LABEL_MAP, typeSubtypeAbbreviationLabelMap);
         }
         return typeSubtypeAbbreviationLabelMap;
@@ -1028,7 +1028,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
 
     private Map<String, String> getTypeSubtypeLabelMap() {
         if (typeSubtypeLabelMap == null) {
-            typeSubtypeLabelMap = new HashMap<String, String>();
+            typeSubtypeLabelMap = new HashMap<>();
             context.set(BTSCoreConstants.CONTEXT_TYPE_SUBTYEPE_LABEL_MAP, typeSubtypeLabelMap);
         }
         return typeSubtypeLabelMap;
@@ -1081,8 +1081,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
             localConfig = getActiveConfiguration();
         }
         String[] path = referencedType.split("\\" + BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR);
-        BTSConfigItem child = findBTSConfigItemByPath(localConfig, path, index);
-        return child;
+        return findBTSConfigItemByPath(localConfig, path, index);
     }
 
     private BTSConfigItem findBTSConfigItemByPath(BTSConfig parentConfig,
@@ -1109,7 +1108,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
         String oClass = findObjectClass(object);
         String oType = object.getType();
         String oSubtype = object.getSubtype();
-        List<String> result = new Vector<String>();
+        List<String> result = new Vector<>();
 
         for (Entry<String, List<String>> e : itemConfig.getOwnerTypesMap().entrySet()) {
             String domainType = e.getKey();
@@ -1153,7 +1152,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             objects.addAll(configurationDao.queryAsJsonString(query, p + BTSCoreConstants.ADMIN_SUFFIX, p
                             + BTSCoreConstants.ADMIN_SUFFIX, objectState,

@@ -479,7 +479,7 @@ public class BTSMarkerImpl extends BTSIdentifiableItemImpl implements BTSMarker 
      */
     public EList<String> getRevisions() {
         if (revisions == null) {
-            revisions = new EDataTypeUniqueEList<String>(String.class, this, BtsCorpusModelPackage.BTS_MARKER__REVISIONS);
+            revisions = new EDataTypeUniqueEList<>(String.class, this, BtsCorpusModelPackage.BTS_MARKER__REVISIONS);
         }
         return revisions;
     }

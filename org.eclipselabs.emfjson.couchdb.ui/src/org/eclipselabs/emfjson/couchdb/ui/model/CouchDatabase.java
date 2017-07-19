@@ -35,7 +35,7 @@ public class CouchDatabase {
     }
 
     public List<CouchDocument> getDocuments() {
-        List<CouchDocument> documents = new ArrayList<CouchDocument>();
+        List<CouchDocument> documents = new ArrayList<>();
         JsonNode rows = org.eclipselabs.emfjson.couchdb.internal.CouchDB.getListOfDocuments(couchDB.getURL() + "/" + name);
         if (rows != null && rows.isArray()) {
             for (Iterator<JsonNode> it = rows.getElements(); it.hasNext(); ) {

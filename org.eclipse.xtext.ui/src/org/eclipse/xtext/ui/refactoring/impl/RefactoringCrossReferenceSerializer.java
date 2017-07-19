@@ -88,7 +88,7 @@ public class RefactoringCrossReferenceSerializer {
         }
     }
 
-    public static interface RefTextEvaluator {
+    public interface RefTextEvaluator {
 
         boolean isBetterThan(String newText, String currentText);
 

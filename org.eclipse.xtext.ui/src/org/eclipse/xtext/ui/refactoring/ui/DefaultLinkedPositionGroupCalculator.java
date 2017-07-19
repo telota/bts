@@ -139,9 +139,8 @@ public class DefaultLinkedPositionGroupCalculator implements ILinkedPositionGrou
         referenceUpdater.createReferenceUpdates(elementRenameArguments, referenceDescriptions, updateAcceptor,
                 progress.newChild(10));
         List<ReplaceEdit> textEdits = updateAcceptor.getTextEdits();
-        LinkedPositionGroup linkedGroup = createLinkedGroupFromReplaceEdits(textEdits, editor,
+        return createLinkedGroupFromReplaceEdits(textEdits, editor,
                 renameStrategy.getOriginalName(), progress.newChild(10));
-        return linkedGroup;
     }
 
     protected LinkedPositionGroup createLinkedGroupFromReplaceEdits(List<ReplaceEdit> edits, XtextEditor xtextEditor,

@@ -104,7 +104,7 @@ public class StaticAccessController {
      * @param service the new service
      */
     public void setService(EHandlerService service) {
-        this.service = service;
+        StaticAccessController.service = service;
     }
 
     /**

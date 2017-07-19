@@ -179,7 +179,7 @@ public enum TypeType6 implements Enumerator {
      *
      * @generated
      */
-    private TypeType6(int value, String name, String literal) {
+    TypeType6(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;

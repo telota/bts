@@ -53,13 +53,13 @@ public class GeneralBTSObjectControllerImpl implements
                 return result;
             }
         }
-        return new Vector<BTSObject>(0);
+        return new Vector<>(0);
     }
 
     @Override
     public List<BTSObject> getObjectProposalsFor(
             BTSConfigItem configItem, String text, BTSObject object, IProgressMonitor monitor) {
-        List<BTSObject> list = new Vector<BTSObject>();
+        List<BTSObject> list = new Vector<>();
 
         //FIXME aktualisieren und auf map umstellen
 
@@ -127,7 +127,7 @@ public class GeneralBTSObjectControllerImpl implements
 
         Set<String> referenceTypes = configurationController.getReferenceTypesSet(object, configItem);
 
-        List<FilterBuilder> filters = new ArrayList<FilterBuilder>();
+        List<FilterBuilder> filters = new ArrayList<>();
         for (String ref : referenceTypes) {
             if (ref.contains(BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR)) {
                 String[] split = ref.split("\\.");

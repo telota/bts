@@ -22,7 +22,7 @@ public class PassportEntryContentProposalProvider implements
 
     @Override
     public IContentProposal[] getProposals(String contents, int position) {
-        List<IContentProposal> partialList = new Vector<IContentProposal>();
+        List<IContentProposal> partialList = new Vector<>();
 
         if (list != null && !list.isEmpty()) {
             for (BTSPassportEntry e : list) {

@@ -56,7 +56,7 @@ public class CacheTreeNode {
 
     public List<CacheTreeNode> getChildren() {
         if (children == null) {
-            children = new Vector<CacheTreeNode>(4);
+            children = new Vector<>(4);
         }
         return children;
     }

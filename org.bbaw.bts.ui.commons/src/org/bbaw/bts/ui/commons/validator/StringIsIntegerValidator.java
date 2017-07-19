@@ -55,7 +55,6 @@ public class StringIsIntegerValidator implements IValidator {
      * The nullable.
      */
     private boolean nullable = false;
-    ;
 
     /**
      * Instantiates a new string is integer validator.

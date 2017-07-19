@@ -23,7 +23,7 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultLinkedPositionGroupCalculator.class)
 public interface ILinkedPositionGroupCalculator {
 
-    public LinkedPositionGroup getLinkedPositionGroup(IRenameElementContext renameElementContext,
-                                                      IProgressMonitor monitor);
+    LinkedPositionGroup getLinkedPositionGroup(IRenameElementContext renameElementContext,
+                                               IProgressMonitor monitor);
 
 }

@@ -14,6 +14,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 public class NewConfigurationHandler {
@@ -26,7 +27,7 @@ public class NewConfigurationHandler {
         NewConfigurationDialog dialog = new NewConfigurationDialog(shell);
         ContextInjectionFactory.inject(
                 dialog, context);
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             System.out.println("Realm.runWithDefault in NewConfigurationHandler");
             final BTSConfiguration config = dialog.getConfiguration();
             configurationController.save(config);

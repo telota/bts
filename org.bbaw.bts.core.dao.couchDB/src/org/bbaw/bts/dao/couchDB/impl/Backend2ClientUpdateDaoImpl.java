@@ -67,10 +67,10 @@ public class Backend2ClientUpdateDaoImpl implements Backend2ClientUpdateDao {
     @Named(BTSCoreConstants.LISTEN_TO_BACKEND_UPDATES)
     private String listen2Updates;
 
-    private List<Backend2ClientUpdateListener> listeners = new Vector<Backend2ClientUpdateListener>(
+    private List<Backend2ClientUpdateListener> listeners = new Vector<>(
             1);
     private String since;
-    private HashMap<String, Changes> changesMap = new HashMap<String, Changes>();
+    private HashMap<String, Changes> changesMap = new HashMap<>();
 
     /**
      * Performs a HTTP PUT request, saves or updates a document.
@@ -320,12 +320,12 @@ public class Backend2ClientUpdateDaoImpl implements Backend2ClientUpdateDao {
             response = rqb.execute().actionGet();
         } catch (IndexMissingException e) {
             System.out.println("no index: " + dbCollection);
-            return new Vector<String>(0);
+            return new Vector<>(0);
         } catch (ElasticsearchException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        List<String> queryIds = new Vector<String>(1);
+        List<String> queryIds = new Vector<>(1);
         if (response != null) {
             for (Match m : response.getMatches()) {
                 queryIds.add(m.getId().toString());

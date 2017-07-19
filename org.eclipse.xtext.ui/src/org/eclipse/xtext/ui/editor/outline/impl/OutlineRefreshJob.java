@@ -74,14 +74,13 @@ public class OutlineRefreshJob extends Job {
      */
     protected IOutlineNode iternalRefreshOutlineModel(final OutlineTreeState formerState,
                                                       final OutlineTreeState newState, final IOutlineTreeProvider treeProvider) {
-        IOutlineNode rootNode = outlinePage.getXtextDocument().readOnly(new IUnitOfWork<IOutlineNode, XtextResource>() {
+        return outlinePage.getXtextDocument().readOnly(new IUnitOfWork<IOutlineNode, XtextResource>() {
             public IOutlineNode exec(XtextResource resource) throws Exception {
-                IOutlineNode rootNode = treeProvider.createRoot(outlinePage.getXtextDocument());
-                restoreChildrenSelectionAndExpansion(rootNode, resource, formerState, newState);
-                return rootNode;
+                IOutlineNode rootNode1 = treeProvider.createRoot(outlinePage.getXtextDocument());
+                restoreChildrenSelectionAndExpansion(rootNode1, resource, formerState, newState);
+                return rootNode1;
             }
         });
-        return rootNode;
     }
 
     protected void restoreChildrenSelectionAndExpansion(IOutlineNode parent, Resource resource, OutlineTreeState formerState, OutlineTreeState newState) {

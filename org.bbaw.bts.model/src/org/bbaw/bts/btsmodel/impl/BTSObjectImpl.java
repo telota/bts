@@ -436,7 +436,7 @@ public abstract class BTSObjectImpl extends AdministrativDataObjectImpl implemen
      */
     public EList<String> getUpdaters() {
         if (updaters == null) {
-            updaters = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_OBJECT__UPDATERS);
+            updaters = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_OBJECT__UPDATERS);
         }
         return updaters;
     }
@@ -449,7 +449,7 @@ public abstract class BTSObjectImpl extends AdministrativDataObjectImpl implemen
      */
     public EList<String> getReaders() {
         if (readers == null) {
-            readers = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_OBJECT__READERS);
+            readers = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_OBJECT__READERS);
         }
         return readers;
     }
@@ -485,7 +485,7 @@ public abstract class BTSObjectImpl extends AdministrativDataObjectImpl implemen
      */
     public EList<String> getConflictingRevs() {
         if (conflictingRevs == null) {
-            conflictingRevs = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_OBJECT__CONFLICTING_REVS);
+            conflictingRevs = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_OBJECT__CONFLICTING_REVS);
         }
         return conflictingRevs;
     }
@@ -603,7 +603,7 @@ public abstract class BTSObjectImpl extends AdministrativDataObjectImpl implemen
      */
     public EList<BTSRelation> getRelations() {
         if (relations == null) {
-            relations = new EObjectContainmentEList<BTSRelation>(BTSRelation.class, this, BtsmodelPackage.BTS_OBJECT__RELATIONS);
+            relations = new EObjectContainmentEList<>(BTSRelation.class, this, BtsmodelPackage.BTS_OBJECT__RELATIONS);
         }
         return relations;
     }
@@ -639,7 +639,7 @@ public abstract class BTSObjectImpl extends AdministrativDataObjectImpl implemen
      */
     public EList<BTSExternalReference> getExternalReferences() {
         if (externalReferences == null) {
-            externalReferences = new EObjectContainmentEList<BTSExternalReference>(BTSExternalReference.class, this, BtsmodelPackage.BTS_OBJECT__EXTERNAL_REFERENCES);
+            externalReferences = new EObjectContainmentEList<>(BTSExternalReference.class, this, BtsmodelPackage.BTS_OBJECT__EXTERNAL_REFERENCES);
         }
         return externalReferences;
     }

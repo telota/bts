@@ -9,6 +9,7 @@ import org.bbaw.bts.ui.main.wizards.newProject.NewProjectWizard;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 
@@ -20,7 +21,7 @@ public class EditProjectHandler {
 
         NewProjectWizard wizard = new NewProjectWizard(project, projectService);
         WizardDialog dialog = new WizardDialog(new Shell(), wizard);
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             System.out.println("project edited.");
 
         }

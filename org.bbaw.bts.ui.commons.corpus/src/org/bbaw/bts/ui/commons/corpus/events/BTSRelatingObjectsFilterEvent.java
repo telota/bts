@@ -9,7 +9,7 @@ public class BTSRelatingObjectsFilterEvent {
     private HashMap<String, Boolean> filters;
 
     public BTSRelatingObjectsFilterEvent() {
-        filters = new HashMap<String, Boolean>();
+        filters = new HashMap<>();
     }
 
     public BTSRelatingObjectsFilterEvent(Map<String, Boolean> arg) {

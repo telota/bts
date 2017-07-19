@@ -238,7 +238,7 @@ public class TCGroupTypeImpl extends MinimalEObjectImpl.Container implements TCG
      */
     public EList<TCPictureType> getTCPicture() {
         if (tCPicture == null) {
-            tCPicture = new EObjectContainmentEList<TCPictureType>(TCPictureType.class, this, CorpusDTDneuPackage.TC_GROUP_TYPE__TC_PICTURE);
+            tCPicture = new EObjectContainmentEList<>(TCPictureType.class, this, CorpusDTDneuPackage.TC_GROUP_TYPE__TC_PICTURE);
         }
         return tCPicture;
     }
@@ -251,7 +251,7 @@ public class TCGroupTypeImpl extends MinimalEObjectImpl.Container implements TCG
      */
     public EList<String> getTCNotebook() {
         if (tCNotebook == null) {
-            tCNotebook = new EDataTypeEList<String>(String.class, this, CorpusDTDneuPackage.TC_GROUP_TYPE__TC_NOTEBOOK);
+            tCNotebook = new EDataTypeEList<>(String.class, this, CorpusDTDneuPackage.TC_GROUP_TYPE__TC_NOTEBOOK);
         }
         return tCNotebook;
     }

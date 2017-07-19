@@ -42,7 +42,6 @@ public class GeneralBTSObjectServiceImpl implements GeneralBTSObjectService {
         } else {
             for (List<BTSObjectSearchService> list : searchServices.values()) {
                 List<BTSObject> obj = queryObjectFromServiceList(query, objectState, className, list, monitor);
-                ;
                 if (obj != null) return obj;
             }
         }
@@ -75,8 +74,8 @@ public class GeneralBTSObjectServiceImpl implements GeneralBTSObjectService {
         }
         IConfigurationElement[] config = ((IExtensionRegistry) ctx.get(IExtensionRegistry.class.getName()))
                 .getConfigurationElementsFor(BTSCoreConstants.EXTENSION_POINT_SEARCH_SERVICE_FACTORY);
-        List<BTSObjectSearchService> services = new Vector<BTSObjectSearchService>(4);
-        Map<String, List<BTSObjectSearchService>> serviceMap = new HashMap<String, List<BTSObjectSearchService>>(10);
+        List<BTSObjectSearchService> services = new Vector<>(4);
+        Map<String, List<BTSObjectSearchService>> serviceMap = new HashMap<>(10);
         System.out.println("loadSearchServices. config.length " + config.length);
 
         for (IConfigurationElement e : config) {
@@ -99,7 +98,7 @@ public class GeneralBTSObjectServiceImpl implements GeneralBTSObjectService {
                 if (serviceMap.containsKey(service.getNameOfServedClass())) {
                     ser = serviceMap.get(service.getNameOfServedClass());
                 } else {
-                    ser = new Vector<BTSObjectSearchService>(4);
+                    ser = new Vector<>(4);
                     serviceMap.put(service.getNameOfServedClass(), ser);
                 }
                 if (!ser.contains(service)) {
@@ -291,7 +290,7 @@ public class GeneralBTSObjectServiceImpl implements GeneralBTSObjectService {
                                                       BTSDBBaseObject revision) {
         // cach old revs
         String rev = current.get_rev();
-        List<String> copyRevs = new Vector<String>();
+        List<String> copyRevs = new Vector<>();
         for (String r : ((AdministrativDataObject) current).getRevisions()) {
             copyRevs.add(new String(r));
         }

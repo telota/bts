@@ -39,8 +39,7 @@ public abstract class AbstractIssueResolutionProviderAdapter {
     }
 
     public Iterable<IssueResolution> getResolutions(final Issue issue, final IXtextDocument document) {
-        Iterable<IssueResolution> result = resolutionProvider.getResolutions(issue);
-        return result;
+        return resolutionProvider.getResolutions(issue);
     }
 
     public Image getImage(IssueResolution resolution) {

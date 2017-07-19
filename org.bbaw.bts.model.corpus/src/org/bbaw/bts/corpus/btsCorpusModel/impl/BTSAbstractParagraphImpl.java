@@ -165,7 +165,7 @@ public class BTSAbstractParagraphImpl extends BTSIdentifiableItemImpl implements
      */
     public EList<BTSRelation> getWitnesses() {
         if (witnesses == null) {
-            witnesses = new EObjectResolvingEList<BTSRelation>(BTSRelation.class, this, BtsCorpusModelPackage.BTS_ABSTRACT_PARAGRAPH__WITNESSES);
+            witnesses = new EObjectResolvingEList<>(BTSRelation.class, this, BtsCorpusModelPackage.BTS_ABSTRACT_PARAGRAPH__WITNESSES);
         }
         return witnesses;
     }

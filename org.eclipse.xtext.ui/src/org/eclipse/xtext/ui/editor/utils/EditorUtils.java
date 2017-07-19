@@ -41,8 +41,7 @@ public class EditorUtils {
                 FontData[] fData = PreferenceConverter.basicGetFontData(fontData);
                 JFaceResources.getFontRegistry().put(fontData, fData);
             }
-            Font font = JFaceResources.getFontRegistry().get(fontData);
-            return font;
+            return JFaceResources.getFontRegistry().get(fontData);
         }
         return null;
     }
@@ -74,8 +73,7 @@ public class EditorUtils {
         IEditorPart activeEditor = HandlerUtil.getActiveEditor(event);
         if (activeEditor == null)
             return null;
-        XtextEditor xtextEditor = (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
-        return xtextEditor;
+        return (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
     }
 
     public static XtextEditor getActiveXtextEditor() {
@@ -89,8 +87,7 @@ public class EditorUtils {
         IEditorPart activeEditor = activePage.getActiveEditor();
         if (activeEditor == null)
             return null;
-        XtextEditor xtextEditor = (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
-        return xtextEditor;
+        return (XtextEditor) activeEditor.getAdapter(XtextEditor.class);
     }
 
     public static XtextEditor getXtextEditor(IEditorPart openEditor) {

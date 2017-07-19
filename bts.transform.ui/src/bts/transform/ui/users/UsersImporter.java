@@ -89,17 +89,15 @@ public class UsersImporter {
 //			resourceToDiagnosticMap.put(resource,  analyzeResourceProblems(resource, exception));
 //		}
 //		editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
-        DocumentRoot data = (DocumentRoot) resource.getContents().get(0);
-        return data;
+        return (DocumentRoot) resource.getContents().get(0);
     }
 
-    public DocumentRoot loadData(String fileName) throws FileNotFoundException, IOException {
+    public DocumentRoot loadData(String fileName) throws IOException {
 
         XMIResourceImpl resource = new XMIResourceImpl();
         File source = new File(fileName);
-        resource.load(new FileInputStream(source), new HashMap<Object, Object>());
-        DocumentRoot data = (DocumentRoot) resource.getContents().get(0);
-        return data;
+        resource.load(new FileInputStream(source), new HashMap<>());
+        return (DocumentRoot) resource.getContents().get(0);
     }
 //	protected void setupOptions(XMLResource result)
 //    {

@@ -13,7 +13,7 @@ public interface BTSSelectionHistoryService {
      * @param n
      * @return
      */
-    public List<BTSObject> getHistory(int n);
+    List<BTSObject> getHistory(int n);
 
 
     /**
@@ -24,7 +24,7 @@ public interface BTSSelectionHistoryService {
      * @param n
      * @return
      */
-    public List<BTSObject> getHistory(Class<BTSObject> type, int n);
+    List<BTSObject> getHistory(Class<BTSObject> type, int n);
 
 
     //TODO: rewind?

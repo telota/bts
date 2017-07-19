@@ -449,8 +449,7 @@ public abstract class OptionsConfigurationBlock {
             currentSettings.put(key, preferenceStore.getString(key));
         }
         MapDifference<String, String> mapDifference = Maps.difference(currentSettings, originalSettings);
-        Map<String, ValueDifference<String>> entriesDiffering = mapDifference.entriesDiffering();
-        return entriesDiffering;
+        return mapDifference.entriesDiffering();
     }
 
     protected abstract Job getBuildJob(IProject project);
@@ -513,8 +512,7 @@ public abstract class OptionsConfigurationBlock {
 
     private boolean checkBoxValue(ControlData data) {
         String currValue = getValue(data.getKey());
-        boolean selection = data.getSelection(currValue) == 0;
-        return selection;
+        return data.getSelection(currValue) == 0;
     }
 
     protected void updateText(Text curr) {

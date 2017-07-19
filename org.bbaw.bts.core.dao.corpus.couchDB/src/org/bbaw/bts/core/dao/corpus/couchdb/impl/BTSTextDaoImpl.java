@@ -101,7 +101,7 @@ public class BTSTextDaoImpl extends AbstractCorpusObjectDaoImpl<BTSText, String>
 
         View view;
         String viewId = "project_corpus/all_active_btstexts_metadata";
-        List<String> allDocs = new Vector<String>(1);
+        List<String> allDocs = new Vector<>(1);
         CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, path);
         try {
             view = dbClient.view(viewId);
@@ -119,7 +119,7 @@ public class BTSTextDaoImpl extends AbstractCorpusObjectDaoImpl<BTSText, String>
         try {
             stream = new ByteArrayInputStream(allDocs.get(0).getBytes("UTF-8"));
             final JSONLoad loader = new JSONLoad(stream,
-                    new HashMap<Object, Object>(), connectionProvider.getEmfResourceSet());
+                    new HashMap<>(), connectionProvider.getEmfResourceSet());
             loader.fillResource(resource);
 
             if (resource.getContents().size() > 0) {

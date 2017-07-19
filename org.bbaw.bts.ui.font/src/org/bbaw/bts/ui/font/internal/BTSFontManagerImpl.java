@@ -111,7 +111,7 @@ public class BTSFontManagerImpl implements BTSFontManager {
         IExtensionRegistry registry = ((IExtensionRegistry) context.get(IExtensionRegistry.class.getName()));
 
         IConfigurationElement[] config = registry.getConfigurationElementsFor(FONT_PROVIDER_EXTENSION_POINT_ID);
-        Map<String, BTSFontProvider> providers = new HashMap<String, BTSFontProvider>(config.length);
+        Map<String, BTSFontProvider> providers = new HashMap<>(config.length);
         for (IConfigurationElement e : config) {
             final Object o = e.createExecutableExtension("class");
             if (o instanceof BTSFontProvider) {

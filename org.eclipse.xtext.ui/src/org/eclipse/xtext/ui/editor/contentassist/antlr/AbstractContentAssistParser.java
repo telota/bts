@@ -62,7 +62,7 @@ public abstract class AbstractContentAssistParser implements IContentAssistParse
     public Collection<FollowElement> getFollowElements(FollowElement element) {
         if (element.getLookAhead() <= 1)
             throw new IllegalArgumentException("lookahead may not be less than or equal to 1");
-        Collection<FollowElement> result = new ArrayList<FollowElement>();
+        Collection<FollowElement> result = new ArrayList<>();
         for (AbstractElement elementToParse : getElementsToParse(element)) {
             String ruleName = getRuleName(elementToParse);
             String[][] allRuleNames = getRequiredRuleNames(ruleName, elementToParse);

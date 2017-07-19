@@ -377,7 +377,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
     /**
      * The local command cache set.
      */
-    private Set<Command> localCommandCacheSet = new HashSet<Command>();
+    private Set<Command> localCommandCacheSet = new HashSet<>();
     /**
      * The parent.
      */
@@ -399,12 +399,12 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
     /**
      * The highlighted annotations.
      */
-    private List<BTSModelAnnotation> highlightedAnnotations = new Vector<BTSModelAnnotation>(
+    private List<BTSModelAnnotation> highlightedAnnotations = new Vector<>(
             4);
     /**
      * The relating objects annotation map.
      */
-    private Map<EObject, List<BTSModelAnnotation>> relatingObjectsAnnotationMap = new HashMap<EObject, List<BTSModelAnnotation>>();
+    private Map<EObject, List<BTSModelAnnotation>> relatingObjectsAnnotationMap = new HashMap<>();
     /**
      * The relating objects map.
      */
@@ -587,10 +587,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                                 }
                             };
                             new ProgressMonitorDialog(new Shell()).run(true, true, op);
-                        } catch (InvocationTargetException ee) {
+                        } catch (InvocationTargetException | InterruptedException ee) {
                             // handle exception
-                        } catch (InterruptedException ee) {
-                            // handle cancelation
                         }
 
                     }
@@ -983,7 +981,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                     BTSSenctence sourceSentence = (BTSSenctence) selectedTextItem;
                     BTSTextContent targettextcontent = (BTSTextContent) (sourceSentence).eContainer();
                     int index = targettextcontent.getTextItems().indexOf(sourceSentence);
-                    Set<BTSSenctence> copySentences = new HashSet<BTSSenctence>();
+                    Set<BTSSenctence> copySentences = new HashSet<>();
                     for (BTSIdentifiableItem copyItem : ev.getSelectedItems()) {
                         if (copyItem instanceof BTSSenctence && !copySentences.contains(copyItem)) {
                             copySentences.add((BTSSenctence) copyItem);
@@ -999,7 +997,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                     BTSSenctence sourceSentence = (BTSSenctence) selectedTextItem;
                     BTSTextContent targettextcontent = (BTSTextContent) (sourceSentence).eContainer();
                     int index = targettextcontent.getTextItems().indexOf(sourceSentence);
-                    Set<BTSSenctence> copySentences = new HashSet<BTSSenctence>();
+                    Set<BTSSenctence> copySentences = new HashSet<>();
                     for (BTSIdentifiableItem copyItem : ev.getSelectedItems()) {
                         if (copyItem instanceof BTSSenctence && !copySentences.contains(copyItem)) {
                             copySentences.add((BTSSenctence) copyItem);
@@ -1045,10 +1043,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 };
                 new ProgressMonitorDialog(new Shell()).run(true, true,
                         op);
-            } catch (InvocationTargetException ee) {
+            } catch (InvocationTargetException | InterruptedException ee) {
                 // handle exception
-            } catch (InterruptedException ee) {
-                // handle cancelation
             }
 
         }
@@ -1140,8 +1136,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 });
         EObject eo = objects.get(0);
         Resource resource = eo.eResource();
-        boolean valid = checkResourceErrors(resource);
-        return valid;
+        return checkResourceErrors(resource);
     }
 
     private boolean checkResourceErrors(Resource resource) {
@@ -1226,7 +1221,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
         text = localtext;
         loading = true;
-        lemmaAnnotationMap = new HashMap<String, List<Object>>();
+        lemmaAnnotationMap = new HashMap<>();
         annotationModel = embeddedEditor.getViewer().getAnnotationModel();
 
         if (monitor != null) monitor.beginTask("Load text into Transliteration-Editor.", IProgressMonitor.UNKNOWN);
@@ -1241,7 +1236,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
         embeddedEditorModelAccess.updateModel("\r", "§§", "\r");
         // remove old annotations
-        List<Annotation> toRemove = new Vector<Annotation>();
+        List<Annotation> toRemove = new Vector<>();
         if (annotationModel != null) // remove old annotations
         {
             Iterator i = annotationModel.getAnnotationIterator();
@@ -1354,10 +1349,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                         }
                     };
                     new ProgressMonitorDialog(parentShell).run(true, true, op);
-                } catch (InvocationTargetException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (InvocationTargetException | InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
@@ -1469,7 +1461,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
      */
     protected void processSelection(List<BTSModelAnnotation> annotations,
                                     boolean postSelection, BTSTextSelectionEvent btsEvent) {
-        List<BTSModelAnnotation> relatingObjectsAnnotations = new Vector<BTSModelAnnotation>(
+        List<BTSModelAnnotation> relatingObjectsAnnotations = new Vector<>(
                 annotations.size());
         AnnotationModelEvent ev_trans = null;
         if (!annotations.isEmpty()) {
@@ -1518,9 +1510,9 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         } else {
             setSentenceTranslationActive(false);
         }
-        List<BTSModelAnnotation> deHighlightedAnnotations = new Vector<BTSModelAnnotation>(
+        List<BTSModelAnnotation> deHighlightedAnnotations = new Vector<>(
                 highlightedAnnotations.size());
-        List<BTSModelAnnotation> toBeHighlightedAnnotations = new Vector<BTSModelAnnotation>(
+        List<BTSModelAnnotation> toBeHighlightedAnnotations = new Vector<>(
                 relatingObjectsAnnotations.size());
         // substract annotations that are already highlighted from those the selected annotations
         toBeHighlightedAnnotations.addAll(relatingObjectsAnnotations);
@@ -1571,7 +1563,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
         // calculate event data
         if (!relatingObjectsAnnotations.isEmpty()) {
-            List<BTSObject> relSelObjects = new Vector<BTSObject>(
+            List<BTSObject> relSelObjects = new Vector<>(
                     annotations.size());
             for (BTSModelAnnotation a : relatingObjectsAnnotations) {
                 if (a instanceof BTSAnnotationAnnotation) {
@@ -1586,7 +1578,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 }
             }
             if (btsEvent != null) {
-                btsEvent.setRelatingObjects(new ArrayList<BTSObject>(relSelObjects));
+                btsEvent.setRelatingObjects(new ArrayList<>(relSelObjects));
             } else
                 revealAnnotation(relatingObjectsAnnotations, true);
 
@@ -1676,12 +1668,12 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                                                                    int end, BTSTextSelectionEvent btsEvent) {
         Iterator it = embeddedEditor.getViewer().getAnnotationModel()
                 .getAnnotationIterator();
-        List<BTSModelAnnotation> annotations = new Vector<BTSModelAnnotation>(4);
-        Map<Integer, List<BTSModelAnnotation>> annotationOffsetMap = new HashMap<Integer, List<BTSModelAnnotation>>(4);
+        List<BTSModelAnnotation> annotations = new Vector<>(4);
+        Map<Integer, List<BTSModelAnnotation>> annotationOffsetMap = new HashMap<>(4);
         BTSSentenceItem startItem = null;
         BTSSentenceItem endItem = null;
         int endItemOffeset = 0;
-        List<BTSIdentifiableItem> textItems = new Vector<BTSIdentifiableItem>();
+        List<BTSIdentifiableItem> textItems = new Vector<>();
         while (it.hasNext()) {
             Annotation a = (Annotation) it.next();
             if (a instanceof BTSModelAnnotation) {
@@ -1694,7 +1686,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                         || (pos.getOffset() >= start && pos.getOffset() <= end)) {
                     List<BTSModelAnnotation> list = annotationOffsetMap.get(pos.getOffset());
                     if (list == null) {
-                        list = new ArrayList<BTSModelAnnotation>(2);
+                        list = new ArrayList<>(2);
                         annotationOffsetMap.put(pos.getOffset(), list);
                     }
                     list.add((BTSModelAnnotation) a);
@@ -1718,7 +1710,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         }
 
         // sort keys and add annotations to annotationslist according to the order of their offset
-        List<Integer> offsets = new ArrayList<Integer>(annotationOffsetMap.size());
+        List<Integer> offsets = new ArrayList<>(annotationOffsetMap.size());
         offsets.addAll(annotationOffsetMap.keySet());
         Collections.sort(offsets);
         for (Integer i : offsets) {
@@ -1876,7 +1868,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                                                   BTSModelAnnotation ma) {
         List<BTSModelAnnotation> l = relatingObjectsAnnotationMap.get(object);
         if (l == null) {
-            l = new Vector<BTSModelAnnotation>(2);
+            l = new Vector<>(2);
             relatingObjectsAnnotationMap.put(object, l);
         }
         l.add(ma);
@@ -2340,10 +2332,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                         }
                     };
                     new ProgressMonitorDialog(new Shell()).run(true, true, op);
-                } catch (InvocationTargetException e) {
+                } catch (InvocationTargetException | InterruptedException e) {
                     // handle exception
-                } catch (InterruptedException e) {
-                    // handle cancelation
                 }
             }
             // plainTextEditor.setText(((BTSText) o).getCode());
@@ -2430,7 +2420,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
         selectedSentence = null;
         cachedCursor = 0;
-        modelAnnotationMap = new HashMap<String, BTSModelAnnotation>();
+        modelAnnotationMap = new HashMap<>();
         relatingObjectsAnnotationMap.clear();
         localCommandCacheSet.clear();
         if (editingDomain != null) {
@@ -2632,7 +2622,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
             @EventTopic("event_relating_objects/*") Object event) {
 
         if (event != null && event instanceof List) {
-            List<BTSModelAnnotation> annotations = new Vector<BTSModelAnnotation>(
+            List<BTSModelAnnotation> annotations = new Vector<>(
                     ((List) event).size());
             for (Object o : (List) event) {
                 if (o instanceof BTSObject) {
@@ -2851,10 +2841,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                         };
                         new ProgressMonitorDialog(new Shell()).run(true, true,
                                 op);
-                    } catch (InvocationTargetException ee) {
+                    } catch (InvocationTargetException | InterruptedException ee) {
                         // handle exception
-                    } catch (InterruptedException ee) {
-                        // handle cancelation
                     }
                 }
             }

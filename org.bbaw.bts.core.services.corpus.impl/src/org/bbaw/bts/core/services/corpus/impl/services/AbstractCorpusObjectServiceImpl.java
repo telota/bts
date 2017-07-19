@@ -81,7 +81,7 @@ public abstract class AbstractCorpusObjectServiceImpl<E extends BTSCorpusObject,
         if (monitor != null) {
             monitor.beginTask("Calculate all Entries", allEntries.size());
         }
-        List<E> allFilteredEntries = new Vector<E>();
+        List<E> allFilteredEntries = new Vector<>();
         for (E e : allEntries) {
             if (isVisible(e, btsFilters)) {
                 if (!e.eIsSet(BtsmodelPackage.Literals.BTS_OBJECT__RELATIONS)) {
@@ -99,7 +99,7 @@ public abstract class AbstractCorpusObjectServiceImpl<E extends BTSCorpusObject,
         if (monitor != null) {
             monitor.beginTask("Calculate all Root Entries", allRootEntries.size());
         }
-        Set<String> allRootEntriesSet = new HashSet<String>(allRootEntries.size());
+        Set<String> allRootEntriesSet = new HashSet<>(allRootEntries.size());
         for (E e : allRootEntries) {
             if (isVisible(e, btsFilters)) {
                 checkAndFullyLoad(e, false);
@@ -114,13 +114,13 @@ public abstract class AbstractCorpusObjectServiceImpl<E extends BTSCorpusObject,
         // init caches
 
         // potential root nodes
-        Map<String, CacheTreeNode> roots = new HashMap<String, CacheTreeNode>();
+        Map<String, CacheTreeNode> roots = new HashMap<>();
         // all nodes
-        Map<String, CacheTreeNode> allNodes = new HashMap<String, CacheTreeNode>();
+        Map<String, CacheTreeNode> allNodes = new HashMap<>();
         // nodes that await a holder, key = id of holder
-        Map<String, List<CacheTreeNode>> awaitingHolder = new HashMap<String, List<CacheTreeNode>>();
+        Map<String, List<CacheTreeNode>> awaitingHolder = new HashMap<>();
         // nodes that provide hold to children, key = id of child
-        Map<String, List<CacheTreeNode>> providingHold = new HashMap<String, List<CacheTreeNode>>();
+        Map<String, List<CacheTreeNode>> providingHold = new HashMap<>();
         if (monitor != null) {
             monitor.beginTask("Calculate all Orphans", allFilteredEntries.size());
         }
@@ -173,7 +173,7 @@ public abstract class AbstractCorpusObjectServiceImpl<E extends BTSCorpusObject,
                 }
             }
         }
-        List<E> orphans = new Vector<E>();
+        List<E> orphans = new Vector<>();
         for (CacheTreeNode tn : roots.values()) {
             if (allRootEntriesSet != null && allRootEntriesSet.contains(tn.getId())) {
                 // tn is rootnode and shown in viewer
@@ -188,7 +188,7 @@ public abstract class AbstractCorpusObjectServiceImpl<E extends BTSCorpusObject,
                           String key, Map<String, List<CacheTreeNode>> map) {
         List<CacheTreeNode> list = map.get(key);
         if (list == null) {
-            list = new Vector<CacheTreeNode>(4);
+            list = new Vector<>(4);
             map.put(key, list);
         }
         list.add(tn);
@@ -213,7 +213,7 @@ public abstract class AbstractCorpusObjectServiceImpl<E extends BTSCorpusObject,
 
     @Override
     public String[] getActive_corpora(String projecPrefix) {
-        List<String> corpora = new ArrayList<String>(4);
+        List<String> corpora = new ArrayList<>(4);
         for (String s : active_corpora.split(BTSCoreConstants.SPLIT_PATTERN)) {
             if (projecPrefix == null || s.startsWith(projecPrefix)) {
                 corpora.add(s);

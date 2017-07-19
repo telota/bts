@@ -54,7 +54,7 @@ public abstract class AbstractPreferencePage extends FieldEditorPreferencePage i
     private static final Logger log = Logger.getLogger(AbstractPreferencePage.class);
 
     private static final String USE_PROJECT_SETTINGS = "useProjectSettings"; //$NON-NLS-1$
-    private final List<FieldEditor> editors = new ArrayList<FieldEditor>();
+    private final List<FieldEditor> editors = new ArrayList<>();
     private IWorkbench workbench;
     private IProject project;
     private Button useProjectSettingsButton;

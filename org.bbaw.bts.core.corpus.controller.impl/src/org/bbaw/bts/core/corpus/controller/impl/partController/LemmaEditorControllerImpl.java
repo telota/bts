@@ -44,7 +44,7 @@ public class LemmaEditorControllerImpl implements LemmaEditorController {
         query.setQueryId("relations.objectId-" + lemmaEntry.get_id());
         query.setResponseFields(BTSConstants.SEARCH_BASIC_RESPONSE_FIELDS);
         System.out.println(query.getQueryId());
-        List<BTSObject> children = new Vector<BTSObject>();
+        List<BTSObject> children = new Vector<>();
         List<BTSLemmaEntry> obs = lemmaService.query(query,
                 BTSConstants.OBJECT_STATE_ACTIVE, monitor);
         for (BTSObject o : obs) {
@@ -82,7 +82,7 @@ public class LemmaEditorControllerImpl implements LemmaEditorController {
     @Override
     public List<BTSLemmaEntry> listInAllInvalidLemmata(IProgressMonitor monitor) {
         String[] params = new String[3];
-        List<BTSLemmaEntry> invalidLemmata = new Vector<BTSLemmaEntry>();
+        List<BTSLemmaEntry> invalidLemmata = new Vector<>();
         String[] active_lemmaLists = lemmaService.getActiveLemmaLists();
         for (String active_lemmaList : active_lemmaLists) {
             try {

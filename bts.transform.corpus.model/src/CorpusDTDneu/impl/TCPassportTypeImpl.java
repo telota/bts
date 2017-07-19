@@ -1210,7 +1210,7 @@ public class TCPassportTypeImpl extends MinimalEObjectImpl.Container implements 
      */
     public EList<TCLocationType> getTCLocation() {
         if (tCLocation == null) {
-            tCLocation = new EObjectContainmentEList<TCLocationType>(TCLocationType.class, this, CorpusDTDneuPackage.TC_PASSPORT_TYPE__TC_LOCATION);
+            tCLocation = new EObjectContainmentEList<>(TCLocationType.class, this, CorpusDTDneuPackage.TC_PASSPORT_TYPE__TC_LOCATION);
         }
         return tCLocation;
     }

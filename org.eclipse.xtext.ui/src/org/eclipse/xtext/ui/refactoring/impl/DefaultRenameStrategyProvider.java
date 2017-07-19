@@ -37,7 +37,7 @@ public class DefaultRenameStrategyProvider implements IRenameStrategy.Provider {
         return guiceStrategyProvider == null ? null : guiceStrategyProvider.get();
     }
 
-    public static interface IInitializable extends IRenameStrategy {
+    public interface IInitializable extends IRenameStrategy {
         boolean initialize(EObject targetEObject, IRenameElementContext renameElementContext);
     }
 }

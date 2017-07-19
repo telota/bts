@@ -36,7 +36,7 @@ public class DefaultCompositeHover extends AbstractCompositeHover {
 
     @Override
     protected List<ITextHover> createHovers() {
-        List<ITextHover> list = new ArrayList<ITextHover>();
+        List<ITextHover> list = new ArrayList<>();
         list.add(annotationHover);
         if (htmlHover instanceof ITextHover)
             list.add((ITextHover) htmlHover);

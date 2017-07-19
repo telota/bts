@@ -66,6 +66,7 @@ import org.eclipse.jface.databinding.swt.DisplayRealm;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
@@ -322,7 +323,7 @@ public class ApplicationStartupControllerImpl implements
 
         if (active_projects != null) // active_projects are set
         {
-            activeProjects = new Vector<String>();
+            activeProjects = new Vector<>();
             boolean reset = false;
             for (String p : active_projects.split("\\|")) {
                 if (!activeProjects.contains(p)) {
@@ -495,7 +496,6 @@ public class ApplicationStartupControllerImpl implements
 
         first_startup = prefs.get("first_startup",
                 defaultPrefs.get("first_startup", null));
-        ;
         remote_db_urls = prefs.get("remote_db_urls",
                 defaultPrefs.get("remote_db_urls", null));
 
@@ -574,7 +574,7 @@ public class ApplicationStartupControllerImpl implements
                 ApplicationStartupControllerImpl.this, sync, userController);
         WizardDialog dialog = new WizardDialog(new Shell(SWT.NO_TRIM
                 | SWT.ON_TOP), installWizard);
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             logger.info("InstallationWizard returned OK");
             localDBUrl = installWizard.getLocalDBUrl();
             context.set(BTSPluginIDs.PREF_LOCAL_DB_URL, localDBUrl);
@@ -697,10 +697,8 @@ public class ApplicationStartupControllerImpl implements
                                 }
                             };
                             new ProgressMonitorDialog(new Shell()).run(true, true, op);
-                        } catch (InvocationTargetException e) {
+                        } catch (InvocationTargetException | InterruptedException e) {
                             // handle exception
-                        } catch (InterruptedException e) {
-                            // handle cancelation
                         }
                     }
                 });
@@ -716,7 +714,7 @@ public class ApplicationStartupControllerImpl implements
 
         if (main_project_key != null && main_project_key.trim().length() > 0) {
             if (activeProjects == null) {
-                activeProjects = new Vector<String>();
+                activeProjects = new Vector<>();
             }
             if (activeProjects != null
                     && !activeProjects.contains(main_project_key)) {
@@ -743,7 +741,7 @@ public class ApplicationStartupControllerImpl implements
                     public void run() {
                         WizardDialog dialog = new WizardDialog(new Shell(
                                 SWT.NO_TRIM | SWT.ON_TOP), wizard);
-                        if (dialog.open() == dialog.OK) {
+                        if (dialog.open() == Window.OK) {
                             logger.info("New project created with prefix: "
                                     + project.getPrefix());
                             projectCreated = true;
@@ -761,7 +759,7 @@ public class ApplicationStartupControllerImpl implements
         // continue with setting project settings
         main_project_key = project.getPrefix();
         if (activeProjects == null) {
-            activeProjects = new Vector<String>();
+            activeProjects = new Vector<>();
         }
         if (!activeProjects.contains(main_project_key)) {
             activeProjects.add(main_project_key);
@@ -905,7 +903,7 @@ public class ApplicationStartupControllerImpl implements
         IConfigurationElement[] config = ((IExtensionRegistry) context
                 .get(IExtensionRegistry.class.getName()))
                 .getConfigurationElementsFor(BTSPluginIDs.EXTENSION_POINT_STARTUP_CONTROLLER);
-        List<ExtensionStartUpController> controllers = new Vector<ExtensionStartUpController>(
+        List<ExtensionStartUpController> controllers = new Vector<>(
                 4);
         for (IConfigurationElement e : config) {
             final Object o = e.createExecutableExtension("class");

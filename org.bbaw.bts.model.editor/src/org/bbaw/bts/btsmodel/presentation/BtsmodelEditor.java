@@ -249,7 +249,7 @@ public class BtsmodelEditor
      *
      * @generated
      */
-    protected List<PropertySheetPage> propertySheetPages = new ArrayList<PropertySheetPage>();
+    protected List<PropertySheetPage> propertySheetPages = new ArrayList<>();
 
     /**
      * This is the viewer that shadows the selection in the content outline.
@@ -342,7 +342,7 @@ public class BtsmodelEditor
      *
      * @generated
      */
-    protected Collection<ISelectionChangedListener> selectionChangedListeners = new ArrayList<ISelectionChangedListener>();
+    protected Collection<ISelectionChangedListener> selectionChangedListeners = new ArrayList<>();
 
     /**
      * This keeps track of the selection of the editor as a whole.
@@ -369,7 +369,7 @@ public class BtsmodelEditor
      *
      * @generated
      */
-    protected Collection<Resource> removedResources = new ArrayList<Resource>();
+    protected Collection<Resource> removedResources = new ArrayList<>();
     /**
      * Resources that have been changed since last activation.
      * <!-- begin-user-doc -->
@@ -377,7 +377,7 @@ public class BtsmodelEditor
      *
      * @generated
      */
-    protected Collection<Resource> changedResources = new ArrayList<Resource>();
+    protected Collection<Resource> changedResources = new ArrayList<>();
     /**
      * Resources that have been saved.
      * <!-- begin-user-doc -->
@@ -385,7 +385,7 @@ public class BtsmodelEditor
      *
      * @generated
      */
-    protected Collection<Resource> savedResources = new ArrayList<Resource>();
+    protected Collection<Resource> savedResources = new ArrayList<>();
     /**
      * Map to store the diagnostic associated with a resource.
      * <!-- begin-user-doc -->
@@ -393,7 +393,7 @@ public class BtsmodelEditor
      *
      * @generated
      */
-    protected Map<Resource, Diagnostic> resourceToDiagnosticMap = new LinkedHashMap<Resource, Diagnostic>();
+    protected Map<Resource, Diagnostic> resourceToDiagnosticMap = new LinkedHashMap<>();
     /**
      * Controls whether the problem indication should be updated.
      * <!-- begin-user-doc -->
@@ -518,8 +518,8 @@ public class BtsmodelEditor
                     try {
                         class ResourceDeltaVisitor implements IResourceDeltaVisitor {
                             protected ResourceSet resourceSet = editingDomain.getResourceSet();
-                            protected Collection<Resource> changedResources = new ArrayList<Resource>();
-                            protected Collection<Resource> removedResources = new ArrayList<Resource>();
+                            protected Collection<Resource> changedResources = new ArrayList<>();
+                            protected Collection<Resource> removedResources = new ArrayList<>();
 
                             public boolean visit(IResourceDelta delta) {
                                 if (delta.getResource().getType() == IResource.FILE) {
@@ -1040,8 +1040,7 @@ public class BtsmodelEditor
                             @Override
                             public Viewer createViewer(Composite composite) {
                                 Tree tree = new Tree(composite, SWT.MULTI);
-                                TreeViewer newTreeViewer = new TreeViewer(tree);
-                                return newTreeViewer;
+                                return new TreeViewer(tree);
                             }
 
                             @Override
@@ -1075,8 +1074,7 @@ public class BtsmodelEditor
                             @Override
                             public Viewer createViewer(Composite composite) {
                                 Tree tree = new Tree(composite, SWT.MULTI);
-                                TreeViewer newTreeViewer = new TreeViewer(tree);
-                                return newTreeViewer;
+                                return new TreeViewer(tree);
                             }
 
                             @Override
@@ -1458,7 +1456,7 @@ public class BtsmodelEditor
                 // If it's the selection viewer, then we want it to select the same selection as this selection.
                 //
                 if (currentViewerPane.getViewer() == selectionViewer) {
-                    ArrayList<Object> selectionList = new ArrayList<Object>();
+                    ArrayList<Object> selectionList = new ArrayList<>();
                     selectionList.add(selectedElement);
                     while (selectedElements.hasNext()) {
                         selectionList.add(selectedElements.next());
@@ -1502,7 +1500,7 @@ public class BtsmodelEditor
     public void doSave(IProgressMonitor progressMonitor) {
         // Save only resources that have actually changed.
         //
-        final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
+        final Map<Object, Object> saveOptions = new HashMap<>();
         saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
         saveOptions.put(Resource.OPTION_LINE_DELIMITER, Resource.OPTION_LINE_DELIMITER_UNSPECIFIED);
 

@@ -51,7 +51,7 @@ public class XtextSourceViewer extends ProjectionViewer implements IAdaptable {
         Assert.isNotNull(listener);
 
         if (fTextPresentationListeners == null)
-            fTextPresentationListeners = new ArrayList<ITextPresentationListener>();
+            fTextPresentationListeners = new ArrayList<>();
 
         fTextPresentationListeners.remove(listener);
         fTextPresentationListeners.add(0, listener);
@@ -72,7 +72,7 @@ public class XtextSourceViewer extends ProjectionViewer implements IAdaptable {
             @SuppressWarnings("unchecked")
             List<ITextListener> textListeners = fTextListeners;
             if (textListeners != null) {
-                textListeners = new ArrayList<ITextListener>(textListeners);
+                textListeners = new ArrayList<>(textListeners);
                 DocumentEvent event = cmd.event;
                 if (event instanceof SlaveDocumentEvent)
                     event = ((SlaveDocumentEvent) event).getMasterEvent();

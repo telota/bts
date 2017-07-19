@@ -171,9 +171,9 @@ public class CorpusSettingsPage extends FieldEditorPreferencePage {
             }
         }
 
-        List<BTSCorpusObject> availableCorpora = new Vector<BTSCorpusObject>(1);
+        List<BTSCorpusObject> availableCorpora = new Vector<>(1);
 
-        List<BTSCorpusObject> chosenCorpora = new Vector<BTSCorpusObject>(1);
+        List<BTSCorpusObject> chosenCorpora = new Vector<>(1);
 
         if (active_corpora == null || active_corpora.trim().length() == 0) {
             active_corpora = main_corpus_key;
@@ -221,7 +221,7 @@ public class CorpusSettingsPage extends FieldEditorPreferencePage {
     }
 
     private List<String> getActiveProjectSelectionsAsStringList() {
-        List<String> prefixes = new Vector<String>();
+        List<String> prefixes = new Vector<>();
         if (chrosenProvider == null) {
             return prefixes;
         }

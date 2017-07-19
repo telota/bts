@@ -104,7 +104,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
 
     @Override
     public E add(E entity, String path) {
-        Map<String, String> options = new HashMap<String, String>();
+        Map<String, String> options = new HashMap<>();
         options.put(XMLResource.OPTION_ENCODING, BTSConstants.ENCODING); // set
         // encoding
         // to
@@ -299,7 +299,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         }
 
         final JSONLoad loader = new JSONLoad(sourceStream,
-                new HashMap<Object, Object>(), connectionProvider.getEmfResourceSet());
+                new HashMap<>(), connectionProvider.getEmfResourceSet());
         loader.fillResource(resource);
 
         try {
@@ -337,7 +337,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         }
         Resource tempResource = connectionProvider.getEmfResourceSet().createResource(uri);
         final JSONLoad loader = new JSONLoad(stream,
-                new HashMap<Object, Object>(), connectionProvider.getEmfResourceSet());
+                new HashMap<>(), connectionProvider.getEmfResourceSet());
         loader.fillResource(tempResource);
 //		EObjectMapper objectMapper = new EObjectMapper();
 //		Object o = objectMapper.from(stream, tempResource, null);
@@ -367,7 +367,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
             return;
         }
         final JSONLoad loader = new JSONLoad(new ByteArrayInputStream(objectAsString.getBytes(StandardCharsets.UTF_8)),
-                new HashMap<Object, Object>(), connectionProvider.getEmfResourceSet());
+                new HashMap<>(), connectionProvider.getEmfResourceSet());
         loader.fillResource(resource);
 
     }
@@ -390,7 +390,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         if (object != null) return object;
 
         Resource resource = connectionProvider.getEmfResourceSet().createResource(uri);
-        Map<String, String> options = new HashMap<String, String>();
+        Map<String, String> options = new HashMap<>();
 
         options.put(XMLResource.OPTION_ENCODING, BTSConstants.ENCODING);
         logger.info(uri.path());
@@ -431,7 +431,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
                         String objectState) {
         List<String> allDocs = connectionProvider.getDBClient(CouchDbClient.class, path).view(staticQueryId)
                 .includeDocs(true).query();
-        ArrayList<BTSDBBaseObject> results = new ArrayList<BTSDBBaseObject>();
+        ArrayList<BTSDBBaseObject> results = new ArrayList<>();
         Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("json", new JsResourceFactoryImpl());
         connectionProvider.getEmfResourceSet().getURIConverter().getURIHandlers().add(0, new CouchDBHandler());
         for (String jo : allDocs) {
@@ -460,7 +460,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
                 CouchDbClient.class, path);
         Params params = new Params();
         params.addParam("revs_info", "true");
-        List<DBRevision> revisions = new Vector<DBRevision>();
+        List<DBRevision> revisions = new Vector<>();
         JsonObject jsonObject = dbClient.find(JsonObject.class, (String) key,
                 params);
         for (JsonElement rev : jsonObject.getAsJsonArray("_revs_info")) {
@@ -600,7 +600,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
     protected List<String> extractReadersFromObjectString(String objectString) {
         Matcher m = readersPattern.matcher(objectString);
         if (m.find()) {
-            List<String> rs = new Vector<String>(4);
+            List<String> rs = new Vector<>(4);
             String r = m.group(3);
             m = memberPattern.matcher(r);
             while (m.find()) {
@@ -623,7 +623,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
     protected List<String> extractUpdatersFromObjectString(String objectString) {
         Matcher m = updatersPattern.matcher(objectString);
         if (m.find()) {
-            List<String> rs = new Vector<String>(4);
+            List<String> rs = new Vector<>(4);
             String r = m.group(3);
             m = memberPattern.matcher(r);
             while (m.find()) {
@@ -644,11 +644,11 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         boolean hasIndex = connectionProvider.getSearchClient(Client.class).admin().indices().exists(new IndicesExistsRequest(indexName)).actionGet()
                 .isExists();
         if (!hasIndex) {
-            return new Vector<E>(0);
+            return new Vector<>(0);
         }
         // check for ID Query
         if (query.isIdQuery()) {
-            List<E> result = new Vector<E>();
+            List<E> result = new Vector<>();
             E o = find((K) query.getSearchString(), indexName);
             result.add(o);
             return result;
@@ -735,11 +735,11 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         boolean hasIndex = connectionProvider.getSearchClient(Client.class).admin().indices().exists(new IndicesExistsRequest(indexName)).actionGet()
                 .isExists();
         if (!hasIndex) {
-            return new Vector<String>(0);
+            return new Vector<>(0);
         }
         // check for ID Query
         if (query.isIdQuery()) {
-            List<String> result = new Vector<String>();
+            List<String> result = new Vector<>();
             String o = findAsJsonString((K) query.getSearchString(), indexName);
             result.add(o);
             return result;
@@ -790,7 +790,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
                 .execute()
                 .actionGet();
         int size = new Long(response.getHits().getTotalHits()).intValue();
-        List<String> result = new Vector<String>(size);
+        List<String> result = new Vector<>(size);
 
         for (SearchHit hit : response.getHits()) {
             result.add(hit.getSourceAsString());
@@ -809,7 +809,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
     }
 
     private List<E> loadResultFromSearchResponse(SearchResponse response, String indexName) {
-        List<E> result = new Vector<E>();
+        List<E> result = new Vector<>();
         Map<URI, Resource> cache = ((ResourceSetImpl) connectionProvider.getEmfResourceSet()).getURIResourceMap();
         for (SearchHit hit : response.getHits()) {
             try {
@@ -886,10 +886,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
                             .setSource(
                                     XContentFactory.jsonBuilder().startObject().field("query", query.getQueryBuilder())
                                             .endObject()).setRefresh(true).execute().actionGet();
-                } catch (ElasticsearchException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (ElasticsearchException | IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
@@ -904,7 +901,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         Map<String, List<String>> map = (Map<String, List<String>>) context.get(DaoConstants.QUERY_ID_REGISTRY);
         List<String> ids = null;
         if (map == null) {
-            map = new HashMap<String, List<String>>(5);
+            map = new HashMap<>(5);
             context.set(DaoConstants.QUERY_ID_REGISTRY, map);
         }
         if (map.containsKey(path)) {
@@ -913,7 +910,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
                 ids.add(queryId);
             }
         } else {
-            ids = new Vector<String>(1);
+            ids = new Vector<>(1);
             ids.add(queryId);
             map.put(path, ids);
         }
@@ -1027,7 +1024,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
                                             String sourcePath, String startKey, String endKey) {
         View view;
 
-        List<String> allDocs = new Vector<String>();
+        List<String> allDocs = new Vector<>();
         CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, path);
         try {
             view = dbClient.view(viewId);
@@ -1044,7 +1041,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
 
     protected List<String> loadDocsFromView(String viewId, String path, String sourcePath) {
         View view;
-        List<String> allDocs = new Vector<String>();
+        List<String> allDocs = new Vector<>();
         CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, path);
         try {
             view = dbClient.view(viewId);
@@ -1112,7 +1109,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         List<String> allDocs = page.getResultList();
         chunkIds[2] = page.getNextParam();
         chunkIds[0] = page.getPreviousParam();
-        ArrayList<E> results = new ArrayList<E>();
+        ArrayList<E> results = new ArrayList<>();
         Map<URI, Resource> cache = ((ResourceSetImpl) connectionProvider.getEmfResourceSet()).getURIResourceMap();
 
         for (String jo : allDocs) {
@@ -1132,7 +1129,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
 
     protected List<E> loadObjectsFromStrings(
             List<String> allDocs, String path) {
-        List<E> results = new Vector<E>(allDocs.size());
+        List<E> results = new Vector<>(allDocs.size());
         Map<URI, Resource> cache = ((ResourceSetImpl) connectionProvider.getEmfResourceSet()).getURIResourceMap();
         for (String jo : allDocs) {
             try {
@@ -1255,7 +1252,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         if (entity == null)
             return entity;
         entity.set_deleted(deleted);
-        Map<String, String> options = new HashMap<String, String>();
+        Map<String, String> options = new HashMap<>();
         options.put(XMLResource.OPTION_ENCODING, BTSConstants.ENCODING); // set
         // encoding
         // to
@@ -1306,7 +1303,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
         Resource resource = connectionProvider.getEmfResourceSet().createResource(
                 uri);
         final JSONLoad loader = new JSONLoad(sourceStream,
-                new HashMap<Object, Object>(), connectionProvider.getEmfResourceSet());
+                new HashMap<>(), connectionProvider.getEmfResourceSet());
         loader.fillResource(resource);
         E source = null;
         if (!resource.getContents().isEmpty()) {
@@ -1349,11 +1346,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
                 json += str;
             }
             return json;
-        } catch (NoDocumentException e) {
-            logger.error(e, "Failed to load json string of object with path: " + (String) key);
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e, "Failed to load json string of object with path: " + (String) key);
-        } catch (IOException e) {
+        } catch (NoDocumentException | IOException e) {
             logger.error(e, "Failed to load json string of object with path: " + (String) key);
         }
         return null;

@@ -52,7 +52,7 @@ public class ElementFigureImpl extends RoundedRectangle implements
 
     public List<BTSObject> getRelatingObjects() {
         if (relatingObjects == null) {
-            relatingObjects = new Vector<BTSObject>(4);
+            relatingObjects = new Vector<>(4);
         }
         return relatingObjects;
     }
@@ -71,7 +71,7 @@ public class ElementFigureImpl extends RoundedRectangle implements
 
     public List<BTSInterTextReference> getInterTextReferences() {
         if (interTextReferences == null) {
-            interTextReferences = new Vector<BTSInterTextReference>(4);
+            interTextReferences = new Vector<>(4);
         }
         return interTextReferences;
     }

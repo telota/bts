@@ -591,21 +591,19 @@ public class TCPassportTypeItemProvider
      */
     @Override
     public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-        Object childFeature = feature;
-        Object childObject = child;
 
         boolean qualify =
-                childFeature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__PROVENANCE ||
-                        childFeature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__OBJECT_TYPE ||
-                        childFeature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__DEPICTION ||
-                        childFeature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__SCRIPT ||
-                        childFeature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__LANGUAGE ||
-                        childFeature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__TEXT_TYPE;
+                feature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__PROVENANCE ||
+                        feature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__OBJECT_TYPE ||
+                        feature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__DEPICTION ||
+                        feature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__SCRIPT ||
+                        feature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__LANGUAGE ||
+                        feature == CorpusDTDneuPackage.Literals.TC_PASSPORT_TYPE__TEXT_TYPE;
 
         if (qualify) {
             return getString
                     ("_UI_CreateChild_text2",
-                            new Object[]{getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner)});
+                            new Object[]{getTypeText(child), getFeatureText(feature), getTypeText(owner)});
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

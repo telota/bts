@@ -130,9 +130,9 @@ public class SelectProjectsPage extends WizardPage {
             projects = startupController.loadRemoteProjects(((InstallationWizard) getWizard()).getRemoteConnection().getUser(),
                     ((InstallationWizard) getWizard()).getRemoteConnection().getPassword());
             comboViewer.setInput(projects);
-            List<BTSProject> availableProjects = new Vector<BTSProject>(1);
+            List<BTSProject> availableProjects = new Vector<>(1);
 
-            List<BTSProject> chosenProjects = new Vector<BTSProject>(1);
+            List<BTSProject> chosenProjects = new Vector<>(1);
             if (active_projects != null && active_projects.trim().length() > 0) {
                 String[] pros = active_projects.split("\\|");
 
@@ -187,7 +187,7 @@ public class SelectProjectsPage extends WizardPage {
     }
 
     List<String> getActiveProjectSelectionsAsStringList() {
-        List<String> prefixes = new Vector<String>();
+        List<String> prefixes = new Vector<>();
         if (chrosenProvider == null) {
             return prefixes;
         }

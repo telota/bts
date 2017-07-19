@@ -34,7 +34,7 @@ public class ViewResult<K, V, T> {
     @SerializedName("update_seq")
     private long updateSeq;
     private int offset;
-    private List<Rows> rows = new ArrayList<Rows>();
+    private List<Rows> rows = new ArrayList<>();
 
     public long getTotalRows() {
         return totalRows;

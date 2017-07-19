@@ -75,8 +75,8 @@ public abstract class RelatedObjectGroup extends Composite {
     private ExpandItem xpndtmNewExpanditem;
     private BTSObject object;
     private Composite composite;
-    private List<Listener> reziseListeners = new Vector<Listener>(2);
-    private List<Listener> selectionListeners = new Vector<Listener>(2);
+    private List<Listener> reziseListeners = new Vector<>(2);
+    private List<Listener> selectionListeners = new Vector<>(2);
     private ExpandBar expandBar;
     private Composite contentComposite;
     private Composite buttonComposite;

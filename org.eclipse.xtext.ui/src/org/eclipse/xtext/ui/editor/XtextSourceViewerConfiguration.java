@@ -128,8 +128,7 @@ public class XtextSourceViewerConfiguration extends TextSourceViewerConfiguratio
 
     @Override
     public IReconciler getReconciler(ISourceViewer sourceViewer) {
-        IReconciler reconciler = reconcilerProvider.get();
-        return reconciler;
+        return reconcilerProvider.get();
     }
 
     @Override
@@ -157,7 +156,7 @@ public class XtextSourceViewerConfiguration extends TextSourceViewerConfiguratio
 
     @Override
     public IHyperlinkDetector[] getHyperlinkDetectors(ISourceViewer sourceViewer) {
-        List<IHyperlinkDetector> detectors = new LinkedList<IHyperlinkDetector>();
+        List<IHyperlinkDetector> detectors = new LinkedList<>();
         IHyperlinkDetector[] inheritedDetectors = super.getHyperlinkDetectors(sourceViewer);
         if (inheritedDetectors != null) {
             for (final IHyperlinkDetector detector : inheritedDetectors) {

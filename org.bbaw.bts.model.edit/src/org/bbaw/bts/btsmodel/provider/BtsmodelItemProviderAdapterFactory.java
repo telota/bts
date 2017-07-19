@@ -108,7 +108,7 @@ public class BtsmodelItemProviderAdapterFactory extends BtsmodelAdapterFactory i
      *
      * @generated
      */
-    protected Collection<Object> supportedTypes = new ArrayList<Object>();
+    protected Collection<Object> supportedTypes = new ArrayList<>();
     /**
      * This keeps track of the one adapter used for all {@link org.bbaw.bts.btsmodel.BTSUser} instances.
      * <!-- begin-user-doc -->

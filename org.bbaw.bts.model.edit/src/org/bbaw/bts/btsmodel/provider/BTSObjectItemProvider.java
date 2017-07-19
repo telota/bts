@@ -464,8 +464,7 @@ public class BTSObjectItemProvider extends AdministrativDataObjectItemProvider {
     protected String getTypeSubtypeString(Object object) {
         if (object instanceof BTSObject) {
             BTSObject o = (BTSObject) object;
-            String str = configurationController.getLabelOfTypeSubtypeString(o, true);
-            return str;
+            return configurationController.getLabelOfTypeSubtypeString(o, true);
         }
         return null;
     }

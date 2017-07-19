@@ -353,7 +353,7 @@ public class BTSDBBaseObjectItemProvider
     protected Object overlayImage(Object object, Object image) {
         if (object instanceof BTSDBBaseObject
                 && ((BTSDBBaseObject) object).isLocked()) {
-            List<Object> images = new ArrayList<Object>(2);
+            List<Object> images = new ArrayList<>(2);
             images.add(image);
             if (getEvaluationService() != null
                     && !getEvaluationService().authenticatedUserHasLock(object)) {
@@ -368,7 +368,7 @@ public class BTSDBBaseObjectItemProvider
         }
         if (object instanceof BTSDBBaseObject
                 && !((BTSDBBaseObject) object).getConflictingRevs().isEmpty()) {
-            List<Object> images = new ArrayList<Object>(2);
+            List<Object> images = new ArrayList<>(2);
             images.add(image);
             images.add(resourceProvider.getImage(Display.getDefault(),
                     BTSResourceProvider.IMG_OVR_CONFLICTS));

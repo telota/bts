@@ -78,8 +78,8 @@ public class BTSProjectServiceImpl extends GenericObjectServiceImpl<BTSProject, 
     private void saveAuthorisation(BTSProject entity, BTSProjectDBCollection coll) {
 
         if (!coll.getRoleDescriptions().isEmpty()) {
-            Set<String> memberUsers = new HashSet<String>();
-            Set<String> memberRoles = new HashSet<String>();
+            Set<String> memberUsers = new HashSet<>();
+            Set<String> memberRoles = new HashSet<>();
             BTSDBCollectionRoleDesc memberDesc = null;
 
             for (BTSDBCollectionRoleDesc desc : coll.getRoleDescriptions()) {
@@ -164,7 +164,7 @@ public class BTSProjectServiceImpl extends GenericObjectServiceImpl<BTSProject, 
     @Override
     public List<BTSProject> query(BTSQueryRequest query, String objectState,
                                   boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSProject> objects = new Vector<BTSProject>();
+        List<BTSProject> objects = new Vector<>();
         objects.addAll(projectDao.query(query, BTSCoreConstants.ADMIN,
                 BTSCoreConstants.ADMIN, objectState, registerQuery));
         return filter(objects);
@@ -276,7 +276,7 @@ public class BTSProjectServiceImpl extends GenericObjectServiceImpl<BTSProject, 
         Object o = context.get(BTSCoreConstants.PROJECT_DB_COLLECTION_MAP);
         Map<String, BTSProjectDBCollection> map = null;
         if (o == null || !(o instanceof Map<?, ?>)) {
-            map = new HashMap<String, BTSProjectDBCollection>();
+            map = new HashMap<>();
             context.set(BTSCoreConstants.PROJECT_DB_COLLECTION_MAP, map);
         } else {
             map = (Map<String, BTSProjectDBCollection>) o;
@@ -297,7 +297,7 @@ public class BTSProjectServiceImpl extends GenericObjectServiceImpl<BTSProject, 
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         objects.addAll(projectDao.queryAsJsonString(query, BTSCoreConstants.ADMIN,
                 BTSCoreConstants.ADMIN, objectState, false));
         return objects;

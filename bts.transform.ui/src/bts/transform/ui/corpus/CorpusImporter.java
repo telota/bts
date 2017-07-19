@@ -242,7 +242,7 @@ public class CorpusImporter {
     }
 
     private Map<String, String> loadthsIDMap() {
-        Map<String, String> userMap = new HashMap<String, String>();
+        Map<String, String> userMap = new HashMap<>();
         BTSThsEntryService us = context.get(BTSThsEntryService.class);
         ThsNavigatorController thsController = context.get(ThsNavigatorController.class);
 
@@ -271,7 +271,7 @@ public class CorpusImporter {
     }
 
     private Map<String, String> loadthsDateMap() {
-        Map<String, String> userMap = new HashMap<String, String>();
+        Map<String, String> userMap = new HashMap<>();
         BTSThsEntryService us = context.get(BTSThsEntryService.class);
         ThsNavigatorController thsController = context.get(ThsNavigatorController.class);
         List<BTSThsEntry> thss = us.list(BTSConstants.OBJECT_STATE_ACTIVE, null);
@@ -302,7 +302,7 @@ public class CorpusImporter {
     }
 
     private Map<String, String> loadUsersNameMap() {
-        Map<String, String> userMap = new HashMap<String, String>();
+        Map<String, String> userMap = new HashMap<>();
         BTSUserService us = context.get(BTSUserService.class);
         List<BTSUser> users = us.list(BTSConstants.OBJECT_STATE_ACTIVE, null);
 
@@ -319,7 +319,7 @@ public class CorpusImporter {
     }
 
     private Map<String, String> loadUsersMap() {
-        Map<String, String> userMap = new HashMap<String, String>();
+        Map<String, String> userMap = new HashMap<>();
         BTSUserService us = context.get(BTSUserService.class);
         List<BTSUser> users = us.list(BTSConstants.OBJECT_STATE_ACTIVE, null);
 
@@ -359,17 +359,15 @@ public class CorpusImporter {
 //			resourceToDiagnosticMap.put(resource,  analyzeResourceProblems(resource, exception));
 //		}
 //		editingDomain.getResourceSet().eAdapters().add(problemIndicationAdapter);
-        DocumentRoot data = (DocumentRoot) resource.getContents().get(0);
-        return data;
+        return (DocumentRoot) resource.getContents().get(0);
     }
 
-    public DocumentRoot loadData(String fileName) throws FileNotFoundException, IOException {
+    public DocumentRoot loadData(String fileName) throws IOException {
 
         XMIResourceImpl resource = new XMIResourceImpl();
         File source = new File(fileName);
-        resource.load(new FileInputStream(source), new HashMap<Object, Object>());
-        DocumentRoot data = (DocumentRoot) resource.getContents().get(0);
-        return data;
+        resource.load(new FileInputStream(source), new HashMap<>());
+        return (DocumentRoot) resource.getContents().get(0);
     }
 
 

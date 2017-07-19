@@ -12,6 +12,7 @@ import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
 import org.bbaw.bts.ui.commons.compare.CompareViewer;
 import org.bbaw.bts.ui.commons.compare.CompareViewerFactory;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -145,7 +146,7 @@ public class ConflictsPart extends AbstractComparePart {
         MessageDialog dialog = new MessageDialog(new Shell(), "Remove Conflicting Revision", null,
                 messeage, MessageDialog.QUESTION, new String[]{"Remove Conflict",
                 "Keep Conflict"}, 1);
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             compareObjectsController.removeRevision(revision, revision.get_rev());
             TreeNodeWrapper delTn = null;
             for (TreeNodeWrapper tn : compareRevInput.getChildren()) {
@@ -192,10 +193,8 @@ public class ConflictsPart extends AbstractComparePart {
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
 

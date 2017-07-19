@@ -98,12 +98,12 @@ public class AnnotationsPart implements EventHandler {
     private EPartService partService;
     private Composite composite;
     private ScrolledComposite scrollComposite;
-    private Map<BTSObject, RelatedObjectGroup> objectWidgetMap = new HashMap<BTSObject, RelatedObjectGroup>();
-    private List<RelatedObjectGroup> highlightedGroups = new Vector<RelatedObjectGroup>(2);
+    private Map<BTSObject, RelatedObjectGroup> objectWidgetMap = new HashMap<>();
+    private List<RelatedObjectGroup> highlightedGroups = new Vector<>(2);
     private BTSTextSelectionEvent textSelectionEvent;
     private Listener selectionListener;
     private String queryId;
-    private Map<String, List<BTSObject>> relatingObjectsQueryIDMap = new HashMap<String, List<BTSObject>>();
+    private Map<String, List<BTSObject>> relatingObjectsQueryIDMap = new HashMap<>();
     private Listener resizeListener;
     private BTSObject parentObject;
 
@@ -198,7 +198,7 @@ public class AnnotationsPart implements EventHandler {
 
     private void extendAnnotationsFilterMenu() {
         // initialize filters from fragment model definition
-        HashMap<String, Boolean> filters = new HashMap<String, Boolean>();
+        HashMap<String, Boolean> filters = new HashMap<>();
         // retrieve annotations part viewmenu
         MMenu viewmenu = null;
         for (MMenu m : part.getMenus()) {
@@ -242,7 +242,6 @@ public class AnnotationsPart implements EventHandler {
                 typeConf = annotationPartController.getAnnoTypesConfigItem();
             } catch (Exception e) {
             }
-            ;
             if (typeConf != null && !typeConf.getChildren().isEmpty()) {
                 // initialize submenu for annotation types
                 submenu = MMenuFactory.INSTANCE.createMenu();
@@ -260,8 +259,7 @@ public class AnnotationsPart implements EventHandler {
                             subtypeConf = annotationPartController.getAnnoSubtypesConfigItem(confItem);
                         } catch (Exception e) {
                         }
-                        ;
-                        List<BTSConfigItem> subTypeConfItems = new Vector<BTSConfigItem>();
+                        List<BTSConfigItem> subTypeConfItems = new Vector<>();
                         if (subtypeConf != null) {
                             // filter attached subtype definition nodes
                             for (BTSConfig cc : subtypeConf.getChildren()) {
@@ -398,7 +396,7 @@ public class AnnotationsPart implements EventHandler {
                             composite.setLayoutData(new GridData(SWT.FILL,
                                     SWT.FILL, true, true, 1, 1));
                             scrollComposite.setContent(composite);
-                            objectWidgetMap = new HashMap<BTSObject, RelatedObjectGroup>(
+                            objectWidgetMap = new HashMap<>(
                                     list.size());
 
 
@@ -431,10 +429,8 @@ public class AnnotationsPart implements EventHandler {
                 }
             };
             new ProgressMonitorDialog(new Shell()).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
     }
 
@@ -494,7 +490,7 @@ public class AnnotationsPart implements EventHandler {
             highlightedGroups = selectedGroups;
         }
 
-        List<BTSObject> selObjects = new Vector<BTSObject>(highlightedGroups.size());
+        List<BTSObject> selObjects = new Vector<>(highlightedGroups.size());
 
         // reveal
         if (!highlightedGroups.isEmpty()) {
@@ -614,7 +610,7 @@ public class AnnotationsPart implements EventHandler {
 
     private List<BTSObject> filterAndCutRelatingObjects(
             List<BTSObject> relatingObjects, IProgressMonitor monitor) {
-        List<BTSObject> filteredRelatingObjects = new Vector<BTSObject>(relatingObjects.size() / 2);
+        List<BTSObject> filteredRelatingObjects = new Vector<>(relatingObjects.size() / 2);
         if (monitor != null) monitor.beginTask("Filter related objects", relatingObjects.size());
         allRelatedObjectsShowed = true;
         for (BTSObject o : relatingObjects) {
@@ -638,9 +634,8 @@ public class AnnotationsPart implements EventHandler {
         HashMap<String, Boolean> filters = (HashMap<String, Boolean>) context.get("org.bbaw.bts.corpus.annotationsPart.filter");
         // toggle
         //String key = "org.bbaw.bts.ui.corpus.part.annotations.viewmenu.show." + filter;
-        String key = filter;
-        if (filters.containsKey(key)) {
-            filters.put(key, !filters.get(key));
+        if (filters.containsKey(filter)) {
+            filters.put(filter, !filters.get(filter));
         }
         if (this.relatingObjectsEvent != null) {
             eventReceivedRelatingObjectsLoaded(relatingObjectsEvent);
@@ -654,12 +649,12 @@ public class AnnotationsPart implements EventHandler {
             setSelectedInternal(null, false);
         }
         if (objects instanceof List<?>) {
-            List<BTSObject> os = new Vector<BTSObject>();
+            List<BTSObject> os = new Vector<>();
             for (Object o : (List<?>) objects)
                 if (o instanceof BTSObject)
                     os.add((BTSObject) o);
             os = filterAndCutRelatingObjects(os, null);
-            List<RelatedObjectGroup> groups = new Vector<RelatedObjectGroup>(os.size());
+            List<RelatedObjectGroup> groups = new Vector<>(os.size());
             boolean resizeRequired = false;
             for (BTSObject o : os) {
                 RelatedObjectGroup g = objectWidgetMap.get(o);
@@ -708,7 +703,7 @@ public class AnnotationsPart implements EventHandler {
     private void processModelUpdate(final BTSModelUpdateNotification notification, String id) {
         List<BTSObject> relatingObjects = relatingObjectsQueryIDMap.get(id);
         if (relatingObjects == null) {
-            relatingObjects = new Vector<BTSObject>(1);
+            relatingObjects = new Vector<>(1);
             relatingObjectsQueryIDMap.put(id, relatingObjects);
         }
         final RelatedObjectGroup group = objectWidgetMap.get(notification
@@ -768,7 +763,7 @@ public class AnnotationsPart implements EventHandler {
     }
 
     public BTSObject[] getSelectedObjects() {
-        List<BTSObject> objects = new ArrayList<BTSObject>(highlightedGroups.size());
+        List<BTSObject> objects = new ArrayList<>(highlightedGroups.size());
         for (RelatedObjectGroup rog : highlightedGroups) {
             objects.add(rog.getObject());
         }

@@ -245,7 +245,7 @@ public class BTSProjectImpl extends BTSObjectImpl implements BTSProject {
      */
     public EList<BTSProjectDBCollection> getDbCollections() {
         if (dbCollections == null) {
-            dbCollections = new EObjectContainmentEList<BTSProjectDBCollection>(BTSProjectDBCollection.class, this, BtsmodelPackage.BTS_PROJECT__DB_COLLECTIONS);
+            dbCollections = new EObjectContainmentEList<>(BTSProjectDBCollection.class, this, BtsmodelPackage.BTS_PROJECT__DB_COLLECTIONS);
         }
         return dbCollections;
     }

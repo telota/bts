@@ -173,7 +173,7 @@ public class ShowPreferenceDialogHandler {
     }
 
     private void initializeCache() {
-        suppressedPagesCache = new HashSet<String>();
+        suppressedPagesCache = new HashSet<>();
         suppressedPagesCache.add("org.eclipse.ui.ide");
         suppressedPagesCache.add("org.eclipse.jdt.ui");
         suppressedPagesCache.add("org.eclipse.jdt.debug.ui");

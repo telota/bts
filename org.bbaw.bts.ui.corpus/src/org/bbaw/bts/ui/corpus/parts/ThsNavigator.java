@@ -124,11 +124,11 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
     private Logger logger;
     private TreeViewer mainTreeViewer;
     private StructuredSelection selection;
-    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<String, BTSQueryResultAbstract>();
-    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<String, List<TreeNodeWrapper>>();
+    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<>();
+    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<>();
     private ISelectionChangedListener selectionListener;
     private Composite composite;
-    private Map<Control, Map> cachingMap = new HashMap<Control, Map>();
+    private Map<Control, Map> cachingMap = new HashMap<>();
     private TreeNodeWrapper mainRootNode;
     private CTabFolder tabFolder;
     private CTabItem mainTabItem;
@@ -291,7 +291,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
 
                         }
                         if (!tn.isChildrenLoaded() || tn.getChildren().isEmpty()) {
-                            List<TreeNodeWrapper> parents = new Vector<TreeNodeWrapper>(1);
+                            List<TreeNodeWrapper> parents = new Vector<>(1);
                             parents.add(tn);
                             tn.setChildrenLoaded(true);
                             loadChildren(parents, false, parentControl);
@@ -322,7 +322,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                     }
                     if (selection instanceof TreeSelection) {
                         TreeSelection ts = (TreeSelection) selection;
-                        List<BTSObject> path = new ArrayList<BTSObject>(4);
+                        List<BTSObject> path = new ArrayList<>(4);
 
                         for (Object o : ts.getPaths()) {
 
@@ -397,13 +397,11 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
-    }
+	}
 
     private void loadInput(final Control parentControl,
                            final TreeViewer treeViewer, final TreeNodeWrapper rootNode,
@@ -484,13 +482,11 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
-    }
+	}
 
     private void openInPassportEditorDialog(
             ISelection sel) {
@@ -559,13 +555,11 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
-    }
+	}
 
     protected void storeIntoMap(final List<BTSThsEntry> children,
                                 final Control parentControl, final boolean cacheViewerInput) {
@@ -605,7 +599,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
         List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
                 .get_id());
         if (list == null) {
-            list = new Vector<TreeNodeWrapper>(1);
+            list = new Vector<>(1);
         }
         if (!list.contains(tn)) {
             list.add(tn);
@@ -716,7 +710,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
 
     @Override
     public List<Map> getScatteredCashMaps() {
-        final List<Map> maps = new Vector<Map>(1);
+        final List<Map> maps = new Vector<>(1);
         for (Map map : cachingMap.values()) {
             maps.add(map);
         }
@@ -841,13 +835,11 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
-    }
+	}
 
     @Override
     public void reloadViewerNodes(final StructuredViewer viewer) {
@@ -885,7 +877,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
 
     private List<BTSThsEntry> filterObjects(List<BTSThsEntry> objs,
                                             StructuredViewer viewer) {
-        List<BTSThsEntry> filtered = new Vector<BTSThsEntry>();
+        List<BTSThsEntry> filtered = new Vector<>();
         for (BTSThsEntry e : objs) {
             if (isFiltered(e, viewer)) {
                 filtered.add(e);

@@ -50,10 +50,10 @@ public class IssueModificationContext implements IModificationContext {
     }
 
     @ImplementedBy(Factory.Default.class)
-    public static interface Factory {
+    public interface Factory {
         IModificationContext createModificationContext(Issue issue);
 
-        public static class Default implements Factory {
+        class Default implements Factory {
 
             @Inject
             private Provider<IssueModificationContext> provider;

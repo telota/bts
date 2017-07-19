@@ -9,6 +9,7 @@ import org.bbaw.bts.ui.corpus.dialogs.PassportEditorDialog;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 public class PassportOpenObjectMetadataHandler {
@@ -26,7 +27,7 @@ public class PassportOpenObjectMetadataHandler {
 
             PassportEditorDialog dialog = ContextInjectionFactory.make(
                     PassportEditorDialog.class, child);
-            if (dialog.open() == dialog.OK) {
+            if (dialog.open() == Window.OK) {
 
             }
         }

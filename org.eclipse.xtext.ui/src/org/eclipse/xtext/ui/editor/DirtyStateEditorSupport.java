@@ -397,7 +397,7 @@ public class DirtyStateEditorSupport implements IXtextModelListener, IResourceDe
         protected UpdateEditorStateJob(ISchedulingRule rule, String name) {
             super(name);
             setRule(rule);
-            pendingChanges = new ConcurrentLinkedQueue<IResourceDescription.Delta>();
+            pendingChanges = new ConcurrentLinkedQueue<>();
         }
 
         protected void scheduleFor(IResourceDescription.Event event) {

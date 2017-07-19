@@ -179,10 +179,9 @@ public class TextModelHelper {
 
     private BTSSenctence makeNewModelSentence(Sentence sentence,
                                               BTSSenctence lastModelSentence, BTSTextContent textContent) {
-        BTSSenctence newModelSentence = BtsCorpusModelFactory.eINSTANCE
-                .createBTSSenctence();
 
-        return newModelSentence;
+        return BtsCorpusModelFactory.eINSTANCE
+                .createBTSSenctence();
     }
 
     private BTSIdentifiableItem updateItemFromTextContent(SentenceItem si,
@@ -348,16 +347,14 @@ public class TextModelHelper {
 
     private BTSLemmaCase makeNewModelCase(Ambivalence ambivalence,
                                           BTSLemmaCase lastModelCase) {
-        BTSLemmaCase newModelLemmaCase = BtsCorpusModelFactory.eINSTANCE
+        return BtsCorpusModelFactory.eINSTANCE
                 .createBTSLemmaCase();
-        return newModelLemmaCase;
     }
 
     private BTSAmbivalence makeNewModelAmbivalence(Ambivalence ambivalence,
                                                    BTSIdentifiableItem lastItem, BTSSenctence modelSentence) {
-        BTSAmbivalence newModelAmbivalence = BtsCorpusModelFactory.eINSTANCE
+        return BtsCorpusModelFactory.eINSTANCE
                 .createBTSAmbivalence();
-        return newModelAmbivalence;
     }
 
     private BTSIdentifiableItem updateMarkerFromTextContent(AbstractMarker si,
@@ -584,9 +581,8 @@ public class TextModelHelper {
 
     private BTSMarker makeNewModelMarker(Sentence sentence,
                                          BTSIdentifiableItem lastItem, BTSSenctence modelSentence) {
-        BTSMarker newModelMarker = BtsCorpusModelFactory.eINSTANCE.createBTSMarker();
 
-        return newModelMarker;
+        return BtsCorpusModelFactory.eINSTANCE.createBTSMarker();
     }
 
     private BTSIdentifiableItem updateWordFromTextContent(Word word,
@@ -629,7 +625,7 @@ public class TextModelHelper {
     }
 
     private Map<Position, List<Annotation>> loadAnnotationMapping(EObject TextContent, IAnnotationModel am) {
-        Map<Position, List<Annotation>> annotationMap = new HashMap<Position, List<Annotation>>();
+        Map<Position, List<Annotation>> annotationMap = new HashMap<>();
         Iterator it = am.getAnnotationIterator();
         while (it.hasNext()) {
             Annotation an = (Annotation) it.next();
@@ -656,7 +652,7 @@ public class TextModelHelper {
                     }
                     List<Annotation> list = annotationMap.get(pos);
                     if (list == null) {
-                        list = new Vector<Annotation>(4);
+                        list = new Vector<>(4);
                         annotationMap.put(pos, list);
                     }
                     list.add(an);

@@ -116,7 +116,7 @@ public class UserManagerControllerImpl implements UserManagerController {
 
     @Override
     public List<BTSObject> listTerminatedUsersUserGroups(IProgressMonitor monitor) {
-        List<BTSObject> terminatedObjects = new Vector<BTSObject>();
+        List<BTSObject> terminatedObjects = new Vector<>();
         terminatedObjects.addAll(userService.list(BTSConstants.OBJECT_STATE_TERMINATED, monitor));
         terminatedObjects.addAll(usergroupService.list(BTSConstants.OBJECT_STATE_TERMINATED, monitor));
         return terminatedObjects;
@@ -126,15 +126,15 @@ public class UserManagerControllerImpl implements UserManagerController {
     public List<BTSObject> getUserUserGroupOrphans(ViewerFilter[] filters, IProgressMonitor monitor) {
         List<BTSFilter> btsFilters = null;
         if (filters.length > 0) {
-            btsFilters = new Vector<BTSFilter>(filters.length);
+            btsFilters = new Vector<>(filters.length);
             for (ViewerFilter f : filters) {
                 if (f instanceof BTSFilter) {
                     btsFilters.add((BTSFilter) f);
                 }
             }
         }
-        List<BTSObject> orphans = new Vector<BTSObject>();
-        List<BTSObject> userGroups = new Vector<BTSObject>();
+        List<BTSObject> orphans = new Vector<>();
+        List<BTSObject> userGroups = new Vector<>();
         userGroups.addAll(usergroupService.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor));
         orphans.addAll(userService.getUserOrphans(btsFilters, userGroups, monitor));
         return orphans;

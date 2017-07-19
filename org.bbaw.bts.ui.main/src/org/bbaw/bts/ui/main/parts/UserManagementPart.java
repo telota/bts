@@ -99,6 +99,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -191,7 +192,7 @@ public class UserManagementPart {
     private BTSUserGroup selectedGroup;
     private SashForm user_sashForm;
     private BTSIdentifiableItem selectedTreeObject;
-    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<String, BTSQueryResultAbstract>();
+    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<>();
     private ISelectionChangedListener user_selectionListener;
     private TreeNodeWrapper selectedTreeNode;
     private TabFolder tabFolder;
@@ -699,10 +700,8 @@ public class UserManagementPart {
                 }
             };
             new ProgressMonitorDialog(new Shell()).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
 
@@ -716,7 +715,7 @@ public class UserManagementPart {
                 ObjectUpdaterReaderEditorDialog.class, child);
         // context.set(UserManagementDialog.class, dialog);
 
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
         }
     }
 
@@ -786,7 +785,7 @@ public class UserManagementPart {
     }
 
     private void init() {
-        roleDescMap = new HashMap<String, String>();
+        roleDescMap = new HashMap<>();
         for (int i = 0; i < databaseRoles.length; i++) {
             roleDescMap.put(databaseRoles[i], databaseRolesDescs[i]);
         }
@@ -818,7 +817,7 @@ public class UserManagementPart {
         user_treeViewer.addSelectionChangedListener(user_selectionListener);
         user_treeViewer.setComparator(new BTSUserManagerViewerComparator());
         // Create sample data
-        userGroups = new ArrayList<BTSUserGroup>();
+        userGroups = new ArrayList<>();
         Job job = new Job("load orphans") {
             @Override
             protected IStatus run(IProgressMonitor monitor) {
@@ -991,7 +990,7 @@ public class UserManagementPart {
 
             if (tn.getObject() instanceof BTSUserGroup) {
                 if (!tn.isChildrenLoaded()) {
-                    List<TreeNodeWrapper> parents = new Vector<TreeNodeWrapper>(1);
+                    List<TreeNodeWrapper> parents = new Vector<>(1);
                     parents.add(tn);
                     loadChildren(parents, treeViewer, false);
                 }
@@ -1093,7 +1092,7 @@ public class UserManagementPart {
             selectedTreeNode = tn;
             if (tn.getObject() instanceof BTSUserGroup) {
                 if (!tn.isChildrenLoaded()) {
-                    List<TreeNodeWrapper> parents = new Vector<TreeNodeWrapper>(1);
+                    List<TreeNodeWrapper> parents = new Vector<>(1);
                     parents.add(tn);
                     loadChildren(parents, treeViewer, false);
                 }
@@ -1442,7 +1441,7 @@ public class UserManagementPart {
     private void loadAllUserGroups() {
         List<BTSUserGroup> groups = userManagerController.listUserGroups(null);
         observableLisAllUserGroups = new WritableList(groups, BTSUserGroup.class);
-        userGroupMap = new HashMap<String, BTSUserGroup>(groups.size());
+        userGroupMap = new HashMap<>(groups.size());
         for (BTSUserGroup u : groups) {
             userGroupMap.put(u.get_id(), u);
         }
@@ -1451,7 +1450,7 @@ public class UserManagementPart {
     private void loadAllUsers() {
         List<BTSUser> users = userManagerController.listUsers(null);
         observableLisAllUsers = new WritableList(users, BTSUser.class);
-        userMap = new HashMap<String, BTSUser>(users.size());
+        userMap = new HashMap<>(users.size());
         for (BTSUser u : users) {
             userMap.put(u.getUserName(), u);
         }
@@ -1665,7 +1664,7 @@ public class UserManagementPart {
                 BTSProjectDBCollection coll = BtsmodelFactory.eINSTANCE.createBTSProjectDBCollection();
 
                 Dialog collectionDialog = new EditDBCollectionDialog(new Shell(), coll);
-                if (collectionDialog.open() == collectionDialog.OK) {
+                if (collectionDialog.open() == Window.OK) {
                     Command command = AddCommand.create(getEditingDomain(selectedProject), selectedProject,
                             BtsmodelPackage.Literals.BTS_PROJECT__DB_COLLECTIONS, coll);
                     getEditingDomain(selectedProject).getCommandStack().execute(command);

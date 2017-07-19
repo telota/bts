@@ -164,7 +164,7 @@ public class BTSAnnotationServiceImpl
 
     @Override
     public List<BTSAnnotation> list(String objectState, IProgressMonitor monitor) {
-        List<BTSAnnotation> annos = new Vector<BTSAnnotation>();
+        List<BTSAnnotation> annos = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 try {
@@ -181,7 +181,7 @@ public class BTSAnnotationServiceImpl
     @Override
     public List<BTSAnnotation> query(BTSQueryRequest query, String objectState,
                                      boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSAnnotation> objects = new Vector<BTSAnnotation>();
+        List<BTSAnnotation> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 try {
@@ -212,7 +212,7 @@ public class BTSAnnotationServiceImpl
     @Override
     public List<BTSAnnotation> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                           String objectState, IProgressMonitor monitor) {
-        List<BTSAnnotation> objects = new Vector<BTSAnnotation>();
+        List<BTSAnnotation> objects = new Vector<>();
         objects.addAll(annotationDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(objects);
     }
@@ -230,7 +230,7 @@ public class BTSAnnotationServiceImpl
 
     @Override
     public List<BTSAnnotation> listRootEntries(IProgressMonitor monitor) {
-        List<BTSAnnotation> objects = new Vector<BTSAnnotation>();
+        List<BTSAnnotation> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 try {
@@ -287,7 +287,7 @@ public class BTSAnnotationServiceImpl
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveProjects()) {
             for (String c : getActive_corpora(p)) {
                 try {

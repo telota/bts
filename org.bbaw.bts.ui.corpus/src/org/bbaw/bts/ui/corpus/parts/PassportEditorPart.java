@@ -193,9 +193,9 @@ public class PassportEditorPart {
     private BTSCorpusObject corpusObject;
     private Composite mainComposite;
     private int selectionIndex;
-    private Map<BTSConfigItem, PassportEntryEditorComposite> passportCategoryMap = new HashMap<BTSConfigItem, PassportEntryEditorComposite>();
+    private Map<BTSConfigItem, PassportEntryEditorComposite> passportCategoryMap = new HashMap<>();
     private EditingDomain editingDomain;
-    private Set<Command> localCommandCacheSet = new HashSet<Command>();
+    private Set<Command> localCommandCacheSet = new HashSet<>();
     private int genericTabsReloadRequiredCounter;
     private CommandStackListener commandStackListener;
     private Spinner sortKey_Spin;
@@ -457,7 +457,7 @@ public class PassportEditorPart {
         child.set(BTSConfigItem.class, category);
         child.set(BTSPassport.class, btsPassport);
         child.set(EditingDomain.class, editingDomain);
-        List<BTSPassportEntry> childEntryGroups = new Vector<BTSPassportEntry>(
+        List<BTSPassportEntry> childEntryGroups = new Vector<>(
                 1);
         childEntryGroups.add(entryGroup);
         child.set(BTSUIConstants.PASSPORT_ENTRIES, childEntryGroups);

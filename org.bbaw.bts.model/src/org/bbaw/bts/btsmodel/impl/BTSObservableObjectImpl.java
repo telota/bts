@@ -76,7 +76,7 @@ public abstract class BTSObservableObjectImpl extends MinimalEObjectImpl.Contain
      * @see #getPropertyChangeSupport()
      */
     protected PropertyChangeSupport propertyChangeSupport = PROPERTY_CHANGE_SUPPORT_EDEFAULT;
-    private List<PropertyChangeListener> propertyChangeListeners = new ArrayList<PropertyChangeListener>();
+    private List<PropertyChangeListener> propertyChangeListeners = new ArrayList<>();
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -24,12 +24,12 @@ public interface IPreferenceStoreInitializer {
     /**
      * Initialize preference values with the given {@link IPreferenceStoreAccess}
      */
-    public void initialize(IPreferenceStoreAccess access);
+    void initialize(IPreferenceStoreAccess access);
 
     /**
      * a composite initialize calling all registered {@link IPreferenceStoreInitializer}s
      */
-    static class CompositeImpl implements IPreferenceStoreInitializer {
+    class CompositeImpl implements IPreferenceStoreInitializer {
 
         private Injector injector;
 

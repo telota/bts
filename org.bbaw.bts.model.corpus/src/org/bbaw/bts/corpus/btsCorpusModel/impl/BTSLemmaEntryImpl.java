@@ -156,7 +156,7 @@ public class BTSLemmaEntryImpl extends BTSCorpusObjectImpl implements BTSLemmaEn
      */
     public EList<BTSWord> getWords() {
         if (words == null) {
-            words = new EObjectContainmentEList<BTSWord>(BTSWord.class, this, BtsCorpusModelPackage.BTS_LEMMA_ENTRY__WORDS);
+            words = new EObjectContainmentEList<>(BTSWord.class, this, BtsCorpusModelPackage.BTS_LEMMA_ENTRY__WORDS);
         }
         return words;
     }

@@ -314,7 +314,7 @@ public class BTSPassportEditorConfigImpl extends BTSIdentifiableItemImpl impleme
      */
     public EList<String> getPredicateList() {
         if (predicateList == null) {
-            predicateList = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_PASSPORT_EDITOR_CONFIG__PREDICATE_LIST);
+            predicateList = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_PASSPORT_EDITOR_CONFIG__PREDICATE_LIST);
         }
         return predicateList;
     }

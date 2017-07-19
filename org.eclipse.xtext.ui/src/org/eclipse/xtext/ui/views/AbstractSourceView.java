@@ -292,8 +292,7 @@ public abstract class AbstractSourceView extends ViewPart implements IPartListen
     }
 
     protected IDocument createDocument(String input) {
-        IDocument document = new Document(input);
-        return document;
+        return new Document(input);
     }
 
     protected void selectAndReveal(IWorkbenchPartSelection workbenchPartSelection) {

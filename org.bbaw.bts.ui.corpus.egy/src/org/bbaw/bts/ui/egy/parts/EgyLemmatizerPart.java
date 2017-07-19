@@ -89,6 +89,7 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.FocusEvent;
@@ -360,7 +361,7 @@ public class EgyLemmatizerPart implements SearchViewer {
                             .setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
 
                     // run search command
-                    Map<String, Object> map = new HashMap<String, Object>(1);
+                    Map<String, Object> map = new HashMap<>(1);
                     map.put("org.bbaw.bts.ui.main.commandparameter.viewerFilter",
                             "reviewState=new,reviewState=awaiting-review awaiting-update,"
                                     + "reviewState=reviewed,"
@@ -408,7 +409,7 @@ public class EgyLemmatizerPart implements SearchViewer {
 
                     SearchSelectObjectDialog dialog = ContextInjectionFactory
                             .make(SearchSelectObjectDialog.class, child);
-                    if (dialog.open() == dialog.OK) {
+                    if (dialog.open() == Window.OK) {
                         BTSObject object = dialog.getObject();
                         System.out.println(object.get_id());
                         // Command command = SetCommand.create(editingDomain,
@@ -707,7 +708,7 @@ public class EgyLemmatizerPart implements SearchViewer {
             @Override
             public void run() {
                 //System.out.println("add children: " + filtered.size());
-                HashSet<BTSObject> ancestors = new HashSet<BTSObject>();
+                HashSet<BTSObject> ancestors = new HashSet<>();
                 TreeNodeWrapper anc = node;
                 while (anc != null) {
                     ancestors.add((BTSObject) anc.getObject());
@@ -1295,7 +1296,7 @@ public class EgyLemmatizerPart implements SearchViewer {
 
     private List<TreeNodeWrapper> loadNodesWithChildren(List<BTSLemmaEntry> entries, IProgressMonitor monitor) {
         this.lemmaNodeRegistry = lemmaNavigatorController.loadNodesWithChildren(entries, monitor, false);
-        Vector<TreeNodeWrapper> nodes = new Vector<TreeNodeWrapper>();
+        Vector<TreeNodeWrapper> nodes = new Vector<>();
         // extract root nodes
         for (BTSLemmaEntry lemma : entries) {
             TreeNodeWrapper node = lemmaNodeRegistry.get(lemma.get_id());

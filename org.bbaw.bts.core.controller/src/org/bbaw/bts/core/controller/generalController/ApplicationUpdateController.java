@@ -6,17 +6,17 @@ import org.eclipse.core.runtime.jobs.Job;
 
 public interface ApplicationUpdateController {
 
-    public final long TIME_UNTIL_RECHECK = 60 * 1000 * 5;
+    long TIME_UNTIL_RECHECK = 60 * 1000 * 5;
 
-    public boolean isUpdateAvailable();
+    boolean isUpdateAvailable();
 
-    public EUpdateStatusType getStatus();
+    EUpdateStatusType getStatus();
 
-    public IStatus scheduleUpdate();
+    IStatus scheduleUpdate();
 
-    public void scheduleCheck();
+    void scheduleCheck();
 
-    public enum EUpdateStatusType {
+    enum EUpdateStatusType {
         CHECK_RUNNING(true, false),
         CHECK_FAILED(false, false),
         NO_UPDATE(true, false),

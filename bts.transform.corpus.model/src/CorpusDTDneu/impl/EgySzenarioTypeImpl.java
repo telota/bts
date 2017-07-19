@@ -97,7 +97,7 @@ public class EgySzenarioTypeImpl extends MinimalEObjectImpl.Container implements
      */
     public EList<EgySentType> getEgySent() {
         if (egySent == null) {
-            egySent = new EObjectContainmentEList<EgySentType>(EgySentType.class, this, CorpusDTDneuPackage.EGY_SZENARIO_TYPE__EGY_SENT);
+            egySent = new EObjectContainmentEList<>(EgySentType.class, this, CorpusDTDneuPackage.EGY_SZENARIO_TYPE__EGY_SENT);
         }
         return egySent;
     }

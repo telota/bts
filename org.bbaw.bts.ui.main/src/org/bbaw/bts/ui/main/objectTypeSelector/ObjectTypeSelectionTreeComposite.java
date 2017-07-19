@@ -194,7 +194,7 @@ public class ObjectTypeSelectionTreeComposite extends Composite {
     }
 
     private Object[] getSelectedElements(BTSObjectTypeTreeNode processedPath) {
-        List<BTSObjectTypeTreeNode> checked = new ArrayList<BTSObjectTypeTreeNode>();
+        List<BTSObjectTypeTreeNode> checked = new ArrayList<>();
         for (BTSObjectTypeTreeNode c : processedPath.getChildren()) {
             addChildrenToList(c, checked);
         }

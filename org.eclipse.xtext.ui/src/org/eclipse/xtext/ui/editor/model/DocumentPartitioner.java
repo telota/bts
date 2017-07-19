@@ -224,10 +224,8 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
 
                 token = fScanner.nextToken();
             }
-        } catch (BadLocationException x) {
+        } catch (BadLocationException | BadPositionCategoryException x) {
             // cannot happen as offsets come from scanner
-        } catch (BadPositionCategoryException x) {
-            // cannot happen if document has been connected before
         }
     }
 
@@ -457,8 +455,7 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
                     try {
                         fDocument.addPosition(fPositionCategory, new TypedPosition(start, length, contentType));
                         rememberRegion(start, length);
-                    } catch (BadPositionCategoryException x) {
-                    } catch (BadLocationException x) {
+                    } catch (BadPositionCategoryException | BadLocationException x) {
                     }
                 }
 
@@ -476,9 +473,8 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
                 rememberRegion(p.offset, p.length);
             }
 
-        } catch (BadPositionCategoryException x) {
+        } catch (BadPositionCategoryException | BadLocationException x) {
             // should never happen on connected documents
-        } catch (BadLocationException x) {
         } finally {
             clearPositionCache();
         }
@@ -518,8 +514,7 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
 
             return (TypedPosition) category[index];
 
-        } catch (BadPositionCategoryException x) {
-        } catch (BadLocationException x) {
+        } catch (BadPositionCategoryException | BadLocationException x) {
         }
 
         return null;
@@ -593,8 +588,7 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
             int endOffset = previous.getOffset() + previous.getLength();
             return new TypedRegion(endOffset, fDocument.getLength() - endOffset, IDocument.DEFAULT_CONTENT_TYPE);
 
-        } catch (BadPositionCategoryException x) {
-        } catch (BadLocationException x) {
+        } catch (BadPositionCategoryException | BadLocationException x) {
         }
 
         return new TypedRegion(0, fDocument.getLength(), IDocument.DEFAULT_CONTENT_TYPE);
@@ -724,7 +718,7 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
      */
     public ITypedRegion[] computePartitioning(int offset, int length, boolean includeZeroLengthPartitions) {
         checkInitialization();
-        List<ITypedRegion> list = new ArrayList<ITypedRegion>();
+        List<ITypedRegion> list = new ArrayList<>();
 
         try {
 

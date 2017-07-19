@@ -194,7 +194,7 @@ public class EditingDomainControllerImpl implements EditingDomainController {
         List<Object> l = (List<Object>) context
                 .get(BTSCoreConstants.LAST_SELECTED_OBJECTS_LIST);
         if (l == null) {
-            l = new Vector<Object>(BTSCoreConstants.LAST_SELECTED_LIST_SIZE);
+            l = new Vector<>(BTSCoreConstants.LAST_SELECTED_LIST_SIZE);
             context.set(BTSCoreConstants.LAST_SELECTED_OBJECTS_LIST, l);
         }
         return l;

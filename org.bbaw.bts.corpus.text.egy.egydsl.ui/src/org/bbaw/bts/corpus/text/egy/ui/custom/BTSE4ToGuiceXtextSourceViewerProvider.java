@@ -16,7 +16,6 @@ public class BTSE4ToGuiceXtextSourceViewerProvider implements Provider<XtextSour
     @Override
     public XtextSourceViewer get() {
         if (context == null) return null;
-        XtextSourceViewer viewer = context.get(XtextSourceViewer.class);
-        return viewer;
+        return context.get(XtextSourceViewer.class);
     }
 }

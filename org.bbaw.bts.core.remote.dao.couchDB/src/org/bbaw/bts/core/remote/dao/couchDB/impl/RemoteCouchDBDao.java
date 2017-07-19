@@ -76,7 +76,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
     @Override
     public void add(E entity, String path) {
 
-        Map<String, String> options = new HashMap<String, String>();
+        Map<String, String> options = new HashMap<>();
         options.put(XMLResource.OPTION_ENCODING, BTSConstants.ENCODING); // set
         // encoding
 
@@ -154,7 +154,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
         InputStream stream = dbClient.find((String) key, revision);
 
         final JSONLoad loader = new JSONLoad(stream,
-                new HashMap<Object, Object>(), connectionProvider.getEmfResourceSet());
+                new HashMap<>(), connectionProvider.getEmfResourceSet());
         loader.fillResource(tempResource);
 
 //		EObjectMapper objectMapper = new EObjectMapper();
@@ -185,7 +185,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
 //		InputStream stream = new ByteArrayInputStream(objectAsString.getBytes(StandardCharsets.UTF_8));
 //		Object o = objectMapper.from(stream, resource, null);
         final JSONLoad loader = new JSONLoad(new ByteArrayInputStream(objectAsString.getBytes(StandardCharsets.UTF_8)),
-                new HashMap<Object, Object>(), connectionProvider.getEmfResourceSet());
+                new HashMap<>(), connectionProvider.getEmfResourceSet());
         loader.fillResource(resource);
 
     }
@@ -225,7 +225,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
     @Override
     public List<E> list(String path, String username, String password) {
         View view;
-        List<String> allDocs = new Vector<String>();
+        List<String> allDocs = new Vector<>();
         CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, path, username, password);
         try {
 
@@ -249,18 +249,16 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
 
     protected List<E> loadObjectsFromStrings(
             List<String> allDocs, String path) {
-        List<E> results = new Vector<E>(allDocs.size());
+        List<E> results = new Vector<>(allDocs.size());
         for (String jo : allDocs) {
             System.out.println(jo);
-            if (true) {
-                URI uri = URI.createURI(getRemoteDBURL() + "/" + path + "/" + extractIdFromObjectString(jo));
-                Resource resource = connectionProvider.getEmfResourceSet().createResource(uri);
-                fillResource(resource, jo);
+            URI uri = URI.createURI(getRemoteDBURL() + "/" + path + "/" + extractIdFromObjectString(jo));
+            Resource resource = connectionProvider.getEmfResourceSet().createResource(uri);
+            fillResource(resource, jo);
 
-                if (!resource.getContents().isEmpty()) {
-                    E o = (E) resource.getContents().get(0);
-                    results.add(o);
-                }
+            if (!resource.getContents().isEmpty()) {
+                E o = (E) resource.getContents().get(0);
+                results.add(o);
             }
         }
 
@@ -269,7 +267,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
 
     protected List<String> loadDocsFromView(String viewId, String path, String sourcePath) {
         View view;
-        List<String> allDocs = new Vector<String>();
+        List<String> allDocs = new Vector<>();
         CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, path);
         try {
 
@@ -336,7 +334,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
                 // .setFilter(FilterBuilders.rangeFilter("age").from(12).to(18))
                 // // Filter
                 .setFrom(0).setSize(60).setExplain(true).execute().actionGet();
-        List<E> result = new Vector<E>();
+        List<E> result = new Vector<>();
         for (SearchHit hit : response.getHits()) {
             try {
                 result.add(loadObjectFromHit(hit, indexName));
@@ -361,10 +359,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
                     .setSource(
                             XContentFactory.jsonBuilder().startObject().field("query", query.getQueryBuilder())
                                     .endObject()).setRefresh(true).execute().actionGet();
-        } catch (ElasticsearchException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ElasticsearchException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -375,13 +370,13 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
         Map<String, List<String>> map = (Map<String, List<String>>) context.get(RemoteDaoConstants.QUERY_ID_REGISTRY);
         List<String> ids = null;
         if (map == null) {
-            map = new HashMap<String, List<String>>(5);
+            map = new HashMap<>(5);
             context.set(RemoteDaoConstants.QUERY_ID_REGISTRY, map);
         }
         if (map.containsKey(path)) {
             ids = map.get(path);
         } else {
-            ids = new Vector<String>(1);
+            ids = new Vector<>(1);
         }
         ids.add(queryId);
         map.put(path, ids);
@@ -507,7 +502,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
         if (entity == null)
             return;
         entity.set_deleted(deleted);
-        Map<String, String> options = new HashMap<String, String>();
+        Map<String, String> options = new HashMap<>();
         options.put(XMLResource.OPTION_ENCODING, BTSConstants.ENCODING); // set
         // encoding
         // to
@@ -533,7 +528,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
                 CouchDbClient.class, path);
         Params params = new Params();
         params.addParam("revs_info", "true");
-        List<DBRevision> revisions = new Vector<DBRevision>();
+        List<DBRevision> revisions = new Vector<>();
         JsonObject jsonObject = dbClient.find(JsonObject.class, (String) key,
                 params);
         for (JsonElement rev : jsonObject.getAsJsonArray("_revs_info")) {

@@ -428,9 +428,8 @@ public class XtextEditor extends TextEditor {
      * @return true if content assist is available
      */
     public boolean isContentAssistAvailable() {
-        boolean result = getSourceViewer().getTextOperationTarget().canDoOperation(
+        return getSourceViewer().getTextOperationTarget().canDoOperation(
                 ISourceViewer.CONTENTASSIST_PROPOSALS);
-        return result;
     }
 
     @Override

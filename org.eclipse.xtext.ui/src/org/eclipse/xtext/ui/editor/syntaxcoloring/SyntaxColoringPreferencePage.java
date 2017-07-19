@@ -33,7 +33,7 @@ public class SyntaxColoringPreferencePage extends AbstractPreferencePage impleme
     private PreferenceStoreAccessor preferenceStoreAccessor;
 
     public SyntaxColoringPreferencePage() {
-        this.highlightings = new ArrayList<Triple<String, String, TextStyle>>();
+        this.highlightings = new ArrayList<>();
     }
 
     @Override

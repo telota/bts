@@ -30,7 +30,7 @@ public class SingleLineTerminalsStrategy extends AbstractTerminalsEditStrategy {
             if (doc.getLength() <= offset)
                 return true;
             char charAtOffset = doc.getChar(offset);
-            boolean result = !(
+            return !(
                     Character.isJavaIdentifierStart(charAtOffset)
                             || Character.isDigit(charAtOffset)
                             || charAtOffset == '!'
@@ -40,7 +40,6 @@ public class SingleLineTerminalsStrategy extends AbstractTerminalsEditStrategy {
                             || charAtOffset == '['
                             || charAtOffset == '\''
                             || charAtOffset == '\"');
-            return result;
         }
     };
     private StrategyPredicate strategy;
@@ -118,7 +117,7 @@ public class SingleLineTerminalsStrategy extends AbstractTerminalsEditStrategy {
         }
     }
 
-    public static interface StrategyPredicate {
+    public interface StrategyPredicate {
         /**
          * @return whether the closing terminal should be inserted, based on the cursor position
          * @throws BadLocationException exceptions are not thrown, thrown exceptions are catched and interpreted like return

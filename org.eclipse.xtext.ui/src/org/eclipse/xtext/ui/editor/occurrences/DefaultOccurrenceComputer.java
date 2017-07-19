@@ -136,8 +136,7 @@ public class DefaultOccurrenceComputer implements IOccurrenceComputer {
      * @since 2.1
      */
     protected boolean canBeReferencedLocally(EObject object) {
-        boolean result = qualifiedNameProvider.getFullyQualifiedName(object) != null;
-        return result;
+        return qualifiedNameProvider.getFullyQualifiedName(object) != null;
     }
 
     public boolean hasAnnotationType(String annotationType) {

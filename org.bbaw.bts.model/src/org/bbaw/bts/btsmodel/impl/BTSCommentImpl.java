@@ -139,7 +139,7 @@ public class BTSCommentImpl extends BTSObjectImpl implements BTSComment {
      */
     public EList<String> getTags() {
         if (tags == null) {
-            tags = new EDataTypeUniqueEList<String>(String.class, this, BtsmodelPackage.BTS_COMMENT__TAGS);
+            tags = new EDataTypeUniqueEList<>(String.class, this, BtsmodelPackage.BTS_COMMENT__TAGS);
         }
         return tags;
     }

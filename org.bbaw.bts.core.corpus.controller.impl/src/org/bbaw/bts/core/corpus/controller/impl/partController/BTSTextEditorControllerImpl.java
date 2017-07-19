@@ -178,7 +178,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
         if (lineLength == 0) {
             lineLength = DEFAULT_LINE_LENGTH;
         }
-        annotationRangeMap = new HashMap<BTSInterTextReference, AnnotationCache>();
+        annotationRangeMap = new HashMap<>();
         if (relatingObjects != null && !relatingObjects.isEmpty())// && (relatingObjectsMap == null || relatingObjectsMap.isEmpty()))
         {
             relatingObjectsMap = fillRelatingObjectsMap(relatingObjects);
@@ -259,7 +259,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 
 
     public HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects) {
-        HashMap<String, List<BTSInterTextReference>> relatingObjectsMap = new HashMap<String, List<BTSInterTextReference>>();
+        HashMap<String, List<BTSInterTextReference>> relatingObjectsMap = new HashMap<>();
         counter = 0;
         if (relatingObjects == null) return relatingObjectsMap;
         for (BTSObject o : relatingObjects) {
@@ -270,7 +270,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
                         if (part.getBeginId() != null) {
                             List<BTSInterTextReference> parts = relatingObjectsMap.get(part.getBeginId());
                             if (parts == null) {
-                                parts = new Vector<BTSInterTextReference>(4);
+                                parts = new Vector<>(4);
                                 relatingObjectsMap.put(part.getBeginId(), parts);
                             }
                             parts.add(part);
@@ -278,7 +278,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
                         if (part.getEndId() != null && !part.getEndId().equals(part.getBeginId())) {
                             List<BTSInterTextReference> parts = relatingObjectsMap.get(part.getEndId());
                             if (parts == null) {
-                                parts = new Vector<BTSInterTextReference>(4);
+                                parts = new Vector<>(4);
                                 relatingObjectsMap.put(part.getEndId(), parts);
                             }
                             parts.add(part);
@@ -631,7 +631,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
     private void add2LemmaAnnotationMap(String lemmaId, BTSModelAnnotation annotation, Map<String, List<Object>> lemmaAnnotationMap) {
         List<Object> list = lemmaAnnotationMap.get(lemmaId);
         if (list == null) {
-            list = new Vector<Object>(4);
+            list = new Vector<>(4);
             lemmaAnnotationMap.put(lemmaId, list);
         }
         list.add(annotation);
@@ -894,7 +894,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
             return mdcString;
         } else {
 
-            ArrayList<String> res = new ArrayList<String>();
+            ArrayList<String> res = new ArrayList<>();
             Pattern p = Pattern.compile("[-:<>*]");
             Matcher m = p.matcher(mdcString);
             int pos = 0;
@@ -948,7 +948,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 
     public void updateBTSWordFromMdCString(BTSWord word, String mdc,
                                            EditingDomain editingDomain) {
-        List<BTSGraphic> toDelete = new ArrayList<BTSGraphic>(1);
+        List<BTSGraphic> toDelete = new ArrayList<>(1);
         String[] tokens = splitSignsKeepDelimeters(mdc);
         int i = 0;
         int innerSentenceOrder = -1;
@@ -1052,7 +1052,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
             if (s instanceof BTSSenctence) {
                 BTSSenctence sentence = (BTSSenctence) s;
                 for (BTSSentenceItem item : sentence.getSentenceItems()) {
-                    List<Object> glyphs = new Vector<Object>();
+                    List<Object> glyphs = new Vector<>();
                     if (item instanceof BTSWord) {
                         for (BTSGraphic g : ((BTSWord) item).getGraphics()) {
 //							if (!g.isIgnored()) {
@@ -1149,7 +1149,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
     }
 
     private String[] splitAndKeep(String input, int offset) {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
         Pattern p = Pattern.compile("[-:<>*]");
         Matcher m = p.matcher(input);
         int pos = 0;
@@ -1197,7 +1197,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
                 text.get_id()));
         query.setQueryId("relations.objectId-" + text.get_id());
         System.out.println(query.getQueryId());
-        List<BTSObject> children = new Vector<BTSObject>();
+        List<BTSObject> children = new Vector<>();
         List<BTSCorpusObject> obs = corpusObjectService.query(query,
                 BTSConstants.OBJECT_STATE_ACTIVE, monitor);
         for (BTSCorpusObject o : obs) {
@@ -1218,8 +1218,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 
     @Override
     public BTSText createNewText(BTSCorpusObject parentObject) {
-        BTSText text = textService.createNewRelationPartOf(parentObject);
-        return text;
+        return textService.createNewRelationPartOf(parentObject);
     }
 
     @Override
@@ -1381,7 +1380,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
     @Override
     public List<BTSText> listInAllInvalidTexts(IProgressMonitor monitor) {
         String[] params = new String[3];
-        List<BTSText> invalidtexts = new Vector<BTSText>();
+        List<BTSText> invalidtexts = new Vector<>();
         String[] active_corpora = textService.getActive_corpora(null);
         for (String active_corpus : active_corpora) {
             try {
@@ -1472,7 +1471,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
     @Override
     public List<BTSText> listInAllInCompleteTexts(IProgressMonitor monitor) {
         String[] params = new String[3];
-        List<BTSText> invalidtexts = new Vector<BTSText>();
+        List<BTSText> invalidtexts = new Vector<>();
         String[] active_corpora = textService.getActive_corpora(null);
         for (String active_corpus : active_corpora) {
             try {

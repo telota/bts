@@ -74,15 +74,15 @@ public abstract class AbstractInternalContentAssistParser extends Parser impleme
     protected IFollowElementFactory followElementFactory = new DefaultFollowElementFactory();
     public AbstractInternalContentAssistParser(TokenStream input, RecognizerSharedState state) {
         super(input, state);
-        this.grammarElements = new ArrayList<EObject>();
-        this.localTrace = new ArrayList<EObject>();
-        this.followElements = new LinkedHashSet<FollowElement>();
+        this.grammarElements = new ArrayList<>();
+        this.localTrace = new ArrayList<>();
+        this.followElements = new LinkedHashSet<>();
     }
     public AbstractInternalContentAssistParser(TokenStream input) {
         super(input);
-        this.grammarElements = new ArrayList<EObject>();
-        this.localTrace = new ArrayList<EObject>();
-        this.followElements = new LinkedHashSet<FollowElement>();
+        this.grammarElements = new ArrayList<>();
+        this.localTrace = new ArrayList<>();
+        this.followElements = new LinkedHashSet<>();
     }
 
     /**
@@ -447,8 +447,7 @@ public abstract class AbstractInternalContentAssistParser extends Parser impleme
     public boolean mismatchIsUnwantedToken(IntStream input, int ttype) {
         try {
             inMismatchIsUnwantedToken = true;
-            boolean result = super.mismatchIsUnwantedToken(input, ttype);
-            return result;
+            return super.mismatchIsUnwantedToken(input, ttype);
         } finally {
             inMismatchIsUnwantedToken = false;
         }

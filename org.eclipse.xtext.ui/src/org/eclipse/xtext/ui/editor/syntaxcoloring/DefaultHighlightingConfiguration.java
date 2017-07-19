@@ -43,9 +43,8 @@ public class DefaultHighlightingConfiguration implements IHighlightingConfigurat
     }
 
     public TextStyle errorTextStyle() {
-        TextStyle textStyle = defaultTextStyle().copy();
-//		textStyle.setColor(new RGB(255, 0, 0));
-        return textStyle;
+        //		textStyle.setColor(new RGB(255, 0, 0));
+        return defaultTextStyle().copy();
     }
 
     public TextStyle numberTextStyle() {
@@ -74,8 +73,7 @@ public class DefaultHighlightingConfiguration implements IHighlightingConfigurat
     }
 
     public TextStyle punctuationTextStyle() {
-        TextStyle textStyle = defaultTextStyle().copy();
-        return textStyle;
+        return defaultTextStyle().copy();
     }
 
 }

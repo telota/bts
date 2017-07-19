@@ -23,8 +23,6 @@ public class UserRoleService {
         }
         try {
             PROPERTIES.load(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,8 +79,7 @@ public class UserRoleService {
         if (PROPERTIES.containsKey(name)) {
             String props = PROPERTIES.getProperty(name);
             if (props == null) return "public";
-            String guests = props.split(";")[2];
-            return guests;
+            return props.split(";")[2];
         }
         return "public";
     }
@@ -104,16 +101,14 @@ public class UserRoleService {
         if (PROPERTIES.containsKey(name)) {
             String props = PROPERTIES.getProperty(name);
             if (props == null) return "inProgress";
-            String prop = props.split(";")[4];
-            return prop;
+            return props.split(";")[4];
         }
         return "inProgress";
     }
 
     private static String processName(String name) {
         String[] splits = name.split("/");
-        String processed = splits[splits.length - 1];
-        return processed;
+        return splits[splits.length - 1];
     }
 
     public static String getMainUser(String name) {
@@ -121,8 +116,7 @@ public class UserRoleService {
         if (PROPERTIES.containsKey(name)) {
             String props = PROPERTIES.getProperty(name);
             if (props == null) return "0";
-            String prop = props.split(";")[5];
-            return prop;
+            return props.split(";")[5];
         }
         return "0";
     }

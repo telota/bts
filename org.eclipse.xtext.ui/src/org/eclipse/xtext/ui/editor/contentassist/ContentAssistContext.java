@@ -211,7 +211,7 @@ public class ContentAssistContext {
     public interface Factory {
         ContentAssistContext[] create(ITextViewer viewer, int offset, XtextResource resource);
 
-        public static class Null implements Factory {
+        class Null implements Factory {
 
             public ContentAssistContext[] create(ITextViewer viewer, int offset, XtextResource resource) {
                 return EMPTY_ARRAY;

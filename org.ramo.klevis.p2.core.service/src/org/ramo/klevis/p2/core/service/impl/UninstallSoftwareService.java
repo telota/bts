@@ -51,10 +51,8 @@ public class UninstallSoftwareService implements IUninstallSoftwareService {
         IQueryResult<IInstallableUnit> query = queryable.query(createIU,
                 monitor);
 
-        List<IInstallableUnit> list = org.ramo.klevis.p2.core.util.Utils
+        return org.ramo.klevis.p2.core.util.Utils
                 .toList(query);
-
-        return list;
 
     }
 

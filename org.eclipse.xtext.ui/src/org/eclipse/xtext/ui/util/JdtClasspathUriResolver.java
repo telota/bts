@@ -74,14 +74,12 @@ public class JdtClasspathUriResolver implements IClasspathUriResolver {
                                     IResource packageFragmentRootResource = packageFragmentRoot.getResource();
                                     if (packageFragmentRootResource != null) { // we have a resource - use nested platform/resource
                                         URI packageFragmentRootURI = createPlatformResourceURI(packageFragmentRootResource);
-                                        URI result = createArchiveURI(packageFragmentRootURI, fullPath);
-                                        return result;
+                                        return createArchiveURI(packageFragmentRootURI, fullPath);
                                     } else {
                                         // no resource - use file uri
                                         IPath packageFragmentRootPath = packageFragmentRoot.getPath();
                                         URI packageFragmentRootURI = URI.createFileURI(packageFragmentRootPath.toString());
-                                        URI result = createArchiveURI(packageFragmentRootURI, fullPath);
-                                        return result;
+                                        return createArchiveURI(packageFragmentRootURI, fullPath);
                                     }
                                 }
                             }
@@ -116,8 +114,7 @@ public class JdtClasspathUriResolver implements IClasspathUriResolver {
     }
 
     protected URI createArchiveURI(URI baseURI, String entryPath) {
-        URI result = URI.createURI("archive:" + baseURI.toString() + "!" + entryPath);
-        return result;
+        return URI.createURI("archive:" + baseURI.toString() + "!" + entryPath);
     }
 
     protected URI createPlatformResourceURI(IResource resource) {
@@ -126,8 +123,7 @@ public class JdtClasspathUriResolver implements IClasspathUriResolver {
     }
 
     private URI createPlatformResourceURI(IPath resourcePath) {
-        URI result = URI.createPlatformResourceURI(resourcePath.toString(), true);
-        return result;
+        return URI.createPlatformResourceURI(resourcePath.toString(), true);
     }
 
 }

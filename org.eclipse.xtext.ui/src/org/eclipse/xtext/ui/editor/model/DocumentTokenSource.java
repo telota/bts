@@ -91,8 +91,7 @@ public class DocumentTokenSource {
     }
 
     protected TokenInfo createTokenInfo(CommonToken token) {
-        TokenInfo info = new TokenInfo(token);
-        return info;
+        return new TokenInfo(token);
     }
 
     public void updateStructure(final DocumentEvent e) {

@@ -69,9 +69,9 @@ public class XtextPluginImages {
     private static final String PATH_LCL_DISABLED = ICONS_PATH + "dlcl16/"; //$NON-NLS-1$
     //    private static final String PATH_TOOL = ICONS_PATH + "etool16/"; //$NON-NLS-1$
     private static final String PATH_OVR = ICONS_PATH + "ovr16/"; //$NON-NLS-1$
-    private static final Map<String, Image> annotationImagesFixable = new HashMap<String, Image>();
-    private static final Map<String, Image> annotationImagesNonFixable = new HashMap<String, Image>();
-    private static final Map<String, Image> annotationImagesDeleted = new HashMap<String, Image>();
+    private static final Map<String, Image> annotationImagesFixable = new HashMap<>();
+    private static final Map<String, Image> annotationImagesNonFixable = new HashMap<>();
+    private static final Map<String, Image> annotationImagesDeleted = new HashMap<>();
     private static ImageRegistry PLUGIN_REGISTRY;
     private static String OS = System.getProperty("os.name").toLowerCase();
     /**
@@ -202,8 +202,7 @@ public class XtextPluginImages {
                 path = path.substring(1, path.length());
             file = new File(path);
             try {
-                URL url = file.toPath().toUri().toURL();
-                return url;
+                return file.toPath().toUri().toURL();
             } catch (MalformedURLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

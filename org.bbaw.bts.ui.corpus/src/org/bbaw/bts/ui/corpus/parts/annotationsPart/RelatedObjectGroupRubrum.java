@@ -9,6 +9,7 @@ import org.bbaw.bts.ui.corpus.dialogs.PassportEditorDialog;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -63,7 +64,7 @@ public class RelatedObjectGroupRubrum extends RelatedObjectGroup {
                 PassportEditorDialog.class, child);
         dialog.setEditable(mayEdit());
 
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             refreschContent((BTSObject) getObject());
         }
 

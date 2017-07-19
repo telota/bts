@@ -74,8 +74,7 @@ public class PreferenceStoreWhitespaceInformationProvider implements IWhitespace
     }
 
     protected String getLineSeparatorPreference(IScopeContext scopeContext) {
-        String lineDelimiter = Platform.getPreferencesService().getString(Platform.PI_RUNTIME,
+        return Platform.getPreferencesService().getString(Platform.PI_RUNTIME,
                 Platform.PREF_LINE_SEPARATOR, null, new IScopeContext[]{scopeContext});
-        return lineDelimiter;
     }
 }

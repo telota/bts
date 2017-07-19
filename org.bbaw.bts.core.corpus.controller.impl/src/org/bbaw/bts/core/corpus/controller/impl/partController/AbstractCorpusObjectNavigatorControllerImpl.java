@@ -71,7 +71,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
         }
         List<E> list = retrieveTypedRootEntries(monitor);//thsService.listRootEntries();
         sortEntries(list);
-        List<E> result = new Vector<E>(list.size());
+        List<E> result = new Vector<>(list.size());
         for (E t : list) {
             result.add(t);
         }
@@ -144,7 +144,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
             queryResultMap.put(query.getQueryId(), qra);
         }
         List<E> children = executeTypedQuery(query, BTSConstants.OBJECT_STATE_ACTIVE, monitor); //thsService.query(query,BTSConstants.OBJECT_STATE_ACTIVE);
-        List<E> result = new Vector<E>(children.size());
+        List<E> result = new Vector<>(children.size());
         for (E o : children) {
             if (!(o instanceof BTSAnnotation)) {
                 result.add(o);
@@ -166,7 +166,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
                                      Map<String, List<TreeNodeWrapper>> viewHolderMap) {
         boolean structualModfication = false;
         if (notification.isLoaded() && notification.getObject() != null) {
-            Set<Object> keepHolderMap = new HashSet<Object>(1);
+            Set<Object> keepHolderMap = new HashSet<>(1);
             // Adds
             if (queryResultMap != null && notification.getQueryIds() != null
                     && !notification.getQueryIds().isEmpty()) {
@@ -186,7 +186,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
                 BTSObject o = (BTSObject) notification.getObject();
                 List<TreeNodeWrapper> holders = viewHolderMap
                         .get(((BTSDBBaseObject) o).get_id());
-                Set<Object> removeHolderMap = new HashSet<Object>(1);
+                Set<Object> removeHolderMap = new HashSet<>(1);
                 if (holders != null) {
                     for (Object holder : holders) {
                         if (!keepHolderMap.contains(holder)) {
@@ -253,7 +253,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
         List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
                 .get_id());
         if (list == null) {
-            list = new Vector<TreeNodeWrapper>(1);
+            list = new Vector<>(1);
         }
         if (!list.contains(tn)) {
             list.add(tn);
@@ -283,7 +283,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
             queryResultMap.put(qra.getQueryId(), qra);
         }
         List<E> list = typedListEntries(BTSConstants.OBJECT_STATE_TERMINATED, monitor); //thsService.list(BTSConstants.OBJECT_STATE_TERMINATED);
-        List<E> result = new Vector<E>(list.size());
+        List<E> result = new Vector<>(list.size());
         for (E t : list) {
             t.setState(BTSConstants.OBJECT_STATE_TERMINATED);
             result.add(t);
@@ -330,7 +330,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
             monitor.beginTask("Calculate Orphan Entries", 100);
         }
         if (filters.length > 0) {
-            btsFilters = new Vector<BTSFilter>(filters.length);
+            btsFilters = new Vector<>(filters.length);
             for (ViewerFilter f : filters) {
                 if (f instanceof BTSFilter) {
                     btsFilters.add((BTSFilter) f);
@@ -376,7 +376,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
             monitor.beginTask("Load Elements to Treenodes", obs.size());
         }
         if (asStructuredTree && obs.size() > 200) {
-            nodes = new Vector<TreeNodeWrapper>();
+            nodes = new Vector<>();
             System.out.println("size " + obs.size());
 
             if (obs.size() > 2000) {
@@ -443,7 +443,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
                 }
             }
         } else {
-            nodes = new Vector<TreeNodeWrapper>(obs.size());
+            nodes = new Vector<>(obs.size());
             for (BTSObject o : obs) {
                 TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE
                         .createTreeNodeWrapper();

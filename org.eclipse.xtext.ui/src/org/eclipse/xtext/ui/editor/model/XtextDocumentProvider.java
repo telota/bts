@@ -99,8 +99,7 @@ public class XtextDocumentProvider extends FileDocumentProvider {
 
     @Override
     protected XtextDocument createEmptyDocument() {
-        XtextDocument xtextDocument = documentProvider.get();
-        return xtextDocument;
+        return documentProvider.get();
     }
 
     @Override
@@ -126,8 +125,7 @@ public class XtextDocumentProvider extends FileDocumentProvider {
     public boolean isDeleted(Object element) {
         if (isWorkspaceExternalEditorInput(element)) {
             final IURIEditorInput input = (IURIEditorInput) element;
-            boolean result = !input.exists();
-            return result;
+            return !input.exists();
         }
         if (element instanceof IFileEditorInput) {
             final IFileEditorInput input = (IFileEditorInput) element;

@@ -125,8 +125,8 @@ public class EmfModelHelper {
     }
 
     private static void mergeAll(List<EObject> targetList, List<EObject> sourceList) {
-        Set<EObject> toRemove = new HashSet<EObject>();
-        List<EObject> toAdd = new Vector<EObject>();
+        Set<EObject> toRemove = new HashSet<>();
+        List<EObject> toAdd = new Vector<>();
         for (EObject target : targetList) {
             int i = listContainsUsingEqualsAtIndex(sourceList, target);
             if (i >= 0) {
@@ -249,9 +249,7 @@ public class EmfModelHelper {
     }
 
     public static String modelToString(Object object) {
-//		throw new UnsupportedOperationException();
-        String string = null;
-
+        return null;
         //FIXME
 //		Map options = new HashMap<Object, Object>();
 //		 options.put(EMFJs.OPTION_INDENT_OUTPUT, false);
@@ -278,7 +276,6 @@ public class EmfModelHelper {
 //		}
 //		
 //		}
-        return string;
     }
 
     public static boolean listContainsNodeWrapperUsingEquals(List<EObject> sourceList, Object target) {

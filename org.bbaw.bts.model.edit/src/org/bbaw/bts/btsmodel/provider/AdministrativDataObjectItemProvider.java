@@ -300,7 +300,7 @@ public class AdministrativDataObjectItemProvider extends BTSObservableObjectItem
     @Override
     protected Object overlayImage(Object object, Object image) {
         if (object instanceof BTSDBBaseObject && ((BTSDBBaseObject) object).isLocked()) {
-            List<Object> images = new ArrayList<Object>(2);
+            List<Object> images = new ArrayList<>(2);
             images.add(image);
             if (getEvaluationService() != null && !getEvaluationService().authenticatedUserHasLock(object)) {
                 Image i = getBTSResourceProvider().getImage(Display.getDefault(), BTSResourceProvider.IMG_OVR_LOCK);
@@ -315,7 +315,7 @@ public class AdministrativDataObjectItemProvider extends BTSObservableObjectItem
         }
         if (object instanceof BTSDBBaseObject
                 && !((BTSDBBaseObject) object).getConflictingRevs().isEmpty()) {
-            List<Object> images = new ArrayList<Object>(2);
+            List<Object> images = new ArrayList<>(2);
             images.add(image);
             images.add(getBTSResourceProvider().getImage(Display.getDefault(),
                     BTSResourceProvider.IMG_OVR_CONFLICTS));
@@ -330,7 +330,7 @@ public class AdministrativDataObjectItemProvider extends BTSObservableObjectItem
                         (String) o);
             }
             if (o != null) {
-                List<Object> images = new ArrayList<Object>(2);
+                List<Object> images = new ArrayList<>(2);
                 images.add(image);
                 images.add(o);
                 image = new ComposedImage(images);

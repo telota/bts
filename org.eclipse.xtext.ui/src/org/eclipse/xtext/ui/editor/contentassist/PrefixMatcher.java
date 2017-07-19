@@ -47,9 +47,8 @@ public abstract class PrefixMatcher {
 
         @Override
         public boolean isCandidateMatchingPrefix(String name, String prefix) {
-            boolean result = super.isCandidateMatchingPrefix(name, prefix) ||
+            return super.isCandidateMatchingPrefix(name, prefix) ||
                     canDoCamelCaseMatch && prefix.length() < name.length() && camelCaseMatch(name, prefix);
-            return result;
         }
 
         /**

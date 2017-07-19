@@ -19,6 +19,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 public class OpenTypeSubtypeFilterDialogHandler {
@@ -51,9 +52,7 @@ public class OpenTypeSubtypeFilterDialogHandler {
             isContained = false;
             try {
                 filter = makeFilter(context);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
 
@@ -81,7 +80,7 @@ public class OpenTypeSubtypeFilterDialogHandler {
         //inject projects and filter
         dialog.create();
 
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             filter = dialog.getFilter();
             // if no projects selected, drop filter, else add to viewer
             if (filter instanceof ViewerFilter) {
@@ -115,8 +114,7 @@ public class OpenTypeSubtypeFilterDialogHandler {
     }
 
     private TypeSubtypeViewerFilter makeFilter(IEclipseContext context) throws InstantiationException, IllegalAccessException {
-        TypeSubtypeViewerFilter filter = ContextInjectionFactory.make(TypeSubtypeViewerFilter.class, context);
-        return filter;
+        return ContextInjectionFactory.make(TypeSubtypeViewerFilter.class, context);
 
     }
 

@@ -114,7 +114,7 @@ public class TranslationEditorComposite extends Composite {
      */
     private boolean dataBind;
 
-    private List<SelectionListener> languageSelectionListeners = new ArrayList<SelectionListener>(2);
+    private List<SelectionListener> languageSelectionListeners = new ArrayList<>(2);
 
     private Binding binding;
 

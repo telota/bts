@@ -70,7 +70,7 @@ public class JSONSave extends AbstractJSONSave {
             rootNode = writeEObject(rootObject, resource);
         } else {
 
-            final Collection<JsonNode> nodes = new ArrayList<JsonNode>();
+            final Collection<JsonNode> nodes = new ArrayList<>();
             rootNode = mapper.createArrayNode();
 
             for (EObject obj : resource.getContents()) {
@@ -275,10 +275,6 @@ public class JSONSave extends AbstractJSONSave {
         JsonNode node = genJson(resource);
         try {
             getDelegate().writeValue(outStream, node);
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -287,10 +283,6 @@ public class JSONSave extends AbstractJSONSave {
     public void writeValue(OutputStream output, Object current) {
         try {
             getDelegate().writeValue(output, current);
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

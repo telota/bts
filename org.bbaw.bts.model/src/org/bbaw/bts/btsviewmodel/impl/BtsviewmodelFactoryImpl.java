@@ -170,8 +170,7 @@ public class BtsviewmodelFactoryImpl extends EFactoryImpl implements Btsviewmode
      * @generated
      */
     public TreeNodeWrapper createTreeNodeWrapper() {
-        TreeNodeWrapperImpl treeNodeWrapper = new TreeNodeWrapperImpl();
-        return treeNodeWrapper;
+        return new TreeNodeWrapperImpl();
     }
 
     /**
@@ -181,8 +180,7 @@ public class BtsviewmodelFactoryImpl extends EFactoryImpl implements Btsviewmode
      * @generated
      */
     public StatusMessage createStatusMessage() {
-        StatusMessageImpl statusMessage = new StatusMessageImpl();
-        return statusMessage;
+        return new StatusMessageImpl();
     }
 
     /**
@@ -192,8 +190,7 @@ public class BtsviewmodelFactoryImpl extends EFactoryImpl implements Btsviewmode
      * @generated
      */
     public BTSObjectTypeTreeNode createBTSObjectTypeTreeNode() {
-        BTSObjectTypeTreeNodeImpl btsObjectTypeTreeNode = new BTSObjectTypeTreeNodeImpl();
-        return btsObjectTypeTreeNode;
+        return new BTSObjectTypeTreeNodeImpl();
     }
 
     /**
@@ -203,8 +200,7 @@ public class BtsviewmodelFactoryImpl extends EFactoryImpl implements Btsviewmode
      * @generated
      */
     public DBCollectionStatusInformation createDBCollectionStatusInformation() {
-        DBCollectionStatusInformationImpl dbCollectionStatusInformation = new DBCollectionStatusInformationImpl();
-        return dbCollectionStatusInformation;
+        return new DBCollectionStatusInformationImpl();
     }
 
     /**

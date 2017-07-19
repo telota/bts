@@ -158,7 +158,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
     private HashMap<String, List<ElementFigure>> relatingObjectFigureMap;
     private BTSTextContent textContent;
     private BTSObject btsObject;
-    private List<Image> imageList = new Vector<Image>(1000);
+    private List<Image> imageList = new Vector<>(1000);
     private boolean enabled;
 
     @Inject
@@ -455,8 +455,6 @@ public class SignTextComposite extends Composite implements IBTSEditor {
             figure = (ElementFigure) currentLineFigure
                     .getChildren()
                     .get(newIndex);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
@@ -464,7 +462,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
     }
 
     private MouseListener makeElementSelectionListener() {
-        MouseListener listener = new MouseListener() {
+        return new MouseListener() {
 
             @Override
             public void mousePressed(MouseEvent me) {
@@ -495,7 +493,6 @@ public class SignTextComposite extends Composite implements IBTSEditor {
             }
 
         };
-        return listener;
     }
 
     protected void updateFigureFromWord(Notification notification) {
@@ -539,7 +536,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
     private void loadText() {
         purgeAll();
         max_line_length = canvas.getViewport().getBounds().width;
-        continuingRelatingObjects = new Vector<BTSObject>();
+        continuingRelatingObjects = new Vector<>();
         // canvas = new FigureCanvas(this);
         // canvas.setBackground(COLOR_CANVAS_BACKGROUND);
         // canvas.setLayout(new FillLayout());
@@ -568,7 +565,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
             }
         }
 
-        wordMap = new HashMap<String, IFigure>();
+        wordMap = new HashMap<>();
         for (BTSTextItems item : textContent.getTextItems()) {
             if (item instanceof BTSSenctence) {
                 BTSSenctence sentence = (BTSSenctence) item;
@@ -690,11 +687,11 @@ public class SignTextComposite extends Composite implements IBTSEditor {
     private void updateRelatingObjectFigureMap(String relatingObjectID,
                                                ElementFigure itemFigure) {
         if (relatingObjectFigureMap == null) {
-            relatingObjectFigureMap = new HashMap<String, List<ElementFigure>>();
+            relatingObjectFigureMap = new HashMap<>();
         }
         List<ElementFigure> list = relatingObjectFigureMap.get(relatingObjectID);
         if (list == null) {
-            list = new Vector<ElementFigure>(4);
+            list = new Vector<>(4);
             relatingObjectFigureMap.put(relatingObjectID, list);
         }
         if (!list.contains(itemFigure)) {

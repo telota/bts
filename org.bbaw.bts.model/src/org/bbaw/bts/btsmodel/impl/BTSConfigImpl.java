@@ -100,7 +100,7 @@ public abstract class BTSConfigImpl extends MinimalEObjectImpl.Container impleme
      */
     public EList<BTSConfig> getChildren() {
         if (children == null) {
-            children = new EObjectContainmentEList<BTSConfig>(BTSConfig.class, this, BtsmodelPackage.BTS_CONFIG__CHILDREN);
+            children = new EObjectContainmentEList<>(BTSConfig.class, this, BtsmodelPackage.BTS_CONFIG__CHILDREN);
         }
         return children;
     }

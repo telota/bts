@@ -30,7 +30,7 @@ public class BTSSelectionHistoryServiceImpl implements BTSSelectionHistoryServic
             if (selection instanceof List<?>) {
                 sel = (List<BTSObject>) selection;
             } else {
-                sel = new Vector<BTSObject>();
+                sel = new Vector<>();
                 if (selection instanceof BTSObject[]) {
                     sel.addAll(Arrays.asList((BTSObject[]) selection));
                 } else if (selection instanceof BTSObject)
@@ -68,7 +68,7 @@ public class BTSSelectionHistoryServiceImpl implements BTSSelectionHistoryServic
 
     @Override
     public List<BTSObject> getHistory(Class<BTSObject> type, int n) {
-        List<BTSObject> res = new Vector<BTSObject>();
+        List<BTSObject> res = new Vector<>();
         Iterator<BTSObject> i = loadSelectionHistory().iterator();
         while (res.size() < n && i.hasNext()) {
             BTSObject o = i.next();

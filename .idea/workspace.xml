@@ -1,11 +1,446 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AnalysisUIOptions">
-    <option name="CUSTOM_SCOPE_NAME" value="Open Files" />
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+    <option name="CUSTOM_SCOPE_NAME" value="&lt;unknown scope&gt;" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e358357-2dc0-49f7-b155-7fd7c254b32a" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.aux.model.edit/src/Btsaux/provider/BtsauxItemProviderAdapterFactory.java" afterPath="$PROJECT_DIR$/bts.transform.aux.model.edit/src/Btsaux/provider/BtsauxItemProviderAdapterFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.aux.model/src/Btsaux/impl/BtsauxFactoryImpl.java" afterPath="$PROJECT_DIR$/bts.transform.aux.model/src/Btsaux/impl/BtsauxFactoryImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.aux.model/src/Btsaux/impl/DocumentRootImpl.java" afterPath="$PROJECT_DIR$/bts.transform.aux.model/src/Btsaux/impl/DocumentRootImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model.edit/src/CorpusDTDneu/provider/CorpusDTDneuItemProviderAdapterFactory.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model.edit/src/CorpusDTDneu/provider/CorpusDTDneuItemProviderAdapterFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model.edit/src/CorpusDTDneu/provider/DocumentRootItemProvider.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model.edit/src/CorpusDTDneu/provider/DocumentRootItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model.edit/src/CorpusDTDneu/provider/TCPassportTypeItemProvider.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model.edit/src/CorpusDTDneu/provider/TCPassportTypeItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/CategoryType.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/CategoryType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/CategoryType1.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/CategoryType1.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/LTypeType.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/LTypeType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType1.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType1.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType2.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType3.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType3.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType4.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType4.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType5.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType5.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType6.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType6.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType7.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType7.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType8.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/TypeType8.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/CorpusDTDneuFactoryImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/CorpusDTDneuFactoryImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/DocumentRootImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/DocumentRootImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/EgySzenarioTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/EgySzenarioTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/PicturesTableTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/PicturesTableTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCArrangementTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCArrangementTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCCaptionTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCCaptionTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCGroupTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCGroupTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCObjPartTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCObjPartTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCObjectTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCObjectTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCPassportTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCPassportTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCSceneTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCSceneTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCSuperTextTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCSuperTextTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCTextTypeImpl.java" afterPath="$PROJECT_DIR$/bts.transform.corpus.model/src/CorpusDTDneu/impl/TCTextTypeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/CharsService.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/CharsService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/DirFileEntityReplacer.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/DirFileEntityReplacer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/corpus/CorpusImporter.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/corpus/CorpusImporter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/lemma/LemmaImporter.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/lemma/LemmaImporter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/signs/SignService.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/signs/SignService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/thsMapping/ThsMappingService.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/thsMapping/ThsMappingService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/ThsImporter.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/ThsImporter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/UsersImporter.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/UsersImporter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/usersRole/UserRoleService.java" afterPath="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/usersRole/UserRoleService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.opcoach.e4.preferences/src/com/opcoach/e4/preferences/IPreferenceStoreProvider.java" afterPath="$PROJECT_DIR$/com.opcoach.e4.preferences/src/com/opcoach/e4/preferences/IPreferenceStoreProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.opcoach.e4.preferences/src/com/opcoach/e4/preferences/internal/E4PreferenceRegistry.java" afterPath="$PROJECT_DIR$/com.opcoach.e4.preferences/src/com/opcoach/e4/preferences/internal/E4PreferenceRegistry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.app.login/src/org/bbaw/bts/app/login/internal/LoginDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.app.login/src/org/bbaw/bts/app/login/internal/LoginDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.commons.fsaccess/src/org/bbaw/bts/commons/fsaccess/BTSContstantsPlatformSpecific.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.commons.fsaccess/src/org/bbaw/bts/commons/fsaccess/BTSContstantsPlatformSpecific.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.commons/src/org/bbaw/bts/commons/BTSPluginIDs.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.commons/src/org/bbaw/bts/commons/BTSPluginIDs.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.commons/src/org/bbaw/bts/commons/OSValidator.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.commons/src/org/bbaw/bts/commons/OSValidator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.commons/pom.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.commons/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.commons/src/org/bbaw/bts/core/commons/staticAccess/StaticAccessController.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.commons/src/org/bbaw/bts/core/commons/staticAccess/StaticAccessController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/dialogControllers/CompareObjectsControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/dialogControllers/CompareObjectsControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/dialogControllers/UserManagerControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/dialogControllers/UserManagerControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/ApplicationStartupControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/ApplicationStartupControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/BTSConfigurationControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/BTSConfigurationControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/BTSUserControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/BTSUserControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/EditingDomainControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/EditingDomainControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/GeneralBTSObjectControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/GeneralBTSObjectControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/PermissionsAndExpressionsEvaluationControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/PermissionsAndExpressionsEvaluationControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/handlerController/MoveObjectAmongProjectDBCollectionHandlerControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/handlerController/MoveObjectAmongProjectDBCollectionHandlerControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller/src/org/bbaw/bts/core/controller/generalController/ApplicationUpdateController.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller/src/org/bbaw/bts/core/controller/generalController/ApplicationUpdateController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.controller/src/org/bbaw/bts/core/controller/generalController/ISplashScreenController.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.controller/src/org/bbaw/bts/core/controller/generalController/ISplashScreenController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/generalController/CorpusStartUpController.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/generalController/CorpusStartUpController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/generalController/ObjectPathControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/generalController/ObjectPathControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/generalController/PassportConfigurationControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/generalController/PassportConfigurationControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/AbstractCorpusObjectNavigatorControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/AbstractCorpusObjectNavigatorControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/AnnotationPartControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/AnnotationPartControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/BTSTextEditorControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/BTSTextEditorControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/CorpusNavigatorControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/CorpusNavigatorControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/HieroglyphTypeWriterControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/HieroglyphTypeWriterControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/LemmaEditorControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/LemmaEditorControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/LemmaNavigatorControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/LemmaNavigatorControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/PassportEditorPartControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/PassportEditorPartControllerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/support/TextModelHelper.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/support/TextModelHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/src/org/bbaw/bts/core/corpus/controller/partController/AnnotationPartController.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/src/org/bbaw/bts/core/corpus/controller/partController/AnnotationPartController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/CorpusDaoFactoryCouchDB.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/CorpusDaoFactoryCouchDB.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/AbstractCorpusObjectDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/AbstractCorpusObjectDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/BTSLemmaEntryDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/BTSLemmaEntryDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/BTSTextDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/BTSTextDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/CorpusObjectDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/CorpusObjectDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/CouchDBDao.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/CouchDBDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/DaoFactoryCouchDB.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/DaoFactoryCouchDB.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/BTSIDReservationObjectDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/BTSIDReservationObjectDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/BTSUserDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/BTSUserDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/Backend2ClientUpdateDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/Backend2ClientUpdateDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/DBConnectionProviderImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/DBConnectionProviderImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/GeneralPurposeDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/GeneralPurposeDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/UserActionCounterDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/UserActionCounterDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao/src/org/bbaw/bts/core/dao/contextFunctions/AbstractDaoFactoryContextFunction.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao/src/org/bbaw/bts/core/dao/contextFunctions/AbstractDaoFactoryContextFunction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao/src/org/bbaw/bts/core/dao/util/BTSQueryRequest.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao/src/org/bbaw/bts/core/dao/util/BTSQueryRequest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao/src/org/bbaw/bts/core/dao/util/DaoConstants.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao/src/org/bbaw/bts/core/dao/util/DaoConstants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.dao/src/org/bbaw/bts/core/dao/util/ScatteredCachingMapService.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.dao/src/org/bbaw/bts/core/dao/util/ScatteredCachingMapService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/RemoteDaoFactoryCouchDB.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/RemoteDaoFactoryCouchDB.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/impl/RemoteBTSProjectDaoImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/impl/RemoteBTSProjectDaoImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/impl/RemoteCouchDBDao.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/impl/RemoteCouchDBDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/impl/RemoteDBConnectionProviderImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/impl/RemoteDBConnectionProviderImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/MoveObjectsAmongProjectDBCollectionsServiceFactoryCorpus.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/MoveObjectsAmongProjectDBCollectionsServiceFactoryCorpus.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/AbstractCorpusObjectServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/AbstractCorpusObjectServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSAbstractTextServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSAbstractTextServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSAnnotationServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSAnnotationServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSImageServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSImageServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSLemmaEntryServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSLemmaEntryServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTCObjectServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTCObjectServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTextCorpusServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTextCorpusServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTextServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTextServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSThsEntryServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSThsEntryServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/CorpusObjectServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/CorpusObjectServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus/src/org/bbaw/bts/core/services/corpus/GenericCorpusObjectService.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus/src/org/bbaw/bts/core/services/corpus/GenericCorpusObjectService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/generic/GenericObjectServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/generic/GenericObjectServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSCommentServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSCommentServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSConfigurationServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSConfigurationServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSEvaluationServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSEvaluationServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSProjectServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSProjectServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSSelectionHistoryServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSSelectionHistoryServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSStatusMessageServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSStatusMessageServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSUserGroupServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSUserGroupServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSUserServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/BTSUserServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/GeneralBTSObjectServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/GeneralBTSObjectServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/IDServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/IDServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/UserActionCounterServiceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/src/org/bbaw/bts/core/services/impl/services/UserActionCounterServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.services/src/org/bbaw/bts/core/services/BTSSelectionHistoryService.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.services/src/org/bbaw/bts/core/services/BTSSelectionHistoryService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSE4ToGuiceXtextSourceViewerProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSE4ToGuiceXtextSourceViewerProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSEObjectDocumentationProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSEObjectDocumentationProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBIndexHelper.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBIndexHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBManager.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/src/org/bbaw/bts/corpus/btsCorpusModel/provider/BTSLemmaEntryItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/src/org/bbaw/bts/corpus/btsCorpusModel/provider/BTSLemmaEntryItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/src/org/bbaw/bts/corpus/btsCorpusModel/provider/BTSPassportEntryGroupItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/src/org/bbaw/bts/corpus/btsCorpusModel/provider/BTSPassportEntryGroupItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/src/org/bbaw/bts/corpus/btsCorpusModel/provider/BTSPassportEntryItemItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/src/org/bbaw/bts/corpus/btsCorpusModel/provider/BTSPassportEntryItemItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/src/org/bbaw/bts/corpus/btsCorpusModel/provider/BtsCorpusModelItemProviderAdapterFactory.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/src/org/bbaw/bts/corpus/btsCorpusModel/provider/BtsCorpusModelItemProviderAdapterFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSAbstractParagraphImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSAbstractParagraphImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSAbstractTextImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSAbstractTextImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSAmbivalenceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSAmbivalenceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSLemmaCaseImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSLemmaCaseImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSLemmaEntryImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSLemmaEntryImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSMarkerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSMarkerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSPassportEntryGroupImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSPassportEntryGroupImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSPassportEntryImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSPassportEntryImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSPassportEntryItemImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSPassportEntryItemImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSPassportImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSPassportImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSSenctenceImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSSenctenceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSTextContentImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSTextContentImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSTextSentenceItemImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSTextSentenceItemImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSWordImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BTSWordImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BtsCorpusModelFactoryImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/btsCorpusModel/impl/BtsCorpusModelFactoryImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/searchModel/WordFormOccurrence.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/searchModel/WordFormOccurrence.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/searchModel/WordFormOccurrenceGroup.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.corpus/src/org/bbaw/bts/corpus/searchModel/WordFormOccurrenceGroup.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/AdministrativDataObjectItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/AdministrativDataObjectItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSConfigItemItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSConfigItemItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSDBBaseObjectItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSDBBaseObjectItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSObjectItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSObjectItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSProjectItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSProjectItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSTimespanItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BTSTimespanItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BtsmodelItemProviderAdapterFactory.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsmodel/provider/BtsmodelItemProviderAdapterFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsviewmodel/provider/BtsviewmodelItemProviderAdapterFactory.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsviewmodel/provider/BtsviewmodelItemProviderAdapterFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsviewmodel/provider/TreeNodeWrapperItemProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsviewmodel/provider/TreeNodeWrapperItemProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.editor/src/org/bbaw/bts/btsmodel/presentation/BtsmodelActionBarContributor.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.editor/src/org/bbaw/bts/btsmodel/presentation/BtsmodelActionBarContributor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.editor/src/org/bbaw/bts/btsmodel/presentation/BtsmodelEditor.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.editor/src/org/bbaw/bts/btsmodel/presentation/BtsmodelEditor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model.editor/src/org/bbaw/bts/btsmodel/presentation/BtsmodelModelWizard.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model.editor/src/org/bbaw/bts/btsmodel/presentation/BtsmodelModelWizard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/BTSConfigItem.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/BTSConfigItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/AdministrativDataObjectImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/AdministrativDataObjectImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSCommentImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSCommentImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSConfigImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSConfigImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSConfigItemImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSConfigItemImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSConfigurationImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSConfigurationImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSDBBaseObjectImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSDBBaseObjectImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSDBCollectionRoleDescImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSDBCollectionRoleDescImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSObjectImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSObjectImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSObservableObjectImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSObservableObjectImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSPassportEditorConfigImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSPassportEditorConfigImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSProjectDBCollectionImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSProjectDBCollectionImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSProjectImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSProjectImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSRelationImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSRelationImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSRevisionImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSRevisionImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSTranslationsImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSTranslationsImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSUserImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSUserImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSWorkflowRuleImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSWorkflowRuleImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BtsmodelFactoryImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BtsmodelFactoryImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/MessageType.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/MessageType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/BTSObjectTypeTreeNodeImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/BTSObjectTypeTreeNodeImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/BtsviewmodelFactoryImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/BtsviewmodelFactoryImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/StatusMessageImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/StatusMessageImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/TreeNodeWrapperImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/TreeNodeWrapperImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/modelUtils/EmfModelHelper.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/modelUtils/EmfModelHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/tempmodel/CacheTreeNode.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/tempmodel/CacheTreeNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/src/org/bbaw/bts/ui/commons/corpus/events/BTSRelatingObjectsFilterEvent.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/src/org/bbaw/bts/ui/commons/corpus/events/BTSRelatingObjectsFilterEvent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/src/org/bbaw/bts/ui/commons/corpus/events/BTSRelatingObjectsLoadingEvent.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/src/org/bbaw/bts/ui/commons/corpus/events/BTSRelatingObjectsLoadingEvent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/src/org/bbaw/bts/ui/commons/corpus/events/BTSTextSelectionEvent.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/src/org/bbaw/bts/ui/commons/corpus/events/BTSTextSelectionEvent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/filter/AbstractObjectByListEntryFilter.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/filter/AbstractObjectByListEntryFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/filter/BTSObjectTypeSubtypeViewerFilter.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/filter/BTSObjectTypeSubtypeViewerFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/filter/TypeSubtypeViewerFilter.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/filter/TypeSubtypeViewerFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/search/SearchViewer.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/search/SearchViewer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/utils/BTSUIConstants.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/utils/BTSUIConstants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/validator/StringEmailAddressValidator.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/validator/StringEmailAddressValidator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/validator/StringHttp_s_URLValidator.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/validator/StringHttp_s_URLValidator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/validator/StringIsIntegerValidator.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/validator/StringIsIntegerValidator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/viewerSorter/BTSObjectByNameViewerSorter.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/viewerSorter/BTSObjectByNameViewerSorter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/widgets/TranslationEditorComposite.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/widgets/TranslationEditorComposite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy.commons/src/org/bbaw/bts/ui/corpus/egy/commons/comparator/BTSEgyObjectByNameViewerSorter.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy.commons/src/org/bbaw/bts/ui/corpus/egy/commons/comparator/BTSEgyObjectByNameViewerSorter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/compare/CompareViewerFactoryEgyLemmaImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/compare/CompareViewerFactoryEgyLemmaImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/compare/CompareViewerFactoryEgyTextImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/compare/CompareViewerFactoryEgyTextImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/dialogs/CheckTextDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/dialogs/CheckTextDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/handlers/FilterOnlyIncompleteTextsHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/handlers/FilterOnlyIncompleteTextsHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/handlers/FilterOnlyInvalidLemmataHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/handlers/FilterOnlyInvalidLemmataHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/handlers/FilterOnlyInvalidTextsHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/handlers/FilterOnlyInvalidTextsHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/handlers/test/TestTextModelElementDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/handlers/test/TestTextModelElementDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyHieroglyphenTypeWriter.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyHieroglyphenTypeWriter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmaEditorPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmaEditorPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmatizerPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmatizerPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextEditorPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextEditorPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextTranslationPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextTranslationPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/support/AbstractTextEditorLogic.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/support/AbstractTextEditorLogic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/SignTextComposite.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/SignTextComposite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/support/ElementFigure.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/support/ElementFigure.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/support/ElementFigureImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/support/ElementFigureImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/test/MDCSplitTester.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/test/MDCSplitTester.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/compare/CompareViewerFactoryPassportImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/compare/CompareViewerFactoryPassportImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/dialogs/CheckPassportDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/dialogs/CheckPassportDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/dialogs/NewCorpusObjectDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/dialogs/NewCorpusObjectDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/handlers/NavigatorParametrizedFilterHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/handlers/NavigatorParametrizedFilterHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/handlers/PassportOpenObjectMetadataHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/handlers/PassportOpenObjectMetadataHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ATextNavigatorPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ATextNavigatorPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/AnnotationsPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/AnnotationsPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/CorpusNavigatorPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/CorpusNavigatorPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/LemmaNavigator.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/LemmaNavigator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/PassportEditorPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/PassportEditorPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ThsNavigator.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ThsNavigator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/annotationsPart/RelatedObjectGroup.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/annotationsPart/RelatedObjectGroup.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/annotationsPart/RelatedObjectGroupComment.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/annotationsPart/RelatedObjectGroupComment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/annotationsPart/RelatedObjectGroupRubrum.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/annotationsPart/RelatedObjectGroupRubrum.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/passportEditor/PassportEntryContentProposalProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/passportEditor/PassportEntryContentProposalProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/passportEditor/PassportEntryEditorComposite.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/passportEditor/PassportEntryEditorComposite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/passportEditor/PassportEntryGroupEditor.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/passportEditor/PassportEntryGroupEditor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/passportEditor/PassportEntryItemEditor.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/passportEditor/PassportEntryItemEditor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/ATextSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/ATextSettingsPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/CorpusSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/CorpusSettingsPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/LemmaListSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/LemmaListSettingsPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/TextAnnotationSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/TextAnnotationSettingsPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/ThsSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/ThsSettingsPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/provider/BTSCorpusRemovableContentProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/provider/BTSCorpusRemovableContentProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/sorter/BTSEgyObjectByNameViewerSorter.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/sorter/BTSEgyObjectByNameViewerSorter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.font/src/org/bbaw/bts/ui/font/internal/BTSFontManagerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.font/src/org/bbaw/bts/ui/font/internal/BTSFontManagerImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/compare/CompareViewerFactoryGeneralImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/compare/CompareViewerFactoryGeneralImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/BTSConfigurationDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/BTSConfigurationDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/CommentEditorDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/CommentEditorDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/EditPropertiesDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/EditPropertiesDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/NewConfigurationDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/NewConfigurationDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/ObjectByListEntrySelectionFilterDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/ObjectByListEntrySelectionFilterDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/PasswordChangeDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/PasswordChangeDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/SearchSelectObjectDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/SearchSelectObjectDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/CreateNewProjectHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/CreateNewProjectHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/EditConfigurationHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/EditConfigurationHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/EditProjectHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/EditProjectHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/InstallNewSoftwareHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/InstallNewSoftwareHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/MoveObjectAmongProjectDBCollectionHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/MoveObjectAmongProjectDBCollectionHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/NewConfigurationHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/NewConfigurationHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenCompareDialogHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenCompareDialogHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenConflictsDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenConflictsDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenDBManagerDialog.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenDBManagerDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenObjectByListEntrySelectionFilterDialogHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenObjectByListEntrySelectionFilterDialogHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenStatusMessagesDialogHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenStatusMessagesDialogHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenTypeSubtypeFilterDialogHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenTypeSubtypeFilterDialogHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/RedoHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/RedoHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/SaveAllHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/SaveAllHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/SaveHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/SaveHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/ShowPreferenceDialogHandler.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/ShowPreferenceDialogHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/TESTER.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/TESTER.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/objectTypeSelector/ObjectTypeSelectionTreeComposite.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/objectTypeSelector/ObjectTypeSelectionTreeComposite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/objectTypeSelector/RelationSubjectObjectTypesSelectionComposite.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/objectTypeSelector/RelationSubjectObjectTypesSelectionComposite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/AbstractComparePart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/AbstractComparePart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ComparePart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ComparePart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ConflictsPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ConflictsPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/DBManagerPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/DBManagerPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ObjectUpdaterReaderEditorPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ObjectUpdaterReaderEditorPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/UserManagementPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/UserManagementPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/preferences/ConfigurationPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/preferences/ConfigurationPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/preferences/LoginRememberMePage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/preferences/LoginRememberMePage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/preferences/ProjectSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/preferences/ProjectSettingsPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/provider/BTSProjectRemovableContentProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/provider/BTSProjectRemovableContentProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/widgets/CompoundIdentifiersEditorComposite.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/widgets/CompoundIdentifiersEditorComposite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/widgets/CompoundRelationsEditorComposite.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/widgets/CompoundRelationsEditorComposite.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/widgets/ObjectSelectionProposalProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/widgets/ObjectSelectionProposalProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/wizards/installation/InstallationWizard.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/wizards/installation/InstallationWizard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/wizards/installation/SelectProjectsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/wizards/installation/SelectProjectsPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/wizards/installation/support/Connection.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/wizards/installation/support/Connection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/wizards/newProject/ProjectCollectionPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/wizards/newProject/ProjectCollectionPage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/eclipse/wb/swt/ResourceManager.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/eclipse/wb/swt/ResourceManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/eclipse/wb/swt/SWTResourceManager.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/eclipse/wb/swt/SWTResourceManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/ramo/klevis/p4app/parts/SimpleUninstallPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/ramo/klevis/p4app/parts/SimpleUninstallPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/src/org/bbaw/bts/ui/resources/impl/BTSResourceProviderImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/src/org/bbaw/bts/ui/resources/impl/BTSResourceProviderImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.resources/src/org/bbaw/bts/ui/resources/BTSResourceProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.resources/src/org/bbaw/bts/ui/resources/BTSResourceProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/commands/E4WorkbenchCommandConstants.java" afterPath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/commands/E4WorkbenchCommandConstants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/internal/dialogs/PerspectiveContentProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/internal/dialogs/PerspectiveContentProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/internal/dialogs/PerspectiveLabelProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/internal/dialogs/PerspectiveLabelProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/internal/dialogs/SelectPerspectiveDialog.java" afterPath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/internal/dialogs/SelectPerspectiveDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/tools/E4Util.java" afterPath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/tools/E4Util.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/tools/PerspectiveSwitcherSwtTrim.java" afterPath="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src/org/eclipse/e4/ui/workbench/perspectiveswitcher/tools/PerspectiveSwitcherSwtTrim.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/e4-src/e4/handler/E4TemplatePreferencePage.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/e4-src/e4/handler/E4TemplatePreferencePage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/e4-src/e4/handler/TemplateVariableProcessor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/e4-src/e4/handler/TemplateVariableProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/IImageHelper.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/IImageHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/compare/DefaultMergeViewer.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/compare/DefaultMergeViewer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/containers/JavaProjectsStateHelper.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/containers/JavaProjectsStateHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/DirtyStateEditorSupport.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/DirtyStateEditorSupport.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/DocumentBasedDirtyResource.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/DocumentBasedDirtyResource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/IXtextEditorCallback.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/IXtextEditorCallback.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/LanguageSpecificURIEditorOpener.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/LanguageSpecificURIEditorOpener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/PresentationDamager.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/PresentationDamager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/WorkspaceEncodingProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/WorkspaceEncodingProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/XtextEditor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/XtextEditor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/XtextSourceViewer.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/XtextSourceViewer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/XtextSourceViewerConfiguration.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/XtextSourceViewerConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/actions/IActionContributor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/actions/IActionContributor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/autoedit/AbstractEditStrategyProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/autoedit/AbstractEditStrategyProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/autoedit/PartitionInsertEditStrategy.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/autoedit/PartitionInsertEditStrategy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/autoedit/SingleLineTerminalsStrategy.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/autoedit/SingleLineTerminalsStrategy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/AbstractJavaBasedContentProposalProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/AbstractJavaBasedContentProposalProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/CompletionProposalComputer.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/CompletionProposalComputer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ContentAssistContext.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ContentAssistContext.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ContextInformationComputer.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ContextInformationComputer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ICompletionProposalPostProcessor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ICompletionProposalPostProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/IFollowElementAcceptor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/IFollowElementAcceptor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/IProposalConflictHelper.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/IProposalConflictHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ITemplateAcceptor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ITemplateAcceptor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/PrefixMatcher.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/PrefixMatcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/antlr/AbstractContentAssistParser.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/antlr/AbstractContentAssistParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/antlr/ParserBasedContentAssistContextFactory.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/antlr/ParserBasedContentAssistContextFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/antlr/internal/AbstractInternalContentAssistParser.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/antlr/internal/AbstractInternalContentAssistParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/embedded/EmbeddedEditorFactory.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/embedded/EmbeddedEditorFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/embedded/TextViewerMoveLinesAction.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/embedded/TextViewerMoveLinesAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/findrefs/ReferenceSearchResultEvents.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/findrefs/ReferenceSearchResultEvents.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/findrefs/ReferenceSearchViewPageActions.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/findrefs/ReferenceSearchViewPageActions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/folding/DefaultFoldingRegionProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/folding/DefaultFoldingRegionProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/folding/DefaultFoldingStructureProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/folding/DefaultFoldingStructureProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/formatting/PreferenceStoreWhitespaceInformationProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/formatting/PreferenceStoreWhitespaceInformationProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/AnnotationWithQuickFixesHover.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/AnnotationWithQuickFixesHover.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/DefaultCompositeHover.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/DefaultCompositeHover.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/IEObjectHover.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/IEObjectHover.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/IEObjectHoverProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/IEObjectHoverProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/html/DefaultEObjectHoverProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/html/DefaultEObjectHoverProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/html/IEObjectHoverDocumentationProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/html/IEObjectHoverDocumentationProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/html/IXtextBrowserInformationControl.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/hover/html/IXtextBrowserInformationControl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/CommonWordIterator.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/CommonWordIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/DocumentPartitioner.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/DocumentPartitioner.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/DocumentTokenSource.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/DocumentTokenSource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/IXtextDocument.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/IXtextDocument.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/IXtextDocumentContentObserver.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/IXtextDocumentContentObserver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/PartitionTokenScanner.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/PartitionTokenScanner.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/XtextDocument.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/XtextDocument.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/XtextDocumentProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/XtextDocumentProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/edit/DefaultTextEditComposer.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/edit/DefaultTextEditComposer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/edit/IssueModificationContext.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/edit/IssueModificationContext.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/occurrences/DefaultOccurrenceComputer.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/occurrences/DefaultOccurrenceComputer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/occurrences/MarkOccurrenceActionContributor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/occurrences/MarkOccurrenceActionContributor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/IOutlineNode.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/IOutlineNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/actions/IOutlineContribution.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/actions/IOutlineContribution.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/impl/OutlineFilterAndSorter.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/impl/OutlineFilterAndSorter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/impl/OutlineRefreshJob.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/impl/OutlineRefreshJob.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/preferences/AbstractPreferencePage.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/preferences/AbstractPreferencePage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/preferences/IPreferenceStoreInitializer.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/preferences/IPreferenceStoreInitializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/preferences/fields/AbstractDetailsPart.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/preferences/fields/AbstractDetailsPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/preferences/fields/AbstractMasterDetailsFieldEditor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/preferences/fields/AbstractMasterDetailsFieldEditor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/AbstractDeclarativeQuickfixProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/AbstractDeclarativeQuickfixProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/AbstractIssueResolutionProviderAdapter.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/AbstractIssueResolutionProviderAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/DefaultQuickfixProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/DefaultQuickfixProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/ISimilarityMatcher.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/ISimilarityMatcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/IssueResolutionProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/quickfix/IssueResolutionProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/reconciler/XtextReconciler.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/reconciler/XtextReconciler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/selection/AstSelectionProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/selection/AstSelectionProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/DefaultHighlightingConfiguration.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/DefaultHighlightingConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/HighlightingPresenter.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/HighlightingPresenter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/HighlightingReconciler.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/HighlightingReconciler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/LightweightPosition.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/LightweightPosition.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/MergingHighlightedPositionAcceptor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/MergingHighlightedPositionAcceptor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/SyntaxColoringPreferencePage.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/SyntaxColoringPreferencePage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/TextAttributeProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/TextAttributeProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/TokenScanner.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/syntaxcoloring/TokenScanner.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/templates/CrossReferenceTemplateVariableResolver.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/templates/CrossReferenceTemplateVariableResolver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/toggleComments/DefaultSingleLineCommentHelper.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/toggleComments/DefaultSingleLineCommentHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/toggleComments/ToggleSLCommentAction.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/toggleComments/ToggleSLCommentAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/utils/EditorUtils.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/utils/EditorUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/validation/MarkerIssueProcessor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/validation/MarkerIssueProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/validation/ValidatingEditorCallback.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/validation/ValidatingEditorCallback.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/validation/ValidationJob.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/validation/ValidationJob.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/generator/trace/DefaultUITraceURIConverter.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/generator/trace/DefaultUITraceURIConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/internal/XtextPluginImages.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/internal/XtextPluginImages.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/label/AbstractLabelProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/label/AbstractLabelProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/label/DeclarativeLabelProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/label/DeclarativeLabelProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/preferences/OptionsConfigurationBlock.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/preferences/OptionsConfigurationBlock.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/preferences/PropertyAndPreferencePage.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/preferences/PropertyAndPreferencePage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ILinkedPositionGroupCalculator.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ILinkedPositionGroupCalculator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/AbstractRenameStrategy.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/AbstractRenameStrategy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/DefaultRenameStrategy.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/DefaultRenameStrategy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/DefaultRenameStrategyProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/DefaultRenameStrategyProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/DisplayChangeWrapper.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/DisplayChangeWrapper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/IRefactoringDocument.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/IRefactoringDocument.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/RefactoringCrossReferenceSerializer.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/RefactoringCrossReferenceSerializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/RenameElementProcessor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/impl/RenameElementProcessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ui/DefaultLinkedPositionGroupCalculator.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ui/DefaultLinkedPositionGroupCalculator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ui/DefaultRenameSupport.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ui/DefaultRenameSupport.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ui/IRenameContextFactory.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ui/IRenameContextFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ui/RefactoringWizardOpenOperation_NonForking.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/refactoring/ui/RefactoringWizardOpenOperation_NonForking.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/DefaultResourceUIServiceProvider.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/DefaultResourceUIServiceProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/IStorage2UriMapperJdtExtensions.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/IStorage2UriMapperJdtExtensions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/Storage2UriMapperImpl.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/Storage2UriMapperImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/Storage2UriMapperJavaImpl.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/Storage2UriMapperJavaImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/search/IXtextEObjectSearch.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/search/IXtextEObjectSearch.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/search/IXtextSearchFilter.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/search/IXtextSearchFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/BundleClasspathUriResolver.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/BundleClasspathUriResolver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/DisplayRunnable.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/DisplayRunnable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/DisplayRunnableWithResult.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/DisplayRunnableWithResult.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/IProjectFactoryContributor.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/IProjectFactoryContributor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/JavaProjectFactory.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/JavaProjectFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/JdtClasspathUriResolver.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/util/JdtClasspathUriResolver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/views/AbstractSourceView.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/views/AbstractSourceView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/wizard/XtextNewProjectWizard.java" afterPath="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/wizard/XtextNewProjectWizard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/src/org/eclipselabs/emfjson/couchdb/efs/CouchDBFileStore.java" afterPath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/src/org/eclipselabs/emfjson/couchdb/efs/CouchDBFileStore.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/src/org/eclipselabs/emfjson/couchdb/ui/model/CouchDB.java" afterPath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/src/org/eclipselabs/emfjson/couchdb/ui/model/CouchDB.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/src/org/eclipselabs/emfjson/couchdb/ui/model/CouchDatabase.java" afterPath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/src/org/eclipselabs/emfjson/couchdb/ui/model/CouchDatabase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb/src/org/eclipselabs/emfjson/couchdb/internal/CouchDB.java" afterPath="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb/src/org/eclipselabs/emfjson/couchdb/internal/CouchDB.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONLoad.java" afterPath="$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONLoad.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONSave.java" afterPath="$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONSave.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONUtil.java" afterPath="$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/src/org/fuberlin/bts/ui/corpus/egy/annotations/parts/TextAnnotationsComposite.java" afterPath="$PROJECT_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/src/org/fuberlin/bts/ui/corpus/egy/annotations/parts/TextAnnotationsComposite.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/src/org/fuberlin/bts/ui/corpus/egy/annotations/parts/TextAnnotationsPart.java" afterPath="$PROJECT_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/src/org/fuberlin/bts/ui/corpus/egy/annotations/parts/TextAnnotationsPart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbClient.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbDesign.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbDesign.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbUtil.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/Document.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/Document.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/Params.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/Params.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/Replicator.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/Replicator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/URIBuilder.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/URIBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/View.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/View.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/ViewResult.java" afterPath="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/ViewResult.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/src/org/ramo/klevis/p2/core/service/impl/InstallNewSoftwareService.java" afterPath="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/src/org/ramo/klevis/p2/core/service/impl/InstallNewSoftwareService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/src/org/ramo/klevis/p2/core/service/impl/UninstallSoftwareService.java" afterPath="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/src/org/ramo/klevis/p2/core/service/impl/UninstallSoftwareService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/src/org/ramo/klevis/p2/core/util/Utils.java" afterPath="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/src/org/ramo/klevis/p2/core/util/Utils.java" />
     </list>
     <ignored path="$PROJECT_DIR$/org.bbaw.bts.app.feature/target/" />
     <ignored path="$PROJECT_DIR$/org.eclipse.xtext.ui/target/" />
@@ -87,91 +522,113 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CouchDBIndexHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBIndexHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="192" column="30" lean-forward="false" selection-start-line="192" selection-start-column="30" selection-end-line="192" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TreeNodeWrapperItemProvider.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.model.edit/src/org/bbaw/bts/btsviewmodel/provider/TreeNodeWrapperItemProvider.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="428" column="28" lean-forward="false" selection-start-line="428" selection-start-column="28" selection-end-line="428" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EgyLemmaEditorPart.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmaEditorPart.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-446">
-              <caret line="327" column="8" lean-forward="false" selection-start-line="327" selection-start-column="8" selection-end-line="327" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EgyTextEditorPart.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextEditorPart.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="1983" column="4" lean-forward="false" selection-start-line="1983" selection-start-column="4" selection-end-line="1983" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EgyTextTranslationPart.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextTranslationPart.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="554" column="8" lean-forward="false" selection-start-line="554" selection-start-column="8" selection-end-line="554" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EditingDomainControllerImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/EditingDomainControllerImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="178" column="8" lean-forward="false" selection-start-line="178" selection-start-column="8" selection-end-line="178" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CorpusObjectServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/CorpusObjectServiceImpl.java">
+      <file leaf-file-name="CouchDBManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="184">
-              <caret line="620" column="4" lean-forward="false" selection-start-line="620" selection-start-column="4" selection-end-line="620" selection-end-column="4" />
+              <caret line="646" column="19" lean-forward="false" selection-start-line="646" selection-start-column="19" selection-end-line="646" selection-end-column="19" />
+              <folding>
+                <marker date="1500481430961" expanded="true" signature="48676:49526" ph="{...}" />
+                <marker date="1500481430961" expanded="true" signature="70513:70638" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ATextNavigatorPart.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ATextNavigatorPart.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="517" column="38" lean-forward="false" selection-start-line="517" selection-start-column="38" selection-end-line="517" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BTSTextServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTextServiceImpl.java">
+      <file leaf-file-name="DirFileEntityReplacer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/DirFileEntityReplacer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="470" column="31" lean-forward="false" selection-start-line="470" selection-start-column="31" selection-end-line="470" selection-end-column="31" />
+            <state relative-caret-position="169">
+              <caret line="58" column="48" lean-forward="false" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BTSTextEditorControllerImpl.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/BTSTextEditorControllerImpl.java">
+      <file leaf-file-name="LemmaImporter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/lemma/LemmaImporter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="456" column="45" lean-forward="false" selection-start-line="456" selection-start-column="45" selection-end-line="456" selection-end-column="45" />
+            <state relative-caret-position="327">
+              <caret line="106" column="8" lean-forward="false" selection-start-line="106" selection-start-column="8" selection-end-line="106" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UsersImporter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/UsersImporter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="99" column="8" lean-forward="false" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThsImporter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/ThsImporter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="327">
+              <caret line="104" column="8" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmfModelHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/modelUtils/EmfModelHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="252" column="10" lean-forward="false" selection-start-line="252" selection-start-column="10" selection-end-line="252" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BtsviewmodelFactoryImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/BtsviewmodelFactoryImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="172" column="8" lean-forward="false" selection-start-line="172" selection-start-column="8" selection-end-line="172" selection-end-column="8" />
+              <folding>
+                <element signature="e#6277#6278#0" expanded="true" />
+                <element signature="e#6325#6326#0" expanded="true" />
+                <element signature="e#6476#6477#0" expanded="true" />
+                <element signature="e#6522#6523#0" expanded="true" />
+                <element signature="e#6689#6690#0" expanded="true" />
+                <element signature="e#6743#6744#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CompareViewerFactoryGeneralImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/compare/CompareViewerFactoryGeneralImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="372">
+              <caret line="33" column="40" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ComparePart.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ComparePart.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="215" column="29" lean-forward="false" selection-start-line="215" selection-start-column="29" selection-end-line="215" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -191,6 +648,7 @@
       <find>OSValidator</find>
       <find>Resource</find>
       <find>storage2UriMapper</find>
+      <find>selection</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -204,33 +662,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbClient.java" />
-        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/LemmatizerTester.java" />
-        <option value="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/outline/quickoutline/StringMatcher.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/utils/BTSUIConstants.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/validator/StringEmailAddressValidator.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/AbstractCorpusObjectDaoImpl.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.db/src/org/bbaw/bts/db/DBManager.java" />
-        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/CharsService.java" />
-        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/signs/SignService.java" />
-        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/usersRole/UserRoleService.java" />
-        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/thsMapping/ThsMappingService.java" />
-        <option value="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/View.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ObjectUpdaterReaderEditorPart.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/support/TypedLabel.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/BTSUserDaoImpl.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/OSGI-INF/bts-resources.properties" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/OSGI-INF/resources.properties" />
-        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/chars.properties" />
-        <option value="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbDesign.java" />
         <option value="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/formatting/PreferenceStoreWhitespaceInformationProvider.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/ApplicationStartupControllerImpl.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ATextNavigatorPart.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ThsNavigator.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/LemmaNavigator.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/handlers/DeleteHandler.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBManager.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenSearchQueryDialogHandler.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenObjectByListEntrySelectionFilterDialogHandler.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/provider/BTSProjectLabelProvider.java" />
@@ -241,7 +678,6 @@
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/dialogs/PasswordChangeDialog.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/ramo/klevis/p4app/parts/SimpleUninstallPart.java" />
         <option value="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/autoedit/MultiLineTerminalsEditStrategy.java" />
-        <option value="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/embedded/TextViewerMoveLinesAction.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/PassportEditorPart.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/util/AnnotationToolbarItemCreator.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/textAnnotationSettings/TextAnnotationSettingsEditor.java" />
@@ -251,10 +687,32 @@
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextEditorPart.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextTranslationPart.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/EditingDomainControllerImpl.java" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/CorpusObjectServiceImpl.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTextServiceImpl.java" />
         <option value="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/BTSTextEditorControllerImpl.java" />
         <option value="$PROJECT_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/src/org/fuberlin/bts/ui/corpus/egy/annotations/parts/TextAnnotationsPart.java" />
+        <option value="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbClient.java" />
+        <option value="$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONUtil.java" />
+        <option value="$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONSave.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/CouchDBDao.java" />
+        <option value="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb/src/org/eclipselabs/emfjson/couchdb/internal/CouchDB.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/sorter/BTSEgyObjectByNameViewerSorter.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/impl/RemoteCouchDBDao.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/CorpusObjectServiceImpl.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/BTSConfigItem.java" />
+        <option value="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/CommonWordIterator.java" />
+        <option value="$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/embedded/TextViewerMoveLinesAction.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/LemmaNavigatorControllerImpl.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBManager.java" />
+        <option value="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbUtil.java" />
+        <option value="$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/URIBuilder.java" />
+        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/DirFileEntityReplacer.java" />
+        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/lemma/LemmaImporter.java" />
+        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/UsersImporter.java" />
+        <option value="$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/ThsImporter.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/modelUtils/EmfModelHelper.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/BtsviewmodelFactoryImpl.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/compare/CompareViewerFactoryGeneralImpl.java" />
+        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ComparePart.java" />
       </list>
     </option>
   </component>
@@ -326,7 +784,13 @@
             <id />
           </State>
           <State>
+            <id>Data flow issuesJava</id>
+          </State>
+          <State>
             <id>General</id>
+          </State>
+          <State>
+            <id>Java</id>
           </State>
           <State>
             <id>OSGi</id>
@@ -334,7 +798,7 @@
         </expanded-state>
         <selected-state>
           <State>
-            <id>LongLine</id>
+            <id>BooleanVariableAlwaysNegated</id>
           </State>
         </selected-state>
       </profile-state>
@@ -389,6 +853,36 @@
               <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
               <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
               <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
+              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
+              <item name="org.fuberlin.bts.ui.corpus.egy.annotations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
+              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
+              <item name="org.fuberlin.bts.ui.corpus.egy.annotations" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
+              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
+              <item name="org.fuberlin.bts.ui.corpus.egy.annotations" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="annotations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
+              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
+              <item name="org.fuberlin.bts.ui.corpus.egy.annotations" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="annotations" type="462c0819:PsiDirectoryNode" />
+              <item name="parts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
@@ -906,16 +1400,15 @@
       <workItem from="1500468335281" duration="261000" />
       <workItem from="1500468636238" duration="27000" />
       <workItem from="1500468738285" duration="16000" />
-      <workItem from="1500468784230" duration="5975000" />
+      <workItem from="1500468784230" duration="8759000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18842000" />
+    <option name="totallyTimeSpent" value="21626000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="44" width="1920" height="1156" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -925,12 +1418,12 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293023" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09322917" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23463687" sideWeight="0.71510416" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23463687" sideWeight="0.71510416" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23854166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45623836" sideWeight="0.81523436" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection Results" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45623836" sideWeight="0.81523436" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32774675" sideWeight="0.49791667" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -973,278 +1466,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/utils/BTSUIConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="230" column="105" lean-forward="false" selection-start-line="230" selection-start-column="105" selection-end-line="230" selection-end-column="105" />
-          <folding>
-            <marker date="1500475938378" expanded="false" signature="0:1182" ph="/**...*/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.commons/src/org/bbaw/bts/ui/commons/validator/StringEmailAddressValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="48" column="54" lean-forward="false" selection-start-line="48" selection-start-column="54" selection-end-line="48" selection-end-column="54" />
-          <folding>
-            <marker date="1500475937690" expanded="false" signature="0:1182" ph="/**...*/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src/org/bbaw/bts/core/dao/corpus/couchdb/impl/AbstractCorpusObjectDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="33" column="17" lean-forward="false" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.lightcouch/META-INF/MANIFEST.MF">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="22" column="16" lean-forward="false" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.db/src/org/bbaw/bts/db/DBManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/CharsService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="19" column="12" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/signs/SignService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="19" column="12" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/usersRole/UserRoleService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="17" column="9" lean-forward="false" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="149" column="17" lean-forward="false" selection-start-line="149" selection-start-column="17" selection-end-line="149" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ObjectUpdaterReaderEditorPart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="492" column="16" lean-forward="false" selection-start-line="492" selection-start-column="16" selection-end-line="492" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/support/TypedLabel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="8" column="36" lean-forward="false" selection-start-line="8" selection-start-column="36" selection-end-line="8" selection-end-column="36" />
-          <folding>
-            <element signature="e#177#224#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/impl/BTSUserDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="163" column="13" lean-forward="true" selection-start-line="163" selection-start-column="13" selection-end-line="163" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/thsMapping/ThsMappingService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/OSGI-INF/resources.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/chars.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="73" column="10" lean-forward="false" selection-start-line="73" selection-start-column="10" selection-end-line="73" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/OSGI-INF/bts-resources.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbDesign.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="188" column="0" lean-forward="false" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/resource/IStorage2UriMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="33" column="48" lean-forward="true" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/formatting/PreferenceStoreWhitespaceInformationProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="59" column="16" lean-forward="false" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/src/org/bbaw/bts/core/controller/impl/generalController/ApplicationStartupControllerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="665" column="55" lean-forward="false" selection-start-line="665" selection-start-column="55" selection-end-line="665" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ATextNavigatorPart.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="350" column="16" lean-forward="false" selection-start-line="350" selection-start-column="16" selection-end-line="350" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ThsNavigator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="340" column="67" lean-forward="false" selection-start-line="340" selection-start-column="67" selection-end-line="340" selection-end-column="67" />
-          <folding>
-            <marker date="1500475930386" expanded="false" signature="11459:11587" ph="(ISelectionChangedListener) (event) → {" />
-            <marker date="1500475930386" expanded="true" signature="15301:15411" ph="{...}" />
-            <marker date="1500475930386" expanded="true" signature="15622:15712" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/LemmaNavigator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="325" column="67" lean-forward="false" selection-start-line="325" selection-start-column="67" selection-end-line="325" selection-end-column="67" />
-          <folding>
-            <marker date="1500475929973" expanded="true" signature="15215:15327" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/handlers/DeleteHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="36" column="72" lean-forward="false" selection-start-line="36" selection-start-column="72" selection-end-line="36" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="788" column="70" lean-forward="false" selection-start-line="788" selection-start-column="70" selection-end-line="788" selection-end-column="70" />
-          <folding>
-            <marker date="1500475938547" expanded="true" signature="48810:49660" ph="{...}" />
-            <marker date="1500475938547" expanded="true" signature="70647:70772" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenSearchQueryDialogHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="44" column="8" lean-forward="false" selection-start-line="44" selection-start-column="8" selection-end-line="44" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/handlers/OpenObjectByListEntrySelectionFilterDialogHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="202" column="8" lean-forward="false" selection-start-line="202" selection-start-column="8" selection-end-line="202" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/provider/BTSProjectLabelProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
-          <folding>
-            <element signature="e#679#680#0" expanded="false" />
-            <element signature="e#725#726#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/preferences/LoginRememberMePage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="105" column="9" lean-forward="true" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/findrefs/TreeViewerNavigator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="169" column="0" lean-forward="false" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/SignTextComposite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="1678" column="0" lean-forward="false" selection-start-line="1678" selection-start-column="0" selection-end-line="1678" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/ConfigurableCompletionProposal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
@@ -1290,17 +1511,6 @@
         <state relative-caret-position="175">
           <caret line="105" column="0" lean-forward="false" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/embedded/TextViewerMoveLinesAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="340" column="70" lean-forward="false" selection-start-line="340" selection-start-column="70" selection-end-line="340" selection-end-column="70" />
-          <folding>
-            <element signature="e#10547#10548#0" expanded="false" />
-            <element signature="e#10615#10616#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1376,14 +1586,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/CorpusObjectServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="620" column="4" lean-forward="false" selection-start-line="620" selection-start-column="4" selection-end-line="620" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/BTSTextServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="319">
@@ -1392,23 +1594,302 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/BTSTextEditorControllerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="472" column="9" lean-forward="true" selection-start-line="472" selection-start-column="9" selection-end-line="472" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/lang/Runnable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/src/org/fuberlin/bts/ui/corpus/egy/annotations/parts/TextAnnotationsPart.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="619" column="42" lean-forward="false" selection-start-line="619" selection-start-column="42" selection-end-line="619" selection-end-column="42" />
+        <state relative-caret-position="442">
+          <caret line="195" column="33" lean-forward="false" selection-start-line="195" selection-start-column="24" selection-end-line="195" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/designdocs/admin/views/all_projects/map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/impl/BTSIdentifiableItemImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="47" column="2" lean-forward="true" selection-start-line="47" selection-start-column="2" selection-end-line="47" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/Activator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="48" column="0" lean-forward="true" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="578" column="9" lean-forward="false" selection-start-line="578" selection-start-column="9" selection-end-line="578" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="44" column="14" lean-forward="false" selection-start-line="44" selection-start-column="14" selection-end-line="44" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.eclipselabs.emfjson/src/org/eclipselabs/emfjson/internal/JSONSave.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="285" column="10" lean-forward="false" selection-start-line="285" selection-start-column="10" selection-end-line="285" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/src/org/bbaw/bts/dao/couchDB/CouchDBDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="1350" column="9" lean-forward="false" selection-start-line="1350" selection-start-column="9" selection-end-line="1350" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb/src/org/eclipselabs/emfjson/couchdb/internal/CouchDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="472" column="10" lean-forward="false" selection-start-line="472" selection-start-column="10" selection-end-line="472" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/IXtextEditorCallback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/findrefs/ReferenceSearchViewPageActions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.commons/src/org/bbaw/bts/commons/OSValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="23" column="4" lean-forward="false" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/sorter/BTSEgyObjectByNameViewerSorter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="37" column="4" lean-forward="false" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src/org/bbaw/bts/core/remote/dao/couchDB/impl/RemoteCouchDBDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="254" column="12" lean-forward="false" selection-start-line="254" selection-start-column="12" selection-end-line="254" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/src/org/bbaw/bts/core/services/corpus/impl/services/CorpusObjectServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="580" column="46" lean-forward="false" selection-start-line="580" selection-start-column="46" selection-end-line="580" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.db/src/org/bbaw/bts/db/DBManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="68" column="12" lean-forward="false" selection-start-line="68" selection-start-column="12" selection-end-line="68" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsmodel/BTSConfigItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="197" column="12" lean-forward="false" selection-start-line="197" selection-start-column="12" selection-end-line="197" selection-end-column="12" />
           <folding>
-            <element signature="e#14130#16031#0" expanded="true" />
-            <element signature="e#16030#16031#0" expanded="true" />
-            <element signature="e#24994#26606#0" expanded="true" />
-            <element signature="e#26605#26606#0" expanded="true" />
+            <element signature="e#7180#7230#1" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/BTSTextEditorControllerImpl.java">
+    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/model/CommonWordIterator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="456" column="45" lean-forward="false" selection-start-line="456" selection-start-column="45" selection-end-line="456" selection-end-column="45" />
+        <state relative-caret-position="175">
+          <caret line="139" column="22" lean-forward="false" selection-start-line="139" selection-start-column="22" selection-end-line="139" selection-end-column="22" />
+          <folding>
+            <element signature="e#702#752#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/embedded/TextViewerMoveLinesAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="248" column="20" lean-forward="false" selection-start-line="248" selection-start-column="20" selection-end-line="248" selection-end-column="20" />
+          <folding>
+            <element signature="e#1493#1517#0" expanded="false" />
+            <element signature="e#10572#10573#0" expanded="false" />
+            <element signature="e#10640#10641#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.eclipse.xtext.ui/src/org/eclipse/xtext/ui/editor/contentassist/antlr/AntlrProposalConflictHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="66" column="22" lean-forward="false" selection-start-line="66" selection-start-column="22" selection-end-line="66" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/LemmaNavigatorControllerImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="38" column="37" lean-forward="false" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/CouchDbUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="108" column="64" lean-forward="true" selection-start-line="108" selection-start-column="64" selection-end-line="108" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.lightcouch/src/org/lightcouch/URIBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="42" column="8" lean-forward="false" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/chars/DirFileEntityReplacer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="58" column="48" lean-forward="false" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/lemma/LemmaImporter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="106" column="8" lean-forward="false" selection-start-line="106" selection-start-column="8" selection-end-line="106" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/UsersImporter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="99" column="8" lean-forward="false" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bts.transform.ui/src/bts/transform/ui/users/ThsImporter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="104" column="8" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/modelUtils/EmfModelHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="252" column="10" lean-forward="false" selection-start-line="252" selection-start-column="10" selection-end-line="252" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.model/src/org/bbaw/bts/btsviewmodel/impl/BtsviewmodelFactoryImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="172" column="8" lean-forward="false" selection-start-line="172" selection-start-column="8" selection-end-line="172" selection-end-column="8" />
+          <folding>
+            <element signature="e#6277#6278#0" expanded="true" />
+            <element signature="e#6325#6326#0" expanded="true" />
+            <element signature="e#6476#6477#0" expanded="true" />
+            <element signature="e#6522#6523#0" expanded="true" />
+            <element signature="e#6689#6690#0" expanded="true" />
+            <element signature="e#6743#6744#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/compare/CompareViewerFactoryGeneralImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="33" column="40" lean-forward="false" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.main/src/org/bbaw/bts/ui/main/parts/ComparePart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="215" column="29" lean-forward="false" selection-start-line="215" selection-start-column="29" selection-end-line="215" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/CouchDBManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="646" column="19" lean-forward="false" selection-start-line="646" selection-start-column="19" selection-end-line="646" selection-end-column="19" />
+          <folding>
+            <marker date="1500481430961" expanded="true" signature="48676:49526" ph="{...}" />
+            <marker date="1500481430961" expanded="true" signature="70513:70638" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/parts/ATextNavigatorPart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="517" column="38" lean-forward="false" selection-start-line="517" selection-start-column="38" selection-end-line="517" selection-end-column="38" />
           <folding />
         </state>
       </provider>

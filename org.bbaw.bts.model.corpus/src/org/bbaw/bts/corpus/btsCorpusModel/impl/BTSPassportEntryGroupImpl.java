@@ -95,7 +95,7 @@ public class BTSPassportEntryGroupImpl extends BTSPassportEntryImpl implements B
      */
     public EList<BTSPassportEntryItem> getItems() {
         if (items == null) {
-            items = new EObjectContainmentEList<BTSPassportEntryItem>(BTSPassportEntryItem.class, this, BtsCorpusModelPackage.BTS_PASSPORT_ENTRY_GROUP__ITEMS);
+            items = new EObjectContainmentEList<>(BTSPassportEntryItem.class, this, BtsCorpusModelPackage.BTS_PASSPORT_ENTRY_GROUP__ITEMS);
         }
         return items;
     }

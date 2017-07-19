@@ -10,7 +10,7 @@ public class Utils {
 
 
     public static List<IInstallableUnit> toList(IQueryResult<IInstallableUnit> query) {
-        List<IInstallableUnit> list = new ArrayList<IInstallableUnit>();
+        List<IInstallableUnit> list = new ArrayList<>();
         for (IInstallableUnit iInstallableUnit : query) {
 
             System.out.println(iInstallableUnit);

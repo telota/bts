@@ -278,7 +278,7 @@ public class StatusMessageImpl extends MinimalEObjectImpl.Container implements S
      */
     public EList<StatusMessage> getChildren() {
         if (children == null) {
-            children = new EObjectResolvingEList<StatusMessage>(StatusMessage.class, this, BtsviewmodelPackage.STATUS_MESSAGE__CHILDREN);
+            children = new EObjectResolvingEList<>(StatusMessage.class, this, BtsviewmodelPackage.STATUS_MESSAGE__CHILDREN);
         }
         return children;
     }

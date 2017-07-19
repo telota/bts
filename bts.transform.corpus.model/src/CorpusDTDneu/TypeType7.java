@@ -95,7 +95,7 @@ public enum TypeType7 implements Enumerator {
      *
      * @generated
      */
-    private TypeType7(int value, String name, String literal) {
+    TypeType7(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;

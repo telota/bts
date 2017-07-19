@@ -177,7 +177,7 @@ public class SimpleUninstallPart {
                     "Please select at least one");
         } else {
 
-            List<IInstallableUnit> listToUninstall = new ArrayList<IInstallableUnit>();
+            List<IInstallableUnit> listToUninstall = new ArrayList<>();
             for (TreeItem tree : selection) {
 
                 for (IInstallableUnit in : installedSoftware) {

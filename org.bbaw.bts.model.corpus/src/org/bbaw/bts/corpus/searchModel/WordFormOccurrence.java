@@ -64,7 +64,7 @@ public class WordFormOccurrence {
      */
     public WordFormOccurrence(BTSWord matchingWord, BTSText text) {
         this.text = text;
-        this.matchingWords = new Vector<BTSWord>(1);
+        this.matchingWords = new Vector<>(1);
         this.matchingWords.add(matchingWord);
     }
 

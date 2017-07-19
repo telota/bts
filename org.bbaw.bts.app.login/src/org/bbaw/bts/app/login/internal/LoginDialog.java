@@ -313,7 +313,6 @@ public class LoginDialog extends Dialog {
                 return false;
             }
             this.restartRequired = true;
-            ;
             return true;
         } catch (Exception e) {
             logger.info(e);

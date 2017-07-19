@@ -95,7 +95,7 @@ public class BTSAbstractTextImpl extends BTSCorpusObjectImpl implements BTSAbstr
      */
     public EList<BTSAbstractParagraph> getParagraphs() {
         if (paragraphs == null) {
-            paragraphs = new EObjectResolvingEList<BTSAbstractParagraph>(BTSAbstractParagraph.class, this, BtsCorpusModelPackage.BTS_ABSTRACT_TEXT__PARAGRAPHS);
+            paragraphs = new EObjectResolvingEList<>(BTSAbstractParagraph.class, this, BtsCorpusModelPackage.BTS_ABSTRACT_TEXT__PARAGRAPHS);
         }
         return paragraphs;
     }

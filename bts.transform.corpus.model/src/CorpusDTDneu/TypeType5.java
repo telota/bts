@@ -123,7 +123,7 @@ public enum TypeType5 implements Enumerator {
      *
      * @generated
      */
-    private TypeType5(int value, String name, String literal) {
+    TypeType5(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;

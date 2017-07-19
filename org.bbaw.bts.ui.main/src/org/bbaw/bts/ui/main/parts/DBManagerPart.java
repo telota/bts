@@ -231,7 +231,7 @@ public class DBManagerPart {
     }
 
     private void reindexAll() {
-        List<DBCollectionStatusInformation> colls = new Vector<DBCollectionStatusInformation>(collInfos.size());
+        List<DBCollectionStatusInformation> colls = new Vector<>(collInfos.size());
         for (DBCollectionStatusInformation info : collInfos) {
             if (!"SYSTEM DB".equals(info.getIndexStatus())) {
                 colls.add(info);
@@ -242,7 +242,7 @@ public class DBManagerPart {
     }
 
     private void reindexAllNonOK() {
-        List<DBCollectionStatusInformation> colls = new Vector<DBCollectionStatusInformation>(collInfos.size());
+        List<DBCollectionStatusInformation> colls = new Vector<>(collInfos.size());
         for (DBCollectionStatusInformation info : collInfos) {
             if (!"SYSTEM DB".equals(info.getIndexStatus()) && !"OK".equals(info.getIndexStatus())) {
                 colls.add(info);
@@ -279,10 +279,8 @@ public class DBManagerPart {
                 }
             };
             new ProgressMonitorDialog(new Shell()).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
     }
 
@@ -304,10 +302,8 @@ public class DBManagerPart {
                         }
                     };
                     new ProgressMonitorDialog(new Shell()).run(true, true, op);
-                } catch (InvocationTargetException e) {
+                } catch (InvocationTargetException | InterruptedException e) {
                     // handle exception
-                } catch (InterruptedException e) {
-                    // handle cancelation
                 }
             }
         }
@@ -441,10 +437,8 @@ public class DBManagerPart {
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
 

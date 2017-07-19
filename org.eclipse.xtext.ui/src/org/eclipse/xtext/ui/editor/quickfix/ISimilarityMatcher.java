@@ -18,9 +18,9 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(ISimilarityMatcher.Default.class)
 public interface ISimilarityMatcher {
 
-    public boolean isSimilar(String s0, String s1);
+    boolean isSimilar(String s0, String s1);
 
-    public static class Default implements ISimilarityMatcher {
+    class Default implements ISimilarityMatcher {
 
         public boolean isSimilar(String s0, String s1) {
             if (Strings.isEmpty(s0) || Strings.isEmpty(s1)) {

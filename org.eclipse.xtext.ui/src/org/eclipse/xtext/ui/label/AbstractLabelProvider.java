@@ -64,8 +64,7 @@ public abstract class AbstractLabelProvider extends LabelProvider implements ISt
      */
     public ImageDescriptor getImageDescriptor(Object element) {
         Object image = doGetImage(element);
-        ImageDescriptor imageDescriptor = convertToImageDescriptor(image);
-        return imageDescriptor;
+        return convertToImageDescriptor(image);
     }
 
     /**

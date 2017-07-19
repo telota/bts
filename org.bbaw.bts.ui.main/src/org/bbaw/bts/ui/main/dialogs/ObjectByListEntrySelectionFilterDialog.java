@@ -28,7 +28,7 @@ public class ObjectByListEntrySelectionFilterDialog extends TitleAreaDialog {
     private BTSObjectsByListEntryFilter filter;
     private Table table;
     private CheckboxTableViewer checkboxTableViewer;
-    private List<TreeNodeWrapper> checkedTreeNodes = new Vector<TreeNodeWrapper>();
+    private List<TreeNodeWrapper> checkedTreeNodes = new Vector<>();
 
     /**
      * Create the dialog.
@@ -102,7 +102,7 @@ public class ObjectByListEntrySelectionFilterDialog extends TitleAreaDialog {
     @Override
     protected void okPressed() {
         Object[] checkedObjects = checkboxTableViewer.getCheckedElements();
-        List<Object> checkedProjects = new Vector<Object>(checkedObjects.length);
+        List<Object> checkedProjects = new Vector<>(checkedObjects.length);
         for (Object o : checkedObjects) {
             if (o instanceof TreeNodeWrapper) {
                 checkedProjects.add(((TreeNodeWrapper) o).getObject());
@@ -131,7 +131,7 @@ public class ObjectByListEntrySelectionFilterDialog extends TitleAreaDialog {
     }
 
     private List<TreeNodeWrapper> loadNodes(List<Object> obs) {
-        List<TreeNodeWrapper> nodes = new Vector<TreeNodeWrapper>(obs.size());
+        List<TreeNodeWrapper> nodes = new Vector<>(obs.size());
         for (Object o : obs) {
             TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE
                     .createTreeNodeWrapper();

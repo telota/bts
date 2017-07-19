@@ -74,7 +74,7 @@ public class E4PreferenceRegistry {
 
         // Remember of the unbounded nodes to order parent pages.
         // Map<category, list of children> (all nodes except root nodes)
-        Map<String, Collection<IPreferenceNode>> childrenNodes = new HashMap<String, Collection<IPreferenceNode>>();
+        Map<String, Collection<IPreferenceNode>> childrenNodes = new HashMap<>();
 
         if (pm != null)
             return pm;
@@ -144,7 +144,7 @@ public class E4PreferenceRegistry {
                 // Check if this category is already registered.
                 Collection<IPreferenceNode> children = childrenNodes.get(category);
                 if (children == null) {
-                    children = new ArrayList<IPreferenceNode>();
+                    children = new ArrayList<>();
                     childrenNodes.put(category, children);
                 }
                 children.add(pn);
@@ -154,7 +154,7 @@ public class E4PreferenceRegistry {
         // Must now bind pages that has not been added in nodes (depends on the
         // preference page read order)
         // Iterate on all possible categories
-        Collection<String> categoriesDone = new ArrayList<String>();
+        Collection<String> categoriesDone = new ArrayList<>();
 
         while (!childrenNodes.isEmpty()) {
             for (String cat : Collections.unmodifiableSet(childrenNodes.keySet())) {
@@ -223,7 +223,7 @@ public class E4PreferenceRegistry {
         if (psProviders == null) {
             IContributionFactory factory = context.get(IContributionFactory.class);
 
-            psProviders = new HashMap<String, Object>();
+            psProviders = new HashMap<>();
 
             // Read extensions and fill the map...
             for (IConfigurationElement elmt : registry.getConfigurationElementsFor(PREF_STORE_PROVIDER)) {

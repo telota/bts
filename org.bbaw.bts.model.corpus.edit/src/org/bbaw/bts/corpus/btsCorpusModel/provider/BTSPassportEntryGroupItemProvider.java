@@ -201,17 +201,15 @@ public class BTSPassportEntryGroupItemProvider
      */
     @Override
     public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-        Object childFeature = feature;
-        Object childObject = child;
 
         boolean qualify =
-                childFeature == BtsCorpusModelPackage.Literals.BTS_PASSPORT_ENTRY__CHILDREN ||
-                        childFeature == BtsCorpusModelPackage.Literals.BTS_PASSPORT_ENTRY_GROUP__ITEMS;
+                feature == BtsCorpusModelPackage.Literals.BTS_PASSPORT_ENTRY__CHILDREN ||
+                        feature == BtsCorpusModelPackage.Literals.BTS_PASSPORT_ENTRY_GROUP__ITEMS;
 
         if (qualify) {
             return getString
                     ("_UI_CreateChild_text2",
-                            new Object[]{getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner)});
+                            new Object[]{getTypeText(child), getFeatureText(feature), getTypeText(owner)});
         }
         return super.getCreateChildText(owner, feature, child, selection);
     }

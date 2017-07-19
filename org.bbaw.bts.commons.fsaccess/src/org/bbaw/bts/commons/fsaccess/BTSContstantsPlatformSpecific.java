@@ -86,8 +86,6 @@ public class BTSContstantsPlatformSpecific {
         if (file.exists()) {
             try {
                 PROPERTIES.load(new FileInputStream(file));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -153,8 +151,7 @@ public class BTSContstantsPlatformSpecific {
         if (btsInsallationDir == null) {
             btsInsallationDir = getInstallationDir();
         }
-        String dbdir = btsInsallationDir + BTSContstantsPlatformSpecific.FS + BTSConstants.DB_DIR;
 
-        return dbdir;
+        return btsInsallationDir + BTSContstantsPlatformSpecific.FS + BTSConstants.DB_DIR;
     }
 }

@@ -477,7 +477,7 @@ public class AnnotationWithQuickFixesHover extends AbstractProblemHover {
             layout.verticalSpacing = 2;
             composite.setLayout(layout);
 
-            List<Link> list = new ArrayList<Link>();
+            List<Link> list = new ArrayList<>();
             for (int i = 0; i < proposals.length; i++) {
                 list.add(createCompletionProposalLink(composite, proposals[i], 1));// Original link for single fix, hence pass 1 for count
 

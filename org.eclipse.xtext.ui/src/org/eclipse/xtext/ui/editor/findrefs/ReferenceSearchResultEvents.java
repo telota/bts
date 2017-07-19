@@ -9,7 +9,7 @@ import org.eclipse.xtext.resource.IReferenceDescription;
  */
 public interface ReferenceSearchResultEvents {
 
-    public static class Added extends SearchResultEvent {
+    class Added extends SearchResultEvent {
         private static final long serialVersionUID = 591474718721135067L;
         private final IReferenceDescription referenceDescription;
 
@@ -23,7 +23,7 @@ public interface ReferenceSearchResultEvents {
         }
     }
 
-    public static class Finish extends SearchResultEvent {
+    class Finish extends SearchResultEvent {
 
         private static final long serialVersionUID = 114654633086769996L;
 
@@ -32,7 +32,7 @@ public interface ReferenceSearchResultEvents {
         }
     }
 
-    public static class Reset extends SearchResultEvent {
+    class Reset extends SearchResultEvent {
         private static final long serialVersionUID = 1244392086001617021L;
 
         public Reset(ReferenceSearchResult referenceSearchResult) {

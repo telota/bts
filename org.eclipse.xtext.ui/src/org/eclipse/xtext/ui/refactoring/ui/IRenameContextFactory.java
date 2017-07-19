@@ -30,7 +30,7 @@ public interface IRenameContextFactory {
     IRenameElementContext createRenameElementContext(EObject targetElement, XtextEditor triggeringEditor,
                                                      ITextSelection selection, XtextResource triggeringResource);
 
-    static class Default implements IRenameContextFactory {
+    class Default implements IRenameContextFactory {
 
         @Inject
         private IGlobalServiceProvider globalServiceProvider;
@@ -63,9 +63,8 @@ public interface IRenameContextFactory {
         protected IRenameElementContext createLocalRenameElementContext(EObject targetElement, XtextEditor editor,
                                                                         ITextSelection selection, XtextResource resource) {
             final URI targetElementURI = EcoreUtil2.getPlatformResourceOrNormalizedURI(targetElement);
-            IRenameElementContext.Impl renameElementContext = new IRenameElementContext.Impl(targetElementURI,
+            return new IRenameElementContext.Impl(targetElementURI,
                     targetElement.eClass(), editor, selection, resource.getURI());
-            return renameElementContext;
         }
     }
 

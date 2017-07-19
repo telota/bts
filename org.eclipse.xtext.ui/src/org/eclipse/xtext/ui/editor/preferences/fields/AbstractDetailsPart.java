@@ -21,7 +21,7 @@ public abstract class AbstractDetailsPart extends FieldEditorPreferencePage {
      */
     protected IPreferenceStore masterPreferenceStore;
     protected PreferenceStore internalStore;
-    private List<FieldEditor> internalEditorsList = new ArrayList<FieldEditor>();
+    private List<FieldEditor> internalEditorsList = new ArrayList<>();
     private String preferencePrefix;
 
     public AbstractDetailsPart(IPreferenceStore masterPreferenceStore) {

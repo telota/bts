@@ -12,6 +12,7 @@ import org.bbaw.bts.ui.main.dialogs.CommentEditorDialog;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -73,7 +74,7 @@ public class RelatedObjectGroupComment extends RelatedObjectGroup {
         CommentEditorDialog dialog = ContextInjectionFactory.make(
                 CommentEditorDialog.class, child);
 
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             refreschContent((BTSComment) getObject());
         }
 

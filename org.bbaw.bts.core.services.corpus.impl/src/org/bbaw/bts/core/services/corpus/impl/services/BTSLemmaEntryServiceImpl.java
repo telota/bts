@@ -112,7 +112,7 @@ public class BTSLemmaEntryServiceImpl
 
     @Override
     public List<BTSLemmaEntry> list(String objectState, IProgressMonitor monitor) {
-        List<BTSLemmaEntry> entries = new Vector<BTSLemmaEntry>();
+        List<BTSLemmaEntry> entries = new Vector<>();
         for (String p : getActiveLemmaLists()) {
             try {
                 entries.addAll(lemmaEntryDao.list(p + BTSCorpusConstants.WLIST,
@@ -128,7 +128,7 @@ public class BTSLemmaEntryServiceImpl
     @Override
     public List<BTSLemmaEntry> query(BTSQueryRequest query, String objectState,
                                      boolean registerQuery, IProgressMonitor monitor) {
-        List<BTSLemmaEntry> objects = new Vector<BTSLemmaEntry>();
+        List<BTSLemmaEntry> objects = new Vector<>();
         for (String p : getActiveLemmaLists()) {
             System.out.println("search in index: " + p + BTSCorpusConstants.WLIST);
             try {
@@ -158,7 +158,7 @@ public class BTSLemmaEntryServiceImpl
     @Override
     public List<BTSLemmaEntry> listChunks(int chunkSize, String[] chunkIds, String dbCollectionName,
                                           String objectState, IProgressMonitor monitor) {
-        List<BTSLemmaEntry> objects = new Vector<BTSLemmaEntry>();
+        List<BTSLemmaEntry> objects = new Vector<>();
         objects.addAll(lemmaEntryDao.listChunks(chunkSize, chunkIds, dbCollectionName, objectState));
         return filter(objects);
     }
@@ -176,7 +176,7 @@ public class BTSLemmaEntryServiceImpl
 
     @Override
     public List<BTSLemmaEntry> listRootEntries(IProgressMonitor monitor) {
-        List<BTSLemmaEntry> entries = new Vector<BTSLemmaEntry>();
+        List<BTSLemmaEntry> entries = new Vector<>();
         for (String p : getActiveLemmaLists()) {
             entries.addAll(lemmaEntryDao.list(p + BTSCorpusConstants.WLIST,
                     DaoConstants.VIEW_LEMMA_ROOT_ENTRIES, BTSConstants.OBJECT_STATE_ACTIVE));
@@ -211,7 +211,7 @@ public class BTSLemmaEntryServiceImpl
 
     private List<BTSLemmaEntry> lemmaFilterReviewStateType(
             List<BTSLemmaEntry> children) {
-        List<BTSLemmaEntry> filtered = new Vector<BTSLemmaEntry>(children.size());
+        List<BTSLemmaEntry> filtered = new Vector<>(children.size());
         for (BTSCorpusObject entry : children)
             if (entry instanceof BTSLemmaEntry
                     && (entry.getRevisionState() == null || !entry.getRevisionState().contains("obsolete"))
@@ -341,7 +341,7 @@ public class BTSLemmaEntryServiceImpl
      */
     @Override
     public List<String> queryAsJsonString(BTSQueryRequest query, String objectState, IProgressMonitor monitor) {
-        List<String> objects = new Vector<String>();
+        List<String> objects = new Vector<>();
         for (String p : getActiveLemmaLists()) {
             System.out.println("search in index: " + p + BTSCorpusConstants.WLIST);
             try {

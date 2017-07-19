@@ -294,7 +294,7 @@ public class BTSRelationImpl extends BTSIdentifiableItemImpl implements BTSRelat
      */
     public EList<BTSInterTextReference> getParts() {
         if (parts == null) {
-            parts = new EObjectContainmentEList<BTSInterTextReference>(BTSInterTextReference.class, this, BtsmodelPackage.BTS_RELATION__PARTS);
+            parts = new EObjectContainmentEList<>(BTSInterTextReference.class, this, BtsmodelPackage.BTS_RELATION__PARTS);
         }
         return parts;
     }

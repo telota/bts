@@ -67,63 +67,52 @@ public class DaoFactoryCouchDB implements DAOFactory {
     }
 
     private BTSIDReservationObjectDao getBTSIDReservationObjectDao(IEclipseContext context) {
-        BTSIDReservationObjectDaoImpl dao = ContextInjectionFactory.make(
+        return ContextInjectionFactory.make(
                 BTSIDReservationObjectDaoImpl.class, context);
-        return dao;
     }
 
     private UserActionCounterDao getGraphicSelectionCounterDao(
             IEclipseContext context) {
-        UserActionCounterDaoImpl dao = ContextInjectionFactory.make(
+        return ContextInjectionFactory.make(
                 UserActionCounterDaoImpl.class, context);
-        return dao;
     }
 
     private DBConnectionProvider getDBConnectionProvider(IEclipseContext context) {
-        DBConnectionProvider dao = ContextInjectionFactory.make(DBConnectionProviderImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(DBConnectionProviderImpl.class, context);
     }
 
     private GeneralPurposeDao getGeneralPurposeDao(IEclipseContext context) {
-        GeneralPurposeDao dao = ContextInjectionFactory.make(GeneralPurposeDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(GeneralPurposeDaoImpl.class, context);
 
     }
 
     private DBLeaseDao getDBLeaseDao(IEclipseContext context) {
-        DBLeaseDao dao = ContextInjectionFactory.make(DBLeaseDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(DBLeaseDaoImpl.class, context);
     }
 
 
     private BTSProjectDao getBTSProjectDao(IEclipseContext context) {
-        BTSProjectDao dao = ContextInjectionFactory.make(BTSProjectDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSProjectDaoImpl.class, context);
     }
 
     private BTSCommentDao getBTSCommentDao(IEclipseContext context) {
-        BTSCommentDao dao = ContextInjectionFactory.make(BTSCommentDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSCommentDaoImpl.class, context);
     }
 
     private Backend2ClientUpdateDao getBackend2ClientUpdateDao(IEclipseContext context) {
-        Backend2ClientUpdateDao dao = ContextInjectionFactory.make(Backend2ClientUpdateDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(Backend2ClientUpdateDaoImpl.class, context);
     }
 
 
     private BTSConfigurationDao getBTSConfigurationDao(IEclipseContext context) {
-        BTSConfigurationDao dao = ContextInjectionFactory.make(BTSConfigurationDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSConfigurationDaoImpl.class, context);
     }
 
     private BTSUserDao getBTSUserDao(IEclipseContext context) {
-        BTSUserDao dao = ContextInjectionFactory.make(BTSUserDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSUserDaoImpl.class, context);
     }
 
     private BTSUserGroupDao getBTSUserGroupDao(IEclipseContext context) {
-        BTSUserGroupDao dao = ContextInjectionFactory.make(BTSUserGroupDaoImpl.class, context);
-        return dao;
+        return ContextInjectionFactory.make(BTSUserGroupDaoImpl.class, context);
     }
 }

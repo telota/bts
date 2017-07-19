@@ -242,7 +242,7 @@ public class TreeNodeWrapperImpl extends MinimalEObjectImpl.Container implements
      */
     public EList<TreeNodeWrapper> getChildren() {
         if (children == null) {
-            children = new EObjectResolvingEList<TreeNodeWrapper>(TreeNodeWrapper.class, this, BtsviewmodelPackage.TREE_NODE_WRAPPER__CHILDREN);
+            children = new EObjectResolvingEList<>(TreeNodeWrapper.class, this, BtsviewmodelPackage.TREE_NODE_WRAPPER__CHILDREN);
         }
         return children;
     }

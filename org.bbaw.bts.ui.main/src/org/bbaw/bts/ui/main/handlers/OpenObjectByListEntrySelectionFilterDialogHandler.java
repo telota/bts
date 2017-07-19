@@ -30,6 +30,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 public class OpenObjectByListEntrySelectionFilterDialogHandler {
@@ -68,7 +69,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
         //inject projects and filter
         dialog.create();
 
-        if (dialog.open() == dialog.OK) {
+        if (dialog.open() == Window.OK) {
             filter = dialog.getFilter();
             // if no projects selected, drop filter, else add to viewer
             if (filter instanceof ViewerFilter) {
@@ -92,7 +93,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
                 clazz = ProjectPrefixViewerFilter.class;
                 BTSProjectService projectService = context.get(BTSProjectService.class);
                 List<BTSProject> projects = projectService.list(BTSConstants.OBJECT_STATE_ACTIVE, null);
-                allObjects = new Vector<Object>(projects.size());
+                allObjects = new Vector<>(projects.size());
                 allObjects.addAll(projects);
                 break;
             }
@@ -100,7 +101,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
                 clazz = CreatorViewerFilter.class;
                 BTSUserService userService = context.get(BTSUserService.class);
                 List<BTSUser> users = userService.list(BTSConstants.OBJECT_STATE_ACTIVE, null);
-                allObjects = new Vector<Object>(users.size());
+                allObjects = new Vector<>(users.size());
                 allObjects.addAll(users);
                 break;
             }
@@ -108,7 +109,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
                 clazz = UpdaterViewerFilter.class;
                 BTSUserService userService = context.get(BTSUserService.class);
                 List<BTSUser> users = userService.list(BTSConstants.OBJECT_STATE_ACTIVE, null);
-                allObjects = new Vector<Object>(users.size());
+                allObjects = new Vector<>(users.size());
                 allObjects.addAll(users);
                 break;
             }
@@ -116,7 +117,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
                 clazz = ReviewStatusViewerFilter.class;
                 BTSConfigurationController configController = context.get(BTSConfigurationController.class);
                 BTSConfigItem ci = configController.getReviewStatusConfigItem();
-                allObjects = new Vector<Object>(ci.getChildren().size());
+                allObjects = new Vector<>(ci.getChildren().size());
                 allObjects.addAll(ci.getChildren());
                 break;
             }
@@ -124,7 +125,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
                 clazz = VisibilityViewerFilter.class;
                 BTSConfigurationController configController = context.get(BTSConfigurationController.class);
                 BTSConfigItem ci = configController.getVisibilityConfigItem();
-                allObjects = new Vector<Object>(ci.getChildren().size());
+                allObjects = new Vector<>(ci.getChildren().size());
                 allObjects.addAll(ci.getChildren());
                 break;
             }
@@ -132,7 +133,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
                 clazz = BTSObjectTypeSubtypeViewerFilter.class;
                 BTSConfigurationController configController = context.get(BTSConfigurationController.class);
                 BTSConfigItem ci = configController.getObjectTypesConfigItem();
-                allObjects = new Vector<Object>(ci.getChildren().size());
+                allObjects = new Vector<>(ci.getChildren().size());
                 allObjects.addAll(ci.getChildren());
                 break;
             }
@@ -144,9 +145,7 @@ public class OpenObjectByListEntrySelectionFilterDialogHandler {
             isContained = false;
             try {
                 filter = makeFilter(clazz, context);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         } else {

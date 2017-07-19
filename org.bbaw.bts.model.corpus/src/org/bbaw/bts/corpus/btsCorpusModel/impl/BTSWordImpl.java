@@ -601,7 +601,7 @@ public class BTSWordImpl extends BTSIdentifiableItemImpl implements BTSWord {
      */
     public EList<BTSGraphic> getGraphics() {
         if (graphics == null) {
-            graphics = new EObjectContainmentEList<BTSGraphic>(BTSGraphic.class, this, BtsCorpusModelPackage.BTS_WORD__GRAPHICS);
+            graphics = new EObjectContainmentEList<>(BTSGraphic.class, this, BtsCorpusModelPackage.BTS_WORD__GRAPHICS);
         }
         return graphics;
     }

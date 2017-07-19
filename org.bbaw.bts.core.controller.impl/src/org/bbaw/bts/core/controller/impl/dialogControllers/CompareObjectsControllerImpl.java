@@ -23,7 +23,7 @@ public class CompareObjectsControllerImpl implements CompareObjectsController {
     @Override
     public List<BTSDBBaseObject> listConflictingVersions(BTSDBBaseObject object, IProgressMonitor monitor) {
         List<String> conflicts = object.getConflictingRevs();
-        List<BTSDBBaseObject> conflictObjects = new Vector<BTSDBBaseObject>();
+        List<BTSDBBaseObject> conflictObjects = new Vector<>();
         for (String rev : conflicts) {
             BTSDBBaseObject o = null;
             try {
@@ -69,7 +69,7 @@ public class CompareObjectsControllerImpl implements CompareObjectsController {
     public List<BTSDBBaseObject> listAvailableVersions(BTSDBBaseObject object,
                                                        boolean fetchFromRemote, IProgressMonitor monitor) {
         List<DBRevision> revisions = objectService.listAvailableRevisions(object, fetchFromRemote, monitor);
-        List<BTSDBBaseObject> availableRevisions = new Vector<BTSDBBaseObject>();
+        List<BTSDBBaseObject> availableRevisions = new Vector<>();
         int counter = 0;
         for (DBRevision rev : revisions) {
             BTSDBBaseObject o = null;

@@ -71,6 +71,7 @@ import org.eclipse.jface.fieldassist.IContentProposalListener;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
@@ -621,7 +622,7 @@ public class PassportEntryItemEditor extends PassportEntryEditorComposite {
                     context.set(BTSObjectTypeSubtypeViewerFilter.class, viewerFilter);
                     SearchSelectObjectDialog dialog = ContextInjectionFactory.make(
                             SearchSelectObjectDialog.class, child);
-                    if (dialog.open() == dialog.OK) {
+                    if (dialog.open() == Window.OK) {
                         BTSObject object = dialog.getObject();
                         System.out.println(object.get_id());
                         Command command = SetCommand.create(editingDomain,
@@ -687,7 +688,7 @@ public class PassportEntryItemEditor extends PassportEntryEditorComposite {
                     context.set(BTSObjectTypeSubtypeViewerFilter.class, viewerFilter);
                     SearchSelectObjectDialog dialog = ContextInjectionFactory.make(
                             SearchSelectObjectDialog.class, child);
-                    if (dialog.open() == dialog.OK) {
+                    if (dialog.open() == Window.OK) {
                         BTSObject object = dialog.getObject();
                         System.out.println(object.get_id());
                         Command command = SetCommand.create(editingDomain,
@@ -735,7 +736,7 @@ public class PassportEntryItemEditor extends PassportEntryEditorComposite {
 
                     PassportEditorDialog dialog = ContextInjectionFactory.make(
                             PassportEditorDialog.class, child);
-                    if (dialog.open() == dialog.OK) {
+                    if (dialog.open() == Window.OK) {
 
                     }
                 }

@@ -42,10 +42,9 @@ public class PartitionTokenScanner implements IPartitionTokenScanner {
     }
 
     public void setPartialRange(IDocument document, int offset, int length, String contentType, int partitionOffset) {
-        int overlapOffset = partitionOffset;
         int overlapLength = offset + length - partitionOffset;
-        tokens = new RangedIterator(getTokens(document), new Region(overlapOffset, overlapLength));
-        this.currentPartitionOffset = overlapOffset;
+        tokens = new RangedIterator(getTokens(document), new Region(partitionOffset, overlapLength));
+        this.currentPartitionOffset = partitionOffset;
         this.currentPartitionLength = 0;
         this.nextToken = tokens.hasNext() ? tokens.next() : null;
     }

@@ -20,9 +20,9 @@ public interface IssueResolutionProvider {
 
     boolean hasResolutionFor(String issueCode);
 
-    public List<IssueResolution> getResolutions(Issue issue);
+    List<IssueResolution> getResolutions(Issue issue);
 
-    public static class NullImpl implements IssueResolutionProvider {
+    class NullImpl implements IssueResolutionProvider {
 
         public List<IssueResolution> getResolutions(Issue issue) {
             return Collections.emptyList();

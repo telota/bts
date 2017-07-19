@@ -99,7 +99,7 @@ public class LightweightPosition implements Comparable<LightweightPosition> {
         if (ids.length == 1)
             return ids[0].ids;
         Arrays.sort(ids);
-        Set<String> allIds = new LinkedHashSet<String>(ids.length * ids[0].ids.length);
+        Set<String> allIds = new LinkedHashSet<>(ids.length * ids[0].ids.length);
         for (IntToStringArray intToStringArray : ids) {
             List<String> addUs = Arrays.asList(intToStringArray.ids);
             if (allIds.isEmpty()) {

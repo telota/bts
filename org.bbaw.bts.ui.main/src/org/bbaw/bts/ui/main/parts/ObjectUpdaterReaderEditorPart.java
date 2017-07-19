@@ -137,7 +137,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
     }
 
     private void init() {
-        roleDescMap = new HashMap<String, String>();
+        roleDescMap = new HashMap<>();
         for (int i = 0; i < databaseRoles.length; i++) {
             roleDescMap.put(databaseRoles[i], databaseRolesDescs[i]);
         }
@@ -303,7 +303,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
                 List<BTSUserGroup> groups = userManagerController.listUserGroups(null);
                 observableLisAllUserGroups = new WritableList(groups,
                         BTSUserGroup.class);
-                userGroupMap = new HashMap<String, BTSUserGroup>(groups.size());
+                userGroupMap = new HashMap<>(groups.size());
                 for (BTSUserGroup u : groups)
                     userGroupMap.put(u.get_id(), u);
             }
@@ -316,7 +316,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
             public void run() {
                 List<BTSUser> users = userManagerController.listUsers(null);
                 observableLisAllUsers = new WritableList(users, BTSUser.class);
-                userMap = new HashMap<String, BTSUser>(users.size());
+                userMap = new HashMap<>(users.size());
                 for (BTSUser u : users)
                     userMap.put(u.getUserName(), u);
             }
@@ -709,7 +709,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
     private void loadChildren(final List<TreeNodeWrapper> parents) {
         for (TreeNodeWrapper parent : parents) {
             if (!parent.isChildrenLoaded()) {
-                List<BTSObject> children = new Vector<BTSObject>();
+                List<BTSObject> children = new Vector<>();
                 List<String> ids = null;
                 if (parent.getLabel().equals(databaseRoles[0])) {
                     ids = dbBaseObject.getReaders();

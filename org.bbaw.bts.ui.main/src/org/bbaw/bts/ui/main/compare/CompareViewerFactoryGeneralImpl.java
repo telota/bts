@@ -31,7 +31,6 @@ public class CompareViewerFactoryGeneralImpl implements CompareViewerFactory {
 
     @Override
     public Image getCompareViewerIcon() {
-        Image i = resourceProvider.getImage(Display.getDefault(), BTSResourceProvider.IMG_TEXTS);
-        return i;
+        return resourceProvider.getImage(Display.getDefault(), BTSResourceProvider.IMG_TEXTS);
     }
 }

@@ -88,7 +88,6 @@ public class TestTextModelElementDialog extends Dialog {
     }
 
     protected DataBindingContext initDataBindings() {
-        DataBindingContext bindingContext = new DataBindingContext();
         //
         // IObservableValue observeTextTextObserveWidget =
         // WidgetProperties.text(SWT.Modify).observe(text);
@@ -105,6 +104,6 @@ public class TestTextModelElementDialog extends Dialog {
         // bindingContext.bindValue(observeTextText_1ObserveWidget,
         // translitterationSpellingObserveValue, null, null);
         //
-        return bindingContext;
+        return new DataBindingContext();
     }
 }

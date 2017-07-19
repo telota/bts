@@ -568,15 +568,12 @@ public final class CouchDbClient extends CouchDbClientBase {
 
     //cplutte method added
     private List<String> getConflictsList(HttpResponse response) {
-        List<String> conflicts = new Vector<String>(3);
+        List<String> conflicts = new Vector<>(3);
         String responseString = null;
         try {
             responseString = EntityUtils
                     .toString(response.getEntity(), "UTF-8");
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParseException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -616,10 +613,7 @@ public final class CouchDbClient extends CouchDbClientBase {
             HttpEntity entity = response.getEntity();
             responseString = EntityUtils
                     .toString(response.getEntity(), "UTF-8");
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParseException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {

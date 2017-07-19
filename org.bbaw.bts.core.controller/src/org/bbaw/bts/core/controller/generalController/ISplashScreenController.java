@@ -39,29 +39,29 @@ public interface ISplashScreenController {
      *
      * @param pluginId ID of teh Plugin where the Image resides
      */
-    public void setSplashPluginId(String pluginId);
+    void setSplashPluginId(String pluginId);
 
     /**
      * Tell the service the path and name of the Splash-Image.
      *
      * @param path Path and filename of the Spalsh-Image
      */
-    public void setSplashImagePath(String path);
+    void setSplashImagePath(String path);
 
     /**
      * Open the Splash-Screen.
      */
-    public void open();
+    void open();
 
     /**
      * Colse the Splash Screen.
      */
-    public void close();
+    void close();
 
     /**
      * Set the displayed message on the Splash-Screen.
      *
      * @param message Text-Message to be displayed.
      */
-    public void setMessage(String message);
+    void setMessage(String message);
 }

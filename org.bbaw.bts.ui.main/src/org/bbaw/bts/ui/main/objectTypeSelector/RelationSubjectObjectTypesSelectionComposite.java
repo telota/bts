@@ -257,7 +257,7 @@ public class RelationSubjectObjectTypesSelectionComposite extends Composite {
         TreePath[] path = selection.getPaths();
         BTSObjectTypeTreeNode nodeRight = (BTSObjectTypeTreeNode) tv.getInput();
         TreePath tp = path[0];
-        List<BTSObjectTypeTreeNode> elements = new Vector<BTSObjectTypeTreeNode>(tp.getSegmentCount());
+        List<BTSObjectTypeTreeNode> elements = new Vector<>(tp.getSegmentCount());
         for (int i = 0; i < tp.getSegmentCount(); i++) {
             BTSObjectTypeTreeNode leftNode = (BTSObjectTypeTreeNode) tp.getSegment(i);
             BTSObjectTypeTreeNode childRight = null;

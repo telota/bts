@@ -327,7 +327,7 @@ public abstract class BTSPassportEntryImpl extends BTSIdentifiableItemImpl imple
      */
     public EList<BTSPassportEntry> getChildren() {
         if (children == null) {
-            children = new EObjectContainmentEList<BTSPassportEntry>(BTSPassportEntry.class, this, BtsCorpusModelPackage.BTS_PASSPORT_ENTRY__CHILDREN);
+            children = new EObjectContainmentEList<>(BTSPassportEntry.class, this, BtsCorpusModelPackage.BTS_PASSPORT_ENTRY__CHILDREN);
         }
         return children;
     }

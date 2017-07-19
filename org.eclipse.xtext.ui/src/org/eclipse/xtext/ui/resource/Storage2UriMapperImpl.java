@@ -137,8 +137,7 @@ public class Storage2UriMapperImpl implements IStorage2UriMapper {
 
 
     public boolean isValidUri(URI uri, IStorage storage) {
-        boolean valid = uriValidator.isValid(uri, storage);
-        return valid;
+        return uriValidator.isValid(uri, storage);
     }
 
     @Deprecated

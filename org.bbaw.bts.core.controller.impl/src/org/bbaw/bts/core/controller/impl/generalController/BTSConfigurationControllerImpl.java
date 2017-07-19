@@ -65,8 +65,7 @@ public class BTSConfigurationControllerImpl implements BTSConfigurationControlle
      */
     @Override
     public BTSConfiguration createNew() {
-        BTSConfiguration config = configService.createNew();
-        return config;
+        return configService.createNew();
     }
 
     /*
@@ -153,15 +152,14 @@ public class BTSConfigurationControllerImpl implements BTSConfigurationControlle
 
     @Override
     public BTSConfigItem getObjectTypesConfigItem() {
-        BTSConfigItem typesCI = configService.getObjectTypesConfigItem();
-        return typesCI;
+        return configService.getObjectTypesConfigItem();
 
     }
 
 
     @Override
     public List<String> processTreePathToList(BTSObjectTypeTreeNode treePath) {
-        List<String> result = new Vector<String>();
+        List<String> result = new Vector<>();
         if (treePath.isSelected()) // all owner selected
         {
             result.add(BTSConstants.OWNER_REFERENCED_TYPES_ANY + BTSConstants.OWNER_REFERENCED_TYPES_SEPERATOR + BTSConstants.OWNER_REFERENCED_TYPES_ANY);
@@ -217,7 +215,7 @@ public class BTSConfigurationControllerImpl implements BTSConfigurationControlle
         {
             return BTSConstants.OWNER_REFERENCED_TYPES_ANY;
         }
-        List<String> list = new Vector<String>();
+        List<String> list = new Vector<>();
         for (BTSObjectTypeTreeNode child : referencedTypesPath.getChildren()) {
             processTreePathToListInternal(child, list);
 
@@ -388,8 +386,7 @@ public class BTSConfigurationControllerImpl implements BTSConfigurationControlle
 
     @Override
     public BTSConfigItem getRelationsConfigItem() {
-        BTSConfigItem typesCI = configService.getRelationsConfigItem();
-        return typesCI;
+        return configService.getRelationsConfigItem();
     }
 
     @Override
@@ -446,7 +443,7 @@ public class BTSConfigurationControllerImpl implements BTSConfigurationControlle
         String oClass = findObjectClass(object);
         String oType = object.getType();
         String oSubtype = object.getSubtype();
-        Set<String> references = new HashSet<String>();
+        Set<String> references = new HashSet<>();
         if (relationConfig == null) {
             return references;
         }
@@ -535,8 +532,7 @@ public class BTSConfigurationControllerImpl implements BTSConfigurationControlle
 
     @Override
     public BTSConfig getIdentifiersConfigItem() {
-        BTSConfigItem typesCI = configService.getIdentifiersConfigItem();
-        return typesCI;
+        return configService.getIdentifiersConfigItem();
     }
 
     @Override

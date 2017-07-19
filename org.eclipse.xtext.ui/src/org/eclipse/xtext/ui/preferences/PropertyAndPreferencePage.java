@@ -222,7 +222,7 @@ public abstract class PropertyAndPreferencePage extends PreferencePage implement
     final void doLinkActivated(Link link) {
         Map<Object, Object> data = getData();
         if (data == null) {
-            data = new HashMap<Object, Object>();
+            data = new HashMap<>();
         }
         data.put(DATA_NO_LINK, Boolean.TRUE);
 

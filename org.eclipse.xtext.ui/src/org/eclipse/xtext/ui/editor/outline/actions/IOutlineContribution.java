@@ -38,19 +38,19 @@ public interface IOutlineContribution extends IPreferenceStoreInitializer {
     @Retention(RUNTIME)
     @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
     @BindingAnnotation
-    public @interface All {
+    @interface All {
     }
 
     @Retention(RUNTIME)
     @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
     @BindingAnnotation
-    public @interface Sort {
+    @interface Sort {
     }
 
     @Retention(RUNTIME)
     @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
     @BindingAnnotation
-    public @interface LinkWithEditor {
+    @interface LinkWithEditor {
     }
 
     class Composite implements IOutlineContribution {

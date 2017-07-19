@@ -119,7 +119,7 @@ public class TextAnnotationsPart implements IBTSEditor {
     private BTSRelatingObjectsLoadingEvent relatingObjectsEvent;
     private EditingDomain editingDomain;
     private CommandStackListener commandStackListener;
-    private Set<Command> localCommandCacheSet = new HashSet<Command>();
+    private Set<Command> localCommandCacheSet = new HashSet<>();
 
 
     private EclipsePreferences annotationSettings;
@@ -193,7 +193,6 @@ public class TextAnnotationsPart implements IBTSEditor {
                         workaround = false;
                     }
 
-
                     if (selection instanceof BTSTextSelectionEvent
                             && ((BTSTextSelectionEvent) selection).data instanceof EObject) {
                         BTSTextSelectionEvent event = (BTSTextSelectionEvent) selection;
@@ -211,8 +210,6 @@ public class TextAnnotationsPart implements IBTSEditor {
                                             getCommandStackListener());
 
                         }
-
-
                     }
                     selectionService.setSelection(selection);
 
@@ -234,7 +231,7 @@ public class TextAnnotationsPart implements IBTSEditor {
             @EventTopic("event_relating_objects/*") Object event) {
 
         if (event != null && event instanceof List) {
-            List<BTSObject> annotations = new Vector<BTSObject>(
+            List<BTSObject> annotations = new Vector<>(
                     ((List) event).size());
             for (Object o : (List) event) {
                 if (o instanceof BTSObject) {
@@ -399,10 +396,8 @@ public class TextAnnotationsPart implements IBTSEditor {
                         }
                     };
                     new ProgressMonitorDialog(new Shell()).run(true, true, op);
-                } catch (InvocationTargetException e) {
+                } catch (InvocationTargetException | InterruptedException e) {
                     // handle exception
-                } catch (InterruptedException e) {
-                    // handle cancelation
                 }
             }
         }
@@ -411,7 +406,7 @@ public class TextAnnotationsPart implements IBTSEditor {
 
     private void extendAnnotationsFilterMenu() {
         // initialize filters from fragment model definition
-        HashMap<String, Boolean> filters = new HashMap<String, Boolean>();
+        HashMap<String, Boolean> filters = new HashMap<>();
         // retrieve annotations part viewmenu
         MMenu viewmenu = null;
         for (MMenu m : part.getMenus())
@@ -441,7 +436,6 @@ public class TextAnnotationsPart implements IBTSEditor {
                 typeConf = annotationPartController.getAnnoTypesConfigItem();
             } catch (Exception e) {
             }
-            ;
             if (typeConf != null && !typeConf.getChildren().isEmpty()) {
                 // initialize submenu for annotation types
                 submenu = MMenuFactory.INSTANCE.createMenu();
@@ -458,8 +452,7 @@ public class TextAnnotationsPart implements IBTSEditor {
                             subtypeConf = annotationPartController.getAnnoSubtypesConfigItem(confItem);
                         } catch (Exception e) {
                         }
-                        ;
-                        List<BTSConfigItem> subTypeConfItems = new Vector<BTSConfigItem>();
+                        List<BTSConfigItem> subTypeConfItems = new Vector<>();
                         if (subtypeConf != null) {
                             // filter attached subtype definition nodes
                             for (BTSConfig cc : subtypeConf.getChildren())

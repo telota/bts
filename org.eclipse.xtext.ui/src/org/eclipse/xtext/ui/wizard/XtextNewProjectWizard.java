@@ -78,9 +78,7 @@ public abstract class XtextNewProjectWizard extends Wizard implements INewWizard
             creator.run(monitor);
             fileOpener.selectAndReveal(creator.getResult());
             fileOpener.openFileToEdit(getShell(), creator.getResult());
-        } catch (final InvocationTargetException e) {
-            logger.error(e.getMessage(), e);
-        } catch (final InterruptedException e) {
+        } catch (final InvocationTargetException | InterruptedException e) {
             logger.error(e.getMessage(), e);
         }
     }

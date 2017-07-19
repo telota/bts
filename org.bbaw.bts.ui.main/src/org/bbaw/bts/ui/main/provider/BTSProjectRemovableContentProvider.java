@@ -29,7 +29,7 @@ public class BTSProjectRemovableContentProvider implements IRemovableContentProv
 
     private List<BTSProject> getProjects() {
         if (projects == null) {
-            projects = new Vector<BTSProject>(3);
+            projects = new Vector<>(3);
         }
         return projects;
     }

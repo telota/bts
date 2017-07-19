@@ -29,7 +29,7 @@ import java.util.List;
 class URIBuilder {
     /* The final query */
     private final StringBuilder query = new StringBuilder();
-    private final List<String> queries = new ArrayList<String>();
+    private final List<String> queries = new ArrayList<>();
     private String scheme;
     private String host;
     private int port;
@@ -40,9 +40,8 @@ class URIBuilder {
     }
 
     public static URIBuilder builder(URI uri) {
-        URIBuilder builder = URIBuilder.builder().scheme(uri.getScheme())
+        return URIBuilder.builder().scheme(uri.getScheme())
                 .host(uri.getHost()).port(uri.getPort()).path(uri.getPath());
-        return builder;
     }
 
     public URI build() {

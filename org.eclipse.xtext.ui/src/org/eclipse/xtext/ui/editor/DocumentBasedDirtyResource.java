@@ -76,7 +76,7 @@ public class DocumentBasedDirtyResource implements IDirtyResource.NormalizedURIS
      * @return the current resource description of the associated document. May be <code>null</code>.
      */
     public IResourceDescription get() {
-        IResourceDescription result = document.readOnly(new IUnitOfWork<IResourceDescription, XtextResource>() {
+        return document.readOnly(new IUnitOfWork<IResourceDescription, XtextResource>() {
             public IResourceDescription exec(XtextResource resource) {
                 if (resource != null) {
                     IResourceServiceProvider serviceProvider = resource.getResourceServiceProvider();
@@ -90,7 +90,6 @@ public class DocumentBasedDirtyResource implements IDirtyResource.NormalizedURIS
                 return null;
             }
         });
-        return result;
     }
 
     public void copyState(IResourceDescription original) {

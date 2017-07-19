@@ -66,8 +66,7 @@ public class DefaultResourceUIServiceProvider implements IResourceUIServiceProvi
     }
 
     public boolean canHandle(URI uri) {
-        boolean result = delegate.canHandle(uri);
-        return result;
+        return delegate.canHandle(uri);
     }
 
     /**

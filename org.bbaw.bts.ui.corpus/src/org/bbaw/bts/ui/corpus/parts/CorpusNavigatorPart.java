@@ -136,11 +136,11 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
     private EHandlerService handlerService;
     private TreeViewer mainTreeViewer;
     private StructuredSelection selection;
-    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<String, BTSQueryResultAbstract>();
-    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<String, List<TreeNodeWrapper>>();
+    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<>();
+    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<>();
     private ISelectionChangedListener selectionListener;
     private Composite composite;
-    private Map<Control, Map<URI, Resource>> cachingMap = new HashMap<Control, Map<URI, Resource>>();
+    private Map<Control, Map<URI, Resource>> cachingMap = new HashMap<>();
     private TreeNodeWrapper mainRootNode;
     private CTabFolder tabFolder;
     private CTabItem mainTabItem;
@@ -326,7 +326,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                                 && !selectedTreeNode.isChildrenLoaded() || selectedTreeNode.getChildren().isEmpty()) {
 
 
-                            List<TreeNodeWrapper> parents = new Vector<TreeNodeWrapper>(1);
+                            List<TreeNodeWrapper> parents = new Vector<>(1);
                             parents.add(selectedTreeNode);
                             selectedTreeNode.setChildrenLoaded(true);
                             loadChildren(parents, false, parentControl);
@@ -362,7 +362,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                 }
                 if (selection instanceof TreeSelection) {
                     TreeSelection ts = (TreeSelection) selection;
-                    List<BTSObject> path = new ArrayList<BTSObject>(4);
+                    List<BTSObject> path = new ArrayList<>(4);
 
                     for (Object o : ts.getPaths()) {
 
@@ -486,10 +486,8 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
     }
 
@@ -578,10 +576,8 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
 
@@ -654,10 +650,8 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
     }
@@ -680,7 +674,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                             && cachingMap.get(parentControl) instanceof Map) {
                         map = cachingMap.get(parentControl);
                     } else {
-                        map = new HashMap<URI, Resource>();
+                        map = new HashMap<>();
                         cachingMap.put(parentControl, map);
                     }
                     if (map != null) {
@@ -700,7 +694,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
         List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
                 .get_id());
         if (list == null) {
-            list = new Vector<TreeNodeWrapper>(1);
+            list = new Vector<>(1);
         }
         if (!list.contains(tn)) {
             list.add(tn);
@@ -752,7 +746,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
     @Optional
     void eventReceivedViewRefresh(@EventTopic("view_refresh/*") BTSObject selectionObject) {
         if ((selectionObject instanceof BTSCorpusObject) && selectionObject.equals(selectedCorpusObject)) {
-            final List<TreeNodeWrapper> nodes = new Vector<TreeNodeWrapper>(1);
+            final List<TreeNodeWrapper> nodes = new Vector<>(1);
             nodes.add(selectedTreeNode);
 
             sync.asyncExec(new Runnable() {
@@ -862,7 +856,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
 
     @Override
     public List<Map> getScatteredCashMaps() {
-        final List<Map> maps = new Vector<Map>(1);
+        final List<Map> maps = new Vector<>(1);
         for (Map map : cachingMap.values()) {
             maps.add(map);
         }
@@ -1005,10 +999,8 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                 }
             };
             new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException | InterruptedException e) {
             // handle exception
-        } catch (InterruptedException e) {
-            // handle cancelation
         }
 
     }
@@ -1049,7 +1041,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
 
     private List<BTSCorpusObject> filterObjects(List<BTSCorpusObject> objs,
                                                 StructuredViewer viewer) {
-        List<BTSCorpusObject> filtered = new Vector<BTSCorpusObject>();
+        List<BTSCorpusObject> filtered = new Vector<>();
         for (BTSCorpusObject e : objs) {
             if (isFiltered(e, viewer)) {
                 filtered.add(e);

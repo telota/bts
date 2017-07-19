@@ -290,7 +290,7 @@ public class BTSSenctenceImpl extends AdministrativDataObjectImpl implements BTS
      */
     public EList<BTSSentenceItem> getSentenceItems() {
         if (sentenceItems == null) {
-            sentenceItems = new EObjectContainmentEList<BTSSentenceItem>(BTSSentenceItem.class, this, BtsCorpusModelPackage.BTS_SENCTENCE__SENTENCE_ITEMS);
+            sentenceItems = new EObjectContainmentEList<>(BTSSentenceItem.class, this, BtsCorpusModelPackage.BTS_SENCTENCE__SENTENCE_ITEMS);
         }
         return sentenceItems;
     }

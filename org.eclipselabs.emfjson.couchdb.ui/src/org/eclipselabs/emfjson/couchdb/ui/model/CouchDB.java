@@ -38,7 +38,7 @@ public class CouchDB {
     }
 
     public List<CouchDatabase> getDataBases() {
-        List<CouchDatabase> databases = new ArrayList<CouchDatabase>();
+        List<CouchDatabase> databases = new ArrayList<>();
         String[] dbs = org.eclipselabs.emfjson.couchdb.internal.CouchDB.getListOfDatabases(getURL());
         for (String db : dbs) {
             databases.add(new CouchDatabase(this, db));

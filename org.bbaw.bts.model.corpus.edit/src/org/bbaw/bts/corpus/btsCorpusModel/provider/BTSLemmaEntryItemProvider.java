@@ -184,8 +184,7 @@ public class BTSLemmaEntryItemProvider
         if (object instanceof BTSCorpusObject) {
             BTSCorpusObject o = (BTSCorpusObject) object;
             if (o.getPassport() == null) return null;
-            String str = o.getPassport().getPassportEntryStringValueByPath("bibliography>>bibliographical_text_field");
-            return str;
+            return o.getPassport().getPassportEntryStringValueByPath("bibliography>>bibliographical_text_field");
         }
         return null;
     }

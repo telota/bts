@@ -23,7 +23,7 @@ public interface AnnotationPartController {
      * @param objectTypesConfigItem
      * @return
      */
-    public BTSConfigItem getAnnoSubtypesConfigItem(BTSConfigItem objectTypesConfigItem);
+    BTSConfigItem getAnnoSubtypesConfigItem(BTSConfigItem objectTypesConfigItem);
 
     /**
      * Retrieve {@link BTSConfigItem} holding type definitions for {@link BTSAnnotation} objects
@@ -31,5 +31,5 @@ public interface AnnotationPartController {
      *
      * @return
      */
-    public BTSConfigItem getAnnoTypesConfigItem();
+    BTSConfigItem getAnnoTypesConfigItem();
 }

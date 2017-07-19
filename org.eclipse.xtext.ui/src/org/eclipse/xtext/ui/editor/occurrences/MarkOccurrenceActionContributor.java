@@ -37,8 +37,7 @@ public class MarkOccurrenceActionContributor extends AbstractToggleActionContrib
 
     @Override
     protected Action getAction() {
-        Action action = super.getAction();
-        return action;
+        return super.getAction();
     }
 
     public void contributeActions(XtextEditor editor) {

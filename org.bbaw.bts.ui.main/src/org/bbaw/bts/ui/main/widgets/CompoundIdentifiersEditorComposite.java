@@ -51,7 +51,7 @@ public class CompoundIdentifiersEditorComposite extends Composite {
     private BTSResourceProvider resourceProvider;
     @Inject
     private BTSObject object;
-    private Map<String, BTSConfigItem> identifierConfigCache = new HashMap<String, BTSConfigItem>();
+    private Map<String, BTSConfigItem> identifierConfigCache = new HashMap<>();
 
     private List<BTSConfigItem> cachedIdentifierConfigs;
 
@@ -144,7 +144,7 @@ public class CompoundIdentifiersEditorComposite extends Composite {
 
     private List<BTSConfigItem> listAllIdentifiersConfigs() {
         if (cachedIdentifierConfigs == null) {
-            cachedIdentifierConfigs = new Vector<BTSConfigItem>();
+            cachedIdentifierConfigs = new Vector<>();
             addToListRecursively(configurationController
                     .getIdentifiersConfigItem());
 
@@ -303,8 +303,7 @@ public class CompoundIdentifiersEditorComposite extends Composite {
     }
 
     protected BTSExternalReference makeAdditionalExternalReference() {
-        BTSExternalReference ref = BtsmodelFactory.eINSTANCE.createBTSExternalReference();
-        return ref;
+        return BtsmodelFactory.eINSTANCE.createBTSExternalReference();
     }
 
 

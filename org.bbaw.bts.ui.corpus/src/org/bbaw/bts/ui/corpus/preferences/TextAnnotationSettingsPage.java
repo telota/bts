@@ -148,7 +148,7 @@ public class TextAnnotationSettingsPage extends FieldEditorPreferencePage {
      * @param scrComposite
      */
     private void loadContents() {
-        settingsEditors = new Vector<TextAnnotationSettingsEditor>(annotationsNodes.size());
+        settingsEditors = new Vector<>(annotationsNodes.size());
 
         for (Preferences node : annotationsNodes) {
             addEditor(node);
@@ -186,7 +186,7 @@ public class TextAnnotationSettingsPage extends FieldEditorPreferencePage {
         Preferences rootNode = ConfigurationScope.INSTANCE.getNode(Activator.BUNDLE_ID);
 
         annotationsNode = (EclipsePreferences) rootNode.node(BTSCorpusConstants.PREF_ANNOTATION_SETTINGS);
-        List<EclipsePreferences> nodes = new Vector<EclipsePreferences>();
+        List<EclipsePreferences> nodes = new Vector<>();
         if (annotationsNode != null) {
             try {
                 for (String n : annotationsNode.childrenNames()) {

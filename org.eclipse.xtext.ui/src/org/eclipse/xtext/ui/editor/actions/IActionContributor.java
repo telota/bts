@@ -25,14 +25,14 @@ public interface IActionContributor {
     /**
      * hook used to contribute any actions on editor start up.
      */
-    public void contributeActions(XtextEditor editor);
+    void contributeActions(XtextEditor editor);
 
-    public void editorDisposed(XtextEditor editor);
+    void editorDisposed(XtextEditor editor);
 
     /**
      * composite action contributor delegating call to all registered {@link IActionContributor}
      */
-    public class CompositeImpl implements IActionContributor {
+    class CompositeImpl implements IActionContributor {
 
         @Inject
         private Injector injector;

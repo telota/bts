@@ -89,21 +89,19 @@ final class TemplateVariableProcessor implements IContentAssistProcessor {
 
         String text = viewer.getDocument().get();
         int start = getStart(text, documentOffset);
-        int end = documentOffset;
 
-        String string = text.substring(start, end);
+        String string = text.substring(start, documentOffset);
         String prefix = (string.length() >= 2)
                 ? string.substring(2)
                 : null;
 
-        int offset = start;
-        int length = end - start;
+        int length = documentOffset - start;
 
         for (Iterator iterator = fContextType.resolvers(); iterator.hasNext(); ) {
             TemplateVariableResolver variable = (TemplateVariableResolver) iterator.next();
 
             if (prefix == null || variable.getType().startsWith(prefix))
-                proposals.add(new TemplateVariableProposal(variable, offset, length, viewer));
+                proposals.add(new TemplateVariableProposal(variable, start, length, viewer));
         }
 
         Collections.sort(proposals, fgTemplateVariableProposalComparator);

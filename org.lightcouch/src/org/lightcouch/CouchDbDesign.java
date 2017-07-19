@@ -141,7 +141,7 @@ public class CouchDbDesign {
      * @see #getFromDesk(String)
      */
     public List<DesignDocument> getAllFromDesk() {
-        List<DesignDocument> designDocsList = new ArrayList<DesignDocument>();
+        List<DesignDocument> designDocsList = new ArrayList<>();
         for (String docName : listResources(format("%s/", DESIGN_DOCS_DIR))) {
             designDocsList.add(getFromDesk(docName));
         }
@@ -176,7 +176,7 @@ public class CouchDbDesign {
         Map<String, MapReduce> views = null;
         if (elements.contains(VIEWS)) { // views
             String viewsPath = format("%s%s/", rootPath, VIEWS);
-            views = new HashMap<String, MapReduce>();
+            views = new HashMap<>();
             for (String viewDirName : listResources(viewsPath)) { // views sub-dirs
                 MapReduce mr = new MapReduce();
                 String viewPath = format("%s%s/", viewsPath, viewDirName);
@@ -202,7 +202,7 @@ public class CouchDbDesign {
     private Map<String, String> populateMap(String rootPath, List<String> elements, String element) {
         Map<String, String> functionsMap = null;
         if (elements.contains(element)) {
-            functionsMap = new HashMap<String, String>();
+            functionsMap = new HashMap<>();
             String path = format("%s%s/", rootPath, element);
             for (String fileName : listResources(path)) {
                 String contents = readFile(format("/%s%s", path, fileName));

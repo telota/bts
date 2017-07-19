@@ -42,7 +42,7 @@ public abstract class AbstractEditStrategyProvider {
     }
 
     public interface IEditStrategyAcceptor {
-        public void accept(IAutoEditStrategy strategy, String contentType);
+        void accept(IAutoEditStrategy strategy, String contentType);
     }
 
 }

@@ -40,7 +40,7 @@ public class DisplayChangeWrapper {
         }
     }
 
-    public static interface Wrapper {
+    public interface Wrapper {
         Change getDelegate();
     }
 
@@ -128,12 +128,10 @@ public class DisplayChangeWrapper {
             Change undoChange = new DisplayRunnableWithResult<Change>() {
                 @Override
                 protected Change run() throws Exception {
-                    Change result = delegate.perform(monitor.newChild(1));
-                    return result;
+                    return delegate.perform(monitor.newChild(1));
                 }
             }.syncExec();
-            Change undoWrap = DisplayChangeWrapper.wrap(undoChange);
-            return undoWrap;
+            return DisplayChangeWrapper.wrap(undoChange);
         }
 
         @Override
@@ -232,12 +230,10 @@ public class DisplayChangeWrapper {
             Change undoChange = new DisplayRunnableWithResult<Change>() {
                 @Override
                 protected Change run() throws Exception {
-                    Change result = delegate.perform(monitor.newChild(1));
-                    return result;
+                    return delegate.perform(monitor.newChild(1));
                 }
             }.syncExec();
-            Change undoWrap = DisplayChangeWrapper.wrap(undoChange);
-            return undoWrap;
+            return DisplayChangeWrapper.wrap(undoChange);
         }
 
         @Override
