@@ -6,50 +6,486 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e358357-2dc0-49f7-b155-7fd7c254b32a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/model/generated/EgyDsl.ecore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/model/generated/EgyDsl.genmodel" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/.classpath" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/.gitignore" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/.project" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/.settings/org.eclipse.core.resources.prefs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/.settings/org.eclipse.jdt.core.prefs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/META-INF/MANIFEST.MF" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/META-INF/beans.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava (com.google.guava).iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/pom.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/pom.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/about.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/about_files/LICENSE.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/about_files/NOTICE.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/about_files/README" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/build.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/com.google.guava.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/plugin.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/pom.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/annotations/Beta.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/annotations/GwtCompatible.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/annotations/GwtIncompatible.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/annotations/VisibleForTesting.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/annotations/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Absent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/AbstractIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Ascii.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/CaseFormat.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/CharMatcher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Charsets.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Defaults.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Enums.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Equivalence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/FinalizablePhantomReference.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/FinalizableReference.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/FinalizableReferenceQueue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/FinalizableSoftReference.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/FinalizableWeakReference.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Function.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/FunctionalEquivalence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Functions.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Joiner.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Objects.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Optional.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/PairwiseEquivalence.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Platform.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Preconditions.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Predicate.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Predicates.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Present.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/SmallCharMatcher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Splitter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/StandardSystemProperty.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Stopwatch.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Strings.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Supplier.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Suppliers.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Throwables.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/Ticker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/internal/Finalizer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/base/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/AbstractCache.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/AbstractLoadingCache.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/Cache.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/CacheBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/CacheBuilderSpec.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/CacheLoader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/CacheStats.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/ForwardingCache.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/ForwardingLoadingCache.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/LoadingCache.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/LocalCache.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/LongAddable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/LongAddables.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/LongAdder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/RemovalCause.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/RemovalListener.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/RemovalListeners.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/RemovalNotification.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/Striped64.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/Weigher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/cache/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractBiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractIndexedListIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractListMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractMapBasedMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractMapBasedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractMapEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractNavigableMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractRangeSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractSequentialIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractSortedKeySortedSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractSortedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractSortedSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AbstractTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/AllEqualOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ArrayListMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ArrayTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/BiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/BinaryTreeTraverser.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/BoundType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ByFunctionOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/CartesianList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ClassToInstanceMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/CollectPreconditions.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Collections2.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ComparatorOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ComparisonChain.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/CompoundOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ComputationException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ComputingConcurrentHashMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ConcurrentHashMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Constraint.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Constraints.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ContiguousSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Count.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Cut.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/DenseImmutableTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/DescendingImmutableSortedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/DescendingImmutableSortedSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/DescendingMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/DiscreteDomain.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EmptyContiguousSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EmptyImmutableBiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EmptyImmutableListMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EmptyImmutableSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EmptyImmutableSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EmptyImmutableSortedMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EmptyImmutableSortedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EmptyImmutableSortedSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EnumBiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EnumHashBiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EnumMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/EvictingQueue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ExplicitOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FilteredEntryMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FilteredEntrySetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FilteredKeyListMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FilteredKeyMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FilteredKeySetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FilteredMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FilteredMultimapValues.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FilteredSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/FluentIterable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingBlockingDeque.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingCollection.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingConcurrentMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingDeque.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingImmutableCollection.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingImmutableList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingImmutableMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingImmutableSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingListIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingListMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingMapEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingNavigableMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingNavigableSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingObject.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingQueue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingSortedMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingSortedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingSortedSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingSortedSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ForwardingTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/GeneralRange.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/GenericMapMaker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/GwtTransient.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/HashBasedTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/HashBiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/HashMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/HashMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Hashing.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableAsList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableBiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableClassToInstanceMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableCollection.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableEnumMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableEnumSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableListMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableMapEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableMapEntrySet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableMapKeySet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableMapValues.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableRangeMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableRangeSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSortedAsList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSortedMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSortedMapFauxverideShim.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSortedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSortedMultisetFauxverideShim.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSortedSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableSortedSetFauxverideShim.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ImmutableTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Interner.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Interners.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Iterables.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Iterators.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/LexicographicalOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/LinkedHashMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/LinkedHashMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/LinkedListMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ListMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Lists.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/MapConstraint.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/MapConstraints.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/MapDifference.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/MapMaker.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/MapMakerInternalMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Maps.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/MinMaxPriorityQueue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Multimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Multimaps.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Multiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Multisets.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/MutableClassToInstanceMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/NaturalOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/NullsFirstOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/NullsLastOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ObjectArrays.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Ordering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/PeekingIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Platform.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Queues.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Range.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RangeMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RangeSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularContiguousSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableAsList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableBiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableSortedMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableSortedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableSortedSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RegularImmutableTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ReverseNaturalOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/ReverseOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/RowSortedTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Serialization.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Sets.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SingletonImmutableBiMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SingletonImmutableList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SingletonImmutableSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SingletonImmutableTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SortedIterable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SortedIterables.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SortedLists.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SortedMapDifference.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SortedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SortedMultisetBridge.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SortedMultisets.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SortedSetMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/SparseImmutableTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/StandardRowSortedTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/StandardTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Synchronized.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Table.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/Tables.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/TransformedIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/TransformedListIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/TreeBasedTable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/TreeMultimap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/TreeMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/TreeRangeMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/TreeRangeSet.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/TreeTraverser.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/UnmodifiableIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/UnmodifiableListIterator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/UnmodifiableSortedMultiset.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/UsingToStringOrdering.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/WellBehavedMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/collect/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/ArrayBasedCharEscaper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/ArrayBasedEscaperMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/ArrayBasedUnicodeEscaper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/CharEscaper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/CharEscaperBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/Escaper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/Escapers.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/Platform.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/UnicodeEscaper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/escape/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/AllowConcurrentEvents.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/AnnotatedHandlerFinder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/AsyncEventBus.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/DeadEvent.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/EventBus.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/EventHandler.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/HandlerFindingStrategy.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/Subscribe.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/SynchronizedEventHandler.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/eventbus/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/AbstractByteHasher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/AbstractCompositeHashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/AbstractHasher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/AbstractNonStreamingHashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/AbstractStreamingHashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/BloomFilter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/BloomFilterStrategies.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/ChecksumHashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/Funnel.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/Funnels.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/HashCode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/HashCodes.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/HashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/Hasher.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/Hashing.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/MessageDigestHashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/Murmur3_128HashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/Murmur3_32HashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/PrimitiveSink.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/SipHashFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/hash/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/html/HtmlEscapers.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/html/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/AppendableWriter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/BaseEncoding.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/ByteArrayDataInput.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/ByteArrayDataOutput.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/ByteProcessor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/ByteSink.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/ByteSource.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/ByteStreams.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/CharSequenceReader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/CharSink.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/CharSource.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/CharStreams.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/Closeables.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/Closer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/CountingInputStream.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/CountingOutputStream.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/FileBackedOutputStream.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/FileWriteMode.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/Files.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/Flushables.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/GwtWorkarounds.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/InputSupplier.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/LineBuffer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/LineProcessor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/LineReader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/LittleEndianDataInputStream.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/LittleEndianDataOutputStream.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/MultiInputStream.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/MultiReader.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/OutputSupplier.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/PatternFilenameFilter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/Resources.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/io/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/math/BigIntegerMath.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/math/DoubleMath.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/math/DoubleUtils.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/math/IntMath.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/math/LongMath.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/math/MathPreconditions.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/math/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/HostAndPort.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/HostSpecifier.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/HttpHeaders.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/InetAddresses.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/InternetDomainName.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/MediaType.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/PercentEscaper.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/TldPatterns.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/TrieParser.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/UrlEscapers.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/net/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/AndroidInteger.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Booleans.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Bytes.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Chars.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Doubles.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Floats.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Ints.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Longs.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/ParseRequest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Primitives.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/Shorts.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/SignedBytes.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/UnsignedBytes.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/UnsignedInteger.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/UnsignedInts.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/UnsignedLong.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/UnsignedLongs.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/primitives/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/AbstractInvocationHandler.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/ClassPath.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/Element.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/ImmutableTypeToInstanceMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/Invokable.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/MutableTypeToInstanceMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/Parameter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/Reflection.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/TypeCapture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/TypeParameter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/TypeResolver.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/TypeToInstanceMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/TypeToken.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/TypeVisitor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/Types.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/reflect/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AbstractCheckedFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AbstractExecutionThreadService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AbstractFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AbstractIdleService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AbstractListeningExecutorService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AbstractScheduledService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AbstractService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AsyncFunction.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AtomicDouble.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AtomicDoubleArray.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/AtomicLongMap.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/Atomics.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/Callables.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/CheckedFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/CycleDetectingLockFactory.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ExecutionError.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ExecutionList.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ExecutionQueue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/FakeTimeLimiter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ForwardingBlockingQueue.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ForwardingCheckedFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ForwardingExecutorService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ForwardingFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ForwardingListenableFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ForwardingListeningExecutorService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ForwardingService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/FutureCallback.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/FutureFallback.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/Futures.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/JdkFutureAdapters.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ListenableFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ListenableFutureTask.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ListenableScheduledFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ListeningExecutorService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ListeningScheduledExecutorService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/Monitor.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/MoreExecutors.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/RateLimiter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/Service.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ServiceManager.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/SettableFuture.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/SimpleTimeLimiter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/Striped.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/ThreadFactoryBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/TimeLimiter.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/UncaughtExceptionHandlers.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/UncheckedExecutionException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/UncheckedTimeoutException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/Uninterruptibles.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/WrappingExecutorService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/WrappingScheduledExecutorService.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/util/concurrent/package-info.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/com.google.guava/src/com/google/common/xml/XmlEscapers.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/org.bbaw.bts.ExternalDependencies/pom.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aaew-bts.iml" afterPath="$PROJECT_DIR$/aaew-bts.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bts.transform.ui/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/bts.transform.ui/META-INF/MANIFEST.MF" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" afterPath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/BTSTextEditorControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/BTSTextEditorControllerImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/HieroglyphTypeWriterControllerImpl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/HieroglyphTypeWriterControllerImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/support/TextModelHelper.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/src/org/bbaw/bts/core/corpus/controller/impl/partController/support/TextModelHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/src/org/bbaw/bts/core/corpus/controller/partController/BTSTextEditorController.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/src/org/bbaw/bts/core/corpus/controller/partController/BTSTextEditorController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/build.properties" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/build.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/pom.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/EgyDslUiModule.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/EgyDslUiModule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSEObjectDocumentationProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSEObjectDocumentationProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSEObjectHover.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSEObjectHover.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSSemanticHighlightingCalculator.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/BTSSemanticHighlightingCalculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/EgyDslProposalProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src/org/bbaw/bts/corpus/text/egy/ui/custom/EgyDslProposalProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/build.properties" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/build.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/plugin.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/pom.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/src/org/bbaw/bts/corpus/text/egy/GenerateEgyDsl.mwe2" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/src/org/bbaw/bts/corpus/text/egy/GenerateEgyDsl.mwe2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/src/org/bbaw/bts/corpus/text/egy/validation/EgyDslJavaValidator.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/src/org/bbaw/bts/corpus/text/egy/validation/EgyDslJavaValidator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/build.properties" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/build.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/pom.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.commons/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyHieroglyphenTypeWriter.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyHieroglyphenTypeWriter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmaEditorPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmaEditorPart.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmatizerPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyLemmatizerPart.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextEditorPart.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/parts/EgyTextEditorPart.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/SignTextComposite.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/src/org/bbaw/bts/ui/egy/textSign/SignTextComposite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/build.properties" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/build.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/plugin.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/pom.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/ATextSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/ATextSettingsPage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/CorpusSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/CorpusSettingsPage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/LemmaListSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/LemmaListSettingsPage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/ThsSettingsPage.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/preferences/ThsSettingsPage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/provider/BTSCorpusRemovableContentProvider.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/provider/BTSCorpusRemovableContentProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/toolcontrol/ObjectPathToolControl.java" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/src/org/bbaw/bts/ui/corpus/toolcontrol/ObjectPathToolControl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/build.properties" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/build.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.ui.main/pom.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.ui.main/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.app.feature/feature.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.app.feature/feature.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/org.bbaw.bts.corpus.egy.feature/feature.xml" afterPath="$PROJECT_DIR$/org.bbaw.bts.corpus.egy.feature/feature.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/org.bbaw.bts.app.feature/target/" />
     <ignored path="$PROJECT_DIR$/org.eclipse.xtext.ui/target/" />
@@ -184,8 +620,8 @@
       <file leaf-file-name="BTSTextEditorController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/src/org/bbaw/bts/core/corpus/controller/partController/BTSTextEditorController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="62" column="90" lean-forward="false" selection-start-line="62" selection-start-column="90" selection-end-line="62" selection-end-column="90" />
+            <state relative-caret-position="450">
+              <caret line="52" column="71" lean-forward="false" selection-start-line="52" selection-start-column="71" selection-end-line="52" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -438,89 +874,7 @@
           <expand>
             <path>
               <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
               <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="partController" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller.impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller.impl" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller.impl" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller.impl" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller.impl" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-              <item name="partController" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bts-clean" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aaew-bts and modules" type="9c53a853:ProjectViewModuleGroupNode" />
-              <item name="bts-clean" type="462c0819:PsiDirectoryNode" />
-              <item name="org.bbaw.bts.core.corpus.controller.impl" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-              <item name="partController" type="462c0819:PsiDirectoryNode" />
-              <item name="support" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1021,16 +1375,15 @@
       <workItem from="1500468738285" duration="16000" />
       <workItem from="1500468784230" duration="12103000" />
       <workItem from="1500982124030" duration="1679000" />
-      <workItem from="1500989023438" duration="4886000" />
+      <workItem from="1500989023438" duration="6141000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31535000" />
+    <option name="totallyTimeSpent" value="32790000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="44" width="1920" height="1156" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1044,7 +1397,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33489582" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33489582" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1385,9 +1738,9 @@
         <state relative-caret-position="367">
           <caret line="25" column="75" lean-forward="false" selection-start-line="25" selection-start-column="75" selection-end-line="25" selection-end-column="75" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2631#2632#0" expanded="true" />
-            <element signature="e#2675#2676#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2631#2632#0" expanded="false" />
+            <element signature="e#2675#2676#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1498,8 +1851,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/src/org/bbaw/bts/core/corpus/controller/partController/BTSTextEditorController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="62" column="90" lean-forward="false" selection-start-line="62" selection-start-column="90" selection-end-line="62" selection-end-column="90" />
+        <state relative-caret-position="450">
+          <caret line="52" column="71" lean-forward="false" selection-start-line="52" selection-start-column="71" selection-end-line="52" selection-end-column="71" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

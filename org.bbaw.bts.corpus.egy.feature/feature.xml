@@ -343,13 +343,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.google.guava"
-         download-size="0"
-         install-size="0"
-         version="10.0.1.v201203051515"
-         unpack="false"/>
-
-   <plugin
          id="org.bbaw.bts.ui.corpus.egy.commons"
          download-size="0"
          install-size="0"

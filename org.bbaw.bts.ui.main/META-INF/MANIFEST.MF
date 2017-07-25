@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: UIMain
 Bundle-SymbolicName: org.bbaw.bts.ui.main;singleton:=true
 Bundle-ClassPath: .,
+ target/lib/rcptoolbox.jar,
  target/lib/opal.jar
 Bundle-Vendor: BBAW
 Export-Package: org.bbaw.bts.ui.main.dialogs,

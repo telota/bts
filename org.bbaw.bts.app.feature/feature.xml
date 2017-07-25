@@ -55,7 +55,6 @@
       <import plugin="org.eclipse.equinox.util" version="1.0.500" match="greaterOrEqual"/>
       <import plugin="org.eclipse.equinox.ds" version="1.4.100" match="greaterOrEqual"/>
       <import plugin="org.bbaw.bts.commons.libs.elasticsearch" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="com.google.guava" version="10.0.1"/>
       <import plugin="org.apache.httpcomponents.httpcore"/>
       <import plugin="org.apache.httpcomponents.httpclient"/>
       <import plugin="org.bbaw.bts.core.remote.dao" version="1.0.0" match="greaterOrEqual"/>
@@ -1068,13 +1067,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.google.guava"
-         download-size="0"
-         install-size="0"
-         version="10.0.1"
          unpack="false"/>
 
    <plugin

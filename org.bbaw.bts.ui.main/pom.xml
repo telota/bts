@@ -10,6 +10,12 @@
     <artifactId>org.bbaw.bts.ui.main</artifactId>
     <version>3.1.0-SNAPSHOT</version>
     <packaging>eclipse-plugin</packaging>
+
+    <properties>
+        <rcptoolbox.version>1.0.10</rcptoolbox.version>
+        <opal.version>1.0.6</opal.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -26,8 +32,21 @@
                             <goal>wget</goal>
                         </goals>
                         <configuration>
-                            <url>https://github.com/lcaron/opal/blob/releases/V1.0.6/opal-1.0.6.jar?raw=true</url>
+                            <url>https://github.com/lcaron/opal/blob/releases/V${opal.version}/opal-${opal.version}.jar?raw=true</url>
                             <outputFileName>opal.jar</outputFileName>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>0000000000002</id>
+                        <!-- the wget goal actually binds itself to this phase by default -->
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://launchpad.net/rcptoolbox/trunk/${rcptoolbox.version}/+download/rcptoolbox.${rcptoolbox.version}.jar</url>
+                            <outputFileName>rcptoolbox.jar</outputFileName>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
                         </configuration>
                     </execution>
