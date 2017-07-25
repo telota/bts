@@ -58,7 +58,7 @@ public class OpenBrowserUtil {
                     else
                         browser = browserSupport.createBrowser(null);
                     browser.openURL(helpSystemUrl);
-                } catch (PartInitException ex) {
+                } catch (PartInitException ignored) {
                 }
             }
         });

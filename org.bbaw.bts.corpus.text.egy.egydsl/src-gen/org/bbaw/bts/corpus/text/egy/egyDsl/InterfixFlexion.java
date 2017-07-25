@@ -8,9 +8,11 @@ package org.bbaw.bts.corpus.text.egy.egyDsl;
  * A representation of the model object '<em><b>Interfix Flexion</b></em>'.
  * <!-- end-user-doc -->
  *
+ *
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getInterfixFlexion()
  * @model
  * @generated
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getInterfixFlexion()
  */
-public interface InterfixFlexion extends Interfix {
+public interface InterfixFlexion extends Interfix
+{
 } // InterfixFlexion

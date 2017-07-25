@@ -109,8 +109,7 @@ public enum TypeType7 implements Enumerator {
      * @generated
      */
     public static TypeType7 get(String literal) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            TypeType7 result = VALUES_ARRAY[i];
+        for (TypeType7 result : VALUES_ARRAY) {
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -126,8 +125,7 @@ public enum TypeType7 implements Enumerator {
      * @generated
      */
     public static TypeType7 getByName(String name) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            TypeType7 result = VALUES_ARRAY[i];
+        for (TypeType7 result : VALUES_ARRAY) {
             if (result.getName().equals(name)) {
                 return result;
             }

@@ -275,7 +275,7 @@ public class ToggleSLCommentAction extends TextEditorAction {
 
         ITextEditor editor = getTextEditor();
         if (fOperationTarget == null && editor != null)
-            fOperationTarget = (ITextOperationTarget) editor.getAdapter(ITextOperationTarget.class);
+            fOperationTarget = editor.getAdapter(ITextOperationTarget.class);
 
         boolean isEnabled = (fOperationTarget != null && fOperationTarget.canDoOperation(ITextOperationTarget.PREFIX) && fOperationTarget.canDoOperation(ITextOperationTarget.STRIP_PREFIX));
         setEnabled(isEnabled);
@@ -295,13 +295,12 @@ public class ToggleSLCommentAction extends TextEditorAction {
 
         String[] types = configuration.getConfiguredContentTypes(sourceViewer);
         Map<String, String[]> prefixesMap = new HashMap<>(types.length);
-        for (int i = 0; i < types.length; i++) {
-            String type = types[i];
+        for (String type : types) {
             String[] prefixes = configuration.getDefaultPrefixes(sourceViewer, type);
             if (prefixes != null && prefixes.length > 0) {
                 int emptyPrefixes = 0;
-                for (int j = 0; j < prefixes.length; j++)
-                    if (prefixes[j].length() == 0)
+                for (String prefixe : prefixes)
+                    if (prefixe.length() == 0)
                         emptyPrefixes++;
 
                 if (emptyPrefixes > 0) {

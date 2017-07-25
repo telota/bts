@@ -91,7 +91,7 @@ public class BTSResourceProviderImpl extends BasicResourceProvider implements
                 if (stream != null) {
                     try {
                         stream.close();
-                    } catch (IOException e) {
+                    } catch (IOException ignored) {
                     }
                 }
             }

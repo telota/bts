@@ -62,13 +62,10 @@ abstract class SourceAttachmentPackageFragmentRootWalker<T> extends PackageFragm
                     try {
                         final File file = path.toFile();
                         if (file != null && file.exists()) {
-                            JarFile jarFile = new JarFile(file);
-                            try {
+                            try (JarFile jarFile = new JarFile(file)) {
                                 Manifest manifest = jarFile.getManifest();
                                 if (manifest != null)
                                     bundleSymbolicName = getBundleSymbolicName(manifest);
-                            } finally {
-                                jarFile.close();
                             }
                         }
                     } catch (IOException e) {
@@ -188,7 +185,7 @@ abstract class SourceAttachmentPackageFragmentRootWalker<T> extends PackageFragm
      */
     protected int isBinInclude(String path) {
         for (Pattern pattern : binIncludePatterns) {
-            if (pattern.matcher(path.toString()).matches()) {
+            if (pattern.matcher(path).matches()) {
                 return YES;
             }
         }

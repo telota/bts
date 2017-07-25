@@ -28,16 +28,13 @@ import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
 import org.bbaw.bts.searchModel.BTSQueryResultAbstract;
 import org.bbaw.bts.ui.commons.navigator.StructuredViewerProvider;
 import org.bbaw.bts.ui.commons.search.SearchViewer;
 import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
 import org.bbaw.bts.ui.corpus.dialogs.PassportEditorDialog;
-import org.bbaw.bts.ui.corpus.parts.corpusNavigator.BTSCorpusObjectBySortKeyNameViewerSorter;
 import org.bbaw.bts.ui.corpus.parts.lemma.BTSLemmaBySortKeyNameViewerSorter;
-import org.bbaw.bts.ui.corpus.sorter.BTSEgyObjectByNameViewerSorter;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -175,7 +172,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                     loaded = true;
                 }
                 if (o != null && o instanceof String) {
-                    if (((String) o).equals("bin")) {
+                    if (o.equals("bin")) {
                         if (!loaded) {
                             binRootNode = BtsviewmodelFactory.eINSTANCE
                                     .createTreeNodeWrapper();
@@ -357,7 +354,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                         public void run() {
                             if (parentControl != null && cachingMap.get(parentControl) != null
                                     && cachingMap.get(parentControl) instanceof Map) {
-                                map = (Map) cachingMap.get(parentControl);
+                                map = cachingMap.get(parentControl);
                             } else {
                                 map = null;
                             }
@@ -558,7 +555,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
                     Map map = null;
                     if (cachingMap.get(parentControl) != null
                             && cachingMap.get(parentControl) instanceof Map) {
-                        map = (Map) cachingMap.get(parentControl);
+                        map = cachingMap.get(parentControl);
                     } else {
                         map = new HashMap<URI, Resource>();
                         cachingMap.put(parentControl, map);
@@ -577,7 +574,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
     }
 
     private void addTooHolderMap(BTSObject o, TreeNodeWrapper tn) {
-        List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
+        List<TreeNodeWrapper> list = viewHolderMap.get(o
                 .get_id());
         if (list == null) {
             list = new Vector<>(1);
@@ -585,7 +582,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
         if (!list.contains(tn)) {
             list.add(tn);
         }
-        viewHolderMap.put(((BTSDBBaseObject) o).get_id(), list);
+        viewHolderMap.put(o.get_id(), list);
 
     }
 
@@ -689,9 +686,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
     @Override
     public List<Map> getScatteredCashMaps() {
         final List<Map> maps = new Vector<>(1);
-        for (Map map : cachingMap.values()) {
-            maps.add(map);
-        }
+        maps.addAll(cachingMap.values());
         return maps;
     }
 
@@ -747,7 +742,7 @@ public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPar
         if (queryName != null && queryName.trim().length() > 0) {
             searchTab.setText(queryName);
         } else {
-            searchTab.setText(new Integer(tabFolder.getChildren().length - 2).toString());
+            searchTab.setText(Integer.toString(tabFolder.getChildren().length - 2));
         }
         if (query != null) {
             searchTab.setData("key", query.getQueryId());

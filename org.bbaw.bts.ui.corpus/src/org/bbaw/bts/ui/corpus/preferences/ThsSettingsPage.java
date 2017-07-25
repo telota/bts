@@ -6,7 +6,6 @@ import java.util.Vector;
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
 import org.bbaw.bts.commons.BTSPluginIDs;
-import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.commons.staticAccess.StaticAccessController;
 import org.bbaw.bts.core.controller.generalController.BTSProjectController;
 import org.bbaw.bts.ui.main.provider.BTSProjectLabelProvider;
@@ -33,8 +32,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.osgi.service.prefs.BackingStoreException;
-
-import com.richclientgui.toolbox.duallists.DualListComposite;
 
 public class ThsSettingsPage extends FieldEditorPreferencePage {
 

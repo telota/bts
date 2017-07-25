@@ -65,7 +65,7 @@ public class BTSIDReservationObjectDaoImpl extends CouchDBDao<BTSIDReservationOb
                 try {
                     Integer i = new Integer(m.group(2));
                     ids.add(i);
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException ignored) {
                 }
             }
         }

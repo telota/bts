@@ -11,10 +11,6 @@ import java.util.zip.ZipInputStream;
 
 import javax.inject.Inject;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.ILog;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.core.services.log.Logger;
 
 public class CopyDirectory {
@@ -32,9 +28,9 @@ public class CopyDirectory {
             }
 
             String files[] = srcPath.list();
-            for (int i = 0; i < files.length; i++) {
-                copyDirectory(new File(srcPath, files[i]), new File(dstPath,
-                        files[i]));
+            for (String file : files) {
+                copyDirectory(new File(srcPath, file), new File(dstPath,
+                        file));
             }
         } else {
             if (!srcPath.exists()) {

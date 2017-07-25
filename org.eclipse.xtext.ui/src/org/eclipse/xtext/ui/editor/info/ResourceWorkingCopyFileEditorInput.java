@@ -54,11 +54,9 @@ public class ResourceWorkingCopyFileEditorInput extends FileEditorInput {
             file = ResourceUtil.getFile(resource);
             boolean isModified = resource.isModified();
             ByteArrayOutputStream outputBuffer = new ByteArrayOutputStream();
-            OutputStream outputStream = new BufferedOutputStream(outputBuffer);
-            try {
+            try (OutputStream outputStream = new BufferedOutputStream(outputBuffer)) {
                 resource.save(outputStream, null);
             } finally {
-                outputStream.close();
                 resource.setModified(isModified);
             }
             buffer = outputBuffer.toByteArray();

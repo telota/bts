@@ -3,9 +3,6 @@
  */
 package org.bbaw.bts.corpus.text.egy.ui;
 
-import org.bbaw.bts.corpus.text.egy.formatting.EgyDslFormatter;
-import org.bbaw.bts.corpus.text.egy.ui.contentassist.AbstractEgyDslProposalProvider;
-import org.bbaw.bts.corpus.text.egy.ui.contentassist.EgyDslProposalProvider;
 import org.bbaw.bts.corpus.text.egy.ui.custom.BTSE4ToGuiceXtextSourceViewerProvider;
 import org.bbaw.bts.corpus.text.egy.ui.custom.BTSEObjectDocumentationProvider;
 import org.bbaw.bts.corpus.text.egy.ui.custom.BTSEObjectHover;
@@ -43,7 +40,7 @@ public class EgyDslUiModule extends org.bbaw.bts.corpus.text.egy.ui.AbstractEgyD
     public void configure(Binder binder) {
         // TODO Auto-generated method stub
         super.configure(binder);
-        binder.bind(XtextSourceViewer.class).toProvider((Class<? extends Provider<? extends XtextSourceViewer>>) BTSE4ToGuiceXtextSourceViewerProvider.class);
+        binder.bind(XtextSourceViewer.class).toProvider(BTSE4ToGuiceXtextSourceViewerProvider.class);
     }
 
 //	 public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider()

@@ -49,7 +49,7 @@ public class AddAnnotationHandler {
             rel.getParts().add(ref);
 
             IEclipseContext child = context.createChild();
-            child.set(BTSObject.class, (BTSObject) object);
+            child.set(BTSObject.class, object);
             child.set(Shell.class, shell);
             PassportEditorDialog dialog = ContextInjectionFactory.make(
                     PassportEditorDialog.class, child);

@@ -87,7 +87,7 @@ public class EditingDomainControllerImpl implements EditingDomainController {
             return object;
         } else {
             if (object.eContainer() instanceof BTSDBBaseObject) {
-                return (BTSDBBaseObject) object.eContainer();
+                return object.eContainer();
             } else {
                 return findRecursivelyParent(object.eContainer());
             }
@@ -101,7 +101,7 @@ public class EditingDomainControllerImpl implements EditingDomainController {
                 && selection instanceof EObject) {
             EditingDomain ed = null;
             if (this.selection != null && this.selection instanceof EObject) {
-                ed = getEditingDomain((EObject) this.selection);
+                ed = getEditingDomain(this.selection);
                 if (ed != null) {
                     ed.getCommandStack().removeCommandStackListener(
                             getCommandStackListener());
@@ -109,7 +109,7 @@ public class EditingDomainControllerImpl implements EditingDomainController {
             }
             this.selection = selection;
             evaluateUndoRedo();
-            ed = getEditingDomain((EObject) selection);
+            ed = getEditingDomain(selection);
             if (ed != null) {
                 ed.getCommandStack().addCommandStackListener(
                         getCommandStackListener());
@@ -133,7 +133,7 @@ public class EditingDomainControllerImpl implements EditingDomainController {
     }
 
     private void evaluateUndoRedo() {
-        EditingDomain ed = getEditingDomain((EObject) selection);
+        EditingDomain ed = getEditingDomain(selection);
         if (ed != null) {
             String canUndo = (String) context
                     .get(BTSCoreConstants.CORE_EXPRESSION_CAN_UNDO);

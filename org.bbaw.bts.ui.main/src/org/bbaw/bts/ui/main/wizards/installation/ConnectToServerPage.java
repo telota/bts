@@ -228,10 +228,6 @@ public class ConnectToServerPage extends WizardPage {
 
     @Override
     public boolean canFlipToNextPage() {
-        if (connection != null) {
-            return super.canFlipToNextPage();
-        } else {
-            return false;
-        }
+        return connection != null && super.canFlipToNextPage();
     }
 }

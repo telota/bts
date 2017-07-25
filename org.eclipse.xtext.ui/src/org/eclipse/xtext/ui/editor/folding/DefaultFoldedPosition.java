@@ -99,9 +99,7 @@ public class DefaultFoldedPosition extends FoldedPosition {
         if (getClass() != obj.getClass())
             return false;
         DefaultFoldedPosition other = (DefaultFoldedPosition) obj;
-        if (contentLength != other.contentLength)
-            return false;
-        return contentStart == other.contentStart;
+        return contentLength == other.contentLength && contentStart == other.contentStart;
     }
 
 

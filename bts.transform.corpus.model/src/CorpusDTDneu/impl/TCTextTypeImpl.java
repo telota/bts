@@ -581,7 +581,7 @@ public class TCTextTypeImpl extends MinimalEObjectImpl.Container implements TCTe
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.TC_TEXT_TYPE__TC_PASSPORT:
-                setTCPassport((TCPassportType) null);
+                setTCPassport(null);
                 return;
             case CorpusDTDneuPackage.TC_TEXT_TYPE__TC_PICTURE:
                 getTCPicture().clear();
@@ -590,7 +590,7 @@ public class TCTextTypeImpl extends MinimalEObjectImpl.Container implements TCTe
                 getTCNotebook().clear();
                 return;
             case CorpusDTDneuPackage.TC_TEXT_TYPE__EGY_TXT:
-                setEgyTxt((EgyTxtType) null);
+                setEgyTxt(null);
                 return;
             case CorpusDTDneuPackage.TC_TEXT_TYPE__AUTHOR:
                 setAuthor(AUTHOR_EDEFAULT);

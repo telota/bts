@@ -1,15 +1,10 @@
 package org.bbaw.bts.ui.egy.dialogs;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import org.bbaw.bts.btsmodel.BTSObject;
-import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
-import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
 import org.bbaw.bts.core.corpus.controller.partController.BTSTextEditorController;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSText;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.contexts.IEclipseContext;
@@ -23,7 +18,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Decorations;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;

@@ -4,7 +4,6 @@ import javax.inject.Named;
 
 import org.bbaw.bts.btsmodel.AdministrativDataObject;
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
-import org.bbaw.bts.btsmodel.BtsmodelPackage;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.controller.generalController.EditingDomainController;
@@ -16,9 +15,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 public class DeleteHandler {
@@ -29,8 +26,7 @@ public class DeleteHandler {
             CorpusCommandController commandController, @Optional @Active MPart activePart) {
         System.out.println("delete");
         if (selection instanceof EObject) {
-            EditingDomain ed = editingDomainController.getEditingDomain((EObject)
-                    selection);
+            EditingDomain ed = editingDomainController.getEditingDomain(selection);
 
             ((AdministrativDataObject) selection)
                     .setState(BTSConstants.OBJECT_STATE_TERMINATED);
@@ -51,9 +47,6 @@ public class DeleteHandler {
     public boolean canExecute(
             @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection,
             @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
-        if (mayDelete != null && mayDelete.booleanValue()) {
-            return selection != null;
-        }
-        return false;
+        return mayDelete != null && mayDelete.booleanValue() && selection != null;
     }
 }

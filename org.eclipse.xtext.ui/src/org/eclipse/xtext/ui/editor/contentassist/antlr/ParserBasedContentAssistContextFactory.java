@@ -245,7 +245,7 @@ public class ParserBasedContentAssistContextFactory extends AbstractContentAssis
                 for (AbstractElement element : context.getFirstSetGrammarElements()) {
                     if (element instanceof Keyword) {
                         String keywordValue = ((Keyword) element).getValue();
-                        String lastText = ((ILeafNode) lastCompleteNode).getText();
+                        String lastText = lastCompleteNode.getText();
                         if (keywordValue.equals(lastText))
                             return true;
                     }
@@ -492,7 +492,7 @@ public class ParserBasedContentAssistContextFactory extends AbstractContentAssis
         public String getNodeTextUpToCompletionOffset(INode currentNode) {
             int startOffset = currentNode.getOffset();
             int length = completionOffset - startOffset;
-            String nodeText = ((ILeafNode) currentNode).getText();
+            String nodeText = currentNode.getText();
             String trimmedNodeText = length > nodeText.length() ? nodeText : nodeText.substring(0, length);
             if (viewer.getDocument() != null /* testing */ && length >= 0) {
                 try {
@@ -521,9 +521,8 @@ public class ParserBasedContentAssistContextFactory extends AbstractContentAssis
                         if (result.length() != 0)
                             hiddens.add((ILeafNode) child);
                     } else {
-                        Iterator<ILeafNode> iter = hiddens.iterator();
-                        while (iter.hasNext()) {
-                            result.append(iter.next().getText());
+                        for (ILeafNode hidden : hiddens) {
+                            result.append(hidden.getText());
                         }
                         hiddens.clear();
                         result.append(getNodeTextUpToCompletionOffset(leaf));

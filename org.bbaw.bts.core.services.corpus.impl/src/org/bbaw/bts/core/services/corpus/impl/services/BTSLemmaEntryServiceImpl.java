@@ -90,7 +90,7 @@ public class BTSLemmaEntryServiceImpl
         BTSLemmaEntry entry = null;
         try {
             entry = lemmaEntryDao.find(key, main_project + BTSCorpusConstants.WLIST);
-        } catch (Exception e1) {
+        } catch (Exception ignored) {
         }
         if (entry != null) {
             return entry;
@@ -317,7 +317,7 @@ public class BTSLemmaEntryServiceImpl
         String entry = null;
         try {
             entry = lemmaEntryDao.findAsJsonString(key, main_project + BTSCorpusConstants.WLIST);
-        } catch (Exception e1) {
+        } catch (Exception ignored) {
         }
         if (entry != null) {
             return entry;

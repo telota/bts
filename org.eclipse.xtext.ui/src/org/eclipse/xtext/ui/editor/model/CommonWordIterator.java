@@ -124,9 +124,7 @@ public class CommonWordIterator extends BreakIterator {
         if (exclusiveEnd == DONE || offset == DONE)
             return false;
 
-        if (isWhitespace(offset, exclusiveEnd))
-            return false;
-        return !isDelimiter(offset, exclusiveEnd);
+        return !isWhitespace(offset, exclusiveEnd) && !isDelimiter(offset, exclusiveEnd);
     }
 
     /**

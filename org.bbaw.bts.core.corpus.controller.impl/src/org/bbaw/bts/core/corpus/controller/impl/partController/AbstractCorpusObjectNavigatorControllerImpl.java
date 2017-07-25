@@ -72,9 +72,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
         List<E> list = retrieveTypedRootEntries(monitor);//thsService.listRootEntries();
         sortEntries(list);
         List<E> result = new Vector<>(list.size());
-        for (E t : list) {
-            result.add(t);
-        }
+        result.addAll(list);
         return result;
     }
 
@@ -97,10 +95,10 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
         TreeNodeWrapper childNode = null;
         if (subject != null) {
             BTSRelation rel = BtsmodelFactory.eINSTANCE.createBTSRelation();
-            rel.setObjectId(((BTSDBBaseObject) object).get_id());
+            rel.setObjectId(object.get_id());
             rel.setType(relationType);
             subject.getRelations().add(rel);
-            corpusObjectService.save((E) subject);
+            corpusObjectService.save(subject);
         }
         if (relationType != null && relationType.equals("partOf")) {
             childNode = BtsviewmodelFactory.eINSTANCE
@@ -185,7 +183,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
             if (notification.getObject() instanceof BTSObject) {
                 BTSObject o = (BTSObject) notification.getObject();
                 List<TreeNodeWrapper> holders = viewHolderMap
-                        .get(((BTSDBBaseObject) o).get_id());
+                        .get(o.get_id());
                 Set<Object> removeHolderMap = new HashSet<>(1);
                 if (holders != null) {
                     for (Object holder : holders) {
@@ -221,7 +219,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
             if (ref.isEmpty() || notification.getObject() == null) {
                 TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE
                         .createTreeNodeWrapper();
-                tn.setObject((BTSObject) notification.getObject());
+                tn.setObject(notification.getObject());
                 tn.setParent((TreeNodeWrapper) parent);
                 ref.add(tn);
                 addTooHolderMap((BTSObject) notification.getObject(), tn, viewHolderMap);
@@ -238,7 +236,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
             }
             TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE
                     .createTreeNodeWrapper();
-            tn.setObject((BTSObject) notification.getObject());
+            tn.setObject(notification.getObject());
             tn.setParent((TreeNodeWrapper) parent);
             ref.add(tn);
             addTooHolderMap((BTSObject) notification.getObject(), tn, viewHolderMap);
@@ -250,7 +248,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
     }
 
     private void addTooHolderMap(BTSObject o, TreeNodeWrapper tn, Map<String, List<TreeNodeWrapper>> viewHolderMap) {
-        List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
+        List<TreeNodeWrapper> list = viewHolderMap.get(o
                 .get_id());
         if (list == null) {
             list = new Vector<>(1);
@@ -258,7 +256,7 @@ public abstract class AbstractCorpusObjectNavigatorControllerImpl<E extends BTSC
         if (!list.contains(tn)) {
             list.add(tn);
         }
-        viewHolderMap.put(((BTSDBBaseObject) o).get_id(), list);
+        viewHolderMap.put(o.get_id(), list);
 
     }
 

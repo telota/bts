@@ -27,7 +27,7 @@ public class CouchDBIndexHelper {
         List<String> lines = fetchLine(collection, dbClient, seq);
         Object returnSeq = processLines(lines, collection, bulkProcessor, monitor, logger);
         if (returnSeq instanceof String) {
-            seq = new Integer(((String) returnSeq)).intValue();
+            seq = new Integer(((String) returnSeq));
         }
         return seq;
     }
@@ -35,7 +35,7 @@ public class CouchDBIndexHelper {
 
     private static List<String> fetchLine(String collection, CouchDbClient dbClient,
                                           int seq) {
-        ChangesResult cr = dbClient.changes().includeDocs(true).since(new Integer(seq).toString()).getChanges();
+        ChangesResult cr = dbClient.changes().includeDocs(true).since(Integer.toString(seq)).getChanges();
         List<Row> rows = cr.getResults();
         List<String> lines = new Vector<>(rows.size());
 

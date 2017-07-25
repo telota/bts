@@ -7,11 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bbaw.bts.btsmodel.BTSUser;
-import org.bbaw.bts.btsmodel.BTSUserGroup;
 import org.bbaw.bts.core.commons.staticAccess.StaticAccessController;
-import org.bbaw.bts.core.services.BTSUserGroupService;
-import org.bbaw.bts.core.services.BTSUserService;
 import org.bbaw.bts.core.services.corpus.BTSThsEntryService;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
@@ -25,8 +21,6 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 
-import bts.transform.ui.xtend.Authors2BTSTransform;
-import bts.transform.ui.xtend.Ths2BTSTransform;
 import Btsaux.DocumentRoot;
 import Btsaux.provider.BtsauxItemProviderAdapterFactory;
 

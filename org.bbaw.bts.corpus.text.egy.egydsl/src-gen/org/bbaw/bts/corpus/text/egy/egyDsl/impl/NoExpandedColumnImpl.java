@@ -16,26 +16,27 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class NoExpandedColumnImpl extends MinimalEObjectImpl.Container implements NoExpandedColumn {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected NoExpandedColumnImpl() {
-        super();
-    }
+public class NoExpandedColumnImpl extends MinimalEObjectImpl.Container implements NoExpandedColumn
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected NoExpandedColumnImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.NO_EXPANDED_COLUMN;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.NO_EXPANDED_COLUMN;
+  }
 
 } //NoExpandedColumnImpl

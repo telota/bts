@@ -73,7 +73,7 @@ public interface ApplicationStartupController {
      * @return list of projects from remote database
      * @throws MalformedURLException exception if url not valid.
      */
-    List<BTSProject> loadRemoteProjects(String username, String password) throws MalformedURLException;
+    List<BTSProject> loadRemoteProjects(String username, String password);
 
     /**
      * Sets the remote database connection
@@ -83,7 +83,7 @@ public interface ApplicationStartupController {
      * @param password password, login credentials
      * @throws MalformedURLException if url not valid
      */
-    void setRemoteDBConnection(String url, String user, String password) throws MalformedURLException;
+    void setRemoteDBConnection(String url, String user, String password);
 
     /**
      * Gets the path to the directory of the database installation.

@@ -24,7 +24,6 @@ package org.bbaw.bts.core.commons.comparator;
  */
 
 import java.text.Collator;
-import java.text.RuleBasedCollator;
 import java.util.Comparator;
 import java.util.Locale;
 

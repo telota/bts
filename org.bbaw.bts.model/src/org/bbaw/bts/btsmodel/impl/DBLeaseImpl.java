@@ -477,7 +477,7 @@ public class DBLeaseImpl extends BTSDBBaseObjectImpl implements DBLease {
                 setTimeStamp(TIME_STAMP_EDEFAULT);
                 return;
             case BtsmodelPackage.DB_LEASE__OBJECT:
-                setObject((BTSDBBaseObject) null);
+                setObject(null);
                 return;
             case BtsmodelPackage.DB_LEASE__ACTIVE:
                 setActive(ACTIVE_EDEFAULT);

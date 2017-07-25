@@ -35,16 +35,14 @@ public class OpenExternalBrowser {
         try { // attempt to use Desktop library from JDK 1.6+
             Class<?> d = Class.forName("java.awt.Desktop");
             d.getDeclaredMethod("browse", new Class[]
-                    {java.net.URI.class}).invoke(d.getDeclaredMethod("getDesktop").invoke(null), new Object[]
-                    {java.net.URI.create(url)});
+                    {java.net.URI.class}).invoke(d.getDeclaredMethod("getDesktop").invoke(null), java.net.URI.create(url));
             // above code mimicks: java.awt.Desktop.getDesktop().browse()
         } catch (Exception ignore) { // library not available or failed
             String osName = System.getProperty("os.name");
             try {
                 if (osName.startsWith("Mac OS")) {
                     Class.forName("com.apple.eio.FileManager").getDeclaredMethod("openURL", new Class[]
-                            {String.class}).invoke(null, new Object[]
-                            {url});
+                            {String.class}).invoke(null, url);
                 } else if (osName.startsWith("Windows"))
                     Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
                 else { // assume Unix or Linux

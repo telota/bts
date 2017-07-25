@@ -164,7 +164,7 @@ public class ProjectCollectionPage extends WizardPage {
             @Override
             public String getText(Object element) {
                 BTSProjectDBCollection p = (BTSProjectDBCollection) element;
-                return new Boolean(p.isSynchronized()).toString();
+                return Boolean.valueOf(p.isSynchronized()).toString();
             }
         });
 
@@ -174,7 +174,7 @@ public class ProjectCollectionPage extends WizardPage {
             @Override
             public String getText(Object element) {
                 BTSProjectDBCollection p = (BTSProjectDBCollection) element;
-                return new Boolean(p.isIndexed()).toString();
+                return Boolean.valueOf(p.isIndexed()).toString();
             }
         });
 

@@ -8,8 +8,7 @@
 		<artifactId>aaew-bts</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.bbaw.bts</groupId>
-	<artifactId>org.bbaw.bts.db.couchdb.mac</artifactId>
+    <artifactId>org.bbaw.bts.db.couchdb.mac</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 

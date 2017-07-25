@@ -34,12 +34,9 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSTextCorpus;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
 import org.bbaw.bts.searchModel.BTSQueryResultAbstract;
-import org.bbaw.bts.ui.commons.corpus.util.BTSEGYUIConstants;
-import org.bbaw.bts.ui.commons.filter.BTSObjectStateViewerFilter;
 import org.bbaw.bts.ui.commons.navigator.StructuredViewerProvider;
 import org.bbaw.bts.ui.commons.search.SearchViewer;
 import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
-import org.bbaw.bts.ui.commons.viewerSorter.BTSObjectByNameViewerSorter;
 import org.bbaw.bts.ui.corpus.dialogs.PassportEditorDialog;
 import org.bbaw.bts.ui.corpus.parts.corpusNavigator.BTSCorpusObjectBySortKeyNameViewerSorter;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
@@ -92,14 +89,12 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -207,7 +202,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                     loaded = true;
                 }
                 if (o != null && o instanceof String) {
-                    if (((String) o).equals("bin")) {
+                    if (o.equals("bin")) {
                         if (!loaded) {
                             binRootNode = BtsviewmodelFactory.eINSTANCE
                                     .createTreeNodeWrapper();
@@ -462,7 +457,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
                         public void run() {
                             if (parentControl != null && cachingMap.get(parentControl) != null
                                     && cachingMap.get(parentControl) instanceof Map) {
-                                map = (Map) cachingMap.get(parentControl);
+                                map = cachingMap.get(parentControl);
                             } else {
                                 map = null;
                             }
@@ -691,7 +686,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
     }
 
     private void addTooHolderMap(BTSObject o, TreeNodeWrapper tn) {
-        List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
+        List<TreeNodeWrapper> list = viewHolderMap.get(o
                 .get_id());
         if (list == null) {
             list = new Vector<>(1);
@@ -699,7 +694,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
         if (!list.contains(tn)) {
             list.add(tn);
         }
-        viewHolderMap.put(((BTSDBBaseObject) o).get_id(), list);
+        viewHolderMap.put(o.get_id(), list);
 
     }
 
@@ -857,9 +852,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
     @Override
     public List<Map> getScatteredCashMaps() {
         final List<Map> maps = new Vector<>(1);
-        for (Map map : cachingMap.values()) {
-            maps.add(map);
-        }
+        maps.addAll(cachingMap.values());
         return maps;
     }
 
@@ -922,7 +915,7 @@ public class CorpusNavigatorPart extends NavigatorPart implements ScatteredCachi
         if (queryName != null && queryName.trim().length() > 0) {
             searchTab.setText(queryName);
         } else {
-            searchTab.setText(new Integer(tabFolder.getChildren().length - 2).toString());
+            searchTab.setText(Integer.toString(tabFolder.getChildren().length - 2));
         }
         if (query != null) {
             searchTab.setData("key", query.getQueryId());

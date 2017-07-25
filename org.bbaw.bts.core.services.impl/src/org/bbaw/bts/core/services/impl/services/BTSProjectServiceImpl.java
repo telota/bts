@@ -84,12 +84,8 @@ public class BTSProjectServiceImpl extends GenericObjectServiceImpl<BTSProject, 
 
             for (BTSDBCollectionRoleDesc desc : coll.getRoleDescriptions()) {
                 if (!"admins".equals(desc.getRoleName())) {
-                    for (String s : desc.getUserNames()) {
-                        memberUsers.add(s);
-                    }
-                    for (String s : desc.getUserRoles()) {
-                        memberRoles.add(s);
-                    }
+                    memberUsers.addAll(desc.getUserNames());
+                    memberRoles.addAll(desc.getUserRoles());
                     if ("members".equals(desc.getRoleName())) {
                         memberDesc = desc;
                     }

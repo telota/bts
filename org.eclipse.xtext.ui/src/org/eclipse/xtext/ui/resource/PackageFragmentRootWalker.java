@@ -96,7 +96,7 @@ public abstract class PackageFragmentRootWalker<T> {
         private List<Object> parents;
 
         TraversalState(Object obj) {
-            parents = Lists.<Object>newArrayList(obj);
+            parents = Lists.newArrayList(obj);
         }
 
         public List<?> getParents() {

@@ -184,7 +184,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                     loaded = true;
                 }
                 if (o != null && o instanceof String) {
-                    if (((String) o).equals("bin")) {
+                    if (o.equals("bin")) {
                         if (!loaded) {
                             binRootNode = BtsviewmodelFactory.eINSTANCE
                                     .createTreeNodeWrapper();
@@ -373,7 +373,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                         public void run() {
                             if (parentControl != null && cachingMap.get(parentControl) != null
                                     && cachingMap.get(parentControl) instanceof Map) {
-                                map = (Map) cachingMap.get(parentControl);
+                                map = cachingMap.get(parentControl);
                             } else {
                                 map = null;
                             }
@@ -474,7 +474,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                                     menuService.registerContextMenu(
                                             treeViewer.getControl(),
                                             BTSPluginIDs.POPMENU_THS_NAVIGATOR_TREE_MENU);
-                                } catch (Exception e) {
+                                } catch (Exception ignored) {
                                 }
                             }
                         }
@@ -577,7 +577,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
                     Map map = null;
                     if (cachingMap.get(parentControl) != null
                             && cachingMap.get(parentControl) instanceof Map) {
-                        map = (Map) cachingMap.get(parentControl);
+                        map = cachingMap.get(parentControl);
                     } else {
                         map = new HashMap<URI, Resource>();
                         cachingMap.put(parentControl, map);
@@ -596,7 +596,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
     }
 
     private void addTooHolderMap(BTSObject o, TreeNodeWrapper tn) {
-        List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
+        List<TreeNodeWrapper> list = viewHolderMap.get(o
                 .get_id());
         if (list == null) {
             list = new Vector<>(1);
@@ -604,7 +604,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
         if (!list.contains(tn)) {
             list.add(tn);
         }
-        viewHolderMap.put(((BTSDBBaseObject) o).get_id(), list);
+        viewHolderMap.put(o.get_id(), list);
 
     }
 
@@ -711,9 +711,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
     @Override
     public List<Map> getScatteredCashMaps() {
         final List<Map> maps = new Vector<>(1);
-        for (Map map : cachingMap.values()) {
-            maps.add(map);
-        }
+        maps.addAll(cachingMap.values());
         return maps;
     }
 
@@ -767,7 +765,7 @@ public class ThsNavigator extends NavigatorPart implements ScatteredCachingPart,
         if (queryName != null && queryName.trim().length() > 0) {
             searchTab.setText(queryName);
         } else {
-            searchTab.setText(new Integer(tabFolder.getChildren().length - 2).toString());
+            searchTab.setText(Integer.toString(tabFolder.getChildren().length - 2));
         }
         searchTab.setData("key", query.getQueryId());
 

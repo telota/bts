@@ -31,8 +31,8 @@ public class BTSEgyLemmaEntryComparator implements Comparator<BTSLemmaEntry> {
         String s1 = null;
         String s2 = null;
         if (e1 instanceof BTSObject && e2 instanceof BTSObject) {
-            BTSObject b1 = (BTSObject) e1;
-            BTSObject b2 = (BTSObject) e2;
+            BTSObject b1 = e1;
+            BTSObject b2 = e2;
             if (b1.getName() != null) {
                 s1 = b1.getName().toLowerCase();
             }

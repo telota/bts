@@ -197,7 +197,7 @@ public class ContentAssistContext {
             this.replaceContextLength = replaceContextLength;
             return replaceContextLength;
         }
-        return replaceContextLength.intValue();
+        return replaceContextLength;
     }
 
     /**

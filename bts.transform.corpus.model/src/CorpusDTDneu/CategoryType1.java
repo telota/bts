@@ -305,8 +305,7 @@ public enum CategoryType1 implements Enumerator {
      * @generated
      */
     public static CategoryType1 get(String literal) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            CategoryType1 result = VALUES_ARRAY[i];
+        for (CategoryType1 result : VALUES_ARRAY) {
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -322,8 +321,7 @@ public enum CategoryType1 implements Enumerator {
      * @generated
      */
     public static CategoryType1 getByName(String name) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            CategoryType1 result = VALUES_ARRAY[i];
+        for (CategoryType1 result : VALUES_ARRAY) {
             if (result.getName().equals(name)) {
                 return result;
             }

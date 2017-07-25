@@ -164,7 +164,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setAugroups(AugroupsType newAugroups) {
-        ((FeatureMap.Internal) getMixed()).set(BtsauxPackage.Literals.DOCUMENT_ROOT__AUGROUPS, newAugroups);
+        getMixed().set(BtsauxPackage.Literals.DOCUMENT_ROOT__AUGROUPS, newAugroups);
     }
 
     /**
@@ -194,7 +194,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setAuthorization(AuthorizationType newAuthorization) {
-        ((FeatureMap.Internal) getMixed()).set(BtsauxPackage.Literals.DOCUMENT_ROOT__AUTHORIZATION, newAuthorization);
+        getMixed().set(BtsauxPackage.Literals.DOCUMENT_ROOT__AUTHORIZATION, newAuthorization);
     }
 
     /**
@@ -224,7 +224,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setAuthors(AuthorsType newAuthors) {
-        ((FeatureMap.Internal) getMixed()).set(BtsauxPackage.Literals.DOCUMENT_ROOT__AUTHORS, newAuthors);
+        getMixed().set(BtsauxPackage.Literals.DOCUMENT_ROOT__AUTHORS, newAuthors);
     }
 
     /**
@@ -254,7 +254,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setBwlengl(BwlenglType newBwlengl) {
-        ((FeatureMap.Internal) getMixed()).set(BtsauxPackage.Literals.DOCUMENT_ROOT__BWLENGL, newBwlengl);
+        getMixed().set(BtsauxPackage.Literals.DOCUMENT_ROOT__BWLENGL, newBwlengl);
     }
 
     /**
@@ -284,7 +284,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setBwllink(BwllinkType newBwllink) {
-        ((FeatureMap.Internal) getMixed()).set(BtsauxPackage.Literals.DOCUMENT_ROOT__BWLLINK, newBwllink);
+        getMixed().set(BtsauxPackage.Literals.DOCUMENT_ROOT__BWLLINK, newBwllink);
     }
 
     /**
@@ -314,7 +314,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setBwllist(BwllistType newBwllist) {
-        ((FeatureMap.Internal) getMixed()).set(BtsauxPackage.Literals.DOCUMENT_ROOT__BWLLIST, newBwllist);
+        getMixed().set(BtsauxPackage.Literals.DOCUMENT_ROOT__BWLLIST, newBwllist);
     }
 
     /**
@@ -344,7 +344,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setStupidXML(StupidXMLType newStupidXML) {
-        ((FeatureMap.Internal) getMixed()).set(BtsauxPackage.Literals.DOCUMENT_ROOT__STUPID_XML, newStupidXML);
+        getMixed().set(BtsauxPackage.Literals.DOCUMENT_ROOT__STUPID_XML, newStupidXML);
     }
 
     /**
@@ -374,7 +374,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setThsdata(ThsdataType newThsdata) {
-        ((FeatureMap.Internal) getMixed()).set(BtsauxPackage.Literals.DOCUMENT_ROOT__THSDATA, newThsdata);
+        getMixed().set(BtsauxPackage.Literals.DOCUMENT_ROOT__THSDATA, newThsdata);
     }
 
     /**
@@ -525,28 +525,28 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
                 getXSISchemaLocation().clear();
                 return;
             case BtsauxPackage.DOCUMENT_ROOT__AUGROUPS:
-                setAugroups((AugroupsType) null);
+                setAugroups(null);
                 return;
             case BtsauxPackage.DOCUMENT_ROOT__AUTHORIZATION:
-                setAuthorization((AuthorizationType) null);
+                setAuthorization(null);
                 return;
             case BtsauxPackage.DOCUMENT_ROOT__AUTHORS:
-                setAuthors((AuthorsType) null);
+                setAuthors(null);
                 return;
             case BtsauxPackage.DOCUMENT_ROOT__BWLENGL:
-                setBwlengl((BwlenglType) null);
+                setBwlengl(null);
                 return;
             case BtsauxPackage.DOCUMENT_ROOT__BWLLINK:
-                setBwllink((BwllinkType) null);
+                setBwllink(null);
                 return;
             case BtsauxPackage.DOCUMENT_ROOT__BWLLIST:
-                setBwllist((BwllistType) null);
+                setBwllist(null);
                 return;
             case BtsauxPackage.DOCUMENT_ROOT__STUPID_XML:
-                setStupidXML((StupidXMLType) null);
+                setStupidXML(null);
                 return;
             case BtsauxPackage.DOCUMENT_ROOT__THSDATA:
-                setThsdata((ThsdataType) null);
+                setThsdata(null);
                 return;
         }
         super.eUnset(featureID);

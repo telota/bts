@@ -99,9 +99,7 @@ public abstract class AbstractContentProposalProvider implements IContentProposa
     protected boolean isValidProposal(String proposal, String prefix, ContentAssistContext context) {
         if (proposal == null)
             return false;
-        if (!context.getMatcher().isCandidateMatchingPrefix(proposal, prefix))
-            return false;
-        return !conflictHelper.existsConflict(proposal, context);
+        return context.getMatcher().isCandidateMatchingPrefix(proposal, prefix) && !conflictHelper.existsConflict(proposal, context);
     }
 
     protected ConfigurableCompletionProposal doCreateProposal(String proposal, StyledString displayString, Image image,

@@ -1,16 +1,12 @@
 package org.bbaw.bts.core.dao.corpus.couchdb.impl;
 
 import java.util.List;
-import java.util.Vector;
-import java.util.regex.Matcher;
 
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.dao.corpus.BTSThsEntryDao;
 import org.bbaw.bts.core.dao.util.DaoConstants;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
-import org.bbaw.bts.dao.couchDB.CouchDBDao;
 
 public class BTSThsEntryDaoImpl extends AbstractCorpusObjectDaoImpl<BTSThsEntry, String> implements BTSThsEntryDao {
 

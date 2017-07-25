@@ -465,7 +465,7 @@ public class BTSProjectDBCollectionImpl extends BTSIdentifiableItemImpl implemen
                 getPropertyStrings().clear();
                 return;
             case BtsmodelPackage.BTS_PROJECT_DB_COLLECTION__PROPERTIES:
-                setProperties((Map<String, String>) null);
+                setProperties(null);
                 return;
             case BtsmodelPackage.BTS_PROJECT_DB_COLLECTION__DIRTY:
                 setDirty(DIRTY_EDEFAULT);

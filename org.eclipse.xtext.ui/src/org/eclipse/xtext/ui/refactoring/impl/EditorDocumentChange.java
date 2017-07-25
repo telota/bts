@@ -34,7 +34,7 @@ import org.eclipse.xtext.ui.util.DisplayRunnableWithResult;
  */
 public class EditorDocumentChange extends TextChange {
 
-    private long modificationStamp = -1l;
+    private long modificationStamp = -1L;
 
     private boolean doSave;
 

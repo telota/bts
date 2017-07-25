@@ -1415,34 +1415,34 @@ public class TCPassportTypeImpl extends MinimalEObjectImpl.Container implements 
                 setBibliography(BIBLIOGRAPHY_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__PROVENANCE:
-                setProvenance((PassportDataItem) null);
+                setProvenance(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__DATE:
-                setDate((DateType) null);
+                setDate(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__OBJECT_TYPE:
-                setObjectType((PassportDataItem) null);
+                setObjectType(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__DEPICTION:
-                setDepiction((PassportDataItem) null);
+                setDepiction(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__SCRIPT:
-                setScript((PassportDataItem) null);
+                setScript(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__LANGUAGE:
-                setLanguage((PassportDataItem) null);
+                setLanguage(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__LANG_COMMENT:
                 setLangComment(LANG_COMMENT_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__WORK:
-                setWork((WorkType) null);
+                setWork(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__TEXT_TYPE:
-                setTextType((PassportDataItem) null);
+                setTextType(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__LINE_COUNT:
-                setLineCount((LineCountType) null);
+                setLineCount(null);
                 return;
             case CorpusDTDneuPackage.TC_PASSPORT_TYPE__CODES:
                 setCodes(CODES_EDEFAULT);

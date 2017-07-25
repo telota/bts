@@ -733,7 +733,7 @@ public class BTSWordImpl extends BTSIdentifiableItemImpl implements BTSWord {
                 setSubtype(SUBTYPE_EDEFAULT);
                 return;
             case BtsCorpusModelPackage.BTS_WORD__TRANSLATION:
-                setTranslation((BTSTranslations) null);
+                setTranslation(null);
                 return;
             case BtsCorpusModelPackage.BTS_WORD__WTYPE:
                 setWType(WTYPE_EDEFAULT);
@@ -899,7 +899,7 @@ public class BTSWordImpl extends BTSIdentifiableItemImpl implements BTSWord {
      */
     @Override
     public String getGraficsAsMdC() {
-        String mdc = new String();
+        String mdc = "";
         for (BTSGraphic g : getGraphics()) {
             mdc += g.getCode();
         }

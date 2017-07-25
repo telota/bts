@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class DestroyedVersMarkerImpl extends VersMarkerImpl implements DestroyedVersMarker {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected DestroyedVersMarkerImpl() {
-        super();
-    }
+public class DestroyedVersMarkerImpl extends VersMarkerImpl implements DestroyedVersMarker
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected DestroyedVersMarkerImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.DESTROYED_VERS_MARKER;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.DESTROYED_VERS_MARKER;
+  }
 
 } //DestroyedVersMarkerImpl

@@ -13,7 +13,6 @@ import org.bbaw.bts.btsmodel.BTSDBCollectionRoleDesc;
 import org.bbaw.bts.btsmodel.BTSExternalReference;
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
-import org.bbaw.bts.btsmodel.BTSReference;
 import org.bbaw.bts.btsmodel.BTSUser;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.commons.BTSConstants;
@@ -42,7 +41,6 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 
 import bts.transform.ui.usersRole.UserRoleService;
-import bts.transform.ui.xtend.Corpus2BTSTransform;
 import Btsaux.provider.BtsauxItemProviderAdapterFactory;
 import CorpusDTDneu.DocumentRoot;
 

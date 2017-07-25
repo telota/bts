@@ -19,7 +19,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.TextViewer;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.swt.graphics.Image;
 
@@ -59,9 +58,9 @@ public interface BTSTextEditorController {
 
     Image transformToSWT(BufferedImage bufferedImage);
 
-    BufferedImage getImageData(String topItemList) throws Exception;
+    BufferedImage getImageData(String topItemList);
 
-    BufferedImage getImageData(String topItemList, int height, int width) throws Exception;
+    BufferedImage getImageData(String topItemList, int height, int width);
 
     HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects);
 

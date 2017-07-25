@@ -433,7 +433,7 @@ public class EgyTxtCorpusTypeImpl extends MinimalEObjectImpl.Container implement
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.EGY_TXT_CORPUS_TYPE__TC_HEADER:
-                setTCHeader((TCHeaderType) null);
+                setTCHeader(null);
                 return;
             case CorpusDTDneuPackage.EGY_TXT_CORPUS_TYPE__GROUP:
                 getGroup().clear();

@@ -6,8 +6,6 @@ import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.bbaw.bts.btsmodel.BTSUser;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.commons.exceptions.BTSDBLocalLoginException;
@@ -42,7 +40,6 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 
 public class LoginDialog extends Dialog {
 
@@ -264,13 +261,13 @@ public class LoginDialog extends Dialog {
         Button button = new Button(parent, SWT.PUSH);
         button.setText(label);
         button.setFont(JFaceResources.getDialogFont());
-        button.setData(new Integer(id));
+        button.setData(id);
         button.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {
                 if (isValidLogin()) {
                     logger.info("Login successful");
 
-                    buttonPressed(((Integer) event.widget.getData()).intValue());
+                    buttonPressed((Integer) event.widget.getData());
                 } else {
                     showLoginError();
                 }

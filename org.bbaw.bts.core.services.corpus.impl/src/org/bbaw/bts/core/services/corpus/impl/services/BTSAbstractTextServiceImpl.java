@@ -97,7 +97,7 @@ public class BTSAbstractTextServiceImpl
         BTSAbstractText entry = null;
         try {
             entry = atextDao.find(key, main_project + BTSCorpusConstants.ATEXT);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (entry != null) {
             return entry;
@@ -105,7 +105,7 @@ public class BTSAbstractTextServiceImpl
         for (String p : getActiveProjects()) {
             try {
                 entry = atextDao.find(key, p + BTSCorpusConstants.ATEXT);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             if (entry != null) {
                 return entry;
@@ -121,7 +121,7 @@ public class BTSAbstractTextServiceImpl
             try {
                 entries.addAll(atextDao.list(p + BTSCorpusConstants.ATEXT,
                         objectState));
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         return filter(entries);
@@ -185,7 +185,7 @@ public class BTSAbstractTextServiceImpl
         String entry = null;
         try {
             entry = atextDao.findAsJsonString(key, main_project + BTSCorpusConstants.ATEXT);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (entry != null) {
             return entry;
@@ -193,7 +193,7 @@ public class BTSAbstractTextServiceImpl
         for (String p : getActiveProjects()) {
             try {
                 entry = atextDao.findAsJsonString(key, p + BTSCorpusConstants.ATEXT);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             if (entry != null) {
                 return entry;

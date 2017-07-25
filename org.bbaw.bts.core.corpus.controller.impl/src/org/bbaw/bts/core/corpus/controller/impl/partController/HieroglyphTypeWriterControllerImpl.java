@@ -13,12 +13,6 @@ import java.util.Vector;
 
 import javax.inject.Inject;
 
-import jsesh.hieroglyphs.CompositeHieroglyphsManager;
-import jsesh.hieroglyphs.PossibilitiesList;
-import jsesh.hieroglyphs.Possibility;
-import jsesh.mdc.MDCSyntaxError;
-import jsesh.mdc.utils.MDCNormalizer;
-
 import org.bbaw.bts.btsmodel.UserActionCounter;
 import org.bbaw.bts.core.corpus.controller.partController.HieroglyphTypeWriterController;
 import org.bbaw.bts.core.services.UserActionCounterService;

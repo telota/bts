@@ -102,8 +102,7 @@ public class HighlightingReconciler implements ITextInputListener, IXtextModelLi
 //		calculator.provideHighlightingFor(resource, this);
         List<AttributedPosition> oldPositions = removedPositions;
         List<AttributedPosition> newPositions = new ArrayList<>(removedPositionCount);
-        for (int i = 0, n = oldPositions.size(); i < n; i++) {
-            AttributedPosition current = oldPositions.get(i);
+        for (AttributedPosition current : oldPositions) {
             if (current != null)
                 newPositions.add(current);
         }

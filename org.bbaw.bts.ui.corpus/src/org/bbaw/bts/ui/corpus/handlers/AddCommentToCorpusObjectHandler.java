@@ -28,7 +28,7 @@ public class AddCommentToCorpusObjectHandler {
 
         if (corpusObject != null) {
             final BTSComment object = commentController
-                    .createComment((BTSCorpusObject) corpusObject);
+                    .createComment(corpusObject);
 
             BTSRelation rel = null;
             if (object.getRelations().isEmpty()) {

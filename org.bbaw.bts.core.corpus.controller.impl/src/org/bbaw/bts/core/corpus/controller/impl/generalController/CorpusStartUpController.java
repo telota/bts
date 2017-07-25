@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.log.Logger;
-import org.eclipse.e4.ui.model.application.MApplication;
 import org.osgi.service.prefs.BackingStoreException;
 
 public class CorpusStartUpController implements ExtensionStartUpController {

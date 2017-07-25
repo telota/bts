@@ -11,11 +11,6 @@ import java.util.Vector;
 
 import javax.inject.Inject;
 
-import jsesh.mdc.MDCSyntaxError;
-import jsesh.mdcDisplayer.draw.MDCDrawingFacade;
-import jsesh.mdcDisplayer.preferences.DrawingSpecification;
-import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
-
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
@@ -504,7 +499,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
                     .eContainer();
         }
         if (word != null) {
-            IFigure rect = (IFigure) wordMap.get(word.get_id());
+            IFigure rect = wordMap.get(word.get_id());
             refreshFigureFromModel(rect, word);
         }
     }
@@ -1080,11 +1075,11 @@ public class SignTextComposite extends Composite implements IBTSEditor {
         int len = 2;
 
         // if not word return len!
-        if (!(figure instanceof WordFigure && ((WordFigure) figure).getModelObject() instanceof BTSWord)) {
+        if (!(figure instanceof WordFigure && figure.getModelObject() instanceof BTSWord)) {
             return figure.getLength();
         }
 
-        BTSWord word = (BTSWord) ((WordFigure) figure).getModelObject();
+        BTSWord word = (BTSWord) figure.getModelObject();
 
         len = Math.max(len, word.getWChar().length() * 2);
 
@@ -1324,7 +1319,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
             BTSTextSelectionEvent event = new BTSTextSelectionEvent(ev, btsObject);
             event.type = eventType;
             event.data = textContent.eContainer();
-            event.getRelatingObjects().addAll(((ElementFigure) figure).getRelatingObjects());
+            event.getRelatingObjects().addAll(figure.getRelatingObjects());
             BTSIdentifiableItem item = (BTSIdentifiableItem) figure.getModelObject();
             event.getSelectedItems().add(item);
 
@@ -1333,7 +1328,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
                 event.setStartId(item.get_id());
             }
 
-            event.getInterTextReferences().addAll(((ElementFigure) figure).getInterTextReferences());
+            event.getInterTextReferences().addAll(figure.getInterTextReferences());
             parentEditor.setEditorSelection(event);
         }
     }
@@ -1462,50 +1457,65 @@ public class SignTextComposite extends Composite implements IBTSEditor {
         int currentIndex = currentLineFigure.getChildren().indexOf(
                 selectedElement);
         refreshFigureFromModel(selectedElement, null);
-        if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_ALL_START)) {
+        switch (event) {
+            case BTSUIConstants.EVENT_TEXT_SELECTION_ALL_START:
 
-            lineIndex = 0;
-            shiftLineSelection(-1);
+                lineIndex = 0;
+                shiftLineSelection(-1);
 //			int currentIndex = currentLineFigure.getChildren().indexOf(
 //					selectedElement);
-            shiftSelection(-currentIndex, true);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_LINE_START)) {
+                shiftSelection(-currentIndex, true);
+                break;
+            case BTSUIConstants.EVENT_TEXT_SELECTION_LINE_START:
 //			int currentIndex = currentLineFigure.getChildren().indexOf(
 //					selectedElement);
-            shiftSelection(-currentIndex, true);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_PREVIOUS)) {
-            shiftSelection(-1, false);
+                shiftSelection(-currentIndex, true);
+                break;
+            case BTSUIConstants.EVENT_TEXT_SELECTION_PREVIOUS:
+                shiftSelection(-1, false);
 
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT)) {
-            shiftSelection(1, true);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_LINE_END)) {
+                break;
+            case BTSUIConstants.EVENT_TEXT_SELECTION_NEXT:
+                shiftSelection(1, true);
+                break;
+            case BTSUIConstants.EVENT_TEXT_SELECTION_LINE_END: {
 //			int currentIndex = currentLineFigure.getChildren().indexOf(
 //					selectedElement);
-            int shift = currentLineFigure.getChildren().size() - currentIndex
-                    - 1;
-            shiftSelection(shift, false);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_ALL_END)) {
-            int lshift = container.getChildren().size() - lineIndex - 1;
-            shiftLineSelection(lshift);
-            currentIndex = currentLineFigure.getChildren().indexOf(
-                    selectedElement);
+                int shift = currentLineFigure.getChildren().size() - currentIndex
+                        - 1;
+                shiftSelection(shift, false);
+                break;
+            }
+            case BTSUIConstants.EVENT_TEXT_SELECTION_ALL_END: {
+                int lshift = container.getChildren().size() - lineIndex - 1;
+                shiftLineSelection(lshift);
+                currentIndex = currentLineFigure.getChildren().indexOf(
+                        selectedElement);
 //			int currentIndex = currentLineFigure.getChildren().indexOf(
 //					selectedElement);
-            int shift = currentLineFigure.getChildren().size() - currentIndex
-                    - 1;
-            shiftSelection(shift, false);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNLEMMATIZED)) {
-            ElementFigure figure = findUnprocessedWordFigure(currentIndex + 1, 0);
-            if (figure != null)
-                setSelectionInternal(figure, 1);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNHIEROGLYPHED)) {
-            ElementFigure figure = findUnprocessedWordFigure(currentIndex + 1, 1);
-            if (figure != null)
-                setSelectionInternal(figure, 1);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNFLEXIONED)) {
-            ElementFigure figure = findUnprocessedWordFigure(currentIndex + 1, 2);
-            if (figure != null)
-                setSelectionInternal(figure, 1);
+                int shift = currentLineFigure.getChildren().size() - currentIndex
+                        - 1;
+                shiftSelection(shift, false);
+                break;
+            }
+            case BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNLEMMATIZED: {
+                ElementFigure figure = findUnprocessedWordFigure(currentIndex + 1, 0);
+                if (figure != null)
+                    setSelectionInternal(figure, 1);
+                break;
+            }
+            case BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNHIEROGLYPHED: {
+                ElementFigure figure = findUnprocessedWordFigure(currentIndex + 1, 1);
+                if (figure != null)
+                    setSelectionInternal(figure, 1);
+                break;
+            }
+            case BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNFLEXIONED: {
+                ElementFigure figure = findUnprocessedWordFigure(currentIndex + 1, 2);
+                if (figure != null)
+                    setSelectionInternal(figure, 1);
+                break;
+            }
         }
 
 
@@ -1564,7 +1574,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 
     private boolean unprocessedWord(ElementFigure figure, int type) {
         if (figure instanceof WordFigure) {
-            Object o = ((WordFigure) figure).getModelObject();
+            Object o = figure.getModelObject();
             if (o instanceof BTSWord) {
                 BTSWord w = (BTSWord) o;
                 if (type == 0) {
@@ -1578,7 +1588,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
                     Integer i = null;
                     try {
                         i = new Integer(w.getFlexCode());
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException ignored) {
                     }
                     return i != null && i.intValue() == defaultFlexion;
                 }

@@ -28,7 +28,7 @@ public class RestoreHandler2 {
         System.out.println("restore");
         if (selection instanceof EObject) {
             EditingDomain ed = editingDomainController
-                    .getEditingDomain((EObject) selection);
+                    .getEditingDomain(selection);
             if (ed != null) {
                 Command command = SetCommand.create(ed, selection,
                         BtsmodelPackage.ADMINISTRATIV_DATA_OBJECT__STATE,
@@ -56,9 +56,6 @@ public class RestoreHandler2 {
     public boolean canExecute(
             @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection,
             @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
-        if (mayDelete != null && mayDelete.booleanValue()) {
-            return selection != null;
-        }
-        return false;
+        return mayDelete != null && mayDelete.booleanValue() && selection != null;
     }
 }

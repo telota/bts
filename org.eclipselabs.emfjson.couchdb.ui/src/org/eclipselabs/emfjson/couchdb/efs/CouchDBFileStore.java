@@ -12,7 +12,6 @@ package org.eclipselabs.emfjson.couchdb.efs;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
 
 import org.eclipse.core.filesystem.EFS;

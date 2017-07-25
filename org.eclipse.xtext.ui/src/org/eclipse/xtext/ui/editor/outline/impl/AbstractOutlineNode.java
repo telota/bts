@@ -74,9 +74,7 @@ public abstract class AbstractOutlineNode implements IOutlineNode, IOutlineNode.
     }
 
     protected boolean removeChild(IOutlineNode outlineNode) {
-        if (children == null)
-            return false;
-        return children.remove(outlineNode);
+        return children != null && children.remove(outlineNode);
     }
 
     public List<IOutlineNode> getChildren() {

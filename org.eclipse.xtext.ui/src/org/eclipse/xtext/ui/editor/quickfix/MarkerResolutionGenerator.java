@@ -100,9 +100,7 @@ public class MarkerResolutionGenerator extends AbstractIssueResolutionProviderAd
         return Iterators.any(iterator, new Predicate<Annotation>() {
 
             public boolean apply(Annotation annotation) {
-                if (annotation.isMarkedDeleted())
-                    return false;
-                return referringToSameIssue(annotation, marker);
+                return !annotation.isMarkedDeleted() && referringToSameIssue(annotation, marker);
             }
 
             private boolean referringToSameIssue(Annotation annotation, IMarker marker) {

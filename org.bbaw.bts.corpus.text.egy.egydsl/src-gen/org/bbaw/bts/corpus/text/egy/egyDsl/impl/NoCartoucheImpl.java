@@ -16,26 +16,27 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class NoCartoucheImpl extends MinimalEObjectImpl.Container implements NoCartouche {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected NoCartoucheImpl() {
-        super();
-    }
+public class NoCartoucheImpl extends MinimalEObjectImpl.Container implements NoCartouche
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected NoCartoucheImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.NO_CARTOUCHE;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.NO_CARTOUCHE;
+  }
 
 } //NoCartoucheImpl

@@ -261,10 +261,7 @@ public class BtsCorpusModelAdapterFactory extends AdapterFactoryImpl {
         if (object == modelPackage) {
             return true;
         }
-        if (object instanceof EObject) {
-            return ((EObject) object).eClass().getEPackage() == modelPackage;
-        }
-        return false;
+        return object instanceof EObject && ((EObject) object).eClass().getEPackage() == modelPackage;
     }
 
     /**

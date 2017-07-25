@@ -65,10 +65,7 @@ public abstract class AbstractJavaProjectsState extends AbstractAllContainersSta
         } else if (element instanceof IJavaModel) {
             return isAffectingPackageFragmentRoots(delta.getAffectedChildren());
         } else if (element instanceof IJavaProject) {
-            if ((delta.getFlags() & IJavaElementDelta.F_CLASSPATH_CHANGED) != 0 ||
-                    (delta.getFlags() & IJavaElementDelta.F_RESOLVED_CLASSPATH_CHANGED) != 0)
-                return true;
-            return isAffectingPackageFragmentRoots(delta.getAffectedChildren());
+            return (delta.getFlags() & IJavaElementDelta.F_CLASSPATH_CHANGED) != 0 || (delta.getFlags() & IJavaElementDelta.F_RESOLVED_CLASSPATH_CHANGED) != 0 || isAffectingPackageFragmentRoots(delta.getAffectedChildren());
         }
         return false;
     }

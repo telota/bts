@@ -20,7 +20,7 @@ public class AddAnnotationThsNavigatorHandler {
             ThsNavigatorController corpusThsController) {
         if (selection instanceof BTSThsEntry) {
             final BTSAnnotation object = corpusThsController
-                    .createNewAnnotation((BTSThsEntry) selection, annotationTypePath);
+                    .createNewAnnotation(selection, annotationTypePath);
             corpusThsController.save(object);
             eventBroker.post("model_add/BTSAnnotation", object);
         }

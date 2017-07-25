@@ -16,26 +16,27 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class NoAncientExpandedImpl extends MinimalEObjectImpl.Container implements NoAncientExpanded {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected NoAncientExpandedImpl() {
-        super();
-    }
+public class NoAncientExpandedImpl extends MinimalEObjectImpl.Container implements NoAncientExpanded
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected NoAncientExpandedImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.NO_ANCIENT_EXPANDED;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.NO_ANCIENT_EXPANDED;
+  }
 
 } //NoAncientExpandedImpl

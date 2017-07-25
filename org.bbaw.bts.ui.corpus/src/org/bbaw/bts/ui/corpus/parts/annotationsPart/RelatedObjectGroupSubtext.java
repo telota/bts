@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import javax.inject.Inject;
 
-import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSRevision;
 import org.bbaw.bts.core.corpus.controller.partController.BTSTextEditorController;
@@ -13,7 +12,6 @@ import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.source.AnnotationModel;
-import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;

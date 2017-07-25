@@ -13,11 +13,9 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +25,6 @@ import javax.inject.Inject;
 import org.bbaw.bts.btsmodel.BTSDBConnection;
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
-import org.bbaw.bts.btsmodel.BTSUser;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.btsviewmodel.DBCollectionStatusInformation;
@@ -55,7 +52,6 @@ import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.elasticsearch.ElasticsearchException;
-import org.elasticsearch.ElasticsearchParseException;
 import org.elasticsearch.action.UnavailableShardsException;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
@@ -70,13 +66,10 @@ import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.settings.SettingsModule;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.indices.IndexMissingException;
@@ -87,9 +80,7 @@ import org.lightcouch.NoDocumentException;
 import org.lightcouch.Page;
 import org.lightcouch.Replicator;
 import org.lightcouch.ReplicatorDocument;
-import org.lightcouch.Response;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
@@ -291,8 +282,7 @@ public class CouchDBManager implements DBManager {
 
     }
 
-    private Map<String, ReplicatorDocument> loadReplicationMap()
-            throws MalformedURLException {
+    private Map<String, ReplicatorDocument> loadReplicationMap() {
         List<ReplicatorDocument> docs = null;
         try {
             docs = getReplicatorDocuments(DaoConstants.ADMIN);
@@ -441,7 +431,7 @@ public class CouchDBManager implements DBManager {
                         .replicatorDocRev(rev).remove();
             }
 
-        } catch (NoDocumentException e) {
+        } catch (NoDocumentException ignored) {
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -466,7 +456,7 @@ public class CouchDBManager implements DBManager {
                                         + DaoConstants.REPLICATOR_SUFFIX_TO_REMOTE)
                         .replicatorDocRev(rev).remove();
             }
-        } catch (NoDocumentException e) {
+        } catch (NoDocumentException ignored) {
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -475,8 +465,7 @@ public class CouchDBManager implements DBManager {
 
     private boolean checkAndSetSyncFromRemote(String collectionName,
                                               BTSDBConnection dbConnection,
-                                              Map<String, ReplicatorDocument> replicationMap)
-            throws MalformedURLException {
+                                              Map<String, ReplicatorDocument> replicationMap) {
         ReplicatorDocument doc = replicationMap.get(collectionName
                 + DaoConstants.REPLICATOR_SUFFIX_FROM_REMOTE);
         if (doc != null) {
@@ -582,8 +571,7 @@ public class CouchDBManager implements DBManager {
 
     private boolean checkAndSetSyncToRemote(String collectionName,
                                             BTSDBConnection dbConnection,
-                                            Map<String, ReplicatorDocument> replicationMap)
-            throws MalformedURLException {
+                                            Map<String, ReplicatorDocument> replicationMap) {
         String docId = collectionName
                 + DaoConstants.REPLICATOR_SUFFIX_TO_REMOTE;
         if (docId.startsWith("_")) {
@@ -644,7 +632,7 @@ public class CouchDBManager implements DBManager {
     }
 
     private List<ReplicatorDocument> getReplicatorDocuments(
-            String collectionName) throws MalformedURLException {
+            String collectionName) {
         List<ReplicatorDocument> docs = null;
         CouchDbClient client = connectionProvider.getDBClient(
                 CouchDbClient.class, collectionName);
@@ -657,7 +645,7 @@ public class CouchDBManager implements DBManager {
         try {
             docs = client.replicator().findAll();
             return docs;
-        } catch (NoDocumentException e) {
+        } catch (NoDocumentException ignored) {
         }
         return null;
     }
@@ -674,11 +662,7 @@ public class CouchDBManager implements DBManager {
         url = url.replaceAll("/", "\\\\/");
         Pattern pattern = Pattern.compile(url + "/*" + collectionName);
         Matcher m = pattern.matcher(target);
-        if (!m.matches()) {
-            return false;
-        }
-        return doc.getReplicationState() == null
-                || !doc.getReplicationState().equals("error");
+        return m.matches() && (doc.getReplicationState() == null || !doc.getReplicationState().equals("error"));
     }
 
     private boolean isValidReplicationFromRemote(ReplicatorDocument doc,
@@ -693,11 +677,7 @@ public class CouchDBManager implements DBManager {
         url = url.replaceAll("/", "\\\\/");
         Pattern pattern = Pattern.compile(url + "/*" + collectionName);
         Matcher m = pattern.matcher(source);
-        if (!m.matches()) {
-            return false;
-        }
-        return doc.getReplicationState() == null
-                || !doc.getReplicationState().equals("error");
+        return m.matches() && (doc.getReplicationState() == null || !doc.getReplicationState().equals("error"));
     }
 
     @Override
@@ -716,7 +696,7 @@ public class CouchDBManager implements DBManager {
         return true;
     }
 
-    private Client getClient() throws URISyntaxException {
+    private Client getClient() {
         if (esClient == null) {
             esClient = connectionProvider.getSearchClient(Client.class);
             // URI uri = new URI(local_elasticsearch_url);
@@ -811,16 +791,11 @@ public class CouchDBManager implements DBManager {
 
         boolean success = indexAllDocsInCollection(collection, bulkProcessor,
                 esClient, dbClient, dbUpdateSeq, monitor);
-        if (success)
-            try {
-                updateRiverIndexUpdateSeq(collection, esClient, dbUpdateSeq);
-                createRiver(esClient, collection);
-                updateRiverIndexUpdateSeq(collection, esClient, dbUpdateSeq);
-            } catch (IOException e) {
-
-                e.printStackTrace();
-                return false;
-            }
+        if (success) {
+            updateRiverIndexUpdateSeq(collection, esClient, dbUpdateSeq);
+            createRiver(esClient, collection);
+            updateRiverIndexUpdateSeq(collection, esClient, dbUpdateSeq);
+        }
         return success;
     }
 
@@ -873,9 +848,9 @@ public class CouchDBManager implements DBManager {
     }
 
     private void updateRiverIndexUpdateSeq(String collection, Client esClient2,
-                                           int indexUpdateSeq) throws IOException {
+                                           int indexUpdateSeq) {
         String json = "{\"couchdb\":{\"last_seq\":\""
-                + new Integer(indexUpdateSeq).toString() + "\"}}";
+                + Integer.toString(indexUpdateSeq) + "\"}}";
         esClient2.index(
                 Requests.indexRequest("_river").type(collection).id("_seq")
                         .source(json)).actionGet();
@@ -930,7 +905,7 @@ public class CouchDBManager implements DBManager {
         for (String doc : docsPage.getResultList()) {
             try {
                 CouchDBIndexHelper.indexDoc(collection, bulkProcessor,
-                        esClient, doc.toString(), monitor, logger);
+                        esClient, doc, monitor, logger);
             } catch (Exception e) {
                 e.printStackTrace();
                 success = false;
@@ -951,7 +926,7 @@ public class CouchDBManager implements DBManager {
             for (String doc : docsPage.getResultList()) {
                 try {
                     CouchDBIndexHelper.indexDoc(collection, bulkProcessor,
-                            esClient, doc.toString(), monitor, logger);
+                            esClient, doc, monitor, logger);
                 } catch (Exception e) {
                     e.printStackTrace();
                     success = false;
@@ -1080,7 +1055,7 @@ public class CouchDBManager implements DBManager {
     }
 
     @Override
-    public boolean prepareDB() throws URISyntaxException {
+    public boolean prepareDB() {
         // database should be installed
         // should be running
 
@@ -1193,14 +1168,14 @@ public class CouchDBManager implements DBManager {
         File localIniFile = new File(localIni);
         if (localIniFile.exists()) {
             Scanner scanner = new Scanner(localIniFile);
-            StringBuffer stringBufferOfData = new StringBuffer();
+            StringBuilder stringBufferOfData = new StringBuilder();
             for (String line; scanner.hasNextLine()
                     && (line = scanner.nextLine()) != null; ) {
                 // set local db port
                 if (line.trim().startsWith(";port")
                         || line.trim().startsWith("port")
                         || line.trim().startsWith("; port")) {
-                    stringBufferOfData.append("port=" + localPort).append(
+                    stringBufferOfData.append("port=").append(localPort).append(
                             "\r\n");
                 } else if (line.trim().startsWith(";require_valid_user")
                         || line.trim().startsWith("require_valid_user")
@@ -1220,8 +1195,7 @@ public class CouchDBManager implements DBManager {
                 } else if (line.trim().startsWith("[admins]")) {
                     // set local admin
                     stringBufferOfData.append(line).append("\r\n");
-                    stringBufferOfData.append(
-                            localAdminName + "=" + localAdminpassword).append(
+                    stringBufferOfData.append(localAdminName).append("=").append(localAdminpassword).append(
                             "\r\n");
                     stringBufferOfData.append("\r\n");
                 } else {
@@ -1269,7 +1243,7 @@ public class CouchDBManager implements DBManager {
         return null;
     }
 
-    private File loadCouchBaseArchive() throws URISyntaxException, IOException {
+    private File loadCouchBaseArchive() throws IOException {
         File file = null;
         URL entry = Platform.getBundle("org.bbaw.bts.db.couchdb").getEntry(
                 "/db/" + DB_ARCHIVE_NAME + ".zip");
@@ -1358,15 +1332,7 @@ public class CouchDBManager implements DBManager {
 
     @Override
     public boolean prepareDBCollectionIndexing(String collection) {
-        try {
-            if (!checkIndex(collection, esClient, null)) {
-                return createIndex(collection, getClient(), null);
-            }
-            return true;
-        } catch (URISyntaxException e) {
-            return false;
-        }
-
+        return checkIndex(collection, esClient, null) || createIndex(collection, getClient(), null);
     }
 
     @Override
@@ -1673,7 +1639,7 @@ public class CouchDBManager implements DBManager {
         try {
             docs = client.replicator().findAll();
             return docs;
-        } catch (NoDocumentException e) {
+        } catch (NoDocumentException ignored) {
         }
         return null;
     }
@@ -1875,20 +1841,10 @@ public class CouchDBManager implements DBManager {
             IProgressMonitor monitor) {
         CouchDbClient dbClient = connectionProvider.getDBClient(
                 CouchDbClient.class, "admin");
-        try {
-            Client esClient = getClient();
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Client esClient = getClient();
         List<String> allDBs = dbClient.context().getAllDbs();
         Map<String, ReplicatorDocument> replicationMap = null;
-        try {
-            replicationMap = loadReplicationMap();
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        replicationMap = loadReplicationMap();
         if (monitor != null) {
             monitor.beginTask("Load DB Collection Information...",
                     allDBs.size());
@@ -1903,7 +1859,7 @@ public class CouchDBManager implements DBManager {
         if (o != null && o instanceof Map<?, ?>) {
             try {
                 cachedInfoMap = (Map<String, DBCollectionStatusInformation>) o;
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         } else {
             cachedInfoMap = new HashMap<>(
@@ -1961,13 +1917,13 @@ public class CouchDBManager implements DBManager {
         // db info
         CouchDbClient collectionClient = connectionProvider.getDBClient(
                 CouchDbClient.class, db);
-        info.setDbDiskSize(new Long(collectionClient.context().info()
-                .getDiskSize()).toString());
+        info.setDbDiskSize(Long.toString(collectionClient.context().info()
+                .getDiskSize()));
         info.setDbDocCount(collectionClient.context().info().getDocCount());
         info.setDbDocDelCount(new Long(collectionClient.context().info()
                 .getDocDelCount()).toString());
-        info.setDbPurgeSeq(new Long(collectionClient.context().info()
-                .getPurgeSeq()).toString());
+        info.setDbPurgeSeq(Long.toString(collectionClient.context().info()
+                .getPurgeSeq()));
         info.setDbUpdateSeq(collectionClient.context().info().getUpdateSeq());
 
         if (docFrom != null) {
@@ -2127,19 +2083,9 @@ public class CouchDBManager implements DBManager {
             String dbCollection, IProgressMonitor monitor) {
         CouchDbClient dbClient = connectionProvider.getDBClient(
                 CouchDbClient.class, "admin");
-        try {
-            Client esClient = getClient();
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Client esClient = getClient();
         Map<String, ReplicatorDocument> replicationMap = null;
-        try {
-            replicationMap = loadReplicationMap();
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        replicationMap = loadReplicationMap();
         ReplicatorDocument docFrom = null;
         ReplicatorDocument docTo = null;
         // db sync
@@ -2155,7 +2101,7 @@ public class CouchDBManager implements DBManager {
         if (o != null && o instanceof Map<?, ?>) {
             try {
                 cachedInfoMap = (Map<String, DBCollectionStatusInformation>) o;
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         DBCollectionStatusInformation cachedInfo = null;
@@ -2174,13 +2120,13 @@ public class CouchDBManager implements DBManager {
         File localIniFile = new File(localIni);
         if (localIniFile.exists()) {
             Scanner scanner = new Scanner(localIniFile);
-            StringBuffer stringBufferOfData = new StringBuffer();
+            StringBuilder stringBufferOfData = new StringBuilder();
             for (String line; scanner.hasNextLine()
                     && (line = scanner.nextLine()) != null; ) {
                 // set local db port
                 if (line.trim().startsWith(userName + "=") || line.trim().startsWith(userName + " =")) {
                     // set local admin
-                    stringBufferOfData.append(userName + "=" + password)
+                    stringBufferOfData.append(userName).append("=").append(password)
                             .append("\r\n");
                     stringBufferOfData.append("\r\n");
                 } else {
@@ -2285,14 +2231,14 @@ public class CouchDBManager implements DBManager {
         File localIniFile = new File(localIni);
         if (localIniFile.exists()) {
             Scanner scanner = new Scanner(localIniFile);
-            StringBuffer stringBufferOfData = new StringBuffer();
+            StringBuilder stringBufferOfData = new StringBuilder();
             boolean found = false;
             for (String line; scanner.hasNextLine()
                     && (line = scanner.nextLine()) != null; ) {
                 // set local db port
                 if (line.trim().startsWith(userName + "=") || line.trim().startsWith(userName + " =")) {
                     // set local admin
-                    stringBufferOfData.append(userName + "=" + password)
+                    stringBufferOfData.append(userName).append("=").append(password)
                             .append("\r\n");
                     stringBufferOfData.append("\r\n");
                     found = true;
@@ -2301,7 +2247,7 @@ public class CouchDBManager implements DBManager {
                 }
             }
             if (!found) {
-                stringBufferOfData.append(userName + "=" + password)
+                stringBufferOfData.append(userName).append("=").append(password)
                         .append("\r\n");
                 stringBufferOfData.append("\r\n");
             }

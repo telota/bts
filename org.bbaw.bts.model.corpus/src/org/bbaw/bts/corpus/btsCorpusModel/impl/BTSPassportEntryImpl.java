@@ -534,7 +534,7 @@ public abstract class BTSPassportEntryImpl extends BTSIdentifiableItemImpl imple
                 getChildren().clear();
                 return;
             case BtsCorpusModelPackage.BTS_PASSPORT_ENTRY__LABEL:
-                setLabel((BTSTranslations) null);
+                setLabel(null);
                 return;
             case BtsCorpusModelPackage.BTS_PASSPORT_ENTRY__NAME:
                 setName(NAME_EDEFAULT);

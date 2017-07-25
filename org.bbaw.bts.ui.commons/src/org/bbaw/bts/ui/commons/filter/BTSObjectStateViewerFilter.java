@@ -44,10 +44,7 @@ public class BTSObjectStateViewerFilter extends ViewerFilter implements
         if (object == null) {
             return true; // because we want to show nested node wrappers
         }
-        if (object instanceof AdministrativDataObject) {
-            return inverted != state.equals(((AdministrativDataObject) object).getState());
-        }
-        return false;
+        return object instanceof AdministrativDataObject && inverted != state.equals(((AdministrativDataObject) object).getState());
     }
 
     @Override

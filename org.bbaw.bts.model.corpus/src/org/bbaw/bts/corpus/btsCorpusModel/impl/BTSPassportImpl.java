@@ -356,7 +356,7 @@ public class BTSPassportImpl extends MinimalEObjectImpl.Container implements BTS
     public void eUnset(int featureID) {
         switch (featureID) {
             case BtsCorpusModelPackage.BTS_PASSPORT__DATE:
-                setDate((BTSTimespan) null);
+                setDate(null);
                 return;
             case BtsCorpusModelPackage.BTS_PASSPORT__CHILDREN:
                 getChildren().clear();

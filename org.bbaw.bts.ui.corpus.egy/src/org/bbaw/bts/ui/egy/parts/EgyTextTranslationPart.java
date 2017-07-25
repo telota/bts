@@ -62,12 +62,10 @@ import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CaretEvent;
 import org.eclipse.swt.custom.CaretListener;
-import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TypedEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -283,7 +281,7 @@ public class EgyTextTranslationPart {
                 annotations.size());
         if (!annotations.isEmpty()) {
             for (BTSModelAnnotation ma : annotations) {
-                if (ma instanceof BTSModelAnnotation && ((BTSModelAnnotation) ma).getModel() instanceof BTSSenctence) {
+                if (ma instanceof BTSModelAnnotation && ma.getModel() instanceof BTSSenctence) {
                     sentenceAnnotations.add(ma);
                 }
             }
@@ -428,7 +426,7 @@ public class EgyTextTranslationPart {
         int endItemOffeset = 0;
         List<BTSSentenceItem> textItems = new Vector<>();
         while (it.hasNext()) {
-            Annotation a = (Annotation) it.next();
+            Annotation a = it.next();
             if (a instanceof BTSModelAnnotation) {
                 Position pos = textViewer.getAnnotationModel()
                         .getPosition(a);
@@ -469,10 +467,10 @@ public class EgyTextTranslationPart {
 
             // calculate the start and end item and startId and endId
             for (BTSModelAnnotation a : list) {
-                if (((BTSModelAnnotation) a).getModel() instanceof BTSSentenceItem) {
+                if (a.getModel() instanceof BTSSentenceItem) {
                     Position pos = textViewer.getAnnotationModel()
                             .getPosition(a);
-                    BTSSentenceItem item = (BTSSentenceItem) ((BTSModelAnnotation) a)
+                    BTSSentenceItem item = (BTSSentenceItem) a
                             .getModel();
 
                     if (startItem == null
@@ -740,13 +738,13 @@ public class EgyTextTranslationPart {
      */
     protected void loadSingleAnnotation2Editor(IAnnotationModel editorModel,
                                                BTSModelAnnotation a, Position pos, Issue issue) {
-        if (a instanceof BTSModelAnnotation && ((BTSModelAnnotation) a).getModel() instanceof BTSSenctence) {
+        if (a instanceof BTSModelAnnotation && a.getModel() instanceof BTSSenctence) {
 
             // Position pos = model.getPosition((Annotation) a);
             Position pos2 = new Position(pos.getOffset() + EDITOR_PREFIX.length(), pos.getLength());
-            editorModel.addAnnotation((Annotation) a, pos2);
+            editorModel.addAnnotation(a, pos2);
             modelAnnotationMap.put(
-                    ((BTSIdentifiableItem) a.getModel()).get_id(), a);
+                    a.getModel().get_id(), a);
         }
 
     }

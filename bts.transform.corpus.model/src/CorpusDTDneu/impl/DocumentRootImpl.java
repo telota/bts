@@ -581,7 +581,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setAuthor(String newAuthor) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__AUTHOR, newAuthor);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__AUTHOR, newAuthor);
     }
 
     /**
@@ -601,7 +601,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setBausteinPassage(BausteinPassageType newBausteinPassage) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__BAUSTEIN_PASSAGE, newBausteinPassage);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__BAUSTEIN_PASSAGE, newBausteinPassage);
     }
 
     /**
@@ -631,7 +631,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setBibliography(String newBibliography) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__BIBLIOGRAPHY, newBibliography);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__BIBLIOGRAPHY, newBibliography);
     }
 
     /**
@@ -651,7 +651,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setBtsCodes(String newBtsCodes) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__BTS_CODES, newBtsCodes);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__BTS_CODES, newBtsCodes);
     }
 
     /**
@@ -671,7 +671,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setCode(String newCode) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__CODE, newCode);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__CODE, newCode);
     }
 
     /**
@@ -691,7 +691,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setCode1(String newCode1) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__CODE1, newCode1);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__CODE1, newCode1);
     }
 
     /**
@@ -711,7 +711,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setCode2(String newCode2) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__CODE2, newCode2);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__CODE2, newCode2);
     }
 
     /**
@@ -731,7 +731,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setCodes(String newCodes) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__CODES, newCodes);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__CODES, newCodes);
     }
 
     /**
@@ -751,7 +751,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setComment(String newComment) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__COMMENT, newComment);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__COMMENT, newComment);
     }
 
     /**
@@ -771,7 +771,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setDate(DateType newDate) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DATE, newDate);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DATE, newDate);
     }
 
     /**
@@ -801,7 +801,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setDateThs(DateThsType newDateThs) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DATE_THS, newDateThs);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DATE_THS, newDateThs);
     }
 
     /**
@@ -831,7 +831,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setDefinition(String newDefinition) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DEFINITION, newDefinition);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DEFINITION, newDefinition);
     }
 
     /**
@@ -851,7 +851,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setDepiction(PassportDataItem newDepiction) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DEPICTION, newDepiction);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__DEPICTION, newDepiction);
     }
 
     /**
@@ -881,7 +881,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgyPunctuation(EgyPunctuationType newEgyPunctuation) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_PUNCTUATION, newEgyPunctuation);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_PUNCTUATION, newEgyPunctuation);
     }
 
     /**
@@ -911,7 +911,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgySent(EgySentType newEgySent) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_SENT, newEgySent);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_SENT, newEgySent);
     }
 
     /**
@@ -941,7 +941,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgySubTxt(EgySubTxtType newEgySubTxt) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_SUB_TXT, newEgySubTxt);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_SUB_TXT, newEgySubTxt);
     }
 
     /**
@@ -971,7 +971,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgySzenario(EgySzenarioType newEgySzenario) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_SZENARIO, newEgySzenario);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_SZENARIO, newEgySzenario);
     }
 
     /**
@@ -1001,7 +1001,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgyTB1(EgyTB1Type newEgyTB1) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TB1, newEgyTB1);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TB1, newEgyTB1);
     }
 
     /**
@@ -1031,7 +1031,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgyTB3End(EgyTB3EndType newEgyTB3End) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TB3_END, newEgyTB3End);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TB3_END, newEgyTB3End);
     }
 
     /**
@@ -1061,7 +1061,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgyTB3Start(EgyTB3StartType newEgyTB3Start) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TB3_START, newEgyTB3Start);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TB3_START, newEgyTB3Start);
     }
 
     /**
@@ -1091,7 +1091,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgyTxt(EgyTxtType newEgyTxt) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TXT, newEgyTxt);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TXT, newEgyTxt);
     }
 
     /**
@@ -1121,7 +1121,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgyTxtCorpus(EgyTxtCorpusType newEgyTxtCorpus) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TXT_CORPUS, newEgyTxtCorpus);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_TXT_CORPUS, newEgyTxtCorpus);
     }
 
     /**
@@ -1151,7 +1151,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setEgyWord(EgyWordType newEgyWord) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_WORD, newEgyWord);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__EGY_WORD, newEgyWord);
     }
 
     /**
@@ -1181,7 +1181,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setFileName(String newFileName) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FILE_NAME, newFileName);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FILE_NAME, newFileName);
     }
 
     /**
@@ -1201,7 +1201,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setFilePath(String newFilePath) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FILE_PATH, newFilePath);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FILE_PATH, newFilePath);
     }
 
     /**
@@ -1221,7 +1221,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setForm(String newForm) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FORM, newForm);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FORM, newForm);
     }
 
     /**
@@ -1241,7 +1241,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setFormattingElement(FormattingElementType newFormattingElement) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FORMATTING_ELEMENT, newFormattingElement);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FORMATTING_ELEMENT, newFormattingElement);
     }
 
     /**
@@ -1271,7 +1271,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setFullName(String newFullName) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FULL_NAME, newFullName);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__FULL_NAME, newFullName);
     }
 
     /**
@@ -1291,7 +1291,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setGlosse(GlosseType newGlosse) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__GLOSSE, newGlosse);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__GLOSSE, newGlosse);
     }
 
     /**
@@ -1321,7 +1321,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setGlossePassage(GlossePassageType newGlossePassage) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__GLOSSE_PASSAGE, newGlossePassage);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__GLOSSE_PASSAGE, newGlossePassage);
     }
 
     /**
@@ -1351,7 +1351,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setGraphics(String newGraphics) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__GRAPHICS, newGraphics);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__GRAPHICS, newGraphics);
     }
 
     /**
@@ -1371,7 +1371,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setHierarchy(String newHierarchy) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__HIERARCHY, newHierarchy);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__HIERARCHY, newHierarchy);
     }
 
     /**
@@ -1391,7 +1391,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setLangComment(String newLangComment) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LANG_COMMENT, newLangComment);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LANG_COMMENT, newLangComment);
     }
 
     /**
@@ -1411,7 +1411,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setLanguage(PassportDataItem newLanguage) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LANGUAGE, newLanguage);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LANGUAGE, newLanguage);
     }
 
     /**
@@ -1441,7 +1441,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setLanguagePassage(LanguagePassageType newLanguagePassage) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LANGUAGE_PASSAGE, newLanguagePassage);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LANGUAGE_PASSAGE, newLanguagePassage);
     }
 
     /**
@@ -1471,7 +1471,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setLeipzigPassage(LeipzigPassageType newLeipzigPassage) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LEIPZIG_PASSAGE, newLeipzigPassage);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LEIPZIG_PASSAGE, newLeipzigPassage);
     }
 
     /**
@@ -1501,7 +1501,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setLineCount(LineCountType newLineCount) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LINE_COUNT, newLineCount);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LINE_COUNT, newLineCount);
     }
 
     /**
@@ -1531,7 +1531,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setLowerTerm(String newLowerTerm) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LOWER_TERM, newLowerTerm);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__LOWER_TERM, newLowerTerm);
     }
 
     /**
@@ -1551,7 +1551,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setMuseumNumber(String newMuseumNumber) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__MUSEUM_NUMBER, newMuseumNumber);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__MUSEUM_NUMBER, newMuseumNumber);
     }
 
     /**
@@ -1571,7 +1571,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setName(String newName) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__NAME, newName);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__NAME, newName);
     }
 
     /**
@@ -1591,7 +1591,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setNameSort(String newNameSort) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__NAME_SORT, newNameSort);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__NAME_SORT, newNameSort);
     }
 
     /**
@@ -1611,7 +1611,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setNote(NoteType newNote) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__NOTE, newNote);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__NOTE, newNote);
     }
 
     /**
@@ -1641,7 +1641,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setNotes(String newNotes) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__NOTES, newNotes);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__NOTES, newNotes);
     }
 
     /**
@@ -1661,7 +1661,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setObjectType(PassportDataItem newObjectType) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__OBJECT_TYPE, newObjectType);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__OBJECT_TYPE, newObjectType);
     }
 
     /**
@@ -1691,7 +1691,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setPassportDataItem(PassportDataItemType newPassportDataItem) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PASSPORT_DATA_ITEM, newPassportDataItem);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PASSPORT_DATA_ITEM, newPassportDataItem);
     }
 
     /**
@@ -1721,7 +1721,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setPicture(PictureType newPicture) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PICTURE, newPicture);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PICTURE, newPicture);
     }
 
     /**
@@ -1751,7 +1751,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setPicturesTable(PicturesTableType newPicturesTable) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PICTURES_TABLE, newPicturesTable);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PICTURES_TABLE, newPicturesTable);
     }
 
     /**
@@ -1781,7 +1781,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setProject(String newProject) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PROJECT, newProject);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PROJECT, newProject);
     }
 
     /**
@@ -1801,7 +1801,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setProtocol(String newProtocol) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PROTOCOL, newProtocol);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PROTOCOL, newProtocol);
     }
 
     /**
@@ -1821,7 +1821,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setProvenance(PassportDataItem newProvenance) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PROVENANCE, newProvenance);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PROVENANCE, newProvenance);
     }
 
     /**
@@ -1851,7 +1851,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setPunctuation(PunctuationType newPunctuation) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PUNCTUATION, newPunctuation);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__PUNCTUATION, newPunctuation);
     }
 
     /**
@@ -1881,7 +1881,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setScript(PassportDataItem newScript) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__SCRIPT, newScript);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__SCRIPT, newScript);
     }
 
     /**
@@ -1911,7 +1911,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCArrangement(TCArrangementType newTCArrangement) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_ARRANGEMENT, newTCArrangement);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_ARRANGEMENT, newTCArrangement);
     }
 
     /**
@@ -1941,7 +1941,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCCaption(TCCaptionType newTCCaption) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_CAPTION, newTCCaption);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_CAPTION, newTCCaption);
     }
 
     /**
@@ -1971,7 +1971,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCGroup(TCGroupType newTCGroup) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_GROUP, newTCGroup);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_GROUP, newTCGroup);
     }
 
     /**
@@ -2001,7 +2001,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCHeader(TCHeaderType newTCHeader) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_HEADER, newTCHeader);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_HEADER, newTCHeader);
     }
 
     /**
@@ -2031,7 +2031,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCLocation(TCLocationType newTCLocation) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_LOCATION, newTCLocation);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_LOCATION, newTCLocation);
     }
 
     /**
@@ -2061,7 +2061,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCNotebook(String newTCNotebook) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_NOTEBOOK, newTCNotebook);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_NOTEBOOK, newTCNotebook);
     }
 
     /**
@@ -2081,7 +2081,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCObject(TCObjectType newTCObject) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_OBJECT, newTCObject);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_OBJECT, newTCObject);
     }
 
     /**
@@ -2111,7 +2111,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCObjPart(TCObjPartType newTCObjPart) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_OBJ_PART, newTCObjPart);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_OBJ_PART, newTCObjPart);
     }
 
     /**
@@ -2141,7 +2141,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCPassport(TCPassportType newTCPassport) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_PASSPORT, newTCPassport);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_PASSPORT, newTCPassport);
     }
 
     /**
@@ -2171,7 +2171,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCPicture(TCPictureType newTCPicture) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_PICTURE, newTCPicture);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_PICTURE, newTCPicture);
     }
 
     /**
@@ -2201,7 +2201,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCScene(TCSceneType newTCScene) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_SCENE, newTCScene);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_SCENE, newTCScene);
     }
 
     /**
@@ -2231,7 +2231,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCSuperText(TCSuperTextType newTCSuperText) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_SUPER_TEXT, newTCSuperText);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_SUPER_TEXT, newTCSuperText);
     }
 
     /**
@@ -2261,7 +2261,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTCText(TCTextType newTCText) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_TEXT, newTCText);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TC_TEXT, newTCText);
     }
 
     /**
@@ -2291,7 +2291,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTerm(String newTerm) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TERM, newTerm);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TERM, newTerm);
     }
 
     /**
@@ -2311,7 +2311,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTextType(PassportDataItem newTextType) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TEXT_TYPE, newTextType);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TEXT_TYPE, newTextType);
     }
 
     /**
@@ -2341,7 +2341,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setThsEntry(ThsEntryType newThsEntry) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__THS_ENTRY, newThsEntry);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__THS_ENTRY, newThsEntry);
     }
 
     /**
@@ -2371,7 +2371,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTitle(String newTitle) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TITLE, newTitle);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TITLE, newTitle);
     }
 
     /**
@@ -2391,7 +2391,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTranslat(String newTranslat) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TRANSLAT, newTranslat);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TRANSLAT, newTranslat);
     }
 
     /**
@@ -2411,7 +2411,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setTranslation(String newTranslation) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TRANSLATION, newTranslation);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__TRANSLATION, newTranslation);
     }
 
     /**
@@ -2431,7 +2431,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setUpperTerm(String newUpperTerm) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__UPPER_TERM, newUpperTerm);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__UPPER_TERM, newUpperTerm);
     }
 
     /**
@@ -2451,7 +2451,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setValue(String newValue) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__VALUE, newValue);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__VALUE, newValue);
     }
 
     /**
@@ -2471,7 +2471,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setWbFolder(String newWbFolder) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__WB_FOLDER, newWbFolder);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__WB_FOLDER, newWbFolder);
     }
 
     /**
@@ -2491,7 +2491,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setWbSlips(String newWbSlips) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__WB_SLIPS, newWbSlips);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__WB_SLIPS, newWbSlips);
     }
 
     /**
@@ -2511,7 +2511,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
      * @generated
      */
     public void setWork(WorkType newWork) {
-        ((FeatureMap.Internal) getMixed()).set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__WORK, newWork);
+        getMixed().set(CorpusDTDneuPackage.Literals.DOCUMENT_ROOT__WORK, newWork);
     }
 
     /**
@@ -3077,7 +3077,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
                 setAuthor(AUTHOR_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__BAUSTEIN_PASSAGE:
-                setBausteinPassage((BausteinPassageType) null);
+                setBausteinPassage(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__BIBLIOGRAPHY:
                 setBibliography(BIBLIOGRAPHY_EDEFAULT);
@@ -3101,46 +3101,46 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
                 setComment(COMMENT_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__DATE:
-                setDate((DateType) null);
+                setDate(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__DATE_THS:
-                setDateThs((DateThsType) null);
+                setDateThs(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__DEFINITION:
                 setDefinition(DEFINITION_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__DEPICTION:
-                setDepiction((PassportDataItem) null);
+                setDepiction(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_PUNCTUATION:
-                setEgyPunctuation((EgyPunctuationType) null);
+                setEgyPunctuation(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_SENT:
-                setEgySent((EgySentType) null);
+                setEgySent(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_SUB_TXT:
-                setEgySubTxt((EgySubTxtType) null);
+                setEgySubTxt(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_SZENARIO:
-                setEgySzenario((EgySzenarioType) null);
+                setEgySzenario(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_TB1:
-                setEgyTB1((EgyTB1Type) null);
+                setEgyTB1(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_TB3_END:
-                setEgyTB3End((EgyTB3EndType) null);
+                setEgyTB3End(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_TB3_START:
-                setEgyTB3Start((EgyTB3StartType) null);
+                setEgyTB3Start(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_TXT:
-                setEgyTxt((EgyTxtType) null);
+                setEgyTxt(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_TXT_CORPUS:
-                setEgyTxtCorpus((EgyTxtCorpusType) null);
+                setEgyTxtCorpus(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__EGY_WORD:
-                setEgyWord((EgyWordType) null);
+                setEgyWord(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__FILE_NAME:
                 setFileName(FILE_NAME_EDEFAULT);
@@ -3152,16 +3152,16 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
                 setForm(FORM_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__FORMATTING_ELEMENT:
-                setFormattingElement((FormattingElementType) null);
+                setFormattingElement(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__FULL_NAME:
                 setFullName(FULL_NAME_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__GLOSSE:
-                setGlosse((GlosseType) null);
+                setGlosse(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__GLOSSE_PASSAGE:
-                setGlossePassage((GlossePassageType) null);
+                setGlossePassage(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__GRAPHICS:
                 setGraphics(GRAPHICS_EDEFAULT);
@@ -3173,16 +3173,16 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
                 setLangComment(LANG_COMMENT_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__LANGUAGE:
-                setLanguage((PassportDataItem) null);
+                setLanguage(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__LANGUAGE_PASSAGE:
-                setLanguagePassage((LanguagePassageType) null);
+                setLanguagePassage(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__LEIPZIG_PASSAGE:
-                setLeipzigPassage((LeipzigPassageType) null);
+                setLeipzigPassage(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__LINE_COUNT:
-                setLineCount((LineCountType) null);
+                setLineCount(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__LOWER_TERM:
                 setLowerTerm(LOWER_TERM_EDEFAULT);
@@ -3197,22 +3197,22 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
                 setNameSort(NAME_SORT_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__NOTE:
-                setNote((NoteType) null);
+                setNote(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__NOTES:
                 setNotes(NOTES_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__OBJECT_TYPE:
-                setObjectType((PassportDataItem) null);
+                setObjectType(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__PASSPORT_DATA_ITEM:
-                setPassportDataItem((PassportDataItemType) null);
+                setPassportDataItem(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__PICTURE:
-                setPicture((PictureType) null);
+                setPicture(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__PICTURES_TABLE:
-                setPicturesTable((PicturesTableType) null);
+                setPicturesTable(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__PROJECT:
                 setProject(PROJECT_EDEFAULT);
@@ -3221,61 +3221,61 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
                 setProtocol(PROTOCOL_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__PROVENANCE:
-                setProvenance((PassportDataItem) null);
+                setProvenance(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__PUNCTUATION:
-                setPunctuation((PunctuationType) null);
+                setPunctuation(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__SCRIPT:
-                setScript((PassportDataItem) null);
+                setScript(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_ARRANGEMENT:
-                setTCArrangement((TCArrangementType) null);
+                setTCArrangement(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_CAPTION:
-                setTCCaption((TCCaptionType) null);
+                setTCCaption(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_GROUP:
-                setTCGroup((TCGroupType) null);
+                setTCGroup(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_HEADER:
-                setTCHeader((TCHeaderType) null);
+                setTCHeader(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_LOCATION:
-                setTCLocation((TCLocationType) null);
+                setTCLocation(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_NOTEBOOK:
                 setTCNotebook(TC_NOTEBOOK_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_OBJECT:
-                setTCObject((TCObjectType) null);
+                setTCObject(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_OBJ_PART:
-                setTCObjPart((TCObjPartType) null);
+                setTCObjPart(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_PASSPORT:
-                setTCPassport((TCPassportType) null);
+                setTCPassport(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_PICTURE:
-                setTCPicture((TCPictureType) null);
+                setTCPicture(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_SCENE:
-                setTCScene((TCSceneType) null);
+                setTCScene(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_SUPER_TEXT:
-                setTCSuperText((TCSuperTextType) null);
+                setTCSuperText(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TC_TEXT:
-                setTCText((TCTextType) null);
+                setTCText(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TERM:
                 setTerm(TERM_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TEXT_TYPE:
-                setTextType((PassportDataItem) null);
+                setTextType(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__THS_ENTRY:
-                setThsEntry((ThsEntryType) null);
+                setThsEntry(null);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__TITLE:
                 setTitle(TITLE_EDEFAULT);
@@ -3299,7 +3299,7 @@ public class DocumentRootImpl extends MinimalEObjectImpl.Container implements Do
                 setWbSlips(WB_SLIPS_EDEFAULT);
                 return;
             case CorpusDTDneuPackage.DOCUMENT_ROOT__WORK:
-                setWork((WorkType) null);
+                setWork(null);
                 return;
         }
         super.eUnset(featureID);

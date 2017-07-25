@@ -17,6 +17,7 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.util.SafeRunnable;
+import org.eclipse.ui.internal.WorkbenchMessages;
 import org.osgi.service.prefs.BackingStoreException;
 
 /**
@@ -213,13 +214,13 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
         if (obj instanceof String) {
             return defaults.get(key, STRING_DEFAULT_DEFAULT);
         } else if (obj instanceof Integer) {
-            return Integer.valueOf(defaults.getInt(key, INT_DEFAULT_DEFAULT));
+            return defaults.getInt(key, INT_DEFAULT_DEFAULT);
         } else if (obj instanceof Double) {
-            return Double.valueOf(defaults.getDouble(key, DOUBLE_DEFAULT_DEFAULT));
+            return defaults.getDouble(key, DOUBLE_DEFAULT_DEFAULT);
         } else if (obj instanceof Float) {
-            return Float.valueOf(defaults.getFloat(key, FLOAT_DEFAULT_DEFAULT));
+            return defaults.getFloat(key, FLOAT_DEFAULT_DEFAULT);
         } else if (obj instanceof Long) {
-            return Long.valueOf(defaults.getLong(key, LONG_DEFAULT_DEFAULT));
+            return defaults.getLong(key, LONG_DEFAULT_DEFAULT);
         } else if (obj instanceof Boolean) {
             return defaults.getBoolean(key, BOOLEAN_DEFAULT_DEFAULT) ? Boolean.TRUE : Boolean.FALSE;
         } else {
@@ -322,12 +323,12 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
 
         // Assert that the default was not included (we automatically add it to
         // the end)
-        for (int i = 0; i < scopes.length; i++) {
-            if (scopes[i].equals(defaultContext)) {
+        for (IScopeContext scope : scopes) {
+            if (scope.equals(defaultContext)) {
                 Assert
                         .isTrue(
                                 false,
-                                org.eclipse.ui.internal.WorkbenchMessages.ScopedPreferenceStore_DefaultAddedError);
+                                WorkbenchMessages.ScopedPreferenceStore_DefaultAddedError);
             }
         }
     }
@@ -338,11 +339,7 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
      * @see org.eclipse.jface.preference.IPreferenceStore#contains(java.lang.String)
      */
     public boolean contains(String name) {
-        if (name == null) {
-            return false;
-        }
-        return (Platform.getPreferencesService().get(name, null,
-                getPreferenceNodes(true))) != null;
+        return name != null && (Platform.getPreferencesService().get(name, null, getPreferenceNodes(true))) != null;
     }
 
     /*
@@ -361,8 +358,8 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
         }
         final PropertyChangeEvent event = new PropertyChangeEvent(this, name,
                 oldValue, newValue);
-        for (int i = 0; i < list.length; i++) {
-            final IPropertyChangeListener listener = (IPropertyChangeListener) list[i];
+        for (Object aList : list) {
+            final IPropertyChangeListener listener = (IPropertyChangeListener) aList;
             SafeRunner.run(new SafeRunnable(JFaceResources
                     .getString("PreferenceStore.changeError")) { //$NON-NLS-1$
                 public void run() {
@@ -379,8 +376,7 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
      */
     public boolean getBoolean(String name) {
         String value = internalGet(name);
-        return value == null ? BOOLEAN_DEFAULT_DEFAULT : Boolean.valueOf(value)
-                .booleanValue();
+        return value == null ? BOOLEAN_DEFAULT_DEFAULT : Boolean.valueOf(value);
     }
 
     /*
@@ -535,11 +531,7 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
      * @see org.eclipse.jface.preference.IPreferenceStore#isDefault(java.lang.String)
      */
     public boolean isDefault(String name) {
-        if (name == null) {
-            return false;
-        }
-        return (Platform.getPreferencesService().get(name, null,
-                getPreferenceNodes(false))) == null;
+        return name != null && (Platform.getPreferencesService().get(name, null, getPreferenceNodes(false))) == null;
     }
 
     /*
@@ -686,7 +678,7 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
                 getStorePreferences().putDouble(name, value);
             }
             dirty = true;
-            firePropertyChangeEvent(name, Double.valueOf(oldValue), Double.valueOf(value));
+            firePropertyChangeEvent(name, oldValue, value);
         } finally {
             silentRunning = false;// Restart listening to preferences
         }
@@ -711,7 +703,7 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
                 getStorePreferences().putFloat(name, value);
             }
             dirty = true;
-            firePropertyChangeEvent(name, Float.valueOf(oldValue), Float.valueOf(value));
+            firePropertyChangeEvent(name, oldValue, value);
         } finally {
             silentRunning = false;// Restart listening to preferences
         }
@@ -736,8 +728,7 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
                 getStorePreferences().putInt(name, value);
             }
             dirty = true;
-            firePropertyChangeEvent(name, Integer.valueOf(oldValue), Integer.valueOf(
-                    value));
+            firePropertyChangeEvent(name, oldValue, value);
         } finally {
             silentRunning = false;// Restart listening to preferences
         }
@@ -762,7 +753,7 @@ public class FixedScopedPreferenceStore extends EventManager implements IPersist
                 getStorePreferences().putLong(name, value);
             }
             dirty = true;
-            firePropertyChangeEvent(name, Long.valueOf(oldValue), Long.valueOf(value));
+            firePropertyChangeEvent(name, oldValue, value);
         } finally {
             silentRunning = false;// Restart listening to preferences
         }

@@ -27,12 +27,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
-import javax.naming.Context;
-
-import jsesh.mdc.MDCSyntaxError;
-import jsesh.mdcDisplayer.draw.MDCDrawingFacade;
-import jsesh.mdcDisplayer.preferences.DrawingSpecification;
-import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
 
 import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
@@ -61,11 +55,7 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSText;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextContent;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextItems;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
-import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage;
-import org.bbaw.bts.corpus.text.egy.EgyDslStandaloneSetup;
-import org.bbaw.bts.corpus.text.egy.egyDsl.TextContent;
-import org.bbaw.bts.corpus.text.egy.ui.internal.EgyDslActivator;
 import org.bbaw.bts.ui.commons.corpus.text.BTSAnnotationAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSCommentAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSLemmaAnnotation;
@@ -97,7 +87,6 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
@@ -106,11 +95,8 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.IParser;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
-import org.eclipse.xtext.util.StringInputStream;
 import org.elasticsearch.index.query.QueryBuilders;
 
 import com.google.inject.Injector;
@@ -400,7 +386,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
         if (model == null) return;
 
         BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN,
-                (BTSIdentifiableItem) ambivalence);
+                ambivalence);
 
         model.addAnnotation(annotation, pos);
 
@@ -439,7 +425,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 
         if (amCase.getScenario() != null) {
             for (BTSAmbivalenceItem item : amCase.getScenario()) {
-                appendAmbivalenceItem((BTSIdentifiableItem) item, amCase, ambivalence, stringBuilder,
+                appendAmbivalenceItem(item, amCase, ambivalence, stringBuilder,
                         model, relatingObjectsMap, lemmaAnnotationMap);
                 stringBuilder.append(WS);
             }
@@ -452,7 +438,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
         if (model == null) return;
 
         BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN,
-                (BTSIdentifiableItem) amCase);
+                amCase);
 
         model.addAnnotation(annotation, pos);
     }
@@ -481,7 +467,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
                                      Position pos) {
         if (model == null) return;
         BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN,
-                (BTSIdentifiableItem) marker);
+                marker);
 
         model.addAnnotation(annotation, pos);
 
@@ -591,7 +577,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
             } else if (marker.getType().equals(
                     BTSConstants.DESTRUCTION_MARKER)) {
 //				stringBuilder.append(MARKER_VERS_SIGN);
-                stringBuilder.append("--" + marker.getName() + "--");
+                stringBuilder.append("--").append(marker.getName()).append("--");
             } else {
                 pos.setOffset(pos.getOffset() + 1);
                 stringBuilder.append(MARKER_START_SIGN);
@@ -622,7 +608,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 
         } else {
             annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN,
-                    (BTSIdentifiableItem) word);
+                    word);
         }
         model.addAnnotation(annotation, position);
 
@@ -1054,12 +1040,10 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
                 for (BTSSentenceItem item : sentence.getSentenceItems()) {
                     List<Object> glyphs = new Vector<>();
                     if (item instanceof BTSWord) {
-                        for (BTSGraphic g : ((BTSWord) item).getGraphics()) {
-//							if (!g.isIgnored()) {
-                            //TODO ignore auskommentiert: Check Klammerung, Öffnen und Schließen
-                            glyphs.add(g);
-//							}
-                        }
+                        //							if (!g.isIgnored()) {
+                        //TODO ignore auskommentiert: Check Klammerung, Öffnen und Schließen
+                        //							}
+                        glyphs.addAll(((BTSWord) item).getGraphics());
 
                     } else if (item instanceof BTSMarker) {
                         String m = item.getType().replace("[", "(");
@@ -1068,14 +1052,13 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
                         if (m.contains("lc")) {
                             glyphs.add("-!");
                         }
-                        glyphs.add(new String("\"" + m + "\""));
+                        glyphs.add("\"" + m + "\"");
 
                     }
                     Collections.sort(glyphs, getGlyphsStringComparator());
                     int lineLength = 0;
                     boolean inBracket = false;
-                    for (int i = 0; i < glyphs.size(); i++) {
-                        Object o = glyphs.get(i);
+                    for (Object o : glyphs) {
                         String mdc = "";
                         if (o instanceof BTSGraphic) {
                             mdc = ((BTSGraphic) o).getCode();
@@ -1200,9 +1183,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
         List<BTSObject> children = new Vector<>();
         List<BTSCorpusObject> obs = corpusObjectService.query(query,
                 BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-        for (BTSCorpusObject o : obs) {
-            children.add(o);
-        }
+        children.addAll(obs);
         if (monitor != null) {
             if (monitor.isCanceled()) return children;
             monitor.beginTask("Load comments", IProgressMonitor.UNKNOWN);
@@ -1408,8 +1389,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
     }
 
     private boolean testTextValidAgainstGrammar(BTSText t) {
-        if (t.getTextContent() == null || t.getTextContent().getTextItems().isEmpty()) return true;
-        return testTextValidAgainstGrammar(t.getTextContent(), t);
+        return t.getTextContent() == null || t.getTextContent().getTextItems().isEmpty() || testTextValidAgainstGrammar(t.getTextContent(), t);
     }
 
     @Override

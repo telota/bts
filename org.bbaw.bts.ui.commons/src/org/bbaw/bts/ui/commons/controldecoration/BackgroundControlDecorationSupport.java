@@ -137,8 +137,7 @@ public class BackgroundControlDecorationSupport {
         targets.addDisposeListener(disposeListener);
         targets.addListChangeListener(targetsChangeListener);
 
-        for (Iterator it = targets.iterator(); it.hasNext(); )
-            targetAdded((IObservable) it.next());
+        for (Object target : targets) targetAdded((IObservable) target);
 
         statusChanged((IStatus) validationStatus.getValue());
     }
@@ -277,12 +276,12 @@ public class BackgroundControlDecorationSupport {
      * @param status the status
      */
     private void statusChanged(IStatus status) {
-        for (Iterator it = targets.iterator(); it.hasNext(); ) {
-            IObservable observable = (IObservable) it.next();
+        for (Object target : targets) {
+            IObservable observable = (IObservable) target;
             updater.updateBackground(findControl(observable), status);
         }
-        for (Iterator it = targetDecorations.iterator(); it.hasNext(); ) {
-            TargetDecoration targetDecoration = (TargetDecoration) it.next();
+        for (Object targetDecoration1 : targetDecorations) {
+            TargetDecoration targetDecoration = (TargetDecoration) targetDecoration1;
             ControlDecoration decoration = targetDecoration.decoration;
             updater.update(decoration, status);
             updater.updateBackground(findControl(targetDecoration.target), status);
@@ -313,8 +312,8 @@ public class BackgroundControlDecorationSupport {
         targetsChangeListener = null;
 
         if (targetDecorations != null) {
-            for (Iterator it = targetDecorations.iterator(); it.hasNext(); ) {
-                TargetDecoration targetDecoration = (TargetDecoration) it.next();
+            for (Object targetDecoration1 : targetDecorations) {
+                TargetDecoration targetDecoration = (TargetDecoration) targetDecoration1;
                 targetDecoration.decoration.dispose();
             }
             targetDecorations.clear();

@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InterfixLexicalImpl extends InterfixImpl implements InterfixLexical {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected InterfixLexicalImpl() {
-        super();
-    }
+public class InterfixLexicalImpl extends InterfixImpl implements InterfixLexical
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected InterfixLexicalImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.INTERFIX_LEXICAL;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.INTERFIX_LEXICAL;
+  }
 
 } //InterfixLexicalImpl

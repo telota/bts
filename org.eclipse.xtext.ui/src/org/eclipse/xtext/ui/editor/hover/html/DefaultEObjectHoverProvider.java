@@ -26,7 +26,6 @@ import org.eclipse.jface.internal.text.html.BrowserInformationControl;
 import org.eclipse.jface.internal.text.html.BrowserInformationControlInput;
 import org.eclipse.jface.internal.text.html.BrowserInput;
 import org.eclipse.jface.internal.text.html.HTMLPrinter;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.AbstractReusableInformationControlCreator;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IInformationControl;
@@ -37,10 +36,8 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.ui.XtextUIMessages;
 import org.eclipse.xtext.ui.editor.IURIEditorOpener;
@@ -284,7 +281,7 @@ public class DefaultEObjectHoverProvider implements IEObjectHoverProvider {
                 try {
                     if (reader != null)
                         reader.close();
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
             }
         }
@@ -332,7 +329,7 @@ public class DefaultEObjectHoverProvider implements IEObjectHoverProvider {
             if (current != null && current.getPrevious() != null) {
                 BrowserInput previous = current.getPrevious();
                 setToolTipText(MessageFormat.format(XtextUIMessages.XtextBrowserInformationControlInput_BackTo,
-                        new Object[]{previous.getInputName()}));
+                        previous.getInputName()));
                 setEnabled(true);
             } else {
                 setToolTipText(XtextUIMessages.XtextBrowserInformationControlInput_Back);
@@ -367,7 +364,7 @@ public class DefaultEObjectHoverProvider implements IEObjectHoverProvider {
 
             if (current != null && current.getNext() != null) {
                 setToolTipText(MessageFormat.format(XtextUIMessages.XtextBrowserInformationControlInput_ForwardTo,
-                        new Object[]{current.getNext().getInputName()}));
+                        current.getNext().getInputName()));
                 setEnabled(true);
             } else {
                 setToolTipText(XtextUIMessages.XtextBrowserInformationControlInput_Forward);

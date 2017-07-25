@@ -354,8 +354,7 @@ public abstract class OptionsConfigurationBlock {
         boolean hasProjectSpecificOption = disabledProjectSettings == null;
         if (enable != hasProjectSpecificOption && project != null) {
             if (enable) {
-                for (int i = 0; i < keys.length; i++) {
-                    String curr = keys[i];
+                for (String curr : keys) {
                     String val = disabledProjectSettings.get(curr);
                     preferenceStore.putValue(curr, val);
                 }
@@ -365,8 +364,7 @@ public abstract class OptionsConfigurationBlock {
                 preferenceStore.setValue(IS_PROJECT_SPECIFIC, true);
             } else {
                 disabledProjectSettings = Maps.newHashMap();
-                for (int i = 0; i < keys.length; i++) {
-                    String curr = keys[i];
+                for (String curr : keys) {
                     String oldSetting = preferenceStore.getString(curr);
                     disabledProjectSettings.put(curr, oldSetting);
                     preferenceStore.setToDefault(curr);
@@ -457,8 +455,7 @@ public abstract class OptionsConfigurationBlock {
     protected abstract String[] getFullBuildDialogStrings(boolean workspaceSettings);
 
     public void performDefaults() {
-        for (int i = 0; i < keys.length; i++) {
-            String curr = keys[i];
+        for (String curr : keys) {
             String defValue = preferenceStore.getDefaultString(curr);
             setValue(curr, defValue);
         }
@@ -579,10 +576,7 @@ public abstract class OptionsConfigurationBlock {
         }
 
         public boolean isCoveredBy(BuildJob other) {
-            if (other.project == null) {
-                return true;
-            }
-            return project != null && project.equals(other.project);
+            return other.project == null || project != null && project.equals(other.project);
         }
 
         @Override
@@ -592,11 +586,11 @@ public abstract class OptionsConfigurationBlock {
                     return Status.CANCEL_STATUS;
                 }
                 Job[] buildJobs = Job.getJobManager().find(ResourcesPlugin.FAMILY_MANUAL_BUILD);
-                for (int i = 0; i < buildJobs.length; i++) {
-                    if (buildJobs[i] != this && buildJobs[i] instanceof BuildJob) {
-                        BuildJob job = (BuildJob) buildJobs[i];
+                for (Job buildJob : buildJobs) {
+                    if (buildJob != this && buildJob instanceof BuildJob) {
+                        BuildJob job = (BuildJob) buildJob;
                         if (job.isCoveredBy(this)) {
-                            buildJobs[i].cancel();
+                            buildJob.cancel();
                         }
                     }
                 }

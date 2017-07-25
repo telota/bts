@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Vector;
 
 import org.bbaw.bts.commons.BTSPluginIDs;
-import org.bbaw.bts.core.commons.corpus.BTSCorpusConstants;
 import org.bbaw.bts.core.commons.staticAccess.StaticAccessController;
 import org.bbaw.bts.core.corpus.controller.partController.CorpusNavigatorController;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
@@ -21,10 +20,7 @@ import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.e4.ui.workbench.IWorkbench;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -40,8 +36,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.osgi.service.prefs.BackingStoreException;
-
-import com.richclientgui.toolbox.duallists.DualListComposite;
 
 public class CorpusSettingsPage extends FieldEditorPreferencePage {
 
@@ -154,7 +148,7 @@ public class CorpusSettingsPage extends FieldEditorPreferencePage {
         loadListInput();
 
         activate = prefs.getBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, false);
-        initialActivate = new Boolean(activate);
+        initialActivate = activate;
         mainCorpusComboViewer.getCombo().setEnabled(activate);
         activateButton.setSelection(activate);
 
@@ -274,7 +268,7 @@ public class CorpusSettingsPage extends FieldEditorPreferencePage {
 
             }
         }
-        if (initialActivate == null || initialActivate.booleanValue() != activate) {
+        if (initialActivate == null || initialActivate != activate) {
             ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.app").putBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, activate);
             // update instance scope so that new value is injected
             InstanceScope.INSTANCE.getNode("org.bbaw.bts.app").putBoolean(BTSPluginIDs.PREF_CORPUS_ACTIVATE_MAIN_CORPUS_SELECTION, activate);

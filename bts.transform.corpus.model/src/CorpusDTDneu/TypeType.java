@@ -137,8 +137,7 @@ public enum TypeType implements Enumerator {
      * @generated
      */
     public static TypeType get(String literal) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            TypeType result = VALUES_ARRAY[i];
+        for (TypeType result : VALUES_ARRAY) {
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -154,8 +153,7 @@ public enum TypeType implements Enumerator {
      * @generated
      */
     public static TypeType getByName(String name) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            TypeType result = VALUES_ARRAY[i];
+        for (TypeType result : VALUES_ARRAY) {
             if (result.getName().equals(name)) {
                 return result;
             }

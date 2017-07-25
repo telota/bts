@@ -53,6 +53,7 @@ import org.eclipse.emf.ecore.EReference;
  * @generated
  * @see org.bbaw.bts.btsmodel.BtsmodelFactory
  */
+@SuppressWarnings("PointlessArithmeticExpression")
 public interface BtsmodelPackage extends EPackage {
     /**
      * The package name.
@@ -182,6 +183,7 @@ public interface BtsmodelPackage extends EPackage {
      * @generated
      * @ordered
      */
+    @SuppressWarnings("PointlessArithmeticExpression")
     int ADMINISTRATIV_DATA_OBJECT__ID = BTS_OBSERVABLE_OBJECT_FEATURE_COUNT + 0;
     /**
      * The feature id for the '<em><b>State</b></em>' attribute.

@@ -2,7 +2,6 @@ package org.bbaw.bts.ui.corpus.search;
 
 import org.bbaw.bts.btsmodel.BTSConfigItem;
 import org.bbaw.bts.core.commons.staticAccess.StaticAccessController;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 import org.bbaw.bts.ui.commons.search.SearchViewer;
 import org.bbaw.bts.ui.commons.search.SearchViewerFactory;

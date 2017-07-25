@@ -82,7 +82,7 @@ public abstract class AbstractEditStrategy implements IAutoEditStrategy, VerifyK
     protected abstract void internalCustomizeDocumentCommand(IDocument document, DocumentCommand command)
             throws BadLocationException;
 
-    public int count(String toFind, String searchMe) throws BadLocationException {
+    public int count(String toFind, String searchMe) {
         int count = 0;
         int index = -toFind.length();
         while (true) {
@@ -111,7 +111,7 @@ public abstract class AbstractEditStrategy implements IAutoEditStrategy, VerifyK
         return builder.toString();
     }
 
-    protected boolean isIdentifierPart(IDocument doc, int offset) throws BadLocationException {
+    protected boolean isIdentifierPart(IDocument doc, int offset) {
         if (doc.getLength() <= offset) {
             return false;
         }

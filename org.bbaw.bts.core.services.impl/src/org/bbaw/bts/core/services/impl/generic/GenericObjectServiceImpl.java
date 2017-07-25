@@ -97,7 +97,7 @@ public abstract class GenericObjectServiceImpl<E extends BTSDBBaseObject, K exte
 
     public void setId(E entity, String dbCollection) {
         if (entity instanceof BTSDBBaseObject) {
-            ((BTSDBBaseObject) entity).set_id(idService.createId(dbCollection));
+            entity.set_id(idService.createId(dbCollection));
             entity.setProject(main_project);
             if (authenticatedUser != null) {
                 entity.getUpdaters().add(authenticatedUser.getUserName());
@@ -277,7 +277,7 @@ public abstract class GenericObjectServiceImpl<E extends BTSDBBaseObject, K exte
         BTSObject o = null;
         try {
             o = (BTSObject) find((K) userId, monitor);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (o != null) {
             return o.getName();

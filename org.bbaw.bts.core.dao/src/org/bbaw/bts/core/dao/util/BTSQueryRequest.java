@@ -29,13 +29,7 @@
  */
 package org.bbaw.bts.core.dao.util;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 import org.apache.lucene.queryParser.QueryParser;
 import org.bbaw.bts.btsmodel.BTSObject;
@@ -210,9 +204,7 @@ public class BTSQueryRequest {
         }
         this.responseFields.clear();
         if (responseFieldsArray != null) {
-            for (String s : responseFieldsArray) {
-                responseFields.add(s);
-            }
+            Collections.addAll(responseFields, responseFieldsArray);
         }
     }
 

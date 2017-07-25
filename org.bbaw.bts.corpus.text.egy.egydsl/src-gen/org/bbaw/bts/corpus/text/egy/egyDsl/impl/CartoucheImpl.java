@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class CartoucheImpl extends BracketsImpl implements Cartouche {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected CartoucheImpl() {
-        super();
-    }
+public class CartoucheImpl extends BracketsImpl implements Cartouche
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected CartoucheImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.CARTOUCHE;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.CARTOUCHE;
+  }
 
 } //CartoucheImpl

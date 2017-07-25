@@ -83,7 +83,7 @@ public abstract class AbstractValidatorConfigurationBlock extends OptionsConfigu
 
         int indentStep = fPixelConverter.convertWidthInCharsToPixels(1);
 
-        int defaultIndent = indentStep * 0;
+        int defaultIndent = 0;
 
         fillSettingsPage(composite, nColumns, defaultIndent);
 

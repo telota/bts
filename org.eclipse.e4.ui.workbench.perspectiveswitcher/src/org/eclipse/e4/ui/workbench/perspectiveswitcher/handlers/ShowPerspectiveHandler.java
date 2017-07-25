@@ -32,8 +32,7 @@ public final class ShowPerspectiveHandler {
     @Execute
     public void execute(IEclipseContext context,
                         @Optional @Named(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_ID) String perspectiveID,
-                        @Optional @Named(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW) String newWindow)
-            throws InvocationTargetException, InterruptedException {
+                        @Optional @Named(E4WorkbenchParameterConstants.COMMAND_PERSPECTIVE_NEW_WINDOW) String newWindow) {
 
         if (perspectiveID == null || perspectiveID.equals(""))
             openSelectionDialog(context);

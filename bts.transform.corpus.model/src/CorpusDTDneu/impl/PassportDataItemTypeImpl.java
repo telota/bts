@@ -348,7 +348,7 @@ public class PassportDataItemTypeImpl extends MinimalEObjectImpl.Container imple
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.PASSPORT_DATA_ITEM_TYPE__THS_ENTRY:
-                setThsEntry((ThsEntryType) null);
+                setThsEntry(null);
                 return;
             case CorpusDTDneuPackage.PASSPORT_DATA_ITEM_TYPE__CODE:
                 setCode(CODE_EDEFAULT);

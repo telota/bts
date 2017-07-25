@@ -105,19 +105,14 @@ public class CouchDB {
 
         try {
             HttpURLConnection connection = getGetConnection(baseURI);
-            InputStream inStream = connection.getInputStream();
-            try {
+            try (InputStream inStream = connection.getInputStream()) {
                 JsonNode node = getRootNode(inStream);
                 isCouchDB = node.has("couchdb");
             } catch (Exception e) {
                 return false;
             } finally {
-
-                if (uri.userInfo() != null) {
+                if (uri.userInfo() != null)
                     Authenticator.setDefault(null);
-                }
-
-                inStream.close();
                 connection.disconnect();
             }
         } catch (IOException e) {
@@ -273,7 +268,7 @@ public class CouchDB {
         return null;
     }
 
-    public static URI getDocumentURI(URI baseURI, InputStream inStream) throws IOException {
+    public static URI getDocumentURI(URI baseURI, InputStream inStream) {
         final JsonNode rootNode = getRootNode(inStream);
 
         URI result = null;
@@ -363,7 +358,7 @@ public class CouchDB {
             } finally {
                 if (output != null) try {
                     output.close();
-                } catch (IOException logOrIgnore) {
+                } catch (IOException ignored) {
                 }
             }
             try {
@@ -400,7 +395,7 @@ public class CouchDB {
             } finally {
                 if (output != null) try {
                     output.close();
-                } catch (IOException logOrIgnore) {
+                } catch (IOException ignored) {
                 }
             }
             try {

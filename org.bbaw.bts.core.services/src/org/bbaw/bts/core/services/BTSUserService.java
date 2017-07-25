@@ -30,7 +30,6 @@
 package org.bbaw.bts.core.services;
 
 import java.io.FileNotFoundException;
-import java.util.Collection;
 import java.util.List;
 
 import org.bbaw.bts.btsmodel.BTSObject;

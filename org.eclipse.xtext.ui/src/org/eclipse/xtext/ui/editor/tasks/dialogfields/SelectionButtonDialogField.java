@@ -54,8 +54,8 @@ public class SelectionButtonDialogField extends DialogField {
      */
     public void attachDialogFields(DialogField[] dialogFields) {
         fAttachedDialogFields = dialogFields;
-        for (int i = 0; i < dialogFields.length; i++) {
-            dialogFields[i].setEnabled(fIsSelected);
+        for (DialogField dialogField : dialogFields) {
+            dialogField.setEnabled(fIsSelected);
         }
     }
 
@@ -65,8 +65,8 @@ public class SelectionButtonDialogField extends DialogField {
      */
     public boolean isAttached(DialogField editor) {
         if (fAttachedDialogFields != null) {
-            for (int i = 0; i < fAttachedDialogFields.length; i++) {
-                if (fAttachedDialogFields[i] == editor) {
+            for (DialogField fAttachedDialogField : fAttachedDialogFields) {
+                if (fAttachedDialogField == editor) {
                     return true;
                 }
             }
@@ -146,10 +146,10 @@ public class SelectionButtonDialogField extends DialogField {
             fIsSelected = newState;
             if (fAttachedDialogFields != null) {
                 boolean focusSet = false;
-                for (int i = 0; i < fAttachedDialogFields.length; i++) {
-                    fAttachedDialogFields[i].setEnabled(fIsSelected);
+                for (DialogField fAttachedDialogField : fAttachedDialogFields) {
+                    fAttachedDialogField.setEnabled(fIsSelected);
                     if (fIsSelected && !focusSet) {
-                        focusSet = fAttachedDialogFields[i].setFocus();
+                        focusSet = fAttachedDialogField.setFocus();
                     }
                 }
             }

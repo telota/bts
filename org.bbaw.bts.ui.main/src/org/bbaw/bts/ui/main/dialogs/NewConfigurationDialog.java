@@ -164,7 +164,7 @@ public class NewConfigurationDialog extends TitleAreaDialog {
         activeConfigcomboViewer.setInput(root);
         if (activeConfigurationTreeNode != null) {
             activeConfigcomboViewer.setSelection(new StructuredSelection(activeConfigurationTreeNode));
-            originalconfiguration = (BTSConfiguration) activeConfiguration;
+            originalconfiguration = activeConfiguration;
         }
         activeConfigcomboViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 

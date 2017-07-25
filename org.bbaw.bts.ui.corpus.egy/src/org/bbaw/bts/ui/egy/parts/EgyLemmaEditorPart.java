@@ -30,8 +30,6 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSTextContent;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextItems;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
-import org.bbaw.bts.corpus.text.egy.egyDsl.TextContent;
-import org.bbaw.bts.corpus.text.egy.ui.internal.EgyDslActivator;
 import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
 import org.bbaw.bts.ui.commons.corpus.events.BTSTextSelectionEvent;
 import org.bbaw.bts.ui.commons.corpus.interfaces.IBTSEditor;
@@ -386,7 +384,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
     private void bringPartToFront(boolean b) {
         try {
             partService.bringToTop(part);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
     }
@@ -399,7 +397,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
-                    relatingObjects = lemmaEditorController.getRelatingObjects((BTSLemmaEntry) selection, monitor);
+                    relatingObjects = lemmaEditorController.getRelatingObjects(selection, monitor);
                     return Status.OK_STATUS;
                 }
             };
@@ -607,11 +605,11 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
             List<BTSObject> relSelObjects = new Vector<>(annotations.size());
             for (BTSModelAnnotation a : relatingObjectsAnnotations) {
                 if (a instanceof BTSAnnotationAnnotation) {
-                    relSelObjects.add((BTSObject) ((BTSAnnotationAnnotation) a).getRelatingObject());
+                    relSelObjects.add(a.getRelatingObject());
                 } else if (a instanceof BTSCommentAnnotation) {
-                    relSelObjects.add((BTSObject) ((BTSCommentAnnotation) a).getRelatingObject());
+                    relSelObjects.add(a.getRelatingObject());
                 } else if (a instanceof BTSSubtextAnnotation) {
-                    relSelObjects.add((BTSObject) ((BTSSubtextAnnotation) a).getRelatingObject());
+                    relSelObjects.add(a.getRelatingObject());
                 }
             }
             if (btsEvent != null) {
@@ -708,55 +706,55 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
     protected void loadSingleAnnotation2Editor(IAnnotationModel editorModel,
                                                BTSModelAnnotation a, Position pos, Issue issue) {
         if (a instanceof BTSLemmaAnnotation) {
-            if (((BTSLemmaAnnotation) a).getModel() instanceof BTSWord) {
+            if (a.getModel() instanceof BTSWord) {
                 Position pos2 = new Position(pos.getOffset()
                         + EDITOR_PREFIX_LENGTH, pos.getLength());
-                editorModel.addAnnotation((Annotation) a, pos2);
+                editorModel.addAnnotation(a, pos2);
                 modelAnnotationMap.put(
-                        ((BTSIdentifiableItem) a.getModel()).get_id(),
+                        a.getModel().get_id(),
                         a);
             }
         } else if (a instanceof BTSAnnotationAnnotation) {
-            if (((BTSAnnotationAnnotation) a).getRelatingObject() != null
-                    && ((BTSAnnotationAnnotation) a).getRelatingObject()
+            if (a.getRelatingObject() != null
+                    && a.getRelatingObject()
                     .getType() != null
-                    && ((BTSAnnotationAnnotation) a).getRelatingObject()
+                    && a.getRelatingObject()
                     .getType().equalsIgnoreCase("rubrum")) {
 
                 // Position pos = model.getPosition((Annotation) a);
                 Position pos2 = new Position(pos.getOffset()
                         + EDITOR_PREFIX_LENGTH, pos.getLength());
-                editorModel.addAnnotation((Annotation) a, pos2);
-                addToRelatingObjectAnnotationMap((EObject) a.getRelatingObject(),
+                editorModel.addAnnotation(a, pos2);
+                addToRelatingObjectAnnotationMap(a.getRelatingObject(),
                         a);
             }
             // Position pos = model.getPosition((Annotation) a);
 
             Position pos2 = new Position(
                     pos.getOffset() + EDITOR_PREFIX_LENGTH, pos.getLength());
-            editorModel.addAnnotation((Annotation) a, pos2);
-            addToRelatingObjectAnnotationMap((EObject) a.getRelatingObject(), a);
+            editorModel.addAnnotation(a, pos2);
+            addToRelatingObjectAnnotationMap(a.getRelatingObject(), a);
 
         } else if (a instanceof BTSCommentAnnotation) {
             Position pos2 = new Position(
                     pos.getOffset() + EDITOR_PREFIX_LENGTH, pos.getLength());
-            editorModel.addAnnotation((Annotation) a, pos2);
-            addToRelatingObjectAnnotationMap((EObject) a.getRelatingObject(), a);
+            editorModel.addAnnotation(a, pos2);
+            addToRelatingObjectAnnotationMap(a.getRelatingObject(), a);
 
         } else if (a instanceof BTSSubtextAnnotation) {
 
             Position pos2 = new Position(
                     pos.getOffset() + EDITOR_PREFIX_LENGTH, pos.getLength());
-            editorModel.addAnnotation((Annotation) a, pos2);
-            addToRelatingObjectAnnotationMap((EObject) a.getRelatingObject(), a);
+            editorModel.addAnnotation(a, pos2);
+            addToRelatingObjectAnnotationMap(a.getRelatingObject(), a);
 
         } else if (a instanceof BTSModelAnnotation) {
 
             // Position pos = model.getPosition((Annotation) a);
             Position pos2 = new Position(pos.getOffset(), pos.getLength());
-            editorModel.addAnnotation((Annotation) a, pos2);
+            editorModel.addAnnotation(a, pos2);
             modelAnnotationMap.put(
-                    ((BTSIdentifiableItem) a.getModel()).get_id(), a);
+                    a.getModel().get_id(), a);
         }
 
     }
@@ -911,7 +909,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
                         }
                         // get selected item, add listener to domain
                         if (!((BTSTextSelectionEvent) selection).getSelectedItems().isEmpty()) {
-                            editingDomain = getEditingDomain((EObject) ((BTSTextSelectionEvent) selection).getSelectedItems().get(0));
+                            editingDomain = getEditingDomain(((BTSTextSelectionEvent) selection).getSelectedItems().get(0));
                             editingDomain.getCommandStack().addCommandStackListener(
                                     getCommandStackListener());
                         }

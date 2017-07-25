@@ -158,7 +158,7 @@ public class RefactoringWizardOpenOperation_NonForking {
             if (context == null) {
                 PlatformUI.getWorkbench().getProgressService().run(false, true, workbenchRunnableAdapter);
             } else if (context instanceof IProgressService) {
-                ((IProgressService) context).run(false, true, workbenchRunnableAdapter);
+                context.run(false, true, workbenchRunnableAdapter);
             } else {
                 context.run(false, true, workbenchRunnableAdapter);
             }
@@ -197,7 +197,7 @@ public class RefactoringWizardOpenOperation_NonForking {
         return true;
     }
 
-    protected Field getPrivateField(Class<?> clazz, String name) throws NoSuchFieldException, SecurityException {
+    protected Field getPrivateField(Class<?> clazz, String name) throws SecurityException {
         try {
             return clazz.getDeclaredField(name);
         } catch (NoSuchFieldException e) {

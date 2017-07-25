@@ -28,11 +28,8 @@ public class ResourceForResourceWorkingCopyEditorInputFactory extends JavaClassP
         try {
             ResourceSet resourceSet = getResourceSet(editorInput.getFile());
             Resource workingCopy = resourceSet.createResource(editorInput.getResource().getURI());
-            InputStream inputStream = editorInput.getFile().getContents();
-            try {
+            try (InputStream inputStream = editorInput.getFile().getContents()) {
                 workingCopy.load(inputStream, Collections.singletonMap(XtextResource.OPTION_ENCODING, editorInput.getEncoding()));
-            } finally {
-                inputStream.close();
             }
             return workingCopy;
         } catch (Exception exc) {

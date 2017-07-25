@@ -36,12 +36,10 @@ import java.util.regex.Pattern;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
@@ -506,18 +504,18 @@ public final class CouchDbClient extends CouchDbClientBase {
     public Response purge(String databaseName, String id, String[] revs) {
         assertNotEmpty(id, "id");
         assertNotEmpty(revs, "rev");
-        String string = "{\"" + id + "\" : [";
+        StringBuilder string = new StringBuilder("{\"" + id + "\" : [");
         if (revs != null && revs.length > 0) {
             for (String rev : revs) {
-                string += "\"" + rev + "\", ";
+                string.append("\"").append(rev).append("\", ");
             }
-            string = string.substring(0, string.length() - 2);
+            string = new StringBuilder(string.substring(0, string.length() - 2));
         }
-        string += "]}";
+        string.append("]}");
         HttpResponse response = null;
         try {
             HttpPost post = new HttpPost(builder(getDBUri()).path("_purge").build());
-            HttpEntity body = new ByteArrayEntity(string.getBytes("UTF-8"));
+            HttpEntity body = new ByteArrayEntity(string.toString().getBytes("UTF-8"));
 
             post.setEntity(body);
             post.setHeader("Content-Type", "application/json");

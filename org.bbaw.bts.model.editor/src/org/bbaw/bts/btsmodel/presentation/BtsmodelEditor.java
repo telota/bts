@@ -1000,7 +1000,7 @@ public class BtsmodelEditor
                                     "org.bbaw.bts.model.editor",
                                     0,
                                     getString("_UI_CreateModelError_message", resource.getURI()),
-                                    new Object[]{exception == null ? (Object) resource : exception});
+                                    new Object[]{exception == null ? resource : exception});
             basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
             return basicDiagnostic;
         } else if (exception != null) {

@@ -40,6 +40,6 @@ public class DeleteHandler {
 
     @CanExecute
     public boolean canExecute(@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
-        return mayDelete.booleanValue();
+        return mayDelete;
     }
 }

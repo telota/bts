@@ -157,7 +157,7 @@ public class TextViewerMoveLinesAction extends TextViewerAction {
                 }
             }
             return true;
-        } catch (BadLocationException e) {
+        } catch (BadLocationException ignored) {
         }
         return false;
     }

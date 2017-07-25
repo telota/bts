@@ -185,10 +185,7 @@ public abstract class BTSIdentifiableItemImpl extends MinimalEObjectImpl.Contain
 
     @Override
     public boolean equals(Object object) {
-        if (object instanceof BTSIdentifiableItem && get_id() != null) {
-            return get_id().equals(((BTSIdentifiableItem) object).get_id());
-        }
-        return false;
+        return object instanceof BTSIdentifiableItem && get_id() != null && get_id().equals(((BTSIdentifiableItem) object).get_id());
     }
 
     @Override

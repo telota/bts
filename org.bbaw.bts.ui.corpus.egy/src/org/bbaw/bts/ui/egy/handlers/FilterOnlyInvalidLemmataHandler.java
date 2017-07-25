@@ -5,10 +5,8 @@ import java.util.List;
 import java.util.Vector;
 
 import org.bbaw.bts.core.corpus.controller.partController.LemmaEditorController;
-import org.bbaw.bts.core.corpus.controller.partController.LemmaNavigatorController;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
-import org.bbaw.bts.ui.corpus.parts.CorpusNavigatorPart;
 import org.bbaw.bts.ui.corpus.parts.LemmaNavigator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.contexts.Active;
@@ -46,9 +44,7 @@ public class FilterOnlyInvalidLemmataHandler {
                     monitor.beginTask("Load all lemmata", IProgressMonitor.UNKNOWN);
                     List<BTSLemmaEntry> lemmata = lemmaEditorController.listInAllInvalidLemmata(monitor);
 
-                    for (BTSLemmaEntry t : lemmata) {
-                        obs.add(t);
-                    }
+                    obs.addAll(lemmata);
                     // If you want to update the UI
                     sync.asyncExec(new Runnable() {
                         @Override

@@ -377,7 +377,7 @@ public class View {
         page.setResultFrom(offset + 1);
         int resultTo = rowsPerPage > resultRows ? resultRows : rowsPerPage; // fix when rowsPerPage exceeds returned rows
         page.setResultTo(offset + resultTo);
-        page.setPageNumber((int) Math.ceil(page.getResultFrom() / Double.valueOf(rowsPerPage)));
+        page.setPageNumber((int) Math.ceil(page.getResultFrom() / (double) rowsPerPage));
         return page;
     }
 

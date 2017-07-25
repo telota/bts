@@ -531,7 +531,7 @@ public class TCSceneTypeImpl extends MinimalEObjectImpl.Container implements TCS
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.TC_SCENE_TYPE__TC_PASSPORT:
-                setTCPassport((TCPassportType) null);
+                setTCPassport(null);
                 return;
             case CorpusDTDneuPackage.TC_SCENE_TYPE__TC_PICTURE:
                 getTCPicture().clear();

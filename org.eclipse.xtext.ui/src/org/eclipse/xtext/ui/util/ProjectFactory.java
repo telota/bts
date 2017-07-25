@@ -226,9 +226,9 @@ public class ProjectFactory {
 
     protected void setBuilder(final IProjectDescription projectDescription, final String[] builders) {
         List<ICommand> commands = Lists.newArrayList();
-        for (int i = 0; i < builders.length; i++) {
+        for (String builder : builders) {
             ICommand command = projectDescription.newCommand();
-            command.setBuilderName(builders[i]);
+            command.setBuilderName(builder);
             commands.add(command);
         }
         projectDescription.setBuildSpec(commands.toArray(new ICommand[commands.size()]));

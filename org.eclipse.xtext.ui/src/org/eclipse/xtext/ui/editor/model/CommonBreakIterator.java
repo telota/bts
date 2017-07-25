@@ -163,10 +163,7 @@ public class CommonBreakIterator extends BreakIterator {
      */
     @Override
     public boolean isBoundary(int offset) {
-        if (offset == getText().getBeginIndex())
-            return true;
-        else
-            return following(offset - 1) == offset;
+        return offset == getText().getBeginIndex() || following(offset - 1) == offset;
     }
 
     /*

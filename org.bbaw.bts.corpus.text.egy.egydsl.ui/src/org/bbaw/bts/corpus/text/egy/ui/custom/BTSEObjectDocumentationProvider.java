@@ -10,8 +10,6 @@ import org.bbaw.bts.core.commons.staticAccess.StaticAccessController;
 import org.bbaw.bts.core.corpus.controller.partController.BTSTextEditorController;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Word;
-import org.bbaw.bts.corpus.text.egy.egyDsl.WordPart;
 import org.bbaw.bts.ui.commons.corpus.text.BTSLemmaAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSModelAnnotation;
 import org.eclipse.e4.core.contexts.IEclipseContext;
@@ -75,7 +73,7 @@ public class BTSEObjectDocumentationProvider implements
                         if (lemma == null && item instanceof BTSWord) {
                             try {
                                 lemma = controller.findLemmaEntry(((BTSWord) item).getLKey(), null);
-                            } catch (Exception e) {
+                            } catch (Exception ignored) {
                             }
                             if (lemma != null) {
                                 ((BTSLemmaAnnotation) a).setRelatingObject(lemma);

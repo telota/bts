@@ -131,8 +131,7 @@ public class DefaultMergeViewer extends TextMergeViewer {
 
     protected void disposeEditors() {
         if (sourceViewerEditorMap != null) {
-            for (Iterator<DefaultMergeEditor> iterator = sourceViewerEditorMap.values().iterator(); iterator.hasNext(); ) {
-                DefaultMergeEditor mergeEditor = iterator.next();
+            for (DefaultMergeEditor mergeEditor : sourceViewerEditorMap.values()) {
                 mergeEditor.dispose();
             }
             sourceViewerEditorMap = null;

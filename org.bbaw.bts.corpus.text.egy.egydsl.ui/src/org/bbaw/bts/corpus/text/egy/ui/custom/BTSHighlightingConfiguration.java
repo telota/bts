@@ -35,20 +35,20 @@ public class BTSHighlightingConfiguration implements IHighlightingConfiguration 
         addType(acceptor, WORD, 50, 0, 0, SWT.NORMAL);
         addType(acceptor, MARKER, 50, 50, 0, SWT.NORMAL);
         addType(acceptor, SENTENCE, 50, 50, 100, SWT.NORMAL);
-        addType(acceptor, AMBIVALENCE, 00, 0, 0, NORMAL);
+        addType(acceptor, AMBIVALENCE, 0, 0, 0, NORMAL);
         addType(acceptor, LEMMA_CASE, 50, 0, 0, NORMAL);
 
-        addType(acceptor, EXPANDED, 00, 0, 0, NORMAL);
-        addType(acceptor, EMANDATION, 00, 0, 0, NORMAL);
-        addType(acceptor, DISPUTABLE_READING, 00, 0, 0, NORMAL);
-        addType(acceptor, LACUNA, 00, 0, 0, NORMAL);
-        addType(acceptor, DELETION, 00, 0, 0, NORMAL);
-        addType(acceptor, EXPANDED_COLUMN, 00, 0, 0, NORMAL);
-        addType(acceptor, RASUR, 00, 0, 0, NORMAL);
-        addType(acceptor, ANCIENT_EXPANDED, 00, 0, 0, NORMAL);
-        addType(acceptor, RESTORATION_OVER_RASUR, 00, 0, 0, NORMAL);
-        addType(acceptor, PARTIAL_DESTRUCTION, 00, 0, 0, NORMAL);
-        addType(acceptor, DESTRUCTION, 00, 0, 0, NORMAL);
+        addType(acceptor, EXPANDED, 0, 0, 0, NORMAL);
+        addType(acceptor, EMANDATION, 0, 0, 0, NORMAL);
+        addType(acceptor, DISPUTABLE_READING, 0, 0, 0, NORMAL);
+        addType(acceptor, LACUNA, 0, 0, 0, NORMAL);
+        addType(acceptor, DELETION, 0, 0, 0, NORMAL);
+        addType(acceptor, EXPANDED_COLUMN, 0, 0, 0, NORMAL);
+        addType(acceptor, RASUR, 0, 0, 0, NORMAL);
+        addType(acceptor, ANCIENT_EXPANDED, 0, 0, 0, NORMAL);
+        addType(acceptor, RESTORATION_OVER_RASUR, 0, 0, 0, NORMAL);
+        addType(acceptor, PARTIAL_DESTRUCTION, 0, 0, 0, NORMAL);
+        addType(acceptor, DESTRUCTION, 0, 0, 0, NORMAL);
 
     }
 

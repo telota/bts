@@ -9,9 +9,11 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>No Deletion</b></em>'.
  * <!-- end-user-doc -->
  *
+ *
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoDeletion()
  * @model
  * @generated
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoDeletion()
  */
-public interface NoDeletion extends EObject {
+public interface NoDeletion extends EObject
+{
 } // NoDeletion

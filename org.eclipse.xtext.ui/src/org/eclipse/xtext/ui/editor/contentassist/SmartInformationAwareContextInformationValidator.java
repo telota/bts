@@ -64,8 +64,8 @@ public class SmartInformationAwareContextInformationValidator implements IContex
         } else {
             IContextInformation[] infos = fProcessor.computeContextInformation(fViewer, offset);
             if (infos != null && infos.length > 0) {
-                for (int i = 0; i < infos.length; i++)
-                    if (fContextInformation.equals(infos[i]))
+                for (IContextInformation info : infos)
+                    if (fContextInformation.equals(info))
                         return true;
             }
             return false;
@@ -73,9 +73,6 @@ public class SmartInformationAwareContextInformationValidator implements IContex
     }
 
     public boolean updatePresentation(int offset, TextPresentation presentation) {
-        if (fContextInformation instanceof ISmartContextInformation) {
-            return ((ISmartContextInformation) fContextInformation).updatePresentation(fViewer, offset, presentation);
-        }
-        return false;
+        return fContextInformation instanceof ISmartContextInformation && ((ISmartContextInformation) fContextInformation).updatePresentation(fViewer, offset, presentation);
     }
 }

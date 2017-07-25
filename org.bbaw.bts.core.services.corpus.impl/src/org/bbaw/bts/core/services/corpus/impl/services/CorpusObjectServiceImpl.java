@@ -149,7 +149,7 @@ public class CorpusObjectServiceImpl
         BTSCorpusObject tcObject = null;
         try {
             tcObject = corpusObjectDao.find(key, main_corpus_key);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (tcObject != null) {
             return tcObject;
@@ -157,7 +157,7 @@ public class CorpusObjectServiceImpl
         for (String c : getActive_corpora(main_project)) {
             try {
                 tcObject = corpusObjectDao.find(key, c);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             if (tcObject != null) {
                 return tcObject;
@@ -167,7 +167,7 @@ public class CorpusObjectServiceImpl
             for (String c : getActive_corpora(p)) {
                 try {
                     tcObject = corpusObjectDao.find(key, c);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
                 if (tcObject != null) {
                     return tcObject;
@@ -481,7 +481,7 @@ public class CorpusObjectServiceImpl
         String tcObject = null;
         try {
             tcObject = corpusObjectDao.findAsJsonString(key, main_corpus_key);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (tcObject != null) {
             return tcObject;
@@ -489,7 +489,7 @@ public class CorpusObjectServiceImpl
         for (String c : getActive_corpora(main_project)) {
             try {
                 tcObject = corpusObjectDao.findAsJsonString(key, c);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             if (tcObject != null) {
                 return tcObject;
@@ -499,7 +499,7 @@ public class CorpusObjectServiceImpl
             for (String c : getActive_corpora(p)) {
                 try {
                     tcObject = corpusObjectDao.findAsJsonString(key, c);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
                 if (tcObject != null) {
                     return tcObject;
@@ -683,8 +683,7 @@ public class CorpusObjectServiceImpl
             if (item.getValue() != null && !"".equals(item.getValue().trim())) {
                 // if value is set, get config items of string
                 // build string representation: label>label>...>:value
-                for (int i = 0; i < path.length; i++) {
-                    String s = path[i];
+                for (String s : path) {
                     response += s + ".";
                 }
                 response = response.substring(0, response.length() - 1);

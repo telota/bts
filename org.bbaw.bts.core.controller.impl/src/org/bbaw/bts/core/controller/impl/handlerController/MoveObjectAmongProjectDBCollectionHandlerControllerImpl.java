@@ -1,7 +1,6 @@
 package org.bbaw.bts.core.controller.impl.handlerController;
 
 import java.util.List;
-import java.util.Vector;
 
 import javax.inject.Inject;
 

@@ -96,12 +96,12 @@ public class PluginProjectFactory extends JavaProjectFactory {
     protected void createManifest(IProject project, IProgressMonitor progressMonitor) throws CoreException {
         final StringBuilder content = new StringBuilder("Manifest-Version: 1.0\n");
         content.append("Bundle-ManifestVersion: 2\n");
-        content.append("Bundle-Name: " + projectName + "\n");
+        content.append("Bundle-Name: ").append(projectName).append("\n");
         content.append("Bundle-Vendor: My Company\n");
         content.append("Bundle-Version: 1.0.0.qualifier\n");
-        content.append("Bundle-SymbolicName: " + projectName + "; singleton:=true\n");
+        content.append("Bundle-SymbolicName: ").append(projectName).append("; singleton:=true\n");
         if (null != activatorClassName) {
-            content.append("Bundle-Activator: " + activatorClassName + "\n");
+            content.append("Bundle-Activator: ").append(activatorClassName).append("\n");
         }
         content.append("Bundle-ActivationPolicy: lazy\n");
 

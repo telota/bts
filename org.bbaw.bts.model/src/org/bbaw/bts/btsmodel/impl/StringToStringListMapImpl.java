@@ -215,7 +215,7 @@ public class StringToStringListMapImpl extends MinimalEObjectImpl.Container impl
                 setTypedKey(KEY_EDEFAULT);
                 return;
             case BtsmodelPackage.STRING_TO_STRING_LIST_MAP__VALUE:
-                setTypedValue((EList<String>) null);
+                setTypedValue(null);
                 return;
         }
         super.eUnset(featureID);

@@ -139,9 +139,8 @@ public class XtextQuickAssistProcessor extends AbstractIssueResolutionProviderAd
         if (invocationContext instanceof QuickAssistInvocationContext && !((QuickAssistInvocationContext) invocationContext).isSuppressSelection()) {
             ISourceViewer sourceViewer = invocationContext.getSourceViewer();
             IAnnotationModel annotationModel = sourceViewer.getAnnotationModel();
-            Iterator<Annotation> iterator = applicableAnnotations.iterator();
-            while (iterator.hasNext()) {
-                Position pos = annotationModel.getPosition(iterator.next());
+            for (Annotation applicableAnnotation : applicableAnnotations) {
+                Position pos = annotationModel.getPosition(applicableAnnotation);
                 if (pos != null) {
                     sourceViewer.setSelectedRange(pos.getOffset(), pos.getLength());
                     sourceViewer.revealRange(pos.getOffset(), pos.getLength());

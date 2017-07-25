@@ -115,7 +115,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
-import org.mihalis.opal.promptSupport.PromptSupport;
 
 public class EgyLemmatizerPart implements SearchViewer {
     protected static final String TRANSLATIONS_SUB_DELIMITER = BTSCoreConstants.TRANSLATIONS_SUB_DELIMITER + " ";
@@ -942,7 +941,7 @@ public class EgyLemmatizerPart implements SearchViewer {
             if (oldWord != null && eventType == 1) {
                 saveWordData(oldWord);
             }
-            currentWord = (BTSWord) selection;
+            currentWord = selection;
             if (currentWord != null) {
                 if (loadWordData(currentWord)) {
                     // nothing
@@ -977,7 +976,7 @@ public class EgyLemmatizerPart implements SearchViewer {
             return object;
         } else {
             if (object.eContainer() instanceof BTSText) {
-                return (BTSText) object.eContainer();
+                return object.eContainer();
             } else {
                 return findRecursivelyParent(object.eContainer());
             }
@@ -1164,7 +1163,7 @@ public class EgyLemmatizerPart implements SearchViewer {
             // if word.lkey unset, than default should not be written in flexion
             if (((word.getLKey() != null && word.getLKey().length() > 0)
                     || !flex_text.getText().equals(
-                    new Integer(defaultFlexion).toString()) || edited)
+                    defaultFlexion.toString()) || edited)
                     && !flex_text.getText().equals(word.getFlexCode())) {
                 org.eclipse.emf.common.command.Command command = SetCommand
                         .create(editingDomain,

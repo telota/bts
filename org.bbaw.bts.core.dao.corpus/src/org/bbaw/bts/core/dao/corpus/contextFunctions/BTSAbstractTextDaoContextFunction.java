@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import org.bbaw.bts.core.commons.exceptions.BTSDBException;
 import org.bbaw.bts.core.dao.contextFunctions.AbstractDaoFactoryContextFunction;
 import org.bbaw.bts.core.dao.corpus.BTSAbstractTextDao;
-import org.bbaw.bts.core.dao.corpus.BTSAnnotationDao;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.extensions.Preference;

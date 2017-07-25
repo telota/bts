@@ -190,12 +190,12 @@ public class LemmaNavigatorControllerImpl extends AbstractCorpusObjectNavigatorC
             try {
                 try {
                     o = lemmaService.find(rel.getObjectId(), null);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
                 if (o instanceof BTSLemmaEntry && !children.contains(o)) {
                     children.add((BTSLemmaEntry) o);
                 }
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         return children;

@@ -259,7 +259,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
 
     protected void handleRolesTreeSelection(IStructuredSelection selection) {
         if (selection.getFirstElement() instanceof BTSIdentifiableItem) {
-            selectedTreeObject = (BTSIdentifiableItem) selection
+            selectedTreeObject = selection
                     .getFirstElement();
             if (selectedTreeObject instanceof BTSUser) {
                 loadDBRoleDescUserEditComposite((BTSUser) selectedTreeObject);
@@ -270,7 +270,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
             }
             if (selectedTreeObject == null
                     || !selectedTreeObject.equals(selection.getFirstElement()))
-                selectedTreeObject = (BTSIdentifiableItem) selection
+                selectedTreeObject = selection
                         .getFirstElement();
         } else if (selection.getFirstElement() instanceof TreeNodeWrapper) {
             TreeNodeWrapper tn = (TreeNodeWrapper) selection.getFirstElement();
@@ -350,7 +350,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
         roles_rolesDesc_name_text.setEditable(false);
         if (selectedTreeNode.getLabel() != null)
             roles_rolesDesc_name_text
-                    .setText(((TreeNodeWrapper) selectedTreeNode)
+                    .setText(selectedTreeNode
                             .getLabel());
         // Label lblRoleDesc = new Label(roles_composite_right, SWT.NONE);
         // lblRoleDesc.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
@@ -362,7 +362,7 @@ public class ObjectUpdaterReaderEditorPart extends Composite {
         txt_rolesDesc.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
                 false, 3, 2));
         txt_rolesDesc.setEditable(false);
-        String desc = roleDescMap.get(((TreeNodeWrapper) selectedTreeNode)
+        String desc = roleDescMap.get(selectedTreeNode
                 .getLabel());
         if (desc != null) {
             txt_rolesDesc.setText(desc);

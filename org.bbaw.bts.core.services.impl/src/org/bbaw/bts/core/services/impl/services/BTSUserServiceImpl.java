@@ -18,7 +18,6 @@ import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.commons.BTSObjectSearchService;
-import org.bbaw.bts.core.commons.exceptions.BTSDBException;
 import org.bbaw.bts.core.commons.exceptions.BTSDBLocalLoginException;
 import org.bbaw.bts.core.commons.filter.BTSFilter;
 import org.bbaw.bts.core.dao.BTSUserDao;
@@ -157,7 +156,7 @@ public class BTSUserServiceImpl extends GenericObjectServiceImpl<BTSUser, String
             return true;
         } catch (StorageException | IOException e) {
             logger.error(e);
-        } catch (SecurityException e) {
+        } catch (SecurityException ignored) {
 
         }
         if (!success) {

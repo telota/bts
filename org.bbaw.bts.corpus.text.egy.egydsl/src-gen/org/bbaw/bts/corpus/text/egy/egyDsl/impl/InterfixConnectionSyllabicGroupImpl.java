@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InterfixConnectionSyllabicGroupImpl extends InterfixImpl implements InterfixConnectionSyllabicGroup {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected InterfixConnectionSyllabicGroupImpl() {
-        super();
-    }
+public class InterfixConnectionSyllabicGroupImpl extends InterfixImpl implements InterfixConnectionSyllabicGroup
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected InterfixConnectionSyllabicGroupImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.INTERFIX_CONNECTION_SYLLABIC_GROUP;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.INTERFIX_CONNECTION_SYLLABIC_GROUP;
+  }
 
 } //InterfixConnectionSyllabicGroupImpl

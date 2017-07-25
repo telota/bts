@@ -9,9 +9,11 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>No Lacuna</b></em>'.
  * <!-- end-user-doc -->
  *
+ *
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoLacuna()
  * @model
  * @generated
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoLacuna()
  */
-public interface NoLacuna extends EObject {
+public interface NoLacuna extends EObject
+{
 } // NoLacuna

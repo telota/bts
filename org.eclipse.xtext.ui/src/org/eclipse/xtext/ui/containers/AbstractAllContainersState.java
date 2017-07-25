@@ -204,7 +204,7 @@ public abstract class AbstractAllContainersState extends AbstractStorage2UriMapp
             try {
                 delta.accept(new IResourceDeltaVisitor() {
                     public boolean visit(IResourceDelta delta) throws CoreException {
-                        if (clear.get().booleanValue())
+                        if (clear.get())
                             return false;
                         if (delta.getResource() != null && isIgnoredResource(delta.getResource()))
                             return false;
@@ -215,7 +215,7 @@ public abstract class AbstractAllContainersState extends AbstractStorage2UriMapp
                         return true;
                     }
                 });
-                if (clear.get().booleanValue())
+                if (clear.get())
                     initialize();
             } catch (CoreException e) {
                 log.error(e.getMessage(), e);

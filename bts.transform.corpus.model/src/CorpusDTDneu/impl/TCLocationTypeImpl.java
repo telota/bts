@@ -261,7 +261,7 @@ public class TCLocationTypeImpl extends MinimalEObjectImpl.Container implements 
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.TC_LOCATION_TYPE__THS_ENTRY:
-                setThsEntry((ThsEntryType) null);
+                setThsEntry(null);
                 return;
             case CorpusDTDneuPackage.TC_LOCATION_TYPE__MUSEUM_NUMBER:
                 setMuseumNumber(MUSEUM_NUMBER_EDEFAULT);

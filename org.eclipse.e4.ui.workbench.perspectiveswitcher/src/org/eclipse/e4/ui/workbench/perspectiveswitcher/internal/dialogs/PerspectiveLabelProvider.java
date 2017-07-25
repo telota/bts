@@ -88,8 +88,8 @@ public class PerspectiveLabelProvider extends LabelProvider implements ITableLab
      */
     @Override
     public final void dispose() {
-        for (Iterator<Image> i = imageCache.values().iterator(); i.hasNext(); ) {
-            i.next().dispose();
+        for (Image image : imageCache.values()) {
+            image.dispose();
         }
         imageCache.clear();
     }

@@ -46,7 +46,6 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
@@ -82,11 +81,9 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.apache.lucene.util.IOUtils;
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.commons.BTSConstants;
-import org.bbaw.bts.modelUtils.EmfModelHelper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipselabs.emfjson.EMFJs;
 import org.eclipselabs.emfjson.internal.JSONSave;
@@ -516,25 +513,6 @@ abstract class CouchDbClientBase {
         } catch (UnsupportedEncodingException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
-        }
-        //FIXME check dynamically eobject
-        if (classType.isAssignableFrom(EObject.class)) {
-            String asString = "";
-
-            try {
-
-                String UTF8 = "UTF-8"; //"utf8"; changed cplutte
-                int BUFFER_SIZE = 8192;
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(instream,
-                        UTF8), BUFFER_SIZE);
-                String str;
-                while ((str = br.readLine()) != null) {
-                    asString += str;
-                }
-            } catch (Exception e) {
-
-            }
         }
         return getGson().fromJson(reader, classType);
     }

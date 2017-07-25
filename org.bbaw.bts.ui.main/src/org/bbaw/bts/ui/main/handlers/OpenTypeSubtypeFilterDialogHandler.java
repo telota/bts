@@ -1,15 +1,11 @@
 package org.bbaw.bts.ui.main.handlers;
 
-import java.util.List;
-
 import org.bbaw.bts.btsmodel.BTSConfigItem;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.btsviewmodel.BTSObjectTypeTreeNode;
-import org.bbaw.bts.core.commons.filter.BTSObjectsByListEntryFilter;
 import org.bbaw.bts.core.controller.generalController.BTSConfigurationController;
 import org.bbaw.bts.ui.commons.filter.TypeSubtypeViewerFilter;
 import org.bbaw.bts.ui.commons.navigator.StructuredViewerProvider;
-import org.bbaw.bts.ui.main.dialogs.ObjectByListEntrySelectionFilterDialog;
 import org.bbaw.bts.ui.main.dialogs.ObjectByTypeSubtypeSelectionFilterDialog;
 import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
@@ -85,9 +81,9 @@ public class OpenTypeSubtypeFilterDialogHandler {
             // if no projects selected, drop filter, else add to viewer
             if (filter instanceof ViewerFilter) {
                 if (filterPathIsEmpty(filter)) {
-                    viewer.removeFilter((ViewerFilter) filter);
+                    viewer.removeFilter(filter);
                 } else if (!isContained) {
-                    viewer.addFilter((ViewerFilter) filter);
+                    viewer.addFilter(filter);
                 } else {
                 }
                 part.reloadViewerNodes(viewer);

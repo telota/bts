@@ -69,10 +69,7 @@ public class Storage2UriMapperImpl implements IStorage2UriMapper {
                         if (uri != null)
                             result.put(uri, storage);
                     }
-                    if (resource instanceof IFolder) {
-                        return isHandled((IFolder) resource);
-                    }
-                    return true;
+                    return !(resource instanceof IFolder) || isHandled((IFolder) resource);
                 }
             });
         } catch (CoreException e) {

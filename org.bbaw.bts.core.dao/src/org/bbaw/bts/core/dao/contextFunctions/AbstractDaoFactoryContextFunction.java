@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Vector;
 
 import org.bbaw.bts.core.commons.exceptions.BTSDBException;
-import org.bbaw.bts.core.dao.BTSCommentDao;
 import org.bbaw.bts.core.dao.DAOFactory;
 import org.bbaw.bts.core.dao.util.DaoConstants;
 import org.eclipse.core.runtime.CoreException;

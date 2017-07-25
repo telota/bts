@@ -2,22 +2,6 @@ package org.bbaw.bts.corpus.text.egy.ui.custom;
 
 import java.util.Iterator;
 
-import org.bbaw.bts.corpus.text.egy.egyDsl.Ambivalence;
-import org.bbaw.bts.corpus.text.egy.egyDsl.AncientExpanded;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Case;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Deletion;
-import org.bbaw.bts.corpus.text.egy.egyDsl.DisputableReading;
-import org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Emendation;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Expanded;
-import org.bbaw.bts.corpus.text.egy.egyDsl.ExpandedColumn;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Lacuna;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Marker;
-import org.bbaw.bts.corpus.text.egy.egyDsl.PartialDestruction;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Rasur;
-import org.bbaw.bts.corpus.text.egy.egyDsl.RestorationOverRasur;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Sentence;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Word;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.nodemodel.INode;

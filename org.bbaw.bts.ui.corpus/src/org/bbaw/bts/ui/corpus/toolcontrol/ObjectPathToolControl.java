@@ -7,14 +7,9 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.bbaw.bts.btsmodel.BTSObject;
-import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
-import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
-import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.corpus.controller.generalController.ObjectPathController;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
-import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -30,11 +25,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.mihalis.opal.breadcrumb.Breadcrumb;
-import org.mihalis.opal.breadcrumb.BreadcrumbItem;
-import org.osgi.service.event.Event;
 
 public class ObjectPathToolControl {
 

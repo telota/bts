@@ -12,10 +12,8 @@ import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.dao.corpus.BTSTextDao;
 import org.bbaw.bts.core.dao.util.DaoConstants;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSText;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
-import org.bbaw.bts.dao.couchDB.CouchDBDao;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -93,7 +91,7 @@ public class BTSTextDaoImpl extends AbstractCorpusObjectDaoImpl<BTSText, String>
      */
     @Override
     public BTSText findReturnOnlyMetadata(String key, String path) {
-        URI uri = URI.createURI(getLocalDBURL() + "/" + path + "/" + key.toString());
+        URI uri = URI.createURI(getLocalDBURL() + "/" + path + "/" + key);
         Map<URI, Resource> cache = ((ResourceSetImpl) connectionProvider.getEmfResourceSet()).getURIResourceMap();
         BTSText object = retrieveFromCache(uri, cache);
         if (object != null) return object;

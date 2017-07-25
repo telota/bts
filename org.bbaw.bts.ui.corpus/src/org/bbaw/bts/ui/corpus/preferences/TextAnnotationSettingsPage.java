@@ -1,20 +1,11 @@
 package org.bbaw.bts.ui.corpus.preferences;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
-import javax.inject.Inject;
-
-import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.commons.corpus.BTSCorpusConstants;
 import org.bbaw.bts.core.commons.staticAccess.StaticAccessController;
-import org.bbaw.bts.core.corpus.controller.generalController.PassportConfigurationController;
-import org.bbaw.bts.ui.commons.corpus.events.BTSRelatingObjectsFilterEvent;
-import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
 import org.bbaw.bts.ui.corpus.internal.Activator;
-import org.bbaw.bts.ui.corpus.parts.passportEditor.PassportEntryItemEditor;
 import org.bbaw.bts.ui.corpus.preferences.textAnnotationSettings.TextAnnotationSettingsEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
@@ -26,7 +17,6 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.jface.preference.ColorFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlAdapter;
@@ -40,7 +30,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 public class TextAnnotationSettingsPage extends FieldEditorPreferencePage {
 

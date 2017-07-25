@@ -268,13 +268,9 @@ public class BtsmodelAdapterFactory extends AdapterFactoryImpl {
      */
     @Override
     public boolean isFactoryForType(Object object) {
-        if (object == modelPackage) {
-            return true;
-        }
-        if (object instanceof EObject) {
-            return ((EObject) object).eClass().getEPackage() == modelPackage;
-        }
-        return false;
+        return object == modelPackage
+                || (object instanceof EObject
+                    && ((EObject) object).eClass().getEPackage() == modelPackage);
     }
 
     /**

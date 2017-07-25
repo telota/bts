@@ -30,7 +30,6 @@
 package org.bbaw.bts.db;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -74,7 +73,7 @@ public interface DBManager {
      * @return true, if successful
      * @throws URISyntaxException the URI syntax exception
      */
-    boolean prepareDB() throws URISyntaxException;
+    boolean prepareDB();
 
     /**
      * Checks whether database is installed.

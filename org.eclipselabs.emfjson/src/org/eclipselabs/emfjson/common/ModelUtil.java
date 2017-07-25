@@ -61,7 +61,7 @@ public class ModelUtil {
         if (parameters != null && parameters instanceof Map) {
             Map<?, ?> map = (Map<?, ?>) parameters;
             for (Object key : map.keySet()) {
-                String query = key + "=" + (String) map.get(key);
+                String query = key + "=" + map.get(key);
                 if (outURI.hasQuery()) {
                     outURI = URI.createURI(outURI + "&" + query);
                 } else {

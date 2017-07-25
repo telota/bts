@@ -178,8 +178,7 @@ public abstract class CheckBoxGroupFieldEditor extends FieldEditor {
     }
 
     private void setupControls(String valueToSet) {
-        for (int i = 0; i < checkBoxButtons.length; i++) {
-            Button currentCheckBox = checkBoxButtons[i];
+        for (Button currentCheckBox : checkBoxButtons) {
             currentCheckBox.setSelection(isSelected(currentCheckBox.getText(), valueToSet));
         }
     }

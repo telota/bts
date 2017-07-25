@@ -82,19 +82,19 @@ public class ObjectPathControllerImpl implements ObjectPathController {
                 try {
                     try {
                         o = service.find(rel.getObjectId(), null);
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                     if (o == null && service instanceof CorpusObjectService) // look in corpora
                     {
                         try {
                             o = textCorpusService.find(rel.getObjectId(), null);
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
                         }
                     }
                     if (o instanceof BTSObject) {
                         parents.add((BTSObject) o);
                     }
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
 
             }

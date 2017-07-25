@@ -5,10 +5,8 @@ import java.util.List;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.dao.corpus.BTSImageDao;
 import org.bbaw.bts.core.dao.util.DaoConstants;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSImage;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
-import org.bbaw.bts.dao.couchDB.CouchDBDao;
 
 public class BTSImageDaoImpl extends AbstractCorpusObjectDaoImpl<BTSImage, String> implements BTSImageDao {
 

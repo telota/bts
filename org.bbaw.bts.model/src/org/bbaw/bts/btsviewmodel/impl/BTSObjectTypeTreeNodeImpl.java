@@ -324,7 +324,7 @@ public class BTSObjectTypeTreeNodeImpl extends MinimalEObjectImpl.Container impl
                 getChildren().clear();
                 return;
             case BtsviewmodelPackage.BTS_OBJECT_TYPE_TREE_NODE__REFERENCED_TYPES_PATH:
-                setReferencedTypesPath((BTSObjectTypeTreeNode) null);
+                setReferencedTypesPath(null);
                 return;
             case BtsviewmodelPackage.BTS_OBJECT_TYPE_TREE_NODE__VALUE:
                 setValue(VALUE_EDEFAULT);

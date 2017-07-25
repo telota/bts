@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.btsmodel.BTSIDReservationObject;
 import org.bbaw.bts.commons.BTSConstants;
@@ -51,7 +49,6 @@ import org.eclipselabs.emfjson.internal.JSONLoad;
 import org.eclipselabs.emfjson.resource.JsResourceFactoryImpl;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
-import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -443,7 +440,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
                 fillResource(resource, jo);
                 E o = (E) resource.getContents().get(0);
                 if (o instanceof BTSDBBaseObject) {
-                    checkForConflicts((E) o, path);
+                    checkForConflicts(o, path);
                 }
                 results.add(o);
             }
@@ -835,7 +832,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
 //				if (o instanceof BTSDBBaseObject) {
 //					checkForConflicts((BTSDBBaseObject) o, indexName);
 //				}
-                result.add((E) o);
+                result.add(o);
             } catch (Exception e) {
                 logger.warn("Query exception " + e.getMessage(), e);
             }
@@ -961,10 +958,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
     public boolean objectIsLoaded(String path, K key) {
         URI uri = URI.createURI(getLocalDBURL() + "/" + path + "/" + key);
         Map map = ((ResourceSetImpl) connectionProvider.getEmfResourceSet()).getURIResourceMap();
-        if (map == null) {
-            return false;
-        }
-        return map.containsKey(uri);
+        return map != null && map.containsKey(uri);
 
     }
 
@@ -1124,7 +1118,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
             }
         }
 
-        return (List<E>) results;
+        return results;
     }
 
     protected List<E> loadObjectsFromStrings(
@@ -1316,9 +1310,9 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
 //				System.out.println("HI");
 //			}
             if (checkForConflicts) {
-                checkForConflicts((E) entity, entity.getDBCollectionKey());
+                checkForConflicts(entity, entity.getDBCollectionKey());
             }
-            return (E) entity;
+            return entity;
         }
         return entity;
     }
@@ -1347,7 +1341,7 @@ public abstract class CouchDBDao<E extends BTSDBBaseObject, K extends Serializab
             }
             return json;
         } catch (NoDocumentException | IOException e) {
-            logger.error(e, "Failed to load json string of object with path: " + (String) key);
+            logger.error(e, "Failed to load json string of object with path: " + key);
         }
         return null;
     }

@@ -148,7 +148,7 @@ public class BTSProjectDaoImpl extends CouchDBDao<BTSProject, String> implements
     @SuppressWarnings("unchecked")
     @Override
     public BTSProject find(String key, String path) {
-        URI uri = URI.createURI(getLocalDBURL() + DaoConstants.ADMIN + key.toString());
+        URI uri = URI.createURI(getLocalDBURL() + DaoConstants.ADMIN + key);
         Resource resource = connectionProvider.getEmfResourceSet().getResource(uri, true);
         if (resource.getContents().size() > 0) {
             Object o = resource.getContents().get(0);

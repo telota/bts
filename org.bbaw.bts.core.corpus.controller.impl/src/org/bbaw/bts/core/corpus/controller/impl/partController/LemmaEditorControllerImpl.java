@@ -16,7 +16,6 @@ import org.bbaw.bts.core.services.BTSCommentService;
 import org.bbaw.bts.core.services.corpus.BTSLemmaEntryService;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSSenctence;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSText;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextContent;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -47,9 +46,7 @@ public class LemmaEditorControllerImpl implements LemmaEditorController {
         List<BTSObject> children = new Vector<>();
         List<BTSLemmaEntry> obs = lemmaService.query(query,
                 BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-        for (BTSObject o : obs) {
-            children.add(o);
-        }
+        children.addAll(obs);
         children.addAll(commentService.query(query, BTSConstants.OBJECT_STATE_ACTIVE, true, monitor));
         return children;
     }

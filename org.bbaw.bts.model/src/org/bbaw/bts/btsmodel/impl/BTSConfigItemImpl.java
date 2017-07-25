@@ -32,11 +32,7 @@ package org.bbaw.bts.btsmodel.impl;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.bbaw.bts.btsmodel.BTSConfigItem;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
@@ -702,9 +698,7 @@ public class BTSConfigItemImpl extends BTSConfigImpl implements BTSConfigItem {
                 String refs = owner.split(BTSConstants.OWNER_REFERENCED_TYPES_SEPERATOR)[1];
                 if (refs.contains(BTSConstants.OWNER_REFERENCED_TYPES_LIST_SEPERATOR)) {
                     String[] references = refs.split(BTSConstants.OWNER_REFERENCED_TYPES_LIST_SEPERATOR);
-                    for (String r : references) {
-                        refList.add(r);
-                    }
+                    Collections.addAll(refList, references);
                 } else {
                     refList.add(refs);
                 }
@@ -872,10 +866,10 @@ public class BTSConfigItemImpl extends BTSConfigImpl implements BTSConfigItem {
                 setValue(VALUE_EDEFAULT);
                 return;
             case BtsmodelPackage.BTS_CONFIG_ITEM__LABEL:
-                setLabel((BTSTranslations) null);
+                setLabel(null);
                 return;
             case BtsmodelPackage.BTS_CONFIG_ITEM__DESCRIPTION:
-                setDescription((BTSTranslations) null);
+                setDescription(null);
                 return;
             case BtsmodelPackage.BTS_CONFIG_ITEM__SORT_KEY:
                 setSortKey(SORT_KEY_EDEFAULT);
@@ -884,7 +878,7 @@ public class BTSConfigItemImpl extends BTSConfigImpl implements BTSConfigItem {
                 setIgnore(IGNORE_EDEFAULT);
                 return;
             case BtsmodelPackage.BTS_CONFIG_ITEM__PASSPORT_EDITOR_CONFIG:
-                setPassportEditorConfig((BTSPassportEditorConfig) null);
+                setPassportEditorConfig(null);
                 return;
             case BtsmodelPackage.BTS_CONFIG_ITEM__TYPE:
                 setType(TYPE_EDEFAULT);

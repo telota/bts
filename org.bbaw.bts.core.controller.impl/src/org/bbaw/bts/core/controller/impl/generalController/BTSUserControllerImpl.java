@@ -1,6 +1,5 @@
 package org.bbaw.bts.core.controller.impl.generalController;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Vector;
 
@@ -19,7 +18,6 @@ import org.bbaw.bts.core.services.BTSUserGroupService;
 import org.bbaw.bts.core.services.BTSUserService;
 import org.bbaw.bts.db.DBManager;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.UISynchronize;

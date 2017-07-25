@@ -7,7 +7,6 @@ import java.util.Vector;
 
 import javax.inject.Inject;
 
-import org.bbaw.bts.btsmodel.BTSUser;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.btsmodel.UserActionCounter;
 import org.bbaw.bts.commons.BTSConstants;

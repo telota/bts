@@ -1,10 +1,6 @@
 package org.bbaw.bts.corpus.text.egy.ui.custom;
 
-import org.bbaw.bts.corpus.text.egy.egyDsl.Marker;
-import org.bbaw.bts.corpus.text.egy.egyDsl.SentenceItem;
-import org.bbaw.bts.corpus.text.egy.egyDsl.Word;
 import org.bbaw.bts.ui.commons.corpus.util.BTSEGYUIConstants;
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -61,7 +57,7 @@ public class BTSEObjectHover extends DefaultEObjectHoverProvider {
             IEclipsePreferences instanceNode = InstanceScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus.egy");
             showHover = instanceNode.getBoolean(BTSEGYUIConstants.PREF_TRANSLITERATION_EDITOR_ACTIVATE_HOVER_INFO,
                     defaultNode.getBoolean(BTSEGYUIConstants.PREF_TRANSLITERATION_EDITOR_ACTIVATE_HOVER_INFO, true));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (showHover) {
             return super.getHoverInfo(object, viewer, region);

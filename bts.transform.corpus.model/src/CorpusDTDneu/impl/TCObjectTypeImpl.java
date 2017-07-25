@@ -718,7 +718,7 @@ public class TCObjectTypeImpl extends MinimalEObjectImpl.Container implements TC
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.TC_OBJECT_TYPE__TC_PASSPORT:
-                setTCPassport((TCPassportType) null);
+                setTCPassport(null);
                 return;
             case CorpusDTDneuPackage.TC_OBJECT_TYPE__TC_PICTURE:
                 getTCPicture().clear();

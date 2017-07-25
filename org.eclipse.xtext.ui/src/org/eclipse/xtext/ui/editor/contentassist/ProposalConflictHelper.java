@@ -28,10 +28,8 @@ public abstract class ProposalConflictHelper implements IProposalConflictHelper 
         INode lastCompleteNode = context.getLastCompleteNode();
         Region replaceRegion = context.getReplaceRegion();
         int nodeEnd = lastCompleteNode.getOffset() + lastCompleteNode.getLength();
-        if (nodeEnd < replaceRegion.getOffset())
-            return false;
+        return nodeEnd >= replaceRegion.getOffset() && existsConflict(lastCompleteNode, replaceRegion.getOffset(), proposal, context);
 
-        return existsConflict(lastCompleteNode, replaceRegion.getOffset(), proposal, context);
     }
 
     /**
@@ -50,9 +48,7 @@ public abstract class ProposalConflictHelper implements IProposalConflictHelper 
     public boolean existsConflict(INode lastCompleteNode, int offset, String proposal, ContentAssistContext context) {
         String lastCompleteText = lastCompleteNode.getText();
         lastCompleteText = lastCompleteText.substring(0, offset - lastCompleteNode.getTotalOffset());
-        if (Strings.isEmpty(lastCompleteText))
-            return false;
-        return existsConflict(lastCompleteText, proposal, context);
+        return !Strings.isEmpty(lastCompleteText) && existsConflict(lastCompleteText, proposal, context);
     }
 
 }

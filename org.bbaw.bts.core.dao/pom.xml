@@ -7,8 +7,7 @@
     <artifactId>aaew-bts</artifactId>
     <version>3.1.0</version>
   </parent>
-  <groupId>org.bbaw.bts</groupId>
-  <artifactId>org.bbaw.bts.core.dao</artifactId>
+    <artifactId>org.bbaw.bts.core.dao</artifactId>
   <version>3.1.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

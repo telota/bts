@@ -359,7 +359,7 @@ public class TCHeaderTypeImpl extends MinimalEObjectImpl.Container implements TC
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.TC_HEADER_TYPE__DATE:
-                setDate((DateType) null);
+                setDate(null);
                 return;
             case CorpusDTDneuPackage.TC_HEADER_TYPE__AUTHOR:
                 setAuthor(AUTHOR_EDEFAULT);

@@ -186,7 +186,7 @@ public class BTSTextImpl extends BTSCorpusObjectImpl implements BTSText {
     public void eUnset(int featureID) {
         switch (featureID) {
             case BtsCorpusModelPackage.BTS_TEXT__TEXT_CONTENT:
-                setTextContent((BTSTextContent) null);
+                setTextContent(null);
                 return;
         }
         super.eUnset(featureID);

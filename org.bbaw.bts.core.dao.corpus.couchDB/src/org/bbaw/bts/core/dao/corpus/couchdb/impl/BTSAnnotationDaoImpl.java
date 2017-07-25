@@ -6,9 +6,7 @@ import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.dao.corpus.BTSAnnotationDao;
 import org.bbaw.bts.core.dao.util.DaoConstants;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
-import org.bbaw.bts.dao.couchDB.CouchDBDao;
 
 public class BTSAnnotationDaoImpl extends AbstractCorpusObjectDaoImpl<BTSAnnotation, String> implements BTSAnnotationDao {
 

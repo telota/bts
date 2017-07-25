@@ -33,10 +33,7 @@ public class OpenLemmaEntryLemmatizerHandler {
     @CanExecute
     public boolean canExecute(@Active MPart activePart) {
         Object o = activePart.getObject();
-        if (o instanceof EgyLemmatizerPart) {
-            return ((EgyLemmatizerPart) o).getSelectedLemmaProposal() != null;
-        }
-        return false;
+        return o instanceof EgyLemmatizerPart && ((EgyLemmatizerPart) o).getSelectedLemmaProposal() != null;
     }
 
 }

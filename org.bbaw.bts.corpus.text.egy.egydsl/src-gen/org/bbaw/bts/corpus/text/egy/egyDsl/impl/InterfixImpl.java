@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InterfixImpl extends WordMiddleImpl implements Interfix {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected InterfixImpl() {
-        super();
-    }
+public class InterfixImpl extends WordMiddleImpl implements Interfix
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected InterfixImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.INTERFIX;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.INTERFIX;
+  }
 
 } //InterfixImpl

@@ -44,9 +44,6 @@ public class RestoreDeletedHandler {
     public boolean canExecute(
             @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSDBBaseObject selection,
             @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE) Boolean mayDelete) {
-        if (mayDelete != null && mayDelete.booleanValue()) {
-            return selection != null;
-        }
-        return false;
+        return mayDelete != null && mayDelete.booleanValue() && selection != null;
     }
 }

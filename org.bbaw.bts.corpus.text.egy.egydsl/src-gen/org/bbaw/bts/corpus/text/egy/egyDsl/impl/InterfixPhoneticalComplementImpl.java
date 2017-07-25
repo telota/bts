@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InterfixPhoneticalComplementImpl extends InterfixImpl implements InterfixPhoneticalComplement {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected InterfixPhoneticalComplementImpl() {
-        super();
-    }
+public class InterfixPhoneticalComplementImpl extends InterfixImpl implements InterfixPhoneticalComplement
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected InterfixPhoneticalComplementImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.INTERFIX_PHONETICAL_COMPLEMENT;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.INTERFIX_PHONETICAL_COMPLEMENT;
+  }
 
 } //InterfixPhoneticalComplementImpl

@@ -1,24 +1,11 @@
 package org.bbaw.bts.ui.corpus.handlers;
 
 import java.util.List;
-import java.util.Vector;
 
 import javax.inject.Named;
 
-import org.bbaw.bts.btsmodel.BTSConfigItem;
-import org.bbaw.bts.btsmodel.BTSProject;
-import org.bbaw.bts.btsmodel.BTSUser;
-import org.bbaw.bts.commons.BTSConstants;
-import org.bbaw.bts.core.commons.BTSCoreConstants;
-import org.bbaw.bts.core.controller.generalController.BTSConfigurationController;
-import org.bbaw.bts.ui.commons.filter.CreatorViewerFilter;
-import org.bbaw.bts.ui.commons.filter.ProjectPrefixViewerFilter;
-import org.bbaw.bts.ui.commons.filter.ReviewStatusViewerFilter;
-import org.bbaw.bts.ui.commons.filter.UpdaterViewerFilter;
-import org.bbaw.bts.ui.commons.filter.VisibilityViewerFilter;
 import org.bbaw.bts.ui.commons.navigator.StructuredViewerProvider;
 import org.bbaw.bts.ui.corpus.parts.corpusNavigator.CorpusNavigatorActiveTextCorporaViewerFilter;
-import org.bbaw.bts.ui.main.dialogs.ObjectByListEntrySelectionFilterDialog;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.State;
 import org.eclipse.e4.core.commands.ECommandService;
@@ -31,7 +18,6 @@ import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.swt.widgets.Shell;
 
 public class NavigatorParametrizedFilterHandler {
 
@@ -48,12 +34,11 @@ public class NavigatorParametrizedFilterHandler {
         State state = command.getState(param);
         if (state == null) {
             state = new State();
-            state.setValue(new Boolean(false));
+            state.setValue(Boolean.FALSE);
             command.addState(param, state);
         }
-        Boolean checked = (Boolean) state.getValue();
-        checked = !checked;
-        state.setValue(new Boolean(checked));
+        Boolean checked = !(Boolean)state.getValue();
+        state.setValue(checked);
 
         filter = null;
         isContained = false;
@@ -90,9 +75,9 @@ public class NavigatorParametrizedFilterHandler {
 
         if (filter instanceof ViewerFilter) {
             if (!checked) {
-                viewer.removeFilter((ViewerFilter) filter);
+                viewer.removeFilter(filter);
             } else if (!isContained) {
-                viewer.addFilter((ViewerFilter) filter);
+                viewer.addFilter(filter);
             }
             viewer.refresh();
         }
@@ -127,7 +112,7 @@ public class NavigatorParametrizedFilterHandler {
         ViewerFilter[] filters = viewer.getFilters();
         for (ViewerFilter f : filters) {
             if (clazz.isInstance(f)) {
-                localfilter = (ViewerFilter) f;
+                localfilter = f;
             }
         }
         return localfilter;

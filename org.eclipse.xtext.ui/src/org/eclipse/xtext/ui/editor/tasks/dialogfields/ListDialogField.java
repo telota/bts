@@ -637,8 +637,7 @@ public class ListDialogField extends DialogField {
             // filter duplicated
             ArrayList elementsToAdd = new ArrayList(nElements);
 
-            for (int i = 0; i < nElements; i++) {
-                Object elem = elements.get(i);
+            for (Object elem : elements) {
                 if (!fElements.contains(elem)) {
                     elementsToAdd.add(elem);
                 }
@@ -776,8 +775,7 @@ public class ListDialogField extends DialogField {
         int nElements = elements.size();
         List res = new ArrayList(nElements);
         Object floating = null;
-        for (int i = 0; i < nElements; i++) {
-            Object curr = elements.get(i);
+        for (Object curr : elements) {
             if (move.contains(curr)) {
                 res.add(curr);
             } else {
@@ -1006,8 +1004,8 @@ public class ListDialogField extends DialogField {
 
             int width = 0;
             int size = columns.size();
-            for (int i = 0; i < size; ++i) {
-                ColumnLayoutData layoutData = (ColumnLayoutData) columns.get(i);
+            for (Object column : columns) {
+                ColumnLayoutData layoutData = (ColumnLayoutData) column;
                 if (layoutData instanceof ColumnPixelData) {
                     ColumnPixelData col = (ColumnPixelData) layoutData;
                     width += col.width;

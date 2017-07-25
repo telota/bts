@@ -358,7 +358,7 @@ public class CorpusNavigatorControllerImpl
         } else {
             try {
                 o = wlistService.find(id, monitor);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         }
@@ -413,9 +413,7 @@ public class CorpusNavigatorControllerImpl
         List<BTSTextCorpus> list = textCorpusService
                 .list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
         List<BTSCorpusObject> result = new Vector<>(list.size());
-        for (BTSTextCorpus t : list) {
-            result.add(t);
-        }
+        result.addAll(list);
         return result;
     }
 

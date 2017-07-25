@@ -21,9 +21,7 @@ import static java.lang.String.format;
 import java.io.Closeable;
 import java.io.File;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -156,14 +154,10 @@ final class CouchDbUtil {
     public static String readFile(String path) {
         InputStream instream = CouchDbUtil.class.getResourceAsStream(path);
         StringBuilder content = new StringBuilder();
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(instream);
+        try (Scanner scanner = new Scanner(instream)) {
             while (scanner.hasNextLine()) {
                 content.append(scanner.nextLine() + LINE_SEP);
             }
-        } finally {
-            scanner.close();
         }
         return content.toString();
     }
@@ -187,7 +181,7 @@ final class CouchDbUtil {
     public static void close(HttpResponse response) {
         try {
             close(response.getEntity().getContent());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -199,7 +193,7 @@ final class CouchDbUtil {
     public static void close(Closeable c) {
         try {
             c.close();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 }

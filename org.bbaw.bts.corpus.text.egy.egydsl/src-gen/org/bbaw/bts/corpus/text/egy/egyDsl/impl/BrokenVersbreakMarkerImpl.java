@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class BrokenVersbreakMarkerImpl extends VersMarkerImpl implements BrokenVersbreakMarker {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected BrokenVersbreakMarkerImpl() {
-        super();
-    }
+public class BrokenVersbreakMarkerImpl extends VersMarkerImpl implements BrokenVersbreakMarker
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected BrokenVersbreakMarkerImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.BROKEN_VERSBREAK_MARKER;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.BROKEN_VERSBREAK_MARKER;
+  }
 
 } //BrokenVersbreakMarkerImpl

@@ -12,8 +12,6 @@ import org.bbaw.bts.core.commons.exceptions.BTSDBException;
 import org.bbaw.bts.core.remote.dao.RemoteDBConnectionProvider;
 import org.bbaw.bts.core.remote.dao.util.RemoteDaoConstants;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.osgi.service.prefs.Preferences;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.emf.common.util.URI;
@@ -72,7 +70,7 @@ public class RemoteDBConnectionProviderImpl implements RemoteDBConnectionProvide
             try {
                 user = auth.get("username", null);
                 password = auth.get("password", null);
-            } catch (StorageException e) {
+            } catch (StorageException ignored) {
             }
         }
         if (dbClient == null) {

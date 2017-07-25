@@ -135,10 +135,8 @@ public class IssueUtil {
     public boolean refersToSameIssue(IMarker marker, Annotation annotation) {
         URI markerURI = getUriToProblem(marker);
         String markerIssue = getCode(marker);
-        if (markerURI == null || markerIssue == null)
-            return false;
+        return markerURI != null && markerIssue != null && markerURI.equals(getUriToProblem(annotation)) && markerIssue.equals(getCode(annotation));
 
-        return markerURI.equals(getUriToProblem(annotation)) && markerIssue.equals(getCode(annotation));
     }
 
 }

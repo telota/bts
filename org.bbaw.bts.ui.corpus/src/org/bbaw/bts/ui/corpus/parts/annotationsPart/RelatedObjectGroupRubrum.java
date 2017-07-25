@@ -2,7 +2,6 @@ package org.bbaw.bts.ui.corpus.parts.annotationsPart;
 
 import javax.inject.Inject;
 
-import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
 import org.bbaw.bts.ui.corpus.dialogs.PassportEditorDialog;
@@ -13,7 +12,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -57,7 +55,7 @@ public class RelatedObjectGroupRubrum extends RelatedObjectGroup {
 
     protected void editObject() {
         IEclipseContext child = context.createChild();
-        child.set(BTSObject.class, (BTSObject) getObject());
+        child.set(BTSObject.class, getObject());
         child.set(Shell.class, new Shell());
 
         PassportEditorDialog dialog = ContextInjectionFactory.make(
@@ -65,7 +63,7 @@ public class RelatedObjectGroupRubrum extends RelatedObjectGroup {
         dialog.setEditable(mayEdit());
 
         if (dialog.open() == Window.OK) {
-            refreschContent((BTSObject) getObject());
+            refreschContent(getObject());
         }
 
     }
@@ -80,7 +78,7 @@ public class RelatedObjectGroupRubrum extends RelatedObjectGroup {
     protected void fillContentComposite(Composite composite) {
         setExpandBarIcon(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_RUBRUM));
         setExpandBarBackground(BTSUIConstants.COLOR_WIHTE);
-        refreschContent((BTSObject) getObject());
+        refreschContent(getObject());
     }
 
 }

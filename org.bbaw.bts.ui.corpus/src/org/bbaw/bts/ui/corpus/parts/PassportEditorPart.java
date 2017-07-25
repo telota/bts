@@ -18,11 +18,7 @@ import org.bbaw.bts.btsmodel.BTSConfigItem;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSRevision;
-import org.bbaw.bts.btsmodel.BTSUser;
-import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.btsmodel.BtsmodelPackage;
-import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
-import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
 import org.bbaw.bts.commons.BTSPluginIDs;
 import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.controller.generalController.BTSConfigurationController;
@@ -42,19 +38,13 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSTCObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSText;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextCorpus;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
-import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage;
 import org.bbaw.bts.ui.commons.controldecoration.BackgroundControlDecorationSupport;
 import org.bbaw.bts.ui.commons.converter.BTSConfigItemToStringConverter;
-import org.bbaw.bts.ui.commons.converter.BTSProjectToStringConverter;
 import org.bbaw.bts.ui.commons.converter.BTSStringToConfigItemConverter;
-import org.bbaw.bts.ui.commons.converter.BTSStringToProjectConverter;
-import org.bbaw.bts.ui.commons.corpus.converter.BTSStringToTextCorpusConverter;
-import org.bbaw.bts.ui.commons.corpus.converter.BTSTextCorpusToStringConverter;
 import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
 import org.bbaw.bts.ui.commons.validator.StringNotEmptyValidator;
 import org.bbaw.bts.ui.corpus.parts.passportEditor.PassportEntryEditorComposite;
 import org.bbaw.bts.ui.corpus.parts.passportEditor.PassportEntryGroupEditor;
-import org.bbaw.bts.ui.corpus.parts.passportEditor.PassportEntryItemEditor;
 import org.bbaw.bts.ui.main.widgets.CompoundIdentifiersEditorComposite;
 import org.bbaw.bts.ui.main.widgets.CompoundRelationsEditorComposite;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
@@ -62,7 +52,6 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -227,7 +216,7 @@ public class PassportEditorPart {
     @PostConstruct
     public void postConstruct(Composite parent) {
         this.parent = parent;
-        if (userMayEdit == null) userMayEdit = new Boolean(false);
+        if (userMayEdit == null) userMayEdit = Boolean.FALSE;
         GridLayout gl_parent = new GridLayout(1, false);
 
         gl_parent.horizontalSpacing = 1;
@@ -376,7 +365,7 @@ public class PassportEditorPart {
             composite.setLayout(fillLayout);
             tabItem.setControl(composite);
         }
-        final ScrolledComposite scrollComposite = (ScrolledComposite) composite;
+        final ScrolledComposite scrollComposite = composite;
         final Composite mainComp = new Composite(scrollComposite, SWT.NONE);
         scrollComposite.setContent(mainComp);
         scrollComposite.setExpandVertical(true);
@@ -424,7 +413,7 @@ public class PassportEditorPart {
             composite.setLayout(fillLayout);
             tabItem.setControl(composite);
         }
-        final ScrolledComposite scrollComposite = (ScrolledComposite) composite;
+        final ScrolledComposite scrollComposite = composite;
         final Composite mainComp = new Composite(scrollComposite, SWT.NONE);
         scrollComposite.setContent(mainComp);
         scrollComposite.setExpandVertical(true);
@@ -800,7 +789,7 @@ public class PassportEditorPart {
                         TableItem item1 = new TableItem(historyTable_Admin,
                                 SWT.NONE);
                         item1.setText(new String[]{
-                                new Integer(rev.getRef()).toString(),
+                                Integer.toString(rev.getRef()),
                                 userController.getUserDisplayName(rev
                                         .getUserId()),
                                 configurationController
@@ -869,8 +858,7 @@ public class PassportEditorPart {
                 toDispose.add(c);
             }
         }
-        for (int i = 0; i < toDispose.size(); i++) {
-            CTabItem c = toDispose.get(i);
+        for (CTabItem c : toDispose) {
             c.dispose();
         }
         createGenericTabItems(tabFolder);
@@ -925,7 +913,7 @@ public class PassportEditorPart {
                                     boolean isVisible = true;
                                     try {
                                         isVisible = partService.isPartVisible(part);
-                                    } catch (Exception e) {
+                                    } catch (Exception ignored) {
                                     }
                                     if (isVisible) {
                                         loadInput(corpusObject);

@@ -62,7 +62,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 import org.eclipse.xtext.ui.XtextUIMessages;
 import org.eclipse.xtext.ui.editor.quickfix.QuickAssistInvocationContext;
@@ -324,8 +323,8 @@ public class AnnotationWithQuickFixesHover extends AbstractProblemHover {
 
         protected void disposeDeferredCreatedContent() {
             Control[] children = fParent.getChildren();
-            for (int i = 0; i < children.length; i++) {
-                children[i].dispose();
+            for (Control aChildren : children) {
+                aChildren.dispose();
             }
             ToolBarManager toolBarManager = getToolBarManager();
             if (toolBarManager != null)
@@ -397,8 +396,8 @@ public class AnnotationWithQuickFixesHover extends AbstractProblemHover {
 
             if (control instanceof Composite) {
                 Control[] children = ((Composite) control).getChildren();
-                for (int i = 0; i < children.length; i++) {
-                    setColorAndFont(children[i], foreground, background, font);
+                for (Control aChildren : children) {
+                    setColorAndFont(aChildren, foreground, background, font);
                 }
             }
         }
@@ -478,8 +477,8 @@ public class AnnotationWithQuickFixesHover extends AbstractProblemHover {
             composite.setLayout(layout);
 
             List<Link> list = new ArrayList<>();
-            for (int i = 0; i < proposals.length; i++) {
-                list.add(createCompletionProposalLink(composite, proposals[i], 1));// Original link for single fix, hence pass 1 for count
+            for (ICompletionProposal proposal : proposals) {
+                list.add(createCompletionProposalLink(composite, proposal, 1));// Original link for single fix, hence pass 1 for count
 
                 // DIFF: outcommented, no support of FixCorrectionProposal and ICleanUp (5)
 //				if (proposals[i] instanceof FixCorrectionProposal) {
@@ -599,7 +598,7 @@ public class AnnotationWithQuickFixesHover extends AbstractProblemHover {
             String linkText;
             if (isMultiFix) {
                 // DIFF: XtextUIMessages (4)
-                linkText = MessageFormat.format(XtextUIMessages.AnnotationWithQuickFixesHover_message_multipleQuickFix, new Object[]{String.valueOf(count)});
+                linkText = MessageFormat.format(XtextUIMessages.AnnotationWithQuickFixesHover_message_multipleQuickFix, String.valueOf(count));
             } else {
                 linkText = proposal.getDisplayString();
             }

@@ -125,12 +125,12 @@ public class EditorDocumentUndoChange extends Change {
         }.syncExec();
     }
 
-    protected void commit(IDocument document, IProgressMonitor pm) throws CoreException {
+    protected void commit(IDocument document, IProgressMonitor pm) {
         if (doSave)
             editor.doSave(pm);
     }
 
-    protected void releaseDocument(IDocument document, IProgressMonitor pm) throws CoreException {
+    protected void releaseDocument(IDocument document, IProgressMonitor pm) {
         document = null;
         editor = null;
     }

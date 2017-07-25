@@ -163,7 +163,7 @@ public class PassportDataItemImpl extends MinimalEObjectImpl.Container implement
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.PASSPORT_DATA_ITEM__PASSPORT_DATA_ITEM:
-                setPassportDataItem((PassportDataItemType) null);
+                setPassportDataItem(null);
                 return;
         }
         super.eUnset(featureID);

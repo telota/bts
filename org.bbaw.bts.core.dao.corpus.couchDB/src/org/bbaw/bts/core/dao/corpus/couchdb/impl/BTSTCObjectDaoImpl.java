@@ -4,10 +4,8 @@ import java.util.List;
 
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.dao.corpus.BTSTCObjectDao;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTCObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
-import org.bbaw.bts.dao.couchDB.CouchDBDao;
 
 public class BTSTCObjectDaoImpl extends AbstractCorpusObjectDaoImpl<BTSTCObject, String> implements BTSTCObjectDao {
 

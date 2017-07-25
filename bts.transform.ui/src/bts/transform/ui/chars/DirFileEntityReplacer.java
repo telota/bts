@@ -1,14 +1,13 @@
 package bts.transform.ui.chars;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
 public class DirFileEntityReplacer {
     private static final String DIR = "D:/AAEW/transform5/corpus";
 
-    public static void main(String... aArgs) throws IOException {
+    public static void main(String... aArgs) {
 
 
 //		// treat as a small file

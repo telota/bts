@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
-import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.commons.exceptions.BTSRemoteDBException;
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
@@ -404,10 +403,7 @@ public abstract class RemoteCouchDBDao<E extends BTSDBBaseObject, K extends Seri
     public boolean objectIsLoaded(String dbPath, String objectId) {
         URI uri = URI.createURI(getRemoteDBURL() + "/" + dbPath + "/" + objectId);
         Map map = ((ResourceSetImpl) connectionProvider.getEmfResourceSet()).getURIResourceMap();
-        if (map == null) {
-            return false;
-        }
-        return map.containsKey(uri);
+        return map != null && map.containsKey(uri);
 
     }
 

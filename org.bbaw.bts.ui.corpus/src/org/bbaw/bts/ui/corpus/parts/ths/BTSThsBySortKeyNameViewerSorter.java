@@ -2,7 +2,6 @@ package org.bbaw.bts.ui.corpus.parts.ths;
 
 import javax.inject.Inject;
 
-import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
 import org.bbaw.bts.core.commons.corpus.BTSCorpusConstants;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;

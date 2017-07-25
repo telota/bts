@@ -267,7 +267,7 @@ public abstract class BTSReferencableItemImpl extends BTSObjectImpl implements B
                 setComment(COMMENT_EDEFAULT);
                 return;
             case BtsmodelPackage.BTS_REFERENCABLE_ITEM__PARENT:
-                setParent((BTSObject) null);
+                setParent(null);
                 return;
             case BtsmodelPackage.BTS_REFERENCABLE_ITEM__PARENT_ID:
                 setParentId(PARENT_ID_EDEFAULT);

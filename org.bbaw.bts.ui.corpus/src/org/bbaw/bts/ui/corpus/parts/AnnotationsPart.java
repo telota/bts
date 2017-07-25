@@ -240,7 +240,7 @@ public class AnnotationsPart implements EventHandler {
             BTSConfigItem typeConf = null;
             try {
                 typeConf = annotationPartController.getAnnoTypesConfigItem();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             if (typeConf != null && !typeConf.getChildren().isEmpty()) {
                 // initialize submenu for annotation types
@@ -257,7 +257,7 @@ public class AnnotationsPart implements EventHandler {
                         BTSConfigItem subtypeConf = null;
                         try {
                             subtypeConf = annotationPartController.getAnnoSubtypesConfigItem(confItem);
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
                         }
                         List<BTSConfigItem> subTypeConfItems = new Vector<>();
                         if (subtypeConf != null) {
@@ -279,7 +279,7 @@ public class AnnotationsPart implements EventHandler {
                                 menuItemSubType.setCommand(menuFilterCommand);
                                 menuItemSubType.setLabel(subTypeConfItem.getLabel().getTranslation(lang));
                                 ((MMenu) menuItemType).getChildren().add(menuItemSubType);
-                                filters.put(key, ((MHandledMenuItem) menuItemSubType).isSelected());
+                                filters.put(key, menuItemSubType.isSelected());
                             }
                         } else { // create checkable menu entry for type without subtypes
                             String key = CorpusUtils.getTypeIdentifier(BTSConstants.ANNOTATION, confItem, null);
@@ -357,7 +357,7 @@ public class AnnotationsPart implements EventHandler {
         composite.layout();
         scrollComposite.setMinSize(composite.computeSize(r.width,
                 SWT.DEFAULT));
-        parentObject = (BTSCorpusObject) selection;
+        parentObject = selection;
 
     }
 
@@ -384,7 +384,7 @@ public class AnnotationsPart implements EventHandler {
 
                             try {
                                 part.setLabel(event.getObject().getName());
-                            } catch (Exception e) {
+                            } catch (Exception ignored) {
                             }
                             composite = new Composite(scrollComposite, SWT.None);
                             composite.setBackground(SWTResourceManager
@@ -417,7 +417,7 @@ public class AnnotationsPart implements EventHandler {
                                     part.setLabel(part.getLabel() + "(" + event.getRelatingObjects().size() + ")? ");
                                     part.setTooltip("Not all related objects (annotations, comments etc) were loaded\n"
                                             + " because there are " + event.getRelatingObjects().size() + " which is to many for this view.");
-                                } catch (Exception e) {
+                                } catch (Exception ignored) {
                                 }
                             }
                             Rectangle r = scrollComposite.getClientArea();
@@ -438,11 +438,11 @@ public class AnnotationsPart implements EventHandler {
                                                       Composite composite2) {
         RelatedObjectGroup roGroup = null;
         IEclipseContext child = context.createChild("relatedObject:"
-                + ((BTSObject) o).get_id());
+                + o.get_id());
 
         child.set(Composite.class, composite);
         child.set(AnnotationsPart.class, this);
-        child.set(BTSObject.class, (BTSObject) o);
+        child.set(BTSObject.class, o);
         if (o instanceof BTSAnnotation) {
             if (BTSConstants.ANNOTATION_RUBRUM.equalsIgnoreCase(o.getType())) {
                 roGroup = ContextInjectionFactory
@@ -661,11 +661,11 @@ public class AnnotationsPart implements EventHandler {
                 if (g != null) {
                     groups.add(g);
                 } else // group not found because was not loaded earlier
-                    if (isRelatedObjVisible((BTSObject) o)) {
+                    if (isRelatedObjVisible(o)) {
                         RelatedObjectGroup roGroup = makeRelatedObjectGroup(
-                                (BTSObject) o, composite);
+                                o, composite);
                         if (roGroup != null) {
-                            objectWidgetMap.put((BTSObject) o, roGroup);
+                            objectWidgetMap.put(o, roGroup);
                             groups.add(roGroup);
                             resizeRequired = true;
                         }

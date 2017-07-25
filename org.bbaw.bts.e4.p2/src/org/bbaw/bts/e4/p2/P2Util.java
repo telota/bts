@@ -21,7 +21,7 @@ public class P2Util {
 
 //	private static Logger LOG = Logger.getLogger(P2Util.class);
 
-    public static IStatus checkForUpdates(IProvisioningAgent agent, IProgressMonitor monitor) throws Exception {
+    public static IStatus checkForUpdates(IProvisioningAgent agent, IProgressMonitor monitor) {
 
         try {
             addUpdateSite(agent);
@@ -56,10 +56,6 @@ public class P2Util {
 //			LOG.error(ex);
             return null;
 
-        } finally {
-            // if (useProxy) {
-            // proxySettings.resetProxy();
-            // }
         }
     }
 

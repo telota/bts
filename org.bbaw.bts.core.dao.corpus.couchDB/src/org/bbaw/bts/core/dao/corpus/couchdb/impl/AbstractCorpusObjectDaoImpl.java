@@ -14,7 +14,6 @@ import org.bbaw.bts.btsmodel.BTSTranslation;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.core.commons.exceptions.BTSDBException;
 import org.bbaw.bts.core.dao.GenericDao;
-import org.bbaw.bts.core.dao.util.DaoConstants;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
@@ -25,7 +24,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHitField;
 
 public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K extends Serializable>
         extends CouchDBDao<E, K> implements GenericDao<E, K> {
@@ -134,7 +132,7 @@ public abstract class AbstractCorpusObjectDaoImpl<E extends BTSCorpusObject, K e
         if (sk != null) {
             try {
                 entity.setSortKey(new Integer(sk));
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
 

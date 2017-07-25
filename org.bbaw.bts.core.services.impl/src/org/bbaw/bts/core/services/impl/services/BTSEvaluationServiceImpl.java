@@ -37,7 +37,6 @@ import org.bbaw.bts.core.commons.exceptions.BTSLockingException;
 import org.bbaw.bts.core.dao.BTSUserDao;
 import org.bbaw.bts.core.dao.DBLeaseDao;
 import org.bbaw.bts.core.dao.GeneralPurposeDao;
-import org.bbaw.bts.core.dao.GenericDao;
 import org.bbaw.bts.core.remote.dao.RemoteDBLeaseDao;
 import org.bbaw.bts.core.remote.dao.RemoteDBManager;
 import org.bbaw.bts.core.services.BTSEvaluationService;
@@ -182,7 +181,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
                 lock_ttl = BTSConstants.DEFAULT_LOCK_TTL;
             } else {
                 try {
-                    lock_ttl = new Integer(lock_ttl_string).intValue();
+                    lock_ttl = new Integer(lock_ttl_string);
                 } catch (NumberFormatException e) {
                     lock_ttl = BTSConstants.DEFAULT_LOCK_TTL;
                 }
@@ -589,7 +588,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
                         BTSConstants.DEFAULT_NTP_SERVERS);
         logger.info("NTP servers: " + servers);
         if (servers == null) {
-            return new Long(ntp).toString();
+            return Long.toString(ntp);
         }
         String[] serverArray = servers.split(BTSCoreConstants.SPLIT_PATTERN);
         NTPUDPClient client = new NTPUDPClient();
@@ -616,7 +615,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
         client.close();
 
         if (info == null) {
-            return new Long(ntp).toString();
+            return Long.toString(ntp);
         }
         NtpV3Packet message = info.getMessage();
 
@@ -640,7 +639,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
         long diff = ntp - system;
         logger.info("Difference NTP - system: " + diff);
 
-        return new Long(diff).toString();
+        return Long.toString(diff);
     }
 
     private Map<String, DBLease> findLockingMap() {
@@ -912,13 +911,8 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
 
         // look up in map if lock exists
         DBLease lease = lockingMap.get(((BTSIdentifiableItem) object).get_id());
-        if (lease == null) // no lease
-        {
-            return false;
-
-        } else {
-            return lockIsOwnedByAuthUser(lease);
-        }
+        // no lease
+        return lease != null && lockIsOwnedByAuthUser(lease);
     }
 
     private boolean lockIsOwnedByAuthUser(DBLease lease) {
@@ -938,10 +932,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService {
 
     @Override
     public boolean authenticatedUserMaySyncDBColl(String dbCollectionName) {
-        if (authenticatedUserIsDBAdmin(true)) {
-            return true;
-        }
-        return dbCollectionExists(dbCollectionName, true);
+        return authenticatedUserIsDBAdmin(true) || dbCollectionExists(dbCollectionName, true);
     }
 
     private boolean dbCollectionExists(String dbCollectionName, boolean dbCollectionExistsRemote) {

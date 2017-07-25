@@ -153,9 +153,7 @@ public class DefaultReferenceUpdater extends AbstractReferenceUpdater {
     protected CrossReference getCrossReference(EObject referringElement, int offset) {
         ICompositeNode node = NodeModelUtils.getNode(referringElement);
         if (node != null) {
-            Iterator<INode> iter = node.getAsTreeIterable().iterator();
-            while (iter.hasNext()) {
-                INode childNode = iter.next();
+            for (INode childNode : node.getAsTreeIterable()) {
                 if (childNode.getOffset() >= offset && childNode.getGrammarElement() instanceof CrossReference)
                     return (CrossReference) childNode.getGrammarElement();
             }

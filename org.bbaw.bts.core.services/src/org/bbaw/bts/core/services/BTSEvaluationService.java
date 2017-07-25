@@ -31,11 +31,9 @@ package org.bbaw.bts.core.services;
 
 import java.util.List;
 
-import org.bbaw.bts.btsmodel.AdministrativDataObject;
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
 import org.bbaw.bts.btsmodel.BTSUser;
-import org.eclipse.emf.common.util.EList;
 
 /**
  * The Interface BTSEvaluationService.

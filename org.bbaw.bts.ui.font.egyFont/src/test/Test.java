@@ -38,13 +38,13 @@ public class Test {
     private static void displayAllLoadedFonts(Shell shell) {
         // display all scalable fonts in the system
         FontData[] fd = shell.getDisplay().getFontList(null, true);
-        for (int i = 0; i < fd.length; i++) {
-            System.out.println(fd[i].getName());
+        for (FontData aFd1 : fd) {
+            System.out.println(aFd1.getName());
         }
         // and the non-scalable ones
         fd = shell.getDisplay().getFontList(null, false);
-        for (int i = 0; i < fd.length; i++) {
-            System.out.println(fd[i].getName());
+        for (FontData aFd : fd) {
+            System.out.println(aFd.getName());
         }
     }
 }

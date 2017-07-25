@@ -69,9 +69,7 @@ public class LightweightPosition implements Comparable<LightweightPosition> {
         LightweightPosition other = (LightweightPosition) obj;
         if (length != other.length)
             return false;
-        if (offset != other.offset)
-            return false;
-        return timestamp == other.timestamp;
+        return offset == other.offset && timestamp == other.timestamp;
     }
 
     @Override

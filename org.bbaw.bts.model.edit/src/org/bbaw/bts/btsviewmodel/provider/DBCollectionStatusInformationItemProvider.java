@@ -427,13 +427,13 @@ public class DBCollectionStatusInformationItemProvider
                 case 0:
                     return info.getDbCollectionName();
                 case 1:
-                    return new Long(info.getDbDocCount()).toString();
+                    return Long.toString(info.getDbDocCount());
                 case 2:
                     return info.getSyncStatusToRemote();
                 case 3:
                     return info.getSyncStatusFromRemote();
                 case 4:
-                    return new Long(info.getIndexDocCount()).toString();
+                    return Long.toString(info.getIndexDocCount());
                 case 5:
                     return info.getIndexStatus();
                 case 6:

@@ -11,7 +11,7 @@ public class CharTester {
 //			System.out.println(entity);
             if (entity instanceof String && p.containsKey(entity) && p.get(entity) instanceof String) {
                 String re2 = "";
-                String re = new String((String) p.get(entity));
+                String re = (String) p.get(entity);
                 String s = (String) entity;
                 if (s.equals("&delVP;")) {
                     char[] c = new char[3];

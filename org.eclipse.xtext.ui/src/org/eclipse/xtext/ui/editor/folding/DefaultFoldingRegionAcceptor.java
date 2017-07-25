@@ -43,7 +43,7 @@ public class DefaultFoldingRegionAcceptor implements IFoldingRegionAcceptor<ITex
                     significantRegion = new TextRegion(significantRegion.getOffset(), endOffset - significantRegion.getOffset());
                 }
             }
-        } catch (BadLocationException e) {
+        } catch (BadLocationException ignored) {
         }
         FoldedPosition foldingRegion = newFoldedPosition(position, significantRegion);
         if (foldingRegion != null) {

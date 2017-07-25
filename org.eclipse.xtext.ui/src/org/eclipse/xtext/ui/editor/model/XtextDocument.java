@@ -166,8 +166,8 @@ public class XtextDocument extends Document implements IXtextDocument {
 
     protected <T> void updateContentBeforeRead() {
         Object[] listeners = xtextDocumentObservers.getListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            ((IXtextDocumentContentObserver) listeners[i]).performNecessaryUpdates(stateAccess);
+        for (Object listener : listeners) {
+            ((IXtextDocumentContentObserver) listener).performNecessaryUpdates(stateAccess);
         }
     }
 
@@ -340,7 +340,7 @@ public class XtextDocument extends Document implements IXtextDocument {
                     XtextResource state = getState();
                     if (state != null)
                         state.reparse(get());
-                } catch (IOException ioe) {
+                } catch (IOException ignored) {
                 }
                 throw e;
             } finally {

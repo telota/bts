@@ -341,7 +341,7 @@ public class BTSProjectImpl extends BTSObjectImpl implements BTSProject {
                 setDescription(DESCRIPTION_EDEFAULT);
                 return;
             case BtsmodelPackage.BTS_PROJECT__DB_CONNECTION:
-                setDbConnection((BTSDBConnection) null);
+                setDbConnection(null);
                 return;
             case BtsmodelPackage.BTS_PROJECT__DB_COLLECTIONS:
                 getDbCollections().clear();

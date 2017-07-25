@@ -29,11 +29,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.xtext.resource.DescriptionUtils;
-import org.eclipse.xtext.resource.IResourceDescription;
-import org.eclipse.xtext.resource.IResourceDescriptions;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
-import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.*;
 import org.eclipse.xtext.resource.impl.ChangedResourceDescriptionDelta;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionChangeEvent;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -243,13 +239,12 @@ public class DirtyStateEditorSupport implements IXtextModelListener, IResourceDe
             normalizedURIs.add(converter.normalize(delta.getUri()));
         }
         List<Resource> resources = resourceSet.getResources();
-        for (int i = 0; i < resources.size(); i++) {
-            Resource res = resources.get(i);
+        for (Resource res : resources) {
             if (res != resource && res != null) {
                 URI uri = res.getURI();
                 try {
                     uri = converter.normalize(uri);
-                } catch (org.eclipse.xtext.resource.ClasspathUriResolutionException e) {
+                } catch (ClasspathUriResolutionException e) {
                     // ignore, since the classpath might be broken.
                 }
                 if (normalizedURIs.contains(uri))

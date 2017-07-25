@@ -9,9 +9,11 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Word Middle</b></em>'.
  * <!-- end-user-doc -->
  *
+ *
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getWordMiddle()
  * @model
  * @generated
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getWordMiddle()
  */
-public interface WordMiddle extends EObject {
+public interface WordMiddle extends EObject
+{
 } // WordMiddle

@@ -55,7 +55,7 @@ public class RelatedObjectGroupAnnotation extends RelatedObjectGroup {
 
     protected void editObject() {
         IEclipseContext child = context.createChild();
-        child.set(BTSObject.class, (BTSObject) getObject());
+        child.set(BTSObject.class, getObject());
         child.set(Shell.class, new Shell());
 
         PassportEditorDialog dialog = ContextInjectionFactory.make(
@@ -63,7 +63,7 @@ public class RelatedObjectGroupAnnotation extends RelatedObjectGroup {
         dialog.setEditable(mayEdit());
 
         if (dialog.open() == SWT.OK)
-            refreshContent((BTSObject) getObject());
+            refreshContent(getObject());
 
         child.dispose();
 
@@ -78,7 +78,7 @@ public class RelatedObjectGroupAnnotation extends RelatedObjectGroup {
 
         setExpandBarIcon(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_ANNOTATION));
         setExpandBarBackground(BTSUIConstants.COLOR_WIHTE);
-        refreshContent((BTSObject) getObject());
+        refreshContent(getObject());
     }
 
 }

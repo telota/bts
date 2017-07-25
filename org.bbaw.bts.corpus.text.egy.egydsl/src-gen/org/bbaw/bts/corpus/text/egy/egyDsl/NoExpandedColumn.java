@@ -9,9 +9,11 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>No Expanded Column</b></em>'.
  * <!-- end-user-doc -->
  *
+ *
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoExpandedColumn()
  * @model
  * @generated
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getNoExpandedColumn()
  */
-public interface NoExpandedColumn extends EObject {
+public interface NoExpandedColumn extends EObject
+{
 } // NoExpandedColumn

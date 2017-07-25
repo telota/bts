@@ -95,7 +95,7 @@ public class DBLeaseDaoImpl extends CouchDBDao<DBLease, String> implements DBLea
         DBLease found = null;
         try {
             found = dbClient.find(DBLeaseImpl.class, entity.get_id());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (found != null) {
             entity.set_rev(found.get_rev());

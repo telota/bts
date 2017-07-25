@@ -15,3781 +15,2900 @@ import org.eclipse.xtext.service.AbstractElementFinder.*;
 
 @Singleton
 public class EgyDslGrammarAccess extends AbstractGrammarElementFinder {
-
-
-    private final TextContentElements pTextContent;
-    private final TextItemElements pTextItem;
-    private final SentenceElements pSentence;
-    private final SentenceItemElements pSentenceItem;
-    private final AbstractMarkerElements pAbstractMarker;
-    private final TerminalRule tNEWLINE;
-    private final AmbivalenceElements pAmbivalence;
-    private final CaseElements pCase;
-    private final TerminalRule tCASESTRING;
-    private final SentenceItemNoAmbivalenceElements pSentenceItemNoAmbivalence;
-    private final MarkerElements pMarker;
-    private final TerminalRule tBETWEEN_HASHES;
-    private final DestructionMarkerElements pDestructionMarker;
-    private final TerminalRule tBETWEEN_MINUS;
-    private final WordElements pWord;
-    private final WordPartElements pWordPart;
-    private final WordMiddleElements pWordMiddle;
-    private final CharsElements pChars;
-    private final TerminalRule tEGYSTRING;
-    private final BracketsElements pBrackets;
-    private final OvalElements pOval;
-    private final SerechElements pSerech;
-    private final CartoucheElements pCartouche;
-    private final NoCartoucheElements pNoCartouche;
-    private final ExpandedElements pExpanded;
-    private final AncientExpandedElements pAncientExpanded;
-    private final NoExpandedElements pNoExpanded;
-    private final EmendationElements pEmendation;
-    private final NoEmendationElements pNoEmendation;
-    private final DisputableReadingElements pDisputableReading;
-    private final NoDisputableReadingElements pNoDisputableReading;
-    private final LacunaElements pLacuna;
-    private final NoLacunaElements pNoLacuna;
-    private final DeletionElements pDeletion;
-    private final NoDeletionElements pNoDeletion;
-    private final ExpandedColumnElements pExpandedColumn;
-    private final NoExpandedColumnElements pNoExpandedColumn;
-    private final RasurElements pRasur;
-    private final NoRasurElements pNoRasur;
-    private final NoAncientExpandedElements pNoAncientExpanded;
-    private final RestorationOverRasurElements pRestorationOverRasur;
-    private final NoRestorationOverRasurElements pNoRestorationOverRasur;
-    private final PartialDestructionElements pPartialDestruction;
-    private final NoPartialDestructionElements pNoPartialDestruction;
-    private final InterfixElements pInterfix;
-    private final InterfixLexicalElements pInterfixLexical;
-    private final InterfixFlexionElements pInterfixFlexion;
-    private final InterfixSuffixPronomLexicalElements pInterfixSuffixPronomLexical;
-    private final InterfixPrefixNonLexicalElements pInterfixPrefixNonLexical;
-    private final InterfixPrefixLexicalElements pInterfixPrefixLexical;
-    private final InterfixConnectionSyllabicGroupElements pInterfixConnectionSyllabicGroup;
-    private final InterfixCompoundWordsElements pInterfixCompoundWords;
-    private final InterfixPhoneticalComplementElements pInterfixPhoneticalComplement;
-    private final VersMarkerElements pVersMarker;
-    private final EmendationVersMarkerElements pEmendationVersMarker;
-    private final DisputableVersMarkerElements pDisputableVersMarker;
-    private final DeletedVersMarkerElements pDeletedVersMarker;
-    private final DestroyedVersMarkerElements pDestroyedVersMarker;
-    private final DestroyedVersFrontierMarkerElements pDestroyedVersFrontierMarker;
-    private final PartialDestroyedVersMarkerElements pPartialDestroyedVersMarker;
-    private final MissingVersMarkerElements pMissingVersMarker;
-    private final RestorationOverRasurMarkerElements pRestorationOverRasurMarker;
-    private final AncientExpandedMarkerElements pAncientExpandedMarker;
-    private final RasurMarkerElements pRasurMarker;
-    private final VersFrontierMarkerElements pVersFrontierMarker;
-    private final VersbreakMarkerElements pVersbreakMarker;
-    private final BrokenVersbreakMarkerElements pBrokenVersbreakMarker;
-    private final Grammar grammar;
-    @Inject
-    public EgyDslGrammarAccess(GrammarProvider grammarProvider) {
-        this.grammar = internalFindGrammar(grammarProvider);
-        this.pTextContent = new TextContentElements();
-        this.pTextItem = new TextItemElements();
-        this.pSentence = new SentenceElements();
-        this.pSentenceItem = new SentenceItemElements();
-        this.pAbstractMarker = new AbstractMarkerElements();
-        this.tNEWLINE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NEWLINE");
-        this.pAmbivalence = new AmbivalenceElements();
-        this.pCase = new CaseElements();
-        this.tCASESTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.CASESTRING");
-        this.pSentenceItemNoAmbivalence = new SentenceItemNoAmbivalenceElements();
-        this.pMarker = new MarkerElements();
-        this.tBETWEEN_HASHES = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.BETWEEN_HASHES");
-        this.pDestructionMarker = new DestructionMarkerElements();
-        this.tBETWEEN_MINUS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.BETWEEN_MINUS");
-        this.pWord = new WordElements();
-        this.pWordPart = new WordPartElements();
-        this.pWordMiddle = new WordMiddleElements();
-        this.pChars = new CharsElements();
-        this.tEGYSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.EGYSTRING");
-        this.pBrackets = new BracketsElements();
-        this.pOval = new OvalElements();
-        this.pSerech = new SerechElements();
-        this.pCartouche = new CartoucheElements();
-        this.pNoCartouche = new NoCartoucheElements();
-        this.pExpanded = new ExpandedElements();
-        this.pAncientExpanded = new AncientExpandedElements();
-        this.pNoExpanded = new NoExpandedElements();
-        this.pEmendation = new EmendationElements();
-        this.pNoEmendation = new NoEmendationElements();
-        this.pDisputableReading = new DisputableReadingElements();
-        this.pNoDisputableReading = new NoDisputableReadingElements();
-        this.pLacuna = new LacunaElements();
-        this.pNoLacuna = new NoLacunaElements();
-        this.pDeletion = new DeletionElements();
-        this.pNoDeletion = new NoDeletionElements();
-        this.pExpandedColumn = new ExpandedColumnElements();
-        this.pNoExpandedColumn = new NoExpandedColumnElements();
-        this.pRasur = new RasurElements();
-        this.pNoRasur = new NoRasurElements();
-        this.pNoAncientExpanded = new NoAncientExpandedElements();
-        this.pRestorationOverRasur = new RestorationOverRasurElements();
-        this.pNoRestorationOverRasur = new NoRestorationOverRasurElements();
-        this.pPartialDestruction = new PartialDestructionElements();
-        this.pNoPartialDestruction = new NoPartialDestructionElements();
-        this.pInterfix = new InterfixElements();
-        this.pInterfixLexical = new InterfixLexicalElements();
-        this.pInterfixFlexion = new InterfixFlexionElements();
-        this.pInterfixSuffixPronomLexical = new InterfixSuffixPronomLexicalElements();
-        this.pInterfixPrefixNonLexical = new InterfixPrefixNonLexicalElements();
-        this.pInterfixPrefixLexical = new InterfixPrefixLexicalElements();
-        this.pInterfixConnectionSyllabicGroup = new InterfixConnectionSyllabicGroupElements();
-        this.pInterfixCompoundWords = new InterfixCompoundWordsElements();
-        this.pInterfixPhoneticalComplement = new InterfixPhoneticalComplementElements();
-        this.pVersMarker = new VersMarkerElements();
-        this.pEmendationVersMarker = new EmendationVersMarkerElements();
-        this.pDisputableVersMarker = new DisputableVersMarkerElements();
-        this.pDeletedVersMarker = new DeletedVersMarkerElements();
-        this.pDestroyedVersMarker = new DestroyedVersMarkerElements();
-        this.pDestroyedVersFrontierMarker = new DestroyedVersFrontierMarkerElements();
-        this.pPartialDestroyedVersMarker = new PartialDestroyedVersMarkerElements();
-        this.pMissingVersMarker = new MissingVersMarkerElements();
-        this.pRestorationOverRasurMarker = new RestorationOverRasurMarkerElements();
-        this.pAncientExpandedMarker = new AncientExpandedMarkerElements();
-        this.pRasurMarker = new RasurMarkerElements();
-        this.pVersFrontierMarker = new VersFrontierMarkerElements();
-        this.pVersbreakMarker = new VersbreakMarkerElements();
-        this.pBrokenVersbreakMarker = new BrokenVersbreakMarkerElements();
-    }
-
-    protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
-        Grammar grammar = grammarProvider.getGrammar(this);
-        while (grammar != null) {
-            if ("org.bbaw.bts.corpus.text.egy.EgyDsl".equals(grammar.getName())) {
-                return grammar;
-            }
-            List<Grammar> grammars = grammar.getUsedGrammars();
-            if (!grammars.isEmpty()) {
-                grammar = grammars.iterator().next();
-            } else {
-                return null;
-            }
-        }
-        return grammar;
-    }
-
-    @Override
-    public Grammar getGrammar() {
-        return grammar;
-    }
-
-    //TextContent:
-    //	{TextContent} (items+=TextItem ((' ' | NEWLINE)? items+=TextItem)*);
-    public TextContentElements getTextContentAccess() {
-        return pTextContent;
-    }
-
-    public ParserRule getTextContentRule() {
-        return getTextContentAccess().getRule();
-    }
-
-    //TextItem:
-    //	Sentence;
-    public TextItemElements getTextItemAccess() {
-        return pTextItem;
-    }
-
-    public ParserRule getTextItemRule() {
-        return getTextItemAccess().getRule();
-    }
-
-    //// sentence
-    //Sentence:
-    //	{Sentence}
-    //	'§' (items+=SentenceItem (' ' NEWLINE? items+=SentenceItem)*)? '§';
-    public SentenceElements getSentenceAccess() {
-        return pSentence;
-    }
-
-    public ParserRule getSentenceRule() {
-        return getSentenceAccess().getRule();
-    }
-
-    //SentenceItem:
-    //	Word | AbstractMarker | Ambivalence;
-    public SentenceItemElements getSentenceItemAccess() {
-        return pSentenceItem;
-    }
-
-    public ParserRule getSentenceItemRule() {
-        return getSentenceItemAccess().getRule();
-    }
-
-    //AbstractMarker:
-    //	Marker | VersMarker | DestructionMarker;
-    public AbstractMarkerElements getAbstractMarkerAccess() {
-        return pAbstractMarker;
-    }
-
-    public ParserRule getAbstractMarkerRule() {
-        return getAbstractMarkerAccess().getRule();
-    }
-
-    //terminal NEWLINE:
-    //	'\r' | '\n' | '\t'+;
-    public TerminalRule getNEWLINERule() {
-        return tNEWLINE;
-    }
-
-    //Ambivalence:
-    //	'%' (cases+=Case ('| ' NEWLINE? cases+=Case)+) '%';
-    public AmbivalenceElements getAmbivalenceAccess() {
-        return pAmbivalence;
-    }
-
-    public ParserRule getAmbivalenceRule() {
-        return getAmbivalenceAccess().getRule();
-    }
-
-    //Case:
-    //	name=CASESTRING NEWLINE? (items+=SentenceItemNoAmbivalence (' ' NEWLINE? items+=SentenceItemNoAmbivalence)*);
-    public CaseElements getCaseAccess() {
-        return pCase;
-    }
-
-    public ParserRule getCaseRule() {
-        return getCaseAccess().getRule();
-    }
-
-    //terminal CASESTRING:
-    //	'case ' !':'+ ': ';
-    public TerminalRule getCASESTRINGRule() {
-        return tCASESTRING;
-    }
-
-    //SentenceItemNoAmbivalence:
-    //	Word | AbstractMarker;
-    public SentenceItemNoAmbivalenceElements getSentenceItemNoAmbivalenceAccess() {
-        return pSentenceItemNoAmbivalence;
-    }
-
-    public ParserRule getSentenceItemNoAmbivalenceRule() {
-        return getSentenceItemNoAmbivalenceAccess().getRule();
-    }
-
-    //Marker:
-    //	type=BETWEEN_HASHES;
-    public MarkerElements getMarkerAccess() {
-        return pMarker;
-    }
-
-    public ParserRule getMarkerRule() {
-        return getMarkerAccess().getRule();
-    }
-
-    //terminal BETWEEN_HASHES:
-    //	'#' !'#'+ '#';
-    public TerminalRule getBETWEEN_HASHESRule() {
-        return tBETWEEN_HASHES;
-    }
-
-    //DestructionMarker:
-    //	type=BETWEEN_MINUS;
-    public DestructionMarkerElements getDestructionMarkerAccess() {
-        return pDestructionMarker;
-    }
-
-    public ParserRule getDestructionMarkerRule() {
-        return getDestructionMarkerAccess().getRule();
-    }
-
-    //terminal BETWEEN_MINUS:
-    //	'--' !'-'+ '--';
-    public TerminalRule getBETWEEN_MINUSRule() {
-        return tBETWEEN_MINUS;
-    }
-
-    //// word
-    //Word:
-    //	{Word} wChar+=WordPart+;
-    public WordElements getWordAccess() {
-        return pWord;
-    }
-
-    public ParserRule getWordRule() {
-        return getWordAccess().getRule();
-    }
-
-    //WordPart:
-    //	wChar=WordMiddle;
-    public WordPartElements getWordPartAccess() {
-        return pWordPart;
-    }
-
-    public ParserRule getWordPartRule() {
-        return getWordPartAccess().getRule();
-    }
-
-    //WordMiddle:
-    //	Brackets | Chars | Interfix;
-    public WordMiddleElements getWordMiddleAccess() {
-        return pWordMiddle;
-    }
-
-    public ParserRule getWordMiddleRule() {
-        return getWordMiddleAccess().getRule();
-    }
-
-    //// Chars...
-    //Chars:
-    //	name=EGYSTRING;
-    public CharsElements getCharsAccess() {
-        return pChars;
-    }
-
-    public ParserRule getCharsRule() {
-        return getCharsAccess().getRule();
-    }
-
-    //terminal EGYSTRING: // AlephU
-    //	'\\uA722' //&aleph;=
-    //	| '\\uA723' | '\\u02BE' // spiLen
-    //	//|'\\u02BE'   // SpiLenU
-    //	| '\\uA725' // ajin
-    //	| '\\uA724' // AjinU
-    //	| 'j' | 'y' | 'w' | 'b' | 'f' | 'm' | 'n' | 'r' | 'h' | 'ḥ' | 'ḫ' | 'ẖ' | 'H' | 'Ḥ' | 'Ḫ' | 'H̱' | 'H̭' | 'z' | 's' |
-    //	'š' | 'S' | 'Š' // Schekelsche Zeichen|'Ś'|'ś'
-    //	| 'q' | 'k' | 'g' | 't' | 'ṯ' | 'ṱ' | 'T' | 'Ṯ' | 'Ṱ' // Schekelsche Zeichen |'ṭ' |'Ṭ'
-    //	| 'd' | 'ḏ' | 'Ḏ' | 'h̭' | 'i' | 'i̯' | 'ı͗' | 'ı̯͗' | 'ï' | 'i̭' | 'I͗' | 'I' // |'\\u0069\\u032F'//iArcU
-    //	| '\\u0049\\u032F' //IArcU
-    //	| 'i̯̯' | '\\u00CF' // ITremaU
-    //	// Schekelsche Zeichen |'ḳ'|'Ḳ'
-    //	| 'u' | 'u̯' | 'U' | '\\u0055\\u032F' | 'e' | '/' | '+' // Schekelsche Zeichen|'č'|'č̣'|'Č'|'Č̣'
-    //	| 'a' | 'J' | 'Y' | 'W' | 'B' | 'P' | 'F' | 'M' | 'N' | 'R' | 'L' | 'Z' | 'Q' | 'K' | 'G' | 'D' | 'A' // coptic
-    //	| '\\u2C80'..'\\u2CFF' //	//oval
-    //	//	| '\\uD80C\\uDE86' |'\\uD80C\\uDE87'
-    //	//
-    //	//	//cartouche
-    //	//	|'\\uD80C\\uDF79' |'\\uD80C\\uDF7A'
-    //	//	|'\\u13379'   // cartOn
-    //	//	|'\\u1337A'   // cartOff
-    //	//	//serech
-    //	//	|'\\uD80C\\uDE58' | '\\uD80C\\uDE82'
-    //	| 'p' | 'l' //interfix :
-    //	| '=' //	|':'|'='|'\\u2261'|','|'.'|'~'|'\\u22ee'
-    //	| '_' | '\\u205D' // trplColon
-    //	//num
-    //	| '0'..'9' // special
-    //	| 'Õ' | 'ã' | 'Þ' | '!' | '\\u0152' // OElig
-    //	| '\\u0153' // oelig
-    //	| '\\u0178' // Yuml
-    //	| '\\u00C6' | '*' | 'ê'+;
-    public TerminalRule getEGYSTRINGRule() {
-        return tEGYSTRING;
-    }
-
-    //// textual criticism brackets
-    //Brackets:
-    //	Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna |
-    //	Deletion | PartialDestruction
-    //	| Cartouche | Oval | Serech;
-    public BracketsElements getBracketsAccess() {
-        return pBrackets;
-    }
-
-    public ParserRule getBracketsRule() {
-        return getBracketsAccess().getRule();
-    }
-
-    ////Cartouche2:
-    ////	'\\u13379'   wChar+=NoCartouche+ '\\u1337A'
-    ////;
-    //Oval: //Oval
-    //	'\\uD80C\\uDE58' wChar+=NoCartouche+ '\\uD80C\\uDE82';
-    public OvalElements getOvalAccess() {
-        return pOval;
-    }
-
-    public ParserRule getOvalRule() {
-        return getOvalAccess().getRule();
-    }
-
-    //Serech: // eigentlich Serech
-    //	'\\uD80C\\uDF79' wChar+=NoCartouche+ '\\uD80C\\uDF7A';
-    public SerechElements getSerechAccess() {
-        return pSerech;
-    }
-
-    public ParserRule getSerechRule() {
-        return getSerechAccess().getRule();
-    }
-
-    //Cartouche:
-    //	{Expanded}
-    //	'\\uD80C\\uDE86' wChar+=NoCartouche+ '\\uD80C\\uDE87';
-    public CartoucheElements getCartoucheAccess() {
-        return pCartouche;
-    }
-
-    public ParserRule getCartoucheRule() {
-        return getCartoucheAccess().getRule();
-    }
-
-    //NoCartouche:
-    //	Chars
-    //	| Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna
-    //	| Deletion | PartialDestruction
-    //	| Interfix;
-    public NoCartoucheElements getNoCartoucheAccess() {
-        return pNoCartouche;
-    }
-
-    public ParserRule getNoCartoucheRule() {
-        return getNoCartoucheAccess().getRule();
-    }
-
-    //Expanded:
-    //	{Expanded}
-    //	'(' wChar+=NoExpanded+ ')';
-    public ExpandedElements getExpandedAccess() {
-        return pExpanded;
-    }
-
-    public ParserRule getExpandedRule() {
-        return getExpandedAccess().getRule();
-    }
-
-    //AncientExpanded:
-    //	{AncientExpanded}
-    //	'((' wChar+=NoAncientExpanded+ '))';
-    public AncientExpandedElements getAncientExpandedAccess() {
-        return pAncientExpanded;
-    }
-
-    public ParserRule getAncientExpandedRule() {
-        return getAncientExpandedAccess().getRule();
-    }
-
-    //NoExpanded:
-    //	DisputableReading | Chars | Interfix;
-    public NoExpandedElements getNoExpandedAccess() {
-        return pNoExpanded;
-    }
-
-    public ParserRule getNoExpandedRule() {
-        return getNoExpandedAccess().getRule();
-    }
-
-    //Emendation:
-    //	{Emendation}
-    //	'\\u2329' wChar+=NoEmendation+ '\\u232A';
-    public EmendationElements getEmendationAccess() {
-        return pEmendation;
-    }
-
-    public ParserRule getEmendationRule() {
-        return getEmendationAccess().getRule();
-    }
-
-    //NoEmendation:
-    //	Expanded | DisputableReading | Chars | Interfix;
-    public NoEmendationElements getNoEmendationAccess() {
-        return pNoEmendation;
-    }
-
-    public ParserRule getNoEmendationRule() {
-        return getNoEmendationAccess().getRule();
-    }
-
-    //DisputableReading:
-    //	{DisputableReading}
-    //	'\\u2E2E' wChar+=NoDisputableReading+ '?';
-    public DisputableReadingElements getDisputableReadingAccess() {
-        return pDisputableReading;
-    }
-
-    public ParserRule getDisputableReadingRule() {
-        return getDisputableReadingAccess().getRule();
-    }
-
-    //NoDisputableReading:
-    //	Expanded | Emendation | Deletion
-    //	| Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn
-    //	| Lacuna
-    //	| PartialDestruction
-    //	| Chars | Interfix;
-    public NoDisputableReadingElements getNoDisputableReadingAccess() {
-        return pNoDisputableReading;
-    }
-
-    public ParserRule getNoDisputableReadingRule() {
-        return getNoDisputableReadingAccess().getRule();
-    }
-
-    //Lacuna:
-    //	{Lacuna}
-    //	'[' wChar+=NoLacuna+ ']';
-    public LacunaElements getLacunaAccess() {
-        return pLacuna;
-    }
-
-    public ParserRule getLacunaRule() {
-        return getLacunaAccess().getRule();
-    }
-
-    //NoLacuna:
-    //	Expanded | DisputableReading | Cartouche | Oval | Serech | Deletion | Emendation | Chars | Interfix;
-    public NoLacunaElements getNoLacunaAccess() {
-        return pNoLacuna;
-    }
-
-    public ParserRule getNoLacunaRule() {
-        return getNoLacunaAccess().getRule();
-    }
-
-    //Deletion:
-    //	{Deletion}
-    //	'{' wChar+=NoDeletion+ '}';
-    public DeletionElements getDeletionAccess() {
-        return pDeletion;
-    }
-
-    public ParserRule getDeletionRule() {
-        return getDeletionAccess().getRule();
-    }
-
-    //NoDeletion:
-    //	PartialDestruction | Expanded | DisputableReading | Lacuna | RestorationOverRasur | AncientExpanded | Chars |
-    //	Interfix;
-    public NoDeletionElements getNoDeletionAccess() {
-        return pNoDeletion;
-    }
-
-    public ParserRule getNoDeletionRule() {
-        return getNoDeletionAccess().getRule();
-    }
-
-    //ExpandedColumn:
-    //	{ExpandedColumn}
-    //	'\\u2329\\u2329' wChar+=NoExpandedColumn+ '\\u232A\\u232A';
-    public ExpandedColumnElements getExpandedColumnAccess() {
-        return pExpandedColumn;
-    }
-
-    public ParserRule getExpandedColumnRule() {
-        return getExpandedColumnAccess().getRule();
-    }
-
-    //NoExpandedColumn:
-    //	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
-    public NoExpandedColumnElements getNoExpandedColumnAccess() {
-        return pNoExpandedColumn;
-    }
-
-    public ParserRule getNoExpandedColumnRule() {
-        return getNoExpandedColumnAccess().getRule();
-    }
-
-    //Rasur:
-    //	{Rasur}
-    //	'{{' wChar+=NoRasur+ '}}';
-    public RasurElements getRasurAccess() {
-        return pRasur;
-    }
-
-    public ParserRule getRasurRule() {
-        return getRasurAccess().getRule();
-    }
-
-    //NoRasur:
-    //	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
-    public NoRasurElements getNoRasurAccess() {
-        return pNoRasur;
-    }
-
-    public ParserRule getNoRasurRule() {
-        return getNoRasurAccess().getRule();
-    }
-
-    //NoAncientExpanded:
-    //	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
-    public NoAncientExpandedElements getNoAncientExpandedAccess() {
-        return pNoAncientExpanded;
-    }
-
-    public ParserRule getNoAncientExpandedRule() {
-        return getNoAncientExpandedAccess().getRule();
-    }
-
-    //RestorationOverRasur:
-    //	{RestorationOverRasur}
-    //	'[[' wChar+=NoRestorationOverRasur+ ']]';
-    public RestorationOverRasurElements getRestorationOverRasurAccess() {
-        return pRestorationOverRasur;
-    }
-
-    public ParserRule getRestorationOverRasurRule() {
-        return getRestorationOverRasurAccess().getRule();
-    }
-
-    //NoRestorationOverRasur:
-    //	Expanded | DisputableReading | Cartouche | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
-    public NoRestorationOverRasurElements getNoRestorationOverRasurAccess() {
-        return pNoRestorationOverRasur;
-    }
-
-    public ParserRule getNoRestorationOverRasurRule() {
-        return getNoRestorationOverRasurAccess().getRule();
-    }
-
-    //PartialDestruction:
-    //	{PartialDestruction}
-    //	'\\u2E22' wChar+=NoPartialDestruction+ '\\u2E23';
-    public PartialDestructionElements getPartialDestructionAccess() {
-        return pPartialDestruction;
-    }
-
-    public ParserRule getPartialDestructionRule() {
-        return getPartialDestructionAccess().getRule();
-    }
-
-    //NoPartialDestruction:
-    //	Deletion | Expanded | DisputableReading | Cartouche | Oval | Serech | Emendation | Chars | Interfix;
-    public NoPartialDestructionElements getNoPartialDestructionAccess() {
-        return pNoPartialDestruction;
-    }
-
-    public ParserRule getNoPartialDestructionRule() {
-        return getNoPartialDestructionAccess().getRule();
-    }
-
-    //// textual criticism interfixes
-    //Interfix:
-    //	InterfixFlexion | InterfixLexical | InterfixSuffixPronomLexical | InterfixPrefixNonLexical | InterfixPrefixLexical
-    //	| InterfixConnectionSyllabicGroup
-    //	| InterfixCompoundWords
-    //	| InterfixPhoneticalComplement;
-    public InterfixElements getInterfixAccess() {
-        return pInterfix;
-    }
-
-    public ParserRule getInterfixRule() {
-        return getInterfixAccess().getRule();
-    }
-
-    //InterfixLexical:
-    //	{InterfixLexical}
-    //	',';
-    public InterfixLexicalElements getInterfixLexicalAccess() {
-        return pInterfixLexical;
-    }
-
-    public ParserRule getInterfixLexicalRule() {
-        return getInterfixLexicalAccess().getRule();
-    }
-
-    //InterfixFlexion:
-    //	{InterfixFlexion}
-    //	'.';
-    public InterfixFlexionElements getInterfixFlexionAccess() {
-        return pInterfixFlexion;
-    }
-
-    public ParserRule getInterfixFlexionRule() {
-        return getInterfixFlexionAccess().getRule();
-    }
-
-    //InterfixSuffixPronomLexical:
-    //	{InterfixSuffixPronomLexical}
-    //	'\\u2261';
-    public InterfixSuffixPronomLexicalElements getInterfixSuffixPronomLexicalAccess() {
-        return pInterfixSuffixPronomLexical;
-    }
-
-    public ParserRule getInterfixSuffixPronomLexicalRule() {
-        return getInterfixSuffixPronomLexicalAccess().getRule();
-    }
-
-    //InterfixPrefixNonLexical:
-    //	{InterfixPrefixNonLexical}
-    //	':';
-    public InterfixPrefixNonLexicalElements getInterfixPrefixNonLexicalAccess() {
-        return pInterfixPrefixNonLexical;
-    }
-
-    public ParserRule getInterfixPrefixNonLexicalRule() {
-        return getInterfixPrefixNonLexicalAccess().getRule();
-    }
-
-    //InterfixPrefixLexical:
-    //	{InterfixPrefixLexical}
-    //	'\\u22ee';
-    public InterfixPrefixLexicalElements getInterfixPrefixLexicalAccess() {
-        return pInterfixPrefixLexical;
-    }
-
-    public ParserRule getInterfixPrefixLexicalRule() {
-        return getInterfixPrefixLexicalAccess().getRule();
-    }
-
-    //InterfixConnectionSyllabicGroup:
-    //	{InterfixConnectionSyllabicGroup}
-    //	'~';
-    public InterfixConnectionSyllabicGroupElements getInterfixConnectionSyllabicGroupAccess() {
-        return pInterfixConnectionSyllabicGroup;
-    }
-
-    public ParserRule getInterfixConnectionSyllabicGroupRule() {
-        return getInterfixConnectionSyllabicGroupAccess().getRule();
-    }
-
-    //InterfixCompoundWords:
-    //	{InterfixCompoundWords}
-    //	'-';
-    public InterfixCompoundWordsElements getInterfixCompoundWordsAccess() {
-        return pInterfixCompoundWords;
-    }
-
-    public ParserRule getInterfixCompoundWordsRule() {
-        return getInterfixCompoundWordsAccess().getRule();
-    }
-
-    //InterfixPhoneticalComplement:
-    //	{InterfixPhoneticalComplement}
-    //	';';
-    public InterfixPhoneticalComplementElements getInterfixPhoneticalComplementAccess() {
-        return pInterfixPhoneticalComplement;
-    }
-
-    public ParserRule getInterfixPhoneticalComplementRule() {
-        return getInterfixPhoneticalComplementAccess().getRule();
-    }
-
-    //VersMarker:
-    //	VersbreakMarker | VersFrontierMarker | BrokenVersbreakMarker
-    //	| MissingVersMarker | DestroyedVersMarker | DeletedVersMarker | DisputableVersMarker
-    //	| RestorationOverRasurMarker | AncientExpandedMarker | RasurMarker
-    //	| EmendationVersMarker | DestroyedVersFrontierMarker | PartialDestroyedVersMarker;
-    public VersMarkerElements getVersMarkerAccess() {
-        return pVersMarker;
-    }
-
-    public ParserRule getVersMarkerRule() {
-        return getVersMarkerAccess().getRule();
-    }
-
-    //EmendationVersMarker:
-    //	{EmendationVersMarker}
-    //	'(\\uDB80\\uDC80)' //'@v'
-    //;
-    public EmendationVersMarkerElements getEmendationVersMarkerAccess() {
-        return pEmendationVersMarker;
-    }
-
-    public ParserRule getEmendationVersMarkerRule() {
-        return getEmendationVersMarkerAccess().getRule();
-    }
-
-    //DisputableVersMarker:
-    //	{DisputableVersMarker}
-    //	'\\u2E2E\\uDB80\\uDC80?' //'@v'
-    //;
-    public DisputableVersMarkerElements getDisputableVersMarkerAccess() {
-        return pDisputableVersMarker;
-    }
-
-    public ParserRule getDisputableVersMarkerRule() {
-        return getDisputableVersMarkerAccess().getRule();
-    }
-
-    //DeletedVersMarker:
-    //	{DeletedVersMarker}
-    //	'{\\uDB80\\uDC80}' //'@v'
-    //;
-    public DeletedVersMarkerElements getDeletedVersMarkerAccess() {
-        return pDeletedVersMarker;
-    }
-
-    public ParserRule getDeletedVersMarkerRule() {
-        return getDeletedVersMarkerAccess().getRule();
-    }
-
-    //DestroyedVersMarker:
-    //	{DestroyedVersMarker}
-    //	'[\\uDB80\\uDC80]' //'@v'
-    //;
-    public DestroyedVersMarkerElements getDestroyedVersMarkerAccess() {
-        return pDestroyedVersMarker;
-    }
-
-    public ParserRule getDestroyedVersMarkerRule() {
-        return getDestroyedVersMarkerAccess().getRule();
-    }
-
-    //DestroyedVersFrontierMarker:
-    //	{DestroyedVersFrontierMarker}
-    //	'[\\uDB80\\uDC81]' //'@v'
-    //;
-    public DestroyedVersFrontierMarkerElements getDestroyedVersFrontierMarkerAccess() {
-        return pDestroyedVersFrontierMarker;
-    }
-
-    public ParserRule getDestroyedVersFrontierMarkerRule() {
-        return getDestroyedVersFrontierMarkerAccess().getRule();
-    }
-
-    //PartialDestroyedVersMarker:
-    //	{PartialDestroyedVersMarker}
-    //	'\\u2E22\\uDB80\\uDC80\\u2E23' //'@v'
-    //;
-    public PartialDestroyedVersMarkerElements getPartialDestroyedVersMarkerAccess() {
-        return pPartialDestroyedVersMarker;
-    }
-
-    public ParserRule getPartialDestroyedVersMarkerRule() {
-        return getPartialDestroyedVersMarkerAccess().getRule();
-    }
-
-    //MissingVersMarker:
-    //	{MissingVersMarker}
-    //	'\\u2329\\uDB80\\uDC80\\u232A' //'@v'
-    //;
-    public MissingVersMarkerElements getMissingVersMarkerAccess() {
-        return pMissingVersMarker;
-    }
-
-    public ParserRule getMissingVersMarkerRule() {
-        return getMissingVersMarkerAccess().getRule();
-    }
-
-    //RestorationOverRasurMarker:
-    //	{RestorationOverRasurMarker}
-    //	'[[\\uDB80\\uDC80]]' //'@v'
-    //;
-    public RestorationOverRasurMarkerElements getRestorationOverRasurMarkerAccess() {
-        return pRestorationOverRasurMarker;
-    }
-
-    public ParserRule getRestorationOverRasurMarkerRule() {
-        return getRestorationOverRasurMarkerAccess().getRule();
-    }
-
-    //AncientExpandedMarker:
-    //	{AncientExpandedMarker}
-    //	'((\\uDB80\\uDC80))' //'@v'
-    //;
-    public AncientExpandedMarkerElements getAncientExpandedMarkerAccess() {
-        return pAncientExpandedMarker;
-    }
-
-    public ParserRule getAncientExpandedMarkerRule() {
-        return getAncientExpandedMarkerAccess().getRule();
-    }
-
-    //RasurMarker:
-    //	{AncientExpandedMarker}
-    //	'{{\\uDB80\\uDC80}}' //'@v'
-    //;
-    public RasurMarkerElements getRasurMarkerAccess() {
-        return pRasurMarker;
-    }
-
-    public ParserRule getRasurMarkerRule() {
-        return getRasurMarkerAccess().getRule();
-    }
-
-    //VersFrontierMarker:
-    //	{VersFrontierMarker}
-    //	'\\uDB80\\uDC81' //'@mv'
-    //;
-    public VersFrontierMarkerElements getVersFrontierMarkerAccess() {
-        return pVersFrontierMarker;
-    }
-
-    public ParserRule getVersFrontierMarkerRule() {
-        return getVersFrontierMarkerAccess().getRule();
-    }
-
-    //VersbreakMarker:
-    //	{VersbreakMarker}
-    //	'\\uDB80\\uDC80' //'@v'
-    //;
-    public VersbreakMarkerElements getVersbreakMarkerAccess() {
-        return pVersbreakMarker;
-    }
-
-    public ParserRule getVersbreakMarkerRule() {
-        return getVersbreakMarkerAccess().getRule();
-    }
-
-    //BrokenVersbreakMarker:
-    //	{BrokenVersbreakMarker}
-    //	'\\uDB80\\uDC82' //'@v'
-    //;
-    public BrokenVersbreakMarkerElements getBrokenVersbreakMarkerAccess() {
-        return pBrokenVersbreakMarker;
-    }
-
-    public ParserRule getBrokenVersbreakMarkerRule() {
-        return getBrokenVersbreakMarkerAccess().getRule();
-    }
-
-    public class TextContentElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.TextContent");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cTextContentAction_0 = (Action) cGroup.eContents().get(0);
-        private final Group cGroup_1 = (Group) cGroup.eContents().get(1);
-        private final Assignment cItemsAssignment_1_0 = (Assignment) cGroup_1.eContents().get(0);
-        private final RuleCall cItemsTextItemParserRuleCall_1_0_0 = (RuleCall) cItemsAssignment_1_0.eContents().get(0);
-        private final Group cGroup_1_1 = (Group) cGroup_1.eContents().get(1);
-        private final Alternatives cAlternatives_1_1_0 = (Alternatives) cGroup_1_1.eContents().get(0);
-        private final Keyword cSpaceKeyword_1_1_0_0 = (Keyword) cAlternatives_1_1_0.eContents().get(0);
-        private final RuleCall cNEWLINETerminalRuleCall_1_1_0_1 = (RuleCall) cAlternatives_1_1_0.eContents().get(1);
-        private final Assignment cItemsAssignment_1_1_1 = (Assignment) cGroup_1_1.eContents().get(1);
-        private final RuleCall cItemsTextItemParserRuleCall_1_1_1_0 = (RuleCall) cItemsAssignment_1_1_1.eContents().get(0);
-
-        //TextContent:
-        //	{TextContent} (items+=TextItem ((' ' | NEWLINE)? items+=TextItem)*);
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{TextContent} (items+=TextItem ((' ' | NEWLINE)? items+=TextItem)*)
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{TextContent}
-        public Action getTextContentAction_0() {
-            return cTextContentAction_0;
-        }
-
-        //(items+=TextItem ((' ' | NEWLINE)? items+=TextItem)*)
-        public Group getGroup_1() {
-            return cGroup_1;
-        }
-
-        //items+=TextItem
-        public Assignment getItemsAssignment_1_0() {
-            return cItemsAssignment_1_0;
-        }
-
-        //TextItem
-        public RuleCall getItemsTextItemParserRuleCall_1_0_0() {
-            return cItemsTextItemParserRuleCall_1_0_0;
-        }
-
-        //((' ' | NEWLINE)? items+=TextItem)*
-        public Group getGroup_1_1() {
-            return cGroup_1_1;
-        }
-
-        //(' ' | NEWLINE)?
-        public Alternatives getAlternatives_1_1_0() {
-            return cAlternatives_1_1_0;
-        }
-
-        //' '
-        public Keyword getSpaceKeyword_1_1_0_0() {
-            return cSpaceKeyword_1_1_0_0;
-        }
-
-        //NEWLINE
-        public RuleCall getNEWLINETerminalRuleCall_1_1_0_1() {
-            return cNEWLINETerminalRuleCall_1_1_0_1;
-        }
-
-        //items+=TextItem
-        public Assignment getItemsAssignment_1_1_1() {
-            return cItemsAssignment_1_1_1;
-        }
-
-        //TextItem
-        public RuleCall getItemsTextItemParserRuleCall_1_1_1_0() {
-            return cItemsTextItemParserRuleCall_1_1_1_0;
-        }
-    }
-
-    public class TextItemElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.TextItem");
-        private final RuleCall cSentenceParserRuleCall = (RuleCall) rule.eContents().get(1);
-
-        //TextItem:
-        //	Sentence;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Sentence
-        public RuleCall getSentenceParserRuleCall() {
-            return cSentenceParserRuleCall;
-        }
-    }
-
-    public class SentenceElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Sentence");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cSentenceAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cSectionSignKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Group cGroup_2 = (Group) cGroup.eContents().get(2);
-        private final Assignment cItemsAssignment_2_0 = (Assignment) cGroup_2.eContents().get(0);
-        private final RuleCall cItemsSentenceItemParserRuleCall_2_0_0 = (RuleCall) cItemsAssignment_2_0.eContents().get(0);
-        private final Group cGroup_2_1 = (Group) cGroup_2.eContents().get(1);
-        private final Keyword cSpaceKeyword_2_1_0 = (Keyword) cGroup_2_1.eContents().get(0);
-        private final RuleCall cNEWLINETerminalRuleCall_2_1_1 = (RuleCall) cGroup_2_1.eContents().get(1);
-        private final Assignment cItemsAssignment_2_1_2 = (Assignment) cGroup_2_1.eContents().get(2);
-        private final RuleCall cItemsSentenceItemParserRuleCall_2_1_2_0 = (RuleCall) cItemsAssignment_2_1_2.eContents().get(0);
-        private final Keyword cSectionSignKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //// sentence
-        //Sentence:
-        //	{Sentence}
-        //	'§' (items+=SentenceItem (' ' NEWLINE? items+=SentenceItem)*)? '§';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{Sentence} '§' (items+=SentenceItem (' ' NEWLINE? items+=SentenceItem)*)? '§'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{Sentence}
-        public Action getSentenceAction_0() {
-            return cSentenceAction_0;
-        }
-
-        //'§'
-        public Keyword getSectionSignKeyword_1() {
-            return cSectionSignKeyword_1;
-        }
-
-        //(items+=SentenceItem (' ' NEWLINE? items+=SentenceItem)*)?
-        public Group getGroup_2() {
-            return cGroup_2;
-        }
-
-        //items+=SentenceItem
-        public Assignment getItemsAssignment_2_0() {
-            return cItemsAssignment_2_0;
-        }
-
-        //SentenceItem
-        public RuleCall getItemsSentenceItemParserRuleCall_2_0_0() {
-            return cItemsSentenceItemParserRuleCall_2_0_0;
-        }
-
-        //(' ' NEWLINE? items+=SentenceItem)*
-        public Group getGroup_2_1() {
-            return cGroup_2_1;
-        }
-
-        //' '
-        public Keyword getSpaceKeyword_2_1_0() {
-            return cSpaceKeyword_2_1_0;
-        }
-
-        //NEWLINE?
-        public RuleCall getNEWLINETerminalRuleCall_2_1_1() {
-            return cNEWLINETerminalRuleCall_2_1_1;
-        }
-
-        //items+=SentenceItem
-        public Assignment getItemsAssignment_2_1_2() {
-            return cItemsAssignment_2_1_2;
-        }
-
-        //SentenceItem
-        public RuleCall getItemsSentenceItemParserRuleCall_2_1_2_0() {
-            return cItemsSentenceItemParserRuleCall_2_1_2_0;
-        }
-
-        //'§'
-        public Keyword getSectionSignKeyword_3() {
-            return cSectionSignKeyword_3;
-        }
-    }
-
-    public class SentenceItemElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.SentenceItem");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cWordParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cAbstractMarkerParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cAmbivalenceParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-
-        //SentenceItem:
-        //	Word | AbstractMarker | Ambivalence;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Word | AbstractMarker | Ambivalence
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Word
-        public RuleCall getWordParserRuleCall_0() {
-            return cWordParserRuleCall_0;
-        }
-
-        //AbstractMarker
-        public RuleCall getAbstractMarkerParserRuleCall_1() {
-            return cAbstractMarkerParserRuleCall_1;
-        }
-
-        //Ambivalence
-        public RuleCall getAmbivalenceParserRuleCall_2() {
-            return cAmbivalenceParserRuleCall_2;
-        }
-    }
-
-    public class AbstractMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.AbstractMarker");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cMarkerParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cVersMarkerParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cDestructionMarkerParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-
-        //AbstractMarker:
-        //	Marker | VersMarker | DestructionMarker;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Marker | VersMarker | DestructionMarker
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Marker
-        public RuleCall getMarkerParserRuleCall_0() {
-            return cMarkerParserRuleCall_0;
-        }
-
-        //VersMarker
-        public RuleCall getVersMarkerParserRuleCall_1() {
-            return cVersMarkerParserRuleCall_1;
-        }
-
-        //DestructionMarker
-        public RuleCall getDestructionMarkerParserRuleCall_2() {
-            return cDestructionMarkerParserRuleCall_2;
-        }
-    }
-
-    public class AmbivalenceElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Ambivalence");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Keyword cPercentSignKeyword_0 = (Keyword) cGroup.eContents().get(0);
-        private final Group cGroup_1 = (Group) cGroup.eContents().get(1);
-        private final Assignment cCasesAssignment_1_0 = (Assignment) cGroup_1.eContents().get(0);
-        private final RuleCall cCasesCaseParserRuleCall_1_0_0 = (RuleCall) cCasesAssignment_1_0.eContents().get(0);
-        private final Group cGroup_1_1 = (Group) cGroup_1.eContents().get(1);
-        private final Keyword cVerticalLineSpaceKeyword_1_1_0 = (Keyword) cGroup_1_1.eContents().get(0);
-        private final RuleCall cNEWLINETerminalRuleCall_1_1_1 = (RuleCall) cGroup_1_1.eContents().get(1);
-        private final Assignment cCasesAssignment_1_1_2 = (Assignment) cGroup_1_1.eContents().get(2);
-        private final RuleCall cCasesCaseParserRuleCall_1_1_2_0 = (RuleCall) cCasesAssignment_1_1_2.eContents().get(0);
-        private final Keyword cPercentSignKeyword_2 = (Keyword) cGroup.eContents().get(2);
-
-        //Ambivalence:
-        //	'%' (cases+=Case ('| ' NEWLINE? cases+=Case)+) '%';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //'%' (cases+=Case ('| ' NEWLINE? cases+=Case)+) '%'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //'%'
-        public Keyword getPercentSignKeyword_0() {
-            return cPercentSignKeyword_0;
-        }
-
-        //(cases+=Case ('| ' NEWLINE? cases+=Case)+)
-        public Group getGroup_1() {
-            return cGroup_1;
-        }
-
-        //cases+=Case
-        public Assignment getCasesAssignment_1_0() {
-            return cCasesAssignment_1_0;
-        }
-
-        //Case
-        public RuleCall getCasesCaseParserRuleCall_1_0_0() {
-            return cCasesCaseParserRuleCall_1_0_0;
-        }
-
-        //('| ' NEWLINE? cases+=Case)+
-        public Group getGroup_1_1() {
-            return cGroup_1_1;
-        }
-
-        //'| '
-        public Keyword getVerticalLineSpaceKeyword_1_1_0() {
-            return cVerticalLineSpaceKeyword_1_1_0;
-        }
-
-        //NEWLINE?
-        public RuleCall getNEWLINETerminalRuleCall_1_1_1() {
-            return cNEWLINETerminalRuleCall_1_1_1;
-        }
-
-        //cases+=Case
-        public Assignment getCasesAssignment_1_1_2() {
-            return cCasesAssignment_1_1_2;
-        }
-
-        //Case
-        public RuleCall getCasesCaseParserRuleCall_1_1_2_0() {
-            return cCasesCaseParserRuleCall_1_1_2_0;
-        }
-
-        //'%'
-        public Keyword getPercentSignKeyword_2() {
-            return cPercentSignKeyword_2;
-        }
-    }
-
-    public class CaseElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Case");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Assignment cNameAssignment_0 = (Assignment) cGroup.eContents().get(0);
-        private final RuleCall cNameCASESTRINGTerminalRuleCall_0_0 = (RuleCall) cNameAssignment_0.eContents().get(0);
-        private final RuleCall cNEWLINETerminalRuleCall_1 = (RuleCall) cGroup.eContents().get(1);
-        private final Group cGroup_2 = (Group) cGroup.eContents().get(2);
-        private final Assignment cItemsAssignment_2_0 = (Assignment) cGroup_2.eContents().get(0);
-        private final RuleCall cItemsSentenceItemNoAmbivalenceParserRuleCall_2_0_0 = (RuleCall) cItemsAssignment_2_0.eContents().get(0);
-        private final Group cGroup_2_1 = (Group) cGroup_2.eContents().get(1);
-        private final Keyword cSpaceKeyword_2_1_0 = (Keyword) cGroup_2_1.eContents().get(0);
-        private final RuleCall cNEWLINETerminalRuleCall_2_1_1 = (RuleCall) cGroup_2_1.eContents().get(1);
-        private final Assignment cItemsAssignment_2_1_2 = (Assignment) cGroup_2_1.eContents().get(2);
-        private final RuleCall cItemsSentenceItemNoAmbivalenceParserRuleCall_2_1_2_0 = (RuleCall) cItemsAssignment_2_1_2.eContents().get(0);
-
-        //Case:
-        //	name=CASESTRING NEWLINE? (items+=SentenceItemNoAmbivalence (' ' NEWLINE? items+=SentenceItemNoAmbivalence)*);
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //name=CASESTRING NEWLINE? (items+=SentenceItemNoAmbivalence (' ' NEWLINE? items+=SentenceItemNoAmbivalence)*)
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //name=CASESTRING
-        public Assignment getNameAssignment_0() {
-            return cNameAssignment_0;
-        }
-
-        //CASESTRING
-        public RuleCall getNameCASESTRINGTerminalRuleCall_0_0() {
-            return cNameCASESTRINGTerminalRuleCall_0_0;
-        }
-
-        //NEWLINE?
-        public RuleCall getNEWLINETerminalRuleCall_1() {
-            return cNEWLINETerminalRuleCall_1;
-        }
-
-        //(items+=SentenceItemNoAmbivalence (' ' NEWLINE? items+=SentenceItemNoAmbivalence)*)
-        public Group getGroup_2() {
-            return cGroup_2;
-        }
-
-        //items+=SentenceItemNoAmbivalence
-        public Assignment getItemsAssignment_2_0() {
-            return cItemsAssignment_2_0;
-        }
-
-        //SentenceItemNoAmbivalence
-        public RuleCall getItemsSentenceItemNoAmbivalenceParserRuleCall_2_0_0() {
-            return cItemsSentenceItemNoAmbivalenceParserRuleCall_2_0_0;
-        }
-
-        //(' ' NEWLINE? items+=SentenceItemNoAmbivalence)*
-        public Group getGroup_2_1() {
-            return cGroup_2_1;
-        }
-
-        //' '
-        public Keyword getSpaceKeyword_2_1_0() {
-            return cSpaceKeyword_2_1_0;
-        }
-
-        //NEWLINE?
-        public RuleCall getNEWLINETerminalRuleCall_2_1_1() {
-            return cNEWLINETerminalRuleCall_2_1_1;
-        }
-
-        //items+=SentenceItemNoAmbivalence
-        public Assignment getItemsAssignment_2_1_2() {
-            return cItemsAssignment_2_1_2;
-        }
-
-        //SentenceItemNoAmbivalence
-        public RuleCall getItemsSentenceItemNoAmbivalenceParserRuleCall_2_1_2_0() {
-            return cItemsSentenceItemNoAmbivalenceParserRuleCall_2_1_2_0;
-        }
-    }
-
-    public class SentenceItemNoAmbivalenceElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.SentenceItemNoAmbivalence");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cWordParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cAbstractMarkerParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-
-        //SentenceItemNoAmbivalence:
-        //	Word | AbstractMarker;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Word | AbstractMarker
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Word
-        public RuleCall getWordParserRuleCall_0() {
-            return cWordParserRuleCall_0;
-        }
-
-        //AbstractMarker
-        public RuleCall getAbstractMarkerParserRuleCall_1() {
-            return cAbstractMarkerParserRuleCall_1;
-        }
-    }
-
-    public class MarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Marker");
-        private final Assignment cTypeAssignment = (Assignment) rule.eContents().get(1);
-        private final RuleCall cTypeBETWEEN_HASHESTerminalRuleCall_0 = (RuleCall) cTypeAssignment.eContents().get(0);
-
-        //Marker:
-        //	type=BETWEEN_HASHES;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //type=BETWEEN_HASHES
-        public Assignment getTypeAssignment() {
-            return cTypeAssignment;
-        }
-
-        //BETWEEN_HASHES
-        public RuleCall getTypeBETWEEN_HASHESTerminalRuleCall_0() {
-            return cTypeBETWEEN_HASHESTerminalRuleCall_0;
-        }
-    }
-
-    public class DestructionMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DestructionMarker");
-        private final Assignment cTypeAssignment = (Assignment) rule.eContents().get(1);
-        private final RuleCall cTypeBETWEEN_MINUSTerminalRuleCall_0 = (RuleCall) cTypeAssignment.eContents().get(0);
-
-        //DestructionMarker:
-        //	type=BETWEEN_MINUS;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //type=BETWEEN_MINUS
-        public Assignment getTypeAssignment() {
-            return cTypeAssignment;
-        }
-
-        //BETWEEN_MINUS
-        public RuleCall getTypeBETWEEN_MINUSTerminalRuleCall_0() {
-            return cTypeBETWEEN_MINUSTerminalRuleCall_0;
-        }
-    }
-
-    public class WordElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Word");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cWordAction_0 = (Action) cGroup.eContents().get(0);
-        private final Assignment cWCharAssignment_1 = (Assignment) cGroup.eContents().get(1);
-        private final RuleCall cWCharWordPartParserRuleCall_1_0 = (RuleCall) cWCharAssignment_1.eContents().get(0);
-
-        //// word
-        //Word:
-        //	{Word} wChar+=WordPart+;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{Word} wChar+=WordPart+
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{Word}
-        public Action getWordAction_0() {
-            return cWordAction_0;
-        }
-
-        //wChar+=WordPart+
-        public Assignment getWCharAssignment_1() {
-            return cWCharAssignment_1;
-        }
-
-        //WordPart
-        public RuleCall getWCharWordPartParserRuleCall_1_0() {
-            return cWCharWordPartParserRuleCall_1_0;
-        }
-    }
-
-    public class WordPartElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.WordPart");
-        private final Assignment cWCharAssignment = (Assignment) rule.eContents().get(1);
-        private final RuleCall cWCharWordMiddleParserRuleCall_0 = (RuleCall) cWCharAssignment.eContents().get(0);
-
-        //WordPart:
-        //	wChar=WordMiddle;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //wChar=WordMiddle
-        public Assignment getWCharAssignment() {
-            return cWCharAssignment;
-        }
-
-        //WordMiddle
-        public RuleCall getWCharWordMiddleParserRuleCall_0() {
-            return cWCharWordMiddleParserRuleCall_0;
-        }
-    }
-
-    public class WordMiddleElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.WordMiddle");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cBracketsParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cCharsParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cInterfixParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-
-        //WordMiddle:
-        //	Brackets | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        ////	{WordMiddle}
-        //Brackets | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        ////	{WordMiddle}
-        //Brackets
-        public RuleCall getBracketsParserRuleCall_0() {
-            return cBracketsParserRuleCall_0;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_1() {
-            return cCharsParserRuleCall_1;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_2() {
-            return cInterfixParserRuleCall_2;
-        }
-    }
-
-    public class CharsElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Chars");
-        private final Assignment cNameAssignment = (Assignment) rule.eContents().get(1);
-        private final RuleCall cNameEGYSTRINGTerminalRuleCall_0 = (RuleCall) cNameAssignment.eContents().get(0);
-
-        //// Chars...
-        //Chars:
-        //	name=EGYSTRING;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //name=EGYSTRING
-        public Assignment getNameAssignment() {
-            return cNameAssignment;
-        }
-
-        //EGYSTRING
-        public RuleCall getNameEGYSTRINGTerminalRuleCall_0() {
-            return cNameEGYSTRINGTerminalRuleCall_0;
-        }
-    }
-
-    public class BracketsElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Brackets");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cRasurParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cAncientExpandedParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cRestorationOverRasurParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cExpandedColumnParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cExpandedParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cDisputableReadingParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cEmendationParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cLacunaParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-        private final RuleCall cDeletionParserRuleCall_8 = (RuleCall) cAlternatives.eContents().get(8);
-        private final RuleCall cPartialDestructionParserRuleCall_9 = (RuleCall) cAlternatives.eContents().get(9);
-        private final RuleCall cCartoucheParserRuleCall_10 = (RuleCall) cAlternatives.eContents().get(10);
-        private final RuleCall cOvalParserRuleCall_11 = (RuleCall) cAlternatives.eContents().get(11);
-        private final RuleCall cSerechParserRuleCall_12 = (RuleCall) cAlternatives.eContents().get(12);
-
-        //// textual criticism brackets
-        //Brackets:
-        //	Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna |
-        //	Deletion | PartialDestruction
-        //	| Cartouche | Oval | Serech;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna |
-        //Deletion | PartialDestruction | Cartouche | Oval | Serech
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Rasur
-        public RuleCall getRasurParserRuleCall_0() {
-            return cRasurParserRuleCall_0;
-        }
-
-        //AncientExpanded
-        public RuleCall getAncientExpandedParserRuleCall_1() {
-            return cAncientExpandedParserRuleCall_1;
-        }
-
-        //RestorationOverRasur
-        public RuleCall getRestorationOverRasurParserRuleCall_2() {
-            return cRestorationOverRasurParserRuleCall_2;
-        }
-
-        //ExpandedColumn
-        public RuleCall getExpandedColumnParserRuleCall_3() {
-            return cExpandedColumnParserRuleCall_3;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_4() {
-            return cExpandedParserRuleCall_4;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_5() {
-            return cDisputableReadingParserRuleCall_5;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_6() {
-            return cEmendationParserRuleCall_6;
-        }
-
-        //Lacuna
-        public RuleCall getLacunaParserRuleCall_7() {
-            return cLacunaParserRuleCall_7;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_8() {
-            return cDeletionParserRuleCall_8;
-        }
-
-        //PartialDestruction
-        public RuleCall getPartialDestructionParserRuleCall_9() {
-            return cPartialDestructionParserRuleCall_9;
-        }
-
-        //Cartouche
-        public RuleCall getCartoucheParserRuleCall_10() {
-            return cCartoucheParserRuleCall_10;
-        }
-
-        //Oval
-        public RuleCall getOvalParserRuleCall_11() {
-            return cOvalParserRuleCall_11;
-        }
-
-        //Serech
-        public RuleCall getSerechParserRuleCall_12() {
-            return cSerechParserRuleCall_12;
-        }
-    }
-
-    public class OvalElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Oval");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Keyword cLeadSurrogateD80cTrailSurrogateDe58Keyword_0 = (Keyword) cGroup.eContents().get(0);
-        private final Assignment cWCharAssignment_1 = (Assignment) cGroup.eContents().get(1);
-        private final RuleCall cWCharNoCartoucheParserRuleCall_1_0 = (RuleCall) cWCharAssignment_1.eContents().get(0);
-        private final Keyword cLeadSurrogateD80cTrailSurrogateDe82Keyword_2 = (Keyword) cGroup.eContents().get(2);
-
-        ////Cartouche2:
-        ////	'\\u13379'   wChar+=NoCartouche+ '\\u1337A'
-        ////;
-        //Oval: //Oval
-        //	'\\uD80C\\uDE58' wChar+=NoCartouche+ '\\uD80C\\uDE82';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        ////Oval
-        //'\\uD80C\\uDE58' wChar+=NoCartouche+ '\\uD80C\\uDE82'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        ////Oval
-        //'\\uD80C\\uDE58'
-        public Keyword getLeadSurrogateD80cTrailSurrogateDe58Keyword_0() {
-            return cLeadSurrogateD80cTrailSurrogateDe58Keyword_0;
-        }
-
-        //wChar+=NoCartouche+
-        public Assignment getWCharAssignment_1() {
-            return cWCharAssignment_1;
-        }
-
-        //NoCartouche
-        public RuleCall getWCharNoCartoucheParserRuleCall_1_0() {
-            return cWCharNoCartoucheParserRuleCall_1_0;
-        }
-
-        //'\\uD80C\\uDE82'
-        public Keyword getLeadSurrogateD80cTrailSurrogateDe82Keyword_2() {
-            return cLeadSurrogateD80cTrailSurrogateDe82Keyword_2;
-        }
-    }
-
-    public class SerechElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Serech");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Keyword cLeadSurrogateD80cTrailSurrogateDf79Keyword_0 = (Keyword) cGroup.eContents().get(0);
-        private final Assignment cWCharAssignment_1 = (Assignment) cGroup.eContents().get(1);
-        private final RuleCall cWCharNoCartoucheParserRuleCall_1_0 = (RuleCall) cWCharAssignment_1.eContents().get(0);
-        private final Keyword cLeadSurrogateD80cTrailSurrogateDf7aKeyword_2 = (Keyword) cGroup.eContents().get(2);
-
-        //Serech: // eigentlich Serech
-        //	'\\uD80C\\uDF79' wChar+=NoCartouche+ '\\uD80C\\uDF7A';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //// eigentlich Serech
-        //'\\uD80C\\uDF79' wChar+=NoCartouche+ '\\uD80C\\uDF7A'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //// eigentlich Serech
-        //'\\uD80C\\uDF79'
-        public Keyword getLeadSurrogateD80cTrailSurrogateDf79Keyword_0() {
-            return cLeadSurrogateD80cTrailSurrogateDf79Keyword_0;
-        }
-
-        //wChar+=NoCartouche+
-        public Assignment getWCharAssignment_1() {
-            return cWCharAssignment_1;
-        }
-
-        //NoCartouche
-        public RuleCall getWCharNoCartoucheParserRuleCall_1_0() {
-            return cWCharNoCartoucheParserRuleCall_1_0;
-        }
-
-        //'\\uD80C\\uDF7A'
-        public Keyword getLeadSurrogateD80cTrailSurrogateDf7aKeyword_2() {
-            return cLeadSurrogateD80cTrailSurrogateDf7aKeyword_2;
-        }
-    }
-
-    public class CartoucheElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Cartouche");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cExpandedAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeadSurrogateD80cTrailSurrogateDe86Keyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoCartoucheParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cLeadSurrogateD80cTrailSurrogateDe87Keyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //Cartouche:
-        //	{Expanded}
-        //	'\\uD80C\\uDE86' wChar+=NoCartouche+ '\\uD80C\\uDE87';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{Expanded} '\\uD80C\\uDE86' wChar+=NoCartouche+ '\\uD80C\\uDE87'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{Expanded}
-        public Action getExpandedAction_0() {
-            return cExpandedAction_0;
-        }
-
-        //'\\uD80C\\uDE86'
-        public Keyword getLeadSurrogateD80cTrailSurrogateDe86Keyword_1() {
-            return cLeadSurrogateD80cTrailSurrogateDe86Keyword_1;
-        }
-
-        //wChar+=NoCartouche+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoCartouche
-        public RuleCall getWCharNoCartoucheParserRuleCall_2_0() {
-            return cWCharNoCartoucheParserRuleCall_2_0;
-        }
-
-        //'\\uD80C\\uDE87'
-        public Keyword getLeadSurrogateD80cTrailSurrogateDe87Keyword_3() {
-            return cLeadSurrogateD80cTrailSurrogateDe87Keyword_3;
-        }
-    }
-
-    public class NoCartoucheElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoCartouche");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cCharsParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cRasurParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cAncientExpandedParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cRestorationOverRasurParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cExpandedColumnParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cExpandedParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cDisputableReadingParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cEmendationParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-        private final RuleCall cLacunaParserRuleCall_8 = (RuleCall) cAlternatives.eContents().get(8);
-        private final RuleCall cDeletionParserRuleCall_9 = (RuleCall) cAlternatives.eContents().get(9);
-        private final RuleCall cPartialDestructionParserRuleCall_10 = (RuleCall) cAlternatives.eContents().get(10);
-        private final RuleCall cInterfixParserRuleCall_11 = (RuleCall) cAlternatives.eContents().get(11);
-
-        //NoCartouche:
-        //	Chars
-        //	| Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna
-        //	| Deletion | PartialDestruction
-        //	| Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Chars | Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation |
-        //Lacuna | Deletion | PartialDestruction | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_0() {
-            return cCharsParserRuleCall_0;
-        }
-
-        //Rasur
-        public RuleCall getRasurParserRuleCall_1() {
-            return cRasurParserRuleCall_1;
-        }
-
-        //AncientExpanded
-        public RuleCall getAncientExpandedParserRuleCall_2() {
-            return cAncientExpandedParserRuleCall_2;
-        }
-
-        //RestorationOverRasur
-        public RuleCall getRestorationOverRasurParserRuleCall_3() {
-            return cRestorationOverRasurParserRuleCall_3;
-        }
-
-        //ExpandedColumn
-        public RuleCall getExpandedColumnParserRuleCall_4() {
-            return cExpandedColumnParserRuleCall_4;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_5() {
-            return cExpandedParserRuleCall_5;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_6() {
-            return cDisputableReadingParserRuleCall_6;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_7() {
-            return cEmendationParserRuleCall_7;
-        }
-
-        //Lacuna
-        public RuleCall getLacunaParserRuleCall_8() {
-            return cLacunaParserRuleCall_8;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_9() {
-            return cDeletionParserRuleCall_9;
-        }
-
-        //PartialDestruction
-        public RuleCall getPartialDestructionParserRuleCall_10() {
-            return cPartialDestructionParserRuleCall_10;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_11() {
-            return cInterfixParserRuleCall_11;
-        }
-    }
-
-    public class ExpandedElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Expanded");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cExpandedAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftParenthesisKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoExpandedParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cRightParenthesisKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //Expanded:
-        //	{Expanded}
-        //	'(' wChar+=NoExpanded+ ')';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{Expanded} '(' wChar+=NoExpanded+ ')'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{Expanded}
-        public Action getExpandedAction_0() {
-            return cExpandedAction_0;
-        }
-
-        //'('
-        public Keyword getLeftParenthesisKeyword_1() {
-            return cLeftParenthesisKeyword_1;
-        }
-
-        //wChar+=NoExpanded+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoExpanded
-        public RuleCall getWCharNoExpandedParserRuleCall_2_0() {
-            return cWCharNoExpandedParserRuleCall_2_0;
-        }
-
-        //')'
-        public Keyword getRightParenthesisKeyword_3() {
-            return cRightParenthesisKeyword_3;
-        }
-    }
-
-    public class AncientExpandedElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.AncientExpanded");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cAncientExpandedAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftParenthesisLeftParenthesisKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoAncientExpandedParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cRightParenthesisRightParenthesisKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //AncientExpanded:
-        //	{AncientExpanded}
-        //	'((' wChar+=NoAncientExpanded+ '))';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{AncientExpanded} '((' wChar+=NoAncientExpanded+ '))'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{AncientExpanded}
-        public Action getAncientExpandedAction_0() {
-            return cAncientExpandedAction_0;
-        }
-
-        //'(('
-        public Keyword getLeftParenthesisLeftParenthesisKeyword_1() {
-            return cLeftParenthesisLeftParenthesisKeyword_1;
-        }
-
-        //wChar+=NoAncientExpanded+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoAncientExpanded
-        public RuleCall getWCharNoAncientExpandedParserRuleCall_2_0() {
-            return cWCharNoAncientExpandedParserRuleCall_2_0;
-        }
-
-        //'))'
-        public Keyword getRightParenthesisRightParenthesisKeyword_3() {
-            return cRightParenthesisRightParenthesisKeyword_3;
-        }
-    }
-
-    public class NoExpandedElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoExpanded");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cDisputableReadingParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cCharsParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cInterfixParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-
-        //NoExpanded:
-        //	DisputableReading | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //DisputableReading | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_0() {
-            return cDisputableReadingParserRuleCall_0;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_1() {
-            return cCharsParserRuleCall_1;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_2() {
-            return cInterfixParserRuleCall_2;
-        }
-    }
-
-    public class EmendationElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Emendation");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cEmendationAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftPointingAngleBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoEmendationParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cRightPointingAngleBracketKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //Emendation:
-        //	{Emendation}
-        //	'\\u2329' wChar+=NoEmendation+ '\\u232A';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{Emendation} '\\u2329' wChar+=NoEmendation+ '\\u232A'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{Emendation}
-        public Action getEmendationAction_0() {
-            return cEmendationAction_0;
-        }
-
-        //'\\u2329'
-        public Keyword getLeftPointingAngleBracketKeyword_1() {
-            return cLeftPointingAngleBracketKeyword_1;
-        }
-
-        //wChar+=NoEmendation+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoEmendation
-        public RuleCall getWCharNoEmendationParserRuleCall_2_0() {
-            return cWCharNoEmendationParserRuleCall_2_0;
-        }
-
-        //'\\u232A'
-        public Keyword getRightPointingAngleBracketKeyword_3() {
-            return cRightPointingAngleBracketKeyword_3;
-        }
-    }
-
-    public class NoEmendationElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoEmendation");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cExpandedParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cCharsParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cInterfixParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-
-        //NoEmendation:
-        //	Expanded | DisputableReading | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Expanded | DisputableReading | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_0() {
-            return cExpandedParserRuleCall_0;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_1() {
-            return cDisputableReadingParserRuleCall_1;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_2() {
-            return cCharsParserRuleCall_2;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_3() {
-            return cInterfixParserRuleCall_3;
-        }
-    }
-
-    public class DisputableReadingElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DisputableReading");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cDisputableReadingAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cReversedQuestionMarkKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoDisputableReadingParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cQuestionMarkKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //DisputableReading:
-        //	{DisputableReading}
-        //	'\\u2E2E' wChar+=NoDisputableReading+ '?';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{DisputableReading} '\\u2E2E' wChar+=NoDisputableReading+ '?'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{DisputableReading}
-        public Action getDisputableReadingAction_0() {
-            return cDisputableReadingAction_0;
-        }
-
-        //'\\u2E2E'
-        public Keyword getReversedQuestionMarkKeyword_1() {
-            return cReversedQuestionMarkKeyword_1;
-        }
-
-        //wChar+=NoDisputableReading+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoDisputableReading
-        public RuleCall getWCharNoDisputableReadingParserRuleCall_2_0() {
-            return cWCharNoDisputableReadingParserRuleCall_2_0;
-        }
-
-        //'?'
-        public Keyword getQuestionMarkKeyword_3() {
-            return cQuestionMarkKeyword_3;
-        }
-    }
-
-    public class NoDisputableReadingElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoDisputableReading");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cExpandedParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cEmendationParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cDeletionParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cRasurParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cAncientExpandedParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cRestorationOverRasurParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cExpandedColumnParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cLacunaParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-        private final RuleCall cPartialDestructionParserRuleCall_8 = (RuleCall) cAlternatives.eContents().get(8);
-        private final RuleCall cCharsParserRuleCall_9 = (RuleCall) cAlternatives.eContents().get(9);
-        private final RuleCall cInterfixParserRuleCall_10 = (RuleCall) cAlternatives.eContents().get(10);
-
-        //NoDisputableReading:
-        //	Expanded | Emendation | Deletion
-        //	| Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn
-        //	| Lacuna
-        //	| PartialDestruction
-        //	| Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Expanded | Emendation | Deletion | Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Lacuna |
-        //PartialDestruction | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_0() {
-            return cExpandedParserRuleCall_0;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_1() {
-            return cEmendationParserRuleCall_1;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_2() {
-            return cDeletionParserRuleCall_2;
-        }
-
-        //Rasur
-        public RuleCall getRasurParserRuleCall_3() {
-            return cRasurParserRuleCall_3;
-        }
-
-        //AncientExpanded
-        public RuleCall getAncientExpandedParserRuleCall_4() {
-            return cAncientExpandedParserRuleCall_4;
-        }
-
-        //RestorationOverRasur
-        public RuleCall getRestorationOverRasurParserRuleCall_5() {
-            return cRestorationOverRasurParserRuleCall_5;
-        }
-
-        //ExpandedColumn
-        public RuleCall getExpandedColumnParserRuleCall_6() {
-            return cExpandedColumnParserRuleCall_6;
-        }
-
-        //Lacuna
-        public RuleCall getLacunaParserRuleCall_7() {
-            return cLacunaParserRuleCall_7;
-        }
-
-        //PartialDestruction
-        public RuleCall getPartialDestructionParserRuleCall_8() {
-            return cPartialDestructionParserRuleCall_8;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_9() {
-            return cCharsParserRuleCall_9;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_10() {
-            return cInterfixParserRuleCall_10;
-        }
-    }
-
-    public class LacunaElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Lacuna");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cLacunaAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftSquareBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoLacunaParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cRightSquareBracketKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //Lacuna:
-        //	{Lacuna}
-        //	'[' wChar+=NoLacuna+ ']';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{Lacuna} '[' wChar+=NoLacuna+ ']'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{Lacuna}
-        public Action getLacunaAction_0() {
-            return cLacunaAction_0;
-        }
-
-        //'['
-        public Keyword getLeftSquareBracketKeyword_1() {
-            return cLeftSquareBracketKeyword_1;
-        }
-
-        //wChar+=NoLacuna+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoLacuna
-        public RuleCall getWCharNoLacunaParserRuleCall_2_0() {
-            return cWCharNoLacunaParserRuleCall_2_0;
-        }
-
-        //']'
-        public Keyword getRightSquareBracketKeyword_3() {
-            return cRightSquareBracketKeyword_3;
-        }
-    }
-
-    public class NoLacunaElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoLacuna");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cExpandedParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cCartoucheParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cOvalParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cSerechParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cDeletionParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cEmendationParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cCharsParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-        private final RuleCall cInterfixParserRuleCall_8 = (RuleCall) cAlternatives.eContents().get(8);
-
-        //NoLacuna:
-        //	Expanded | DisputableReading | Cartouche | Oval | Serech | Deletion | Emendation | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Expanded | DisputableReading | Cartouche | Oval | Serech | Deletion | Emendation | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_0() {
-            return cExpandedParserRuleCall_0;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_1() {
-            return cDisputableReadingParserRuleCall_1;
-        }
-
-        //Cartouche
-        public RuleCall getCartoucheParserRuleCall_2() {
-            return cCartoucheParserRuleCall_2;
-        }
-
-        //Oval
-        public RuleCall getOvalParserRuleCall_3() {
-            return cOvalParserRuleCall_3;
-        }
-
-        //Serech
-        public RuleCall getSerechParserRuleCall_4() {
-            return cSerechParserRuleCall_4;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_5() {
-            return cDeletionParserRuleCall_5;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_6() {
-            return cEmendationParserRuleCall_6;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_7() {
-            return cCharsParserRuleCall_7;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_8() {
-            return cInterfixParserRuleCall_8;
-        }
-    }
-
-    public class DeletionElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Deletion");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cDeletionAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoDeletionParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cRightCurlyBracketKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //Deletion:
-        //	{Deletion}
-        //	'{' wChar+=NoDeletion+ '}';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{Deletion} '{' wChar+=NoDeletion+ '}'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{Deletion}
-        public Action getDeletionAction_0() {
-            return cDeletionAction_0;
-        }
-
-        //'{'
-        public Keyword getLeftCurlyBracketKeyword_1() {
-            return cLeftCurlyBracketKeyword_1;
-        }
-
-        //wChar+=NoDeletion+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoDeletion
-        public RuleCall getWCharNoDeletionParserRuleCall_2_0() {
-            return cWCharNoDeletionParserRuleCall_2_0;
-        }
-
-        //'}'
-        public Keyword getRightCurlyBracketKeyword_3() {
-            return cRightCurlyBracketKeyword_3;
-        }
-    }
-
-    public class NoDeletionElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoDeletion");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cPartialDestructionParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cExpandedParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cDisputableReadingParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cLacunaParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cRestorationOverRasurParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cAncientExpandedParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cCharsParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cInterfixParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-
-        //NoDeletion:
-        //	PartialDestruction | Expanded | DisputableReading | Lacuna | RestorationOverRasur | AncientExpanded | Chars |
-        //	Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //PartialDestruction | Expanded | DisputableReading | Lacuna | RestorationOverRasur | AncientExpanded | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //PartialDestruction
-        public RuleCall getPartialDestructionParserRuleCall_0() {
-            return cPartialDestructionParserRuleCall_0;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_1() {
-            return cExpandedParserRuleCall_1;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_2() {
-            return cDisputableReadingParserRuleCall_2;
-        }
-
-        //Lacuna
-        public RuleCall getLacunaParserRuleCall_3() {
-            return cLacunaParserRuleCall_3;
-        }
-
-        //RestorationOverRasur
-        public RuleCall getRestorationOverRasurParserRuleCall_4() {
-            return cRestorationOverRasurParserRuleCall_4;
-        }
-
-        //AncientExpanded
-        public RuleCall getAncientExpandedParserRuleCall_5() {
-            return cAncientExpandedParserRuleCall_5;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_6() {
-            return cCharsParserRuleCall_6;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_7() {
-            return cInterfixParserRuleCall_7;
-        }
-    }
-
-    public class ExpandedColumnElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.ExpandedColumn");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cExpandedColumnAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftPointingAngleBracketLeftPointingAngleBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoExpandedColumnParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cRightPointingAngleBracketRightPointingAngleBracketKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //ExpandedColumn:
-        //	{ExpandedColumn}
-        //	'\\u2329\\u2329' wChar+=NoExpandedColumn+ '\\u232A\\u232A';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{ExpandedColumn} '\\u2329\\u2329' wChar+=NoExpandedColumn+ '\\u232A\\u232A'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{ExpandedColumn}
-        public Action getExpandedColumnAction_0() {
-            return cExpandedColumnAction_0;
-        }
-
-        //'\\u2329\\u2329'
-        public Keyword getLeftPointingAngleBracketLeftPointingAngleBracketKeyword_1() {
-            return cLeftPointingAngleBracketLeftPointingAngleBracketKeyword_1;
-        }
-
-        //wChar+=NoExpandedColumn+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoExpandedColumn
-        public RuleCall getWCharNoExpandedColumnParserRuleCall_2_0() {
-            return cWCharNoExpandedColumnParserRuleCall_2_0;
-        }
-
-        //'\\u232A\\u232A'
-        public Keyword getRightPointingAngleBracketRightPointingAngleBracketKeyword_3() {
-            return cRightPointingAngleBracketRightPointingAngleBracketKeyword_3;
-        }
-    }
-
-    public class NoExpandedColumnElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoExpandedColumn");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cExpandedParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cEmendationParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cLacunaParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cPartialDestructionParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cDeletionParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cCharsParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cInterfixParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-
-        //NoExpandedColumn:
-        //	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_0() {
-            return cExpandedParserRuleCall_0;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_1() {
-            return cDisputableReadingParserRuleCall_1;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_2() {
-            return cEmendationParserRuleCall_2;
-        }
-
-        //Lacuna
-        public RuleCall getLacunaParserRuleCall_3() {
-            return cLacunaParserRuleCall_3;
-        }
-
-        //PartialDestruction
-        public RuleCall getPartialDestructionParserRuleCall_4() {
-            return cPartialDestructionParserRuleCall_4;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_5() {
-            return cDeletionParserRuleCall_5;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_6() {
-            return cCharsParserRuleCall_6;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_7() {
-            return cInterfixParserRuleCall_7;
-        }
-    }
-
-    public class RasurElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Rasur");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cRasurAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftCurlyBracketLeftCurlyBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoRasurParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cRightCurlyBracketRightCurlyBracketKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //Rasur:
-        //	{Rasur}
-        //	'{{' wChar+=NoRasur+ '}}';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{Rasur} '{{' wChar+=NoRasur+ '}}'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{Rasur}
-        public Action getRasurAction_0() {
-            return cRasurAction_0;
-        }
-
-        //'{{'
-        public Keyword getLeftCurlyBracketLeftCurlyBracketKeyword_1() {
-            return cLeftCurlyBracketLeftCurlyBracketKeyword_1;
-        }
-
-        //wChar+=NoRasur+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoRasur
-        public RuleCall getWCharNoRasurParserRuleCall_2_0() {
-            return cWCharNoRasurParserRuleCall_2_0;
-        }
-
-        //'}}'
-        public Keyword getRightCurlyBracketRightCurlyBracketKeyword_3() {
-            return cRightCurlyBracketRightCurlyBracketKeyword_3;
-        }
-    }
-
-    public class NoRasurElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoRasur");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cExpandedParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cEmendationParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cLacunaParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cPartialDestructionParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cDeletionParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cCharsParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cInterfixParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-
-        //NoRasur:
-        //	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_0() {
-            return cExpandedParserRuleCall_0;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_1() {
-            return cDisputableReadingParserRuleCall_1;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_2() {
-            return cEmendationParserRuleCall_2;
-        }
-
-        //Lacuna
-        public RuleCall getLacunaParserRuleCall_3() {
-            return cLacunaParserRuleCall_3;
-        }
-
-        //PartialDestruction
-        public RuleCall getPartialDestructionParserRuleCall_4() {
-            return cPartialDestructionParserRuleCall_4;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_5() {
-            return cDeletionParserRuleCall_5;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_6() {
-            return cCharsParserRuleCall_6;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_7() {
-            return cInterfixParserRuleCall_7;
-        }
-    }
-
-    public class NoAncientExpandedElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoAncientExpanded");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cExpandedParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cEmendationParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cLacunaParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cPartialDestructionParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cDeletionParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cCharsParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cInterfixParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-
-        //NoAncientExpanded:
-        //	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_0() {
-            return cExpandedParserRuleCall_0;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_1() {
-            return cDisputableReadingParserRuleCall_1;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_2() {
-            return cEmendationParserRuleCall_2;
-        }
-
-        //Lacuna
-        public RuleCall getLacunaParserRuleCall_3() {
-            return cLacunaParserRuleCall_3;
-        }
-
-        //PartialDestruction
-        public RuleCall getPartialDestructionParserRuleCall_4() {
-            return cPartialDestructionParserRuleCall_4;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_5() {
-            return cDeletionParserRuleCall_5;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_6() {
-            return cCharsParserRuleCall_6;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_7() {
-            return cInterfixParserRuleCall_7;
-        }
-    }
-
-    public class RestorationOverRasurElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.RestorationOverRasur");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cRestorationOverRasurAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftSquareBracketLeftSquareBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoRestorationOverRasurParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cRightSquareBracketRightSquareBracketKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //RestorationOverRasur:
-        //	{RestorationOverRasur}
-        //	'[[' wChar+=NoRestorationOverRasur+ ']]';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{RestorationOverRasur} '[[' wChar+=NoRestorationOverRasur+ ']]'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{RestorationOverRasur}
-        public Action getRestorationOverRasurAction_0() {
-            return cRestorationOverRasurAction_0;
-        }
-
-        //'[['
-        public Keyword getLeftSquareBracketLeftSquareBracketKeyword_1() {
-            return cLeftSquareBracketLeftSquareBracketKeyword_1;
-        }
-
-        //wChar+=NoRestorationOverRasur+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoRestorationOverRasur
-        public RuleCall getWCharNoRestorationOverRasurParserRuleCall_2_0() {
-            return cWCharNoRestorationOverRasurParserRuleCall_2_0;
-        }
-
-        //']]'
-        public Keyword getRightSquareBracketRightSquareBracketKeyword_3() {
-            return cRightSquareBracketRightSquareBracketKeyword_3;
-        }
-    }
-
-    public class NoRestorationOverRasurElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoRestorationOverRasur");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cExpandedParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cCartoucheParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cEmendationParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cLacunaParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cPartialDestructionParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cDeletionParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cCharsParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-        private final RuleCall cInterfixParserRuleCall_8 = (RuleCall) cAlternatives.eContents().get(8);
-
-        //NoRestorationOverRasur:
-        //	Expanded | DisputableReading | Cartouche | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Expanded | DisputableReading | Cartouche | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_0() {
-            return cExpandedParserRuleCall_0;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_1() {
-            return cDisputableReadingParserRuleCall_1;
-        }
-
-        //Cartouche
-        public RuleCall getCartoucheParserRuleCall_2() {
-            return cCartoucheParserRuleCall_2;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_3() {
-            return cEmendationParserRuleCall_3;
-        }
-
-        //Lacuna
-        public RuleCall getLacunaParserRuleCall_4() {
-            return cLacunaParserRuleCall_4;
-        }
-
-        //PartialDestruction
-        public RuleCall getPartialDestructionParserRuleCall_5() {
-            return cPartialDestructionParserRuleCall_5;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_6() {
-            return cDeletionParserRuleCall_6;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_7() {
-            return cCharsParserRuleCall_7;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_8() {
-            return cInterfixParserRuleCall_8;
-        }
-    }
-
-    public class PartialDestructionElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.PartialDestruction");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cPartialDestructionAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cTopLeftHalfBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-        private final Assignment cWCharAssignment_2 = (Assignment) cGroup.eContents().get(2);
-        private final RuleCall cWCharNoPartialDestructionParserRuleCall_2_0 = (RuleCall) cWCharAssignment_2.eContents().get(0);
-        private final Keyword cTopRightHalfBracketKeyword_3 = (Keyword) cGroup.eContents().get(3);
-
-        //PartialDestruction:
-        //	{PartialDestruction}
-        //	'\\u2E22' wChar+=NoPartialDestruction+ '\\u2E23';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{PartialDestruction} '\\u2E22' wChar+=NoPartialDestruction+ '\\u2E23'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{PartialDestruction}
-        public Action getPartialDestructionAction_0() {
-            return cPartialDestructionAction_0;
-        }
-
-        //'\\u2E22'
-        public Keyword getTopLeftHalfBracketKeyword_1() {
-            return cTopLeftHalfBracketKeyword_1;
-        }
-
-        //wChar+=NoPartialDestruction+
-        public Assignment getWCharAssignment_2() {
-            return cWCharAssignment_2;
-        }
-
-        //NoPartialDestruction
-        public RuleCall getWCharNoPartialDestructionParserRuleCall_2_0() {
-            return cWCharNoPartialDestructionParserRuleCall_2_0;
-        }
-
-        //'\\u2E23'
-        public Keyword getTopRightHalfBracketKeyword_3() {
-            return cTopRightHalfBracketKeyword_3;
-        }
-    }
-
-    public class NoPartialDestructionElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoPartialDestruction");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cDeletionParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cExpandedParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cDisputableReadingParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cCartoucheParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cOvalParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cSerechParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cEmendationParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cCharsParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-        private final RuleCall cInterfixParserRuleCall_8 = (RuleCall) cAlternatives.eContents().get(8);
-
-        //NoPartialDestruction:
-        //	Deletion | Expanded | DisputableReading | Cartouche | Oval | Serech | Emendation | Chars | Interfix;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //Deletion | Expanded | DisputableReading | Cartouche | Oval | Serech | Emendation | Chars | Interfix
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //Deletion
-        public RuleCall getDeletionParserRuleCall_0() {
-            return cDeletionParserRuleCall_0;
-        }
-
-        //Expanded
-        public RuleCall getExpandedParserRuleCall_1() {
-            return cExpandedParserRuleCall_1;
-        }
-
-        //DisputableReading
-        public RuleCall getDisputableReadingParserRuleCall_2() {
-            return cDisputableReadingParserRuleCall_2;
-        }
-
-        //Cartouche
-        public RuleCall getCartoucheParserRuleCall_3() {
-            return cCartoucheParserRuleCall_3;
-        }
-
-        //Oval
-        public RuleCall getOvalParserRuleCall_4() {
-            return cOvalParserRuleCall_4;
-        }
-
-        //Serech
-        public RuleCall getSerechParserRuleCall_5() {
-            return cSerechParserRuleCall_5;
-        }
-
-        //Emendation
-        public RuleCall getEmendationParserRuleCall_6() {
-            return cEmendationParserRuleCall_6;
-        }
-
-        //Chars
-        public RuleCall getCharsParserRuleCall_7() {
-            return cCharsParserRuleCall_7;
-        }
-
-        //Interfix
-        public RuleCall getInterfixParserRuleCall_8() {
-            return cInterfixParserRuleCall_8;
-        }
-    }
-
-    public class InterfixElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Interfix");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cInterfixFlexionParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cInterfixLexicalParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cInterfixSuffixPronomLexicalParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cInterfixPrefixNonLexicalParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cInterfixPrefixLexicalParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cInterfixConnectionSyllabicGroupParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cInterfixCompoundWordsParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cInterfixPhoneticalComplementParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-
-        //// textual criticism interfixes
-        //Interfix:
-        //	InterfixFlexion | InterfixLexical | InterfixSuffixPronomLexical | InterfixPrefixNonLexical | InterfixPrefixLexical
-        //	| InterfixConnectionSyllabicGroup
-        //	| InterfixCompoundWords
-        //	| InterfixPhoneticalComplement;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //InterfixFlexion | InterfixLexical | InterfixSuffixPronomLexical | InterfixPrefixNonLexical | InterfixPrefixLexical |
-        //InterfixConnectionSyllabicGroup | InterfixCompoundWords | InterfixPhoneticalComplement
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //InterfixFlexion
-        public RuleCall getInterfixFlexionParserRuleCall_0() {
-            return cInterfixFlexionParserRuleCall_0;
-        }
-
-        //InterfixLexical
-        public RuleCall getInterfixLexicalParserRuleCall_1() {
-            return cInterfixLexicalParserRuleCall_1;
-        }
-
-        //InterfixSuffixPronomLexical
-        public RuleCall getInterfixSuffixPronomLexicalParserRuleCall_2() {
-            return cInterfixSuffixPronomLexicalParserRuleCall_2;
-        }
-
-        //InterfixPrefixNonLexical
-        public RuleCall getInterfixPrefixNonLexicalParserRuleCall_3() {
-            return cInterfixPrefixNonLexicalParserRuleCall_3;
-        }
-
-        //InterfixPrefixLexical
-        public RuleCall getInterfixPrefixLexicalParserRuleCall_4() {
-            return cInterfixPrefixLexicalParserRuleCall_4;
-        }
-
-        //InterfixConnectionSyllabicGroup
-        public RuleCall getInterfixConnectionSyllabicGroupParserRuleCall_5() {
-            return cInterfixConnectionSyllabicGroupParserRuleCall_5;
-        }
-
-        //InterfixCompoundWords
-        public RuleCall getInterfixCompoundWordsParserRuleCall_6() {
-            return cInterfixCompoundWordsParserRuleCall_6;
-        }
-
-        //InterfixPhoneticalComplement
-        public RuleCall getInterfixPhoneticalComplementParserRuleCall_7() {
-            return cInterfixPhoneticalComplementParserRuleCall_7;
-        }
-    }
-
-    public class InterfixLexicalElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixLexical");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cInterfixLexicalAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cCommaKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //InterfixLexical:
-        //	{InterfixLexical}
-        //	',';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{InterfixLexical} ','
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{InterfixLexical}
-        public Action getInterfixLexicalAction_0() {
-            return cInterfixLexicalAction_0;
-        }
-
-        //','
-        public Keyword getCommaKeyword_1() {
-            return cCommaKeyword_1;
-        }
-    }
-
-    public class InterfixFlexionElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixFlexion");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cInterfixFlexionAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cFullStopKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //InterfixFlexion:
-        //	{InterfixFlexion}
-        //	'.';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{InterfixFlexion} '.'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{InterfixFlexion}
-        public Action getInterfixFlexionAction_0() {
-            return cInterfixFlexionAction_0;
-        }
-
-        //'.'
-        public Keyword getFullStopKeyword_1() {
-            return cFullStopKeyword_1;
-        }
-    }
-
-    public class InterfixSuffixPronomLexicalElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixSuffixPronomLexical");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cInterfixSuffixPronomLexicalAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cIdenticalToKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //InterfixSuffixPronomLexical:
-        //	{InterfixSuffixPronomLexical}
-        //	'\\u2261';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{InterfixSuffixPronomLexical} '\\u2261'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{InterfixSuffixPronomLexical}
-        public Action getInterfixSuffixPronomLexicalAction_0() {
-            return cInterfixSuffixPronomLexicalAction_0;
-        }
-
-        //'\\u2261'
-        public Keyword getIdenticalToKeyword_1() {
-            return cIdenticalToKeyword_1;
-        }
-    }
-
-    public class InterfixPrefixNonLexicalElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixPrefixNonLexical");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cInterfixPrefixNonLexicalAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cColonKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //InterfixPrefixNonLexical:
-        //	{InterfixPrefixNonLexical}
-        //	':';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{InterfixPrefixNonLexical} ':'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{InterfixPrefixNonLexical}
-        public Action getInterfixPrefixNonLexicalAction_0() {
-            return cInterfixPrefixNonLexicalAction_0;
-        }
-
-        //':'
-        public Keyword getColonKeyword_1() {
-            return cColonKeyword_1;
-        }
-    }
-
-    public class InterfixPrefixLexicalElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixPrefixLexical");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cInterfixPrefixLexicalAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cVerticalEllipsisKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //InterfixPrefixLexical:
-        //	{InterfixPrefixLexical}
-        //	'\\u22ee';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{InterfixPrefixLexical} '\\u22ee'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{InterfixPrefixLexical}
-        public Action getInterfixPrefixLexicalAction_0() {
-            return cInterfixPrefixLexicalAction_0;
-        }
-
-        //'\\u22ee'
-        public Keyword getVerticalEllipsisKeyword_1() {
-            return cVerticalEllipsisKeyword_1;
-        }
-    }
-
-    public class InterfixConnectionSyllabicGroupElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixConnectionSyllabicGroup");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cInterfixConnectionSyllabicGroupAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cTildeKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //InterfixConnectionSyllabicGroup:
-        //	{InterfixConnectionSyllabicGroup}
-        //	'~';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{InterfixConnectionSyllabicGroup} '~'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{InterfixConnectionSyllabicGroup}
-        public Action getInterfixConnectionSyllabicGroupAction_0() {
-            return cInterfixConnectionSyllabicGroupAction_0;
-        }
-
-        //'~'
-        public Keyword getTildeKeyword_1() {
-            return cTildeKeyword_1;
-        }
-    }
-
-    public class InterfixCompoundWordsElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixCompoundWords");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cInterfixCompoundWordsAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cHyphenMinusKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //InterfixCompoundWords:
-        //	{InterfixCompoundWords}
-        //	'-';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{InterfixCompoundWords} '-'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{InterfixCompoundWords}
-        public Action getInterfixCompoundWordsAction_0() {
-            return cInterfixCompoundWordsAction_0;
-        }
-
-        //'-'
-        public Keyword getHyphenMinusKeyword_1() {
-            return cHyphenMinusKeyword_1;
-        }
-    }
-
-    public class InterfixPhoneticalComplementElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixPhoneticalComplement");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cInterfixPhoneticalComplementAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cSemicolonKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //InterfixPhoneticalComplement:
-        //	{InterfixPhoneticalComplement}
-        //	';';
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{InterfixPhoneticalComplement} ';'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{InterfixPhoneticalComplement}
-        public Action getInterfixPhoneticalComplementAction_0() {
-            return cInterfixPhoneticalComplementAction_0;
-        }
-
-        //';'
-        public Keyword getSemicolonKeyword_1() {
-            return cSemicolonKeyword_1;
-        }
-    }
-
-    public class VersMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.VersMarker");
-        private final Alternatives cAlternatives = (Alternatives) rule.eContents().get(1);
-        private final RuleCall cVersbreakMarkerParserRuleCall_0 = (RuleCall) cAlternatives.eContents().get(0);
-        private final RuleCall cVersFrontierMarkerParserRuleCall_1 = (RuleCall) cAlternatives.eContents().get(1);
-        private final RuleCall cBrokenVersbreakMarkerParserRuleCall_2 = (RuleCall) cAlternatives.eContents().get(2);
-        private final RuleCall cMissingVersMarkerParserRuleCall_3 = (RuleCall) cAlternatives.eContents().get(3);
-        private final RuleCall cDestroyedVersMarkerParserRuleCall_4 = (RuleCall) cAlternatives.eContents().get(4);
-        private final RuleCall cDeletedVersMarkerParserRuleCall_5 = (RuleCall) cAlternatives.eContents().get(5);
-        private final RuleCall cDisputableVersMarkerParserRuleCall_6 = (RuleCall) cAlternatives.eContents().get(6);
-        private final RuleCall cRestorationOverRasurMarkerParserRuleCall_7 = (RuleCall) cAlternatives.eContents().get(7);
-        private final RuleCall cAncientExpandedMarkerParserRuleCall_8 = (RuleCall) cAlternatives.eContents().get(8);
-        private final RuleCall cRasurMarkerParserRuleCall_9 = (RuleCall) cAlternatives.eContents().get(9);
-        private final RuleCall cEmendationVersMarkerParserRuleCall_10 = (RuleCall) cAlternatives.eContents().get(10);
-        private final RuleCall cDestroyedVersFrontierMarkerParserRuleCall_11 = (RuleCall) cAlternatives.eContents().get(11);
-        private final RuleCall cPartialDestroyedVersMarkerParserRuleCall_12 = (RuleCall) cAlternatives.eContents().get(12);
-
-        //VersMarker:
-        //	VersbreakMarker | VersFrontierMarker | BrokenVersbreakMarker
-        //	| MissingVersMarker | DestroyedVersMarker | DeletedVersMarker | DisputableVersMarker
-        //	| RestorationOverRasurMarker | AncientExpandedMarker | RasurMarker
-        //	| EmendationVersMarker | DestroyedVersFrontierMarker | PartialDestroyedVersMarker;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //VersbreakMarker | VersFrontierMarker | BrokenVersbreakMarker | MissingVersMarker | DestroyedVersMarker |
-        //DeletedVersMarker | DisputableVersMarker | RestorationOverRasurMarker | AncientExpandedMarker | RasurMarker |
-        //EmendationVersMarker | DestroyedVersFrontierMarker | PartialDestroyedVersMarker
-        public Alternatives getAlternatives() {
-            return cAlternatives;
-        }
-
-        //VersbreakMarker
-        public RuleCall getVersbreakMarkerParserRuleCall_0() {
-            return cVersbreakMarkerParserRuleCall_0;
-        }
-
-        //VersFrontierMarker
-        public RuleCall getVersFrontierMarkerParserRuleCall_1() {
-            return cVersFrontierMarkerParserRuleCall_1;
-        }
-
-        //BrokenVersbreakMarker
-        public RuleCall getBrokenVersbreakMarkerParserRuleCall_2() {
-            return cBrokenVersbreakMarkerParserRuleCall_2;
-        }
-
-        //MissingVersMarker
-        public RuleCall getMissingVersMarkerParserRuleCall_3() {
-            return cMissingVersMarkerParserRuleCall_3;
-        }
-
-        //DestroyedVersMarker
-        public RuleCall getDestroyedVersMarkerParserRuleCall_4() {
-            return cDestroyedVersMarkerParserRuleCall_4;
-        }
-
-        //DeletedVersMarker
-        public RuleCall getDeletedVersMarkerParserRuleCall_5() {
-            return cDeletedVersMarkerParserRuleCall_5;
-        }
-
-        //DisputableVersMarker
-        public RuleCall getDisputableVersMarkerParserRuleCall_6() {
-            return cDisputableVersMarkerParserRuleCall_6;
-        }
-
-        //RestorationOverRasurMarker
-        public RuleCall getRestorationOverRasurMarkerParserRuleCall_7() {
-            return cRestorationOverRasurMarkerParserRuleCall_7;
-        }
-
-        //AncientExpandedMarker
-        public RuleCall getAncientExpandedMarkerParserRuleCall_8() {
-            return cAncientExpandedMarkerParserRuleCall_8;
-        }
-
-        //RasurMarker
-        public RuleCall getRasurMarkerParserRuleCall_9() {
-            return cRasurMarkerParserRuleCall_9;
-        }
-
-        //EmendationVersMarker
-        public RuleCall getEmendationVersMarkerParserRuleCall_10() {
-            return cEmendationVersMarkerParserRuleCall_10;
-        }
-
-        //DestroyedVersFrontierMarker
-        public RuleCall getDestroyedVersFrontierMarkerParserRuleCall_11() {
-            return cDestroyedVersFrontierMarkerParserRuleCall_11;
-        }
-
-        //PartialDestroyedVersMarker
-        public RuleCall getPartialDestroyedVersMarkerParserRuleCall_12() {
-            return cPartialDestroyedVersMarkerParserRuleCall_12;
-        }
-    }
-
-    public class EmendationVersMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.EmendationVersMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cEmendationVersMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //EmendationVersMarker:
-        //	{EmendationVersMarker}
-        //	'(\\uDB80\\uDC80)' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{EmendationVersMarker} '(\\uDB80\\uDC80)'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{EmendationVersMarker}
-        public Action getEmendationVersMarkerAction_0() {
-            return cEmendationVersMarkerAction_0;
-        }
-
-        //'(\\uDB80\\uDC80)'
-        public Keyword getLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisKeyword_1() {
-            return cLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisKeyword_1;
-        }
-    }
-
-    public class DisputableVersMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DisputableVersMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cDisputableVersMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cReversedQuestionMarkLeadSurrogateDb80TrailSurrogateDc80QuestionMarkKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //DisputableVersMarker:
-        //	{DisputableVersMarker}
-        //	'\\u2E2E\\uDB80\\uDC80?' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{DisputableVersMarker} '\\u2E2E\\uDB80\\uDC80?'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{DisputableVersMarker}
-        public Action getDisputableVersMarkerAction_0() {
-            return cDisputableVersMarkerAction_0;
-        }
-
-        //'\\u2E2E\\uDB80\\uDC80?'
-        public Keyword getReversedQuestionMarkLeadSurrogateDb80TrailSurrogateDc80QuestionMarkKeyword_1() {
-            return cReversedQuestionMarkLeadSurrogateDb80TrailSurrogateDc80QuestionMarkKeyword_1;
-        }
-    }
-
-    public class DeletedVersMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DeletedVersMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cDeletedVersMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //DeletedVersMarker:
-        //	{DeletedVersMarker}
-        //	'{\\uDB80\\uDC80}' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{DeletedVersMarker} '{\\uDB80\\uDC80}'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{DeletedVersMarker}
-        public Action getDeletedVersMarkerAction_0() {
-            return cDeletedVersMarkerAction_0;
-        }
-
-        //'{\\uDB80\\uDC80}'
-        public Keyword getLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketKeyword_1() {
-            return cLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketKeyword_1;
-        }
-    }
-
-    public class DestroyedVersMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DestroyedVersMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cDestroyedVersMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //DestroyedVersMarker:
-        //	{DestroyedVersMarker}
-        //	'[\\uDB80\\uDC80]' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{DestroyedVersMarker} '[\\uDB80\\uDC80]'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{DestroyedVersMarker}
-        public Action getDestroyedVersMarkerAction_0() {
-            return cDestroyedVersMarkerAction_0;
-        }
-
-        //'[\\uDB80\\uDC80]'
-        public Keyword getLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketKeyword_1() {
-            return cLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketKeyword_1;
-        }
-    }
-
-    public class DestroyedVersFrontierMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DestroyedVersFrontierMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cDestroyedVersFrontierMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc81RightSquareBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //DestroyedVersFrontierMarker:
-        //	{DestroyedVersFrontierMarker}
-        //	'[\\uDB80\\uDC81]' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{DestroyedVersFrontierMarker} '[\\uDB80\\uDC81]'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{DestroyedVersFrontierMarker}
-        public Action getDestroyedVersFrontierMarkerAction_0() {
-            return cDestroyedVersFrontierMarkerAction_0;
-        }
-
-        //'[\\uDB80\\uDC81]'
-        public Keyword getLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc81RightSquareBracketKeyword_1() {
-            return cLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc81RightSquareBracketKeyword_1;
-        }
-    }
-
-    public class PartialDestroyedVersMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.PartialDestroyedVersMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cPartialDestroyedVersMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cTopLeftHalfBracketLeadSurrogateDb80TrailSurrogateDc80TopRightHalfBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //PartialDestroyedVersMarker:
-        //	{PartialDestroyedVersMarker}
-        //	'\\u2E22\\uDB80\\uDC80\\u2E23' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{PartialDestroyedVersMarker} '\\u2E22\\uDB80\\uDC80\\u2E23'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{PartialDestroyedVersMarker}
-        public Action getPartialDestroyedVersMarkerAction_0() {
-            return cPartialDestroyedVersMarkerAction_0;
-        }
-
-        //'\\u2E22\\uDB80\\uDC80\\u2E23'
-        public Keyword getTopLeftHalfBracketLeadSurrogateDb80TrailSurrogateDc80TopRightHalfBracketKeyword_1() {
-            return cTopLeftHalfBracketLeadSurrogateDb80TrailSurrogateDc80TopRightHalfBracketKeyword_1;
-        }
-    }
-
-    public class MissingVersMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.MissingVersMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cMissingVersMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftPointingAngleBracketLeadSurrogateDb80TrailSurrogateDc80RightPointingAngleBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //MissingVersMarker:
-        //	{MissingVersMarker}
-        //	'\\u2329\\uDB80\\uDC80\\u232A' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{MissingVersMarker} '\\u2329\\uDB80\\uDC80\\u232A'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{MissingVersMarker}
-        public Action getMissingVersMarkerAction_0() {
-            return cMissingVersMarkerAction_0;
-        }
-
-        //'\\u2329\\uDB80\\uDC80\\u232A'
-        public Keyword getLeftPointingAngleBracketLeadSurrogateDb80TrailSurrogateDc80RightPointingAngleBracketKeyword_1() {
-            return cLeftPointingAngleBracketLeadSurrogateDb80TrailSurrogateDc80RightPointingAngleBracketKeyword_1;
-        }
-    }
-
-    public class RestorationOverRasurMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.RestorationOverRasurMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cRestorationOverRasurMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftSquareBracketLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketRightSquareBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //RestorationOverRasurMarker:
-        //	{RestorationOverRasurMarker}
-        //	'[[\\uDB80\\uDC80]]' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{RestorationOverRasurMarker} '[[\\uDB80\\uDC80]]'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{RestorationOverRasurMarker}
-        public Action getRestorationOverRasurMarkerAction_0() {
-            return cRestorationOverRasurMarkerAction_0;
-        }
-
-        //'[[\\uDB80\\uDC80]]'
-        public Keyword getLeftSquareBracketLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketRightSquareBracketKeyword_1() {
-            return cLeftSquareBracketLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketRightSquareBracketKeyword_1;
-        }
-    }
-
-    public class AncientExpandedMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.AncientExpandedMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cAncientExpandedMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftParenthesisLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisRightParenthesisKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //AncientExpandedMarker:
-        //	{AncientExpandedMarker}
-        //	'((\\uDB80\\uDC80))' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{AncientExpandedMarker} '((\\uDB80\\uDC80))'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{AncientExpandedMarker}
-        public Action getAncientExpandedMarkerAction_0() {
-            return cAncientExpandedMarkerAction_0;
-        }
-
-        //'((\\uDB80\\uDC80))'
-        public Keyword getLeftParenthesisLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisRightParenthesisKeyword_1() {
-            return cLeftParenthesisLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisRightParenthesisKeyword_1;
-        }
-    }
-
-    public class RasurMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.RasurMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cAncientExpandedMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeftCurlyBracketLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketRightCurlyBracketKeyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //RasurMarker:
-        //	{AncientExpandedMarker}
-        //	'{{\\uDB80\\uDC80}}' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{AncientExpandedMarker} '{{\\uDB80\\uDC80}}'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{AncientExpandedMarker}
-        public Action getAncientExpandedMarkerAction_0() {
-            return cAncientExpandedMarkerAction_0;
-        }
-
-        //'{{\\uDB80\\uDC80}}'
-        public Keyword getLeftCurlyBracketLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketRightCurlyBracketKeyword_1() {
-            return cLeftCurlyBracketLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketRightCurlyBracketKeyword_1;
-        }
-    }
-
-    public class VersFrontierMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.VersFrontierMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cVersFrontierMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeadSurrogateDb80TrailSurrogateDc81Keyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //VersFrontierMarker:
-        //	{VersFrontierMarker}
-        //	'\\uDB80\\uDC81' //'@mv'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{VersFrontierMarker} '\\uDB80\\uDC81'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{VersFrontierMarker}
-        public Action getVersFrontierMarkerAction_0() {
-            return cVersFrontierMarkerAction_0;
-        }
-
-        //'\\uDB80\\uDC81'
-        public Keyword getLeadSurrogateDb80TrailSurrogateDc81Keyword_1() {
-            return cLeadSurrogateDb80TrailSurrogateDc81Keyword_1;
-        }
-    }
-
-    public class VersbreakMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.VersbreakMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cVersbreakMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeadSurrogateDb80TrailSurrogateDc80Keyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //VersbreakMarker:
-        //	{VersbreakMarker}
-        //	'\\uDB80\\uDC80' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{VersbreakMarker} '\\uDB80\\uDC80'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{VersbreakMarker}
-        public Action getVersbreakMarkerAction_0() {
-            return cVersbreakMarkerAction_0;
-        }
-
-        //'\\uDB80\\uDC80'
-        public Keyword getLeadSurrogateDb80TrailSurrogateDc80Keyword_1() {
-            return cLeadSurrogateDb80TrailSurrogateDc80Keyword_1;
-        }
-    }
-
-    public class BrokenVersbreakMarkerElements extends AbstractParserRuleElementFinder {
-        private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.BrokenVersbreakMarker");
-        private final Group cGroup = (Group) rule.eContents().get(1);
-        private final Action cBrokenVersbreakMarkerAction_0 = (Action) cGroup.eContents().get(0);
-        private final Keyword cLeadSurrogateDb80TrailSurrogateDc82Keyword_1 = (Keyword) cGroup.eContents().get(1);
-
-        //BrokenVersbreakMarker:
-        //	{BrokenVersbreakMarker}
-        //	'\\uDB80\\uDC82' //'@v'
-        //;
-        @Override
-        public ParserRule getRule() {
-            return rule;
-        }
-
-        //{BrokenVersbreakMarker} '\\uDB80\\uDC82'
-        public Group getGroup() {
-            return cGroup;
-        }
-
-        //{BrokenVersbreakMarker}
-        public Action getBrokenVersbreakMarkerAction_0() {
-            return cBrokenVersbreakMarkerAction_0;
-        }
-
-        //'\\uDB80\\uDC82'
-        public Keyword getLeadSurrogateDb80TrailSurrogateDc82Keyword_1() {
-            return cLeadSurrogateDb80TrailSurrogateDc82Keyword_1;
-        }
-    }
+	
+	
+	public class TextContentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.TextContent");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTextContentAction_0 = (Action)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Assignment cItemsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cItemsTextItemParserRuleCall_1_0_0 = (RuleCall)cItemsAssignment_1_0.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Alternatives cAlternatives_1_1_0 = (Alternatives)cGroup_1_1.eContents().get(0);
+		private final Keyword cSpaceKeyword_1_1_0_0 = (Keyword)cAlternatives_1_1_0.eContents().get(0);
+		private final RuleCall cNEWLINETerminalRuleCall_1_1_0_1 = (RuleCall)cAlternatives_1_1_0.eContents().get(1);
+		private final Assignment cItemsAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cItemsTextItemParserRuleCall_1_1_1_0 = (RuleCall)cItemsAssignment_1_1_1.eContents().get(0);
+		
+		//TextContent:
+		//	{TextContent} (items+=TextItem ((' ' | NEWLINE)? items+=TextItem)*);
+		@Override public ParserRule getRule() { return rule; }
+
+		//{TextContent} (items+=TextItem ((' ' | NEWLINE)? items+=TextItem)*)
+		public Group getGroup() { return cGroup; }
+
+		//{TextContent}
+		public Action getTextContentAction_0() { return cTextContentAction_0; }
+
+		//(items+=TextItem ((' ' | NEWLINE)? items+=TextItem)*)
+		public Group getGroup_1() { return cGroup_1; }
+
+		//items+=TextItem
+		public Assignment getItemsAssignment_1_0() { return cItemsAssignment_1_0; }
+
+		//TextItem
+		public RuleCall getItemsTextItemParserRuleCall_1_0_0() { return cItemsTextItemParserRuleCall_1_0_0; }
+
+		//((' ' | NEWLINE)? items+=TextItem)*
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//(' ' | NEWLINE)?
+		public Alternatives getAlternatives_1_1_0() { return cAlternatives_1_1_0; }
+
+		//' '
+		public Keyword getSpaceKeyword_1_1_0_0() { return cSpaceKeyword_1_1_0_0; }
+
+		//NEWLINE
+		public RuleCall getNEWLINETerminalRuleCall_1_1_0_1() { return cNEWLINETerminalRuleCall_1_1_0_1; }
+
+		//items+=TextItem
+		public Assignment getItemsAssignment_1_1_1() { return cItemsAssignment_1_1_1; }
+
+		//TextItem
+		public RuleCall getItemsTextItemParserRuleCall_1_1_1_0() { return cItemsTextItemParserRuleCall_1_1_1_0; }
+	}
+
+	public class TextItemElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.TextItem");
+		private final RuleCall cSentenceParserRuleCall = (RuleCall)rule.eContents().get(1);
+		
+		//TextItem:
+		//	Sentence;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Sentence
+		public RuleCall getSentenceParserRuleCall() { return cSentenceParserRuleCall; }
+	}
+
+	public class SentenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Sentence");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cSentenceAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cSectionSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cItemsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cItemsSentenceItemParserRuleCall_2_0_0 = (RuleCall)cItemsAssignment_2_0.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
+		private final Keyword cSpaceKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final RuleCall cNEWLINETerminalRuleCall_2_1_1 = (RuleCall)cGroup_2_1.eContents().get(1);
+		private final Assignment cItemsAssignment_2_1_2 = (Assignment)cGroup_2_1.eContents().get(2);
+		private final RuleCall cItemsSentenceItemParserRuleCall_2_1_2_0 = (RuleCall)cItemsAssignment_2_1_2.eContents().get(0);
+		private final Keyword cSectionSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//// sentence	
+		//Sentence:
+		//	{Sentence}
+		//	'§' (items+=SentenceItem (' ' NEWLINE? items+=SentenceItem)*)? '§';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Sentence} '§' (items+=SentenceItem (' ' NEWLINE? items+=SentenceItem)*)? '§'
+		public Group getGroup() { return cGroup; }
+
+		//{Sentence}
+		public Action getSentenceAction_0() { return cSentenceAction_0; }
+
+		//'§'
+		public Keyword getSectionSignKeyword_1() { return cSectionSignKeyword_1; }
+
+		//(items+=SentenceItem (' ' NEWLINE? items+=SentenceItem)*)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//items+=SentenceItem
+		public Assignment getItemsAssignment_2_0() { return cItemsAssignment_2_0; }
+
+		//SentenceItem
+		public RuleCall getItemsSentenceItemParserRuleCall_2_0_0() { return cItemsSentenceItemParserRuleCall_2_0_0; }
+
+		//(' ' NEWLINE? items+=SentenceItem)*
+		public Group getGroup_2_1() { return cGroup_2_1; }
+
+		//' '
+		public Keyword getSpaceKeyword_2_1_0() { return cSpaceKeyword_2_1_0; }
+
+		//NEWLINE?
+		public RuleCall getNEWLINETerminalRuleCall_2_1_1() { return cNEWLINETerminalRuleCall_2_1_1; }
+
+		//items+=SentenceItem
+		public Assignment getItemsAssignment_2_1_2() { return cItemsAssignment_2_1_2; }
+
+		//SentenceItem
+		public RuleCall getItemsSentenceItemParserRuleCall_2_1_2_0() { return cItemsSentenceItemParserRuleCall_2_1_2_0; }
+
+		//'§'
+		public Keyword getSectionSignKeyword_3() { return cSectionSignKeyword_3; }
+	}
+
+	public class SentenceItemElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.SentenceItem");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cWordParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAbstractMarkerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAmbivalenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//SentenceItem:
+		//	Word | AbstractMarker | Ambivalence;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Word | AbstractMarker | Ambivalence
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Word
+		public RuleCall getWordParserRuleCall_0() { return cWordParserRuleCall_0; }
+
+		//AbstractMarker
+		public RuleCall getAbstractMarkerParserRuleCall_1() { return cAbstractMarkerParserRuleCall_1; }
+
+		//Ambivalence
+		public RuleCall getAmbivalenceParserRuleCall_2() { return cAmbivalenceParserRuleCall_2; }
+	}
+
+	public class AbstractMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.AbstractMarker");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cMarkerParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cVersMarkerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cDestructionMarkerParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//AbstractMarker:
+		//	Marker | VersMarker | DestructionMarker;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Marker | VersMarker | DestructionMarker
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Marker
+		public RuleCall getMarkerParserRuleCall_0() { return cMarkerParserRuleCall_0; }
+
+		//VersMarker
+		public RuleCall getVersMarkerParserRuleCall_1() { return cVersMarkerParserRuleCall_1; }
+
+		//DestructionMarker
+		public RuleCall getDestructionMarkerParserRuleCall_2() { return cDestructionMarkerParserRuleCall_2; }
+	}
+
+	public class AmbivalenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Ambivalence");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cPercentSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Assignment cCasesAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cCasesCaseParserRuleCall_1_0_0 = (RuleCall)cCasesAssignment_1_0.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
+		private final Keyword cVerticalLineSpaceKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final RuleCall cNEWLINETerminalRuleCall_1_1_1 = (RuleCall)cGroup_1_1.eContents().get(1);
+		private final Assignment cCasesAssignment_1_1_2 = (Assignment)cGroup_1_1.eContents().get(2);
+		private final RuleCall cCasesCaseParserRuleCall_1_1_2_0 = (RuleCall)cCasesAssignment_1_1_2.eContents().get(0);
+		private final Keyword cPercentSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//Ambivalence:
+		//	'%' (cases+=Case ('| ' NEWLINE? cases+=Case)+) '%';
+		@Override public ParserRule getRule() { return rule; }
+
+		//'%' (cases+=Case ('| ' NEWLINE? cases+=Case)+) '%'
+		public Group getGroup() { return cGroup; }
+
+		//'%'
+		public Keyword getPercentSignKeyword_0() { return cPercentSignKeyword_0; }
+
+		//(cases+=Case ('| ' NEWLINE? cases+=Case)+)
+		public Group getGroup_1() { return cGroup_1; }
+
+		//cases+=Case
+		public Assignment getCasesAssignment_1_0() { return cCasesAssignment_1_0; }
+
+		//Case
+		public RuleCall getCasesCaseParserRuleCall_1_0_0() { return cCasesCaseParserRuleCall_1_0_0; }
+
+		//('| ' NEWLINE? cases+=Case)+
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//'| '
+		public Keyword getVerticalLineSpaceKeyword_1_1_0() { return cVerticalLineSpaceKeyword_1_1_0; }
+
+		//NEWLINE?
+		public RuleCall getNEWLINETerminalRuleCall_1_1_1() { return cNEWLINETerminalRuleCall_1_1_1; }
+
+		//cases+=Case
+		public Assignment getCasesAssignment_1_1_2() { return cCasesAssignment_1_1_2; }
+
+		//Case
+		public RuleCall getCasesCaseParserRuleCall_1_1_2_0() { return cCasesCaseParserRuleCall_1_1_2_0; }
+
+		//'%'
+		public Keyword getPercentSignKeyword_2() { return cPercentSignKeyword_2; }
+	}
+
+	public class CaseElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Case");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameCASESTRINGTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final RuleCall cNEWLINETerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cItemsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cItemsSentenceItemNoAmbivalenceParserRuleCall_2_0_0 = (RuleCall)cItemsAssignment_2_0.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
+		private final Keyword cSpaceKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final RuleCall cNEWLINETerminalRuleCall_2_1_1 = (RuleCall)cGroup_2_1.eContents().get(1);
+		private final Assignment cItemsAssignment_2_1_2 = (Assignment)cGroup_2_1.eContents().get(2);
+		private final RuleCall cItemsSentenceItemNoAmbivalenceParserRuleCall_2_1_2_0 = (RuleCall)cItemsAssignment_2_1_2.eContents().get(0);
+		
+		//Case:
+		//	name=CASESTRING NEWLINE? (items+=SentenceItemNoAmbivalence (' ' NEWLINE? items+=SentenceItemNoAmbivalence)*);
+		@Override public ParserRule getRule() { return rule; }
+
+		//name=CASESTRING NEWLINE? (items+=SentenceItemNoAmbivalence (' ' NEWLINE? items+=SentenceItemNoAmbivalence)*)
+		public Group getGroup() { return cGroup; }
+
+		//name=CASESTRING
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+
+		//CASESTRING
+		public RuleCall getNameCASESTRINGTerminalRuleCall_0_0() { return cNameCASESTRINGTerminalRuleCall_0_0; }
+
+		//NEWLINE?
+		public RuleCall getNEWLINETerminalRuleCall_1() { return cNEWLINETerminalRuleCall_1; }
+
+		//(items+=SentenceItemNoAmbivalence (' ' NEWLINE? items+=SentenceItemNoAmbivalence)*)
+		public Group getGroup_2() { return cGroup_2; }
+
+		//items+=SentenceItemNoAmbivalence
+		public Assignment getItemsAssignment_2_0() { return cItemsAssignment_2_0; }
+
+		//SentenceItemNoAmbivalence
+		public RuleCall getItemsSentenceItemNoAmbivalenceParserRuleCall_2_0_0() { return cItemsSentenceItemNoAmbivalenceParserRuleCall_2_0_0; }
+
+		//(' ' NEWLINE? items+=SentenceItemNoAmbivalence)*
+		public Group getGroup_2_1() { return cGroup_2_1; }
+
+		//' '
+		public Keyword getSpaceKeyword_2_1_0() { return cSpaceKeyword_2_1_0; }
+
+		//NEWLINE?
+		public RuleCall getNEWLINETerminalRuleCall_2_1_1() { return cNEWLINETerminalRuleCall_2_1_1; }
+
+		//items+=SentenceItemNoAmbivalence
+		public Assignment getItemsAssignment_2_1_2() { return cItemsAssignment_2_1_2; }
+
+		//SentenceItemNoAmbivalence
+		public RuleCall getItemsSentenceItemNoAmbivalenceParserRuleCall_2_1_2_0() { return cItemsSentenceItemNoAmbivalenceParserRuleCall_2_1_2_0; }
+	}
+
+	public class SentenceItemNoAmbivalenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.SentenceItemNoAmbivalence");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cWordParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAbstractMarkerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//SentenceItemNoAmbivalence:
+		//	Word | AbstractMarker;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Word | AbstractMarker
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Word
+		public RuleCall getWordParserRuleCall_0() { return cWordParserRuleCall_0; }
+
+		//AbstractMarker
+		public RuleCall getAbstractMarkerParserRuleCall_1() { return cAbstractMarkerParserRuleCall_1; }
+	}
+
+	public class MarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Marker");
+		private final Assignment cTypeAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cTypeBETWEEN_HASHESTerminalRuleCall_0 = (RuleCall)cTypeAssignment.eContents().get(0);
+		
+		//Marker:
+		//	type=BETWEEN_HASHES;
+		@Override public ParserRule getRule() { return rule; }
+
+		//type=BETWEEN_HASHES
+		public Assignment getTypeAssignment() { return cTypeAssignment; }
+
+		//BETWEEN_HASHES
+		public RuleCall getTypeBETWEEN_HASHESTerminalRuleCall_0() { return cTypeBETWEEN_HASHESTerminalRuleCall_0; }
+	}
+
+	public class DestructionMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DestructionMarker");
+		private final Assignment cTypeAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cTypeBETWEEN_MINUSTerminalRuleCall_0 = (RuleCall)cTypeAssignment.eContents().get(0);
+		
+		//DestructionMarker:
+		//	type=BETWEEN_MINUS;
+		@Override public ParserRule getRule() { return rule; }
+
+		//type=BETWEEN_MINUS
+		public Assignment getTypeAssignment() { return cTypeAssignment; }
+
+		//BETWEEN_MINUS
+		public RuleCall getTypeBETWEEN_MINUSTerminalRuleCall_0() { return cTypeBETWEEN_MINUSTerminalRuleCall_0; }
+	}
+
+	public class WordElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Word");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cWordAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cWCharAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cWCharWordPartParserRuleCall_1_0 = (RuleCall)cWCharAssignment_1.eContents().get(0);
+		
+		//// word
+		//Word:
+		//	{Word} wChar+=WordPart+;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Word} wChar+=WordPart+
+		public Group getGroup() { return cGroup; }
+
+		//{Word}
+		public Action getWordAction_0() { return cWordAction_0; }
+
+		//wChar+=WordPart+
+		public Assignment getWCharAssignment_1() { return cWCharAssignment_1; }
+
+		//WordPart
+		public RuleCall getWCharWordPartParserRuleCall_1_0() { return cWCharWordPartParserRuleCall_1_0; }
+	}
+
+	public class WordPartElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.WordPart");
+		private final Assignment cWCharAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cWCharWordMiddleParserRuleCall_0 = (RuleCall)cWCharAssignment.eContents().get(0);
+		
+		//WordPart:
+		//	wChar=WordMiddle;
+		@Override public ParserRule getRule() { return rule; }
+
+		//wChar=WordMiddle
+		public Assignment getWCharAssignment() { return cWCharAssignment; }
+
+		//WordMiddle
+		public RuleCall getWCharWordMiddleParserRuleCall_0() { return cWCharWordMiddleParserRuleCall_0; }
+	}
+
+	public class WordMiddleElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.WordMiddle");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cBracketsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cCharsParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cInterfixParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//WordMiddle:
+		//	Brackets | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		////	{WordMiddle}
+		//Brackets | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		////	{WordMiddle}
+		//Brackets
+		public RuleCall getBracketsParserRuleCall_0() { return cBracketsParserRuleCall_0; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_1() { return cCharsParserRuleCall_1; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_2() { return cInterfixParserRuleCall_2; }
+	}
+
+	public class CharsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Chars");
+		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cNameEGYSTRINGTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		
+		//// Chars...
+		//Chars:
+		//	name=EGYSTRING;
+		@Override public ParserRule getRule() { return rule; }
+
+		//name=EGYSTRING
+		public Assignment getNameAssignment() { return cNameAssignment; }
+
+		//EGYSTRING
+		public RuleCall getNameEGYSTRINGTerminalRuleCall_0() { return cNameEGYSTRINGTerminalRuleCall_0; }
+	}
+
+	public class BracketsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Brackets");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cRasurParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAncientExpandedParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cRestorationOverRasurParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cExpandedColumnParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cExpandedParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cDisputableReadingParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cEmendationParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cLacunaParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cDeletionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cPartialDestructionParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cCartoucheParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cOvalParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cSerechParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
+		
+		//// textual criticism brackets
+		//Brackets:
+		//	Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna |
+		//	Deletion | PartialDestruction
+		//	| Cartouche | Oval | Serech;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna |
+		//Deletion | PartialDestruction | Cartouche | Oval | Serech
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Rasur
+		public RuleCall getRasurParserRuleCall_0() { return cRasurParserRuleCall_0; }
+
+		//AncientExpanded
+		public RuleCall getAncientExpandedParserRuleCall_1() { return cAncientExpandedParserRuleCall_1; }
+
+		//RestorationOverRasur
+		public RuleCall getRestorationOverRasurParserRuleCall_2() { return cRestorationOverRasurParserRuleCall_2; }
+
+		//ExpandedColumn
+		public RuleCall getExpandedColumnParserRuleCall_3() { return cExpandedColumnParserRuleCall_3; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_4() { return cExpandedParserRuleCall_4; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_5() { return cDisputableReadingParserRuleCall_5; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_6() { return cEmendationParserRuleCall_6; }
+
+		//Lacuna
+		public RuleCall getLacunaParserRuleCall_7() { return cLacunaParserRuleCall_7; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_8() { return cDeletionParserRuleCall_8; }
+
+		//PartialDestruction
+		public RuleCall getPartialDestructionParserRuleCall_9() { return cPartialDestructionParserRuleCall_9; }
+
+		//Cartouche
+		public RuleCall getCartoucheParserRuleCall_10() { return cCartoucheParserRuleCall_10; }
+
+		//Oval
+		public RuleCall getOvalParserRuleCall_11() { return cOvalParserRuleCall_11; }
+
+		//Serech
+		public RuleCall getSerechParserRuleCall_12() { return cSerechParserRuleCall_12; }
+	}
+
+	public class OvalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Oval");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeadSurrogateD80cTrailSurrogateDe58Keyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cWCharAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cWCharNoCartoucheParserRuleCall_1_0 = (RuleCall)cWCharAssignment_1.eContents().get(0);
+		private final Keyword cLeadSurrogateD80cTrailSurrogateDe82Keyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		////Cartouche2:
+		////	'\\u13379'   wChar+=NoCartouche+ '\\u1337A'
+		////;
+		//Oval: //Oval
+		//	'\\uD80C\\uDE58' wChar+=NoCartouche+ '\\uD80C\\uDE82';
+		@Override public ParserRule getRule() { return rule; }
+
+		////Oval
+		//'\\uD80C\\uDE58' wChar+=NoCartouche+ '\\uD80C\\uDE82'
+		public Group getGroup() { return cGroup; }
+
+		////Oval
+		//'\\uD80C\\uDE58'
+		public Keyword getLeadSurrogateD80cTrailSurrogateDe58Keyword_0() { return cLeadSurrogateD80cTrailSurrogateDe58Keyword_0; }
+
+		//wChar+=NoCartouche+
+		public Assignment getWCharAssignment_1() { return cWCharAssignment_1; }
+
+		//NoCartouche
+		public RuleCall getWCharNoCartoucheParserRuleCall_1_0() { return cWCharNoCartoucheParserRuleCall_1_0; }
+
+		//'\\uD80C\\uDE82'
+		public Keyword getLeadSurrogateD80cTrailSurrogateDe82Keyword_2() { return cLeadSurrogateD80cTrailSurrogateDe82Keyword_2; }
+	}
+
+	public class SerechElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Serech");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeadSurrogateD80cTrailSurrogateDf79Keyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cWCharAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cWCharNoCartoucheParserRuleCall_1_0 = (RuleCall)cWCharAssignment_1.eContents().get(0);
+		private final Keyword cLeadSurrogateD80cTrailSurrogateDf7aKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//Serech: // eigentlich Serech
+		//	'\\uD80C\\uDF79' wChar+=NoCartouche+ '\\uD80C\\uDF7A';
+		@Override public ParserRule getRule() { return rule; }
+
+		//// eigentlich Serech
+		//'\\uD80C\\uDF79' wChar+=NoCartouche+ '\\uD80C\\uDF7A'
+		public Group getGroup() { return cGroup; }
+
+		//// eigentlich Serech
+		//'\\uD80C\\uDF79'
+		public Keyword getLeadSurrogateD80cTrailSurrogateDf79Keyword_0() { return cLeadSurrogateD80cTrailSurrogateDf79Keyword_0; }
+
+		//wChar+=NoCartouche+
+		public Assignment getWCharAssignment_1() { return cWCharAssignment_1; }
+
+		//NoCartouche
+		public RuleCall getWCharNoCartoucheParserRuleCall_1_0() { return cWCharNoCartoucheParserRuleCall_1_0; }
+
+		//'\\uD80C\\uDF7A'
+		public Keyword getLeadSurrogateD80cTrailSurrogateDf7aKeyword_2() { return cLeadSurrogateD80cTrailSurrogateDf7aKeyword_2; }
+	}
+
+	public class CartoucheElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Cartouche");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cExpandedAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeadSurrogateD80cTrailSurrogateDe86Keyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoCartoucheParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cLeadSurrogateD80cTrailSurrogateDe87Keyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Cartouche:
+		//	{Expanded}
+		//	'\\uD80C\\uDE86' wChar+=NoCartouche+ '\\uD80C\\uDE87';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Expanded} '\\uD80C\\uDE86' wChar+=NoCartouche+ '\\uD80C\\uDE87'
+		public Group getGroup() { return cGroup; }
+
+		//{Expanded}
+		public Action getExpandedAction_0() { return cExpandedAction_0; }
+
+		//'\\uD80C\\uDE86'
+		public Keyword getLeadSurrogateD80cTrailSurrogateDe86Keyword_1() { return cLeadSurrogateD80cTrailSurrogateDe86Keyword_1; }
+
+		//wChar+=NoCartouche+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoCartouche
+		public RuleCall getWCharNoCartoucheParserRuleCall_2_0() { return cWCharNoCartoucheParserRuleCall_2_0; }
+
+		//'\\uD80C\\uDE87'
+		public Keyword getLeadSurrogateD80cTrailSurrogateDe87Keyword_3() { return cLeadSurrogateD80cTrailSurrogateDe87Keyword_3; }
+	}
+
+	public class NoCartoucheElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoCartouche");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cCharsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cRasurParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cAncientExpandedParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cRestorationOverRasurParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cExpandedColumnParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cExpandedParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cDisputableReadingParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cEmendationParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cLacunaParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cDeletionParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cPartialDestructionParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cInterfixParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		
+		//NoCartouche:
+		//	Chars
+		//	| Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna
+		//	| Deletion | PartialDestruction
+		//	| Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Chars | Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation |
+		//Lacuna | Deletion | PartialDestruction | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_0() { return cCharsParserRuleCall_0; }
+
+		//Rasur
+		public RuleCall getRasurParserRuleCall_1() { return cRasurParserRuleCall_1; }
+
+		//AncientExpanded
+		public RuleCall getAncientExpandedParserRuleCall_2() { return cAncientExpandedParserRuleCall_2; }
+
+		//RestorationOverRasur
+		public RuleCall getRestorationOverRasurParserRuleCall_3() { return cRestorationOverRasurParserRuleCall_3; }
+
+		//ExpandedColumn
+		public RuleCall getExpandedColumnParserRuleCall_4() { return cExpandedColumnParserRuleCall_4; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_5() { return cExpandedParserRuleCall_5; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_6() { return cDisputableReadingParserRuleCall_6; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_7() { return cEmendationParserRuleCall_7; }
+
+		//Lacuna
+		public RuleCall getLacunaParserRuleCall_8() { return cLacunaParserRuleCall_8; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_9() { return cDeletionParserRuleCall_9; }
+
+		//PartialDestruction
+		public RuleCall getPartialDestructionParserRuleCall_10() { return cPartialDestructionParserRuleCall_10; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_11() { return cInterfixParserRuleCall_11; }
+	}
+
+	public class ExpandedElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Expanded");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cExpandedAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoExpandedParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Expanded:
+		//	{Expanded}
+		//	'(' wChar+=NoExpanded+ ')';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Expanded} '(' wChar+=NoExpanded+ ')'
+		public Group getGroup() { return cGroup; }
+
+		//{Expanded}
+		public Action getExpandedAction_0() { return cExpandedAction_0; }
+
+		//'('
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//wChar+=NoExpanded+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoExpanded
+		public RuleCall getWCharNoExpandedParserRuleCall_2_0() { return cWCharNoExpandedParserRuleCall_2_0; }
+
+		//')'
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+	}
+
+	public class AncientExpandedElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.AncientExpanded");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cAncientExpandedAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoAncientExpandedParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//AncientExpanded:
+		//	{AncientExpanded}
+		//	'((' wChar+=NoAncientExpanded+ '))';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{AncientExpanded} '((' wChar+=NoAncientExpanded+ '))'
+		public Group getGroup() { return cGroup; }
+
+		//{AncientExpanded}
+		public Action getAncientExpandedAction_0() { return cAncientExpandedAction_0; }
+
+		//'(('
+		public Keyword getLeftParenthesisLeftParenthesisKeyword_1() { return cLeftParenthesisLeftParenthesisKeyword_1; }
+
+		//wChar+=NoAncientExpanded+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoAncientExpanded
+		public RuleCall getWCharNoAncientExpandedParserRuleCall_2_0() { return cWCharNoAncientExpandedParserRuleCall_2_0; }
+
+		//'))'
+		public Keyword getRightParenthesisRightParenthesisKeyword_3() { return cRightParenthesisRightParenthesisKeyword_3; }
+	}
+
+	public class NoExpandedElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoExpanded");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cDisputableReadingParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cCharsParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cInterfixParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//NoExpanded:
+		//	DisputableReading | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//DisputableReading | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_0() { return cDisputableReadingParserRuleCall_0; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_1() { return cCharsParserRuleCall_1; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_2() { return cInterfixParserRuleCall_2; }
+	}
+
+	public class EmendationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Emendation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cEmendationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftPointingAngleBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoEmendationParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cRightPointingAngleBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Emendation:
+		//	{Emendation}
+		//	'\\u2329' wChar+=NoEmendation+ '\\u232A';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Emendation} '\\u2329' wChar+=NoEmendation+ '\\u232A'
+		public Group getGroup() { return cGroup; }
+
+		//{Emendation}
+		public Action getEmendationAction_0() { return cEmendationAction_0; }
+
+		//'\\u2329'
+		public Keyword getLeftPointingAngleBracketKeyword_1() { return cLeftPointingAngleBracketKeyword_1; }
+
+		//wChar+=NoEmendation+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoEmendation
+		public RuleCall getWCharNoEmendationParserRuleCall_2_0() { return cWCharNoEmendationParserRuleCall_2_0; }
+
+		//'\\u232A'
+		public Keyword getRightPointingAngleBracketKeyword_3() { return cRightPointingAngleBracketKeyword_3; }
+	}
+
+	public class NoEmendationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoEmendation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpandedParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cCharsParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cInterfixParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		
+		//NoEmendation:
+		//	Expanded | DisputableReading | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Expanded | DisputableReading | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_0() { return cExpandedParserRuleCall_0; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_1() { return cDisputableReadingParserRuleCall_1; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_2() { return cCharsParserRuleCall_2; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_3() { return cInterfixParserRuleCall_3; }
+	}
+
+	public class DisputableReadingElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DisputableReading");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDisputableReadingAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cReversedQuestionMarkKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoDisputableReadingParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cQuestionMarkKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//DisputableReading:
+		//	{DisputableReading}
+		//	'\\u2E2E' wChar+=NoDisputableReading+ '?';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{DisputableReading} '\\u2E2E' wChar+=NoDisputableReading+ '?'
+		public Group getGroup() { return cGroup; }
+
+		//{DisputableReading}
+		public Action getDisputableReadingAction_0() { return cDisputableReadingAction_0; }
+
+		//'\\u2E2E'
+		public Keyword getReversedQuestionMarkKeyword_1() { return cReversedQuestionMarkKeyword_1; }
+
+		//wChar+=NoDisputableReading+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoDisputableReading
+		public RuleCall getWCharNoDisputableReadingParserRuleCall_2_0() { return cWCharNoDisputableReadingParserRuleCall_2_0; }
+
+		//'?'
+		public Keyword getQuestionMarkKeyword_3() { return cQuestionMarkKeyword_3; }
+	}
+
+	public class NoDisputableReadingElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoDisputableReading");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpandedParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cEmendationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cDeletionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cRasurParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cAncientExpandedParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cRestorationOverRasurParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cExpandedColumnParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cLacunaParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cPartialDestructionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cCharsParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cInterfixParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		
+		//NoDisputableReading:
+		//	Expanded | Emendation | Deletion
+		//	| Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn
+		//	| Lacuna
+		//	| PartialDestruction
+		//	| Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Expanded | Emendation | Deletion | Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Lacuna |
+		//PartialDestruction | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_0() { return cExpandedParserRuleCall_0; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_1() { return cEmendationParserRuleCall_1; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_2() { return cDeletionParserRuleCall_2; }
+
+		//Rasur
+		public RuleCall getRasurParserRuleCall_3() { return cRasurParserRuleCall_3; }
+
+		//AncientExpanded
+		public RuleCall getAncientExpandedParserRuleCall_4() { return cAncientExpandedParserRuleCall_4; }
+
+		//RestorationOverRasur
+		public RuleCall getRestorationOverRasurParserRuleCall_5() { return cRestorationOverRasurParserRuleCall_5; }
+
+		//ExpandedColumn
+		public RuleCall getExpandedColumnParserRuleCall_6() { return cExpandedColumnParserRuleCall_6; }
+
+		//Lacuna
+		public RuleCall getLacunaParserRuleCall_7() { return cLacunaParserRuleCall_7; }
+
+		//PartialDestruction
+		public RuleCall getPartialDestructionParserRuleCall_8() { return cPartialDestructionParserRuleCall_8; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_9() { return cCharsParserRuleCall_9; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_10() { return cInterfixParserRuleCall_10; }
+	}
+
+	public class LacunaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Lacuna");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cLacunaAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoLacunaParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Lacuna:
+		//	{Lacuna}
+		//	'[' wChar+=NoLacuna+ ']';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Lacuna} '[' wChar+=NoLacuna+ ']'
+		public Group getGroup() { return cGroup; }
+
+		//{Lacuna}
+		public Action getLacunaAction_0() { return cLacunaAction_0; }
+
+		//'['
+		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
+
+		//wChar+=NoLacuna+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoLacuna
+		public RuleCall getWCharNoLacunaParserRuleCall_2_0() { return cWCharNoLacunaParserRuleCall_2_0; }
+
+		//']'
+		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
+	}
+
+	public class NoLacunaElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoLacuna");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpandedParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cCartoucheParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cOvalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cSerechParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cDeletionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cEmendationParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cCharsParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cInterfixParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		
+		//NoLacuna:
+		//	Expanded | DisputableReading | Cartouche | Oval | Serech | Deletion | Emendation | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Expanded | DisputableReading | Cartouche | Oval | Serech | Deletion | Emendation | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_0() { return cExpandedParserRuleCall_0; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_1() { return cDisputableReadingParserRuleCall_1; }
+
+		//Cartouche
+		public RuleCall getCartoucheParserRuleCall_2() { return cCartoucheParserRuleCall_2; }
+
+		//Oval
+		public RuleCall getOvalParserRuleCall_3() { return cOvalParserRuleCall_3; }
+
+		//Serech
+		public RuleCall getSerechParserRuleCall_4() { return cSerechParserRuleCall_4; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_5() { return cDeletionParserRuleCall_5; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_6() { return cEmendationParserRuleCall_6; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_7() { return cCharsParserRuleCall_7; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_8() { return cInterfixParserRuleCall_8; }
+	}
+
+	public class DeletionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Deletion");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDeletionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoDeletionParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Deletion:
+		//	{Deletion}
+		//	'{' wChar+=NoDeletion+ '}';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Deletion} '{' wChar+=NoDeletion+ '}'
+		public Group getGroup() { return cGroup; }
+
+		//{Deletion}
+		public Action getDeletionAction_0() { return cDeletionAction_0; }
+
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+
+		//wChar+=NoDeletion+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoDeletion
+		public RuleCall getWCharNoDeletionParserRuleCall_2_0() { return cWCharNoDeletionParserRuleCall_2_0; }
+
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
+	}
+
+	public class NoDeletionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoDeletion");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cPartialDestructionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cExpandedParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cDisputableReadingParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cLacunaParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cRestorationOverRasurParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cAncientExpandedParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cCharsParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cInterfixParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		
+		//NoDeletion:
+		//	PartialDestruction | Expanded | DisputableReading | Lacuna | RestorationOverRasur | AncientExpanded | Chars |
+		//	Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//PartialDestruction | Expanded | DisputableReading | Lacuna | RestorationOverRasur | AncientExpanded | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//PartialDestruction
+		public RuleCall getPartialDestructionParserRuleCall_0() { return cPartialDestructionParserRuleCall_0; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_1() { return cExpandedParserRuleCall_1; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_2() { return cDisputableReadingParserRuleCall_2; }
+
+		//Lacuna
+		public RuleCall getLacunaParserRuleCall_3() { return cLacunaParserRuleCall_3; }
+
+		//RestorationOverRasur
+		public RuleCall getRestorationOverRasurParserRuleCall_4() { return cRestorationOverRasurParserRuleCall_4; }
+
+		//AncientExpanded
+		public RuleCall getAncientExpandedParserRuleCall_5() { return cAncientExpandedParserRuleCall_5; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_6() { return cCharsParserRuleCall_6; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_7() { return cInterfixParserRuleCall_7; }
+	}
+
+	public class ExpandedColumnElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.ExpandedColumn");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cExpandedColumnAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftPointingAngleBracketLeftPointingAngleBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoExpandedColumnParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cRightPointingAngleBracketRightPointingAngleBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//ExpandedColumn:
+		//	{ExpandedColumn}
+		//	'\\u2329\\u2329' wChar+=NoExpandedColumn+ '\\u232A\\u232A';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{ExpandedColumn} '\\u2329\\u2329' wChar+=NoExpandedColumn+ '\\u232A\\u232A'
+		public Group getGroup() { return cGroup; }
+
+		//{ExpandedColumn}
+		public Action getExpandedColumnAction_0() { return cExpandedColumnAction_0; }
+
+		//'\\u2329\\u2329'
+		public Keyword getLeftPointingAngleBracketLeftPointingAngleBracketKeyword_1() { return cLeftPointingAngleBracketLeftPointingAngleBracketKeyword_1; }
+
+		//wChar+=NoExpandedColumn+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoExpandedColumn
+		public RuleCall getWCharNoExpandedColumnParserRuleCall_2_0() { return cWCharNoExpandedColumnParserRuleCall_2_0; }
+
+		//'\\u232A\\u232A'
+		public Keyword getRightPointingAngleBracketRightPointingAngleBracketKeyword_3() { return cRightPointingAngleBracketRightPointingAngleBracketKeyword_3; }
+	}
+
+	public class NoExpandedColumnElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoExpandedColumn");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpandedParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cEmendationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cLacunaParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cPartialDestructionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cDeletionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cCharsParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cInterfixParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		
+		//NoExpandedColumn:
+		//	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_0() { return cExpandedParserRuleCall_0; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_1() { return cDisputableReadingParserRuleCall_1; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_2() { return cEmendationParserRuleCall_2; }
+
+		//Lacuna
+		public RuleCall getLacunaParserRuleCall_3() { return cLacunaParserRuleCall_3; }
+
+		//PartialDestruction
+		public RuleCall getPartialDestructionParserRuleCall_4() { return cPartialDestructionParserRuleCall_4; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_5() { return cDeletionParserRuleCall_5; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_6() { return cCharsParserRuleCall_6; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_7() { return cInterfixParserRuleCall_7; }
+	}
+
+	public class RasurElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Rasur");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRasurAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoRasurParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Rasur:
+		//	{Rasur}
+		//	'{{' wChar+=NoRasur+ '}}';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{Rasur} '{{' wChar+=NoRasur+ '}}'
+		public Group getGroup() { return cGroup; }
+
+		//{Rasur}
+		public Action getRasurAction_0() { return cRasurAction_0; }
+
+		//'{{'
+		public Keyword getLeftCurlyBracketLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketLeftCurlyBracketKeyword_1; }
+
+		//wChar+=NoRasur+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoRasur
+		public RuleCall getWCharNoRasurParserRuleCall_2_0() { return cWCharNoRasurParserRuleCall_2_0; }
+
+		//'}}'
+		public Keyword getRightCurlyBracketRightCurlyBracketKeyword_3() { return cRightCurlyBracketRightCurlyBracketKeyword_3; }
+	}
+
+	public class NoRasurElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoRasur");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpandedParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cEmendationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cLacunaParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cPartialDestructionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cDeletionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cCharsParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cInterfixParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		
+		//NoRasur:
+		//	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_0() { return cExpandedParserRuleCall_0; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_1() { return cDisputableReadingParserRuleCall_1; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_2() { return cEmendationParserRuleCall_2; }
+
+		//Lacuna
+		public RuleCall getLacunaParserRuleCall_3() { return cLacunaParserRuleCall_3; }
+
+		//PartialDestruction
+		public RuleCall getPartialDestructionParserRuleCall_4() { return cPartialDestructionParserRuleCall_4; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_5() { return cDeletionParserRuleCall_5; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_6() { return cCharsParserRuleCall_6; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_7() { return cInterfixParserRuleCall_7; }
+	}
+
+	public class NoAncientExpandedElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoAncientExpanded");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpandedParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cEmendationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cLacunaParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cPartialDestructionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cDeletionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cCharsParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cInterfixParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		
+		//NoAncientExpanded:
+		//	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_0() { return cExpandedParserRuleCall_0; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_1() { return cDisputableReadingParserRuleCall_1; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_2() { return cEmendationParserRuleCall_2; }
+
+		//Lacuna
+		public RuleCall getLacunaParserRuleCall_3() { return cLacunaParserRuleCall_3; }
+
+		//PartialDestruction
+		public RuleCall getPartialDestructionParserRuleCall_4() { return cPartialDestructionParserRuleCall_4; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_5() { return cDeletionParserRuleCall_5; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_6() { return cCharsParserRuleCall_6; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_7() { return cInterfixParserRuleCall_7; }
+	}
+
+	public class RestorationOverRasurElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.RestorationOverRasur");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRestorationOverRasurAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoRestorationOverRasurParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cRightSquareBracketRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//RestorationOverRasur:
+		//	{RestorationOverRasur}
+		//	'[[' wChar+=NoRestorationOverRasur+ ']]';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{RestorationOverRasur} '[[' wChar+=NoRestorationOverRasur+ ']]'
+		public Group getGroup() { return cGroup; }
+
+		//{RestorationOverRasur}
+		public Action getRestorationOverRasurAction_0() { return cRestorationOverRasurAction_0; }
+
+		//'[['
+		public Keyword getLeftSquareBracketLeftSquareBracketKeyword_1() { return cLeftSquareBracketLeftSquareBracketKeyword_1; }
+
+		//wChar+=NoRestorationOverRasur+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoRestorationOverRasur
+		public RuleCall getWCharNoRestorationOverRasurParserRuleCall_2_0() { return cWCharNoRestorationOverRasurParserRuleCall_2_0; }
+
+		//']]'
+		public Keyword getRightSquareBracketRightSquareBracketKeyword_3() { return cRightSquareBracketRightSquareBracketKeyword_3; }
+	}
+
+	public class NoRestorationOverRasurElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoRestorationOverRasur");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpandedParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDisputableReadingParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cCartoucheParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cEmendationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cLacunaParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cPartialDestructionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cDeletionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cCharsParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cInterfixParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		
+		//NoRestorationOverRasur:
+		//	Expanded | DisputableReading | Cartouche | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Expanded | DisputableReading | Cartouche | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_0() { return cExpandedParserRuleCall_0; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_1() { return cDisputableReadingParserRuleCall_1; }
+
+		//Cartouche
+		public RuleCall getCartoucheParserRuleCall_2() { return cCartoucheParserRuleCall_2; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_3() { return cEmendationParserRuleCall_3; }
+
+		//Lacuna
+		public RuleCall getLacunaParserRuleCall_4() { return cLacunaParserRuleCall_4; }
+
+		//PartialDestruction
+		public RuleCall getPartialDestructionParserRuleCall_5() { return cPartialDestructionParserRuleCall_5; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_6() { return cDeletionParserRuleCall_6; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_7() { return cCharsParserRuleCall_7; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_8() { return cInterfixParserRuleCall_8; }
+	}
+
+	public class PartialDestructionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.PartialDestruction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cPartialDestructionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cTopLeftHalfBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cWCharAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cWCharNoPartialDestructionParserRuleCall_2_0 = (RuleCall)cWCharAssignment_2.eContents().get(0);
+		private final Keyword cTopRightHalfBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//PartialDestruction:
+		//	{PartialDestruction}
+		//	'\\u2E22' wChar+=NoPartialDestruction+ '\\u2E23';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{PartialDestruction} '\\u2E22' wChar+=NoPartialDestruction+ '\\u2E23'
+		public Group getGroup() { return cGroup; }
+
+		//{PartialDestruction}
+		public Action getPartialDestructionAction_0() { return cPartialDestructionAction_0; }
+
+		//'\\u2E22'
+		public Keyword getTopLeftHalfBracketKeyword_1() { return cTopLeftHalfBracketKeyword_1; }
+
+		//wChar+=NoPartialDestruction+
+		public Assignment getWCharAssignment_2() { return cWCharAssignment_2; }
+
+		//NoPartialDestruction
+		public RuleCall getWCharNoPartialDestructionParserRuleCall_2_0() { return cWCharNoPartialDestructionParserRuleCall_2_0; }
+
+		//'\\u2E23'
+		public Keyword getTopRightHalfBracketKeyword_3() { return cTopRightHalfBracketKeyword_3; }
+	}
+
+	public class NoPartialDestructionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NoPartialDestruction");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cDeletionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cExpandedParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cDisputableReadingParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cCartoucheParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cOvalParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cSerechParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cEmendationParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cCharsParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cInterfixParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		
+		//NoPartialDestruction:
+		//	Deletion | Expanded | DisputableReading | Cartouche | Oval | Serech | Emendation | Chars | Interfix;
+		@Override public ParserRule getRule() { return rule; }
+
+		//Deletion | Expanded | DisputableReading | Cartouche | Oval | Serech | Emendation | Chars | Interfix
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Deletion
+		public RuleCall getDeletionParserRuleCall_0() { return cDeletionParserRuleCall_0; }
+
+		//Expanded
+		public RuleCall getExpandedParserRuleCall_1() { return cExpandedParserRuleCall_1; }
+
+		//DisputableReading
+		public RuleCall getDisputableReadingParserRuleCall_2() { return cDisputableReadingParserRuleCall_2; }
+
+		//Cartouche
+		public RuleCall getCartoucheParserRuleCall_3() { return cCartoucheParserRuleCall_3; }
+
+		//Oval
+		public RuleCall getOvalParserRuleCall_4() { return cOvalParserRuleCall_4; }
+
+		//Serech
+		public RuleCall getSerechParserRuleCall_5() { return cSerechParserRuleCall_5; }
+
+		//Emendation
+		public RuleCall getEmendationParserRuleCall_6() { return cEmendationParserRuleCall_6; }
+
+		//Chars
+		public RuleCall getCharsParserRuleCall_7() { return cCharsParserRuleCall_7; }
+
+		//Interfix
+		public RuleCall getInterfixParserRuleCall_8() { return cInterfixParserRuleCall_8; }
+	}
+
+	public class InterfixElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.Interfix");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cInterfixFlexionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cInterfixLexicalParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cInterfixSuffixPronomLexicalParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cInterfixPrefixNonLexicalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cInterfixPrefixLexicalParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cInterfixConnectionSyllabicGroupParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cInterfixCompoundWordsParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cInterfixPhoneticalComplementParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		
+		//// textual criticism interfixes
+		//Interfix:
+		//	InterfixFlexion | InterfixLexical | InterfixSuffixPronomLexical | InterfixPrefixNonLexical | InterfixPrefixLexical
+		//	| InterfixConnectionSyllabicGroup
+		//	| InterfixCompoundWords
+		//	| InterfixPhoneticalComplement;
+		@Override public ParserRule getRule() { return rule; }
+
+		//InterfixFlexion | InterfixLexical | InterfixSuffixPronomLexical | InterfixPrefixNonLexical | InterfixPrefixLexical |
+		//InterfixConnectionSyllabicGroup | InterfixCompoundWords | InterfixPhoneticalComplement
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//InterfixFlexion
+		public RuleCall getInterfixFlexionParserRuleCall_0() { return cInterfixFlexionParserRuleCall_0; }
+
+		//InterfixLexical
+		public RuleCall getInterfixLexicalParserRuleCall_1() { return cInterfixLexicalParserRuleCall_1; }
+
+		//InterfixSuffixPronomLexical
+		public RuleCall getInterfixSuffixPronomLexicalParserRuleCall_2() { return cInterfixSuffixPronomLexicalParserRuleCall_2; }
+
+		//InterfixPrefixNonLexical
+		public RuleCall getInterfixPrefixNonLexicalParserRuleCall_3() { return cInterfixPrefixNonLexicalParserRuleCall_3; }
+
+		//InterfixPrefixLexical
+		public RuleCall getInterfixPrefixLexicalParserRuleCall_4() { return cInterfixPrefixLexicalParserRuleCall_4; }
+
+		//InterfixConnectionSyllabicGroup
+		public RuleCall getInterfixConnectionSyllabicGroupParserRuleCall_5() { return cInterfixConnectionSyllabicGroupParserRuleCall_5; }
+
+		//InterfixCompoundWords
+		public RuleCall getInterfixCompoundWordsParserRuleCall_6() { return cInterfixCompoundWordsParserRuleCall_6; }
+
+		//InterfixPhoneticalComplement
+		public RuleCall getInterfixPhoneticalComplementParserRuleCall_7() { return cInterfixPhoneticalComplementParserRuleCall_7; }
+	}
+
+	public class InterfixLexicalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixLexical");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfixLexicalAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cCommaKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//InterfixLexical:
+		//	{InterfixLexical}
+		//	',';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{InterfixLexical} ','
+		public Group getGroup() { return cGroup; }
+
+		//{InterfixLexical}
+		public Action getInterfixLexicalAction_0() { return cInterfixLexicalAction_0; }
+
+		//','
+		public Keyword getCommaKeyword_1() { return cCommaKeyword_1; }
+	}
+
+	public class InterfixFlexionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixFlexion");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfixFlexionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//InterfixFlexion:
+		//	{InterfixFlexion}
+		//	'.';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{InterfixFlexion} '.'
+		public Group getGroup() { return cGroup; }
+
+		//{InterfixFlexion}
+		public Action getInterfixFlexionAction_0() { return cInterfixFlexionAction_0; }
+
+		//'.'
+		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
+	}
+
+	public class InterfixSuffixPronomLexicalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixSuffixPronomLexical");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfixSuffixPronomLexicalAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cIdenticalToKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//InterfixSuffixPronomLexical:
+		//	{InterfixSuffixPronomLexical}
+		//	'\\u2261';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{InterfixSuffixPronomLexical} '\\u2261'
+		public Group getGroup() { return cGroup; }
+
+		//{InterfixSuffixPronomLexical}
+		public Action getInterfixSuffixPronomLexicalAction_0() { return cInterfixSuffixPronomLexicalAction_0; }
+
+		//'\\u2261'
+		public Keyword getIdenticalToKeyword_1() { return cIdenticalToKeyword_1; }
+	}
+
+	public class InterfixPrefixNonLexicalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixPrefixNonLexical");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfixPrefixNonLexicalAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//InterfixPrefixNonLexical:
+		//	{InterfixPrefixNonLexical}
+		//	':';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{InterfixPrefixNonLexical} ':'
+		public Group getGroup() { return cGroup; }
+
+		//{InterfixPrefixNonLexical}
+		public Action getInterfixPrefixNonLexicalAction_0() { return cInterfixPrefixNonLexicalAction_0; }
+
+		//':'
+		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+	}
+
+	public class InterfixPrefixLexicalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixPrefixLexical");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfixPrefixLexicalAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cVerticalEllipsisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//InterfixPrefixLexical:
+		//	{InterfixPrefixLexical}
+		//	'\\u22ee';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{InterfixPrefixLexical} '\\u22ee'
+		public Group getGroup() { return cGroup; }
+
+		//{InterfixPrefixLexical}
+		public Action getInterfixPrefixLexicalAction_0() { return cInterfixPrefixLexicalAction_0; }
+
+		//'\\u22ee'
+		public Keyword getVerticalEllipsisKeyword_1() { return cVerticalEllipsisKeyword_1; }
+	}
+
+	public class InterfixConnectionSyllabicGroupElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixConnectionSyllabicGroup");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfixConnectionSyllabicGroupAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cTildeKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//InterfixConnectionSyllabicGroup:
+		//	{InterfixConnectionSyllabicGroup}
+		//	'~';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{InterfixConnectionSyllabicGroup} '~'
+		public Group getGroup() { return cGroup; }
+
+		//{InterfixConnectionSyllabicGroup}
+		public Action getInterfixConnectionSyllabicGroupAction_0() { return cInterfixConnectionSyllabicGroupAction_0; }
+
+		//'~'
+		public Keyword getTildeKeyword_1() { return cTildeKeyword_1; }
+	}
+
+	public class InterfixCompoundWordsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixCompoundWords");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfixCompoundWordsAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cHyphenMinusKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//InterfixCompoundWords:
+		//	{InterfixCompoundWords}
+		//	'-';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{InterfixCompoundWords} '-'
+		public Group getGroup() { return cGroup; }
+
+		//{InterfixCompoundWords}
+		public Action getInterfixCompoundWordsAction_0() { return cInterfixCompoundWordsAction_0; }
+
+		//'-'
+		public Keyword getHyphenMinusKeyword_1() { return cHyphenMinusKeyword_1; }
+	}
+
+	public class InterfixPhoneticalComplementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.InterfixPhoneticalComplement");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfixPhoneticalComplementAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//InterfixPhoneticalComplement:
+		//	{InterfixPhoneticalComplement}
+		//	';';
+		@Override public ParserRule getRule() { return rule; }
+
+		//{InterfixPhoneticalComplement} ';'
+		public Group getGroup() { return cGroup; }
+
+		//{InterfixPhoneticalComplement}
+		public Action getInterfixPhoneticalComplementAction_0() { return cInterfixPhoneticalComplementAction_0; }
+
+		//';'
+		public Keyword getSemicolonKeyword_1() { return cSemicolonKeyword_1; }
+	}
+
+	public class VersMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.VersMarker");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cVersbreakMarkerParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cVersFrontierMarkerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBrokenVersbreakMarkerParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cMissingVersMarkerParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cDestroyedVersMarkerParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cDeletedVersMarkerParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cDisputableVersMarkerParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cRestorationOverRasurMarkerParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cAncientExpandedMarkerParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cRasurMarkerParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cEmendationVersMarkerParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cDestroyedVersFrontierMarkerParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cPartialDestroyedVersMarkerParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
+		
+		//VersMarker:
+		//	VersbreakMarker | VersFrontierMarker | BrokenVersbreakMarker
+		//	| MissingVersMarker | DestroyedVersMarker | DeletedVersMarker | DisputableVersMarker
+		//	| RestorationOverRasurMarker | AncientExpandedMarker | RasurMarker
+		//	| EmendationVersMarker | DestroyedVersFrontierMarker | PartialDestroyedVersMarker;
+		@Override public ParserRule getRule() { return rule; }
+
+		//VersbreakMarker | VersFrontierMarker | BrokenVersbreakMarker | MissingVersMarker | DestroyedVersMarker |
+		//DeletedVersMarker | DisputableVersMarker | RestorationOverRasurMarker | AncientExpandedMarker | RasurMarker |
+		//EmendationVersMarker | DestroyedVersFrontierMarker | PartialDestroyedVersMarker
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//VersbreakMarker
+		public RuleCall getVersbreakMarkerParserRuleCall_0() { return cVersbreakMarkerParserRuleCall_0; }
+
+		//VersFrontierMarker
+		public RuleCall getVersFrontierMarkerParserRuleCall_1() { return cVersFrontierMarkerParserRuleCall_1; }
+
+		//BrokenVersbreakMarker
+		public RuleCall getBrokenVersbreakMarkerParserRuleCall_2() { return cBrokenVersbreakMarkerParserRuleCall_2; }
+
+		//MissingVersMarker
+		public RuleCall getMissingVersMarkerParserRuleCall_3() { return cMissingVersMarkerParserRuleCall_3; }
+
+		//DestroyedVersMarker
+		public RuleCall getDestroyedVersMarkerParserRuleCall_4() { return cDestroyedVersMarkerParserRuleCall_4; }
+
+		//DeletedVersMarker
+		public RuleCall getDeletedVersMarkerParserRuleCall_5() { return cDeletedVersMarkerParserRuleCall_5; }
+
+		//DisputableVersMarker
+		public RuleCall getDisputableVersMarkerParserRuleCall_6() { return cDisputableVersMarkerParserRuleCall_6; }
+
+		//RestorationOverRasurMarker
+		public RuleCall getRestorationOverRasurMarkerParserRuleCall_7() { return cRestorationOverRasurMarkerParserRuleCall_7; }
+
+		//AncientExpandedMarker
+		public RuleCall getAncientExpandedMarkerParserRuleCall_8() { return cAncientExpandedMarkerParserRuleCall_8; }
+
+		//RasurMarker
+		public RuleCall getRasurMarkerParserRuleCall_9() { return cRasurMarkerParserRuleCall_9; }
+
+		//EmendationVersMarker
+		public RuleCall getEmendationVersMarkerParserRuleCall_10() { return cEmendationVersMarkerParserRuleCall_10; }
+
+		//DestroyedVersFrontierMarker
+		public RuleCall getDestroyedVersFrontierMarkerParserRuleCall_11() { return cDestroyedVersFrontierMarkerParserRuleCall_11; }
+
+		//PartialDestroyedVersMarker
+		public RuleCall getPartialDestroyedVersMarkerParserRuleCall_12() { return cPartialDestroyedVersMarkerParserRuleCall_12; }
+	}
+
+	public class EmendationVersMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.EmendationVersMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cEmendationVersMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//EmendationVersMarker:
+		//	{EmendationVersMarker}
+		//	'(\\uDB80\\uDC80)' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{EmendationVersMarker} '(\\uDB80\\uDC80)'
+		public Group getGroup() { return cGroup; }
+
+		//{EmendationVersMarker}
+		public Action getEmendationVersMarkerAction_0() { return cEmendationVersMarkerAction_0; }
+
+		//'(\\uDB80\\uDC80)'
+		public Keyword getLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisKeyword_1() { return cLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisKeyword_1; }
+	}
+
+	public class DisputableVersMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DisputableVersMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDisputableVersMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cReversedQuestionMarkLeadSurrogateDb80TrailSurrogateDc80QuestionMarkKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//DisputableVersMarker:
+		//	{DisputableVersMarker}
+		//	'\\u2E2E\\uDB80\\uDC80?' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{DisputableVersMarker} '\\u2E2E\\uDB80\\uDC80?'
+		public Group getGroup() { return cGroup; }
+
+		//{DisputableVersMarker}
+		public Action getDisputableVersMarkerAction_0() { return cDisputableVersMarkerAction_0; }
+
+		//'\\u2E2E\\uDB80\\uDC80?'
+		public Keyword getReversedQuestionMarkLeadSurrogateDb80TrailSurrogateDc80QuestionMarkKeyword_1() { return cReversedQuestionMarkLeadSurrogateDb80TrailSurrogateDc80QuestionMarkKeyword_1; }
+	}
+
+	public class DeletedVersMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DeletedVersMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDeletedVersMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//DeletedVersMarker:
+		//	{DeletedVersMarker}
+		//	'{\\uDB80\\uDC80}' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{DeletedVersMarker} '{\\uDB80\\uDC80}'
+		public Group getGroup() { return cGroup; }
+
+		//{DeletedVersMarker}
+		public Action getDeletedVersMarkerAction_0() { return cDeletedVersMarkerAction_0; }
+
+		//'{\\uDB80\\uDC80}'
+		public Keyword getLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketKeyword_1() { return cLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketKeyword_1; }
+	}
+
+	public class DestroyedVersMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DestroyedVersMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDestroyedVersMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//DestroyedVersMarker:
+		//	{DestroyedVersMarker}
+		//	'[\\uDB80\\uDC80]' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{DestroyedVersMarker} '[\\uDB80\\uDC80]'
+		public Group getGroup() { return cGroup; }
+
+		//{DestroyedVersMarker}
+		public Action getDestroyedVersMarkerAction_0() { return cDestroyedVersMarkerAction_0; }
+
+		//'[\\uDB80\\uDC80]'
+		public Keyword getLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketKeyword_1() { return cLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketKeyword_1; }
+	}
+
+	public class DestroyedVersFrontierMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.DestroyedVersFrontierMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDestroyedVersFrontierMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc81RightSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//DestroyedVersFrontierMarker:
+		//	{DestroyedVersFrontierMarker}
+		//	'[\\uDB80\\uDC81]' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{DestroyedVersFrontierMarker} '[\\uDB80\\uDC81]'
+		public Group getGroup() { return cGroup; }
+
+		//{DestroyedVersFrontierMarker}
+		public Action getDestroyedVersFrontierMarkerAction_0() { return cDestroyedVersFrontierMarkerAction_0; }
+
+		//'[\\uDB80\\uDC81]'
+		public Keyword getLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc81RightSquareBracketKeyword_1() { return cLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc81RightSquareBracketKeyword_1; }
+	}
+
+	public class PartialDestroyedVersMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.PartialDestroyedVersMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cPartialDestroyedVersMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cTopLeftHalfBracketLeadSurrogateDb80TrailSurrogateDc80TopRightHalfBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//PartialDestroyedVersMarker:
+		//	{PartialDestroyedVersMarker}
+		//	'\\u2E22\\uDB80\\uDC80\\u2E23' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{PartialDestroyedVersMarker} '\\u2E22\\uDB80\\uDC80\\u2E23'
+		public Group getGroup() { return cGroup; }
+
+		//{PartialDestroyedVersMarker}
+		public Action getPartialDestroyedVersMarkerAction_0() { return cPartialDestroyedVersMarkerAction_0; }
+
+		//'\\u2E22\\uDB80\\uDC80\\u2E23'
+		public Keyword getTopLeftHalfBracketLeadSurrogateDb80TrailSurrogateDc80TopRightHalfBracketKeyword_1() { return cTopLeftHalfBracketLeadSurrogateDb80TrailSurrogateDc80TopRightHalfBracketKeyword_1; }
+	}
+
+	public class MissingVersMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.MissingVersMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cMissingVersMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftPointingAngleBracketLeadSurrogateDb80TrailSurrogateDc80RightPointingAngleBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//MissingVersMarker:
+		//	{MissingVersMarker}
+		//	'\\u2329\\uDB80\\uDC80\\u232A' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{MissingVersMarker} '\\u2329\\uDB80\\uDC80\\u232A'
+		public Group getGroup() { return cGroup; }
+
+		//{MissingVersMarker}
+		public Action getMissingVersMarkerAction_0() { return cMissingVersMarkerAction_0; }
+
+		//'\\u2329\\uDB80\\uDC80\\u232A'
+		public Keyword getLeftPointingAngleBracketLeadSurrogateDb80TrailSurrogateDc80RightPointingAngleBracketKeyword_1() { return cLeftPointingAngleBracketLeadSurrogateDb80TrailSurrogateDc80RightPointingAngleBracketKeyword_1; }
+	}
+
+	public class RestorationOverRasurMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.RestorationOverRasurMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cRestorationOverRasurMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketRightSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//RestorationOverRasurMarker:
+		//	{RestorationOverRasurMarker}
+		//	'[[\\uDB80\\uDC80]]' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{RestorationOverRasurMarker} '[[\\uDB80\\uDC80]]'
+		public Group getGroup() { return cGroup; }
+
+		//{RestorationOverRasurMarker}
+		public Action getRestorationOverRasurMarkerAction_0() { return cRestorationOverRasurMarkerAction_0; }
+
+		//'[[\\uDB80\\uDC80]]'
+		public Keyword getLeftSquareBracketLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketRightSquareBracketKeyword_1() { return cLeftSquareBracketLeftSquareBracketLeadSurrogateDb80TrailSurrogateDc80RightSquareBracketRightSquareBracketKeyword_1; }
+	}
+
+	public class AncientExpandedMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.AncientExpandedMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cAncientExpandedMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisRightParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//AncientExpandedMarker:
+		//	{AncientExpandedMarker}
+		//	'((\\uDB80\\uDC80))' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{AncientExpandedMarker} '((\\uDB80\\uDC80))'
+		public Group getGroup() { return cGroup; }
+
+		//{AncientExpandedMarker}
+		public Action getAncientExpandedMarkerAction_0() { return cAncientExpandedMarkerAction_0; }
+
+		//'((\\uDB80\\uDC80))'
+		public Keyword getLeftParenthesisLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisRightParenthesisKeyword_1() { return cLeftParenthesisLeftParenthesisLeadSurrogateDb80TrailSurrogateDc80RightParenthesisRightParenthesisKeyword_1; }
+	}
+
+	public class RasurMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.RasurMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cAncientExpandedMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketRightCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//RasurMarker:
+		//	{AncientExpandedMarker}
+		//	'{{\\uDB80\\uDC80}}' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{AncientExpandedMarker} '{{\\uDB80\\uDC80}}'
+		public Group getGroup() { return cGroup; }
+
+		//{AncientExpandedMarker}
+		public Action getAncientExpandedMarkerAction_0() { return cAncientExpandedMarkerAction_0; }
+
+		//'{{\\uDB80\\uDC80}}'
+		public Keyword getLeftCurlyBracketLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketRightCurlyBracketKeyword_1() { return cLeftCurlyBracketLeftCurlyBracketLeadSurrogateDb80TrailSurrogateDc80RightCurlyBracketRightCurlyBracketKeyword_1; }
+	}
+
+	public class VersFrontierMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.VersFrontierMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cVersFrontierMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeadSurrogateDb80TrailSurrogateDc81Keyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//VersFrontierMarker:
+		//	{VersFrontierMarker}
+		//	'\\uDB80\\uDC81' //'@mv'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{VersFrontierMarker} '\\uDB80\\uDC81'
+		public Group getGroup() { return cGroup; }
+
+		//{VersFrontierMarker}
+		public Action getVersFrontierMarkerAction_0() { return cVersFrontierMarkerAction_0; }
+
+		//'\\uDB80\\uDC81'
+		public Keyword getLeadSurrogateDb80TrailSurrogateDc81Keyword_1() { return cLeadSurrogateDb80TrailSurrogateDc81Keyword_1; }
+	}
+
+	public class VersbreakMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.VersbreakMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cVersbreakMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeadSurrogateDb80TrailSurrogateDc80Keyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//VersbreakMarker:
+		//	{VersbreakMarker}
+		//	'\\uDB80\\uDC80' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{VersbreakMarker} '\\uDB80\\uDC80'
+		public Group getGroup() { return cGroup; }
+
+		//{VersbreakMarker}
+		public Action getVersbreakMarkerAction_0() { return cVersbreakMarkerAction_0; }
+
+		//'\\uDB80\\uDC80'
+		public Keyword getLeadSurrogateDb80TrailSurrogateDc80Keyword_1() { return cLeadSurrogateDb80TrailSurrogateDc80Keyword_1; }
+	}
+
+	public class BrokenVersbreakMarkerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.BrokenVersbreakMarker");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cBrokenVersbreakMarkerAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cLeadSurrogateDb80TrailSurrogateDc82Keyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//BrokenVersbreakMarker:
+		//	{BrokenVersbreakMarker}
+		//	'\\uDB80\\uDC82' //'@v'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+
+		//{BrokenVersbreakMarker} '\\uDB80\\uDC82'
+		public Group getGroup() { return cGroup; }
+
+		//{BrokenVersbreakMarker}
+		public Action getBrokenVersbreakMarkerAction_0() { return cBrokenVersbreakMarkerAction_0; }
+
+		//'\\uDB80\\uDC82'
+		public Keyword getLeadSurrogateDb80TrailSurrogateDc82Keyword_1() { return cLeadSurrogateDb80TrailSurrogateDc82Keyword_1; }
+	}
+	
+	
+	private final TextContentElements pTextContent;
+	private final TextItemElements pTextItem;
+	private final SentenceElements pSentence;
+	private final SentenceItemElements pSentenceItem;
+	private final AbstractMarkerElements pAbstractMarker;
+	private final TerminalRule tNEWLINE;
+	private final AmbivalenceElements pAmbivalence;
+	private final CaseElements pCase;
+	private final TerminalRule tCASESTRING;
+	private final SentenceItemNoAmbivalenceElements pSentenceItemNoAmbivalence;
+	private final MarkerElements pMarker;
+	private final TerminalRule tBETWEEN_HASHES;
+	private final DestructionMarkerElements pDestructionMarker;
+	private final TerminalRule tBETWEEN_MINUS;
+	private final WordElements pWord;
+	private final WordPartElements pWordPart;
+	private final WordMiddleElements pWordMiddle;
+	private final CharsElements pChars;
+	private final TerminalRule tEGYSTRING;
+	private final BracketsElements pBrackets;
+	private final OvalElements pOval;
+	private final SerechElements pSerech;
+	private final CartoucheElements pCartouche;
+	private final NoCartoucheElements pNoCartouche;
+	private final ExpandedElements pExpanded;
+	private final AncientExpandedElements pAncientExpanded;
+	private final NoExpandedElements pNoExpanded;
+	private final EmendationElements pEmendation;
+	private final NoEmendationElements pNoEmendation;
+	private final DisputableReadingElements pDisputableReading;
+	private final NoDisputableReadingElements pNoDisputableReading;
+	private final LacunaElements pLacuna;
+	private final NoLacunaElements pNoLacuna;
+	private final DeletionElements pDeletion;
+	private final NoDeletionElements pNoDeletion;
+	private final ExpandedColumnElements pExpandedColumn;
+	private final NoExpandedColumnElements pNoExpandedColumn;
+	private final RasurElements pRasur;
+	private final NoRasurElements pNoRasur;
+	private final NoAncientExpandedElements pNoAncientExpanded;
+	private final RestorationOverRasurElements pRestorationOverRasur;
+	private final NoRestorationOverRasurElements pNoRestorationOverRasur;
+	private final PartialDestructionElements pPartialDestruction;
+	private final NoPartialDestructionElements pNoPartialDestruction;
+	private final InterfixElements pInterfix;
+	private final InterfixLexicalElements pInterfixLexical;
+	private final InterfixFlexionElements pInterfixFlexion;
+	private final InterfixSuffixPronomLexicalElements pInterfixSuffixPronomLexical;
+	private final InterfixPrefixNonLexicalElements pInterfixPrefixNonLexical;
+	private final InterfixPrefixLexicalElements pInterfixPrefixLexical;
+	private final InterfixConnectionSyllabicGroupElements pInterfixConnectionSyllabicGroup;
+	private final InterfixCompoundWordsElements pInterfixCompoundWords;
+	private final InterfixPhoneticalComplementElements pInterfixPhoneticalComplement;
+	private final VersMarkerElements pVersMarker;
+	private final EmendationVersMarkerElements pEmendationVersMarker;
+	private final DisputableVersMarkerElements pDisputableVersMarker;
+	private final DeletedVersMarkerElements pDeletedVersMarker;
+	private final DestroyedVersMarkerElements pDestroyedVersMarker;
+	private final DestroyedVersFrontierMarkerElements pDestroyedVersFrontierMarker;
+	private final PartialDestroyedVersMarkerElements pPartialDestroyedVersMarker;
+	private final MissingVersMarkerElements pMissingVersMarker;
+	private final RestorationOverRasurMarkerElements pRestorationOverRasurMarker;
+	private final AncientExpandedMarkerElements pAncientExpandedMarker;
+	private final RasurMarkerElements pRasurMarker;
+	private final VersFrontierMarkerElements pVersFrontierMarker;
+	private final VersbreakMarkerElements pVersbreakMarker;
+	private final BrokenVersbreakMarkerElements pBrokenVersbreakMarker;
+	
+	private final Grammar grammar;
+
+	@Inject
+	public EgyDslGrammarAccess(GrammarProvider grammarProvider) {
+		this.grammar = internalFindGrammar(grammarProvider);
+		this.pTextContent = new TextContentElements();
+		this.pTextItem = new TextItemElements();
+		this.pSentence = new SentenceElements();
+		this.pSentenceItem = new SentenceItemElements();
+		this.pAbstractMarker = new AbstractMarkerElements();
+		this.tNEWLINE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.NEWLINE");
+		this.pAmbivalence = new AmbivalenceElements();
+		this.pCase = new CaseElements();
+		this.tCASESTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.CASESTRING");
+		this.pSentenceItemNoAmbivalence = new SentenceItemNoAmbivalenceElements();
+		this.pMarker = new MarkerElements();
+		this.tBETWEEN_HASHES = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.BETWEEN_HASHES");
+		this.pDestructionMarker = new DestructionMarkerElements();
+		this.tBETWEEN_MINUS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.BETWEEN_MINUS");
+		this.pWord = new WordElements();
+		this.pWordPart = new WordPartElements();
+		this.pWordMiddle = new WordMiddleElements();
+		this.pChars = new CharsElements();
+		this.tEGYSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "org.bbaw.bts.corpus.text.egy.EgyDsl.EGYSTRING");
+		this.pBrackets = new BracketsElements();
+		this.pOval = new OvalElements();
+		this.pSerech = new SerechElements();
+		this.pCartouche = new CartoucheElements();
+		this.pNoCartouche = new NoCartoucheElements();
+		this.pExpanded = new ExpandedElements();
+		this.pAncientExpanded = new AncientExpandedElements();
+		this.pNoExpanded = new NoExpandedElements();
+		this.pEmendation = new EmendationElements();
+		this.pNoEmendation = new NoEmendationElements();
+		this.pDisputableReading = new DisputableReadingElements();
+		this.pNoDisputableReading = new NoDisputableReadingElements();
+		this.pLacuna = new LacunaElements();
+		this.pNoLacuna = new NoLacunaElements();
+		this.pDeletion = new DeletionElements();
+		this.pNoDeletion = new NoDeletionElements();
+		this.pExpandedColumn = new ExpandedColumnElements();
+		this.pNoExpandedColumn = new NoExpandedColumnElements();
+		this.pRasur = new RasurElements();
+		this.pNoRasur = new NoRasurElements();
+		this.pNoAncientExpanded = new NoAncientExpandedElements();
+		this.pRestorationOverRasur = new RestorationOverRasurElements();
+		this.pNoRestorationOverRasur = new NoRestorationOverRasurElements();
+		this.pPartialDestruction = new PartialDestructionElements();
+		this.pNoPartialDestruction = new NoPartialDestructionElements();
+		this.pInterfix = new InterfixElements();
+		this.pInterfixLexical = new InterfixLexicalElements();
+		this.pInterfixFlexion = new InterfixFlexionElements();
+		this.pInterfixSuffixPronomLexical = new InterfixSuffixPronomLexicalElements();
+		this.pInterfixPrefixNonLexical = new InterfixPrefixNonLexicalElements();
+		this.pInterfixPrefixLexical = new InterfixPrefixLexicalElements();
+		this.pInterfixConnectionSyllabicGroup = new InterfixConnectionSyllabicGroupElements();
+		this.pInterfixCompoundWords = new InterfixCompoundWordsElements();
+		this.pInterfixPhoneticalComplement = new InterfixPhoneticalComplementElements();
+		this.pVersMarker = new VersMarkerElements();
+		this.pEmendationVersMarker = new EmendationVersMarkerElements();
+		this.pDisputableVersMarker = new DisputableVersMarkerElements();
+		this.pDeletedVersMarker = new DeletedVersMarkerElements();
+		this.pDestroyedVersMarker = new DestroyedVersMarkerElements();
+		this.pDestroyedVersFrontierMarker = new DestroyedVersFrontierMarkerElements();
+		this.pPartialDestroyedVersMarker = new PartialDestroyedVersMarkerElements();
+		this.pMissingVersMarker = new MissingVersMarkerElements();
+		this.pRestorationOverRasurMarker = new RestorationOverRasurMarkerElements();
+		this.pAncientExpandedMarker = new AncientExpandedMarkerElements();
+		this.pRasurMarker = new RasurMarkerElements();
+		this.pVersFrontierMarker = new VersFrontierMarkerElements();
+		this.pVersbreakMarker = new VersbreakMarkerElements();
+		this.pBrokenVersbreakMarker = new BrokenVersbreakMarkerElements();
+	}
+	
+	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
+		Grammar grammar = grammarProvider.getGrammar(this);
+		while (grammar != null) {
+			if ("org.bbaw.bts.corpus.text.egy.EgyDsl".equals(grammar.getName())) {
+				return grammar;
+			}
+			List<Grammar> grammars = grammar.getUsedGrammars();
+			if (!grammars.isEmpty()) {
+				grammar = grammars.iterator().next();
+			} else {
+				return null;
+			}
+		}
+		return grammar;
+	}
+	
+	@Override
+	public Grammar getGrammar() {
+		return grammar;
+	}
+	
+
+	
+	//TextContent:
+	//	{TextContent} (items+=TextItem ((' ' | NEWLINE)? items+=TextItem)*);
+	public TextContentElements getTextContentAccess() {
+		return pTextContent;
+	}
+	
+	public ParserRule getTextContentRule() {
+		return getTextContentAccess().getRule();
+	}
+
+	//TextItem:
+	//	Sentence;
+	public TextItemElements getTextItemAccess() {
+		return pTextItem;
+	}
+	
+	public ParserRule getTextItemRule() {
+		return getTextItemAccess().getRule();
+	}
+
+	//// sentence	
+	//Sentence:
+	//	{Sentence}
+	//	'§' (items+=SentenceItem (' ' NEWLINE? items+=SentenceItem)*)? '§';
+	public SentenceElements getSentenceAccess() {
+		return pSentence;
+	}
+	
+	public ParserRule getSentenceRule() {
+		return getSentenceAccess().getRule();
+	}
+
+	//SentenceItem:
+	//	Word | AbstractMarker | Ambivalence;
+	public SentenceItemElements getSentenceItemAccess() {
+		return pSentenceItem;
+	}
+	
+	public ParserRule getSentenceItemRule() {
+		return getSentenceItemAccess().getRule();
+	}
+
+	//AbstractMarker:
+	//	Marker | VersMarker | DestructionMarker;
+	public AbstractMarkerElements getAbstractMarkerAccess() {
+		return pAbstractMarker;
+	}
+	
+	public ParserRule getAbstractMarkerRule() {
+		return getAbstractMarkerAccess().getRule();
+	}
+
+	//terminal NEWLINE:
+	//	'\r' | '\n' | '\t'+;
+	public TerminalRule getNEWLINERule() {
+		return tNEWLINE;
+	} 
+
+	//Ambivalence:
+	//	'%' (cases+=Case ('| ' NEWLINE? cases+=Case)+) '%';
+	public AmbivalenceElements getAmbivalenceAccess() {
+		return pAmbivalence;
+	}
+	
+	public ParserRule getAmbivalenceRule() {
+		return getAmbivalenceAccess().getRule();
+	}
+
+	//Case:
+	//	name=CASESTRING NEWLINE? (items+=SentenceItemNoAmbivalence (' ' NEWLINE? items+=SentenceItemNoAmbivalence)*);
+	public CaseElements getCaseAccess() {
+		return pCase;
+	}
+	
+	public ParserRule getCaseRule() {
+		return getCaseAccess().getRule();
+	}
+
+	//terminal CASESTRING:
+	//	'case ' !':'+ ': ';
+	public TerminalRule getCASESTRINGRule() {
+		return tCASESTRING;
+	} 
+
+	//SentenceItemNoAmbivalence:
+	//	Word | AbstractMarker;
+	public SentenceItemNoAmbivalenceElements getSentenceItemNoAmbivalenceAccess() {
+		return pSentenceItemNoAmbivalence;
+	}
+	
+	public ParserRule getSentenceItemNoAmbivalenceRule() {
+		return getSentenceItemNoAmbivalenceAccess().getRule();
+	}
+
+	//Marker:
+	//	type=BETWEEN_HASHES;
+	public MarkerElements getMarkerAccess() {
+		return pMarker;
+	}
+	
+	public ParserRule getMarkerRule() {
+		return getMarkerAccess().getRule();
+	}
+
+	//terminal BETWEEN_HASHES:
+	//	'#' !'#'+ '#';
+	public TerminalRule getBETWEEN_HASHESRule() {
+		return tBETWEEN_HASHES;
+	} 
+
+	//DestructionMarker:
+	//	type=BETWEEN_MINUS;
+	public DestructionMarkerElements getDestructionMarkerAccess() {
+		return pDestructionMarker;
+	}
+	
+	public ParserRule getDestructionMarkerRule() {
+		return getDestructionMarkerAccess().getRule();
+	}
+
+	//terminal BETWEEN_MINUS:
+	//	'--' !'-'+ '--';
+	public TerminalRule getBETWEEN_MINUSRule() {
+		return tBETWEEN_MINUS;
+	} 
+
+	//// word
+	//Word:
+	//	{Word} wChar+=WordPart+;
+	public WordElements getWordAccess() {
+		return pWord;
+	}
+	
+	public ParserRule getWordRule() {
+		return getWordAccess().getRule();
+	}
+
+	//WordPart:
+	//	wChar=WordMiddle;
+	public WordPartElements getWordPartAccess() {
+		return pWordPart;
+	}
+	
+	public ParserRule getWordPartRule() {
+		return getWordPartAccess().getRule();
+	}
+
+	//WordMiddle:
+	//	Brackets | Chars | Interfix;
+	public WordMiddleElements getWordMiddleAccess() {
+		return pWordMiddle;
+	}
+	
+	public ParserRule getWordMiddleRule() {
+		return getWordMiddleAccess().getRule();
+	}
+
+	//// Chars...
+	//Chars:
+	//	name=EGYSTRING;
+	public CharsElements getCharsAccess() {
+		return pChars;
+	}
+	
+	public ParserRule getCharsRule() {
+		return getCharsAccess().getRule();
+	}
+
+	//terminal EGYSTRING: // AlephU
+	//	'\\uA722' //&aleph;=
+	//	| '\\uA723' | '\\u02BE' // spiLen
+	//	//|'\\u02BE'   // SpiLenU
+	//	| '\\uA725' // ajin
+	//	| '\\uA724' // AjinU
+	//	| 'j' | 'y' | 'w' | 'b' | 'f' | 'm' | 'n' | 'r' | 'h' | 'ḥ' | 'ḫ' | 'ẖ' | 'H' | 'Ḥ' | 'Ḫ' | 'H̱' | 'H̭' | 'z' | 's' |
+	//	'š' | 'S' | 'Š' // Schekelsche Zeichen|'Ś'|'ś'
+	//	| 'q' | 'k' | 'g' | 't' | 'ṯ' | 'ṱ' | 'T' | 'Ṯ' | 'Ṱ' // Schekelsche Zeichen |'ṭ' |'Ṭ'
+	//	| 'd' | 'ḏ' | 'Ḏ' | 'h̭' | 'i' | 'i̯' | 'ı͗' | 'ı̯͗' | 'ï' | 'i̭' | 'I͗' | 'I' // |'\\u0069\\u032F'//iArcU
+	//	| '\\u0049\\u032F' //IArcU
+	//	| 'i̯̯' | '\\u00CF' // ITremaU
+	//	// Schekelsche Zeichen |'ḳ'|'Ḳ'
+	//	| 'u' | 'u̯' | 'U' | '\\u0055\\u032F' | 'e' | '/' | '+' // Schekelsche Zeichen|'č'|'č̣'|'Č'|'Č̣'
+	//	| 'a' | 'J' | 'Y' | 'W' | 'B' | 'P' | 'F' | 'M' | 'N' | 'R' | 'L' | 'Z' | 'Q' | 'K' | 'G' | 'D' | 'A' // coptic
+	//	| '\\u2C80'..'\\u2CFF' //	//oval
+	//	//	| '\\uD80C\\uDE86' |'\\uD80C\\uDE87'
+	//	//	
+	//	//	//cartouche
+	//	//	|'\\uD80C\\uDF79' |'\\uD80C\\uDF7A'
+	//	//	|'\\u13379'   // cartOn
+	//	//	|'\\u1337A'   // cartOff
+	//	//	//serech
+	//	//	|'\\uD80C\\uDE58' | '\\uD80C\\uDE82'
+	//	| 'p' | 'l' //interfix :
+	//	| '=' //	|':'|'='|'\\u2261'|','|'.'|'~'|'\\u22ee'
+	//	| '_' | '\\u205D' // trplColon	
+	//	//num
+	//	| '0'..'9' // special
+	//	| 'Õ' | 'ã' | 'Þ' | '!' | '\\u0152' // OElig
+	//	| '\\u0153' // oelig
+	//	| '\\u0178' // Yuml
+	//	| '\\u00C6' | '*' | 'ê'+;
+	public TerminalRule getEGYSTRINGRule() {
+		return tEGYSTRING;
+	} 
+
+	//// textual criticism brackets
+	//Brackets:
+	//	Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna |
+	//	Deletion | PartialDestruction
+	//	| Cartouche | Oval | Serech;
+	public BracketsElements getBracketsAccess() {
+		return pBrackets;
+	}
+	
+	public ParserRule getBracketsRule() {
+		return getBracketsAccess().getRule();
+	}
+
+	////Cartouche2:
+	////	'\\u13379'   wChar+=NoCartouche+ '\\u1337A'
+	////;
+	//Oval: //Oval
+	//	'\\uD80C\\uDE58' wChar+=NoCartouche+ '\\uD80C\\uDE82';
+	public OvalElements getOvalAccess() {
+		return pOval;
+	}
+	
+	public ParserRule getOvalRule() {
+		return getOvalAccess().getRule();
+	}
+
+	//Serech: // eigentlich Serech
+	//	'\\uD80C\\uDF79' wChar+=NoCartouche+ '\\uD80C\\uDF7A';
+	public SerechElements getSerechAccess() {
+		return pSerech;
+	}
+	
+	public ParserRule getSerechRule() {
+		return getSerechAccess().getRule();
+	}
+
+	//Cartouche:
+	//	{Expanded}
+	//	'\\uD80C\\uDE86' wChar+=NoCartouche+ '\\uD80C\\uDE87';
+	public CartoucheElements getCartoucheAccess() {
+		return pCartouche;
+	}
+	
+	public ParserRule getCartoucheRule() {
+		return getCartoucheAccess().getRule();
+	}
+
+	//NoCartouche:
+	//	Chars
+	//	| Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn | Expanded | DisputableReading | Emendation | Lacuna
+	//	| Deletion | PartialDestruction
+	//	| Interfix;
+	public NoCartoucheElements getNoCartoucheAccess() {
+		return pNoCartouche;
+	}
+	
+	public ParserRule getNoCartoucheRule() {
+		return getNoCartoucheAccess().getRule();
+	}
+
+	//Expanded:
+	//	{Expanded}
+	//	'(' wChar+=NoExpanded+ ')';
+	public ExpandedElements getExpandedAccess() {
+		return pExpanded;
+	}
+	
+	public ParserRule getExpandedRule() {
+		return getExpandedAccess().getRule();
+	}
+
+	//AncientExpanded:
+	//	{AncientExpanded}
+	//	'((' wChar+=NoAncientExpanded+ '))';
+	public AncientExpandedElements getAncientExpandedAccess() {
+		return pAncientExpanded;
+	}
+	
+	public ParserRule getAncientExpandedRule() {
+		return getAncientExpandedAccess().getRule();
+	}
+
+	//NoExpanded:
+	//	DisputableReading | Chars | Interfix;
+	public NoExpandedElements getNoExpandedAccess() {
+		return pNoExpanded;
+	}
+	
+	public ParserRule getNoExpandedRule() {
+		return getNoExpandedAccess().getRule();
+	}
+
+	//Emendation:
+	//	{Emendation}
+	//	'\\u2329' wChar+=NoEmendation+ '\\u232A';
+	public EmendationElements getEmendationAccess() {
+		return pEmendation;
+	}
+	
+	public ParserRule getEmendationRule() {
+		return getEmendationAccess().getRule();
+	}
+
+	//NoEmendation:
+	//	Expanded | DisputableReading | Chars | Interfix;
+	public NoEmendationElements getNoEmendationAccess() {
+		return pNoEmendation;
+	}
+	
+	public ParserRule getNoEmendationRule() {
+		return getNoEmendationAccess().getRule();
+	}
+
+	//DisputableReading:
+	//	{DisputableReading}
+	//	'\\u2E2E' wChar+=NoDisputableReading+ '?';
+	public DisputableReadingElements getDisputableReadingAccess() {
+		return pDisputableReading;
+	}
+	
+	public ParserRule getDisputableReadingRule() {
+		return getDisputableReadingAccess().getRule();
+	}
+
+	//NoDisputableReading:
+	//	Expanded | Emendation | Deletion
+	//	| Rasur | AncientExpanded | RestorationOverRasur | ExpandedColumn
+	//	| Lacuna
+	//	| PartialDestruction
+	//	| Chars | Interfix;
+	public NoDisputableReadingElements getNoDisputableReadingAccess() {
+		return pNoDisputableReading;
+	}
+	
+	public ParserRule getNoDisputableReadingRule() {
+		return getNoDisputableReadingAccess().getRule();
+	}
+
+	//Lacuna:
+	//	{Lacuna}
+	//	'[' wChar+=NoLacuna+ ']';
+	public LacunaElements getLacunaAccess() {
+		return pLacuna;
+	}
+	
+	public ParserRule getLacunaRule() {
+		return getLacunaAccess().getRule();
+	}
+
+	//NoLacuna:
+	//	Expanded | DisputableReading | Cartouche | Oval | Serech | Deletion | Emendation | Chars | Interfix;
+	public NoLacunaElements getNoLacunaAccess() {
+		return pNoLacuna;
+	}
+	
+	public ParserRule getNoLacunaRule() {
+		return getNoLacunaAccess().getRule();
+	}
+
+	//Deletion:
+	//	{Deletion}
+	//	'{' wChar+=NoDeletion+ '}';
+	public DeletionElements getDeletionAccess() {
+		return pDeletion;
+	}
+	
+	public ParserRule getDeletionRule() {
+		return getDeletionAccess().getRule();
+	}
+
+	//NoDeletion:
+	//	PartialDestruction | Expanded | DisputableReading | Lacuna | RestorationOverRasur | AncientExpanded | Chars |
+	//	Interfix;
+	public NoDeletionElements getNoDeletionAccess() {
+		return pNoDeletion;
+	}
+	
+	public ParserRule getNoDeletionRule() {
+		return getNoDeletionAccess().getRule();
+	}
+
+	//ExpandedColumn:
+	//	{ExpandedColumn}
+	//	'\\u2329\\u2329' wChar+=NoExpandedColumn+ '\\u232A\\u232A';
+	public ExpandedColumnElements getExpandedColumnAccess() {
+		return pExpandedColumn;
+	}
+	
+	public ParserRule getExpandedColumnRule() {
+		return getExpandedColumnAccess().getRule();
+	}
+
+	//NoExpandedColumn:
+	//	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
+	public NoExpandedColumnElements getNoExpandedColumnAccess() {
+		return pNoExpandedColumn;
+	}
+	
+	public ParserRule getNoExpandedColumnRule() {
+		return getNoExpandedColumnAccess().getRule();
+	}
+
+	//Rasur:
+	//	{Rasur}
+	//	'{{' wChar+=NoRasur+ '}}';
+	public RasurElements getRasurAccess() {
+		return pRasur;
+	}
+	
+	public ParserRule getRasurRule() {
+		return getRasurAccess().getRule();
+	}
+
+	//NoRasur:
+	//	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
+	public NoRasurElements getNoRasurAccess() {
+		return pNoRasur;
+	}
+	
+	public ParserRule getNoRasurRule() {
+		return getNoRasurAccess().getRule();
+	}
+
+	//NoAncientExpanded:
+	//	Expanded | DisputableReading | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
+	public NoAncientExpandedElements getNoAncientExpandedAccess() {
+		return pNoAncientExpanded;
+	}
+	
+	public ParserRule getNoAncientExpandedRule() {
+		return getNoAncientExpandedAccess().getRule();
+	}
+
+	//RestorationOverRasur:
+	//	{RestorationOverRasur}
+	//	'[[' wChar+=NoRestorationOverRasur+ ']]';
+	public RestorationOverRasurElements getRestorationOverRasurAccess() {
+		return pRestorationOverRasur;
+	}
+	
+	public ParserRule getRestorationOverRasurRule() {
+		return getRestorationOverRasurAccess().getRule();
+	}
+
+	//NoRestorationOverRasur:
+	//	Expanded | DisputableReading | Cartouche | Emendation | Lacuna | PartialDestruction | Deletion | Chars | Interfix;
+	public NoRestorationOverRasurElements getNoRestorationOverRasurAccess() {
+		return pNoRestorationOverRasur;
+	}
+	
+	public ParserRule getNoRestorationOverRasurRule() {
+		return getNoRestorationOverRasurAccess().getRule();
+	}
+
+	//PartialDestruction:
+	//	{PartialDestruction}
+	//	'\\u2E22' wChar+=NoPartialDestruction+ '\\u2E23';
+	public PartialDestructionElements getPartialDestructionAccess() {
+		return pPartialDestruction;
+	}
+	
+	public ParserRule getPartialDestructionRule() {
+		return getPartialDestructionAccess().getRule();
+	}
+
+	//NoPartialDestruction:
+	//	Deletion | Expanded | DisputableReading | Cartouche | Oval | Serech | Emendation | Chars | Interfix;
+	public NoPartialDestructionElements getNoPartialDestructionAccess() {
+		return pNoPartialDestruction;
+	}
+	
+	public ParserRule getNoPartialDestructionRule() {
+		return getNoPartialDestructionAccess().getRule();
+	}
+
+	//// textual criticism interfixes
+	//Interfix:
+	//	InterfixFlexion | InterfixLexical | InterfixSuffixPronomLexical | InterfixPrefixNonLexical | InterfixPrefixLexical
+	//	| InterfixConnectionSyllabicGroup
+	//	| InterfixCompoundWords
+	//	| InterfixPhoneticalComplement;
+	public InterfixElements getInterfixAccess() {
+		return pInterfix;
+	}
+	
+	public ParserRule getInterfixRule() {
+		return getInterfixAccess().getRule();
+	}
+
+	//InterfixLexical:
+	//	{InterfixLexical}
+	//	',';
+	public InterfixLexicalElements getInterfixLexicalAccess() {
+		return pInterfixLexical;
+	}
+	
+	public ParserRule getInterfixLexicalRule() {
+		return getInterfixLexicalAccess().getRule();
+	}
+
+	//InterfixFlexion:
+	//	{InterfixFlexion}
+	//	'.';
+	public InterfixFlexionElements getInterfixFlexionAccess() {
+		return pInterfixFlexion;
+	}
+	
+	public ParserRule getInterfixFlexionRule() {
+		return getInterfixFlexionAccess().getRule();
+	}
+
+	//InterfixSuffixPronomLexical:
+	//	{InterfixSuffixPronomLexical}
+	//	'\\u2261';
+	public InterfixSuffixPronomLexicalElements getInterfixSuffixPronomLexicalAccess() {
+		return pInterfixSuffixPronomLexical;
+	}
+	
+	public ParserRule getInterfixSuffixPronomLexicalRule() {
+		return getInterfixSuffixPronomLexicalAccess().getRule();
+	}
+
+	//InterfixPrefixNonLexical:
+	//	{InterfixPrefixNonLexical}
+	//	':';
+	public InterfixPrefixNonLexicalElements getInterfixPrefixNonLexicalAccess() {
+		return pInterfixPrefixNonLexical;
+	}
+	
+	public ParserRule getInterfixPrefixNonLexicalRule() {
+		return getInterfixPrefixNonLexicalAccess().getRule();
+	}
+
+	//InterfixPrefixLexical:
+	//	{InterfixPrefixLexical}
+	//	'\\u22ee';
+	public InterfixPrefixLexicalElements getInterfixPrefixLexicalAccess() {
+		return pInterfixPrefixLexical;
+	}
+	
+	public ParserRule getInterfixPrefixLexicalRule() {
+		return getInterfixPrefixLexicalAccess().getRule();
+	}
+
+	//InterfixConnectionSyllabicGroup:
+	//	{InterfixConnectionSyllabicGroup}
+	//	'~';
+	public InterfixConnectionSyllabicGroupElements getInterfixConnectionSyllabicGroupAccess() {
+		return pInterfixConnectionSyllabicGroup;
+	}
+	
+	public ParserRule getInterfixConnectionSyllabicGroupRule() {
+		return getInterfixConnectionSyllabicGroupAccess().getRule();
+	}
+
+	//InterfixCompoundWords:
+	//	{InterfixCompoundWords}
+	//	'-';
+	public InterfixCompoundWordsElements getInterfixCompoundWordsAccess() {
+		return pInterfixCompoundWords;
+	}
+	
+	public ParserRule getInterfixCompoundWordsRule() {
+		return getInterfixCompoundWordsAccess().getRule();
+	}
+
+	//InterfixPhoneticalComplement:
+	//	{InterfixPhoneticalComplement}
+	//	';';
+	public InterfixPhoneticalComplementElements getInterfixPhoneticalComplementAccess() {
+		return pInterfixPhoneticalComplement;
+	}
+	
+	public ParserRule getInterfixPhoneticalComplementRule() {
+		return getInterfixPhoneticalComplementAccess().getRule();
+	}
+
+	//VersMarker:
+	//	VersbreakMarker | VersFrontierMarker | BrokenVersbreakMarker
+	//	| MissingVersMarker | DestroyedVersMarker | DeletedVersMarker | DisputableVersMarker
+	//	| RestorationOverRasurMarker | AncientExpandedMarker | RasurMarker
+	//	| EmendationVersMarker | DestroyedVersFrontierMarker | PartialDestroyedVersMarker;
+	public VersMarkerElements getVersMarkerAccess() {
+		return pVersMarker;
+	}
+	
+	public ParserRule getVersMarkerRule() {
+		return getVersMarkerAccess().getRule();
+	}
+
+	//EmendationVersMarker:
+	//	{EmendationVersMarker}
+	//	'(\\uDB80\\uDC80)' //'@v'
+	//;
+	public EmendationVersMarkerElements getEmendationVersMarkerAccess() {
+		return pEmendationVersMarker;
+	}
+	
+	public ParserRule getEmendationVersMarkerRule() {
+		return getEmendationVersMarkerAccess().getRule();
+	}
+
+	//DisputableVersMarker:
+	//	{DisputableVersMarker}
+	//	'\\u2E2E\\uDB80\\uDC80?' //'@v'
+	//;
+	public DisputableVersMarkerElements getDisputableVersMarkerAccess() {
+		return pDisputableVersMarker;
+	}
+	
+	public ParserRule getDisputableVersMarkerRule() {
+		return getDisputableVersMarkerAccess().getRule();
+	}
+
+	//DeletedVersMarker:
+	//	{DeletedVersMarker}
+	//	'{\\uDB80\\uDC80}' //'@v'
+	//;
+	public DeletedVersMarkerElements getDeletedVersMarkerAccess() {
+		return pDeletedVersMarker;
+	}
+	
+	public ParserRule getDeletedVersMarkerRule() {
+		return getDeletedVersMarkerAccess().getRule();
+	}
+
+	//DestroyedVersMarker:
+	//	{DestroyedVersMarker}
+	//	'[\\uDB80\\uDC80]' //'@v'
+	//;
+	public DestroyedVersMarkerElements getDestroyedVersMarkerAccess() {
+		return pDestroyedVersMarker;
+	}
+	
+	public ParserRule getDestroyedVersMarkerRule() {
+		return getDestroyedVersMarkerAccess().getRule();
+	}
+
+	//DestroyedVersFrontierMarker:
+	//	{DestroyedVersFrontierMarker}
+	//	'[\\uDB80\\uDC81]' //'@v'
+	//;
+	public DestroyedVersFrontierMarkerElements getDestroyedVersFrontierMarkerAccess() {
+		return pDestroyedVersFrontierMarker;
+	}
+	
+	public ParserRule getDestroyedVersFrontierMarkerRule() {
+		return getDestroyedVersFrontierMarkerAccess().getRule();
+	}
+
+	//PartialDestroyedVersMarker:
+	//	{PartialDestroyedVersMarker}
+	//	'\\u2E22\\uDB80\\uDC80\\u2E23' //'@v'
+	//;
+	public PartialDestroyedVersMarkerElements getPartialDestroyedVersMarkerAccess() {
+		return pPartialDestroyedVersMarker;
+	}
+	
+	public ParserRule getPartialDestroyedVersMarkerRule() {
+		return getPartialDestroyedVersMarkerAccess().getRule();
+	}
+
+	//MissingVersMarker:
+	//	{MissingVersMarker}
+	//	'\\u2329\\uDB80\\uDC80\\u232A' //'@v'
+	//;
+	public MissingVersMarkerElements getMissingVersMarkerAccess() {
+		return pMissingVersMarker;
+	}
+	
+	public ParserRule getMissingVersMarkerRule() {
+		return getMissingVersMarkerAccess().getRule();
+	}
+
+	//RestorationOverRasurMarker:
+	//	{RestorationOverRasurMarker}
+	//	'[[\\uDB80\\uDC80]]' //'@v'
+	//;
+	public RestorationOverRasurMarkerElements getRestorationOverRasurMarkerAccess() {
+		return pRestorationOverRasurMarker;
+	}
+	
+	public ParserRule getRestorationOverRasurMarkerRule() {
+		return getRestorationOverRasurMarkerAccess().getRule();
+	}
+
+	//AncientExpandedMarker:
+	//	{AncientExpandedMarker}
+	//	'((\\uDB80\\uDC80))' //'@v'
+	//;
+	public AncientExpandedMarkerElements getAncientExpandedMarkerAccess() {
+		return pAncientExpandedMarker;
+	}
+	
+	public ParserRule getAncientExpandedMarkerRule() {
+		return getAncientExpandedMarkerAccess().getRule();
+	}
+
+	//RasurMarker:
+	//	{AncientExpandedMarker}
+	//	'{{\\uDB80\\uDC80}}' //'@v'
+	//;
+	public RasurMarkerElements getRasurMarkerAccess() {
+		return pRasurMarker;
+	}
+	
+	public ParserRule getRasurMarkerRule() {
+		return getRasurMarkerAccess().getRule();
+	}
+
+	//VersFrontierMarker:
+	//	{VersFrontierMarker}
+	//	'\\uDB80\\uDC81' //'@mv'
+	//;
+	public VersFrontierMarkerElements getVersFrontierMarkerAccess() {
+		return pVersFrontierMarker;
+	}
+	
+	public ParserRule getVersFrontierMarkerRule() {
+		return getVersFrontierMarkerAccess().getRule();
+	}
+
+	//VersbreakMarker:
+	//	{VersbreakMarker}
+	//	'\\uDB80\\uDC80' //'@v'
+	//;
+	public VersbreakMarkerElements getVersbreakMarkerAccess() {
+		return pVersbreakMarker;
+	}
+	
+	public ParserRule getVersbreakMarkerRule() {
+		return getVersbreakMarkerAccess().getRule();
+	}
+
+	//BrokenVersbreakMarker:
+	//	{BrokenVersbreakMarker}
+	//	'\\uDB80\\uDC82' //'@v'
+	//;
+	public BrokenVersbreakMarkerElements getBrokenVersbreakMarkerAccess() {
+		return pBrokenVersbreakMarker;
+	}
+	
+	public ParserRule getBrokenVersbreakMarkerRule() {
+		return getBrokenVersbreakMarkerAccess().getRule();
+	}
 }

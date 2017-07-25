@@ -122,7 +122,7 @@ public class DefaultRenameElementHandler extends AbstractHandler implements IRen
         return false;
     }
 
-    protected void startRenameElement(IRenameElementContext renameElementContext) throws InterruptedException {
+    protected void startRenameElement(IRenameElementContext renameElementContext) {
         renameRefactoringController.startRefactoring(renameElementContext);
     }
 

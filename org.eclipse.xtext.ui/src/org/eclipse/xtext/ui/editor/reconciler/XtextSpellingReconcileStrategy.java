@@ -70,11 +70,11 @@ public class XtextSpellingReconcileStrategy extends SpellingReconcileStrategy {
         ITypedRegion[] allRegions = new ITypedRegion[0];
         try {
             allRegions = TextUtilities.computePartitioning(getDocument(), partitionType, offset, length, false);
-        } catch (BadLocationException x) {
+        } catch (BadLocationException ignored) {
         }
-        for (int i = 0; i < allRegions.length; i++) {
-            if (shouldProcess(allRegions[i])) {
-                result = concat(result, allRegions[i]);
+        for (ITypedRegion allRegion : allRegions) {
+            if (shouldProcess(allRegion)) {
+                result = concat(result, allRegion);
             }
 
         }
@@ -84,10 +84,7 @@ public class XtextSpellingReconcileStrategy extends SpellingReconcileStrategy {
     protected boolean shouldProcess(ITypedRegion typedRegion) {
         String type = typedRegion.getType();
         if (partitionMapperExtension != null) {
-            if (partitionMapperExtension.isMultiLineComment(type) || partitionMapperExtension.isSingleLineComment(type)) {
-                return true;
-            }
-            return STRING_LITERAL_PARTITION.equals(type);
+            return partitionMapperExtension.isMultiLineComment(type) || partitionMapperExtension.isSingleLineComment(type) || STRING_LITERAL_PARTITION.equals(type);
         }
         return STRING_LITERAL_PARTITION.equals(type)
                 || SL_COMMENT_PARTITION.equals(type)

@@ -116,8 +116,7 @@ public class CompareInputResourceProvider implements IResourceProvider {
         List<String> segments = Lists.newArrayList();
         for (String name : names)
             if (!Strings.isEmpty(name))
-                for (String seg : name.split("/"))
-                    segments.add(seg);
+                Collections.addAll(segments, name.split("/"));
         return segments;
     }
 

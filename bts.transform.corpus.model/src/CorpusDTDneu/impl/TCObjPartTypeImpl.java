@@ -571,7 +571,7 @@ public class TCObjPartTypeImpl extends MinimalEObjectImpl.Container implements T
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.TC_OBJ_PART_TYPE__TC_PASSPORT:
-                setTCPassport((TCPassportType) null);
+                setTCPassport(null);
                 return;
             case CorpusDTDneuPackage.TC_OBJ_PART_TYPE__TC_PICTURE:
                 getTCPicture().clear();

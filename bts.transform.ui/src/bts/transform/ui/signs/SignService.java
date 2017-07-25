@@ -2,7 +2,6 @@ package bts.transform.ui.signs;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -46,22 +45,19 @@ public class SignService {
         System.out.println(arr);
     }
 
-    private static String newReplaceString(String originalString) {
-        if (originalString == null) return null;
+    private static String newReplaceString(String str) {
+        if (str == null)
+            return null;
 //		System.out.println("string before: " + originalString);
         for (Object entity : PROPERTIES.keySet()) {
 //			System.out.println(entity);
             if (entity instanceof String && PROPERTIES.containsKey(entity) && PROPERTIES.get(entity) instanceof String) {
-                String re = new String((String) PROPERTIES.get(entity));
-                if (re.equals("'\u2E2E'")) {
+                String re = (String) PROPERTIES.get(entity);
+                if (re.equals("'\u2E2E'"))
                     re = "\"" + '\u2E2E' + "\"";
-                }
-                String s = (String) entity;
-
-
-                originalString = originalString.replaceAll(s, re);
+                str = str.replaceAll((String)entity, re);
             }
         }
-        return originalString;
+        return str;
     }
 }

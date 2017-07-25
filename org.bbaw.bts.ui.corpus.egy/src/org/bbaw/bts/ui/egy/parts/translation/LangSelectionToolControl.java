@@ -1,23 +1,16 @@
 package org.bbaw.bts.ui.egy.parts.translation;
 
-import java.util.List;
-import java.util.Vector;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.bbaw.bts.btsmodel.BTSTranslations;
 import org.bbaw.bts.core.commons.BTSCoreConstants;
-import org.bbaw.bts.ui.egy.parts.EgyTextEditorPart;
 import org.bbaw.bts.ui.egy.parts.EgyTextTranslationPart;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;

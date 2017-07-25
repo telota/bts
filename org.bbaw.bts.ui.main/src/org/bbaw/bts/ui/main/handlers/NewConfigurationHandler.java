@@ -38,7 +38,7 @@ public class NewConfigurationHandler {
 
     @CanExecute
     public boolean canExecute(@Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT_CONFIG) Boolean mayEdit) {
-        return (mayEdit != null && mayEdit.booleanValue());
+        return (mayEdit != null && mayEdit);
     }
 
 }

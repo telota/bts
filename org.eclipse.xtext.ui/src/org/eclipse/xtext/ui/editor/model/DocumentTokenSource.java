@@ -267,9 +267,7 @@ public class DocumentTokenSource {
             if (getClass() != obj.getClass())
                 return false;
             TokenInfo other = (TokenInfo) obj;
-            if (length != other.length)
-                return false;
-            return type == other.type;
+            return length == other.length && type == other.type;
         }
 
         @Override
@@ -347,9 +345,7 @@ public class DocumentTokenSource {
         public boolean equals(Object obj) {
             if (obj == this)
                 return true;
-            if (!(obj instanceof IRegionIterable))
-                return false;
-            return tokens == ((IRegionIterable) obj).tokens;
+            return obj instanceof IRegionIterable && tokens == ((IRegionIterable) obj).tokens;
         }
 
         @Override

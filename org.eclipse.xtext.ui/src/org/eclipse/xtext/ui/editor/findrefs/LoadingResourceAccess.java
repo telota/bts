@@ -36,9 +36,7 @@ public class LoadingResourceAccess implements IReferenceFinder.ILocalResourceAcc
 
     public <R> R readOnly(URI targetURI, IUnitOfWork<R, ResourceSet> work) {
         Iterable<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(targetURI.trimFragment());
-        Iterator<Pair<IStorage, IProject>> iterator = storages.iterator();
-        while (iterator.hasNext()) {
-            Pair<IStorage, IProject> pair = iterator.next();
+        for (Pair<IStorage, IProject> pair : storages) {
             IProject project = pair.getSecond();
             if (project != null) {
                 ResourceSet resourceSet = resourceSetProvider.get(project);

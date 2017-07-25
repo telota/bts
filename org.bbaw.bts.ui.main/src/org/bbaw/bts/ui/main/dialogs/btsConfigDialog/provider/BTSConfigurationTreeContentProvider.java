@@ -41,10 +41,10 @@ public class BTSConfigurationTreeContentProvider extends ObservableListTreeConte
     @Override
     public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof BTSConfiguration) {
-            return (BTSConfigItem[]) ((BTSConfiguration) parentElement).getChildren().toArray(
+            return ((BTSConfiguration) parentElement).getChildren().toArray(
                     new BTSConfigItem[((BTSConfiguration) parentElement).getChildren().size()]);
         } else if (parentElement instanceof BTSConfigItem) {
-            return (BTSConfigItem[]) ((BTSConfigItem) parentElement).getChildren().toArray(
+            return ((BTSConfigItem) parentElement).getChildren().toArray(
                     new BTSConfigItem[((BTSConfigItem) parentElement).getChildren().size()]);
         }
         return null;

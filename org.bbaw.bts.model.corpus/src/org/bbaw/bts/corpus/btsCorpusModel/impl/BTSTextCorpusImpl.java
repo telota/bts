@@ -235,7 +235,7 @@ public class BTSTextCorpusImpl extends BTSCorpusObjectImpl implements BTSTextCor
     public void eUnset(int featureID) {
         switch (featureID) {
             case BtsCorpusModelPackage.BTS_TEXT_CORPUS__HEADER:
-                setHeader((BTSCorpusHeader) null);
+                setHeader(null);
                 return;
             case BtsCorpusModelPackage.BTS_TEXT_CORPUS__ACTIVE:
                 setActive(ACTIVE_EDEFAULT);

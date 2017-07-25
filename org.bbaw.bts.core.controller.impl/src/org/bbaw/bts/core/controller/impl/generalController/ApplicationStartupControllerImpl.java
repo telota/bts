@@ -141,7 +141,7 @@ public class ApplicationStartupControllerImpl implements
         // check and set application uuid
         if (prefs.get(BTSConstants.BTS_UUID, null) == null) {
             Calendar now = Calendar.getInstance();
-            String uuid = new Long(now.getTimeInMillis()).toString();
+            String uuid = Long.toString(now.getTimeInMillis());
             prefs.put(BTSConstants.BTS_UUID, uuid);
             try {
                 prefs.flush();
@@ -295,13 +295,9 @@ public class ApplicationStartupControllerImpl implements
             }
         }
 
-        try {
-            splashController.setMessage("Prepare Database...");
+        splashController.setMessage("Prepare Database...");
 
-            dbManager.prepareDB();
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
-        }
+        dbManager.prepareDB();
 
         try {
             projects = projectService.list(BTSConstants.OBJECT_STATE_ACTIVE,
@@ -791,7 +787,7 @@ public class ApplicationStartupControllerImpl implements
         try {
             projects = projectService.list(BTSConstants.OBJECT_STATE_ACTIVE,
                     null);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         // if (projects != null) {
@@ -824,8 +820,7 @@ public class ApplicationStartupControllerImpl implements
     }
 
     @Override
-    public void setRemoteDBConnection(String url, String user, String password)
-            throws MalformedURLException {
+    public void setRemoteDBConnection(String url, String user, String password) {
         prefs.put(BTSPluginIDs.PREF_REMOTE_DB_URL, url);
         prefs.put(BTSPluginIDs.PREF_AUTHENTICATED_USER, user);
         prefs.put(BTSPluginIDs.PREF_AUTHENTICATED_USER_PASSWORD, password);
@@ -837,8 +832,7 @@ public class ApplicationStartupControllerImpl implements
     }
 
     @Override
-    public List<BTSProject> loadRemoteProjects(String username, String password)
-            throws MalformedURLException {
+    public List<BTSProject> loadRemoteProjects(String username, String password) {
         return projectService.listRemoteProjects(username, password);
     }
 

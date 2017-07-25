@@ -5,7 +5,6 @@ import java.util.List;
 import org.bbaw.bts.btsmodel.BTSUserGroup;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.dao.BTSUserGroupDao;
-import org.bbaw.bts.core.dao.util.DaoConstants;
 import org.bbaw.bts.dao.couchDB.CouchDBDao;
 import org.eclipse.e4.core.di.annotations.Creatable;
 

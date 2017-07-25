@@ -223,9 +223,7 @@ public abstract class AbstractPreferencePage extends FieldEditorPreferencePage i
         // TODO handle do not use project settings sets project settings to
         // default
         Composite parent = getFieldEditorParent();
-        Iterator<FieldEditor> it = editors.iterator();
-        while (it.hasNext()) {
-            FieldEditor editor = it.next();
+        for (FieldEditor editor : editors) {
             if (enabled)
                 editor.load();
             else

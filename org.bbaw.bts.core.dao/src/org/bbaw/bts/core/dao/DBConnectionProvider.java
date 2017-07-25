@@ -30,7 +30,6 @@
 package org.bbaw.bts.core.dao;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 

@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class InterfixCompoundWordsImpl extends InterfixImpl implements InterfixCompoundWords {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected InterfixCompoundWordsImpl() {
-        super();
-    }
+public class InterfixCompoundWordsImpl extends InterfixImpl implements InterfixCompoundWords
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected InterfixCompoundWordsImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.INTERFIX_COMPOUND_WORDS;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.INTERFIX_COMPOUND_WORDS;
+  }
 
 } //InterfixCompoundWordsImpl

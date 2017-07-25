@@ -130,8 +130,7 @@ public class RenameLinkedMode {
         int start = selection.x;
         int end = start + selection.y;
         LinkedPosition[] positions = linkedPositionGroup.getPositions();
-        for (int i = 0; i < positions.length; i++) {
-            LinkedPosition position = positions[i];
+        for (LinkedPosition position : positions) {
             if (position.includes(start) && position.includes(end))
                 return position;
         }

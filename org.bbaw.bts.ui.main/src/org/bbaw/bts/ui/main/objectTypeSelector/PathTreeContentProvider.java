@@ -42,10 +42,7 @@ public class PathTreeContentProvider implements ITreeContentProvider {
 
     @Override
     public boolean hasChildren(Object element) {
-        if (element != null && element instanceof BTSObjectTypeTreeNode) {
-            return !((BTSObjectTypeTreeNode) element).getChildren().isEmpty();
-        }
-        return false;
+        return element != null && element instanceof BTSObjectTypeTreeNode && !((BTSObjectTypeTreeNode) element).getChildren().isEmpty();
     }
 
 }

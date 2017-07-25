@@ -71,10 +71,7 @@ public class ReferenceSearchResultContentProvider implements ITreeContentProvide
     }
 
     public boolean hasChildren(Object element) {
-        if (element instanceof ReferenceSearchViewTreeNode) {
-            return !((ReferenceSearchViewTreeNode) element).getChildren().isEmpty();
-        }
-        return false;
+        return element instanceof ReferenceSearchViewTreeNode && !((ReferenceSearchViewTreeNode) element).getChildren().isEmpty();
     }
 
     public Object[] getElements(Object inputElement) {

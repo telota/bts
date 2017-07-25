@@ -527,9 +527,9 @@ public abstract class AdministrativDataObjectImpl extends BTSObservableObjectImp
             } else if (this.get_id().equals(o.get_id())) {
                 if (((BTSDBBaseObject) this).get_rev() != null) {
                     return ((BTSDBBaseObject) this).get_rev().equals(
-                            ((BTSDBBaseObject) o).get_rev());
+                            o.get_rev());
                 }
-                return (((BTSDBBaseObject) o).get_rev() == null);
+                return (o.get_rev() == null);
             }
         } else if (object instanceof BTSIdentifiableItem && get_id() != null) {
             return get_id().equals(((BTSIdentifiableItem) object).get_id());

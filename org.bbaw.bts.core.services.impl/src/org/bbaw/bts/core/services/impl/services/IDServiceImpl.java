@@ -12,7 +12,6 @@ import javax.inject.Named;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.codec.binary.Base32;
-import org.apache.commons.net.util.Base64;
 import org.bbaw.bts.btsmodel.BTSIDReservationObject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
 import org.bbaw.bts.btsmodel.BTSUser;
@@ -84,7 +83,7 @@ public class IDServiceImpl implements IDService {
             return id;
         }
         now = Calendar.getInstance();
-        id = new Long(now.getTimeInMillis()).toString();
+        id = Long.toString(now.getTimeInMillis());
         BTSUser user = (BTSUser) eclipseCtx.get("currentUser");
         if (user != null) {
             id += user.get_id().substring(5, 15);
@@ -93,7 +92,7 @@ public class IDServiceImpl implements IDService {
             id += btsUUID.substring(5, 10);
         }
         while (id.length() < 32) {
-            id += new Long(now.getTimeInMillis()).toString();
+            id += Long.toString(now.getTimeInMillis());
         }
         String uuid = id.substring(0, 32).replaceAll(
                 PATTERN,
@@ -152,7 +151,7 @@ public class IDServiceImpl implements IDService {
         if (coll.getProperty(BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_FORCE_SERVER) != null) {
             String s = coll.getProperty(BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_FORCE_SERVER);
             try {
-                forceOnServer = new Boolean(s);
+                forceOnServer = Boolean.valueOf(s);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -187,7 +186,7 @@ public class IDServiceImpl implements IDService {
         } else {
             lastID = findLastIDInternal(coll.getCollectionName(), prefix, forceOnServer);
             if (lastID == null) {
-                lastID = new Integer(begin).toString();
+                lastID = Integer.toString(begin);
                 return null;
             }
             reserationObjects = makeReservationObjects(btsUUID, authenticatedUser.getUserName(), coll.getCollectionName(), prefix, step, max, lastID);

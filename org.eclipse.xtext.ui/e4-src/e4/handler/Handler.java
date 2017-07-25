@@ -1,11 +1,8 @@
 package e4.handler;
 
-import java.util.ResourceBundle;
-
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 import org.eclipse.xtext.ui.editor.embedded.TextViewerOperationAction;
 import org.osgi.framework.Bundle;

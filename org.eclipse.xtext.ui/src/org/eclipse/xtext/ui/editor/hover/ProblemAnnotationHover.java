@@ -74,9 +74,8 @@ public class ProblemAnnotationHover extends AbstractProblemHover implements IAnn
         final StringBuffer buffer = new StringBuffer();
         if (messages.size() > 1) {
             buffer.append(XtextUIMessages.AbstractHover_MultipleMarkers);
-            final Iterator<String> e = messages.iterator();
-            while (e.hasNext()) {
-                splitInfo("- " + e.next() + "\n", buffer);
+            for (String message : messages) {
+                splitInfo("- " + message + "\n", buffer);
             }
             buffer.deleteCharAt(buffer.length() - 1);
         } else if (messages.size() == 1) {
@@ -92,11 +91,11 @@ public class ProblemAnnotationHover extends AbstractProblemHover implements IAnn
         do {
             pos = msg.indexOf(" ", 60);
             if (pos > -1) {
-                buffer.append(prefix + msg.substring(0, pos) + "\n");
+                buffer.append(prefix).append(msg.substring(0, pos)).append("\n");
                 msg = msg.substring(pos);
                 prefix = "  ";
             } else {
-                buffer.append(prefix + msg);
+                buffer.append(prefix).append(msg);
             }
         } while (pos > -1);
         return buffer.toString();

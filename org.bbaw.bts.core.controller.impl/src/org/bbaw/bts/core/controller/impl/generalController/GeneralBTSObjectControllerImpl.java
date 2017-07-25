@@ -132,11 +132,11 @@ public class GeneralBTSObjectControllerImpl implements
             if (ref.contains(BTSConstants.OWNER_REFERENCED_TYPES_PATH_SEPERATOR)) {
                 String[] split = ref.split("\\.");
                 if (split.length == 2) {
-                    filters.add(FilterBuilders.termFilter(new String("type"),
+                    filters.add(FilterBuilders.termFilter("type",
                             ref));
                 } else if (split.length == 3) {
                     filters.add(FilterBuilders.termFilter(
-                            new String("subtype"), ref));
+                            "subtype", ref));
                 }
 
             }

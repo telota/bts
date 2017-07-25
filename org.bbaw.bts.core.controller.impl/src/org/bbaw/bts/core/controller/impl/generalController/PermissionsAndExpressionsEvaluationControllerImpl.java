@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
-import org.bbaw.bts.btsmodel.BTSDBCollectionRoleDesc;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
@@ -238,25 +237,17 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
 
     private boolean evaluateMayEditProjects() {
         boolean may = false;
-        if (authenticatedUser == null || mainProject == null) {
-            may = false;
-        } else {
-            may = evaluationService.authenticatedUserIsDBAdmin(false);
-        }
+        may = authenticatedUser != null && mainProject != null && evaluationService.authenticatedUserIsDBAdmin(false);
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT_PROJECTS,
-                new Boolean(may));
+                may);
         return may;
     }
 
     private boolean evaluateMayCreateDBCollection() {
         boolean may = false;
-        if (authenticatedUser == null || mainProject == null) {
-            may = false;
-        } else {
-            may = evaluationService.authenticatedUserIsDBAdmin(false);
-        }
+        may = authenticatedUser != null && mainProject != null && evaluationService.authenticatedUserIsDBAdmin(false);
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_CREATE_DBCOLLECTION,
-                new Boolean(may));
+                may);
         return may;
     }
 
@@ -267,7 +258,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
         }
 
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_TRANSCRIBE,
-                new Boolean(may));
+                may);
         if (!may) {
 //			StatusMessage m = BtsviewmodelFactory.eINSTANCE.createNotEditingRightsMessage();
 //			eventBroker.post("status_info/filtered", m);
@@ -318,13 +309,9 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
 
     private boolean evaluateMayOpenFuton() {
         boolean may = false;
-        if (authenticatedUser == null) {
-            may = false;
-        } else {
-            may = evaluationService.authenticatedUserIsDBAdmin(true);
-        }
+        may = authenticatedUser != null && evaluationService.authenticatedUserIsDBAdmin(true);
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT_USERS,
-                new Boolean(may));
+                may);
         return may;
 
     }
@@ -349,7 +336,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
             }
         }
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT_USERS,
-                new Boolean(may));
+                may);
         return may;
 
     }
@@ -374,7 +361,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
             }
         }
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT_USERS,
-                new Boolean(may));
+                may);
         return may;
 
     }
@@ -399,7 +386,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
             }
         }
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_MASTER_EDIT_CONFIG,
-                new Boolean(may));
+                may);
         return may;
 
     }
@@ -424,7 +411,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
             }
         }
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT_CONFIG,
-                new Boolean(may));
+                may);
         return may;
 
     }
@@ -447,7 +434,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
         }
 
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT,
-                new Boolean(may));
+                may);
         if (!may) {
             StatusMessage m = BtsviewmodelFactory.eINSTANCE.createNotEditingRightsMessage();
             eventBroker.post("status_info/filtered", m);
@@ -504,7 +491,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
             }
         }
         workbenchContext.modify(BTSCoreConstants.CORE_EXPRESSION_MAY_DELETE,
-                new Boolean(may));
+                may);
         return may;
 
     }
@@ -597,7 +584,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
         if (lease instanceof DBLease) {
             // object is locked
             if (selection != null
-                    && selection.equals(((DBLease) lease).getObject())
+                    && selection.equals(lease.getObject())
                     && !hasLock) {
                 evaluateSelectionPermissionsAndExpressions(selection);
                 hasLock = true;
@@ -605,7 +592,7 @@ public class PermissionsAndExpressionsEvaluationControllerImpl implements
         } else {
             // object is locked
             if (selection != null
-                    && selection.equals(((DBLease) lease).getObject())
+                    && selection.equals(lease.getObject())
                     && hasLock) {
                 otherLocked = false;
                 evaluateSelectionPermissionsAndExpressions(selection);

@@ -57,9 +57,6 @@ public class BTSStringToBooleanConverter implements IConverter {
      */
     @Override
     public Object convert(Object fromObject) {
-        if (fromObject instanceof String) {
-            return fromObject.equals("true");
-        }
-        return false;
+        return fromObject instanceof String && fromObject.equals("true");
     }
 }

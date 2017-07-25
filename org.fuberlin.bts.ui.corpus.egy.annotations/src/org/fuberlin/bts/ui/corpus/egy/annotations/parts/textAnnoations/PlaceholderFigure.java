@@ -2,7 +2,6 @@ package org.fuberlin.bts.ui.corpus.egy.annotations.parts.textAnnoations;
 
 import org.bbaw.bts.ui.egy.textSign.support.ElementFigure;
 import org.eclipse.draw2d.AbstractBorder;
-import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RoundedRectangle;

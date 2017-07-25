@@ -14,11 +14,6 @@ import java.util.Vector;
 
 import javax.inject.Inject;
 
-import jsesh.mdc.MDCSyntaxError;
-import jsesh.mdcDisplayer.draw.MDCDrawingFacade;
-import jsesh.mdcDisplayer.preferences.DrawingSpecification;
-import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
-
 import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSConfig;
 import org.bbaw.bts.btsmodel.BTSConfigItem;
@@ -30,9 +25,7 @@ import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.commons.corpus.BTSCorpusConstants;
 import org.bbaw.bts.core.commons.corpus.CorpusUtils;
-import org.bbaw.bts.core.controller.generalController.BTSConfigurationController;
 import org.bbaw.bts.core.corpus.controller.generalController.PassportConfigurationController;
-import org.bbaw.bts.core.corpus.controller.partController.AnnotationPartController;
 import org.bbaw.bts.core.corpus.controller.partController.BTSTextEditorController;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSAmbivalence;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSAmbivalenceItem;
@@ -50,7 +43,6 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
 import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
 import org.bbaw.bts.ui.commons.corpus.events.BTSTextSelectionEvent;
 import org.bbaw.bts.ui.commons.corpus.interfaces.IBTSEditor;
-import org.bbaw.bts.ui.commons.corpus.text.BTSModelAnnotation;
 import org.bbaw.bts.ui.commons.corpus.util.BTSEGYUIConstants;
 import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
 import org.bbaw.bts.ui.corpus.util.AnnotationToolbarItemCreator;
@@ -76,7 +68,6 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.ImageFigure;
 import org.eclipse.draw2d.KeyEvent;
 import org.eclipse.draw2d.KeyListener;
-import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.MouseEvent;
 import org.eclipse.draw2d.MouseListener;
 import org.eclipse.draw2d.MouseMotionListener;
@@ -91,11 +82,9 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.extensions.Preference;
 import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.services.internal.events.EventBroker;
-import org.eclipse.e4.ui.workbench.UIEvents.Placeholder;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlAdapter;
@@ -103,7 +92,6 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -117,7 +105,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.fuberlin.bts.ui.corpus.egy.annotations.internal.Activator;
@@ -606,7 +593,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
                 if (el instanceof AnnotationFigure) {
                     event.getRelatingObjects().add((BTSObject) el.getModelObject());
                 } else {
-                    event.getRelatingObjects().addAll(((ElementFigure) el).getRelatingObjects());
+                    event.getRelatingObjects().addAll(el.getRelatingObjects());
                 }
                 BTSIdentifiableItem item = (BTSIdentifiableItem) el.getModelObject();
                 event.getSelectedItems().add(item);
@@ -616,7 +603,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
                     event.setStartId(item.get_id());
                 }
 
-                event.getInterTextReferences().addAll(((ElementFigure) el).getInterTextReferences());
+                event.getInterTextReferences().addAll(el.getInterTextReferences());
 
                 if (sentenceLineFigure.getChildren().contains(el)) {
                     int i = sentenceLineFigure.getChildren().indexOf(el);
@@ -747,7 +734,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
                     .eContainer();
         }
         if (word != null) {
-            IFigure rect = (IFigure) wordMap.get(word.get_id());
+            IFigure rect = wordMap.get(word.get_id());
             List<ElementFigure> els = new ArrayList<>();
             els.add((ElementFigure) rect);
             refreshFigureFromModel(els, word);
@@ -960,9 +947,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
 
         // TODO sort groups according to sortkey in config!!!
         List<String> sortedGroupKeys = new Vector<>(annotationsGroups.size());
-        for (String key : annotationsGroups.keySet()) {
-            sortedGroupKeys.add(key);
-        }
+        sortedGroupKeys.addAll(annotationsGroups.keySet());
 
         Collections.sort(sortedGroupKeys, annotationsGroupByConfigurationSortKeySorter);
 
@@ -1751,7 +1736,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
         // FIXME sort
         try {
             reveal(selectedElements.get(0));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
 
@@ -1800,7 +1785,7 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
             } else if (figure instanceof AmbivalenceStartFigure || figure instanceof AmbivalenceEndFigure) {
                 figure.setBackgroundColor(BTSUIConstants.VIEW_FOREGROUND_DESELECTED_COLOR);
             } else if (figure instanceof AnnotationFigure) {
-                ((AnnotationFigure) figure).setBackgroundColor(((AnnotationFigure) figure).getBaseBackgroundcolor());
+                figure.setBackgroundColor(((AnnotationFigure) figure).getBaseBackgroundcolor());
             }
 //			figure.repaint();
         }
@@ -1934,37 +1919,46 @@ public class TextAnnotationsComposite extends Composite implements IBTSEditor {
     public void setTextSelectionEvent(String event) {
         int currentIndex = getCurrentIndex();
         refreshFigureFromModel(selectedElements, null);
-        if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_ALL_START)) {
+        switch (event) {
+            case BTSUIConstants.EVENT_TEXT_SELECTION_ALL_START:
 
 //			shiftLineSelection(-1);
 //			int currentIndex = sentenceLineFigure.getChildren().indexOf(
 //					selectedElement);
-            shiftSelection(-currentIndex, true);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_LINE_START)) {
+                shiftSelection(-currentIndex, true);
+                break;
+            case BTSUIConstants.EVENT_TEXT_SELECTION_LINE_START:
 //			int currentIndex = sentenceLineFigure.getChildren().indexOf(
 //					selectedElement);
-            shiftSelection(-currentIndex, true);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_PREVIOUS)) {
-            shiftSelection(-1, false);
+                shiftSelection(-currentIndex, true);
+                break;
+            case BTSUIConstants.EVENT_TEXT_SELECTION_PREVIOUS:
+                shiftSelection(-1, false);
 
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT)) {
-            shiftSelection(1, true);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_LINE_END)) {
+                break;
+            case BTSUIConstants.EVENT_TEXT_SELECTION_NEXT:
+                shiftSelection(1, true);
+                break;
+            case BTSUIConstants.EVENT_TEXT_SELECTION_LINE_END: {
 //			int currentIndex = sentenceLineFigure.getChildren().indexOf(
 //					selectedElement);
-            int shift = sentenceLineFigure.getChildren().size() - currentIndex
-                    - 1;
-            shiftSelection(shift, false);
-        } else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_ALL_END)) {
+                int shift = sentenceLineFigure.getChildren().size() - currentIndex
+                        - 1;
+                shiftSelection(shift, false);
+                break;
+            }
+            case BTSUIConstants.EVENT_TEXT_SELECTION_ALL_END: {
 
 //			move sentence selection
-            //			shiftLineSelection(lshift);
-            currentIndex = getCurrentIndex();
+                //			shiftLineSelection(lshift);
+                currentIndex = getCurrentIndex();
 //			int currentIndex = sentenceLineFigure.getChildren().indexOf(
 //					selectedElement);
-            int shift = sentenceLineFigure.getChildren().size() - currentIndex
-                    - 1;
-            shiftSelection(shift, false);
+                int shift = sentenceLineFigure.getChildren().size() - currentIndex
+                        - 1;
+                shiftSelection(shift, false);
+                break;
+            }
         }
 
 

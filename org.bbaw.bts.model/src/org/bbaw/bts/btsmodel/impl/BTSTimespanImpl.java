@@ -303,10 +303,10 @@ public class BTSTimespanImpl extends MinimalEObjectImpl.Container implements BTS
     public void eUnset(int featureID) {
         switch (featureID) {
             case BtsmodelPackage.BTS_TIMESPAN__FROM:
-                setFrom((BTSDate) null);
+                setFrom(null);
                 return;
             case BtsmodelPackage.BTS_TIMESPAN__TO:
-                setTo((BTSDate) null);
+                setTo(null);
                 return;
             case BtsmodelPackage.BTS_TIMESPAN__COMMENT:
                 setComment(COMMENT_EDEFAULT);
@@ -344,11 +344,10 @@ public class BTSTimespanImpl extends MinimalEObjectImpl.Container implements BTS
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (comment: ");
-        result.append(comment);
-        result.append(')');
-        return result.toString();
+        String result = super.toString() + " (comment: " +
+                comment +
+                ')';
+        return result;
     }
 
 } //BTSTimespanImpl

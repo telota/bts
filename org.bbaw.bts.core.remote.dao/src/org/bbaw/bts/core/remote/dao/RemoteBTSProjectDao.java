@@ -1,7 +1,5 @@
 package org.bbaw.bts.core.remote.dao;
 
-import java.util.List;
-
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
 

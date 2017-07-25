@@ -182,10 +182,7 @@ public class GeneralBTSObjectServiceImpl implements GeneralBTSObjectService {
     public boolean save(BTSDBBaseObject dbBaseObject) {
 
         GenericObjectService<BTSDBBaseObject, String> service = (GenericObjectService<BTSDBBaseObject, String>) findServiceByObject(dbBaseObject);
-        if (service != null) {
-            return service.save(dbBaseObject);
-        }
-        return false;
+        return service != null && service.save(dbBaseObject);
 
     }
 
@@ -253,10 +250,7 @@ public class GeneralBTSObjectServiceImpl implements GeneralBTSObjectService {
     @Override
     public boolean removeRevision(BTSDBBaseObject dbBaseObject, String revision) {
         GenericObjectService<BTSDBBaseObject, String> service = (GenericObjectService<BTSDBBaseObject, String>) findServiceByObject(dbBaseObject);
-        if (service != null) {
-            return service.removeRevision(dbBaseObject, revision);
-        }
-        return false;
+        return service != null && service.removeRevision(dbBaseObject, revision);
     }
 
     @Override
@@ -292,7 +286,7 @@ public class GeneralBTSObjectServiceImpl implements GeneralBTSObjectService {
         String rev = current.get_rev();
         List<String> copyRevs = new Vector<>();
         for (String r : ((AdministrativDataObject) current).getRevisions()) {
-            copyRevs.add(new String(r));
+            copyRevs.add(r);
         }
         // merge revision into current
         BTSDBBaseObject eObject = EmfModelHelper.mergeChanges(current, revision);

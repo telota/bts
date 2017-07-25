@@ -16,26 +16,27 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class NoRestorationOverRasurImpl extends MinimalEObjectImpl.Container implements NoRestorationOverRasur {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected NoRestorationOverRasurImpl() {
-        super();
-    }
+public class NoRestorationOverRasurImpl extends MinimalEObjectImpl.Container implements NoRestorationOverRasur
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected NoRestorationOverRasurImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.NO_RESTORATION_OVER_RASUR;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.NO_RESTORATION_OVER_RASUR;
+  }
 
 } //NoRestorationOverRasurImpl

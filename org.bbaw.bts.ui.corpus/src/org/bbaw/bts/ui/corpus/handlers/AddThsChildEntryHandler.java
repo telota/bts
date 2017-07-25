@@ -28,11 +28,7 @@ public class AddThsChildEntryHandler {
     public boolean canExecute(
             @Active MPart part,
             @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
-        if (selection != null && selection instanceof BTSThsEntry) {
-            return part.getElementId().equals(
-                    BTSPluginIDs.PART_ID_THS_NAVIGATOR);
-        }
-        return false;
+        return selection != null && selection instanceof BTSThsEntry && part.getElementId().equals(BTSPluginIDs.PART_ID_THS_NAVIGATOR);
     }
 
 }

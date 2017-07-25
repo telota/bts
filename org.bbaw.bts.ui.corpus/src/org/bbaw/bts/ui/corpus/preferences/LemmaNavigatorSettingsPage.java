@@ -175,11 +175,11 @@ public class LemmaNavigatorSettingsPage extends FieldEditorPreferencePage {
         if (dirty) {
             try {
                 ConfigurationScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").flush();
-            } catch (BackingStoreException e) {
+            } catch (BackingStoreException ignored) {
             }
             try {
                 InstanceScope.INSTANCE.getNode("org.bbaw.bts.ui.corpus").flush();
-            } catch (BackingStoreException e) {
+            } catch (BackingStoreException ignored) {
             }
         }
         return super.performOk();

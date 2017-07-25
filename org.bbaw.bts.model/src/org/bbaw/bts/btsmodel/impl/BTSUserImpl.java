@@ -886,7 +886,7 @@ public class BTSUserImpl extends BTSObjectImpl implements BTSUser {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (groupIds: ");
         result.append(groupIds);
         result.append(", sigle: ");

@@ -31,7 +31,7 @@ public class AddCommentHandler {
 
         if (dbbaseObject != null) {
             final BTSComment object = commentController
-                    .createComment((BTSCorpusObject) dbbaseObject);
+                    .createComment(dbbaseObject);
 
             BTSRelation rel = null;
             if (object.getRelations().isEmpty()) {

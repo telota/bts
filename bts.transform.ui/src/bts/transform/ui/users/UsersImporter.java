@@ -25,7 +25,6 @@ import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory
 
 import Btsaux.DocumentRoot;
 import Btsaux.provider.BtsauxItemProviderAdapterFactory;
-import bts.transform.ui.xtend.Authors2BTSTransform;
 
 public class UsersImporter {
 

@@ -6,7 +6,6 @@ import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.commons.BTSPluginIDs;
 import org.bbaw.bts.core.corpus.controller.partController.LemmaNavigatorController;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaSubentry;
 import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -28,11 +27,7 @@ public class AddNewLemmaSubEntryHandler {
     public boolean canExecute(
             @Active MPart part,
             @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSObject selection) {
-        if (selection != null && selection instanceof BTSLemmaEntry) {
-            return part.getElementId().equals(
-                    BTSPluginIDs.PART_ID_LEMMA_NAVIGATOR);
-        }
-        return false;
+        return selection != null && selection instanceof BTSLemmaEntry && part.getElementId().equals(BTSPluginIDs.PART_ID_LEMMA_NAVIGATOR);
     }
 
 }

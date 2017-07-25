@@ -30,33 +30,22 @@
 package org.bbaw.bts.modelUtils;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-import org.bbaw.bts.btsmodel.DBLease;
 import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
-import org.bbaw.bts.commons.BTSConstants;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
-import org.eclipselabs.emfjson.EMFJs;
 import com.google.gson.Gson;
 
 public class EmfModelHelper {
@@ -80,7 +69,7 @@ public class EmfModelHelper {
                 }
             }
         }
-        return (T) target;
+        return target;
     }
 
     /**
@@ -299,7 +288,7 @@ public class EmfModelHelper {
                 final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                 return gson.fromJson(reader, clazz);
             }
-        } catch (final Exception e) {
+        } catch (final Exception ignored) {
         }
         return null;
     }

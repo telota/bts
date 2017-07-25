@@ -39,7 +39,7 @@ public class PassportEditorPartControllerImpl
                 entryPath.size());
         for (int i = 0; i < entryPath.size() - 1; i++) {
             field += ".children";
-            filters.add(FilterBuilders.termFilter(new String(field + ".type"),
+            filters.add(FilterBuilders.termFilter(field + ".type",
                     entryPath.get(i).getType()));
 
         }

@@ -89,15 +89,11 @@ public class OutlineTreeState {
     }
 
     public boolean addExpandedNode(IOutlineNode node) {
-        if (expandedNodes.contains(node))
-            return false;
-        return expandedNodes.add(node);
+        return !expandedNodes.contains(node) && expandedNodes.add(node);
     }
 
     public boolean addSelectedNode(IOutlineNode node) {
-        if (selectedNodes.contains(node))
-            return false;
-        return selectedNodes.add(node);
+        return !selectedNodes.contains(node) && selectedNodes.add(node);
     }
 
 }

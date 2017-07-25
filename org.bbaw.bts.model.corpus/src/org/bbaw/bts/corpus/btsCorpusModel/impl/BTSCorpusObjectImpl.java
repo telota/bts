@@ -293,7 +293,7 @@ public abstract class BTSCorpusObjectImpl extends BTSObjectImpl implements BTSCo
     public void eUnset(int featureID) {
         switch (featureID) {
             case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT:
-                setPassport((BTSPassport) null);
+                setPassport(null);
                 return;
             case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__CORPUS_PREFIX:
                 setCorpusPrefix(CORPUS_PREFIX_EDEFAULT);

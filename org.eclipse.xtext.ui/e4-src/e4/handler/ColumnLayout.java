@@ -71,8 +71,8 @@ final class ColumnLayout extends Layout {
 
         int width = 0;
         int size = columns.size();
-        for (int i = 0; i < size; ++i) {
-            ColumnLayoutData layoutData = (ColumnLayoutData) columns.get(i);
+        for (Object column : columns) {
+            ColumnLayoutData layoutData = (ColumnLayoutData) column;
             if (layoutData instanceof ColumnPixelData) {
                 ColumnPixelData col = (ColumnPixelData) layoutData;
                 width += col.width;

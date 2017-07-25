@@ -8,9 +8,11 @@ package org.bbaw.bts.corpus.text.egy.egyDsl;
  * A representation of the model object '<em><b>Partial Destroyed Vers Marker</b></em>'.
  * <!-- end-user-doc -->
  *
+ *
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getPartialDestroyedVersMarker()
  * @model
  * @generated
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getPartialDestroyedVersMarker()
  */
-public interface PartialDestroyedVersMarker extends VersMarker {
+public interface PartialDestroyedVersMarker extends VersMarker
+{
 } // PartialDestroyedVersMarker

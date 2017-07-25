@@ -1,7 +1,5 @@
 package org.bbaw.bts.ui.commons.corpus.converter;
 
-import java.util.List;
-
 import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextCorpus;

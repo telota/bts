@@ -18,7 +18,6 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.resource.ContentHandler;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IURIEditorInput;
@@ -88,7 +87,7 @@ public class ResourceForIEditorInputFactory implements IResourceForEditorInputFa
         return createResourceFor(storage);
     }
 
-    protected Resource createResourceFor(IStorage storage) throws CoreException {
+    protected Resource createResourceFor(IStorage storage) {
         ResourceSet resourceSet = getResourceSet(storage);
         URI uri = URI.createPlatformResourceURI(storage.getFullPath().toString(), true);
         configureResourceSet(resourceSet, uri);

@@ -108,10 +108,7 @@ public abstract class TextViewerAction extends ResourceAction implements IUpdate
      */
     protected boolean canModifyViewer() {
         ITextViewer viewer = getTextViewer();
-        if (viewer != null)
-            return viewer.isEditable();
-        else
-            return false;
+        return viewer != null && viewer.isEditable();
     }
 
     /**

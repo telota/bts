@@ -56,10 +56,10 @@ public class DeleteInAnnotationPartHandler {
             if (result == 1 || result == SWT.DEFAULT)
                 return;
             for (BTSObject o : objects) {
-                ((AdministrativDataObject) o)
+                o
                         .setState(BTSConstants.OBJECT_STATE_TERMINATED);
                 //General Command Controller... save!
-                commandController.save((BTSDBBaseObject) o);
+                commandController.save(o);
             }
         }
     }

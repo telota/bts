@@ -28,7 +28,6 @@ import org.bbaw.bts.core.dao.BTSConfigurationDao;
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.core.services.BTSConfigurationService;
 import org.bbaw.bts.core.services.impl.generic.GenericObjectServiceImpl;
-import org.bbaw.bts.modelUtils.EmfModelHelper;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -166,7 +165,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
     public BTSConfiguration getActiveConfiguration() {
         BTSConfiguration activeConfig = (BTSConfiguration) context.get(BTSPluginIDs.ACTIVE_CONFIGURATION);
         if (activeConfig != null) {
-            return (BTSConfiguration) activeConfig;
+            return activeConfig;
         }
         List<BTSConfiguration> list = list(BTSConstants.OBJECT_STATE_ACTIVE, null);
         if (list == null || list.isEmpty()) {
@@ -242,7 +241,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
                                                    boolean strict) {
         BTSConfigItem objectTypesCI = getObjectTypesConfigItem();
         if (objectTypesCI == null) return null;
-        String oClass = findObjectClass((BTSObject) object);
+        String oClass = findObjectClass(object);
         for (BTSConfig c : objectTypesCI.getChildren()) {
             if (oClass.equals(((BTSConfigItem) c).getValue())) {
                 if (object.getType() == null || "".equals(object.getType())) {
@@ -372,7 +371,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
                             if (!l1CI.isIgnore()
                                     && l1CI.getValue() != null
                                     && l1CI.getValue().equals(
-                                    ((BTSObjectTypeTreeNode) pathEntry)
+                                    pathEntry
                                             .getValue())
                                     && objectTypesPathsContainsObjectype(
                                     l1CI.getOwnerTypesMap(), object)) {
@@ -912,7 +911,7 @@ public class BTSConfigurationServiceImpl extends GenericObjectServiceImpl<BTSCon
         if (str == null) return null;
         BTSConfigItem objectTypesCI = getObjectTypesConfigItem();
         if (objectTypesCI == null) return null;
-        String oClass = findObjectClass((BTSObject) object);
+        String oClass = findObjectClass(object);
         String labelKeyString = oClass;
         if (str != null) {
             labelKeyString += "/" + str;

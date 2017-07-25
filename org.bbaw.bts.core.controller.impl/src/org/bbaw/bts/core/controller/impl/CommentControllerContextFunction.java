@@ -1,8 +1,6 @@
 package org.bbaw.bts.core.controller.impl;
 
-import org.bbaw.bts.core.controller.dialogControllers.UserManagerController;
 import org.bbaw.bts.core.controller.generalController.CommentController;
-import org.bbaw.bts.core.controller.impl.dialogControllers.UserManagerControllerImpl;
 import org.bbaw.bts.core.controller.impl.generalController.CommentControllerImpl;
 import org.eclipse.e4.core.contexts.ContextFunction;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;

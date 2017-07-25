@@ -92,7 +92,7 @@ public class EditorUtils {
 
     public static XtextEditor getXtextEditor(IEditorPart openEditor) {
         if (openEditor != null) {
-            return (XtextEditor) openEditor.getAdapter(XtextEditor.class);
+            return openEditor.getAdapter(XtextEditor.class);
         }
         return null;
     }

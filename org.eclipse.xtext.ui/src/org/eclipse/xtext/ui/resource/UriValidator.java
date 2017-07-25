@@ -8,7 +8,6 @@
 package org.eclipse.xtext.ui.resource;
 
 import org.eclipse.core.resources.IStorage;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 
@@ -68,9 +67,6 @@ public class UriValidator {
         }
         name = URI.encodeSegment(name, true);
         int index = name.lastIndexOf('.');
-        if (index == -1) {
-            return true;
-        }
-        return registry.getExtensionToFactoryMap().containsKey(name.substring(index + 1));
+        return index == -1 || registry.getExtensionToFactoryMap().containsKey(name.substring(index + 1));
     }
 }

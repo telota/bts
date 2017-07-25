@@ -56,10 +56,7 @@ public class E4Util {
     public static boolean isSelectedElement(MUIElement element) {
         MElementContainer<MUIElement> parent = element.getParent();
         if (parent.getSelectedElement() == element) {
-            if (!((MUIElement) parent instanceof MWindow))
-                return isSelectedElement(parent);
-            else
-                return true;
+            return (MUIElement) parent instanceof MWindow || isSelectedElement(parent);
         }
 
         return false;

@@ -455,7 +455,7 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
                     try {
                         fDocument.addPosition(fPositionCategory, new TypedPosition(start, length, contentType));
                         rememberRegion(start, length);
-                    } catch (BadPositionCategoryException | BadLocationException x) {
+                    } catch (BadPositionCategoryException | BadLocationException ignored) {
                     }
                 }
 
@@ -514,7 +514,7 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
 
             return (TypedPosition) category[index];
 
-        } catch (BadPositionCategoryException | BadLocationException x) {
+        } catch (BadPositionCategoryException | BadLocationException ignored) {
         }
 
         return null;
@@ -588,7 +588,7 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
             int endOffset = previous.getOffset() + previous.getLength();
             return new TypedRegion(endOffset, fDocument.getLength() - endOffset, IDocument.DEFAULT_CONTENT_TYPE);
 
-        } catch (BadPositionCategoryException | BadLocationException x) {
+        } catch (BadPositionCategoryException | BadLocationException ignored) {
         }
 
         return new TypedRegion(0, fDocument.getLength(), IDocument.DEFAULT_CONTENT_TYPE);
@@ -644,8 +644,8 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
      */
     protected boolean isSupportedContentType(String contentType) {
         if (contentType != null) {
-            for (int i = 0; i < fLegalContentTypes.length; i++) {
-                if (fLegalContentTypes[i].equals(contentType))
+            for (String fLegalContentType : fLegalContentTypes) {
+                if (fLegalContentType.equals(contentType))
                     return true;
             }
         }
@@ -891,7 +891,7 @@ public class DocumentPartitioner implements IDocumentPartitioner, IDocumentParti
         // remove all position belonging to the partitioner position category
         try {
             fDocument.removePositionCategory(fPositionCategory);
-        } catch (BadPositionCategoryException x) {
+        } catch (BadPositionCategoryException ignored) {
         }
         fDocument.addPositionCategory(fPositionCategory);
 

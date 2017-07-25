@@ -153,7 +153,7 @@ public class StreamContentDocumentProvider extends AbstractDocumentProvider {
         if (element instanceof IEncodedStreamContentAccessor) {
             try {
                 encoding = ((IEncodedStreamContentAccessor) element).getCharset();
-            } catch (CoreException exception) {
+            } catch (CoreException ignored) {
             }
         }
         return encoding;
@@ -197,13 +197,13 @@ public class StreamContentDocumentProvider extends AbstractDocumentProvider {
 
             return buffer.toString();
 
-        } catch (IOException ex) {
+        } catch (IOException ignored) {
 
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
-                } catch (IOException ex) {
+                } catch (IOException ignored) {
 
                 }
             }

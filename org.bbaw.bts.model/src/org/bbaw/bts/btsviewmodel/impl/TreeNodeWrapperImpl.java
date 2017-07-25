@@ -470,7 +470,7 @@ public class TreeNodeWrapperImpl extends MinimalEObjectImpl.Container implements
     public void eUnset(int featureID) {
         switch (featureID) {
             case BtsviewmodelPackage.TREE_NODE_WRAPPER__PARENT:
-                setParent((TreeNodeWrapper) null);
+                setParent(null);
                 return;
             case BtsviewmodelPackage.TREE_NODE_WRAPPER__CHILDREN:
                 getChildren().clear();

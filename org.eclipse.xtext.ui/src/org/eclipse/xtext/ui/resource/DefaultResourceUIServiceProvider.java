@@ -78,10 +78,7 @@ public class DefaultResourceUIServiceProvider implements IResourceUIServiceProvi
      */
     public boolean canHandle(URI uri, IStorage storage) {
         if (delegate.canHandle(uri)) {
-            if (isJavaCoreAvailable()) {
-                return !isJavaTargetFolder(storage);
-            }
-            return true;
+            return !isJavaCoreAvailable() || !isJavaTargetFolder(storage);
         }
         return false;
     }
@@ -104,10 +101,7 @@ public class DefaultResourceUIServiceProvider implements IResourceUIServiceProvi
      * @since 2.1
      */
     protected boolean isJavaTargetFolder(IStorage storage) {
-        if (storage instanceof IResource) {
-            return jdtHelper.isFromOutputPath((IResource) storage);
-        }
-        return false;
+        return storage instanceof IResource && jdtHelper.isFromOutputPath((IResource) storage);
     }
 
     public IEncodingProvider getEncodingProvider() {

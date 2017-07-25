@@ -283,7 +283,7 @@ public class BTSLemmaEntryImpl extends BTSCorpusObjectImpl implements BTSLemmaEn
                 getWords().clear();
                 return;
             case BtsCorpusModelPackage.BTS_LEMMA_ENTRY__TRANSLATIONS:
-                setTranslations((BTSTranslations) null);
+                setTranslations(null);
                 return;
         }
         super.eUnset(featureID);

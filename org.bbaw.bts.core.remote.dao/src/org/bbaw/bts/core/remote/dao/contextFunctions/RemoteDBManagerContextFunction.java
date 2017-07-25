@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import org.bbaw.bts.core.commons.exceptions.BTSDBException;
 import org.bbaw.bts.core.remote.dao.RemoteDAOFactory;
 import org.bbaw.bts.core.remote.dao.RemoteDBManager;
-import org.bbaw.bts.core.remote.dao.RemoteGeneralPurposeDao;
 import org.bbaw.bts.core.remote.dao.util.RemoteDaoConstants;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;

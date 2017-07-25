@@ -62,6 +62,6 @@ public class FoldingMessages {
      * @return the string
      */
     public static String getFormattedString(String key, Object arg) {
-        return MessageFormat.format(key, new Object[]{arg});
+        return MessageFormat.format(key, arg);
     }
 }

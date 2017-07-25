@@ -456,7 +456,7 @@ public class UserManagementPart {
                     loaded = true;
                 }
                 if (o != null && o instanceof String) {
-                    if (((String) o).equals("bin")) {
+                    if (o.equals("bin")) {
                         if (!loaded) {
                             loadBinUserTreeInput(user_bintreeViewer, user_binTabItem);
                             // ti.setData("loaded", true);
@@ -766,7 +766,7 @@ public class UserManagementPart {
             dialogTitle = "Delete Usergroup";
             dialogMessage = "Delete selected usergroup: " + labelProvider.getText(object);
         }
-        if (!permissionController.userMayEditObject(permissionController.getAuthenticatedUser(), (BTSObject) object)) {
+        if (!permissionController.userMayEditObject(permissionController.getAuthenticatedUser(), object)) {
             dialogTitle = "Deletion Not Allowed";
             dialogMessage = "You are not allowed to delete the selected user or usergroup: " + labelProvider.getText(object);
             MessageDialog dialog = new MessageDialog(shell, dialogTitle, null,
@@ -1049,10 +1049,10 @@ public class UserManagementPart {
             } else if (dirtyProjects.contains(oldSelection)) {
                 dirtyProjects.remove(oldSelection);
             } else if (oldSelection instanceof BTSProjectDBCollection) {
-                dirtyProjects.remove((BTSProject) oldSelection.eContainer());
+                dirtyProjects.remove(oldSelection.eContainer());
             } else if (oldSelection instanceof BTSDBCollectionRoleDesc) {
                 if (oldSelection.eContainer() != null) {
-                    dirtyProjects.remove((BTSProject) oldSelection.eContainer().eContainer());
+                    dirtyProjects.remove(oldSelection.eContainer().eContainer());
                 }
             }
         }
@@ -1154,8 +1154,8 @@ public class UserManagementPart {
                                 BtsmodelPackage.Literals.BTSDB_COLLECTION_ROLE_DESC__USER_ROLES, u.getName());
                         compoundCommand.append(c2);
                         getEditingDomain(selectedDBRoleDesc).getCommandStack().execute(compoundCommand);
-                        if (((BTSDBCollectionRoleDesc) parentRoleDesc).eContainer() instanceof BTSProjectDBCollection) {
-                            ((BTSProjectDBCollection) ((BTSDBCollectionRoleDesc) parentRoleDesc).eContainer()).setDirty(true);
+                        if (parentRoleDesc.eContainer() instanceof BTSProjectDBCollection) {
+                            ((BTSProjectDBCollection) parentRoleDesc.eContainer()).setDirty(true);
                         }
                         roles_treeViewer.refresh(parent);
                     }
@@ -1219,8 +1219,8 @@ public class UserManagementPart {
                                 BtsmodelPackage.Literals.BTSDB_COLLECTION_ROLE_DESC__USER_NAMES, u.getUserName());
                         compoundCommand.append(c2);
                         getEditingDomain(selectedDBRoleDesc).getCommandStack().execute(compoundCommand);
-                        if (((BTSDBCollectionRoleDesc) parentRoleDesc).eContainer() instanceof BTSProjectDBCollection) {
-                            ((BTSProjectDBCollection) ((BTSDBCollectionRoleDesc) parentRoleDesc).eContainer()).setDirty(true);
+                        if (parentRoleDesc.eContainer() instanceof BTSProjectDBCollection) {
+                            ((BTSProjectDBCollection) parentRoleDesc.eContainer()).setDirty(true);
                         }
                         roles_treeViewer.refresh(parent);
                     }
@@ -1318,8 +1318,8 @@ public class UserManagementPart {
                                 BtsmodelPackage.Literals.BTSDB_COLLECTION_ROLE_DESC__USER_NAMES, u.getUserName());
                         compoundCommand.append(command2);
                         getEditingDomain(selectedDBRoleDesc).getCommandStack().execute(compoundCommand);
-                        if (((BTSDBCollectionRoleDesc) selectedDBRoleDesc).eContainer() instanceof BTSProjectDBCollection) {
-                            ((BTSProjectDBCollection) ((BTSDBCollectionRoleDesc) selectedDBRoleDesc).eContainer()).setDirty(true);
+                        if (selectedDBRoleDesc.eContainer() instanceof BTSProjectDBCollection) {
+                            ((BTSProjectDBCollection) selectedDBRoleDesc.eContainer()).setDirty(true);
                         }
                         roles_treeViewer.refresh(selectedDBRoleDesc);
                         manageDirtyObjects(selectedDBRoleDesc, selectedTreeObject);
@@ -1371,8 +1371,8 @@ public class UserManagementPart {
                         compoundCommand.append(command2);
                         getEditingDomain(selectedDBRoleDesc).getCommandStack().execute(compoundCommand);
                         manageDirtyObjects(selectedDBRoleDesc, selectedTreeObject);
-                        if (((BTSDBCollectionRoleDesc) selectedDBRoleDesc).eContainer() instanceof BTSProjectDBCollection) {
-                            ((BTSProjectDBCollection) ((BTSDBCollectionRoleDesc) selectedDBRoleDesc).eContainer()).setDirty(true);
+                        if (selectedDBRoleDesc.eContainer() instanceof BTSProjectDBCollection) {
+                            ((BTSProjectDBCollection) selectedDBRoleDesc.eContainer()).setDirty(true);
                         }
                         roles_treeViewer.refresh(selectedDBRoleDesc);
                     }
@@ -2364,7 +2364,7 @@ public class UserManagementPart {
                 tn.setParent(user_root);
                 user_root.getChildren().add(tn);
                 StructuredSelection select = new StructuredSelection(tn);
-                handleUserTreeSelection((IStructuredSelection) select, user_treeViewer);
+                handleUserTreeSelection(select, user_treeViewer);
                 if (object instanceof BTSUserGroup) {
                     if (observableLisAllUserGroups == null) {
                         loadAllUserGroups();

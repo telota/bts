@@ -80,9 +80,7 @@ public class AnnotationPartControllerImpl implements AnnotationPartController {
         }
         obs = corpusObjectService.query(query,
                 BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-        for (BTSCorpusObject o : obs) {
-            children.add(o);
-        }
+        children.addAll(obs);
         children.addAll(commentService.query(query, BTSConstants.OBJECT_STATE_ACTIVE, true, monitor));
         return children;
     }

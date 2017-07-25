@@ -130,7 +130,7 @@ public abstract class AbstractProjectCreator extends WorkspaceModifyOperation im
 
     protected abstract ProjectFactory createProjectFactory();
 
-    protected void enhanceProject(final IProject project, final IProgressMonitor monitor) throws CoreException {
+    protected void enhanceProject(final IProject project, final IProgressMonitor monitor) {
     }
 
     protected String getPrimaryModelFileExtension() {

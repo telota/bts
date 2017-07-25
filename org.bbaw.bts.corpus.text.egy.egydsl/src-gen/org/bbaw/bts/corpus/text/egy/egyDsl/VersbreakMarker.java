@@ -8,9 +8,11 @@ package org.bbaw.bts.corpus.text.egy.egyDsl;
  * A representation of the model object '<em><b>Versbreak Marker</b></em>'.
  * <!-- end-user-doc -->
  *
+ *
+ * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getVersbreakMarker()
  * @model
  * @generated
- * @see org.bbaw.bts.corpus.text.egy.egyDsl.EgyDslPackage#getVersbreakMarker()
  */
-public interface VersbreakMarker extends VersMarker {
+public interface VersbreakMarker extends VersMarker
+{
 } // VersbreakMarker

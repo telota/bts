@@ -73,8 +73,7 @@ public class PluginImageHelper implements IImageHelper, IImageDescriptorHelper, 
      * Disposes all images managed by this image helper.
      */
     public void dispose() {
-        for (Iterator<Image> iter = registry.values().iterator(); iter.hasNext(); ) {
-            Image image = iter.next();
+        for (Image image : registry.values()) {
             image.dispose();
         }
         registry.clear();

@@ -144,8 +144,8 @@ public class EmbeddedEditorActions {
         Shell shell = viewer.getTextWidget().getShell();
 
         if (workbench != null) {
-            final IHandlerService handlerService = (IHandlerService) workbench.getAdapter(IHandlerService.class);
-            final IContextService contextService = (IContextService) workbench.getAdapter(IContextService.class);
+            final IHandlerService handlerService = workbench.getAdapter(IHandlerService.class);
+            final IContextService contextService = workbench.getAdapter(IContextService.class);
             final ActiveShellExpression expression = new ActiveShellExpression(shell);
             final IContextActivation contextActivation = contextService.activateContext(EMBEDDED_TEXT_EDITOR_SCOPE,
                     expression);
@@ -248,8 +248,7 @@ public class EmbeddedEditorActions {
 
     protected ActionActivationCode findActionActivationCode(List<ActionActivationCode> activationCodes, String actionID) {
         int size = activationCodes.size();
-        for (int i = 0; i < size; i++) {
-            ActionActivationCode code = activationCodes.get(i);
+        for (ActionActivationCode code : activationCodes) {
             if (actionID.equals(code.fActionId))
                 return code;
         }
@@ -259,8 +258,7 @@ public class EmbeddedEditorActions {
     protected void createActions() {
 
         StyledText textWidget = viewer.getTextWidget();
-        for (int i = 0; i < ACTION_MAP.length; i++) {
-            ActionDefinitionToStyledTextAction entry = ACTION_MAP[i];
+        for (ActionDefinitionToStyledTextAction entry : ACTION_MAP) {
             IAction action = new TextNavigationAction(textWidget, entry.getAction());
             action.setActionDefinitionId(entry.getActionId());
             setAction(entry.getActionId(), action);

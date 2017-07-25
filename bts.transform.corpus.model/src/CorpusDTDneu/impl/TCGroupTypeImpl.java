@@ -531,7 +531,7 @@ public class TCGroupTypeImpl extends MinimalEObjectImpl.Container implements TCG
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.TC_GROUP_TYPE__TC_PASSPORT:
-                setTCPassport((TCPassportType) null);
+                setTCPassport(null);
                 return;
             case CorpusDTDneuPackage.TC_GROUP_TYPE__TC_PICTURE:
                 getTCPicture().clear();

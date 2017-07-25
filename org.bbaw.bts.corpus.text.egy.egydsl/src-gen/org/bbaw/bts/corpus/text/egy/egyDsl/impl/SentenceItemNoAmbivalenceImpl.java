@@ -16,26 +16,27 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class SentenceItemNoAmbivalenceImpl extends MinimalEObjectImpl.Container implements SentenceItemNoAmbivalence {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected SentenceItemNoAmbivalenceImpl() {
-        super();
-    }
+public class SentenceItemNoAmbivalenceImpl extends MinimalEObjectImpl.Container implements SentenceItemNoAmbivalence
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected SentenceItemNoAmbivalenceImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.SENTENCE_ITEM_NO_AMBIVALENCE;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.SENTENCE_ITEM_NO_AMBIVALENCE;
+  }
 
 } //SentenceItemNoAmbivalenceImpl

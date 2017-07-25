@@ -48,9 +48,7 @@ public class PerspectiveContentProvider implements IStructuredContentProvider {
 
     private void addElementsFrom(MWindow window, List<MPerspective> perspectives) {
         List<MWindowElement> windowElements = window.getChildren();
-        for (Iterator<MWindowElement> i = windowElements.iterator(); i.hasNext(); ) {
-            MWindowElement _elm = i.next();
-
+        for (MWindowElement _elm : windowElements) {
             if (_elm instanceof MPerspectiveStack)
                 perspectives.addAll(((MPerspectiveStack) _elm).getChildren());
             else if (_elm instanceof MPartSashContainer)
@@ -60,9 +58,7 @@ public class PerspectiveContentProvider implements IStructuredContentProvider {
 
     private void addChildPerspectives(MPartSashContainer partContainer, List<MPerspective> perspectives) {
         List<MPartSashContainerElement> containerElements = partContainer.getChildren();
-        for (Iterator<MPartSashContainerElement> i = containerElements.iterator(); i.hasNext(); ) {
-            MPartSashContainerElement _elm = i.next();
-
+        for (MPartSashContainerElement _elm : containerElements) {
             if (_elm instanceof MPartSashContainer)
                 addChildPerspectives((MPartSashContainer) _elm, perspectives);
             if (_elm instanceof MPerspectiveStack)

@@ -25,7 +25,6 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URI;
-import java.nio.charset.Charset;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -51,11 +50,10 @@ public class CouchDbContext {
     CouchDbContext(CouchDbClient dbc) {
         this.dbc = dbc;
         CouchDbProperties props = dbc.getConfig().getProperties();
-        if (props.isCreateDbIfNotExist()) {
+        if (props.isCreateDbIfNotExist())
             createDB(props.getDbName());
-        } else {
+        else
             serverVersion(); // pre warm up client
-        }
     }
 
     /**

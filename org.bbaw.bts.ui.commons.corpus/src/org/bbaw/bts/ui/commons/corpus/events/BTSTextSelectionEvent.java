@@ -6,7 +6,6 @@ import java.util.Vector;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSSentenceItem;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.swt.custom.CaretEvent;
 import org.eclipse.swt.events.SelectionEvent;

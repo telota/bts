@@ -451,7 +451,7 @@ public class TCSuperTextTypeImpl extends MinimalEObjectImpl.Container implements
     public void eUnset(int featureID) {
         switch (featureID) {
             case CorpusDTDneuPackage.TC_SUPER_TEXT_TYPE__TC_PASSPORT:
-                setTCPassport((TCPassportType) null);
+                setTCPassport(null);
                 return;
             case CorpusDTDneuPackage.TC_SUPER_TEXT_TYPE__TC_PICTURE:
                 getTCPicture().clear();

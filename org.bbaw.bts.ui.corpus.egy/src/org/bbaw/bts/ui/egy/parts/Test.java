@@ -145,8 +145,8 @@ class WordTracker {
 
     public List suggest(String word) {
         List suggestions = new LinkedList();
-        for (Iterator i = wordBuffer.iterator(); i.hasNext(); ) {
-            String currWord = (String) i.next();
+        for (Object aWordBuffer : wordBuffer) {
+            String currWord = (String) aWordBuffer;
             if (currWord.startsWith(word)) {
                 suggestions.add(currWord);
             }
@@ -198,8 +198,8 @@ class RecentWordContentAssistProcessor implements IContentAssistProcessor {
     private ICompletionProposal[] buildProposals(List suggestions, String replacedWord, int offset) {
         ICompletionProposal[] proposals = new ICompletionProposal[suggestions.size()];
         int index = 0;
-        for (Iterator i = suggestions.iterator(); i.hasNext(); ) {
-            String currSuggestion = (String) i.next();
+        for (Object suggestion : suggestions) {
+            String currSuggestion = (String) suggestion;
             proposals[index] = new CompletionProposal(currSuggestion, offset, replacedWord.length(),
                     currSuggestion.length());
             index++;

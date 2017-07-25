@@ -122,14 +122,14 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
 
         int minStart = Integer.MAX_VALUE;
         int maxEnd = Integer.MIN_VALUE;
-        for (int i = 0, n = removedPositions.size(); i < n; i++) {
-            Position position = removedPositions.get(i);
+        for (AttributedPosition removedPosition : removedPositions) {
+            Position position = removedPosition;
             int offset = position.getOffset();
             minStart = Math.min(minStart, offset);
             maxEnd = Math.max(maxEnd, offset + position.getLength());
         }
-        for (int i = 0, n = addedPositions.size(); i < n; i++) {
-            Position position = addedPositions.get(i);
+        for (AttributedPosition addedPosition : addedPositions) {
+            Position position = addedPosition;
             int offset = position.getOffset();
             minStart = Math.min(minStart, offset);
             maxEnd = Math.max(maxEnd, offset + position.getLength());
@@ -520,8 +520,7 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
      * @param highlighting The highlighting
      */
     public void highlightingStyleChanged(TextAttribute highlighting) {
-        for (int i = 0, n = fPositions.size(); i < n; i++) {
-            AttributedPosition position = fPositions.get(i);
+        for (AttributedPosition position : fPositions) {
             if (position.getHighlighting() == highlighting)
                 fSourceViewer.invalidateTextPresentation(position.getOffset(), position.getLength());
         }
@@ -531,8 +530,7 @@ public class HighlightingPresenter implements ITextPresentationListener, ITextIn
      * Invalidate text presentation of all positions.
      */
     private void invalidateTextPresentation() {
-        for (int i = 0, n = fPositions.size(); i < n; i++) {
-            AttributedPosition position = fPositions.get(i);
+        for (AttributedPosition position : fPositions) {
             fSourceViewer.invalidateTextPresentation(position.getOffset(), position.getLength());
         }
     }

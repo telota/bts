@@ -543,7 +543,7 @@ public class TreeNodeWrapperItemProvider extends ItemProviderAdapter implements 
             case 0:
                 return getText(object);
             case 1:
-                return new Integer(((TreeNodeWrapper) object).getChildren().size()).toString();
+                return Integer.toString(((TreeNodeWrapper) object).getChildren().size());
         }
 
 

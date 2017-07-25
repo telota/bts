@@ -217,8 +217,7 @@ public class DefaultRefactoringDocumentProvider implements IRefactoringDocument.
 
         public String getOriginalContents() {
             try {
-                InputStream inputStream = file.getContents();
-                try {
+                try (InputStream inputStream = file.getContents()) {
                     String charset = (encodingProvider != null) ? encodingProvider.getEncoding(getURI()) : file
                             .getCharset();
                     InputStreamReader input = new InputStreamReader(inputStream, charset);
@@ -229,8 +228,6 @@ public class DefaultRefactoringDocumentProvider implements IRefactoringDocument.
                         output.append(buffer, 0, read);
                     }
                     return output.toString();
-                } finally {
-                    inputStream.close();
                 }
             } catch (Exception e) {
                 throw new WrappedException(e);

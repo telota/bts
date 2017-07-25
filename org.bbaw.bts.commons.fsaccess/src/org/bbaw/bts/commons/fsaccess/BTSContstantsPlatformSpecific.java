@@ -32,7 +32,6 @@ package org.bbaw.bts.commons.fsaccess;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;

@@ -209,6 +209,6 @@ public class PassportInheritFromParentHandler {
     public boolean canExecute(
             @Named(IServiceConstants.ACTIVE_SELECTION) @Optional BTSCorpusObject selection,
             @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) Boolean mayEdit) {
-        return mayEdit != null && mayEdit.booleanValue() && selection != null && selection instanceof BTSCorpusObject && !selection.getRelations().isEmpty();
+        return mayEdit != null && mayEdit && selection != null && selection instanceof BTSCorpusObject && !selection.getRelations().isEmpty();
     }
 }

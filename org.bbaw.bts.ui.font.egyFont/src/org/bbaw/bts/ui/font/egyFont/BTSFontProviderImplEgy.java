@@ -1,11 +1,7 @@
 package org.bbaw.bts.ui.font.egyFont;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 
 import org.bbaw.bts.ui.font.BTSFontProvider;
 import org.eclipse.core.runtime.FileLocator;
@@ -14,7 +10,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Display;
-import org.osgi.framework.Bundle;
 
 public class BTSFontProviderImplEgy implements BTSFontProvider {
 
@@ -58,9 +53,9 @@ public class BTSFontProviderImplEgy implements BTSFontProvider {
 
         if (isLoaded) {
             FontData[] fd = Display.getCurrent().getFontList(null, true);
-            for (int i = 0; i < fd.length; i++) {
-                if (fd[i].getName().equals(FONT_NAME)) {
-                    fontdata = fd[i];
+            for (FontData aFd : fd) {
+                if (aFd.getName().equals(FONT_NAME)) {
+                    fontdata = aFd;
                     break;
                 }
             }

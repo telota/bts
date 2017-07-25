@@ -42,7 +42,7 @@ public abstract class AbstractProblemHover extends AbstractHover {
         try {
             lineNumber = textViewer.getDocument().getLineOfOffset(offset);
             return getHoverRegionInternal(lineNumber, offset);
-        } catch (BadLocationException e) {
+        } catch (BadLocationException ignored) {
         }
         return null;
     }

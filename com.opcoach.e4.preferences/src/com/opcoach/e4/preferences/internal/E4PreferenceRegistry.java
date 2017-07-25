@@ -27,9 +27,7 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Creatable;
 import org.eclipse.e4.core.services.contributions.IContributionFactory;
 import org.eclipse.e4.core.services.log.Logger;
-import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceNode;
-import org.eclipse.jface.preference.IPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
@@ -94,29 +92,23 @@ public class E4PreferenceRegistry {
             PreferenceNode pn = null;
             if (elmt.getAttribute(ATTR_CLASS) != null) {
                 PreferencePage page = null;
-                try {
-                    String prefPageURI = getClassURI(bundleId, elmt.getAttribute(ATTR_CLASS));
-                    Object object = factory.create(prefPageURI, context);
+                String prefPageURI = getClassURI(bundleId, elmt.getAttribute(ATTR_CLASS));
+                Object object = factory.create(prefPageURI, context);
+                if (!(object instanceof PreferencePage)) {
+                    logger.error("Expected instance of PreferencePage: {0}", elmt.getAttribute(ATTR_CLASS));
+                    try {
+                        object = elmt.createExecutableExtension("class");
+                    } catch (CoreException e1) {
+                        logger.error(e1);
+                    }
                     if (!(object instanceof PreferencePage)) {
                         logger.error("Expected instance of PreferencePage: {0}", elmt.getAttribute(ATTR_CLASS));
-                        try {
-                            object = elmt.createExecutableExtension("class");
-                        } catch (CoreException e1) {
-                            logger.error(e1);
-                        }
-                        if (!(object instanceof PreferencePage)) {
-                            logger.error("Expected instance of PreferencePage: {0}", elmt.getAttribute(ATTR_CLASS));
-                            continue;
-                        }
+                        continue;
                     }
-                    page = (PreferencePage) object;
-                    setPreferenceStore(bundleId, page);
-
-                } catch (ClassNotFoundException e) {
-                    logger.error(e);
-
-                    continue;
                 }
+                page = (PreferencePage) object;
+                setPreferenceStore(bundleId, page);
+
                 ContextInjectionFactory.inject(page, context);
                 if ((page.getTitle() == null || page.getTitle().isEmpty()) && elmt.getAttribute(ATTR_NAME) != null) {
                     page.setTitle(elmt.getAttribute(ATTR_NAME));
@@ -268,7 +260,7 @@ public class E4PreferenceRegistry {
         return null;
     }
 
-    private String getClassURI(String definingBundleId, String spec) throws ClassNotFoundException {
+    private String getClassURI(String definingBundleId, String spec) {
         if (spec.startsWith("platform:")) {
             return spec;
         } // $NON-NLS-1$

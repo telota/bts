@@ -28,8 +28,8 @@ public class OpenUpdatersReadersEditorDialogHandler {
             IEclipseContext context) {
         IEclipseContext childContext = context.createChild("Edit Updaters/Readers Context");
         childContext.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT,
-                new Boolean(permissionsController.userMayEditObject(
-                        permissionsController.getAuthenticatedUser(), selection)));
+                permissionsController.userMayEditObject(
+                        permissionsController.getAuthenticatedUser(), selection));
         ObjectUpdaterReaderEditorDialog dialog = ContextInjectionFactory.make(
                 ObjectUpdaterReaderEditorDialog.class, childContext);
         childContext.set(ObjectUpdaterReaderEditorDialog.class, dialog);

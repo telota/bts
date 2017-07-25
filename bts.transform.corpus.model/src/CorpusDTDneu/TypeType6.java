@@ -193,8 +193,7 @@ public enum TypeType6 implements Enumerator {
      * @generated
      */
     public static TypeType6 get(String literal) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            TypeType6 result = VALUES_ARRAY[i];
+        for (TypeType6 result : VALUES_ARRAY) {
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -210,8 +209,7 @@ public enum TypeType6 implements Enumerator {
      * @generated
      */
     public static TypeType6 getByName(String name) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            TypeType6 result = VALUES_ARRAY[i];
+        for (TypeType6 result : VALUES_ARRAY) {
             if (result.getName().equals(name)) {
                 return result;
             }

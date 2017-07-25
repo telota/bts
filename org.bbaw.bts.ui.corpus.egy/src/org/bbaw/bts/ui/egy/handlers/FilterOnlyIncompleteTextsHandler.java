@@ -45,9 +45,7 @@ public class FilterOnlyIncompleteTextsHandler {
                     monitor.beginTask("Load all texts", IProgressMonitor.UNKNOWN);
                     List<BTSText> texts = textController.listInAllInCompleteTexts(monitor);
 
-                    for (BTSText t : texts) {
-                        obs.add(t);
-                    }
+                    obs.addAll(texts);
                     // If you want to update the UI
                     sync.asyncExec(new Runnable() {
                         @Override

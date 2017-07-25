@@ -43,8 +43,7 @@ public class TokenTypeDefDetailsPart extends AbstractDetailsPart {
                 @Override
                 protected String calculateResult(String[][] settings) {
                     int result = SWT.NORMAL;
-                    for (int i = 0; i < settings.length; i++) {
-                        String[] row = settings[i];
+                    for (String[] row : settings) {
                         String value = row[1];
                         String checked = row[2];
                         if (Boolean.valueOf(checked)) {
@@ -65,14 +64,16 @@ public class TokenTypeDefDetailsPart extends AbstractDetailsPart {
                     }
                     if (value == SWT.NORMAL)
                         return false;
-                    if (fieldName.equals("Italic"))
-                        return (value & SWT.ITALIC) == SWT.ITALIC;
-                    else if (fieldName.equals("Bold"))
-                        return (value & SWT.BOLD) == SWT.BOLD;
-                    else if (fieldName.equals("Underline"))
-                        return (value & TextAttribute.UNDERLINE) == TextAttribute.UNDERLINE;
-                    else if (fieldName.equals("Strike through"))
-                        return (value & TextAttribute.STRIKETHROUGH) == TextAttribute.STRIKETHROUGH;
+                    switch (fieldName) {
+                        case "Italic":
+                            return (value & SWT.ITALIC) == SWT.ITALIC;
+                        case "Bold":
+                            return (value & SWT.BOLD) == SWT.BOLD;
+                        case "Underline":
+                            return (value & TextAttribute.UNDERLINE) == TextAttribute.UNDERLINE;
+                        case "Strike through":
+                            return (value & TextAttribute.STRIKETHROUGH) == TextAttribute.STRIKETHROUGH;
+                    }
                     return false;
                 }
             });

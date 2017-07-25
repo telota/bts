@@ -47,9 +47,7 @@ public class WorkspaceEncodingProvider implements IEncodingProvider {
 
     public String getEncoding(URI uri) {
         if (workspace != null) {
-            Iterator<Pair<IStorage, IProject>> storages = storage2UriMapper.getStorages(uri).iterator();
-            while (storages.hasNext()) {
-                Pair<IStorage, IProject> storage = storages.next();
+            for (Pair<IStorage, IProject> storage : storage2UriMapper.getStorages(uri)) {
                 if (storage.getFirst() instanceof IEncodedStorage) {
                     try {
                         return ((IEncodedStorage) storage.getFirst()).getCharset();

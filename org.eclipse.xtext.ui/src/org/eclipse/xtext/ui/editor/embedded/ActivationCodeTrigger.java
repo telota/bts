@@ -36,8 +36,8 @@ public class ActivationCodeTrigger implements VerifyKeyListener {
 
         ActionActivationCode code = null;
         int size = activationCodes.size();
-        for (int i = 0; i < size; i++) {
-            code = activationCodes.get(i);
+        for (ActionActivationCode activationCode : activationCodes) {
+            code = activationCode;
             if (code.matches(event)) {
                 IAction action = actions.get(code.fActionId);
                 if (action != null) {

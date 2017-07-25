@@ -6,12 +6,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
@@ -291,7 +288,6 @@ public class InstallNewSoftwareService implements IInstallNewSoftwareService {
 
     private List<IInstallableUnit> getUpdatedGroups() {
         nullProgressMonitor = new NullProgressMonitor();
-        this.agent = agent;
 
         MetadataRepositoryManager metadataRepositoryManager = new MetadataRepositoryManager(
                 agent);

@@ -3,13 +3,9 @@ package org.bbaw.bts.dao.couchDB.impl;
 import java.util.List;
 
 import org.bbaw.bts.btsmodel.BTSComment;
-import org.bbaw.bts.btsmodel.BtsmodelFactory;
-import org.bbaw.bts.core.commons.exceptions.BTSDBException;
 import org.bbaw.bts.core.dao.BTSCommentDao;
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.dao.couchDB.CouchDBDao;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
 
 public class BTSCommentDaoImpl extends CouchDBDao<BTSComment, String> implements BTSCommentDao {
 

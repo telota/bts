@@ -277,8 +277,7 @@ public enum CategoryType implements Enumerator {
      * @generated
      */
     public static CategoryType get(String literal) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            CategoryType result = VALUES_ARRAY[i];
+        for (CategoryType result : VALUES_ARRAY) {
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -294,8 +293,7 @@ public enum CategoryType implements Enumerator {
      * @generated
      */
     public static CategoryType getByName(String name) {
-        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            CategoryType result = VALUES_ARRAY[i];
+        for (CategoryType result : VALUES_ARRAY) {
             if (result.getName().equals(name)) {
                 return result;
             }

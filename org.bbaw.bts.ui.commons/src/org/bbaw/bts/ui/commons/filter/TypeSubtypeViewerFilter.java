@@ -36,8 +36,7 @@ public class TypeSubtypeViewerFilter extends ViewerFilter {
                 map = loadMap();
             }
             // if map empty, no filtering!
-            if (map.isEmpty()) return true;
-            return configurationController.objectTypesPathsContainsObjectype(map, o);
+            return map.isEmpty() || configurationController.objectTypesPathsContainsObjectype(map, o);
         }
         return false;
     }

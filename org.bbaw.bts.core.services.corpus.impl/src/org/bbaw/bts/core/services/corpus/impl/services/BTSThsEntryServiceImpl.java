@@ -97,7 +97,7 @@ public class BTSThsEntryServiceImpl
         BTSThsEntry entry = null;
         try {
             entry = thsEntryDao.find(key, main_project + BTSCorpusConstants.THS);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (entry != null) {
             return entry;
@@ -105,7 +105,7 @@ public class BTSThsEntryServiceImpl
         for (String p : getActiveThss()) {
             try {
                 entry = thsEntryDao.find(key, p + BTSCorpusConstants.THS);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             if (entry != null) {
                 return entry;
@@ -121,7 +121,7 @@ public class BTSThsEntryServiceImpl
             try {
                 entries.addAll(thsEntryDao.list(p + BTSCorpusConstants.THS,
                         objectState));
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
         return filter(entries);
@@ -185,7 +185,7 @@ public class BTSThsEntryServiceImpl
         String entry = null;
         try {
             entry = thsEntryDao.findAsJsonString(key, main_project + BTSCorpusConstants.THS);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (entry != null) {
             return entry;
@@ -193,7 +193,7 @@ public class BTSThsEntryServiceImpl
         for (String p : getActiveThss()) {
             try {
                 entry = thsEntryDao.findAsJsonString(key, p + BTSCorpusConstants.THS);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             if (entry != null) {
                 return entry;

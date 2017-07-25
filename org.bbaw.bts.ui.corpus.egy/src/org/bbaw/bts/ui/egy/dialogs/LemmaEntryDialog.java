@@ -102,11 +102,11 @@ public class LemmaEntryDialog extends TitleAreaDialog {
         passportChild = context.createChild("passportEditorDialog");
         passportChild.set(Composite.class, passportComposite);
         passportChild.set(IServiceConstants.ACTIVE_SELECTION, null);
-        passportChild.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT, new Boolean(userMayEdit));
+        passportChild.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT, userMayEdit);
 
         passportEditor = ContextInjectionFactory.make(
                 PassportEditorPart.class, passportChild);
-        passportEditor.setInputObjectDirect((BTSCorpusObject) selectionObject);
+        passportEditor.setInputObjectDirect(selectionObject);
 
         sashForm.setWeights(new int[]{1, 1});
         return area;

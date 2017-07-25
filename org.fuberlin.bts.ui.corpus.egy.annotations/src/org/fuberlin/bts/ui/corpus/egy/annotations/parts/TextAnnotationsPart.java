@@ -17,7 +17,6 @@ import org.bbaw.bts.btsmodel.BTSConfigItem;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
-import org.bbaw.bts.commons.BTSCommonsActivator;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.core.commons.corpus.BTSCorpusConstants;
 import org.bbaw.bts.core.controller.generalController.EditingDomainController;
@@ -72,7 +71,6 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.fuberlin.bts.ui.corpus.egy.annotations.internal.Activator;
 import org.osgi.service.prefs.Preferences;
 
 public class TextAnnotationsPart implements IBTSEditor {
@@ -204,7 +202,7 @@ public class TextAnnotationsPart implements IBTSEditor {
                         }
                         // get selected item, add listener to domain
                         if (!event.getSelectedItems().isEmpty()) {
-                            editingDomain = getEditingDomain((EObject) event.getSelectedItems().get(0));
+                            editingDomain = getEditingDomain(event.getSelectedItems().get(0));
                             editingDomain.getCommandStack()
                                     .addCommandStackListener(
                                             getCommandStackListener());
@@ -361,7 +359,7 @@ public class TextAnnotationsPart implements IBTSEditor {
                                 InterruptedException {
                             monitor.beginTask("Load relating objects (comments, annotations, glosses).", 100);
                             relatingObjects = textEditorController
-                                    .getRelatingObjects((BTSText) text, monitor);
+                                    .getRelatingObjects(text, monitor);
 
                             queryId = "relations.objectId-" + text.get_id();
 
@@ -434,7 +432,7 @@ public class TextAnnotationsPart implements IBTSEditor {
             BTSConfigItem typeConf = null;
             try {
                 typeConf = annotationPartController.getAnnoTypesConfigItem();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             if (typeConf != null && !typeConf.getChildren().isEmpty()) {
                 // initialize submenu for annotation types
@@ -450,7 +448,7 @@ public class TextAnnotationsPart implements IBTSEditor {
                         BTSConfigItem subtypeConf = null;
                         try {
                             subtypeConf = annotationPartController.getAnnoSubtypesConfigItem(confItem);
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
                         }
                         List<BTSConfigItem> subTypeConfItems = new Vector<>();
                         if (subtypeConf != null) {
@@ -471,7 +469,7 @@ public class TextAnnotationsPart implements IBTSEditor {
                                 menuItemSubType.setCommand(menuFilterCommand);
                                 menuItemSubType.setLabel(subTypeConfItem.getLabel().getTranslation(lang));
                                 ((MMenu) menuItemType).getChildren().add(menuItemSubType);
-                                filters.put(key, ((MHandledMenuItem) menuItemSubType).isSelected());
+                                filters.put(key, menuItemSubType.isSelected());
                             }
                         } else { // create checkable menu entry for type without subtypes
                             String key = "annotation." + confItem.getValue();

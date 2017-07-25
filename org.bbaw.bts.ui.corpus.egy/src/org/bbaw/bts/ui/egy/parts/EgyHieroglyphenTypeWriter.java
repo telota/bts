@@ -24,14 +24,6 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import jsesh.editor.JMDCEditor;
-import jsesh.hieroglyphs.DefaultHieroglyphicFontManager;
-import jsesh.hieroglyphs.HieroglyphicFontManager;
-import jsesh.hieroglyphs.HieroglyphsManager;
-import jsesh.hieroglyphs.ManuelDeCodage;
-import jsesh.mdc.MDCSyntaxError;
-import jsesh.mdc.utils.MDCNormalizer;
-
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.commons.BTSPluginIDs;
@@ -122,7 +114,7 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
     //	@Inject
 //	@Optional
 //	@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_TRANSCRIBE)
-    private Boolean userMayTranscribe = new Boolean(false);
+    private Boolean userMayTranscribe = Boolean.FALSE;
     // private WordOccurrence wordOccurrence;
     // private JTextAsWordsEditorPanel ramsesEditor;
     private Text hierotw_text;
@@ -629,7 +621,7 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
                     } else if (selection instanceof BTSLemmaEntry) {
                         purgeAll();
                         corpusObject = (BTSLemmaEntry) selection;
-                        part.setLabel(((BTSLemmaEntry) selection).getName());
+                        part.setLabel(selection.getName());
                         editingDomain = getEditingDomain(corpusObject);
 
                     } else if (corpusObject != null) {
@@ -677,11 +669,11 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
 
                         // make sure the right text is set
                         if (selection.getParentObject() != null && !selection.getParentObject().equals(corpusObject)) {
-                            setSelection((BTSCorpusObject) selection.getParentObject());
+                            setSelection(selection.getParentObject());
                         }
-                        selectionObject = (BTSIdentifiableItem) selection.getSelectedItems()
+                        selectionObject = selection.getSelectedItems()
                                 .get(0);
-                        setSelectionInteral((BTSWord) selection
+                        setSelectionInteral(selection
                                 .getSelectedItems().get(0));
                         ignoreGlyph_Button.setSelection(false);
                         loaded = true;
@@ -699,7 +691,7 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
         } else if (selection != null && selection.getSelectedItems() != null
                 && !selection.getSelectedItems().isEmpty() && selection.getSelectedItems().get(0) instanceof BTSWord) {
             if (selection.getParentObject() != null && !selection.getParentObject().equals(corpusObject)) {
-                setSelection((BTSCorpusObject) selection.getParentObject());
+                setSelection(selection.getParentObject());
             }
             currentWord = (BTSWord) selection.getSelectedItems().get(0);
             selectionCached = true;
@@ -798,7 +790,7 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
             return object;
         } else {
             if (object.eContainer() instanceof BTSText) {
-                return (BTSText) object.eContainer();
+                return object.eContainer();
             } else {
                 return findRecursivelyParent(object.eContainer());
             }

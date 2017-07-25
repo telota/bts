@@ -99,8 +99,7 @@ public class XtextSourceViewer extends ProjectionViewer implements IAdaptable {
                 }
                 TextEvent e = new TextEvent(cmd.start, length, text, cmd.preservedText, event, redraws()) {
                 };
-                for (int i = 0; i < textListeners.size(); i++) {
-                    ITextListener l = textListeners.get(i);
+                for (ITextListener l : textListeners) {
                     try {
                         l.textChanged(e);
                     } catch (NullPointerException exception) {

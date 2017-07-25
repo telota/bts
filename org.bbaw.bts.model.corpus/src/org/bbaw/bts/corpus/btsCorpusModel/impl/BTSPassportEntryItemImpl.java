@@ -465,13 +465,13 @@ public class BTSPassportEntryItemImpl extends BTSPassportEntryImpl implements BT
                 getExternalReferences().clear();
                 return;
             case BtsCorpusModelPackage.BTS_PASSPORT_ENTRY_ITEM__TIMESPAN:
-                setTimespan((BTSTimespan) null);
+                setTimespan(null);
                 return;
             case BtsCorpusModelPackage.BTS_PASSPORT_ENTRY_ITEM__DESCRIPTION:
-                setDescription((BTSTranslations) null);
+                setDescription(null);
                 return;
             case BtsCorpusModelPackage.BTS_PASSPORT_ENTRY_ITEM__TRANSLATION:
-                setTranslation((BTSTranslations) null);
+                setTranslation(null);
                 return;
         }
         super.eUnset(featureID);

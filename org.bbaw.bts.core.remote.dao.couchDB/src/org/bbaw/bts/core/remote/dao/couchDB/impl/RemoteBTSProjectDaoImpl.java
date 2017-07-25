@@ -122,7 +122,7 @@ public class RemoteBTSProjectDaoImpl extends RemoteCouchDBDao<BTSProject, String
     @SuppressWarnings("unchecked")
     @Override
     public BTSProject find(String key, String path) {
-        URI uri = URI.createURI(getRemoteDBURL() + RemoteDaoConstants.ADMIN + key.toString());
+        URI uri = URI.createURI(getRemoteDBURL() + RemoteDaoConstants.ADMIN + key);
         Resource resource = connectionProvider.getEmfResourceSet().getResource(uri, true);
         if (resource.getContents().size() > 0) {
             Object o = resource.getContents().get(0);

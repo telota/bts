@@ -14,26 +14,27 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class AncientExpandedMarkerImpl extends VersMarkerImpl implements AncientExpandedMarker {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    protected AncientExpandedMarkerImpl() {
-        super();
-    }
+public class AncientExpandedMarkerImpl extends VersMarkerImpl implements AncientExpandedMarker
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected AncientExpandedMarkerImpl()
+  {
+    super();
+  }
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     *
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return EgyDslPackage.Literals.ANCIENT_EXPANDED_MARKER;
-    }
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return EgyDslPackage.Literals.ANCIENT_EXPANDED_MARKER;
+  }
 
 } //AncientExpandedMarkerImpl

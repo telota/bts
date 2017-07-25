@@ -59,8 +59,8 @@ public class BTSStringToIntegerConverter implements IConverter {
     @Override
     public Object convert(Object fromObject) {
         if (fromObject instanceof String) {
-            return new Integer((String) fromObject).intValue();
+            return new Integer((String) fromObject);
         }
-        return new Integer(0);
+        return 0;
     }
 }

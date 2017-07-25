@@ -2,7 +2,6 @@ package bts.transform.ui.chars;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -54,7 +53,7 @@ public class CharsService {
 //			System.out.println(entity);
             if (entity instanceof String && PROPERTIES.containsKey(entity) && PROPERTIES.get(entity) instanceof String) {
                 String re2 = "";
-                String re = new String((String) PROPERTIES.get(entity));
+                String re = (String) PROPERTIES.get(entity);
                 String s = (String) entity;
                 if (s.equals("&delVP;")) {
                     char[] c = new char[3];
@@ -148,7 +147,7 @@ public class CharsService {
                     c[2] = Character.toChars(125)[0];
                     re2 = new String(c);
                 } else {
-                    re = new String((String) PROPERTIES.get(entity));
+                    re = (String) PROPERTIES.get(entity);
                     re = re.substring(2, re.length() - 1);
                     int r = new Integer(re);
                     char[] c = Character.toChars(r);

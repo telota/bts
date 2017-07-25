@@ -441,7 +441,7 @@ public class BTSSenctenceImpl extends AdministrativDataObjectImpl implements BTS
                 getSentenceItems().clear();
                 return;
             case BtsCorpusModelPackage.BTS_SENCTENCE__TRANSLATION:
-                setTranslation((BTSTranslations) null);
+                setTranslation(null);
                 return;
         }
         super.eUnset(featureID);

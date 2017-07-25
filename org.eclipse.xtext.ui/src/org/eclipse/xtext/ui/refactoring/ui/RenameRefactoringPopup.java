@@ -121,8 +121,8 @@ public class RenameRefactoringPopup implements IWidgetTokenKeeper, IWidgetTokenK
         control.setBackground(color);
         if (control instanceof Composite) {
             Control[] children = ((Composite) control).getChildren();
-            for (int i = 0; i < children.length; i++) {
-                recursiveSetBackgroundColor(children[i], color);
+            for (Control aChildren : children) {
+                recursiveSetBackgroundColor(aChildren, color);
             }
         }
     }
@@ -137,7 +137,7 @@ public class RenameRefactoringPopup implements IWidgetTokenKeeper, IWidgetTokenK
      * @return the keybinding for Refactor &gt; Rename
      */
     protected static String getOpenDialogBinding() {
-        IBindingService bindingService = (IBindingService) PlatformUI.getWorkbench().getAdapter(IBindingService.class);
+        IBindingService bindingService = PlatformUI.getWorkbench().getAdapter(IBindingService.class);
         if (bindingService == null)
             return ""; //$NON-NLS-1$
         String binding = bindingService
