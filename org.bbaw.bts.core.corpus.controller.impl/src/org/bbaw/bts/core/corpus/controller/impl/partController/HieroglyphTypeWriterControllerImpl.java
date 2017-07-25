@@ -1,21 +1,16 @@
 package org.bbaw.bts.core.corpus.controller.impl.partController;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import javax.inject.Inject;
-
+import jsesh.hieroglyphs.CompositeHieroglyphsManager;
+import jsesh.hieroglyphs.PossibilitiesList;
+import jsesh.hieroglyphs.Possibility;
+import jsesh.mdc.MDCSyntaxError;
+import jsesh.mdc.utils.MDCNormalizer;
 import org.bbaw.bts.btsmodel.UserActionCounter;
 import org.bbaw.bts.core.corpus.controller.partController.HieroglyphTypeWriterController;
 import org.bbaw.bts.core.services.UserActionCounterService;
+
+import javax.inject.Inject;
+import java.util.*;
 
 public class HieroglyphTypeWriterControllerImpl implements
         HieroglyphTypeWriterController {

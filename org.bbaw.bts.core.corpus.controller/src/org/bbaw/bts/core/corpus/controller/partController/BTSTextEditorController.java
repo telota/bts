@@ -58,9 +58,9 @@ public interface BTSTextEditorController {
 
     Image transformToSWT(BufferedImage bufferedImage);
 
-    BufferedImage getImageData(String topItemList);
+    BufferedImage getImageData(String topItemList) throws Exception;
 
-    BufferedImage getImageData(String topItemList, int height, int width);
+    BufferedImage getImageData(String topItemList, int height, int width) throws Exception;
 
     HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects);
 

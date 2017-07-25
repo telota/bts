@@ -28,6 +28,10 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import jsesh.mdc.MDCSyntaxError;
+import jsesh.mdcDisplayer.draw.MDCDrawingFacade;
+import jsesh.mdcDisplayer.preferences.DrawingSpecification;
+import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
 import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
@@ -56,6 +60,7 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSTextContent;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextItems;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage;
+import org.bbaw.bts.corpus.text.egy.ui.internal.EgyDslActivator;
 import org.bbaw.bts.ui.commons.corpus.text.BTSAnnotationAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSCommentAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSLemmaAnnotation;

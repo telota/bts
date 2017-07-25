@@ -7,9 +7,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .,
  target/lib/opal.jar,
  target/lib/rcptoolbox.jar
-Export-Package: com.richclientgui.toolbox.duallists,
- com.richclientgui.toolbox.propagate,
- org.bbaw.bts.ui.commons.compare,
+Export-Package: org.bbaw.bts.ui.commons.compare,
  org.bbaw.bts.ui.commons.controldecoration,
  org.bbaw.bts.ui.commons.converter,
  org.bbaw.bts.ui.commons.filter,

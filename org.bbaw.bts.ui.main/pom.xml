@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.bbaw.bts</groupId>
-    <artifactId>aaew-bts</artifactId>
-    <version>3.1.0</version>
-  </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.bbaw.bts</groupId>
+        <artifactId>aaew-bts</artifactId>
+        <version>3.1.0</version>
+    </parent>
     <artifactId>org.bbaw.bts.ui.main</artifactId>
-  <version>3.1.0-SNAPSHOT</version>
-  <packaging>eclipse-plugin</packaging>
+    <version>3.1.0-SNAPSHOT</version>
+    <packaging>eclipse-plugin</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.3.0</version>
+                <executions>
+                    <!-- This could have been two lines of shell... -->
+                    <execution>
+                        <id>0000000000001</id>
+                        <!-- the wget goal actually binds itself to this phase by default -->
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://github.com/lcaron/opal/blob/releases/V1.0.6/opal-1.0.6.jar?raw=true</url>
+                            <outputFileName>opal.jar</outputFileName>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

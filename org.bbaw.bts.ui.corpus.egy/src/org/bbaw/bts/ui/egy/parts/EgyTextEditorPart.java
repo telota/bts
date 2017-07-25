@@ -53,6 +53,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import jsesh.editor.JMDCEditor;
 import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
@@ -83,6 +84,7 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSTextContent;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage;
+import org.bbaw.bts.corpus.text.egy.egyDsl.TextContent;
 import org.bbaw.bts.corpus.text.egy.ui.custom.BTSE4ToGuiceXtextSourceViewerProvider;
 import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
 import org.bbaw.bts.ui.commons.corpus.events.BTSRelatingObjectsFilterEvent;
@@ -2137,31 +2139,15 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
     }
 
-    /**
-     * Gets the model annotation at model object.
-     *
-     * @param selectedItem the selected item
-     * @return the model annotation at model object
-     */
     private BTSModelAnnotation getModelAnnotationAtModelObject(
             BTSSentenceItem selectedItem) {
         return modelAnnotationMap.get(selectedItem.get_id());
     }
 
-    /**
-     * Sets the sentence item deselected.
-     *
-     * @param oldSelectedItem the new sentence item deselected
-     */
     private void setSentenceItemDeselected(BTSSentenceItem oldSelectedItem) {
         // TODO
     }
 
-    /**
-     * Sets the sentence translation.
-     *
-     * @param sentence the new sentence translation
-     */
     private AnnotationModelEvent setSentenceTranslation(BTSSenctence sentence, boolean postSelection) {
         // TODO: allow for multiple sentence translations to be highlighted simultaneously
         // i.e. create method setSentenceTranslation(List<BTSSentence>) which gets passed
@@ -2228,11 +2214,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         return null;
     }
 
-    /**
-     * Sets the sentence translation.
-     *
-     * @param word the new sentence translation
-     */
     private void setSentenceTranslation(BTSSentenceItem sentenceItem) {
         if (sentenceItem != null) {
             BTSSenctence sentence = null;
@@ -2263,11 +2244,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
     }
 
-    /**
-     * Load input.
-     *
-     * @param o the o
-     */
     private void loadInput(BTSCorpusObject o) {
         setSentenceTranslationActive(false);
         // wipe latest text selection event in order to avoid leak
@@ -2363,15 +2339,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         }
     }
 
-    /**
-     * Load input sign text.
-     *
-     * @param localText             the local text
-     * @param localRelatingObjects  the local relating objects
-     * @param relatingObjectsMap2   the relating objects map2
-     * @param monitor
-     * @param localSelectedTextItem
-     */
     private void loadInputSignText(BTSText localText,
                                    List<BTSObject> localRelatingObjects,
                                    Map<String, List<BTSInterTextReference>> relatingObjectsMap2, IProgressMonitor monitor, Object localSelectedTextItem) {
@@ -2387,12 +2354,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         }
     }
 
-    /**
-     * Creates the mock up.
-     *
-     * @param text2 the text2
-     * @return the BTS text
-     */
     private BTSText createMockUp(BTSText text2) {
         if (text2 == null) {
             text2 = BtsCorpusModelFactory.eINSTANCE.createBTSText();
@@ -2417,9 +2378,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         return text2;
     }
 
-    /**
-     * Purge cache.
-     */
     private void purgeCacheAndEditingDomain() {
 
         selectedSentence = null;
@@ -2438,9 +2396,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         }
     }
 
-    /**
-     * Sets the focus.
-     */
     @Focus
     public void setFocus() {
         if (!loaded && selectionCached) // not yet loaded but has cached selection
@@ -2469,11 +2424,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 .activateDBCollectionContext(BTSPluginIDs.PREF_MAIN_CORPUS_KEY);
     }
 
-    /**
-     * Save.
-     *
-     * @return true, if successful
-     */
     @Persist
     public boolean save() {
         if (text != null && dirty != null && dirty.isDirty()) {
@@ -2509,11 +2459,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         return true;
     }
 
-    /**
-     * Sets the editor selection.
-     *
-     * @param selection the new editor selection
-     */
     @Override
     public void setEditorSelection(final Object selection) {
         if (selection != null) {
@@ -2579,21 +2524,10 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         }
     }
 
-    /**
-     * Gets the editing domain.
-     *
-     * @param editingObject the editing object
-     * @return the editing domain
-     */
     private EditingDomain getEditingDomain(EObject editingObject) {
         return editingDomainController.getEditingDomain(editingObject);
     }
 
-    /**
-     * Handle event.
-     *
-     * @param event the event
-     */
     @Override
     public void handleEvent(Event event) {
         // System.out.println(arg0);
@@ -2614,11 +2548,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
     }
 
-    /**
-     * Event received relating objects loaded events.
-     *
-     * @param event the event
-     */
     @SuppressWarnings({"restriction", "rawtypes"})
     @Inject
     @Optional
@@ -2643,11 +2572,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         }
     }
 
-    /**
-     * Event received updates.
-     *
-     * @param notification the notification
-     */
     @SuppressWarnings("restriction")
     @Inject
     @Optional
@@ -2759,10 +2683,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         }
     }
 
-    /**
-     * @param fig
-     * @param object
-     */
     private Color getBackgroundColorTypePath(String typePath) {
         // read values from the instance scope
         String colorString = null;
@@ -2799,11 +2719,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
     }
 
-    /**
-     * Event received load lemmata.
-     *
-     * @param o the o
-     */
     @Inject
     @Optional
     void eventReceivedLoadLemmata(
@@ -2854,12 +2769,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         });
     }
 
-    /**
-     * Process model update.
-     *
-     * @param notification the notification
-     * @param id           the id
-     */
     private void processModelUpdate(BTSModelUpdateNotification notification,
                                     String id) {
         if (notification.getObject() instanceof BTSAnnotation
@@ -2900,21 +2809,11 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
     }
 
-    /**
-     * Adds the annotation to sign text.
-     *
-     * @param notification the notification
-     */
     private void addAnnotationToSignText(BTSModelUpdateNotification notification) {
         signTextEditor.addRelatingObjectNotification(notification);
 
     }
 
-    /**
-     * Adds the annotation to transcription.
-     *
-     * @param notification the notification
-     */
     private void addAnnotationToTranscription(
             BTSModelUpdateNotification notification) {
         List<BTSModelAnnotation> mas = relatingObjectsAnnotationMap
@@ -2974,14 +2873,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         painter.modelChanged(annotationModel);
     }
 
-    /**
-     * Make annotation.
-     *
-     * @param object the object
-     * @param issue  the issue
-     * @param ref    the ref
-     * @return the annotation
-     */
     @SuppressWarnings("restriction")
     private Annotation makeAnnotation(BTSObject object, Issue issue,
                                       BTSInterTextReference ref) {

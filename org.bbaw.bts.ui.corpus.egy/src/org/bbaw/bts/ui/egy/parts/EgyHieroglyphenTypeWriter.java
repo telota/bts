@@ -24,6 +24,13 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import jsesh.editor.JMDCEditor;
+import jsesh.hieroglyphs.DefaultHieroglyphicFontManager;
+import jsesh.hieroglyphs.HieroglyphicFontManager;
+import jsesh.hieroglyphs.HieroglyphsManager;
+import jsesh.hieroglyphs.ManuelDeCodage;
+import jsesh.mdc.MDCSyntaxError;
+import jsesh.mdc.utils.MDCNormalizer;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.commons.BTSPluginIDs;

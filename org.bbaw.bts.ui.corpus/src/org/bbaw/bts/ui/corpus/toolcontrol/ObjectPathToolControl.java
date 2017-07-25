@@ -26,6 +26,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.mihalis.opal.breadcrumb.Breadcrumb;
+import org.mihalis.opal.breadcrumb.BreadcrumbItem;
 
 public class ObjectPathToolControl {
 

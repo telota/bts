@@ -3,6 +3,8 @@ package org.bbaw.bts.ui.corpus.preferences;
 import java.util.List;
 import java.util.Vector;
 
+import com.richclientgui.toolbox.duallists.DualListComposite;
+
 import org.bbaw.bts.commons.BTSPluginIDs;
 import org.bbaw.bts.core.commons.staticAccess.StaticAccessController;
 import org.bbaw.bts.core.corpus.controller.partController.CorpusNavigatorController;

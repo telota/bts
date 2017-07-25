@@ -21,7 +21,7 @@ Workflow {
     }
 
     component = DirectoryCleaner {
-        directory = "${runtimeProject}/src-gen"
+        directory = "${runtimeProject}/target/src-gen"
     }
 
     component = DirectoryCleaner {
@@ -29,11 +29,11 @@ Workflow {
     }
 
     component = DirectoryCleaner {
-        directory = "${runtimeProject}.ui/src-gen"
+        directory = "${runtimeProject}.ui/target/src-gen"
     }
 
     //component = DirectoryCleaner {
-    //  directory = "${runtimeProject}.tests/src-gen"
+    //  directory = "${runtimeProject}.tests/target/src-gen"
     //}
 
     component = Generator {
@@ -45,7 +45,7 @@ Workflow {
         encoding = encoding
 
         srcPath = "/src"
-        srcGenPath = "/src-gen"
+        srcGenPath = "/target/src-gen"
 
         language = auto-inject {
             uri = grammarURI

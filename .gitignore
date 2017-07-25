@@ -1,5 +1,6 @@
 /*/bin
 /*/target
+/*/model
 *.xtendbin
 *.class
 org.bbaw.bts.corpus.text.btsdsl
@@ -10,8 +11,6 @@ org.bbaw.bts.corpus.text.dsl.tests
 org.bbaw.bts.corpus.text.dsl.ui
 org.bbaw.bts.corpus.text.egy.dsl
 org.bbaw.bts.corpus.text.egy.dsl.tests
-
-*.class
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

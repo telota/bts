@@ -30,6 +30,8 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSTextContent;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextItems;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
+import org.bbaw.bts.corpus.text.egy.egyDsl.TextContent;
+import org.bbaw.bts.corpus.text.egy.ui.internal.EgyDslActivator;
 import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
 import org.bbaw.bts.ui.commons.corpus.events.BTSTextSelectionEvent;
 import org.bbaw.bts.ui.commons.corpus.interfaces.IBTSEditor;

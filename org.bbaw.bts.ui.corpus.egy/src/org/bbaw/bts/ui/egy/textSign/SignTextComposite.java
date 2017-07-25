@@ -11,6 +11,10 @@ import java.util.Vector;
 
 import javax.inject.Inject;
 
+import jsesh.mdc.MDCSyntaxError;
+import jsesh.mdcDisplayer.draw.MDCDrawingFacade;
+import jsesh.mdcDisplayer.preferences.DrawingSpecification;
+import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;

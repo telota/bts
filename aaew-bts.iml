@@ -43,7 +43,6 @@
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.corpus.impl/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.impl/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/model" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb/src" isTestSource="false" />
@@ -188,6 +187,12 @@
       <sourceFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/OSGI-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.lightcouch/designdocs" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/model" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/generated-sources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/src-gen" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/xtend" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/xtend-gen" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/target/src-gen" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/bts.transform.ui/xtend-gen" />
       <excludeFolder url="file://$MODULE_DIR$/com.google.guava" />
@@ -228,6 +233,7 @@
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/xtend-gen" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/model" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/src-gen" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/xtend-gen" />
@@ -785,6 +791,168 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/org.bbaw.bts.core.commons/target/lib/org.bbaw.bts.core.commons-target/lib/commons-net.jar.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus/target/lib/rcptoolbox.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus/target/lib/opal.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/bcmail-jdk16.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/bcprov-jdk16.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/com.google.gson.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/com.ibm.icu.base.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/commons-net.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/forms.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/javax.inject.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/javax.xml.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/jsesh-libs-cupruntime.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/jsesh-libs-itext.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/jsesh-libs-jhotdrawfw.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/jsesh-libs-jsesh.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/jsesh-libs-jseshAppli.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/jsesh-libs-jvectClipboard.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/jsesh-libs-miglayout.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target/lib/jsesh-libs-qenherkhopeshefUtils.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

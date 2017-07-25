@@ -1,5 +1,8 @@
 package org.bbaw.bts.corpus.text.egy.ui.custom;
 
+import org.bbaw.bts.corpus.text.egy.egyDsl.Marker;
+import org.bbaw.bts.corpus.text.egy.egyDsl.SentenceItem;
+import org.bbaw.bts.corpus.text.egy.egyDsl.Word;
 import org.bbaw.bts.ui.commons.corpus.util.BTSEGYUIConstants;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;

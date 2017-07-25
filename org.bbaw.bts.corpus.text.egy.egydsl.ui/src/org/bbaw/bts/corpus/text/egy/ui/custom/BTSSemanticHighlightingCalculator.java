@@ -2,6 +2,7 @@ package org.bbaw.bts.corpus.text.egy.ui.custom;
 
 import java.util.Iterator;
 
+import org.bbaw.bts.corpus.text.egy.egyDsl.*;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.nodemodel.INode;

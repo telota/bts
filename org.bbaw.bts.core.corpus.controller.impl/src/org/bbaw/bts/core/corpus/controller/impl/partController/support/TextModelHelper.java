@@ -18,6 +18,7 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSSenctence;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextContent;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSWord;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelFactory;
+import org.bbaw.bts.corpus.text.egy.egyDsl.*;
 import org.bbaw.bts.ui.commons.corpus.text.BTSModelAnnotation;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;

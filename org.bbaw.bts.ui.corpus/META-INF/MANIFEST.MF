@@ -5,6 +5,9 @@ Bundle-SymbolicName: org.bbaw.bts.ui.corpus;singleton:=true
 Bundle-Version: 3.1.0.qualifier
 Bundle-Activator: org.bbaw.bts.ui.corpus.internal.Activator
 Bundle-Vendor: BBAW
+Bundle-ClassPath: .,
+ target/lib/rcptoolbox.jar,
+ target/lib/opal.jar
 Export-Package: org.bbaw.bts.ui.corpus.dialogs,
  org.bbaw.bts.ui.corpus.parts,
  org.bbaw.bts.ui.corpus.parts.lemma,

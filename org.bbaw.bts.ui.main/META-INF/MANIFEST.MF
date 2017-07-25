@@ -2,7 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UIMain
 Bundle-SymbolicName: org.bbaw.bts.ui.main;singleton:=true
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ target/lib/opal.jar
 Bundle-Vendor: BBAW
 Export-Package: org.bbaw.bts.ui.main.dialogs,
  org.bbaw.bts.ui.main.handlers,

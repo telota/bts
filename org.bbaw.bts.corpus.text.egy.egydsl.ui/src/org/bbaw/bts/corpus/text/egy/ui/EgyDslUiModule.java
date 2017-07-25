@@ -3,13 +3,9 @@
  */
 package org.bbaw.bts.corpus.text.egy.ui;
 
-import org.bbaw.bts.corpus.text.egy.ui.custom.BTSE4ToGuiceXtextSourceViewerProvider;
-import org.bbaw.bts.corpus.text.egy.ui.custom.BTSEObjectDocumentationProvider;
-import org.bbaw.bts.corpus.text.egy.ui.custom.BTSEObjectHover;
-import org.bbaw.bts.corpus.text.egy.ui.custom.BTSEncodingProvider;
-import org.bbaw.bts.corpus.text.egy.ui.custom.BTSHighlightingConfiguration;
-import org.bbaw.bts.corpus.text.egy.ui.custom.BTSLocationInFileProvider;
-import org.bbaw.bts.corpus.text.egy.ui.custom.BTSSemanticHighlightingCalculator;
+import org.bbaw.bts.corpus.text.egy.formatting.EgyDslFormatter;
+import org.bbaw.bts.corpus.text.egy.ui.contentassist.AbstractEgyDslProposalProvider;
+import org.bbaw.bts.corpus.text.egy.ui.custom.*;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;

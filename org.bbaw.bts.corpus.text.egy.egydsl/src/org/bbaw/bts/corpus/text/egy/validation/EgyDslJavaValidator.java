@@ -4,6 +4,7 @@
 package org.bbaw.bts.corpus.text.egy.validation;
 
 //import org.bbaw.bts.corpus.text.egy.egyDsl.Interfix;
+import org.bbaw.bts.corpus.text.egy.egyDsl.*;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;

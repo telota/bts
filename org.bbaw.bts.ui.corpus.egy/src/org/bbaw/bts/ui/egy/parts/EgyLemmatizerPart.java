@@ -115,6 +115,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeItem;
+import org.mihalis.opal.promptSupport.PromptSupport;
 
 public class EgyLemmatizerPart implements SearchViewer {
     protected static final String TRANSLATIONS_SUB_DELIMITER = BTSCoreConstants.TRANSLATIONS_SUB_DELIMITER + " ";

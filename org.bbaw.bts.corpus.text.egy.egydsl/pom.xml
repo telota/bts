@@ -17,8 +17,6 @@
     </properties>
 
     <build>
-
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -30,23 +28,22 @@
                         <configuration>
                             <filesets combine.children="append">
                                 <fileset>
-                                    <directory>${basedir}/src-gen/</directory>
+                                    <directory>${basedir}/target/src-gen</directory>
                                 </fileset>
                                 <fileset>
-                                    <directory>${basedir}/model/generated/</directory>
+                                    <directory>${basedir}/model/generated</directory>
                                 </fileset>
                                 <fileset>
-                                    <directory>${basedir}/../${project.artifactId}.ui/src-gen/</directory>
+                                    <directory>${basedir}/../${project.artifactId}.ui/target/src-gen</directory>
                                 </fileset>
                                 <fileset>
-                                    <directory>${basedir}/../${project.artifactId}.tests/src-gen/</directory>
+                                    <directory>${basedir}/../${project.artifactId}.tests/target/src-gen</directory>
                                 </fileset>
                             </filesets>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -114,7 +111,7 @@
                         <goal>compile</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${basedir}/xtend-gen</outputDirectory>
+                        <outputDirectory>${basedir}/target/xtend-gen</outputDirectory>
                     </configuration>
                 </execution>
             </executions>

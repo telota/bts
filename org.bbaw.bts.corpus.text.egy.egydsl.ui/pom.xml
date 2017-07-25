@@ -22,7 +22,7 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/xtend-gen</outputDirectory>
+                            <outputDirectory>${basedir}/target/xtend-gen</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

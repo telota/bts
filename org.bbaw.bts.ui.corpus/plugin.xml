@@ -1,95 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
-	<extension id="id" point="org.eclipse.e4.workbench.model">
-		<fragment
-        apply="always"
-        uri="fragment.e4xmi"></fragment>
-	</extension>
- <extension
-       point="com.opcoach.e4.preferences.e4PreferencePages">
-    <page
-          category="org.bbaw.bts.ui.main.btsgeneral.page"
-          class="org.bbaw.bts.ui.corpus.preferences.CorpusSettingsPage"
-          id="org.bbaw.bts.ui.corpus.corpussettings.page"
-          name="Corpus Settings">
-    </page>
-    <page
-          category="org.bbaw.bts.ui.main.btsgeneral.page"
-          class="org.bbaw.bts.ui.corpus.preferences.LemmaListSettingsPage"
-          id="org.bbaw.bts.ui.corpus.lemmalist.page"
-          name="Lemma List">
-    </page>
-    <page
-          category="org.bbaw.bts.ui.corpus.corpussettings.page"
-          class="org.bbaw.bts.ui.corpus.preferences.CorpusNavigatorSettingsPage"
-          id="org.bbaw.bts.ui.corpus.corpusnavigator.page"
-          name="corpusnavigator">
-    </page>
-    <page
-          category="org.bbaw.bts.ui.corpus.lemmalist.page"
-          class="org.bbaw.bts.ui.corpus.preferences.LemmaNavigatorSettingsPage"
-          id="org.bbaw.bts.ui.corpus.lemmanavigator.page"
-          name="lemmanavigator">
-    </page>
-    <page
-          category="org.bbaw.bts.ui.main.btsgeneral.page"
-          class="org.bbaw.bts.ui.corpus.preferences.ThsSettingsPage"
-          id="org.bbaw.bts.ui.corpus.thssettings.page"
-          name="thssettings">
-    </page>
-    <page
-          category="org.bbaw.bts.ui.corpus.thssettings.page"
-          class="org.bbaw.bts.ui.corpus.preferences.ThsNavigatorSettingsPage"
-          id="org.bbaw.bts.ui.corpus.thsnavigator.page"
-          name="Thesaurus Navigator Settings">
-    </page>
-    <page
-          category="org.bbaw.bts.ui.main.btsgeneral.page"
-          class="org.bbaw.bts.ui.corpus.preferences.ATextSettingsPage"
-          id="org.bbaw.bts.ui.corpus.atextSettings"
-          name="atextSettings">
-    </page>
-    <page
-          category="org.bbaw.bts.ui.corpus.atextSettings"
-          class="org.bbaw.bts.ui.corpus.preferences.ATextNavigatorSettingsPage"
-          id="org.bbaw.bts.ui.corpus.atextnavigatorsettings"
-          name="atextnavigatorsettings">
-    </page>
-    <page
-          category="org.bbaw.bts.ui.main.btsgeneral.page"
-          class="org.bbaw.bts.ui.corpus.preferences.TextAnnotationSettingsPage"
-          id="org.bbaw.bts.ui.corpus.textannottionssettings"
-          name="Text Annotation Settings">
-    </page>
- </extension>
- <extension
-       point="org.bbaw.bts.ui.commons.compareViewerFactory">
-    <compareViewerFactory
-          class="org.bbaw.bts.ui.corpus.compare.CompareViewerFactoryPassportImpl">
-    </compareViewerFactory>
- </extension>
- <extension
-       point="org.bbaw.bts.ui.commons.searchViewerFactory">
-    <searchViewerFactory
-          class="org.bbaw.bts.ui.corpus.search.SearchViewerFactoryCorpus">
-    </searchViewerFactory>
- </extension>
- <extension
-       point="org.bbaw.bts.ui.commons.searchViewerFactory">
-    <searchViewerFactory
-          class="org.bbaw.bts.ui.corpus.search.SearchViewerFactoryLemma">
-    </searchViewerFactory>
- </extension>
- <extension
-       point="org.bbaw.bts.ui.commons.searchViewerFactory">
-    <searchViewerFactory
-          class="org.bbaw.bts.ui.corpus.search.SearchViewerFactoryThs">
-    </searchViewerFactory>
- </extension>
- <extension
-       point="org.bbaw.bts.ui.commons.searchViewerFactory">
-    <searchViewerFactory
-          class="org.bbaw.bts.ui.corpus.search.SearchViewerFactoryAText">
-    </searchViewerFactory>
- </extension>
+    <extension id="id" point="org.eclipse.e4.workbench.model">
+        <fragment apply="always" uri="fragment.e4xmi"></fragment>
+    </extension>
+    <extension point="com.opcoach.e4.preferences.e4PreferencePages">
+        <page category="org.bbaw.bts.ui.main.btsgeneral.page"
+            class="org.bbaw.bts.ui.corpus.preferences.CorpusSettingsPage"
+            id="org.bbaw.bts.ui.corpus.corpussettings.page"
+            name="Corpus Settings"></page>
+        <page category="org.bbaw.bts.ui.main.btsgeneral.page"
+            class="org.bbaw.bts.ui.corpus.preferences.LemmaListSettingsPage"
+            id="org.bbaw.bts.ui.corpus.lemmalist.page"
+            name="Lemma List"></page>
+        <page category="org.bbaw.bts.ui.corpus.corpussettings.page"
+            class="org.bbaw.bts.ui.corpus.preferences.CorpusNavigatorSettingsPage"
+            id="org.bbaw.bts.ui.corpus.corpusnavigator.page"
+            name="corpusnavigator"></page>
+        <page category="org.bbaw.bts.ui.corpus.lemmalist.page"
+            class="org.bbaw.bts.ui.corpus.preferences.LemmaNavigatorSettingsPage"
+            id="org.bbaw.bts.ui.corpus.lemmanavigator.page"
+            name="lemmanavigator"></page>
+        <page category="org.bbaw.bts.ui.main.btsgeneral.page"
+            class="org.bbaw.bts.ui.corpus.preferences.ThsSettingsPage"
+            id="org.bbaw.bts.ui.corpus.thssettings.page"
+            name="thssettings"></page>
+        <page category="org.bbaw.bts.ui.corpus.thssettings.page"
+            class="org.bbaw.bts.ui.corpus.preferences.ThsNavigatorSettingsPage"
+            id="org.bbaw.bts.ui.corpus.thsnavigator.page"
+            name="Thesaurus Navigator Settings"></page>
+        <page category="org.bbaw.bts.ui.main.btsgeneral.page"
+            class="org.bbaw.bts.ui.corpus.preferences.ATextSettingsPage"
+            id="org.bbaw.bts.ui.corpus.atextSettings"
+            name="atextSettings"></page>
+        <page category="org.bbaw.bts.ui.corpus.atextSettings"
+            class="org.bbaw.bts.ui.corpus.preferences.ATextNavigatorSettingsPage"
+            id="org.bbaw.bts.ui.corpus.atextnavigatorsettings"
+            name="atextnavigatorsettings"></page>
+        <page category="org.bbaw.bts.ui.main.btsgeneral.page"
+            class="org.bbaw.bts.ui.corpus.preferences.TextAnnotationSettingsPage"
+            id="org.bbaw.bts.ui.corpus.textannottionssettings"
+            name="Text Annotation Settings"></page>
+    </extension>
+    <extension point="org.bbaw.bts.ui.commons.compareViewerFactory">
+        <compareViewerFactory class="org.bbaw.bts.ui.corpus.compare.CompareViewerFactoryPassportImpl"> </compareViewerFactory>
+    </extension>
+    <extension point="org.bbaw.bts.ui.commons.searchViewerFactory">
+        <searchViewerFactory class="org.bbaw.bts.ui.corpus.search.SearchViewerFactoryCorpus"> </searchViewerFactory>
+    </extension>
+    <extension point="org.bbaw.bts.ui.commons.searchViewerFactory">
+        <searchViewerFactory class="org.bbaw.bts.ui.corpus.search.SearchViewerFactoryLemma"> </searchViewerFactory>
+    </extension>
+    <extension point="org.bbaw.bts.ui.commons.searchViewerFactory">
+        <searchViewerFactory class="org.bbaw.bts.ui.corpus.search.SearchViewerFactoryThs"> </searchViewerFactory>
+    </extension>
+    <extension point="org.bbaw.bts.ui.commons.searchViewerFactory">
+        <searchViewerFactory class="org.bbaw.bts.ui.corpus.search.SearchViewerFactoryAText"> </searchViewerFactory>
+    </extension>
 </plugin>
