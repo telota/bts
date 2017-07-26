@@ -6,13 +6,74 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="bts.transform.aux.model" />
+        <module name="bts.transform.aux.model.edit" />
+        <module name="bts.transform.corpus.model" />
+        <module name="bts.transform.corpus.model.edit" />
+        <module name="bts.transform.feature" />
+        <module name="bts.transform.ui" />
         <module name="guava" />
         <module name="guava (2) (com.google.guava)" />
+        <module name="org.bbaw.bts.ui.commons" />
+        <module name="org.bbaw.bts.ui.commons.corpus" />
+        <module name="org.bbaw.bts.ui.corpus" />
+        <module name="org.bbaw.bts.ui.corpus.egy" />
+        <module name="org.bbaw.bts.ui.corpus.egy.commons" />
+        <module name="org.bbaw.bts.ui.font" />
+        <module name="org.bbaw.bts.ui.font.academy" />
+        <module name="org.bbaw.bts.ui.font.egyFont" />
+        <module name="org.bbaw.bts.ui.main" />
+        <module name="org.bbaw.bts.ui.resources" />
+        <module name="org.bbaw.bts.ui.resources.impl" />
+        <module name="org.bbaw.btw.ui.resources" />
+        <module name="transform" />
+        <module name="ui-commons" />
+        <module name="ui-corpus" />
+        <module name="ui-corpus-commons" />
+        <module name="ui-egy" />
+        <module name="ui-egy-commons" />
+        <module name="ui-egy-font" />
+        <module name="ui-font" />
+        <module name="ui-font-academy" />
+        <module name="ui-main" />
+        <module name="ui-resources" />
+        <module name="ui-resources-impl" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="aaew-bts" target="1.7" />
+      <module name="bts.transform.aux.model" target="1.5" />
+      <module name="bts.transform.aux.model.edit" target="1.5" />
+      <module name="bts.transform.corpus.model" target="1.5" />
+      <module name="bts.transform.corpus.model.edit" target="1.5" />
+      <module name="bts.transform.feature" target="1.5" />
+      <module name="bts.transform.ui" target="1.5" />
       <module name="guava" target="1.5" />
+      <module name="org.bbaw.bts.ui.commons" target="1.7" />
+      <module name="org.bbaw.bts.ui.commons.corpus" target="1.7" />
+      <module name="org.bbaw.bts.ui.corpus" target="1.7" />
+      <module name="org.bbaw.bts.ui.corpus.egy" target="1.7" />
+      <module name="org.bbaw.bts.ui.corpus.egy.commons" target="1.7" />
+      <module name="org.bbaw.bts.ui.font" target="1.7" />
+      <module name="org.bbaw.bts.ui.font.academy" target="1.7" />
+      <module name="org.bbaw.bts.ui.font.egyFont" target="1.7" />
+      <module name="org.bbaw.bts.ui.main" target="1.7" />
+      <module name="org.bbaw.bts.ui.resources" target="1.7" />
+      <module name="org.bbaw.bts.ui.resources.impl" target="1.7" />
+      <module name="org.bbaw.btw.ui.resources" target="1.7" />
+      <module name="transform" target="1.7" />
+      <module name="ui" target="1.5" />
+      <module name="ui-commons" target="1.7" />
+      <module name="ui-corpus" target="1.7" />
+      <module name="ui-corpus-commons" target="1.7" />
+      <module name="ui-egy" target="1.7" />
+      <module name="ui-egy-commons" target="1.7" />
+      <module name="ui-egy-font" target="1.7" />
+      <module name="ui-font" target="1.7" />
+      <module name="ui-font-academy" target="1.7" />
+      <module name="ui-main" target="1.7" />
+      <module name="ui-resources" target="1.7" />
+      <module name="ui-resources-impl" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -12,11 +12,11 @@
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.aux.model/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.aux.model.edit/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.corpus.model/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.corpus.model.edit/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.ui/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model.edit/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model.edit/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.ui/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/com.opcoach.e4.preferences/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.login/src" isTestSource="false" />
@@ -59,18 +59,18 @@
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus.edit/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.edit/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.editor/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons.corpus/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font.egyFont/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font.academy/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font/schema" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.main/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources.impl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/commons/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/corpus-commons/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/corpus/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/egy/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font-egy/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font-academy/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font/schema" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/egy-commons/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/main/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/resources/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/resources-impl/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson/src" isTestSource="false" />
@@ -83,12 +83,12 @@
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/e4-src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources.impl/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.main/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font.egyFont/font" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font.academy/font" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons/schema" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/resources-impl/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/resources/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/main/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font-egy/font" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font-academy/font" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/commons/schema" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.editor/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.edit/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus.edit/icons" type="java-resource" />
@@ -101,18 +101,18 @@
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/css" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.login/css" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/com.opcoach.e4.preferences/schema" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.corpus.model/model" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.aux.model.edit/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.aux.model/model" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model/model" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model.edit/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model/model" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.login/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/com.opcoach.e4.preferences/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.ui/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.corpus.model.edit/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.corpus.model/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.corpus.model.edit/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.aux.model.edit/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/bts.transform.aux.model/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.ui/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model.edit/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model.edit/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model.edit/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons.fsaccess/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons.libs.elasticsearch/META-INF" type="java-resource" />
@@ -159,20 +159,20 @@
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus.edit/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.editor/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.edit/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons.corpus/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/corpus-commons/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font.academy/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font.egyFont/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.main/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources.impl/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources.impl/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/commons/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/corpus/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/egy/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/egy-commons/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font-academy/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/font-egy/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/main/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/resources/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/resources-impl/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/ui/resources-impl/OSGI-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson/META-INF" type="java-resource" />
@@ -194,7 +194,6 @@
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/xtend-gen" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/target/src-gen" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/bts.transform.ui/xtend-gen" />
       <excludeFolder url="file://$MODULE_DIR$/com.google.guava" />
       <excludeFolder url="file://$MODULE_DIR$/com.opcoach.e4.preferences/target" />
       <excludeFolder url="file://$MODULE_DIR$/debug_dir" />
@@ -245,20 +244,10 @@
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.edit/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.editor/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.model/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons.corpus/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/jseshlibs" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font.academy/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.font/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.main/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources.impl/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.resources/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/xtend-gen" />
       <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb.feature/target" />
@@ -272,6 +261,17 @@
       <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/transform/bts.transform.ui/xtend-gen" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/commons/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/corpus-commons/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/corpus/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/egy-commons/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/egy/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/font-academy/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/font/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/main/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/resources-impl/target" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/resources/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

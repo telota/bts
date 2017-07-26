@@ -41,16 +41,6 @@
 		<module>org.bbaw.bts.model.editor</module>
 		<module>org.bbaw.bts.model.corpus</module>
 		<module>org.bbaw.bts.model.corpus.edit</module>
-		<module>org.bbaw.bts.ui.commons</module>
-		<module>org.bbaw.bts.ui.corpus</module>
-		<module>org.bbaw.bts.ui.commons.corpus</module>
-		<module>org.bbaw.bts.ui.corpus.egy</module>
-		<module>org.bbaw.bts.ui.corpus.egy.commons</module>
-		<module>org.bbaw.bts.ui.font</module>
-		<module>org.bbaw.bts.ui.font.academy</module>
-		<module>org.bbaw.bts.ui.main</module>
-		<module>org.bbaw.bts.ui.resources</module>
-		<module>org.bbaw.bts.ui.resources.impl</module>
 		<module>org.lightcouch</module>
 		<module>org.eclipselabs.emfjson</module>
 		<module>org.eclipselabs.emfjson.feature</module>
@@ -60,6 +50,7 @@
 		<module>org.eclipse.e4.ui.workbench.perspectiveswitcher</module>
 		<module>org.ramo.klevis.p2.core.service</module>
 		<module>org.bbaw.bts.app.product</module>
+		<module>ui</module>
 	</modules>
 
 	<properties>

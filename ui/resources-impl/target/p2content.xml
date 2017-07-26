@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='org.bbaw.bts.ui.resources.impl' version='3.1.0.201707261305' singleton='false'>
+    <update id='org.bbaw.bts.ui.resources.impl' range='[0.0.0,3.1.0.201707261305)' severity='0'/>
+    <properties size='5'>
+      <property name='org.eclipse.equinox.p2.name' value='UI Resource Impl'/>
+      <property name='org.eclipse.equinox.p2.provider' value='BBAW'/>
+      <property name='maven-groupId' value='org.bbaw.bts'/>
+      <property name='maven-artifactId' value='org.bbaw.bts.ui.resources.impl'/>
+      <property name='maven-version' value='3.1.0-SNAPSHOT'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.bbaw.bts.ui.resources.impl' version='3.1.0.201707261305'/>
+      <provided namespace='osgi.bundle' name='org.bbaw.bts.ui.resources.impl' version='3.1.0.201707261305'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='10'>
+      <required namespace='osgi.bundle' name='org.eclipse.swt' range='3.7.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.e4.tools.services' range='0.12.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.commons.staticAccess' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.resources' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.core.runtime' range='3.4.0'/>
+      <required namespace='java.package' name='org.eclipse.e4.core.contexts' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.e4.tools.services' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.swt.graphics' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.swt.widgets' range='0.0.0'/>
+      <required namespace='java.package' name='org.osgi.framework' range='1.8.0'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.bbaw.bts.ui.resources.impl' version='3.1.0.201707261305'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.bbaw.bts.ui.resources.impl&#xA;Bundle-Version: 3.1.0.201707261305&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk16:1.38" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcmail-jdk16:1.38" level="project" />
+    <orderEntry type="library" name="Maven: com.jgoodies:forms:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.devzendo:Quaqua:7.3.4" level="project" />
+    <orderEntry type="library" name="Maven: org.swinglabs:swing-layout:1.0.3" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-itext:2.1.5">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/itext-2.1.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-jhotdrawfw:7.3">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/jhotdrawfw-7.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-jsesh:6.5.5">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/jsesh-6.5.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-jseshAppli:6.5.5">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/jseshAppli-6.5.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-jseshDoc:6.5.5">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/jseshDoc-6.5.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-jseshGlyphs:6.5.5">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/jseshGlyphs-6.5.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-jvectClipboard:1.3">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/jvectClipboard-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-miglayout:3.7.4">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/miglayout-3.7.4-swing.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-qenherkhopeshefUtils:6.5.5">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/qenherkhopeshefUtils-6.5.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:jsesh-libs-cupruntime:1">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/JSesh-6.5.5/libJSesh/cupruntime-1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>

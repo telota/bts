@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.bbaw.bts.ui.corpus.egy.commons
+Export-Package: jsesh.editor,jsesh.hieroglyphs,jsesh.mdc,jsesh.mdc.uti
+ ls,jsesh.mdcDisplayer.draw,jsesh.mdcDisplayer.preferences,org.bbaw.bt
+ s.ui.corpus.egy.commons,org.bbaw.bts.ui.corpus.egy.commons.comparator
+Bundle-Name: UI Corpus Egy Commons
+Bundle-Version: 3.1.0.201707261305
+Bundle-ClassPath: target/lib/bcmail-jdk16.jar,target/lib/bcprov-jdk16.
+ jar,target/lib/jsesh-libs-cupruntime.jar,target/lib/forms.jar,target/
+ lib/swing-layout.jar,target/lib/Quaqua.jar,target/lib/jsesh-libs-itex
+ t.jar,target/lib/jsesh-libs-jhotdrawfw.jar,target/lib/jsesh-libs-jses
+ h.jar,target/lib/jsesh-libs-jseshAppli.jar,target/lib/jsesh-libs-jses
+ hDoc.jar,target/lib/jsesh-libs-jseshGlyphs.jar,target/lib/jsesh-libs-
+ jvectClipboard.jar,target/lib/jsesh-libs-miglayout.jar,target/lib/jse
+ sh-libs-qenherkhopeshefUtils.jar
+Require-Bundle: org.bbaw.bts.model,org.bbaw.bts.core.commons,org.eclip
+ se.jface,org.bbaw.bts.commons
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: BTS
+

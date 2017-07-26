@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='org.bbaw.bts.ui.corpus.egy' version='3.1.0.201707261305'>
+    <update id='org.bbaw.bts.ui.corpus.egy' range='[0.0.0,3.1.0.201707261305)' severity='0'/>
+    <properties size='5'>
+      <property name='org.eclipse.equinox.p2.name' value='CorpusUIEgyptian'/>
+      <property name='org.eclipse.equinox.p2.provider' value='BBAW'/>
+      <property name='maven-groupId' value='org.bbaw.bts'/>
+      <property name='maven-artifactId' value='org.bbaw.bts.ui.corpus.egy'/>
+      <property name='maven-version' value='3.1.0-SNAPSHOT'/>
+    </properties>
+    <provides size='6'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.bbaw.bts.ui.corpus.egy' version='3.1.0.201707261305'/>
+      <provided namespace='osgi.bundle' name='org.bbaw.bts.ui.corpus.egy' version='3.1.0.201707261305'/>
+      <provided namespace='java.package' name='org.bbaw.bts.ui.egy.handlers' version='0.0.0'/>
+      <provided namespace='java.package' name='org.bbaw.bts.ui.egy.parts.support' version='0.0.0'/>
+      <provided namespace='java.package' name='org.bbaw.bts.ui.egy.textSign.support' version='0.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='89'>
+      <required namespace='osgi.bundle' name='org.eclipse.swt' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.bbaw.bts.commons' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.e4.core.di' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.e4.core.di.extensions' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jface' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.bbaw.bts.model' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.e4.ui.di' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.e4.ui.services' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.databinding' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jface.databinding' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.osgi' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.e4.ui.model.workbench' range='1.0.0'/>
+      <required namespace='osgi.bundle' name='org.bbaw.bts.ui.font' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.jface.text' range='3.8.100'/>
+      <required namespace='osgi.bundle' name='org.bbaw.bts.ui.corpus.egy.commons' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='com.google.inject' range='3.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.xtext.ui' range='[2.4.4,2.4.6]'/>
+      <required namespace='osgi.bundle' name='org.eclipse.xtext.util' range='[2.4.3,2.4.6]'/>
+      <required namespace='osgi.bundle' name='org.eclipse.e4.ui.workbench' range='1.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.3.100'/>
+      <required namespace='osgi.bundle' name='org.eclipse.e4.core.contexts' range='1.3.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.emf.databinding' range='1.3.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.text' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='javax.inject' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.bbaw.bts.ui.corpus' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='javax.annotation' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='com.opcoach.e4.preferences' range='1.0.0'/>
+      <required namespace='osgi.bundle' name='org.bbaw.bts.ui.main' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.emf.edit' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.bbaw.bts.app' range='1.1.0'/>
+      <required namespace='java.package' name='javax.annotation' range='1.0.0'/>
+      <required namespace='java.package' name='javax.inject' range='0.0.0'/>
+      <required namespace='java.package' name='jsesh.editor' range='0.0.0'/>
+      <required namespace='java.package' name='jsesh.hieroglyphs' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.commons' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.commons.comparator' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.commons.corpus' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.commons.staticAccess' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.controller.dialogControllers' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.controller.generalController' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.corpus.controller.partController' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.corpus.controller.partController.text.model' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.dao.util' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.core.services' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.corpus.btsCorpusModel' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.corpus.text.egy' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.corpus.text.egy.egyDsl' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.corpus.text.egy.ui.custom' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.corpus.text.egy.ui.internal' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.compare' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.controldecoration' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.corpus.events' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.corpus.interfaces' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.corpus.text' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.corpus.util' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.filter' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.navigator' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.search' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.utils' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.validator' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.commons.widgets' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.corpus.dialogs' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.egy.handlers' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.main.dialogs' range='0.0.0'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.resources' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.core.databinding.beans' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.core.databinding.property.value' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.core.runtime' range='3.4.0'/>
+      <required namespace='java.package' name='org.eclipse.draw2d' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.draw2d.geometry' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.e4.core.commands' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.e4.core.contexts' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.e4.core.services.log' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.e4.tools.services' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.e4.ui.workbench.modeling' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.emf.common.notify' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.emf.common.util' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.emf.databinding.edit' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.emf.ecore' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.emf.ecore.resource' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.emf.ecore.resource.impl' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.ui' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.ui.editors.text' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.ui.internal.editors.text' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.ui.texteditor' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.ui.texteditor.spelling' range='0.0.0'/>
+      <required namespace='java.package' name='org.eclipse.xtext.resource' range='0.0.0'/>
+      <required namespace='java.package' name='org.elasticsearch.common.recycler' range='0.0.0'/>
+      <required namespace='java.package' name='org.mihalis.opal.promptSupport' range='0.0.0'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.bbaw.bts.ui.corpus.egy' version='3.1.0.201707261305'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.bbaw.bts.ui.corpus.egy;singleton:=true&#xA;Bundle-Version: 3.1.0.201707261305&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>

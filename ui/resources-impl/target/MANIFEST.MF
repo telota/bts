@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.bbaw.bts.ui.resources.impl
+Bundle-Name: UI Resource Impl
+Bundle-Version: 3.1.0.201707261305
+Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",org.eclipse.e4.
+ tools.services;bundle-version="0.12.0"
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: BBAW
+Import-Package: org.bbaw.bts.core.commons.staticAccess,org.bbaw.bts.ui
+ .resources,org.eclipse.core.runtime;version="3.4.0",org.eclipse.e4.co
+ re.contexts,org.eclipse.e4.tools.services,org.eclipse.swt.graphics,or
+ g.eclipse.swt.widgets,org.osgi.framework;version="1.8.0"
+Service-Component: OSGI-INF/resourceprovider.xml
+

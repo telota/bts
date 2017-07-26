@@ -2,7 +2,6 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/com.opcoach.e4.preferences" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.bbaw.bts.app" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.bbaw.bts.app.feature" charset="UTF-8" />
@@ -44,16 +43,6 @@
     <file url="file://$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.bbaw.bts.model.edit" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.bbaw.bts.model.editor" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.commons" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy.commons" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.font" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.font.academy" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.main" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.eclipselabs.emfjson" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb" charset="UTF-8" />
@@ -62,5 +51,18 @@
     <file url="file://$PROJECT_DIR$/org.eclipselabs.emfjson.feature" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.lightcouch" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/org.ramo.klevis.p2.core.service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/transform" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/corpus" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/corpus-commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/egy" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/egy-commons" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/font" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/font-academy" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/font-egy" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/main" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ui/resources-impl" charset="UTF-8" />
   </component>
 </project>

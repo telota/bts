@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='org.bbaw.bts.ui.font.academy' version='3.1.0.201707261305'>
+    <update id='org.bbaw.bts.ui.font.academy' range='[0.0.0,3.1.0.201707261305)' severity='0'/>
+    <properties size='5'>
+      <property name='org.eclipse.equinox.p2.name' value='AcademyFont'/>
+      <property name='org.eclipse.equinox.p2.provider' value='BBAW'/>
+      <property name='maven-groupId' value='org.bbaw.bts'/>
+      <property name='maven-artifactId' value='org.bbaw.bts.ui.font.academy'/>
+      <property name='maven-version' value='3.1.0-SNAPSHOT'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.bbaw.bts.ui.font.academy' version='3.1.0.201707261305'/>
+      <provided namespace='osgi.bundle' name='org.bbaw.bts.ui.font.academy' version='3.1.0.201707261305'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='5'>
+      <required namespace='osgi.bundle' name='org.eclipse.swt' range='3.102.1'/>
+      <required namespace='osgi.bundle' name='org.eclipse.equinox.common' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.osgi' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='3.9.100'/>
+      <required namespace='java.package' name='org.bbaw.bts.ui.font' range='0.0.0'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.bbaw.bts.ui.font.academy' version='3.1.0.201707261305'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.bbaw.bts.ui.font.academy;singleton:=true&#xA;Bundle-Version: 3.1.0.201707261305&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>
