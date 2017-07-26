@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-SymbolicName: org.bbaw.bts.ui.font.egyFont;singleton:=true
 Bundle-Name: EgyFont
-Bundle-Version: 3.1.0.201707261305
+Bundle-Version: 3.1.0.201707261619
 Require-Bundle: org.bbaw.bts.ui.font,org.eclipse.swt,org.eclipse.osgi
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

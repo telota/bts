@@ -17,48 +17,48 @@
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model.edit/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.ui/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/com.opcoach.e4.preferences/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.login/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons.fsaccess/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons.corpus/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons.corpus.help/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.controller/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.controller.impl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.corpus.controller.impl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.corpus.controller/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao/schema" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.corpus/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.couchDB/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao/schema" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao.couchDB/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services/schema" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.corpus/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.corpus.impl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.impl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb/js" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb/db" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb.mac/db" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb.win32/db" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb.win64/db" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.e4.p2/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model/model" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus/model" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus.edit/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.edit/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.editor/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/com.opcoach.e4.preferences/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/app-base/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/login/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/global-commons/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-fs/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-commons/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-commons/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-help/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/controller/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/controller-impl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-controller-impl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-controller/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao/schema" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-corpus/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-corpus-couch/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-couch/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-remote/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-remote/schema" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-remote-couch/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-services/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-services/schema" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-services/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-services-impl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-services-impl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/egydsl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/ui/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/db/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch/js" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch/db" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch-mac/db" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch-win32/db" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch-win64/db" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/e4p2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model/model" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-corpus/model" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-corpus/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-corpus-edit/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-edit/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-editor/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ui/commons/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ui/corpus-commons/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ui/corpus/src" isTestSource="false" />
@@ -71,96 +71,96 @@
       <sourceFolder url="file://$MODULE_DIR$/ui/main/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ui/resources/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ui/resources-impl/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb.ui/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.lightcouch/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/schema" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/e4-src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.e4.ui.workbench.perspectiveswitcher/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.xtext.ui/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb.ui/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/lightcouch/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/egy-annotations/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.ramo.klevis.p2.core.service/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.xtext.ui/schema" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.xtext.ui/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.xtext.ui/e4-src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.e4.ui.workbench.perspectiveswitcher/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/resources-impl/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/resources/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/main/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/font-egy/font" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/font-academy/font" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/commons/schema" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.editor/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.edit/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus.edit/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model/viewModel" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons.corpus.help/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.product/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.login/images" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/splash" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/css" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.login/css" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/com.opcoach.e4.preferences/schema" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-editor/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-edit/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-corpus-edit/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model/viewModel" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-help/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/product/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/login/images" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/app-base/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/app-base/splash" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/app-base/css" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/login/css" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/com.opcoach.e4.preferences/schema" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model/model" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model.edit/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model/model" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.login/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/com.opcoach.e4.preferences/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/login/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/app-base/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/com.opcoach.e4.preferences/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.ui/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model.edit/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.corpus.model.edit/icons" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model.edit/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/transform/bts.transform.aux.model/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons.fsaccess/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons.libs.elasticsearch/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons.corpus/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons.corpus.help/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.controller.impl/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.controller.impl/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.controller/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.controller/schema" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.corpus/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.corpus/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.corpus.controller.impl/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.corpus.controller/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.corpus.controller.impl/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.couchDB/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.couchDB/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.corpus/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao.couchDB/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao.couchDB/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.corpus.impl/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.impl/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.impl/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.corpus.impl/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb.mac/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb.win32/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.e4.p2/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb.win64/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus.edit/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.editor/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.edit/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-fs/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/global-commons/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/elasticsearch-libs/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-commons/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-commons/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-commons/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-help/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/controller-impl/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/controller-impl/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/controller/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/controller/schema" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-corpus-couch/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-corpus/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-corpus/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-controller-impl/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-controller/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-controller-impl/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-couch/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-couch/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-services/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-remote-couch/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-services/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-remote/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-remote-couch/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/dao-remote/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-services-impl/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-services-impl/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/core-services-impl/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/core/corpus-services-impl/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/egydsl/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch-mac/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/db/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/ui/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/tests/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch-win32/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/infrastructure/e4p2/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/couch-win64/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-corpus-edit/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-editor/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-edit/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/corpus-commons/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/db/model-corpus/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/commons/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/corpus/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/egy/META-INF" type="java-resource" />
@@ -173,94 +173,94 @@
       <sourceFolder url="file://$MODULE_DIR$/ui/resources/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/resources-impl/META-INF" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ui/resources-impl/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb.ui/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb.ui/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.lightcouch/guide" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.lightcouch/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.fuberlin.bts.ui.corpus.egy.annotations/icons" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/META-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/OSGI-INF" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.lightcouch/designdocs" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/model" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/generated-sources" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/src-gen" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/xtend" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target/xtend-gen" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/target/src-gen" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.e4.ui.workbench.perspectiveswitcher/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.xtext.ui/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb.ui/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb.ui/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/lightcouch/guide" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/egy-annotations/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/lightcouch/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/egy-annotations/icons" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.ramo.klevis.p2.core.service/META-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/org.ramo.klevis.p2.core.service/OSGI-INF" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/thirdparty/lightcouch/designdocs" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/egydsl/model" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/egydsl/target/generated-sources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/egydsl/target/src-gen" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/egydsl/target/xtend" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/egydsl/target/xtend-gen" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dsl/ui/target/src-gen" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/com.google.guava" />
-      <excludeFolder url="file://$MODULE_DIR$/com.opcoach.e4.preferences/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/controller-impl/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/controller/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/core-commons/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/core-fs/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/core-services-impl/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/core-services/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/corpus-commons/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/corpus-controller-impl/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/corpus-controller/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/corpus-help/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/corpus-services-impl/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/corpus-services/target" />
+      <excludeFolder url="file://$MODULE_DIR$/core/global-commons/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/couch/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/dao-corpus-couch/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/dao-corpus/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/dao-couch/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/dao-remote-couch/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/dao-remote/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/dao/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/db/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/model-corpus-edit/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/model-corpus/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/model-edit/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/model-editor/target" />
+      <excludeFolder url="file://$MODULE_DIR$/db/model/target" />
       <excludeFolder url="file://$MODULE_DIR$/debug_dir" />
       <excludeFolder url="file://$MODULE_DIR$/debug_dir/workspace" />
+      <excludeFolder url="file://$MODULE_DIR$/dsl/egydsl/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/dsl/egydsl/model" />
+      <excludeFolder url="file://$MODULE_DIR$/dsl/egydsl/target" />
+      <excludeFolder url="file://$MODULE_DIR$/dsl/feature/target" />
+      <excludeFolder url="file://$MODULE_DIR$/dsl/tests/target" />
+      <excludeFolder url="file://$MODULE_DIR$/dsl/ui/target" />
+      <excludeFolder url="file://$MODULE_DIR$/dsl/ui/xtend-gen" />
+      <excludeFolder url="file://$MODULE_DIR$/infrastructure/app-base/target" />
+      <excludeFolder url="file://$MODULE_DIR$/infrastructure/feature/target" />
+      <excludeFolder url="file://$MODULE_DIR$/infrastructure/login/target" />
+      <excludeFolder url="file://$MODULE_DIR$/infrastructure/product/target" />
+      <excludeFolder url="file://$MODULE_DIR$/infrastructure/product/workspace" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ExternalDependencies/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.feature/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.login/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.product/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.app.product/workspace" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.app/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons.fsaccess/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons.libs.elasticsearch/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.commons/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons.corpus.help/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons.corpus/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.commons/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.controller.impl/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.controller/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.corpus.controller.impl/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.corpus.controller/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.corpus/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao.couchDB/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.dao/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao.couchDB/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.remote.dao/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.corpus.impl/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.corpus/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services.impl/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.core.services/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.egy.feature/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/src-gen" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.tests/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/src-gen" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/xtend-gen" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/model" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/src-gen" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/xtend-gen" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.db.couchdb/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.db/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus.edit/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.corpus/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.edit/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.model.editor/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.model/target" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.commons/lib" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/jseshlibs" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy.commons/lib" />
       <excludeFolder url="file://$MODULE_DIR$/org.bbaw.bts.ui.corpus.egy/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.eclipse.xtext.ui/xtend-gen" />
-      <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb.feature/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb.ui/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.couchdb/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson.feature/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.eclipselabs.emfjson/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/designdocs" />
       <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/lib" />
-      <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/src/org/lightcouch/designdocs" />
-      <excludeFolder url="file://$MODULE_DIR$/org.lightcouch/target" />
-      <excludeFolder url="file://$MODULE_DIR$/org.ramo.klevis.p2.core.service/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/com.opcoach.e4.preferences/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/elasticsearch-libs/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/lightcouch/designdocs" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/lightcouch/src/org/lightcouch/designdocs" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/lightcouch/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.e4.ui.workbench.perspectiveswitcher/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/org.eclipse.xtext.ui/xtend-gen" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb.feature/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb.ui/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson.feature/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/org.eclipselabs.emfjson/target" />
+      <excludeFolder url="file://$MODULE_DIR$/thirdparty/org.ramo.klevis.p2.core.service/target" />
       <excludeFolder url="file://$MODULE_DIR$/transform/bts.transform.ui/xtend-gen" />
       <excludeFolder url="file://$MODULE_DIR$/ui/commons/target" />
       <excludeFolder url="file://$MODULE_DIR$/ui/corpus-commons/target" />

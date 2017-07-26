@@ -4,7 +4,7 @@ Export-Package: jsesh.editor,jsesh.hieroglyphs,jsesh.mdc,jsesh.mdc.uti
  ls,jsesh.mdcDisplayer.draw,jsesh.mdcDisplayer.preferences,org.bbaw.bt
  s.ui.corpus.egy.commons,org.bbaw.bts.ui.corpus.egy.commons.comparator
 Bundle-Name: UI Corpus Egy Commons
-Bundle-Version: 3.1.0.201707261305
+Bundle-Version: 3.1.0.201707261619
 Bundle-ClassPath: target/lib/bcmail-jdk16.jar,target/lib/bcprov-jdk16.
  jar,target/lib/jsesh-libs-cupruntime.jar,target/lib/forms.jar,target/
  lib/swing-layout.jar,target/lib/Quaqua.jar,target/lib/jsesh-libs-itex

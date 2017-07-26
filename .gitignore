@@ -1,8 +1,9 @@
 /*/bin
-/*/target
+**/target
 /*/model
 *.xtendbin
 *.class
+*.zip
 org.bbaw.bts.corpus.text.btsdsl
 org.bbaw.bts.corpus.text.btsdsl.tests
 org.bbaw.bts.corpus.text.btsdsl.ui

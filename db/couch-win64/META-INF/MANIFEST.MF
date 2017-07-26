@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CouchdbWin64
+Bundle-SymbolicName: org.bbaw.bts.db.couchdb.win64
+Bundle-Version: 3.1.0.qualifier
+Fragment-Host: org.bbaw.bts.db.couchdb;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Eclipse-PlatformFilter: (& (osgi.ws=win32) (osgi.os=win32) (osgi.arch=x86_64))
+Import-Package: javax.inject,
+ org.eclipse.e4.core.services.log,
+ org.eclipse.e4.core.di.extensions,
+ org.eclipse.e4.core.contexts,
+ org.eclipse.e4.core.di.annotations,
+ javax.net.ssl,
+ javax.annotation,
+ javax.crypto,
+ javax.crypto.spec,
+ javax.swing.tree,
+ javax.xml.bind,
+ javax.swing,
+ javax.xml.ws.http,
+ org.apache.commons.logging,
+ org.apache.http

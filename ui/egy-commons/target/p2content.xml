@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <units size='1'>
-  <unit id='org.bbaw.bts.ui.corpus.egy.commons' version='3.1.0.201707261305' singleton='false'>
-    <update id='org.bbaw.bts.ui.corpus.egy.commons' range='[0.0.0,3.1.0.201707261305)' severity='0'/>
+  <unit id='org.bbaw.bts.ui.corpus.egy.commons' version='3.1.0.201707261619' singleton='false'>
+    <update id='org.bbaw.bts.ui.corpus.egy.commons' range='[0.0.0,3.1.0.201707261619)' severity='0'/>
     <properties size='5'>
       <property name='org.eclipse.equinox.p2.name' value='UI Corpus Egy Commons'/>
       <property name='org.eclipse.equinox.p2.provider' value='BTS'/>
@@ -10,8 +10,8 @@
       <property name='maven-version' value='3.1.0-SNAPSHOT'/>
     </properties>
     <provides size='11'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='org.bbaw.bts.ui.corpus.egy.commons' version='3.1.0.201707261305'/>
-      <provided namespace='osgi.bundle' name='org.bbaw.bts.ui.corpus.egy.commons' version='3.1.0.201707261305'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.bbaw.bts.ui.corpus.egy.commons' version='3.1.0.201707261619'/>
+      <provided namespace='osgi.bundle' name='org.bbaw.bts.ui.corpus.egy.commons' version='3.1.0.201707261619'/>
       <provided namespace='java.package' name='jsesh.editor' version='0.0.0'/>
       <provided namespace='java.package' name='jsesh.hieroglyphs' version='0.0.0'/>
       <provided namespace='java.package' name='jsesh.mdc' version='0.0.0'/>
@@ -29,13 +29,13 @@
       <required namespace='osgi.bundle' name='org.bbaw.bts.commons' range='0.0.0'/>
     </requires>
     <artifacts size='1'>
-      <artifact classifier='osgi.bundle' id='org.bbaw.bts.ui.corpus.egy.commons' version='3.1.0.201707261305'/>
+      <artifact classifier='osgi.bundle' id='org.bbaw.bts.ui.corpus.egy.commons' version='3.1.0.201707261619'/>
     </artifacts>
     <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
     <touchpointData size='1'>
       <instructions size='1'>
         <instruction key='manifest'>
-          Bundle-SymbolicName: org.bbaw.bts.ui.corpus.egy.commons&#xA;Bundle-Version: 3.1.0.201707261305&#xA;
+          Bundle-SymbolicName: org.bbaw.bts.ui.corpus.egy.commons&#xA;Bundle-Version: 3.1.0.201707261619&#xA;
         </instruction>
       </instructions>
     </touchpointData>

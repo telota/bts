@@ -69,8 +69,8 @@
     </option>
   </component>
   <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/ValidateDocumentRead.js" />
-    <file url="file://$PROJECT_DIR$/org.bbaw.bts.db.couchdb/src/org/bbaw/bts/db/couchdb/impl/ValidateDocumentUpdate.js" />
+    <file url="file://$PROJECT_DIR$/db/couch/src/org/bbaw/bts/db/couchdb/impl/ValidateDocumentRead.js" />
+    <file url="file://$PROJECT_DIR$/db/couch/src/org/bbaw/bts/db/couchdb/impl/ValidateDocumentUpdate.js" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
