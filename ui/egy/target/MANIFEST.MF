@@ -51,7 +51,7 @@ Import-Package: javax.annotation;version="1.0.0",javax.inject,jsesh.ed
 Export-Package: org.bbaw.bts.ui.egy.handlers,org.bbaw.bts.ui.egy.parts
  .support,org.bbaw.bts.ui.egy.textSign.support
 Bundle-Name: CorpusUIEgyptian
-Bundle-Version: 3.1.0.201707261619
+Bundle-Version: 3.1.0.201708011224
 Bundle-ClassPath: .
 Bundle-Activator: org.bbaw.bts.ui.egy.internal.Activator
 

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-SymbolicName: org.bbaw.bts.ui.resources.impl
 Bundle-Name: UI Resource Impl
-Bundle-Version: 3.1.0.201707261619
+Bundle-Version: 3.1.0.201708011224
 Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",org.eclipse.e4.
  tools.services;bundle-version="0.12.0"
 Bundle-ManifestVersion: 2

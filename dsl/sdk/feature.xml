@@ -2,7 +2,7 @@
 <feature
       id="org.bbaw.bts.corpus.text.egy.egydsl.sdk"
       label="EgyDsl SDK Feature "
-      version="3.1.0.qualifier">
+      version="3.1.0">
 
    <plugin
          id="org.bbaw.bts.corpus.text.egy.egydsl"

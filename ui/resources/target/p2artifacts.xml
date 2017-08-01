@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
 <artifacts size='1'>
-  <artifact classifier='osgi.bundle' id='org.bbaw.bts.ui.resources' version='3.1.0.201707261619'>
+  <artifact classifier='osgi.bundle' id='org.bbaw.bts.ui.resources' version='3.1.0.201708011224'>
     <properties size='5'>
-      <property name='artifact.size' value='5330'/>
-      <property name='download.size' value='5330'/>
+      <property name='artifact.size' value='5328'/>
+      <property name='download.size' value='5328'/>
       <property name='maven-groupId' value='org.bbaw.bts'/>
       <property name='maven-artifactId' value='org.bbaw.bts.ui.resources'/>
       <property name='maven-version' value='3.1.0-SNAPSHOT'/>
