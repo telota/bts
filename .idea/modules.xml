@@ -3,17 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/aaew-bts.iml" filepath="$PROJECT_DIR$/aaew-bts.iml" />
-      <module fileurl="file://$PROJECT_DIR$/transform/bts.transform.aux.model/bts.transform.aux.model.iml" filepath="$PROJECT_DIR$/transform/bts.transform.aux.model/bts.transform.aux.model.iml" group="transform and modules" />
-      <module fileurl="file://$PROJECT_DIR$/transform/bts.transform.aux.model.edit/bts.transform.aux.model.edit.iml" filepath="$PROJECT_DIR$/transform/bts.transform.aux.model.edit/bts.transform.aux.model.edit.iml" group="transform and modules" />
-      <module fileurl="file://$PROJECT_DIR$/transform/bts.transform.corpus.model/bts.transform.corpus.model.iml" filepath="$PROJECT_DIR$/transform/bts.transform.corpus.model/bts.transform.corpus.model.iml" group="transform and modules" />
-      <module fileurl="file://$PROJECT_DIR$/transform/bts.transform.corpus.model.edit/bts.transform.corpus.model.edit.iml" filepath="$PROJECT_DIR$/transform/bts.transform.corpus.model.edit/bts.transform.corpus.model.edit.iml" group="transform and modules" />
-      <module fileurl="file://$PROJECT_DIR$/transform/bts.transform.feature/bts.transform.feature.iml" filepath="$PROJECT_DIR$/transform/bts.transform.feature/bts.transform.feature.iml" group="transform and modules" />
-      <module fileurl="file://$PROJECT_DIR$/transform/bts.transform.ui/bts.transform.ui.iml" filepath="$PROJECT_DIR$/transform/bts.transform.ui/bts.transform.ui.iml" group="transform and modules" />
       <module fileurl="file://$PROJECT_DIR$/thirdparty/com.opcoach.e4.preferences/com.opcoach.e4.preferences.iml" filepath="$PROJECT_DIR$/thirdparty/com.opcoach.e4.preferences/com.opcoach.e4.preferences.iml" group="thirdparty and modules" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" group="core and modules" />
       <module fileurl="file://$PROJECT_DIR$/db/db.iml" filepath="$PROJECT_DIR$/db/db.iml" group="db and modules" />
       <module fileurl="file://$PROJECT_DIR$/dsl/dsl.iml" filepath="$PROJECT_DIR$/dsl/dsl.iml" group="dsl and modules" />
-      <module fileurl="file://$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" filepath="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/guava.iml" />
       <module fileurl="file://$PROJECT_DIR$/infrastructure/infrastructure.iml" filepath="$PROJECT_DIR$/infrastructure/infrastructure.iml" group="infrastructure and modules" />
       <module fileurl="file://$PROJECT_DIR$/infrastructure/app-base/org.bbaw.bts.app.iml" filepath="$PROJECT_DIR$/infrastructure/app-base/org.bbaw.bts.app.iml" group="infrastructure and modules" />
       <module fileurl="file://$PROJECT_DIR$/infrastructure/feature/org.bbaw.bts.app.feature.iml" filepath="$PROJECT_DIR$/infrastructure/feature/org.bbaw.bts.app.feature.iml" group="infrastructure and modules" />
@@ -76,7 +69,6 @@
       <module fileurl="file://$PROJECT_DIR$/thirdparty/lightcouch/org.lightcouch.iml" filepath="$PROJECT_DIR$/thirdparty/lightcouch/org.lightcouch.iml" group="thirdparty and modules" />
       <module fileurl="file://$PROJECT_DIR$/thirdparty/org.ramo.klevis.p2.core.service/org.ramo.klevis.p2.core.service.iml" filepath="$PROJECT_DIR$/thirdparty/org.ramo.klevis.p2.core.service/org.ramo.klevis.p2.core.service.iml" group="thirdparty and modules" />
       <module fileurl="file://$PROJECT_DIR$/thirdparty/thirdparty.iml" filepath="$PROJECT_DIR$/thirdparty/thirdparty.iml" group="thirdparty and modules" />
-      <module fileurl="file://$PROJECT_DIR$/transform/transform.iml" filepath="$PROJECT_DIR$/transform/transform.iml" group="transform and modules" />
       <module fileurl="file://$PROJECT_DIR$/ui/ui.iml" filepath="$PROJECT_DIR$/ui/ui.iml" group="ui and modules" />
     </modules>
   </component>

@@ -6,15 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="bts.transform.aux.model" />
-        <module name="bts.transform.aux.model.edit" />
-        <module name="bts.transform.corpus.model" />
-        <module name="bts.transform.corpus.model.edit" />
-        <module name="bts.transform.feature" />
-        <module name="bts.transform.ui" />
         <module name="com.opcoach.e4.preferences" />
-        <module name="guava" />
-        <module name="guava (2) (com.google.guava)" />
         <module name="org.bbaw.bts.app" />
         <module name="org.bbaw.bts.app.feature" />
         <module name="org.bbaw.bts.app.login" />
@@ -72,37 +64,17 @@
         <module name="org.bbaw.bts.ui.main" />
         <module name="org.bbaw.bts.ui.resources" />
         <module name="org.bbaw.bts.ui.resources.impl" />
-        <module name="org.bbaw.btw.ui.resources" />
         <module name="org.eclipse.e4.ui.workbench.perspectiveswitcher" />
         <module name="org.lightcouch" />
         <module name="org.ramo.klevis.p2.core.service" />
-        <module name="transform" />
-        <module name="ui-commons" />
-        <module name="ui-corpus" />
-        <module name="ui-corpus-commons" />
-        <module name="ui-egy" />
-        <module name="ui-egy-commons" />
-        <module name="ui-egy-font" />
-        <module name="ui-font" />
-        <module name="ui-font-academy" />
-        <module name="ui-main" />
-        <module name="ui-resources" />
-        <module name="ui-resources-impl" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="aaew-bts" target="1.7" />
-      <module name="bts.transform.aux.model" target="1.5" />
-      <module name="bts.transform.aux.model.edit" target="1.5" />
-      <module name="bts.transform.corpus.model" target="1.5" />
-      <module name="bts.transform.corpus.model.edit" target="1.5" />
-      <module name="bts.transform.feature" target="1.5" />
-      <module name="bts.transform.ui" target="1.5" />
       <module name="com.opcoach.e4.preferences" target="1.7" />
       <module name="core" target="1.7" />
       <module name="db" target="1.7" />
       <module name="dsl" target="1.7" />
-      <module name="guava" target="1.5" />
       <module name="infrastructure" target="1.7" />
       <module name="org.bbaw.bts.app" target="1.7" />
       <module name="org.bbaw.bts.app.feature" target="1.7" />
@@ -132,7 +104,6 @@
       <module name="org.bbaw.bts.corpus.egy.feature" target="1.7" />
       <module name="org.bbaw.bts.corpus.text.egy.egydsl" target="1.7" />
       <module name="org.bbaw.bts.corpus.text.egy.egydsl.sdk" target="1.7" />
-      <module name="org.bbaw.bts.corpus.text.egy.egydsl.tests" target="1.7" />
       <module name="org.bbaw.bts.corpus.text.egy.egydsl.ui" target="1.7" />
       <module name="org.bbaw.bts.db" target="1.7" />
       <module name="org.bbaw.bts.db.couchdb" target="1.7" />
@@ -162,26 +133,11 @@
       <module name="org.bbaw.bts.ui.main" target="1.7" />
       <module name="org.bbaw.bts.ui.resources" target="1.7" />
       <module name="org.bbaw.bts.ui.resources.impl" target="1.7" />
-      <module name="org.bbaw.bts.updatesite" target="1.7" />
-      <module name="org.bbaw.btw.ui.resources" target="1.7" />
       <module name="org.eclipse.e4.ui.workbench.perspectiveswitcher" target="1.7" />
-      <module name="org.eclipse.xtext.ui" target="1.7" />
       <module name="org.lightcouch" target="1.7" />
       <module name="org.ramo.klevis.p2.core.service" target="1.7" />
       <module name="thirdparty" target="1.7" />
-      <module name="transform" target="1.7" />
       <module name="ui" target="1.5" />
-      <module name="ui-commons" target="1.7" />
-      <module name="ui-corpus" target="1.7" />
-      <module name="ui-corpus-commons" target="1.7" />
-      <module name="ui-egy" target="1.7" />
-      <module name="ui-egy-commons" target="1.7" />
-      <module name="ui-egy-font" target="1.7" />
-      <module name="ui-font" target="1.7" />
-      <module name="ui-font-academy" target="1.7" />
-      <module name="ui-main" target="1.7" />
-      <module name="ui-resources" target="1.7" />
-      <module name="ui-resources-impl" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

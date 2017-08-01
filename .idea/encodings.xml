@@ -38,7 +38,6 @@
     <file url="file://$PROJECT_DIR$/dsl/egydsl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dsl/feature" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dsl/sdk" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/dsl/tests" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dsl/ui" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infrastructure" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infrastructure/app-base" charset="UTF-8" />
@@ -47,21 +46,17 @@
     <file url="file://$PROJECT_DIR$/infrastructure/feature" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infrastructure/login" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/infrastructure/product" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/infrastructure/update" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/com.opcoach.e4.preferences" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/elasticsearch-libs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/lightcouch" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/org.eclipse.e4.ui.workbench.perspectiveswitcher" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/thirdparty/org.eclipse.xtext.ui" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/org.eclipselabs.emfjson" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb.feature" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/org.eclipselabs.emfjson.couchdb.ui" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/org.eclipselabs.emfjson.feature" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/thirdparty/org.ramo.klevis.p2.core.service" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/transform" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/ui" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ui/commons" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ui/corpus" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ui/corpus-commons" charset="UTF-8" />

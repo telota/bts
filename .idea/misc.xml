@@ -1,76 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="FrameworkDetectionExcludesConfiguration">
-    <file type="Osmorc" url="file://$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava" />
-  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/com.google.guava/META-INF/maven/com.google.guava/guava/pom.properties" />
       </list>
     </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/com.opcoach.e4.preferences/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.app.feature/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.app.login/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.app.product/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.app/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.commons.fsaccess/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.commons.libs.elasticsearch/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.commons/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.commons.corpus.help/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.commons.corpus/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.commons/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.controller.impl/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.controller/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller.impl/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.corpus.controller/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus.couchDB/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.dao.corpus/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.dao.couchDB/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.dao/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao.couchDB/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.remote.dao/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus.impl/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.services.corpus/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.services.impl/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.core.services/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.corpus.egy.feature/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl.ui/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.corpus.text.egy.egydsl/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.db.couchdb/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.db/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.model.corpus.edit/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.model.corpus/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.model.edit/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.model.editor/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.model/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.commons.corpus/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.commons/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy.commons/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus.egy/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.corpus/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.font.academy/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.font/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.main/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.resources.impl/pom.xml" />
-        <option value="$PROJECT_DIR$/org.bbaw.bts.ui.resources/pom.xml" />
-        <option value="$PROJECT_DIR$/org.eclipse.e4.ui.workbench.perspectiveswitcher/pom.xml" />
-        <option value="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.feature/pom.xml" />
-        <option value="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb.ui/pom.xml" />
-        <option value="$PROJECT_DIR$/org.eclipselabs.emfjson.couchdb/pom.xml" />
-        <option value="$PROJECT_DIR$/org.eclipselabs.emfjson.feature/pom.xml" />
-        <option value="$PROJECT_DIR$/org.eclipselabs.emfjson/pom.xml" />
-        <option value="$PROJECT_DIR$/org.lightcouch/pom.xml" />
-        <option value="$PROJECT_DIR$/org.ramo.klevis.p2.core.service/pom.xml" />
-      </set>
-    </option>
-  </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/db/couch/src/org/bbaw/bts/db/couchdb/impl/ValidateDocumentRead.js" />
-    <file url="file://$PROJECT_DIR$/db/couch/src/org/bbaw/bts/db/couchdb/impl/ValidateDocumentUpdate.js" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
