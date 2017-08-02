@@ -3,28 +3,14 @@ package org.bbaw.bts.ui.main.wizards.newProject;
 import org.bbaw.bts.btsmodel.BTSProject;
 import org.bbaw.bts.btsmodel.BTSProjectDBCollection;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
-import org.bbaw.bts.btsmodel.BtsmodelPackage;
-import org.bbaw.bts.ui.commons.validator.StringNotEmptyValidator;
-import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.core.databinding.validation.ValidationStatus;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.emf.databinding.EMFProperties;
-import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
-import org.eclipse.emf.databinding.FeaturePath;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridData;
 
 public class ProjectGeneralCollectionPage extends WizardPage {

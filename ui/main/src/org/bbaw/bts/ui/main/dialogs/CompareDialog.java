@@ -3,7 +3,6 @@ package org.bbaw.bts.ui.main.dialogs;
 import javax.inject.Inject;
 
 import org.bbaw.bts.ui.main.parts.ComparePart;
-import org.bbaw.bts.ui.main.parts.UserManagementPart;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;

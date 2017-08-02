@@ -5,9 +5,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.bbaw.bts.btsmodel.BTSDBBaseObject;
-import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSUser;
-import org.bbaw.bts.btsmodel.BTSUserGroup;
 import org.bbaw.bts.btsviewmodel.MessageType;
 import org.bbaw.bts.btsviewmodel.StatusMessage;
 import org.bbaw.bts.core.controller.generalController.BTSUserController;
@@ -19,16 +17,9 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
 
 public class StatusInformationToolControl {

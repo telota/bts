@@ -2,12 +2,10 @@ package org.bbaw.bts.ui.main.dialogs;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.btsviewmodel.StatusMessage;
-import org.bbaw.bts.btsviewmodel.impl.StatusMessageImpl;
 import org.bbaw.bts.core.services.BTSStatusMessageService;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -40,21 +38,11 @@ public class StatusMessageDialog extends TitleAreaDialog {
     private StatusMessage masterMessage;
     private TableViewer tableViewer;
 
-    /**
-     * Create the dialog.
-     *
-     * @param parentShell
-     */
     public StatusMessageDialog() {
         super(new Shell());
 
     }
 
-    /**
-     * Create contents of the dialog.
-     *
-     * @param parent
-     */
     protected Control createDialogArea(Composite parent) {
 
         Composite area = (Composite) super.createDialogArea(parent);
@@ -139,12 +127,6 @@ public class StatusMessageDialog extends TitleAreaDialog {
         tableViewer.setInput(masterMessage);
     }
 
-
-    /**
-     * Create contents of the button bar.
-     *
-     * @param parent
-     */
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
@@ -156,9 +138,6 @@ public class StatusMessageDialog extends TitleAreaDialog {
         setMessage("This dialog shows the last " + MESSAGE_SIZE + " status messages.");
     }
 
-    /**
-     * Return the initial size of the dialog.
-     */
     @Override
     protected Point getInitialSize() {
         return new Point(580, 450);

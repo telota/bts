@@ -17,23 +17,20 @@ Workflow {
     	platformUri = ".."
         uriMap = {
             from = "platform:/resource/egydsl/"
-            to = "${projectName}/"
+            to = "./"
         }
-//        uriMap2 = {
- //           platform:/resource/${projectName}
-  //      }
-    }
-    
-    component = DirectoryCleaner {
-    	directory = "${runtimeProject}/src-gen"
-    }
-    
-    component = DirectoryCleaner {
-    	directory = "${runtimeProject}/model"
-    }
-    
-    component = DirectoryCleaner {
-    	directory = "ui/target/src-gen"
+        uriMap = {
+            from = "/src-gen"
+            to = "/target/src-gen"
+        }
+        uriMap = {
+            from = "/egydsl/src-gen"
+            to = "/egydsl/target/src-gen"
+        }
+        uriMap = {
+            from = "/${projectName}/src-gen"
+            to = "/${projectName}/target/src-gen"
+        }
     }
     
     component = Generator {
@@ -41,6 +38,9 @@ Workflow {
     	pathUiProject = "../ui"
     	projectNameRt = projectName
     	projectNameUi = "ui"
+
+        srcGenPath = "/target/src-gen"
+
     	encoding = encoding
     	language = auto-inject {
     		uri = grammarURI

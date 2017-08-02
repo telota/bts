@@ -2,8 +2,6 @@ package org.bbaw.bts.ui.corpus.handlers;
 
 import javax.inject.Named;
 
-import org.bbaw.bts.btsmodel.AdministrativDataObject;
-import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.commons.BTSConstants;
 import org.bbaw.bts.commons.BTSPluginIDs;

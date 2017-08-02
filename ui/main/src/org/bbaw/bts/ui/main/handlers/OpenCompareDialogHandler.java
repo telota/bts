@@ -3,11 +3,9 @@ package org.bbaw.bts.ui.main.handlers;
 import javax.inject.Named;
 
 import org.bbaw.bts.btsmodel.AdministrativDataObject;
-import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.controller.dialogControllers.CompareObjectsController;
 import org.bbaw.bts.ui.main.dialogs.CompareDialog;
-import org.bbaw.bts.ui.main.dialogs.ConflictsDialog;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;

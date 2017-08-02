@@ -10,7 +10,6 @@ import java.util.Vector;
 
 import javax.inject.Inject;
 
-import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSRelation;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;

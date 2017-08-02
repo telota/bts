@@ -17,7 +17,7 @@
     </properties>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>src,target/src-gen</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -29,16 +29,16 @@
                         <configuration>
                             <filesets combine.children="append">
                                 <fileset>
-                                    <directory>${basedir}/target/src-gen</directory>
+                                    <directory>${basedir}/target/generated-sources/mwe</directory>
                                 </fileset>
                                 <fileset>
                                     <directory>${basedir}/model/generated</directory>
                                 </fileset>
                                 <fileset>
-                                    <directory>${basedir}/../ui/target/src-gen</directory>
+                                    <directory>${basedir}/../ui/target/generated-sources/mwe</directory>
                                 </fileset>
                                 <fileset>
-                                    <directory>${basedir}/../tests/target/src-gen</directory>
+                                    <directory>${basedir}/../tests/target/generated-sources/mwe</directory>
                                 </fileset>
                             </filesets>
                         </configuration>
@@ -76,7 +76,7 @@
                     <classpathScope>compile</classpathScope>
                     <executable>java</executable>
                     <arguments>
-                        <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005</argument>
+                        <!-- for hardcore debugging: argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005</argument -->
                         <!-- necessary for the java process to find the mwe2 launcher -->
                         <argument>-classpath</argument>
                         <classpath/>
@@ -113,7 +113,7 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/xtend-gen</outputDirectory>
+                            <outputDirectory>${basedir}/target/src-gen/xtend</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

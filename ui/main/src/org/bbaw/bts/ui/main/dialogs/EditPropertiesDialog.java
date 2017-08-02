@@ -10,10 +10,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
 import org.eclipse.jface.viewers.ICellModifier;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -51,11 +49,6 @@ public class EditPropertiesDialog extends TitleAreaDialog {
             BTSConstants.DB_COLLECTION_PROP_RESERVE_ID_FORCE_SERVER};
     private List<List<String>> properties;
 
-    /**
-     * Create the dialog.
-     *
-     * @param parentShell
-     */
     public EditPropertiesDialog(Shell parentShell, Map<String, String> inputPorperties) {
         super(parentShell);
         loadProperties(inputPorperties);
@@ -76,11 +69,6 @@ public class EditPropertiesDialog extends TitleAreaDialog {
 
     }
 
-    /**
-     * Create contents of the dialog.
-     *
-     * @param parent
-     */
     @Override
     protected Control createDialogArea(Composite parent) {
         Composite composite = new Composite(parent, SWT.NONE);
@@ -146,11 +134,6 @@ public class EditPropertiesDialog extends TitleAreaDialog {
 
     }
 
-    /**
-     * Create contents of the button bar.
-     *
-     * @param parent
-     */
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
@@ -159,9 +142,6 @@ public class EditPropertiesDialog extends TitleAreaDialog {
                 IDialogConstants.CANCEL_LABEL, false);
     }
 
-    /**
-     * Return the initial size of the dialog.
-     */
     @Override
     protected Point getInitialSize() {
         return new Point(500, 400);
@@ -179,51 +159,26 @@ public class EditPropertiesDialog extends TitleAreaDialog {
     }
 
     class PropertiesContentProvider implements IStructuredContentProvider {
-        /**
-         * Returns the Person objects
-         */
+
         public Object[] getElements(Object inputElement) {
             return ((List) inputElement).toArray();
         }
 
-        /**
-         * Disposes any created resources
-         */
         public void dispose() {
             // Do nothing
         }
 
-        /**
-         * Called when the input changes
-         */
         public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
             // Ignore
         }
     }
 
-    /**
-     * This class provides the labels for the person table
-     */
-
     class PropertiesLabelProvider implements ITableLabelProvider {
-        /**
-         * Returns the image
-         *
-         * @param element     the element
-         * @param columnIndex the column index
-         * @return Image
-         */
+
         public Image getColumnImage(Object element, int columnIndex) {
             return null;
         }
 
-        /**
-         * Returns the column text
-         *
-         * @param element     the element
-         * @param columnIndex the column index
-         * @return String
-         */
         public String getColumnText(Object element, int columnIndex) {
             List<String> p = (List<String>) element;
             switch (columnIndex) {
@@ -235,47 +190,22 @@ public class EditPropertiesDialog extends TitleAreaDialog {
             return null;
         }
 
-        /**
-         * Adds a listener
-         *
-         * @param listener the listener
-         */
         public void addListener(ILabelProviderListener listener) {
             // Ignore it
         }
 
-        /**
-         * Disposes any created resources
-         */
         public void dispose() {
             // Nothing to dispose
         }
 
-        /**
-         * Returns whether altering this property on this element will affect the
-         * label
-         *
-         * @param element  the element
-         * @param property the property
-         * @return boolean
-         */
         public boolean isLabelProperty(Object element, String property) {
             return false;
         }
 
-        /**
-         * Removes a listener
-         *
-         * @param listener the listener
-         */
         public void removeListener(ILabelProviderListener listener) {
             // Ignore
         }
     }
-
-    /**
-     * This class represents the cell modifier for the PersonEditor program
-     */
 
     class PropertyCellModifier implements ICellModifier {
         private Viewer viewer;
@@ -284,25 +214,11 @@ public class EditPropertiesDialog extends TitleAreaDialog {
             this.viewer = viewer;
         }
 
-        /**
-         * Returns whether the property can be modified
-         *
-         * @param element  the element
-         * @param property the property
-         * @return boolean
-         */
         public boolean canModify(Object element, String property) {
             // Allow editing of all values
             return true;
         }
 
-        /**
-         * Returns the value for the property
-         *
-         * @param element  the element
-         * @param property the property
-         * @return Object
-         */
         public Object getValue(Object element, String property) {
             List<String> p = (List<String>) element;
             if (EditPropertiesDialog.KEY.equals(property))
@@ -313,13 +229,6 @@ public class EditPropertiesDialog extends TitleAreaDialog {
                 return null;
         }
 
-        /**
-         * Modifies the element
-         *
-         * @param element  the element
-         * @param property the property
-         * @param value    the value
-         */
         public void modify(Object element, String property, Object value) {
             if (element instanceof Item)
                 element = ((Item) element).getData();

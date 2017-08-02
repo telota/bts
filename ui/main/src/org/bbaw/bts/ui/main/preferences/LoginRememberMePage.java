@@ -3,10 +3,7 @@ package org.bbaw.bts.ui.main.preferences;
 import java.io.IOException;
 
 import org.bbaw.bts.core.commons.staticAccess.StaticAccessController;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
-import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
@@ -15,15 +12,11 @@ import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.jface.preference.BooleanFieldEditor;
-import org.osgi.framework.BundleContext;
 
 import com.opcoach.e4.preferences.ScopedPreferenceStore;
 

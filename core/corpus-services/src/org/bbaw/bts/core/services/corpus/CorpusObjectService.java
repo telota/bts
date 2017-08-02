@@ -14,16 +14,8 @@ public interface CorpusObjectService extends GenericCorpusObjectService<BTSCorpu
 
     String[] getActive_corpora(String projecPrefix);
 
-    /**
-     * @param object
-     * @param annotationTypePath
-     */
     void setObjectTypePath(BTSCorpusObject object, String annotationTypePath);
 
-    /**
-     * @param object
-     * @return
-     */
     String getAllPassportDataAsString(BTSCorpusObject object);
 
 }

@@ -20,9 +20,6 @@ import org.eclipse.swt.widgets.Label;
 
 public class LangSelectionToolControl {
 
-    /**
-     * The resource provider.
-     */
     @Inject
     private BTSResourceProvider resourceProvider;
 

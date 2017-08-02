@@ -93,10 +93,6 @@ public class AnnotationToolbarItemCreator {
         }
     }
 
-    /**
-     * @param toolbar
-     * @return
-     */
     private static MCommand findCommand(MToolBar toolbar) {
         for (MToolBarElement el : toolbar.getChildren()) {
             if (el instanceof MHandledToolItem) {
@@ -109,11 +105,6 @@ public class AnnotationToolbarItemCreator {
         return null;
     }
 
-    /**
-     * @param toolbar
-     * @param commandService
-     * @param node
-     */
     private static void addToolbarShortcut(MToolBar toolbar, IEclipsePreferences node, MCommand command) {
         MHandledToolItem toolitem = MMenuFactory.INSTANCE.createHandledToolItem();
         toolitem.setCommand(command);
@@ -140,10 +131,6 @@ public class AnnotationToolbarItemCreator {
 
     }
 
-    /**
-     * @param node
-     * @return
-     */
     public static String getAnnotationTypePath(IEclipsePreferences node) {
         String annotationTypePath = BTSConstants.ANNOTATION;
         String type = node.get(BTSCorpusConstants.PREF_ANNOTATION_TYPE, null);
@@ -157,20 +144,11 @@ public class AnnotationToolbarItemCreator {
         return annotationTypePath;
     }
 
-    /**
-     * @param toolbarCache
-     * @param node
-     * @return
-     */
     private static MHandledToolItem getCachedShortcutMHandledToolItem(Map<String, MHandledToolItem> toolbarCache, IEclipsePreferences node) {
         String annotationTypePath = getAnnotationTypePath(node);
         return (toolbarCache.get(annotationTypePath));
     }
 
-    /**
-     * @param toolbar
-     * @return
-     */
     private static Map<String, MHandledToolItem> loadToolbarCache(MToolBar toolbar) {
         Map<String, MHandledToolItem> cache = new HashMap<>();
         for (MToolBarElement el : toolbar.getChildren()) {

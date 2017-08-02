@@ -4,10 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSUser;
-import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
-import org.bbaw.bts.btsviewmodel.TreeNodeWrapper;
 import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.e4.core.contexts.IEclipseContext;

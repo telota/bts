@@ -5,7 +5,6 @@ import javax.inject.Named;
 
 import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.controller.generalController.PermissionsAndExpressionsEvaluationController;
-import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.bbaw.bts.ui.corpus.parts.PassportEditorPart;
 import org.bbaw.bts.ui.egy.parts.EgyLemmaEditorPart;

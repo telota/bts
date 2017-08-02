@@ -122,6 +122,16 @@
             <scope>system</scope>
             <systemPath>${jseshlibs}/cupruntime-1.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.model</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.commons</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

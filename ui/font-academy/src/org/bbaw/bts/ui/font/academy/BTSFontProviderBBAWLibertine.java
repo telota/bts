@@ -38,7 +38,7 @@ public class BTSFontProviderBBAWLibertine implements BTSFontProvider {
     }
 
     private FontData getFontData() {
-        URL entry = org.eclipse.core.runtime.Platform.getBundle(BUNDLE_NAME).getEntry("/" + FOLDER + FONT_FILE_NAME);
+        URL entry = Platform.getBundle(BUNDLE_NAME).getEntry("/" + FOLDER + FONT_FILE_NAME);
         String fontpath = null;
         if (entry != null) {
 

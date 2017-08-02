@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.bbaw.bts.btsmodel.BTSComment;
-import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.btsviewmodel.BtsviewmodelPackage;

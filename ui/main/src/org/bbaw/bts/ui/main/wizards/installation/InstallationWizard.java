@@ -14,10 +14,6 @@ import org.bbaw.bts.core.controller.generalController.ApplicationStartupControll
 import org.bbaw.bts.core.controller.generalController.BTSUserController;
 import org.bbaw.bts.core.controller.generalController.EditingDomainController;
 import org.bbaw.bts.ui.main.wizards.installation.support.Connection;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -30,7 +26,6 @@ import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
 
 public class InstallationWizard extends Wizard {
 

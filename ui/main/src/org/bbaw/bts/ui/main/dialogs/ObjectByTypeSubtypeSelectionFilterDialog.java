@@ -3,7 +3,6 @@ package org.bbaw.bts.ui.main.dialogs;
 import javax.inject.Inject;
 
 import org.bbaw.bts.btsmodel.BTSConfigItem;
-import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.btsviewmodel.BTSObjectTypeTreeNode;
 import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.core.controller.generalController.BTSConfigurationController;

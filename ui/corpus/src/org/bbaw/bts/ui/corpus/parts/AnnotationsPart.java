@@ -91,9 +91,6 @@ public class AnnotationsPart implements EventHandler {
     private IEclipseContext context;
     @Inject
     private Logger logger;
-    /**
-     * The part service.
-     */
     @Inject
     private EPartService partService;
     private Composite composite;
@@ -112,9 +109,6 @@ public class AnnotationsPart implements EventHandler {
     // boolean if gui is constructed
     private boolean constructed;
 
-    /**
-     * The part.
-     */
     private MPart part;
 
     private BTSRelatingObjectsLoadingEvent relatingObjectsEvent;

@@ -5,7 +5,6 @@ import javax.inject.Named;
 import org.bbaw.bts.btsmodel.BTSConfiguration;
 import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.controller.generalController.BTSConfigurationController;
-import org.bbaw.bts.ui.main.dialogs.ConflictsDialog;
 import org.bbaw.bts.ui.main.dialogs.NewConfigurationDialog;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;

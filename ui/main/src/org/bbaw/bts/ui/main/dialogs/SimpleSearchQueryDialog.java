@@ -33,12 +33,6 @@ public class SimpleSearchQueryDialog extends TitleAreaDialog {
     @Named("org.bbaw.bts.ui.main.commandparameter.searchString")
     private String searchString;
 
-    /**
-     * Create the dialog.
-     *
-     * @param parentShell
-     * @param query
-     */
     public SimpleSearchQueryDialog(Shell parentShell) {
         super(parentShell);
     }
@@ -54,11 +48,6 @@ public class SimpleSearchQueryDialog extends TitleAreaDialog {
         newShell.setMinimumSize(getInitialSize());
     }
 
-    /**
-     * Create contents of the dialog.
-     *
-     * @param parent
-     */
     @Override
     protected Control createDialogArea(final Composite parent) {
         Composite area = (Composite) super.createDialogArea(parent);
@@ -155,11 +144,6 @@ public class SimpleSearchQueryDialog extends TitleAreaDialog {
         return area;
     }
 
-    /**
-     * Create contents of the button bar.
-     *
-     * @param parent
-     */
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         createButton(parent, IDialogConstants.OK_ID, "Search",
@@ -183,10 +167,6 @@ public class SimpleSearchQueryDialog extends TitleAreaDialog {
         super.okPressed();
     }
 
-
-    /**
-     * Return the initial size of the dialog.
-     */
     @Override
     protected Point getInitialSize() {
         return new Point(450, 300);

@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import org.bbaw.bts.btsmodel.BTSConfig;
 import org.bbaw.bts.btsmodel.BTSConfigItem;
-import org.bbaw.bts.btsmodel.BTSConfiguration;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
 import org.bbaw.bts.btsviewmodel.BTSObjectTypeTreeNode;
 import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;

@@ -44,5 +44,221 @@
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-suggest:6.6.0" level="project" />
     <orderEntry type="library" name="Maven: com.spatial4j:spatial4j:0.5" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-river-couchdb:2.6.0" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/antlr-runtime.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/antlr-runtime.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/apache-log4j-extras.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/apache-log4j-extras.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/asm.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/asm.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/asm-commons.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/asm-commons.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/elasticsearch.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/groovy-all.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/groovy-all.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/jna.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/jna.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/jts.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/jts.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/log4j.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/log4j.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-analyzers-common.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-analyzers-common.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-core.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-core.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-expressions.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-expressions.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-grouping.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-grouping.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-highlighter.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-highlighter.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-join.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-join.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-memory.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-memory.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-misc.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-misc.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queries.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-queries.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queryparser.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-queryparser.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-sandbox.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-sandbox.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-spatial.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-spatial.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-suggest.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/lucene-suggest.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/spatial4j.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/spatial4j.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch-river-couchdb.jar:3.1.0.qualifier">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/target/lib/elasticsearch-river-couchdb.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
