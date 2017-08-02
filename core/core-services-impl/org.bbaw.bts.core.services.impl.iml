@@ -17,8 +17,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="PRODUCT" level="project" />
     <orderEntry type="library" name="Maven: p2.eclipse-plugin:org.eclipse.e4.core.contexts:RELEASE" level="project" />
     <orderEntry type="module" module-name="org.bbaw.bts.core.services" />
-    <orderEntry type="library" name="PRODUCT" level="project" />
   </component>
 </module>

@@ -3,6 +3,88 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
+    <dependencies>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.model</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.ui.commons</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.controller</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.ui.resources</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.commons</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>p2.eclipse-plugin</groupId>
+            <artifactId>org.bbaw.bts.ui.main</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.dao</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.services</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.services</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>p2.eclipse-plugin</groupId>
+            <artifactId>org.bbaw.bts.ui.main</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.services</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.services</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.services</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.services</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.db</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bbaw.bts</groupId>
+            <artifactId>org.bbaw.bts.core.services</artifactId>
+            <version>3.1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     <parent>
         <groupId>org.bbaw.bts</groupId>
         <artifactId>aaew-bts</artifactId>
@@ -18,6 +100,7 @@
     </properties>
 
     <build>
+        <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>com.googlecode.maven-download-plugin</groupId>

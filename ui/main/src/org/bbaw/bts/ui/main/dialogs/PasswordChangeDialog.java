@@ -62,29 +62,16 @@ public class PasswordChangeDialog extends TitleAreaDialog {
     @Inject
     private BTSUserController userController;
 
-    /**
-     * Create the dialog.
-     *
-     * @param parentShell
-     */
+
     public PasswordChangeDialog() {
         super(new Shell());
     }
 
-    /**
-     * Create the dialog.
-     *
-     * @param parentShell
-     */
+
     public PasswordChangeDialog(Shell parentShell) {
         super(parentShell);
     }
 
-    /**
-     * Create contents of the dialog.
-     *
-     * @param parent
-     */
     @Override
     protected Control createDialogArea(Composite parent) {
         authenticatedUserIsAdmin = permissionController.authenticatedUserIsDBAdmin(false);
@@ -140,11 +127,6 @@ public class PasswordChangeDialog extends TitleAreaDialog {
         return area;
     }
 
-    /**
-     * Create contents of the button bar.
-     *
-     * @param parent
-     */
     @Override
     protected void createButtonsForButtonBar(Composite parent) {
         createOkButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
@@ -226,9 +208,6 @@ public class PasswordChangeDialog extends TitleAreaDialog {
         return true;
     }
 
-    /**
-     * Return the initial size of the dialog.
-     */
     @Override
     protected Point getInitialSize() {
         return new Point(450, 400);

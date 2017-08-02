@@ -10,4 +10,7 @@
     <artifactId>org.bbaw.bts.model.edit</artifactId>
   <version>3.1.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+  </build>
 </project>

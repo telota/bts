@@ -17,7 +17,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="org.bbaw.bts.core.controller" />
     <orderEntry type="library" name="PRODUCT" level="project" />
+    <orderEntry type="module" module-name="org.bbaw.bts.core.controller" />
   </component>
 </module>

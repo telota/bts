@@ -18,5 +18,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="PRODUCT" level="project" />
+    <orderEntry type="module" module-name="org.bbaw.bts.core.services" />
+    <orderEntry type="module" module-name="org.bbaw.bts.core.commons" />
+    <orderEntry type="library" name="Maven: commons-net:commons-net:3.6" level="project" />
+    <orderEntry type="module" module-name="org.bbaw.bts.core.controller" />
+    <orderEntry type="module" module-name="org.bbaw.bts.model" />
+    <orderEntry type="module" module-name="org.bbaw.bts.commons" />
   </component>
 </module>

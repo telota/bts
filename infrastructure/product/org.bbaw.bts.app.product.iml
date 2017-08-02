@@ -8,6 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="PRODUCT" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: p2.eclipse-plugin:com.google.guava:18.0.0.v20161115-1643">
         <CLASSES>
@@ -3104,6 +3105,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="PRODUCT" level="project" />
   </component>
 </module>

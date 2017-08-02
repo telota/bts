@@ -10,4 +10,7 @@
     <artifactId>org.bbaw.bts.corpus.text.egy.egydsl.sdk</artifactId>
   <version>3.1.0</version>
   <packaging>eclipse-feature</packaging>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+  </build>
 </project>

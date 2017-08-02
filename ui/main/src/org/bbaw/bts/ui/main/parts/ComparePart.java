@@ -2,7 +2,6 @@ package org.bbaw.bts.ui.main.parts;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Vector;
 
 import javax.inject.Inject;
 import javax.annotation.PostConstruct;
@@ -18,8 +17,6 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-
-import javax.annotation.PreDestroy;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.e4.core.contexts.Active;

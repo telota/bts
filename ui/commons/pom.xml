@@ -9,4 +9,7 @@
     </parent>
     <artifactId>org.bbaw.bts.ui.commons</artifactId>
     <packaging>eclipse-plugin</packaging>
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+    </build>
 </project>

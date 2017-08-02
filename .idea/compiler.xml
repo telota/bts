@@ -134,6 +134,7 @@
       <module name="org.bbaw.bts.ui.resources" target="1.7" />
       <module name="org.bbaw.bts.ui.resources.impl" target="1.7" />
       <module name="org.eclipse.e4.ui.workbench.perspectiveswitcher" target="1.7" />
+      <module name="org.eclipse.xtext.ui" target="1.7" />
       <module name="org.lightcouch" target="1.7" />
       <module name="org.ramo.klevis.p2.core.service" target="1.7" />
       <module name="thirdparty" target="1.7" />

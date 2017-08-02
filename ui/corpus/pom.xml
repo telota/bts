@@ -18,6 +18,7 @@
     </properties>
 
     <build>
+        <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>com.googlecode.maven-download-plugin</groupId>

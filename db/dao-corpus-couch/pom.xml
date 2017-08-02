@@ -10,4 +10,7 @@
     <artifactId>org.bbaw.bts.core.dao.corpus.couchDB</artifactId>
   <version>3.1.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+  </build>
 </project>

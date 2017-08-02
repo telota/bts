@@ -11,4 +11,7 @@
     <artifactId>org.bbaw.bts.e4.p2</artifactId>
     <version>3.1.0</version>
     <packaging>eclipse-plugin</packaging>
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+    </build>
 </project>

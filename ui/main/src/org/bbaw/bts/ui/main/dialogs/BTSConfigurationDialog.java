@@ -196,21 +196,11 @@ public class BTSConfigurationDialog extends TitleAreaDialog {
     private Shell shell;
 
 
-    /**
-     * Create the dialog.
-     *
-     * @param parentShell
-     */
     public BTSConfigurationDialog() {
         super(new Shell());
         shell = getShell();
     }
 
-    /**
-     * Create contents of the dialog.
-     *
-     * @param parent
-     */
     @Override
     protected Control createDialogArea(Composite parent) {
         // initializeDIs();
