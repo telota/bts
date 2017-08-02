@@ -4,115 +4,122 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-// This script is run by maven from the egydsl subproject root. All paths are relative to
-// the subproject root. Do note that this script accesses the ui project *next to* the
-// subproject.
-
-var projectName = "egydsl"
-var grammarURI = "src/org/bbaw/bts/corpus/text/egy/EgyDsl.xtext"
-var runtimeProject = "."
+var grammarURI = "classpath:/org/bbaw/bts/corpus/text/egy/EgyDsl.xtext"
 var fileExtensions = "egydsl"
+var projectName = "org.bbaw.bts.corpus.text.egy.egydsl"
+var runtimeProject = "../egydsl"
 var generateXtendStub = true
 var encoding = "UTF-8"
 
 Workflow {
     bean = StandaloneSetup {
-        scanClassPath = true
-        platformUri = ".."
-    }
-
-    component = DirectoryCleaner {
-        directory = "target/src-gen"
-    }
-
-    component = DirectoryCleaner {
-        directory = "model"
-    }
-
-    component = DirectoryCleaner {
-        directory = "../ui/target/src-gen"
-    }
-
-    component = Generator {
-        pathRtProject = "."
-        pathUiProject = "../ui"
-        projectNameRt = "${projectName}"
-        projectNameUi = "ui"
-        encoding = encoding
-
-        srcPath = "/src"
-        srcGenPath = "/target/src-gen"
-
-        language = auto-inject {
-            uri = grammarURI
-
-            // Java API to access grammar elements (required by several other fragments)
-            fragment = grammarAccess.GrammarAccessFragment auto-inject {}
-
-            // generates Java API for the generated EPackages
-            fragment = ecore.EMFGeneratorFragment auto-inject {}
-
-            // the old serialization component
-            // fragment = parseTreeConstructor.ParseTreeConstructorFragment auto-inject {}    
-
-            // serializer 2.0
-            fragment = serializer.SerializerFragment auto-inject {
-                generateStub = false
-            }
-
-            // a custom ResourceFactory for use with EMF
-            fragment = resourceFactory.ResourceFactoryFragment auto-inject {}
-
-            // The antlr parser generator fragment.
-            fragment = parser.antlr.XtextAntlrGeneratorFragment auto-inject {}
-
-            // Xtend-based API for validation
-            fragment = validation.ValidatorFragment auto-inject {}
-
-            // scoping and exporting API
-            fragment = scoping.ImportNamespacesScopingFragment auto-inject {}
-            fragment = exporting.QualifiedNamesFragment auto-inject {}
-            fragment = builder.BuilderIntegrationFragment auto-inject {}
-
-            // generator API
-            fragment = generator.GeneratorFragment auto-inject {}
-
-            // formatter API
-            fragment = formatting.FormatterFragment auto-inject {}
-
-            // labeling API
-            fragment = labeling.LabelProviderFragment auto-inject {}
-
-            // outline API
-            fragment = outline.OutlineTreeProviderFragment auto-inject {}
-            fragment = outline.QuickOutlineFragment auto-inject {}
-
-            // quickfix API
-            fragment = quickfix.QuickfixProviderFragment auto-inject {}
-
-            // content assist API
-            fragment = contentAssist.ContentAssistFragment auto-inject {}
-
-            // generates a more lightweight Antlr parser and lexer tailored for content assist
-            fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {}
-
-            // rename refactoring
-            fragment = refactoring.RefactorElementNameFragment auto-inject {}
-
-            // provides the necessary bindings for java types integration
-            fragment = types.TypesGeneratorFragment auto-inject {}
-
-            // generates the required bindings only if the grammar inherits from Xbase
-            fragment = xbase.XbaseGeneratorFragment auto-inject {}
-
-            // provides a preference page for template proposals
-            fragment = templates.CodetemplatesGeneratorFragment auto-inject {}
-
-            // provides a compare view
-            fragment = compare.CompareFragment auto-inject {}
-
-            fragment = org.eclipse.xtext.generator.validation.JavaValidatorFragment auto-inject {}
+    	scanClassPath = true
+    	platformUri = ".."
+        uriMap = {
+            from = "platform:/resource/egydsl/"
+            to = "${projectName}/"
         }
+//        uriMap2 = {
+ //           platform:/resource/${projectName}
+  //      }
+    }
+    
+    component = DirectoryCleaner {
+    	directory = "${runtimeProject}/src-gen"
+    }
+    
+    component = DirectoryCleaner {
+    	directory = "${runtimeProject}/model"
+    }
+    
+    component = DirectoryCleaner {
+    	directory = "ui/target/src-gen"
+    }
+    
+    component = Generator {
+    	pathRtProject = runtimeProject
+    	pathUiProject = "../ui"
+    	projectNameRt = projectName
+    	projectNameUi = "ui"
+    	encoding = encoding
+    	language = auto-inject {
+    		uri = grammarURI
+    
+    		// Java API to access grammar elements (required by several other fragments)
+    		fragment = grammarAccess.GrammarAccessFragment auto-inject {}
+    
+    		// generates Java API for the generated EPackages
+    		fragment = ecore.EMFGeneratorFragment auto-inject {
+            }
+    
+    		// the old serialization component
+    		// fragment = parseTreeConstructor.ParseTreeConstructorFragment auto-inject {}    
+    
+    		// serializer 2.0
+    		fragment = serializer.SerializerFragment auto-inject {
+    			generateStub = false
+    		}
+    
+    		// a custom ResourceFactory for use with EMF
+    		fragment = resourceFactory.ResourceFactoryFragment auto-inject {}
+    
+    		// The antlr parser generator fragment.
+    		fragment = parser.antlr.XtextAntlrGeneratorFragment auto-inject {}
+    
+    		// Xtend-based API for validation
+    		fragment = validation.ValidatorFragment auto-inject {
+    		//    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+    		//    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+    		}
+    
+    		// old scoping and exporting API
+    		// fragment = scoping.ImportURIScopingFragment auto-inject {}
+    		// fragment = exporting.SimpleNamesFragment auto-inject {}
+    
+    		// scoping and exporting API
+    		fragment = scoping.ImportNamespacesScopingFragment auto-inject {}
+    		fragment = exporting.QualifiedNamesFragment auto-inject {}
+    		fragment = builder.BuilderIntegrationFragment auto-inject {}
+    
+    		// generator API
+    		fragment = generator.GeneratorFragment auto-inject {}
+    
+    		// formatter API
+    		fragment = formatting.FormatterFragment auto-inject {}
+    
+    		// labeling API
+    		fragment = labeling.LabelProviderFragment auto-inject {}
+    
+    		// outline API
+    		fragment = outline.OutlineTreeProviderFragment auto-inject {}
+    		fragment = outline.QuickOutlineFragment auto-inject {}
+    
+    		// quickfix API
+    		fragment = quickfix.QuickfixProviderFragment auto-inject {}
+    
+    		// content assist API
+    		fragment = contentAssist.ContentAssistFragment auto-inject {}
+    
+    		// generates a more lightweight Antlr parser and lexer tailored for content assist
+    		fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {}
+    
+    		// rename refactoring
+    		fragment = refactoring.RefactorElementNameFragment auto-inject {}
+    
+    		// provides the necessary bindings for java types integration
+    		fragment = types.TypesGeneratorFragment auto-inject {}
+    
+    		// generates the required bindings only if the grammar inherits from Xbase
+    		fragment = xbase.XbaseGeneratorFragment auto-inject {}
+    
+    		// provides a preference page for template proposals
+    		fragment = templates.CodetemplatesGeneratorFragment auto-inject {}
+    
+    		// provides a compare view
+    		fragment = compare.CompareFragment auto-inject {}
+    		
+    		fragment = org.eclipse.xtext.generator.validation.JavaValidatorFragment auto-inject {}
+    	}
     }
 }
 
