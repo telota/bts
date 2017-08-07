@@ -1,0 +1,273 @@
+/*
+  This file is part of Berlin Text System.
+
+  The software Berlin Text System serves as a client user interface for working with
+  text corpus data. See: aaew.bbaw.de
+
+  The software Berlin Text System was developed at the Berlin-Brandenburg Academy
+  of Sciences and Humanities, Jägerstr. 22/23, D-10117 Berlin.
+  www.bbaw.de
+
+  Copyright (C) 2013-2015  Berlin-Brandenburg Academy
+  of Sciences and Humanities
+
+  The software Berlin Text System was developed by @author: Christoph Plutte.
+
+  Berlin Text System is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Berlin Text System is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public License
+  along with Berlin Text System.
+  If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ */
+package org.bbaw.bts.btsmodel;
+
+import org.eclipse.emf.common.util.EList;
+
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>BTSDB Base Object</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * <!-- begin-model-doc -->
+ * This is the superclass of all database object. Each object that can be stored in the database
+ * on its own and is not contained by any other object has to extend this abstract class.
+ * <!-- end-model-doc -->
+ * <p>
+ * <p>
+ * The following features are supported:
+ * <ul>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#get_rev <em>rev</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#getProject <em>Project</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#isLocked <em>Locked</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#getUpdaters <em>Updaters</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#getReaders <em>Readers</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#is_deleted <em>deleted</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#getConflictingRevs <em>Conflicting Revs</em>}</li>
+ * <li>{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#getDBCollectionKey <em>DB Collection Key</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @model abstract="true"
+ * @generated
+ * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject()
+ */
+public interface BTSDBBaseObject extends BTSIdentifiableItem {
+    /**
+     * Returns the value of the '<em><b>rev</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>rev</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * holds the id of the revision of the object.
+     * <!-- end-model-doc -->
+     *
+     * @return the value of the '<em>rev</em>' attribute.
+     * @model
+     * @generated
+     * @see #set_rev(String)
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject__rev()
+     */
+    String get_rev();
+
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#get_rev <em>rev</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>rev</em>' attribute.
+     * @generated
+     * @see #get_rev()
+     */
+    void set_rev(String value);
+
+    /**
+     * Returns the value of the '<em><b>Project</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Project</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * The prefix of the project to which this object belongs. That means also the root path
+     * where the object is stored in the database if the database supports collections.
+     * <!-- end-model-doc -->
+     *
+     * @return the value of the '<em>Project</em>' attribute.
+     * @model transient="true"
+     * @generated
+     * @see #setProject(String)
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject_Project()
+     */
+    String getProject();
+
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#getProject <em>Project</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Project</em>' attribute.
+     * @generated
+     * @see #getProject()
+     */
+    void setProject(String value);
+
+    /**
+     * Returns the value of the '<em><b>Locked</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Locked</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Transient! Allows to cache locking status information and propagate locking status information to
+     * UI and other top layers.
+     * <!-- end-model-doc -->
+     *
+     * @return the value of the '<em>Locked</em>' attribute.
+     * @model transient="true"
+     * @generated
+     * @see #setLocked(boolean)
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject_Locked()
+     */
+    boolean isLocked();
+
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#isLocked <em>Locked</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>Locked</em>' attribute.
+     * @generated
+     * @see #isLocked()
+     */
+    void setLocked(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Updaters</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Updaters</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Used by rights management.
+     * Holds ids of user objects and usergroups that are allowed to modify the object.
+     * <!-- end-model-doc -->
+     *
+     * @return the value of the '<em>Updaters</em>' attribute list.
+     * @model
+     * @generated
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject_Updaters()
+     */
+    EList<String> getUpdaters();
+
+    /**
+     * Returns the value of the '<em><b>Readers</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Readers</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Used by rights management.
+     * Holds ids of user objects and usergroups that are allowed to read the object.
+     * <!-- end-model-doc -->
+     *
+     * @return the value of the '<em>Readers</em>' attribute list.
+     * @model
+     * @generated
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject_Readers()
+     */
+    EList<String> getReaders();
+
+    /**
+     * Returns the value of the '<em><b>deleted</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>deleted</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>deleted</em>' attribute.
+     * @model
+     * @generated
+     * @see #set_deleted(boolean)
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject__deleted()
+     */
+    boolean is_deleted();
+
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#is_deleted <em>deleted</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>deleted</em>' attribute.
+     * @generated
+     * @see #is_deleted()
+     */
+    void set_deleted(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Conflicting Revs</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Conflicting Revs</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * holds revision ids of revisions which cause conflicts.
+     * <!-- end-model-doc -->
+     *
+     * @return the value of the '<em>Conflicting Revs</em>' attribute list.
+     * @model default="" transient="true"
+     * @generated
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject_ConflictingRevs()
+     */
+    EList<String> getConflictingRevs();
+
+    /**
+     * Returns the value of the '<em><b>DB Collection Key</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @return the value of the '<em>DB Collection Key</em>' attribute.
+     * @model transient="true"
+     * @generated
+     * @see #setDBCollectionKey(String)
+     * @see org.bbaw.bts.btsmodel.BtsmodelPackage#getBTSDBBaseObject_DBCollectionKey()
+     */
+    String getDBCollectionKey();
+
+    /**
+     * Sets the value of the '{@link org.bbaw.bts.btsmodel.BTSDBBaseObject#getDBCollectionKey <em>DB Collection Key</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @param value the new value of the '<em>DB Collection Key</em>' attribute.
+     * @generated
+     * @see #getDBCollectionKey()
+     */
+    void setDBCollectionKey(String value);
+
+} // BTSDBBaseObject

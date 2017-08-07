@@ -1,0 +1,346 @@
+/*
+  This file is part of Berlin Text System.
+
+  The software Berlin Text System serves as a client user interface for working with
+  text corpus data. See: aaew.bbaw.de
+
+  The software Berlin Text System was developed at the Berlin-Brandenburg Academy
+  of Sciences and Humanities, Jägerstr. 22/23, D-10117 Berlin.
+  www.bbaw.de
+
+  Copyright (C) 2013-2015  Berlin-Brandenburg Academy
+  of Sciences and Humanities
+
+  The software Berlin Text System was developed by @author: Christoph Plutte.
+
+  Berlin Text System is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  Berlin Text System is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public License
+  along with Berlin Text System.
+  If not, see <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ */
+package org.bbaw.bts.corpus.btsCorpusModel.impl;
+
+import org.bbaw.bts.btsmodel.impl.BTSObjectImpl;
+import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
+import org.bbaw.bts.corpus.btsCorpusModel.BTSPassport;
+import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>BTS Corpus Object</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * <ul>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.impl.BTSCorpusObjectImpl#getPassport <em>Passport</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.impl.BTSCorpusObjectImpl#getCorpusPrefix <em>Corpus Prefix</em>}</li>
+ * <li>{@link org.bbaw.bts.corpus.btsCorpusModel.impl.BTSCorpusObjectImpl#getWorkPhase <em>Work Phase</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @generated
+ */
+public abstract class BTSCorpusObjectImpl extends BTSObjectImpl implements BTSCorpusObject {
+    /**
+     * The default value of the '{@link #getCorpusPrefix() <em>Corpus Prefix</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getCorpusPrefix()
+     */
+    protected static final String CORPUS_PREFIX_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getWorkPhase() <em>Work Phase</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getWorkPhase()
+     */
+    protected static final String WORK_PHASE_EDEFAULT = null;
+    /**
+     * The cached value of the '{@link #getPassport() <em>Passport</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getPassport()
+     */
+    protected BTSPassport passport;
+    /**
+     * The cached value of the '{@link #getCorpusPrefix() <em>Corpus Prefix</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getCorpusPrefix()
+     */
+    protected String corpusPrefix = CORPUS_PREFIX_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getWorkPhase() <em>Work Phase</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     * @ordered
+     * @see #getWorkPhase()
+     */
+    protected String workPhase = WORK_PHASE_EDEFAULT;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    protected BTSCorpusObjectImpl() {
+        super();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BtsCorpusModelPackage.Literals.BTS_CORPUS_OBJECT;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public BTSPassport getPassport() {
+        return passport;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setPassport(BTSPassport newPassport) {
+        if (newPassport != passport) {
+            NotificationChain msgs = null;
+            if (passport != null)
+                msgs = ((InternalEObject) passport).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT, null, msgs);
+            if (newPassport != null)
+                msgs = ((InternalEObject) newPassport).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT, null, msgs);
+            msgs = basicSetPassport(newPassport, msgs);
+            if (msgs != null) msgs.dispatch();
+        } else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT, newPassport, newPassport));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public NotificationChain basicSetPassport(BTSPassport newPassport, NotificationChain msgs) {
+        BTSPassport oldPassport = passport;
+        passport = newPassport;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT, oldPassport, newPassport);
+            if (msgs == null) msgs = notification;
+            else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generatedNOT
+     */
+    public String getCorpusPrefix() {
+        if (dBCollectionKey != null) {
+            String[] arr = dBCollectionKey.split("_");
+            if (arr.length > 2) {
+                corpusPrefix = arr[arr.length - 1];
+            }
+        }
+        return corpusPrefix;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setCorpusPrefix(String newCorpusPrefix) {
+        String oldCorpusPrefix = corpusPrefix;
+        corpusPrefix = newCorpusPrefix;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsCorpusModelPackage.BTS_CORPUS_OBJECT__CORPUS_PREFIX, oldCorpusPrefix, corpusPrefix));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public String getWorkPhase() {
+        return workPhase;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    public void setWorkPhase(String newWorkPhase) {
+        String oldWorkPhase = workPhase;
+        workPhase = newWorkPhase;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BtsCorpusModelPackage.BTS_CORPUS_OBJECT__WORK_PHASE, oldWorkPhase, workPhase));
+    }
+
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT:
+                return basicSetPassport(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT:
+                return getPassport();
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__CORPUS_PREFIX:
+                return getCorpusPrefix();
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__WORK_PHASE:
+                return getWorkPhase();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT:
+                setPassport((BTSPassport) newValue);
+                return;
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__CORPUS_PREFIX:
+                setCorpusPrefix((String) newValue);
+                return;
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__WORK_PHASE:
+                setWorkPhase((String) newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT:
+                setPassport(null);
+                return;
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__CORPUS_PREFIX:
+                setCorpusPrefix(CORPUS_PREFIX_EDEFAULT);
+                return;
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__WORK_PHASE:
+                setWorkPhase(WORK_PHASE_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__PASSPORT:
+                return passport != null;
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__CORPUS_PREFIX:
+                return CORPUS_PREFIX_EDEFAULT == null ? corpusPrefix != null : !CORPUS_PREFIX_EDEFAULT.equals(corpusPrefix);
+            case BtsCorpusModelPackage.BTS_CORPUS_OBJECT__WORK_PHASE:
+                return WORK_PHASE_EDEFAULT == null ? workPhase != null : !WORK_PHASE_EDEFAULT.equals(workPhase);
+        }
+        return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     *
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (corpusPrefix: ");
+        result.append(corpusPrefix);
+        result.append(", workPhase: ");
+        result.append(workPhase);
+        result.append(')');
+        return result.toString();
+    }
+
+} //BTSCorpusObjectImpl
