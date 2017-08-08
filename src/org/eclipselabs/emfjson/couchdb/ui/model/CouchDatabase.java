@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.codehaus.jackson.JsonNode;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class CouchDatabase {
 
@@ -38,11 +38,11 @@ public class CouchDatabase {
         List<CouchDocument> documents = new ArrayList<>();
         JsonNode rows = org.eclipselabs.emfjson.couchdb.internal.CouchDB.getListOfDocuments(couchDB.getURL() + "/" + name);
         if (rows != null && rows.isArray()) {
-            for (Iterator<JsonNode> it = rows.getElements(); it.hasNext(); ) {
+            for (Iterator<JsonNode> it = rows.elements(); it.hasNext(); ) {
                 JsonNode node = it.next();
                 documents.add(new CouchDocument(this,
-                        node.get("id").getTextValue(),
-                        node.get("key").getTextValue(),
+                        node.get("id").asText(),
+                        node.get("key").asText(),
                         node.get("revisions")));
             }
         }

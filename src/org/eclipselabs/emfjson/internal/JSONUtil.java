@@ -4,15 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JSONUtil {
 
     public static JsonParser getJsonParser(URL url) {
-        final JsonFactory jsonFactory = new JsonFactory();
+        final ObjectMapper mapper = new ObjectMapper();
+        final JsonFactory jsonFactory = mapper.getFactory();
         JsonParser jp = null;
         try {
             jp = jsonFactory.createJsonParser(url);
@@ -23,7 +24,8 @@ public class JSONUtil {
     }
 
     public static JsonParser getJsonParser(InputStream inStream) {
-        final JsonFactory jsonFactory = new JsonFactory();
+        final ObjectMapper mapper = new ObjectMapper();
+        final JsonFactory jsonFactory = mapper.getFactory();
         JsonParser jp = null;
         try {
             jp = jsonFactory.createJsonParser(inStream);

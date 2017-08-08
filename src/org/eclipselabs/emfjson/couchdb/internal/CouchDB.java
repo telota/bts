@@ -23,13 +23,13 @@ import java.util.Iterator;
 
 import javax.xml.ws.http.HTTPException;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ObjectNode;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipselabs.emfjson.internal.JSONSave;
 
@@ -187,10 +187,10 @@ public class CouchDB {
 
             if (node != null) {
                 if (node.isArray()) {
-                    for (Iterator<JsonNode> it = node.getElements(); it.hasNext() && result == 0; ) {
+                    for (Iterator<JsonNode> it = node.elements(); it.hasNext() && result == 0; ) {
                         JsonNode n = it.next();
 
-                        if (database.equalsIgnoreCase(n.getTextValue())) {
+                        if (database.equalsIgnoreCase(n.asText())) {
                             result = 1;
                         }
                     }
@@ -219,9 +219,9 @@ public class CouchDB {
 
                     String[] result = new String[1];
 
-                    for (Iterator<JsonNode> it = node.getElements(); it.hasNext(); ) {
+                    for (Iterator<JsonNode> it = node.elements(); it.hasNext(); ) {
                         JsonNode n = it.next();
-                        String value = n.getTextValue();
+                        String value = n.asText();
 
                         if (!value.startsWith("_")) {
                             result[result.length - 1] = value;
@@ -275,12 +275,12 @@ public class CouchDB {
         if (rootNode.isObject()) {
             JsonNode okNode = rootNode.findValue("ok");
 
-            if (okNode.getBooleanValue()) {
+            if (okNode.asBoolean()) {
                 JsonNode idNode = rootNode.findValue("id");
 
                 //plutte added check if baseURI not already ends with id
-                if (!baseURI.path().endsWith(idNode.getTextValue())) {
-                    result = baseURI.appendSegment(idNode.getTextValue());
+                if (!baseURI.path().endsWith(idNode.asText())) {
+                    result = baseURI.appendSegment(idNode.asText());
                 } else {
                     result = baseURI;
                 }
@@ -293,7 +293,7 @@ public class CouchDB {
         try {
             HttpURLConnection connection = getGetConnection(uri);
             JsonNode node = getRootNode(connection.getInputStream());
-            return node.findValue(rev).getTextValue();
+            return node.findValue(rev).asText();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -301,7 +301,7 @@ public class CouchDB {
     }
 
     public static URI createOrUpdateDocument(URI uri, JSONSave writer, JsonNode current) {
-        if (current.isArray() && current.getElements().hasNext()) {
+        if (current.isArray() && current.elements().hasNext()) {
             throw new IllegalArgumentException("Document Root must be an Object");
         }
         if (isUpdate(uri)) {
@@ -332,7 +332,8 @@ public class CouchDB {
     }
 
     public static JsonParser getJsonParser(InputStream inStream) {
-        final JsonFactory jsonFactory = new JsonFactory();
+        final ObjectMapper mapper = new ObjectMapper();
+        final JsonFactory jsonFactory = mapper.getFactory();
         JsonParser jp = null;
         try {
             jp = jsonFactory.createJsonParser(inStream);

@@ -25,9 +25,9 @@ import java.util.Map.Entry;
 import java.util.Vector;
 
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.node.ObjectNode;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -85,7 +85,7 @@ public class JSONLoad {
         String fragment = nodeURI.fragment().startsWith("//") ? nodeURI.fragment().substring(2) : nodeURI.fragment();
 
         for (JsonNode node : root.findParents(eID.getName())) {
-            String value = node.get(eID.getName()).getTextValue();
+            String value = node.get(eID.getName()).asText();
             if (value.equals(fragment)) {
                 return node;
             }
@@ -93,7 +93,6 @@ public class JSONLoad {
         return null;
     }
 
-    @SuppressWarnings("deprecation")
     private void init(JsonParser parser, Map<?, ?> options, ResourceSet resourceSet) {
         this.resourceSet = resourceSet;
         JsonNode root = JSONUtil.getRootNode(parser);
@@ -109,7 +108,7 @@ public class JSONLoad {
 
 
             if (root.has(EJS_TYPE_KEYWORD)) {
-                this.rootClass = getEClass(URI.createURI(root.get(EJS_TYPE_KEYWORD).getValueAsText()));
+                this.rootClass = getEClass(URI.createURI(root.get(EJS_TYPE_KEYWORD).asText()));
 
                 //FIXME rename eClass uri, added cplutte
                 if (this.rootClass == null) {
@@ -144,27 +143,25 @@ public class JSONLoad {
         return (EClass) resourceSet.getEObject(uri, false);
     }
 
-    @SuppressWarnings("deprecation")
     private EClass getEClass(JsonNode node, boolean isRoot) throws IllegalArgumentException {
         if (isRoot && rootClass != null) {
             return rootClass;
         } else {
             if (node.has(EJS_TYPE_KEYWORD)) {
-                return getEClass(URI.createURI(node.get(EJS_TYPE_KEYWORD).getValueAsText()));
+                return getEClass(URI.createURI(node.get(EJS_TYPE_KEYWORD).asText()));
             } else {
                 throw new IllegalArgumentException("Cannot find EClass for node " + node);
             }
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void fillNamespaces(JsonNode node) {
         if (node.has(EJS_NS_KEYWORD)) {
             ObjectNode nsNode = (ObjectNode) node.findPath(EJS_NS_KEYWORD);
 
-            for (Iterator<Entry<String, JsonNode>> it = nsNode.getFields(); it.hasNext(); ) {
+            for (Iterator<Entry<String, JsonNode>> it = nsNode.fields(); it.hasNext(); ) {
                 Entry<String, JsonNode> entry = it.next();
-                nsMap.put(entry.getKey(), entry.getValue().getValueAsText());
+                nsMap.put(entry.getKey(), entry.getValue().asText());
             }
         }
     }
@@ -175,7 +172,7 @@ public class JSONLoad {
 
         if (this.rootNode.isArray()) {
 
-            for (Iterator<JsonNode> it = this.rootNode.getElements(); it.hasNext(); ) {
+            for (Iterator<JsonNode> it = this.rootNode.elements(); it.hasNext(); ) {
                 JsonNode node = it.next();
                 EClass eClass = null;
                 try {
@@ -219,7 +216,7 @@ public class JSONLoad {
                     EList<EObject> values = (EList<EObject>) rootObject.eGet(reference);
 
                     if (node.isArray()) {
-                        for (Iterator<JsonNode> it = node.getElements(); it.hasNext(); ) {
+                        for (Iterator<JsonNode> it = node.elements(); it.hasNext(); ) {
                             JsonNode current = it.next();
                             EClass eClass = findEClass(reference.getEReferenceType(), current, root, resource);
                             EObject obj = createEObject(resource, eClass, current);
@@ -270,7 +267,7 @@ public class JSONLoad {
     }
 
     private URI getEObjectURI(JsonNode jsonNode, Resource resource) {
-        final String value = jsonNode.getTextValue();
+        final String value = jsonNode.asText();
         if (value.startsWith("#//")) { // is fragment
             return URI.createURI(resource.getURI() + value);
         } else if (value.contains("#//") && nsMap.keySet().contains(value.split("#//")[0])) {
@@ -289,7 +286,7 @@ public class JSONLoad {
             JsonNode node = root.get(getElementName(attribute));
             if (node != null) {
                 if (node.isArray()) {
-                    for (Iterator<JsonNode> it = node.getElements(); it.hasNext(); ) {
+                    for (Iterator<JsonNode> it = node.elements(); it.hasNext(); ) {
                         setEAttributeValue(obj, attribute, it.next());
                     }
                 } else {
@@ -300,7 +297,7 @@ public class JSONLoad {
     }
 
     protected void setEAttributeValue(EObject obj, EAttribute attribute, JsonNode value) {
-        @SuppressWarnings("deprecation") final String stringValue = value.getValueAsText();
+        @SuppressWarnings("deprecation") final String stringValue = value.asText();
         if (stringValue != null && !stringValue.trim().isEmpty()) {
             Object newValue;
             if (attribute.getEAttributeType().getInstanceClass().isEnum()) {
@@ -366,7 +363,7 @@ public class JSONLoad {
 
         if (this.rootNode.isArray()) {
 
-            for (Iterator<JsonNode> it = this.rootNode.getElements(); it.hasNext(); ) {
+            for (Iterator<JsonNode> it = this.rootNode.elements(); it.hasNext(); ) {
                 JsonNode node = it.next();
                 EClass eClass = null;
                 try {
