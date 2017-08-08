@@ -34,7 +34,7 @@ def get_maven_deps(poms):
             version = version.text.strip()
             yield (group, artifact, version)
 
-def fetch_osgi_meta(strip_buildid=True):
+def fetch_osgi_meta(strip_buildid=True, include_requires=False):
     res = requests.get('{}/content.xml.xz'.format(eclipse_site_url))
     tree = etree.fromstring(lzma.decompress(res.content))
     units = tree.findall('units/unit')
@@ -43,7 +43,14 @@ def fetch_osgi_meta(strip_buildid=True):
         version = unit.get('version')
         if strip_buildid:
             version = '.'.join(version.split('.')[:-1])
-        yield (name, version)
+        if not include_requires:
+            yield (name, version)
+        else:
+            reqs = []
+            for req in unit.findall('requires/required'):
+                if req.get('namespace') == 'osgi.bundle':
+                    reqs.append(req.get('name'))
+            yield (name, (version, reqs))
 
 def get_osgi_deps(manifests):
     for lines in manifests:
@@ -80,7 +87,7 @@ def duplicate_versions(deps):
 def _make_table(data):
     data = list(data)
     widths = [ max(len(e[i]) for e in data) for i in range(len(data[0])) ]
-    formats = [ '{{:<{}}}'.format(w) for w in widths ]
+    formats = [ '{{:<{}}}'.format(w) for w in widths[:-1] ] + ['{}']
     return '\n'.join(''.join(fmt.format(field) for fmt,field in zip(formats, row)) for row in data)
 
 if __name__ == '__main__':
@@ -132,14 +139,38 @@ if __name__ == '__main__':
             print()
 
         print('# Eclipse/OSGi dependencies')
-        osgi_meta = dict(fetch_osgi_meta(strip_buildid=False))
+        osgi_meta = dict(fetch_osgi_meta(strip_buildid=False, include_requires=True))
+        included = set()
+        transitive_reqs = set()
         for name, _version in dependencies.OSGI_DEPS:
-            filename = '{}_{}.jar'.format(name, osgi_meta[name])
+            version, reqs = osgi_meta[name]
+            transitive_reqs |= set(reqs)
+            filename = '{}_{}.jar'.format(name, version)
             package_url = '{}/plugins/{}'.format(eclipse_site_url, filename)
+            included.add(name)
             print('sync_deps: {}'.format(filename))
             print('{}:'.format(filename))
             print('\t$(WGET) {}'.format(package_url))
             print()
+        transitive_reqs -= included
+
+        print('# Transitive Eclipse/OSGi dependencies')
+        while transitive_reqs:
+            new_transitive_reqs = set()
+            for name in transitive_reqs:
+                if not name in osgi_meta:
+                    warnings.warn('Transitive dependency {} not found'.format(name))
+                    continue
+                version, reqs = osgi_meta[name]
+                new_transitive_reqs |= set(reqs)
+                filename = '{}_{}.jar'.format(name, version)
+                package_url = '{}/plugins/{}'.format(eclipse_site_url, filename)
+                included.add(name)
+                print('sync_deps: {}'.format(filename))
+                print('{}:'.format(filename))
+                print('\t$(WGET) {}'.format(package_url))
+                print()
+            transitive_reqs = new_transitive_reqs - included
 
     @subcmd
     def extract_mvn_deps(args, **_):

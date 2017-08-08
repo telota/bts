@@ -13,4 +13,12 @@ $(TARGET): manifest.mf $(SOURCES:.java=.class)
 	jar cf $(TARGET) manifest.mf $^
 
 %.class: %.java
-	javac $(JFLAGS) $<
+	@echo -e '\e[37m' javac $< '\e[0m'
+	@echo -ne '\e[93m'
+	@javac $(JFLAGS) $<
+	@echo -ne '\e[0m'
+
+.PHONY: clean
+clean:
+	rm -f $(SOURCES:.java=.class)
+

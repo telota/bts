@@ -5,9 +5,13 @@ WGET ?= wget --timestamping
 
 all: sync_deps
 
-.PHONY: mrproper
-mrproper:
+.PHONY: clean
+clean:
 	rm $(filter-out Makefile $(shell egrep '^sync_deps: ' dependencies.mk|cut -d' ' -f2),$(wildcard *))
+
+.PHONY: mrproper
+mrproper: clean
+	rm $(wildcard *.jar)
 
 include dependencies.mk
 
