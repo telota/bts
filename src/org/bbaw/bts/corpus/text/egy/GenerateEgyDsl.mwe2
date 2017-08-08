@@ -7,7 +7,7 @@ import org.eclipse.xtext.ui.generator.*
 var grammarURI = "classpath:/org/bbaw/bts/corpus/text/egy/EgyDsl.xtext"
 var fileExtensions = "egydsl"
 var projectName = "org.bbaw.bts.corpus.text.egy.egydsl"
-var runtimeProject = "../egydsl"
+var runtimeProject = "../egy"
 var generateXtendStub = true
 var encoding = "UTF-8"
 
@@ -16,7 +16,7 @@ Workflow {
     	scanClassPath = true
     	platformUri = ".."
         uriMap = {
-            from = "platform:/resource/egydsl/"
+            from = "platform:/resource/egy/"
             to = "./"
         }
         uriMap = {
@@ -24,8 +24,8 @@ Workflow {
             to = "/target/src-gen"
         }
         uriMap = {
-            from = "/egydsl/src-gen"
-            to = "/egydsl/target/src-gen"
+            from = "/egy/src-gen"
+            to = "/egy/target/src-gen"
         }
         uriMap = {
             from = "/${projectName}/src-gen"

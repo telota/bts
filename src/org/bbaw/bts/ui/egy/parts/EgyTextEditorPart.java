@@ -673,6 +673,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                     painter = new AnnotationPainter(embeddedEditor.getViewer(),
                             annotationAccess);
 
+                    /* FIXME 01
                     ruler = EmbeddedEditorFactory.getCpAnnotationRuler();
                     oruler = EmbeddedEditorFactory.getOverViewRuler();
 
@@ -684,6 +685,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                         embeddedEditor.getViewer()
                                 .addVerticalRulerColumn(lineNumberRulerColumn);
                     }
+                    */
 
                     embeddedEditor.getViewer().addTextPresentationListener(painter);
                     embeddedEditor.getViewer().addPainter(painter);
@@ -1287,6 +1289,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         painter.modelChanged(embeddedEditor.getViewer().getAnnotationModel());
         embeddedEditorParentComp.layout();
 
+        /* FIXME 01
         // connect ruler to annotationModel
         ruler.setModel(annotationModel);
         ruler.update();
@@ -1295,6 +1298,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         // connect overview ruler to annotationModel
         oruler.setModel(annotationModel);
         oruler.update();
+        */
 
         loading = false;
         delaySelectionJob.schedule();
@@ -1552,9 +1556,11 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                     // TODO this can be improved in order to reduce work load repainting large texts
                     painter.modelChanged(ev);
                     painter.paint(IPainter.INTERNAL);
+                    /* FIXME 01
                     ruler.update();
                     ruler.relayout();
                     oruler.update();
+                    */
                     embeddedEditor.getViewer().getTextWidget().redraw();
                 }
             });
@@ -2196,9 +2202,11 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                             if (painter == null || embeddedEditor.getViewer().getTextWidget().isDisposed()) return;
                             painter.modelChanged(ev);
                             painter.paint(IPainter.INTERNAL);
+                            /* FIXME 01
                             ruler.update();
                             ruler.relayout();
                             oruler.update();
+                            */
                             embeddedEditor.getViewer().getTextWidget().redraw();
                         }
                     });
@@ -2606,8 +2614,9 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 public void run() {
                     AnnotationToolbarItemCreator.processAndUpateToolbarItemsAnnotationShortcut(part,
                             getAnnotationPreferences());
+                    /* FIXME 01
                     configureEditorDrawingStrategies(oruler);
-
+                    */
                 }
             });
 
@@ -2672,10 +2681,14 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                                 strategyId + suffix);
 
                         painter.setAnnotationTypeColor(typeId + suffix, getBackgroundColorTypePath(strategyId));
+                        /* FIXME 01
                         oruler.addAnnotationType(typeId + suffix);
+                        */
                     } else {
                         painter.removeAnnotationType(typeId + suffix);
+                        /* FIXME 01
                         oruler.removeAnnotationType(typeId + suffix);
+                        */
                     }
                 }
                 painter.paint(IPainter.INTERNAL);

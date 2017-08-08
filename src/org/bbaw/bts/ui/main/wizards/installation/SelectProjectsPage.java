@@ -118,53 +118,43 @@ public class SelectProjectsPage extends WizardPage {
     }
 
     private void loadListInput() {
-        try {
-            startupController.setRemoteDBConnection(((InstallationWizard) getWizard()).getRemoteConnection().getUrl(),
-                    ((InstallationWizard) getWizard()).getRemoteConnection().getUser(),
-                    ((InstallationWizard) getWizard()).getRemoteConnection().getPassword());
-        } catch (MalformedURLException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        try {
-            projects = startupController.loadRemoteProjects(((InstallationWizard) getWizard()).getRemoteConnection().getUser(),
-                    ((InstallationWizard) getWizard()).getRemoteConnection().getPassword());
-            comboViewer.setInput(projects);
-            List<BTSProject> availableProjects = new Vector<>(1);
+        startupController.setRemoteDBConnection(((InstallationWizard) getWizard()).getRemoteConnection().getUrl(),
+                ((InstallationWizard) getWizard()).getRemoteConnection().getUser(),
+                ((InstallationWizard) getWizard()).getRemoteConnection().getPassword());
+        projects = startupController.loadRemoteProjects(((InstallationWizard) getWizard()).getRemoteConnection().getUser(),
+                ((InstallationWizard) getWizard()).getRemoteConnection().getPassword());
+        comboViewer.setInput(projects);
+        List<BTSProject> availableProjects = new Vector<>(1);
 
-            List<BTSProject> chosenProjects = new Vector<>(1);
-            if (active_projects != null && active_projects.trim().length() > 0) {
-                String[] pros = active_projects.split("\\|");
+        List<BTSProject> chosenProjects = new Vector<>(1);
+        if (active_projects != null && active_projects.trim().length() > 0) {
+            String[] pros = active_projects.split("\\|");
 
-                for (BTSProject pp : projects) {
+            for (BTSProject pp : projects) {
 
-                    boolean found = false;
-                    if (main_project != null && main_project.equals(pp.getPrefix())) {
-                        comboViewer.setSelection(new StructuredSelection(pp));
-                    }
-                    for (String p : pros) {
-                        if (p.equals(pp.getPrefix())) {
-                            chosenProjects.add(pp);
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        availableProjects.add(pp);
+                boolean found = false;
+                if (main_project != null && main_project.equals(pp.getPrefix())) {
+                    comboViewer.setSelection(new StructuredSelection(pp));
+                }
+                for (String p : pros) {
+                    if (p.equals(pp.getPrefix())) {
+                        chosenProjects.add(pp);
+                        found = true;
+                        break;
                     }
                 }
-
+                if (!found) {
+                    availableProjects.add(pp);
+                }
             }
 
-            duallistcomposite.setAvailableContentProvider(new BTSProjectRemovableContentProvider(availableProjects));
-            duallistcomposite.setAvailableLabelProvider(new BTSProjectLabelProvider());
-            chrosenProvider = new BTSProjectRemovableContentProvider(chosenProjects);
-            duallistcomposite.setChosenContentProvider(chrosenProvider);
-            duallistcomposite.setChosenLabelProvider(new BTSProjectLabelProvider());
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
+
+        duallistcomposite.setAvailableContentProvider(new BTSProjectRemovableContentProvider(availableProjects));
+        duallistcomposite.setAvailableLabelProvider(new BTSProjectLabelProvider());
+        chrosenProvider = new BTSProjectRemovableContentProvider(chosenProjects);
+        duallistcomposite.setChosenContentProvider(chrosenProvider);
+        duallistcomposite.setChosenLabelProvider(new BTSProjectLabelProvider());
         loaded = true;
 
     }

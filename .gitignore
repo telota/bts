@@ -1,3 +1,5 @@
 *.jar
 *.class
+*.class.d
+src/classes
 lib/dependencies.mk

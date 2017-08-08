@@ -148,3 +148,8 @@ OSGI_DEPS = [
     ('org.hamcrest.core',                                        '1.3.0'),
     ('org.objectweb.asm',                                        '5.0.1'),
         ]
+
+WEB_DEPS = [
+        ('opal-{version}.jar', 'https://github.com/lcaron/opal/blob/releases/V{version}/opal-{version}.jar?raw=true', '1.0.6'),
+        ('rcptoolbox-{version}.jar', 'https://launchpad.net/rcptoolbox/trunk/{version}/+download/rcptoolbox.{version}.jar', '1.0.10'),
+    ]

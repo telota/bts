@@ -21,7 +21,11 @@ import org.bbaw.bts.core.dao.DBConnectionProvider;
 import org.bbaw.bts.core.dao.GeneralPurposeDao;
 import org.bbaw.bts.core.dao.util.DaoConstants;
 import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
-import org.codehaus.jackson.JsonNode;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.log.Logger;
@@ -78,7 +82,8 @@ public class Backend2ClientUpdateDaoImpl implements Backend2ClientUpdateDao {
      * @return {@link Response}
      */
     public static String modelToString(Object object) {
-        // throw new UnsupportedOperationException();
+        /* FIXME this is crap */
+		final ObjectMapper mapper = new ObjectMapper();
         String string = null;
         Map options = new HashMap<Object, Object>();
         options.put("OPTION_INDENT_OUTPUT", false);
@@ -86,7 +91,11 @@ public class Backend2ClientUpdateDaoImpl implements Backend2ClientUpdateDao {
         if (object instanceof EObject) {
             EObject eo = (EObject) object;
             JsonNode node = js.writeEObject(eo, eo.eResource());
-            string = node.toString();
+            try {
+                string = mapper.writeValueAsString(node);
+            } catch(JsonProcessingException ex) {
+                ex.printStackTrace();
+            }
         } else {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
 

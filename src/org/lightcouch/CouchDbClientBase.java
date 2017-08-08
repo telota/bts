@@ -98,6 +98,10 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+
 /**
  * Base client class to be extended by a concrete subclass, responsible for establishing
  * a connection with the database and the definition of the basic HTTP request handling and validation.
@@ -139,15 +143,20 @@ abstract class CouchDbClientBase {
      * @return {@link Response}
      */
     public static String modelToString(Object object) {
-//		throw new UnsupportedOperationException();
+        /* FIXME this is crap */
+		final ObjectMapper mapper = new ObjectMapper();
         String string = null;
         Map options = new HashMap<Object, Object>();
         options.put(EMFJs.OPTION_INDENT_OUTPUT, false);
         JSONSave js = new JSONSave(options);
         if (object instanceof EObject) {
             EObject eo = (EObject) object;
-            org.codehaus.jackson.JsonNode node = js.writeEObject(eo, eo.eResource());
-            string = node.toString();
+            JsonNode node = js.writeEObject(eo, eo.eResource());
+            try {
+                string = mapper.writeValueAsString(node);
+            } catch(JsonProcessingException ex) {
+                ex.printStackTrace();
+            }
         } else {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
 

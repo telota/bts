@@ -150,7 +150,7 @@ if __name__ == '__main__':
             included.add(name)
             print('sync_deps: {}'.format(filename))
             print('{}:'.format(filename))
-            print('\t$(WGET) {}'.format(package_url))
+            print('\t$(WGET) -O $@ {}'.format(package_url))
             print()
         transitive_reqs -= included
 
@@ -168,9 +168,17 @@ if __name__ == '__main__':
                 included.add(name)
                 print('sync_deps: {}'.format(filename))
                 print('{}:'.format(filename))
-                print('\t$(WGET) {}'.format(package_url))
+                print('\t$(WGET) -O $@ {}'.format(package_url))
                 print()
             transitive_reqs = new_transitive_reqs - included
+
+        print('# Web dependencies')
+        for filename, url, version in dependencies.WEB_DEPS:
+            filename, url = filename.format(version=version), url.format(version=version)
+            print('sync_deps: {}'.format(filename))
+            print('{}:'.format(filename))
+            print('\t$(WGET) -O $@ {}'.format(url))
+            print()
 
     @subcmd
     def extract_mvn_deps(args, **_):

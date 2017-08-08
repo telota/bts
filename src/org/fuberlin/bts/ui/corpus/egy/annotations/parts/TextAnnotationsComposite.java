@@ -112,6 +112,10 @@ import org.fuberlin.bts.ui.corpus.egy.annotations.parts.textAnnoations.Annotatio
 import org.fuberlin.bts.ui.corpus.egy.annotations.parts.textAnnoations.PlaceholderFigure;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
+import jsesh.mdcDisplayer.preferences.DrawingSpecification;
+import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
+import jsesh.mdc.MDCSyntaxError;
+import jsesh.mdcDisplayer.draw.MDCDrawingFacade;
 
 
 public class TextAnnotationsComposite extends Composite implements IBTSEditor {

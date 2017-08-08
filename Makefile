@@ -1,6 +1,9 @@
 
+JSESH_LIB ?= $(wildcard ~/JSesh-6.5.5/libJSesh)
 LIB ?= lib
 SRC ?= src
+
+export LIB SRC JSESH_LIB
 
 all: jar
 
@@ -11,8 +14,12 @@ $(LIB)/dependencies.mk: notmaven.py dependencies.py
 sync_deps: $(LIB)/dependencies.mk
 	$(MAKE) -C $(LIB)
 
+.PHONY: generate_sources
+generate_sources: sync_deps
+	$(MAKE) -C $(SRC) generate_sources
+
 .PHONY: jar
-jar: $(LIB)/dependencies.mk sync_deps
+jar: $(LIB)/dependencies.mk generate_sources
 	$(MAKE) -C $(SRC)
 
 .PHONY: clean
