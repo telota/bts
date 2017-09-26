@@ -5,5 +5,6 @@ import java.util.Map;
 
 public interface ScatteredCachingPart {
 
-    List<Map> getScatteredCashMaps();
+	List<Map> getScatteredCacheMaps();
+
 }

@@ -6,36 +6,36 @@
         <dependency>
             <groupId>org.bbaw.bts</groupId>
             <artifactId>org.bbaw.bts.model</artifactId>
-            <version>3.1.0-SNAPSHOT</version>
+            <version>3.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bbaw.bts</groupId>
             <artifactId>org.bbaw.bts.core.commons</artifactId>
-            <version>3.1.0-SNAPSHOT</version>
+            <version>3.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bbaw.bts</groupId>
             <artifactId>org.bbaw.bts.ui.resources</artifactId>
-            <version>3.1.0-SNAPSHOT</version>
+            <version>3.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bbaw.bts</groupId>
             <artifactId>org.bbaw.bts.core.controller</artifactId>
-            <version>3.1.0-SNAPSHOT</version>
+            <version>3.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.bbaw.bts</groupId>
             <artifactId>org.bbaw.bts.core.services</artifactId>
-            <version>3.1.0-SNAPSHOT</version>
+            <version>3.1.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <parent>
     <groupId>org.bbaw.bts</groupId>
     <artifactId>aaew-bts</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1-SNAPSHOT</version>
   </parent>
     <artifactId>org.bbaw.bts.model.edit</artifactId>
-  <version>3.1.0-SNAPSHOT</version>
+  <version>3.1.1-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>

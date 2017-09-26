@@ -8,6 +8,7 @@ import org.bbaw.bts.ui.corpus.dialogs.PassportEditorDialog;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -19,66 +20,54 @@ import org.eclipse.swt.widgets.Shell;
 
 public class RelatedObjectGroupAnnotation extends RelatedObjectGroup {
 
-    @Inject
-    public RelatedObjectGroupAnnotation(Composite parent, BTSObject object) {
-        super(parent, object);
-    }
+	@Inject
+	public RelatedObjectGroupAnnotation(Composite parent, BTSObject object) {
+		super(parent, object);
+	}
 
-    @Override
-    protected void addButtons(Composite composite) {
-        Label editButton = new Label(composite, SWT.PUSH);
-        editButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_EDIT));
-        if (mayEdit()) {
-            editButton.setToolTipText("Edit Annotation");
-        } else {
-            editButton.setToolTipText("Open Annotation");
-        }
-        editButton.setLayoutData(new RowData());
-        editButton.addMouseListener(new MouseAdapter() {
+	@Override
+	protected void addButtons(Composite composite) {
+		Label editButton = new Label(composite, SWT.PUSH);
+		editButton.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_EDIT));
+		editButton.setToolTipText("Open Annotation");
+		editButton.setLayoutData(new RowData());
+		editButton.addMouseListener(new MouseAdapter() {
 
-            @Override
-            public void mouseDown(MouseEvent e) {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				
+				Label l = (Label) e.getSource();
+				l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
+			}
 
-                Label l = (Label) e.getSource();
-                l.setBackground(BTSUIConstants.VIEW_BACKGROUND_LABEL_PRESSED);
-            }
+			@Override
+			public void mouseUp(MouseEvent e) {
+				Label l = (Label) e.getSource();
+				l.setBackground(l.getParent().getBackground());
+				editObject();
+			}
+		});
 
-            @Override
-            public void mouseUp(MouseEvent e) {
-                Label l = (Label) e.getSource();
-                l.setBackground(l.getParent().getBackground());
-                editObject();
-            }
-        });
+	}
 
-    }
 
-    protected void editObject() {
-        IEclipseContext child = context.createChild();
-        child.set(BTSObject.class, getObject());
-        child.set(Shell.class, new Shell());
+	@Override
+	protected Dialog createEditorDialog() {
+		return ContextInjectionFactory.make(
+				PassportEditorDialog.class, context);
+	}
 
-        PassportEditorDialog dialog = ContextInjectionFactory.make(
-                PassportEditorDialog.class, child);
-        dialog.setEditable(mayEdit());
+	@Override
+	protected void refreshContent(BTSObject object) {
+		setExpandItemTitle(object.getName());
+	}
 
-        if (dialog.open() == SWT.OK)
-            refreshContent(getObject());
-
-        child.dispose();
-
-    }
-
-    private void refreshContent(BTSObject object) {
-        setExpandItemTitle(object.getName());
-    }
-
-    @Override
-    protected void fillContentComposite(Composite composite) {
-
-        setExpandBarIcon(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_ANNOTATION));
-        setExpandBarBackground(BTSUIConstants.COLOR_WIHTE);
-        refreshContent(getObject());
-    }
+	@Override
+	protected void fillContentComposite(Composite composite) {
+		
+		setExpandBarIcon(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_ANNOTATION));
+		setExpandBarBackground(BTSUIConstants.COLOR_WIHTE);
+		refreshContent((BTSObject) getObject());
+	}
 
 }

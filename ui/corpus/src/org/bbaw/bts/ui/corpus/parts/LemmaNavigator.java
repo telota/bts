@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.bbaw.bts.btsmodel.BTSComment;
+import org.bbaw.bts.btsmodel.BTSDBBaseObject;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsviewmodel.BtsviewmodelFactory;
 import org.bbaw.bts.btsviewmodel.BtsviewmodelPackage;
@@ -27,13 +28,16 @@ import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
+import org.bbaw.bts.corpus.btsCorpusModel.BTSThsEntry;
 import org.bbaw.bts.searchModel.BTSModelUpdateNotification;
 import org.bbaw.bts.searchModel.BTSQueryResultAbstract;
 import org.bbaw.bts.ui.commons.navigator.StructuredViewerProvider;
 import org.bbaw.bts.ui.commons.search.SearchViewer;
 import org.bbaw.bts.ui.commons.utils.BTSUIConstants;
 import org.bbaw.bts.ui.corpus.dialogs.PassportEditorDialog;
+import org.bbaw.bts.ui.corpus.parts.corpusNavigator.BTSCorpusObjectBySortKeyNameViewerSorter;
 import org.bbaw.bts.ui.corpus.parts.lemma.BTSLemmaBySortKeyNameViewerSorter;
+import org.bbaw.bts.ui.corpus.sorter.BTSEgyObjectByNameViewerSorter;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -86,812 +90,887 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 
-public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPart, SearchViewer, StructuredViewerProvider {
+public class LemmaNavigator extends NavigatorPart implements ScatteredCachingPart, SearchViewer, StructuredViewerProvider
+{
 
-    protected TreeNodeWrapper orphanNode;
-    @Inject
-    private EventBroker eventBroker;
-    @Inject
-    private LemmaNavigatorController lemmaNavigatorController;
-    // Get UISynchronize injected as field
-    @Inject
-    private UISynchronize sync;
-    // use field injection for the service
-    @Inject
-    private ESelectionService selectionService;
-    @Inject
-    private PermissionsAndExpressionsEvaluationController evaluationController;
-    @Inject
-    private BTSResourceProvider resourceProvider;
-    @Inject
-    private EMenuService menuService;
-    @Inject
-    @Optional
-    @Named(BTSUIConstants.SELECTION_TYPE)
-    private String selectionType;
-    @Inject
-    @Active
-    @Optional
-    private Shell parentShell;
-    @Inject
-    private Logger logger;
-    private TreeViewer mainTreeViewer;
-    private StructuredSelection selection;
-    private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<>();
-    private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<>();
-    private ISelectionChangedListener selectionListener;
-    private Composite composite;
-    private Map<Control, Map> cachingMap = new HashMap<>();
-    private TreeNodeWrapper mainRootNode;
-    private CTabFolder tabFolder;
-    private CTabItem mainTabItem;
-    private Composite mainTabItemComp;
-    private CTabItem binTabItem;
-    private Composite binTabItemComp;
-    private TreeViewer bintreeViewer;
-    private boolean loaded;
-    private ViewerSorter sorter;
-    @Inject
-    private IEclipseContext context;
+	@Inject
+	private EventBroker eventBroker;
+	@Inject
+	private LemmaNavigatorController lemmaNavigatorController;
+	// Get UISynchronize injected as field
+	@Inject
+	private UISynchronize sync;
+	// use field injection for the service
+	@Inject
+	private ESelectionService selectionService;
 
-    @PostConstruct
-    public void createComposite(Composite parent) {
-        if (parentShell == null) parentShell = new Shell();
+	@Inject
+	private PermissionsAndExpressionsEvaluationController evaluationController;
 
-        parent.setLayout(new GridLayout());
-        ((GridLayout) parent.getLayout()).marginHeight = 0;
-        ((GridLayout) parent.getLayout()).marginWidth = 0;
-        composite = new Composite(parent, SWT.NONE);
-        composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-        composite.setLayout(new GridLayout());
-        ((GridLayout) composite.getLayout()).marginHeight = 0;
-        ((GridLayout) composite.getLayout()).marginWidth = 0;
+	@Inject
+	private BTSResourceProvider resourceProvider;
 
-        tabFolder = new CTabFolder(composite, SWT.None);
-        tabFolder.setSimple(false);
-        tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
+	@Inject
+	private EMenuService menuService;
+	
+	@Inject
+	@Optional
+	@Named(BTSUIConstants.SELECTION_TYPE)
+	private String selectionType;
 
-        tabFolder.addSelectionListener(new SelectionAdapter() {
+	@Inject
+	@Active
+	@Optional
+	private Shell parentShell;
+	
+	@Inject
+	private Logger logger;
+	
+	private TreeViewer mainTreeViewer;
+	private StructuredSelection selection;
+	private Map<String, BTSQueryResultAbstract> queryResultMap = new HashMap<String, BTSQueryResultAbstract>();
+	private Map<String, List<TreeNodeWrapper>> viewHolderMap = new HashMap<String, List<TreeNodeWrapper>>();
 
-            private TreeNodeWrapper binRootNode;
+	private ISelectionChangedListener selectionListener;
+	private Composite composite;
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                CTabItem ti = tabFolder.getSelection();
-                Object o = ti.getData("key");
-                Object o2 = ti.getData("loaded");
-                Object tv = ti.getData("tv");
-                TreeViewer treeViewer;
-                if (tv != null && tv instanceof TreeViewer) {
-                    treeViewer = (TreeViewer) tv;
-                    treeViewer.refresh();
-                }
-                boolean loaded = false;
-                if (o2 != null && (boolean) o2) {
-                    loaded = true;
-                }
-                if (o != null && o instanceof String) {
-                    if (o.equals("bin")) {
-                        if (!loaded) {
-                            binRootNode = BtsviewmodelFactory.eINSTANCE
-                                    .createTreeNodeWrapper();
-                            loadInput(binTabItemComp, bintreeViewer,
-                                    binRootNode, true);
-                            // ti.setData("loaded", true);
-                        }
+	private Map<Control, Map> cachingMap = new HashMap<Control, Map>();
+	private TreeNodeWrapper mainRootNode;
+	private CTabFolder tabFolder;
+	private CTabItem mainTabItem;
+	private Composite mainTabItemComp;
+	private CTabItem binTabItem;
+	private Composite binTabItemComp;
+	private TreeViewer bintreeViewer;
+	private boolean loaded;
+	protected TreeNodeWrapper orphanNode;
+	private ViewerSorter sorter;
+	@Inject
+	private IEclipseContext context;
+	
+	@PostConstruct
+	public void createComposite(Composite parent)
+	{
+		if (parentShell == null ) parentShell = new Shell();
 
-                    }
-                }
+		parent.setLayout(new GridLayout());
+		((GridLayout) parent.getLayout()).marginHeight = 0;
+		((GridLayout) parent.getLayout()).marginWidth = 0;
+		composite = new Composite(parent, SWT.NONE);
+		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+		composite.setLayout(new GridLayout());
+		((GridLayout) composite.getLayout()).marginHeight = 0;
+		((GridLayout) composite.getLayout()).marginWidth = 0;
 
-            }
-        });
+		tabFolder = new CTabFolder(composite, SWT.None);
+		tabFolder.setSimple(false);
+		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
+		tabFolder.addSelectionListener(new SelectionAdapter() {
+			
+			private TreeNodeWrapper binRootNode;
 
-        // create main tab item
-        mainTabItem = new CTabItem(tabFolder, SWT.NONE);
-        mainTabItem.setImage(resourceProvider.getImage(Display.getDefault(),
-                BTSResourceProvider.IMG_LEMMATA));
-        mainTabItem.setText("WL");
-        mainTabItem.setData("key", "main");
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				CTabItem ti = tabFolder.getSelection();
+				Object o = ti.getData("key");
+				Object o2 = ti.getData("loaded");
+				Object tv = ti.getData("tv");
+				TreeViewer treeViewer;
+				if (tv != null && tv instanceof TreeViewer) {
+					treeViewer = (TreeViewer) tv;
+					treeViewer.refresh();
+				}
+				boolean loaded = false;
+				if (o2 != null && (boolean) o2)
+				{
+					loaded = true;
+				}
+				if (o != null && o instanceof String)
+				{
+					if (((String)o).equals("bin"))
+					{
+						if (!loaded)
+						{
+							binRootNode = BtsviewmodelFactory.eINSTANCE
+									.createTreeNodeWrapper();
+							loadInput(binTabItemComp, bintreeViewer,
+									binRootNode, true);
+							// ti.setData("loaded", true);
+						}
+						
+					}
+				}
+				
+			}
+		});
 
-        mainTabItemComp = new Composite(tabFolder, SWT.NONE);
-        mainTabItemComp.setLayoutData(new GridData(GridData.FILL_BOTH));
-        mainTabItemComp.setLayout(new GridLayout());
-        ((GridLayout) mainTabItemComp.getLayout()).marginHeight = 0;
-        ((GridLayout) mainTabItemComp.getLayout()).marginWidth = 0;
+		// create main tab item
+		mainTabItem = new CTabItem(tabFolder, SWT.NONE);
+		mainTabItem.setImage(resourceProvider.getImage(Display.getDefault(),
+				BTSResourceProvider.IMG_LEMMATA));
+		mainTabItem.setText("WL");
+		mainTabItem.setData("key", "main");
 
-        mainTabItem.setControl(mainTabItemComp);
+		mainTabItemComp = new Composite(tabFolder, SWT.NONE);
+		mainTabItemComp.setLayoutData(new GridData(GridData.FILL_BOTH));
+		mainTabItemComp.setLayout(new GridLayout());
+		((GridLayout) mainTabItemComp.getLayout()).marginHeight = 0;
+		((GridLayout) mainTabItemComp.getLayout()).marginWidth = 0;
 
-        mainTreeViewer = new TreeViewer(mainTabItemComp);
-        mainTreeViewer.getTree()
-                .setLayoutData(new GridData(GridData.FILL_BOTH));
-        mainTreeViewer.getTree().setLayout(new GridLayout());
+		mainTabItem.setControl(mainTabItemComp);
 
-        mainRootNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-        prepareTreeViewer(mainTreeViewer, mainTabItemComp);
-        loadInput(mainTabItemComp, mainTreeViewer, mainRootNode, false);
+		mainTreeViewer = new TreeViewer(mainTabItemComp);
+		mainTreeViewer.getTree()
+				.setLayoutData(new GridData(GridData.FILL_BOTH));
+		mainTreeViewer.getTree().setLayout(new GridLayout());
 
-        mainTabItem.setData("tv", mainTreeViewer);
+		mainRootNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+		prepareTreeViewer(mainTreeViewer, mainTabItemComp);
+		loadInput(mainTabItemComp, mainTreeViewer, mainRootNode, false);
 
-        mainTabItemComp.layout();
+		mainTabItem.setData("tv", mainTreeViewer);
 
+		mainTabItemComp.layout();
+				
+		
+		// create bin tab item
+		binTabItem = new CTabItem(tabFolder, SWT.NONE);
+		binTabItem.setText("Bin");
+		binTabItem.setData("key", "bin");
+		binTabItem.setImage(resourceProvider.getImage(Display.getDefault(),
+				BTSResourceProvider.IMG_BIN));
 
-        // create bin tab item
-        binTabItem = new CTabItem(tabFolder, SWT.NONE);
-        binTabItem.setText("Bin");
-        binTabItem.setData("key", "bin");
-        binTabItem.setImage(resourceProvider.getImage(Display.getDefault(),
-                BTSResourceProvider.IMG_BIN));
+		binTabItemComp = new Composite(tabFolder, SWT.NONE);
+		binTabItemComp.setLayoutData(new GridData(GridData.FILL_BOTH));
+		binTabItemComp.setLayout(new GridLayout());
+		((GridLayout) binTabItemComp.getLayout()).marginHeight = 0;
+		((GridLayout) binTabItemComp.getLayout()).marginWidth = 0;
 
-        binTabItemComp = new Composite(tabFolder, SWT.NONE);
-        binTabItemComp.setLayoutData(new GridData(GridData.FILL_BOTH));
-        binTabItemComp.setLayout(new GridLayout());
-        ((GridLayout) binTabItemComp.getLayout()).marginHeight = 0;
-        ((GridLayout) binTabItemComp.getLayout()).marginWidth = 0;
+		binTabItem.setControl(binTabItemComp);
 
-        binTabItem.setControl(binTabItemComp);
+		bintreeViewer = new TreeViewer(binTabItemComp);
+		bintreeViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
+		bintreeViewer.getTree().setLayout(new GridLayout());
+		binTabItem.setData("tv", bintreeViewer);
+		prepareTreeViewer(bintreeViewer, binTabItemComp);
 
-        bintreeViewer = new TreeViewer(binTabItemComp);
-        bintreeViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
-        bintreeViewer.getTree().setLayout(new GridLayout());
-        binTabItem.setData("tv", bintreeViewer);
-        prepareTreeViewer(bintreeViewer, binTabItemComp);
+		binTabItemComp.layout();
+		// loadInput(mainTabItemComp);
 
-        binTabItemComp.layout();
-        // loadInput(mainTabItemComp);
-
-        tabFolder.setSelection(mainTabItem);
-        parent.layout();
-        loaded = true;
-    }
-
-    private void prepareTreeViewer(final TreeViewer treeViewer,
-                                   final Composite parentControl) {
-        ComposedAdapterFactory factory = new ComposedAdapterFactory(
-                ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-        AdapterFactoryLabelProvider.StyledLabelProvider labelProvider = new AdapterFactoryLabelProvider.StyledLabelProvider(
-                factory, treeViewer);
-        AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
-                factory);
-
-        treeViewer.setContentProvider(contentProvider);
-        treeViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(labelProvider));
-
-        treeViewer.setUseHashlookup(true);
-        selectionListener = new ISelectionChangedListener() {
-
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                selection = (StructuredSelection) event.getSelection();
-                System.out.println(event.getSelection());
-                if (selection.getFirstElement() != null
-                        && selection.getFirstElement() instanceof TreeNodeWrapper) {
-                    final TreeNodeWrapper tn = (TreeNodeWrapper) selection
-                            .getFirstElement();
-                    if (tn.getObject() != null) {
-                        BTSObject o = (BTSObject) tn.getObject();
-                        if (o instanceof BTSCorpusObject) {
-                            lemmaNavigatorController.checkAndFullyLoad((BTSCorpusObject) o, true);
-
-                            if (!tn.isChildrenLoaded() || tn.getChildren().isEmpty()) {
-                                List<TreeNodeWrapper> parents = new Vector<>(1);
-                                parents.add(tn);
-                                tn.setChildrenLoaded(true);
-                                loadChildren(parents, false, parentControl);
-                                Job j = new Job("expand") {
-                                    @Override
-                                    protected IStatus run(IProgressMonitor monitor) {
-                                        sync.asyncExec(new Runnable() {
-                                            public void run() {
-                                                treeViewer.setExpandedState(tn, true);
-                                            }
-                                        });
-                                        return Status.OK_STATUS;
-                                    }
-                                };
-                                j.schedule(750);
-                            }
-                            if (!BTSUIConstants.SELECTION_TYPE_SECONDARY
-                                    .equals(selectionType)) {
-                                selectionService.setSelection(o);
-                            } else {
-                                eventBroker.send(
-                                        "ui_secondarySelection/lemmaNavigator", o);
-
-                            }
-                        }
-
-                    } else if (tn.getLabel().equals(BTSConstants.ORPHANS_NODE_LABEL)) {
-                        tn.setChildrenLoaded(true);
-                        loadOrphans(parentControl, treeViewer, tn);
-                    }
-                    if (selection instanceof TreeSelection) {
-                        TreeSelection ts = (TreeSelection) selection;
-                        List<BTSObject> path = new ArrayList<>(4);
-
-                        for (Object o : ts.getPaths()) {
-
-                            if (o instanceof TreePath) {
-                                TreePath tp = (TreePath) o;
-                                for (int i = 0; i < tp.getSegmentCount(); i++) {
-                                    Object segment = tp.getSegment(i);
-                                    BTSObject btso = (BTSObject) ((TreeNodeWrapper) segment).getObject();
-                                    if (btso != null) {
-                                        path.add(btso);
-                                    }
-                                }
-                                break;
-                            }
-
-                        }
-                        if (event.getSource().equals(mainTreeViewer)) {
-                            eventBroker.post("navigator_path_event_with_root/lemma", path.toArray(new BTSObject[path.size()]));
-                        } else {
-                            eventBroker.post("navigator_path_event_no_root/lemma", path.toArray(new BTSObject[path.size()]));
-                        }
-                    }
-                }
-            }
-        };
-        if (sorter == null) {
-            sorter = ContextInjectionFactory.make(BTSLemmaBySortKeyNameViewerSorter.class, context);
-        }
-
-        treeViewer.setSorter(sorter);
-        treeViewer.addSelectionChangedListener(selectionListener);
-    }
-
-    private void loadOrphans(final Control parentControl,
-                             final TreeViewer treeViewer, final TreeNodeWrapper localOrphanNode) {
-        try {
-            IRunnableWithProgress op = new IRunnableWithProgress() {
-                Map map;
-
-                @Override
-                public void run(IProgressMonitor monitor)
-                        throws InvocationTargetException, InterruptedException {
-                    sync.asyncExec(new Runnable() {
-                        public void run() {
-                            if (parentControl != null && cachingMap.get(parentControl) != null
-                                    && cachingMap.get(parentControl) instanceof Map) {
-                                map = cachingMap.get(parentControl);
-                            } else {
-                                map = null;
-                            }
-                        }
-                    });
-                    List<BTSLemmaEntry> obs;
-                    obs = lemmaNavigatorController
-                            .getOrphanEntries(map,
-                                    treeViewer.getFilters(), monitor);
-                    storeIntoMap(obs, parentControl, true);
-                    final List<TreeNodeWrapper> nodes = lemmaNavigatorController.loadNodes(obs, monitor, true);
-
-                    // If you want to update the UI
-                    sync.asyncExec(new Runnable() {
-                        @Override
-                        public void run() {
-                            localOrphanNode.getChildren().clear();
-                            localOrphanNode.getChildren().addAll(nodes);
-                        }
-                    });
-                }
-            };
-            new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException | InterruptedException e) {
-            // handle exception
-        }
+		tabFolder.setSelection(mainTabItem);
+		parent.layout();
+		loaded = true;
 	}
 
-    private void loadInput(final Control parentControl,
-                           final TreeViewer treeViewer, final TreeNodeWrapper rootNode,
-                           final boolean deleted) {
-        try {
-            IRunnableWithProgress op = new IRunnableWithProgress() {
+	private void prepareTreeViewer(final TreeViewer treeViewer,
+			final Composite parentControl) {
+		ComposedAdapterFactory factory = new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		AdapterFactoryLabelProvider.StyledLabelProvider labelProvider = new AdapterFactoryLabelProvider.StyledLabelProvider(
+				factory, treeViewer);
+		AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
+				factory);
 
-                @Override
-                public void run(IProgressMonitor monitor)
-                        throws InvocationTargetException, InterruptedException {
-                    List<BTSLemmaEntry> obs;
-                    if (!deleted) {
-                        obs = lemmaNavigatorController
-                                .getRootEntries(
-                                        queryResultMap,
-                                        treeViewer,
-                                        rootNode,
-                                        BtsviewmodelPackage.Literals.TREE_NODE_WRAPPER__CHILDREN,
-                                        BTSCorpusConstants.VIEW_LEMMA_ROOT_ENTRIES, monitor);
-                    } else {
-                        obs = lemmaNavigatorController
-                                .getDeletedEntries(
-                                        queryResultMap,
-                                        treeViewer,
-                                        rootNode,
-                                        BtsviewmodelPackage.Literals.TREE_NODE_WRAPPER__CHILDREN,
-                                        BTSCorpusConstants.VIEW_ALL_TERMINATED_BTSLISTENTRIES, monitor);
-                    }
-                    storeIntoMap(obs, parentControl, true);
-                    List<TreeNodeWrapper> nodes = lemmaNavigatorController.loadNodes(obs, monitor, true);
-                    rootNode.getChildren().addAll(nodes);
+		treeViewer.setContentProvider(contentProvider);
+		treeViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(labelProvider));
 
-                    orphanNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-                    orphanNode.setLabel(BTSConstants.ORPHANS_NODE_LABEL);
+		treeViewer.setUseHashlookup(true);
+		selectionListener = new ISelectionChangedListener() {
 
-                    rootNode.getChildren().add(orphanNode);
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				selection = (StructuredSelection) event.getSelection();
+				System.out.println(event.getSelection());
+				if (selection.getFirstElement() != null
+						&& selection.getFirstElement() instanceof TreeNodeWrapper) {
+					final TreeNodeWrapper tn = (TreeNodeWrapper) selection
+							.getFirstElement();
+					if (tn.getObject() != null) {
+						BTSObject o = (BTSObject) tn.getObject();
+						if (o instanceof BTSCorpusObject) {
+							lemmaNavigatorController.checkAndFullyLoad((BTSCorpusObject) o, true);
 
-                    // If you want to update the UI
-                    sync.asyncExec(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadTree(treeViewer, rootNode, parentControl);
-                            treeViewer.addFilter(getDeletedFilter(deleted));
-                            if (BTSUIConstants.SELECTION_TYPE_SECONDARY
-                                    .equals(selectionType)) {
-                                // register context menu on the table
-                                MenuManager menuMgr = new MenuManager("#PopupMenu");
-                                menuMgr.setRemoveAllWhenShown(true);
-                                menuMgr.addMenuListener(new IMenuListener() {
-                                    @Override
-                                    public void menuAboutToShow(IMenuManager manager) {
-                                        Action action = new Action() {
-                                            public void run() {
-                                                openInPassportEditorDialog(treeViewer.getSelection());
-                                            }
+							if (!tn.isChildrenLoaded() || tn.getChildren().isEmpty()) {
+								List<TreeNodeWrapper> parents = new Vector<TreeNodeWrapper>(1);
+								parents.add(tn);
+								tn.setChildrenLoaded(true);
+								loadChildren(parents, false, parentControl);
+								Job j = new Job("expand") {
+									@Override
+									protected IStatus run(IProgressMonitor monitor) {
+										sync.asyncExec(new Runnable() {
+											public void run() {
+												treeViewer.setExpandedState(tn, true);
+											}
+										});
+										return Status.OK_STATUS;
+									}
+								};
+								j.schedule(750);
+							}
+							if (!BTSUIConstants.SELECTION_TYPE_SECONDARY
+									.equals(selectionType)) {
+								selectionService.setSelection(o);
+							} else {
+								eventBroker.send(
+										"ui_secondarySelection/lemmaNavigator", o);
 
+							}
+						}
+						
+					}
+					else if (tn.getLabel().equals(BTSConstants.ORPHANS_NODE_LABEL))
+					{
+						if (true || !tn.isChildrenLoaded())
+						{
+							tn.setChildrenLoaded(true);
+							loadOrphans(parentControl, treeViewer, tn);
+						}
+					}
+					if (selection instanceof TreeSelection)
+					{
+						TreeSelection ts = (TreeSelection) selection;
+						List<BTSObject> path = new ArrayList<BTSObject>(4);
 
-                                        };
-                                        action.setText("Open in Passport Data Editor");
-                                        manager.add(action);
-                                    }
+						for (Object o : ts.getPaths())
+						{
+							
+							if (o instanceof TreePath)
+							{
+								TreePath tp = (TreePath) o;
+								for (int i = 0; i < tp.getSegmentCount(); i++)
+								{
+									Object segment = tp.getSegment(i);
+									BTSObject btso = (BTSObject) ((TreeNodeWrapper)segment).getObject();
+									if (btso != null)
+									{
+										path.add(btso);
+									}
+								}
+								break;
+							}
+							
+						}
+						if (event.getSource().equals(mainTreeViewer))
+						{
+							eventBroker.post("navigator_path_event_with_root/lemma", path.toArray(new BTSObject[path.size()]));
+						}
+						else
+						{
+							eventBroker.post("navigator_path_event_no_root/lemma", path.toArray(new BTSObject[path.size()]));
+						}
+					}
+				}
+			}
+		};
+		if (sorter == null)
+		{
+			sorter = ContextInjectionFactory.make(BTSLemmaBySortKeyNameViewerSorter.class, context);
+		}
 
-                                });
+		treeViewer.setSorter(sorter);
+		treeViewer.addSelectionChangedListener(selectionListener);
+	}
+	
+	private void loadOrphans(final Control parentControl,
+			final TreeViewer treeViewer, final TreeNodeWrapper localOrphanNode) {
+		try {
+			 IRunnableWithProgress op = new IRunnableWithProgress() {
+					Map map;
 
-                                Menu menu = menuMgr.createContextMenu(treeViewer.getTree());
-                                treeViewer.getTree().setMenu(menu);
-                            } else {
-                                // register context menu on the table
-                                menuService.registerContextMenu(
-                                        treeViewer.getControl(),
-                                        BTSPluginIDs.POPMENU_LEMMA_NAVIGATOR_TREE_MENU);
-                            }
-                        }
-                    });
-                }
-            };
-            new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException | InterruptedException e) {
-            // handle exception
-        }
+					@Override
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException 
+					{
+						sync.asyncExec(new Runnable() {
+							public void run() {
+								if (parentControl != null && cachingMap.get(parentControl) != null
+											&& cachingMap.get(parentControl) instanceof Map) {
+									map = (Map) cachingMap.get(parentControl);
+								}
+								else
+								{
+									map = null;
+								}
+							}
+						});
+						List<BTSLemmaEntry> obs;
+						obs = lemmaNavigatorController
+								.getOrphanEntries(map,
+										treeViewer.getFilters(), monitor);
+						storeIntoMap(obs, parentControl, true);
+						final List<TreeNodeWrapper> nodes = lemmaNavigatorController.loadNodes(obs, monitor, true);
+						
+						// If you want to update the UI
+						sync.asyncExec(new Runnable() {
+							@Override
+							public void run() {
+								localOrphanNode.getChildren().clear();
+								localOrphanNode.getChildren().addAll(nodes);
+							}
+						});
+					}};
+		       new ProgressMonitorDialog(parentShell).run(true, true, op);
+		    } catch (InvocationTargetException e) {
+		       // handle exception
+		    } catch (InterruptedException e) {
+		       // handle cancelation
+		    }
+	}
+	
+	private void loadInput(final Control parentControl,
+			final TreeViewer treeViewer, final TreeNodeWrapper rootNode,
+			final boolean deleted) {
+		try {
+			 IRunnableWithProgress op = new IRunnableWithProgress() {
+
+					@Override
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException 
+					{
+						List<BTSLemmaEntry> obs;
+						if (!deleted) {
+							obs = lemmaNavigatorController
+								.getRootEntries(
+										queryResultMap,
+										treeViewer,
+										rootNode,
+										BtsviewmodelPackage.Literals.TREE_NODE_WRAPPER__CHILDREN,
+										BTSCorpusConstants.VIEW_LEMMA_ROOT_ENTRIES, monitor);
+						} else {
+							obs = lemmaNavigatorController
+									.getDeletedEntries(
+											queryResultMap,
+											treeViewer,
+											rootNode,
+											BtsviewmodelPackage.Literals.TREE_NODE_WRAPPER__CHILDREN, 
+											BTSCorpusConstants.VIEW_ALL_TERMINATED_BTSLISTENTRIES, monitor);
+						}
+						storeIntoMap(obs, parentControl, true);
+						List<TreeNodeWrapper> nodes = lemmaNavigatorController.loadNodes(obs, monitor, true);
+						rootNode.getChildren().addAll(nodes);
+						
+						orphanNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+						orphanNode.setLabel(BTSConstants.ORPHANS_NODE_LABEL);
+						
+						rootNode.getChildren().add(orphanNode);
+
+						// If you want to update the UI
+						sync.asyncExec(new Runnable() {
+							@Override
+							public void run() {
+								loadTree(treeViewer, rootNode, parentControl);
+								treeViewer.addFilter(getDeletedFilter(deleted));
+								if (BTSUIConstants.SELECTION_TYPE_SECONDARY
+										.equals(selectionType)) {
+									// register context menu on the table
+									 MenuManager menuMgr = new MenuManager("#PopupMenu"); 
+									 menuMgr.setRemoveAllWhenShown(true);
+									 menuMgr.addMenuListener(new IMenuListener() {
+									     @Override
+									     public void menuAboutToShow(IMenuManager manager) {
+									         Action action = new Action() {
+									      public void run() {
+									                openInPassportEditorDialog(treeViewer.getSelection());
+									      }
+
+										
+									  };
+									  action.setText("Open in Passport Data Editor");
+									  manager.add(action);
+									 }
+
+									 });
+
+									 Menu menu = menuMgr.createContextMenu(treeViewer.getTree());
+									 treeViewer.getTree().setMenu(menu);
+								}
+								else
+								{
+								// register context menu on the table
+								menuService.registerContextMenu(
+										treeViewer.getControl(),
+										BTSPluginIDs.POPMENU_LEMMA_NAVIGATOR_TREE_MENU);
+								}
+							}
+						});
+					}};
+		       new ProgressMonitorDialog(parentShell).run(true, true, op);
+		    } catch (InvocationTargetException e) {
+		       // handle exception
+		    } catch (InterruptedException e) {
+		       // handle cancelation
+		    }
+	}
+	
+	private void openInPassportEditorDialog(
+			ISelection sel) {
+		StructuredSelection localSelection = (StructuredSelection) sel;
+		if (localSelection.getFirstElement() != null
+				&& localSelection.getFirstElement() instanceof TreeNodeWrapper) {
+			TreeNodeWrapper localTreeNode = (TreeNodeWrapper) localSelection
+					.getFirstElement();
+			if (localTreeNode.getObject() != null) {
+				BTSObject localCorpusObject = (BTSObject) localTreeNode.getObject();
+				if (localCorpusObject instanceof BTSCorpusObject) {
+					lemmaNavigatorController.checkAndFullyLoad((BTSCorpusObject) localCorpusObject, true);
+					IEclipseContext child = context.createChild();
+					child.set(BTSObject.class, localCorpusObject);
+					child.set(Shell.class, new Shell());
+					child.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT, false);
+
+					PassportEditorDialog dialog = ContextInjectionFactory.make(
+							PassportEditorDialog.class, child);
+					dialog.open();
+				}
+			}
+		}
+	}
+	
+
+	private void loadChildren(final List<TreeNodeWrapper> parents,
+			boolean includeGrandChildren, final Control parentControl) {
+		
+		try {
+			 IRunnableWithProgress op = new IRunnableWithProgress() {
+
+					@Override
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException 
+					{
+						for (final TreeNodeWrapper parent : parents) {
+							final List<BTSLemmaEntry> children = lemmaNavigatorController
+									.findChildren(
+											(BTSLemmaEntry) parent.getObject(),
+											queryResultMap,
+											mainTreeViewer,
+											parent,
+											BtsviewmodelPackage.Literals.TREE_NODE_WRAPPER__CHILDREN, monitor);
+
+							storeIntoMap(children, parentControl, false);
+							// If you want to update the UI
+							sync.asyncExec(new Runnable() {
+
+								@Override
+								public void run() {
+									System.out.println("add children" + children.size());
+									parent.getChildren().clear();
+									for (BTSObject o : children) {
+										TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE
+												.createTreeNodeWrapper();
+										tn.setObject(o);
+										addTooHolderMap(o, tn);
+										tn.setParent(parent);
+										// grandChildren.add(tn);
+										parent.getChildren().add(tn);
+									}
+									parent.setChildrenLoaded(true);
+								}
+							});
+						}
+						refreshTreeViewer(null);
+
+					}};
+		       new ProgressMonitorDialog(parentShell).run(true, true, op);
+		    } catch (InvocationTargetException e) {
+		       // handle exception
+		    } catch (InterruptedException e) {
+		       // handle cancelation
+		    }
+		
 	}
 
-    private void openInPassportEditorDialog(
-            ISelection sel) {
-        StructuredSelection localSelection = (StructuredSelection) sel;
-        if (localSelection.getFirstElement() != null
-                && localSelection.getFirstElement() instanceof TreeNodeWrapper) {
-            TreeNodeWrapper localTreeNode = (TreeNodeWrapper) localSelection
-                    .getFirstElement();
-            if (localTreeNode.getObject() != null) {
-                BTSObject localCorpusObject = (BTSObject) localTreeNode.getObject();
-                if (localCorpusObject instanceof BTSCorpusObject) {
-                    lemmaNavigatorController.checkAndFullyLoad((BTSCorpusObject) localCorpusObject, true);
-                    IEclipseContext child = context.createChild();
-                    child.set(BTSObject.class, localCorpusObject);
-                    child.set(Shell.class, new Shell());
-                    child.set(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT, false);
+	protected void storeIntoMap(final List<BTSLemmaEntry> children,
+			final Control parentControl, final boolean cacheViewerInput) {
+		if (children.isEmpty())
+		{
+			return;
+		}
+		sync.asyncExec(new Runnable() {
+			public void run() {
+				if (parentControl != null && children != null
+						&& !children.isEmpty()) {
 
-                    PassportEditorDialog dialog = ContextInjectionFactory.make(
-                            PassportEditorDialog.class, child);
-                    dialog.open();
-                }
-            }
-        }
-    }
+					if (cacheViewerInput)
+					{
+						parentControl.setData("objs", children);
+					}
+					Map map = null;
+					if (cachingMap.get(parentControl) != null
+							&& cachingMap.get(parentControl) instanceof Map) {
+						map = (Map) cachingMap.get(parentControl);
+					} else {
+						map = new HashMap<URI, Resource>();
+						cachingMap.put(parentControl, map);
+					}
+					if (map != null) {
+						for (BTSCorpusObject o : children) {
+							if (o.eResource() != null)
+							{
+								map.put(o.eResource().getURI(), o.eResource());
+							}
+						}
+					}
+				}
+			}
+		});
 
-
-    private void loadChildren(final List<TreeNodeWrapper> parents,
-                              boolean includeGrandChildren, final Control parentControl) {
-
-        try {
-            IRunnableWithProgress op = new IRunnableWithProgress() {
-
-                @Override
-                public void run(IProgressMonitor monitor)
-                        throws InvocationTargetException, InterruptedException {
-                    for (final TreeNodeWrapper parent : parents) {
-                        final List<BTSLemmaEntry> children = lemmaNavigatorController
-                                .findChildren(
-                                        (BTSLemmaEntry) parent.getObject(),
-                                        queryResultMap,
-                                        mainTreeViewer,
-                                        parent,
-                                        BtsviewmodelPackage.Literals.TREE_NODE_WRAPPER__CHILDREN, monitor);
-
-                        storeIntoMap(children, parentControl, false);
-                        // If you want to update the UI
-                        sync.asyncExec(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                System.out.println("add children" + children.size());
-                                parent.getChildren().clear();
-                                for (BTSObject o : children) {
-                                    TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE
-                                            .createTreeNodeWrapper();
-                                    tn.setObject(o);
-                                    addTooHolderMap(o, tn);
-                                    tn.setParent(parent);
-                                    // grandChildren.add(tn);
-                                    parent.getChildren().add(tn);
-                                }
-                                parent.setChildrenLoaded(true);
-                            }
-                        });
-                    }
-                    refreshTreeViewer(null);
-
-                }
-            };
-            new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException | InterruptedException e) {
-            // handle exception
-        }
+	}
+	
+	private void addTooHolderMap(BTSObject o, TreeNodeWrapper tn) {
+		List<TreeNodeWrapper> list = viewHolderMap.get(((BTSDBBaseObject) o)
+				.get_id());
+		if (list == null) {
+			list = new Vector<TreeNodeWrapper>(1);
+		}
+		if (!list.contains(tn)) {
+			list.add(tn);
+		}
+		viewHolderMap.put(((BTSDBBaseObject) o).get_id(), list);
 
 	}
 
-    protected void storeIntoMap(final List<BTSLemmaEntry> children,
-                                final Control parentControl, final boolean cacheViewerInput) {
-        if (children.isEmpty()) {
-            return;
-        }
-        sync.asyncExec(new Runnable() {
-            public void run() {
-                if (parentControl != null && children != null
-                        && !children.isEmpty()) {
+	private void loadTree(TreeViewer treeViewer, TreeNodeWrapper root,
+			final Control parentControl) {
+		if (treeViewer.getTree().isDisposed()) return;
+		treeViewer.setInput(root);
+	}
+	
 
-                    if (cacheViewerInput) {
-                        parentControl.setData("objs", children);
-                    }
-                    Map map = null;
-                    if (cachingMap.get(parentControl) != null
-                            && cachingMap.get(parentControl) instanceof Map) {
-                        map = cachingMap.get(parentControl);
-                    } else {
-                        map = new HashMap<URI, Resource>();
-                        cachingMap.put(parentControl, map);
-                    }
-                    if (map != null) {
-                        for (BTSCorpusObject o : children) {
-                            if (o.eResource() != null) {
-                                map.put(o.eResource().getURI(), o.eResource());
-                            }
-                        }
-                    }
-                }
-            }
-        });
+	@Focus
+	public void setFocus()
+	{
+		evaluationController
+				.activateDBCollectionContext(BTSCoreConstants.MAIN_WORD_LIST);
+	}
 
-    }
+	@Inject
+	@Optional
+	void eventReceivedNew(@EventTopic("model_lemma_new_root/*") BTSObject object) {
+		if ((object instanceof BTSLemmaEntry)) {
+			final TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE
+					.createTreeNodeWrapper();
+			tn.setObject(object);
+			mainRootNode.getChildren().add(tn);
+			tn.setParentObject(mainRootNode);
+			sync.asyncExec(new Runnable() {
+				public void run() {
+					if (!mainTreeViewer.getTree().isDisposed())
+					{
+						mainTreeViewer.setSelection(new StructuredSelection(tn), true);
+					}
+				}
+			});
+		}
+	}
+	@Inject
+	@Optional
+	void eventReceivedAdd(@EventTopic("model_lemma_add/*") BTSObject object) {
+		if ((object instanceof BTSLemmaEntry)
+				&& selection != null
+				&& ((TreeNodeWrapper) selection.getFirstElement()).getObject() instanceof BTSLemmaEntry) {
+			final TreeNodeWrapper tn = lemmaNavigatorController.addRelation((BTSLemmaEntry) object,
+					BTSCoreConstants.BASIC_RELATIONS_PARTOF,
+					(TreeNodeWrapper) selection.getFirstElement());
+			sync.asyncExec(new Runnable() {
+				public void run() {
+					if (!mainTreeViewer.getTree().isDisposed())
+					{
+						mainTreeViewer.setSelection(new StructuredSelection(tn), true);
+					}
+				}
+			});
+		}
+	}
+	@Inject
+	@Optional
+	void eventReceivedUpdates(@EventTopic("model_update/async") Object object) {
+		//logger.info("LemmaNavigatorPart eventReceivedUpdates. object: " + object);
 
-    private void addTooHolderMap(BTSObject o, TreeNodeWrapper tn) {
-        List<TreeNodeWrapper> list = viewHolderMap.get(o
-                .get_id());
-        if (list == null) {
-            list = new Vector<>(1);
-        }
-        if (!list.contains(tn)) {
-            list.add(tn);
-        }
-        viewHolderMap.put(o.get_id(), list);
+		if (object instanceof BTSLemmaEntry && selection != null
+				&& selection.getFirstElement() instanceof BTSLemmaEntry) {
+			// corpusNavigatorController.addRelation((BTSCorpusObject) object,
+			// "partOf",
+			// (BTSCorpusObject) selection.getFirstElement(), input);
 
-    }
+			refreshTreeViewer((BTSLemmaEntry) object);
+		} else if (object instanceof BTSLemmaEntry) {
+			refreshTreeViewer((BTSLemmaEntry) object);
+		} else if (object instanceof BTSModelUpdateNotification) {
+			if (((BTSModelUpdateNotification) object).getObject() instanceof BTSComment)
+			{
+				// comment, do nothing
+			}
+			else if (((BTSModelUpdateNotification) object).getObject() instanceof BTSAnnotation)
+			{
+				// comment, do nothing
+			}
+			else if (lemmaNavigatorController.handleModelUpdate(
+					(BTSModelUpdateNotification) object, queryResultMap,
+					viewHolderMap)) {
+				refreshTreeViewer((BTSCorpusObject) ((BTSModelUpdateNotification) object)
+						.getObject());
+			}
 
-    private void loadTree(TreeViewer treeViewer, TreeNodeWrapper root,
-                          final Control parentControl) {
-        if (treeViewer.getTree().isDisposed()) return;
-        treeViewer.setInput(root);
-    }
+		}
+	}
 
-
-    @Focus
-    public void setFocus() {
-        evaluationController
-                .activateDBCollectionContext(BTSCoreConstants.MAIN_WORD_LIST);
-    }
-
-    @Inject
-    @Optional
-    void eventReceivedNew(@EventTopic("model_lemma_new_root/*") BTSObject object) {
-        if ((object instanceof BTSLemmaEntry)) {
-            final TreeNodeWrapper tn = BtsviewmodelFactory.eINSTANCE
-                    .createTreeNodeWrapper();
-            tn.setObject(object);
-            mainRootNode.getChildren().add(tn);
-            tn.setParentObject(mainRootNode);
-            sync.asyncExec(new Runnable() {
-                public void run() {
-                    if (!mainTreeViewer.getTree().isDisposed()) {
-                        mainTreeViewer.setSelection(new StructuredSelection(tn), true);
-                    }
-                }
-            });
-        }
-    }
-
-    @Inject
-    @Optional
-    void eventReceivedAdd(@EventTopic("model_lemma_add/*") BTSObject object) {
-        if ((object instanceof BTSLemmaEntry)
-                && selection != null
-                && ((TreeNodeWrapper) selection.getFirstElement()).getObject() instanceof BTSLemmaEntry) {
-            final TreeNodeWrapper tn = lemmaNavigatorController.addRelation((BTSLemmaEntry) object,
-                    BTSCoreConstants.BASIC_RELATIONS_PARTOF,
-                    (TreeNodeWrapper) selection.getFirstElement());
-            sync.asyncExec(new Runnable() {
-                public void run() {
-                    if (!mainTreeViewer.getTree().isDisposed()) {
-                        mainTreeViewer.setSelection(new StructuredSelection(tn), true);
-                    }
-                }
-            });
-        }
-    }
-
-    @Inject
-    @Optional
-    void eventReceivedUpdates(@EventTopic("model_update/async") Object object) {
-        //logger.info("LemmaNavigatorPart eventReceivedUpdates. object: " + object);
-
-        if (object instanceof BTSLemmaEntry && selection != null
-                && selection.getFirstElement() instanceof BTSLemmaEntry) {
-            // corpusNavigatorController.addRelation((BTSCorpusObject) object,
-            // "partOf",
-            // (BTSCorpusObject) selection.getFirstElement(), input);
-
-            refreshTreeViewer((BTSLemmaEntry) object);
-        } else if (object instanceof BTSLemmaEntry) {
-            refreshTreeViewer((BTSLemmaEntry) object);
-        } else if (object instanceof BTSModelUpdateNotification) {
-            if (((BTSModelUpdateNotification) object).getObject() instanceof BTSComment) {
-                // comment, do nothing
-            } else if (((BTSModelUpdateNotification) object).getObject() instanceof BTSAnnotation) {
-                // comment, do nothing
-            } else if (lemmaNavigatorController.handleModelUpdate(
-                    (BTSModelUpdateNotification) object, queryResultMap,
-                    viewHolderMap)) {
-                refreshTreeViewer((BTSCorpusObject) ((BTSModelUpdateNotification) object)
-                        .getObject());
-            }
-
-        }
-    }
-
-    private void refreshTreeViewer(final BTSCorpusObject btsCorpusObject) {
-        sync.asyncExec(new Runnable() {
-            public void run() {
-                if (!mainTreeViewer.getTree().isDisposed()) {
-
+	private void refreshTreeViewer(final BTSCorpusObject btsCorpusObject) {
+		sync.asyncExec(new Runnable() {
+			public void run() {
+				if (!mainTreeViewer.getTree().isDisposed())
+				{
+					
 //					mainTreeViewer
 //							.removeSelectionChangedListener(selectionListener);
-                    for (TreePath path : mainTreeViewer.getExpandedTreePaths())
-                        System.out.println(path.getLastSegment());
-                    mainTreeViewer.refresh();
+					for (TreePath path : mainTreeViewer.getExpandedTreePaths())
+						System.out.println(path.getLastSegment());
+					mainTreeViewer.refresh();
 //					mainTreeViewer.addSelectionChangedListener(selectionListener);
-                }
-            }
-        });
-
-    }
-
-    @Override
-    public List<Map> getScatteredCashMaps() {
-        final List<Map> maps = new Vector<>(1);
-        maps.addAll(cachingMap.values());
-        return maps;
-    }
-
-    @Override
-    public void dispose() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Inject
-    void setSelection(
-            @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSObject selection) {
-        if (selection == null) {
-            /* implementation not shown */
-        } else {
-            if (!(selection instanceof BTSLemmaEntry)) {
-                if (loaded) {
-                    mainTreeViewer.setSelection(null);
-                }
-            }
-            System.out.println("CorpusNavigator selection received");
-        }
-    }
-
-
-    @Override
-    public StructuredViewer getActiveStructuredViewer() {
-        CTabItem item = tabFolder.getSelection();
-        if (item != null) {
-            Object o = item.getData("tv");
-            if (o instanceof StructuredViewer) {
-                return (StructuredViewer) o;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void search(BTSQueryRequest query, String queryName, String viewerFilterString) {
-        if (query == null) {
-            return;
-        }
-
-        // make new tab, with queryName if name != null
-        createNewSearchTab(query, queryName, null);
-    }
-
-    private void createNewSearchTab(BTSQueryRequest query, String queryName, List<BTSCorpusObject> objects) {
-        // create main tab item
-        CTabItem searchTab = new CTabItem(tabFolder, SWT.NONE);
-        searchTab.setShowClose(true);
-        searchTab.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_SEARCH));
-        if (queryName != null && queryName.trim().length() > 0) {
-            searchTab.setText(queryName);
-        } else {
-            searchTab.setText(Integer.toString(tabFolder.getChildren().length - 2));
-        }
-        if (query != null) {
-            searchTab.setData("key", query.getQueryId());
-        }
-
-        Composite searchTabItemComp = new Composite(tabFolder, SWT.NONE);
-        searchTabItemComp.setLayoutData(new GridData(GridData.FILL_BOTH));
-        searchTabItemComp.setLayout(new GridLayout());
-        ((GridLayout) searchTabItemComp.getLayout()).marginHeight = 0;
-        ((GridLayout) searchTabItemComp.getLayout()).marginWidth = 0;
-
-        searchTab.setControl(searchTabItemComp);
-
-        TreeViewer searchTreeViewer = new TreeViewer(searchTabItemComp);
-        searchTreeViewer.getTree()
-                .setLayoutData(new GridData(GridData.FILL_BOTH));
-        searchTreeViewer.getTree().setLayout(new GridLayout());
-        searchTab.setData("tv", searchTreeViewer);
-        searchTabItemComp.layout();
-        tabFolder.setSelection(searchTab);
-
-        TreeNodeWrapper searchRootNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-        prepareTreeViewer(searchTreeViewer, searchTabItemComp);
-
-        // search
-        searchInput(searchTabItemComp, searchTreeViewer, searchRootNode, query, objects, searchTab);
-
-    }
-
-    private void searchInput(final Composite parentControl,
-                             final TreeViewer treeViewer, final TreeNodeWrapper rootNode,
-                             final BTSQueryRequest query, final List<BTSCorpusObject> objects, final CTabItem searchTab) {
-        try {
-            IRunnableWithProgress op = new IRunnableWithProgress() {
-
-                @Override
-                public void run(IProgressMonitor monitor)
-                        throws InvocationTargetException, InterruptedException {
-                    List<BTSLemmaEntry> obs;
-                    if (objects != null && !objects.isEmpty()) {
-                        obs = new Vector<>(objects.size());
-                        for (BTSCorpusObject o : objects) {
-                            if (o instanceof BTSLemmaEntry) {
-                                obs.add((BTSLemmaEntry) o);
-                            }
-                        }
-                    } else {
-                        obs = lemmaNavigatorController
-                                .getSearchEntries(query,
-                                        queryResultMap,
-                                        treeViewer,
-                                        rootNode,
-                                        BtsviewmodelPackage.Literals.TREE_NODE_WRAPPER__CHILDREN, monitor);
-                    }
-                    if (obs != null && obs.size() > 0) {
-                        storeIntoMap(obs, parentControl, true);
-                        List<TreeNodeWrapper> nodes = lemmaNavigatorController.loadNodes(obs, monitor, true);
-                        rootNode.getChildren().addAll(nodes);
-                    } else {
-                        TreeNodeWrapper emptyNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-                        emptyNode.setLabel("Nothing found that matches your query");
-                        rootNode.getChildren().add(emptyNode);
-                    }
-                    // If you want to update the UI
-                    sync.asyncExec(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadTree(treeViewer, rootNode, parentControl);
-                            treeViewer.addFilter(getDeletedFilter(false));
-                            // register context menu on the table
-                            menuService.registerContextMenu(
-                                    treeViewer.getControl(),
-                                    BTSPluginIDs.POPMENU_LEMMA_NAVIGATOR_TREE_MENU);
-                        }
-                    });
-                }
-            };
-            new ProgressMonitorDialog(parentShell).run(true, true, op);
-        } catch (InvocationTargetException | InterruptedException e) {
-            // handle exception
-        }
+				}
+			}
+		});
 
 	}
 
-    public void setInputList(List<BTSCorpusObject> objects, String queryName) {
-        if (objects == null) {
-            return;
-        }
+	@Override
+	public List<Map> getScatteredCacheMaps() {
+		final List<Map> maps = new Vector<Map>(1);
+		for (Map map : cachingMap.values()) {
+			maps.add(map);
+		}
+		return maps;
+	}
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 
-        // make new tab, with queryName if name != null
-        createNewSearchTab(null, queryName, objects);
+	@Inject
+	void setSelection(
+			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSObject selection) {
+		if (selection == null) {
+			/* implementation not shown */
+		} else {
+			if (!(selection instanceof BTSLemmaEntry)) {
+				if (loaded)
+				{
+					mainTreeViewer.setSelection(null);
+				}
+			}
+			System.out.println("CorpusNavigator selection received");
+		}
+	}
 
-    }
 
-    @Override
-    public void reloadViewerNodes(final StructuredViewer viewer) {
-        // get nodes
-        if (viewer == null) return;
-        final Control parent = viewer.getControl().getParent();
-        if (parent == null) return;
-        Object data = parent.getData("objs");
-        List<BTSLemmaEntry> objs = null;
-        if (data instanceof List<?>) {
-            objs = (List<BTSLemmaEntry>) data;
-        }
-        if (objs == null) return;
-        // filter nodes
-        objs = filterObjects(objs, viewer);
-        // load nodes
-        final TreeNodeWrapper rootNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-        if (objs != null && objs.size() > 0) {
-            List<TreeNodeWrapper> nodes = lemmaNavigatorController.loadNodes(objs, null, true);
-            rootNode.getChildren().addAll(nodes);
-        } else {
-            TreeNodeWrapper emptyNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
-            emptyNode.setLabel("Nothing found that matches your filtering");
-            rootNode.getChildren().add(emptyNode);
-        }
-        // If you want to update the UI
-        sync.asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                loadTree((TreeViewer) viewer, rootNode, parent);
-            }
-        });
+	@Override
+	public StructuredViewer getActiveStructuredViewer() {
+		CTabItem item = tabFolder.getSelection();
+		if (item != null)
+		{
+			Object o = item.getData("tv");
+			if (o instanceof StructuredViewer)
+			{
+				return (StructuredViewer) o;
+			}
+		}
+		return null;
+	}
 
-    }
+	@Override
+	public void search(BTSQueryRequest query, String queryName, String viewerFilterString) {
+		if (query == null)
+		{
+			return;
+		}
+		
+		// make new tab, with queryName if name != null
+		createNewSearchTab(query, queryName, null);
+	}
 
-    private List<BTSLemmaEntry> filterObjects(List<BTSLemmaEntry> objs,
-                                              StructuredViewer viewer) {
-        List<BTSLemmaEntry> filtered = new Vector<>();
-        for (BTSLemmaEntry e : objs) {
-            if (isFiltered(e, viewer)) {
-                filtered.add(e);
-            }
-        }
-        return filtered;
-    }
+	private void createNewSearchTab(BTSQueryRequest query, String queryName, List<BTSCorpusObject> objects) {
+		// create main tab item
+		CTabItem searchTab = new CTabItem(tabFolder, SWT.NONE);
+		searchTab.setShowClose(true);
+		searchTab.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_SEARCH));
+		if (queryName != null && queryName.trim().length() > 0)
+		{
+			searchTab.setText(queryName);
+		}
+		else
+		{
+			searchTab.setText(new Integer(tabFolder.getChildren().length - 2).toString());
+		}
+		if (query != null)
+		{
+			searchTab.setData("key", query.getQueryId());
+		}
 
-    private boolean isFiltered(BTSLemmaEntry e, StructuredViewer viewer) {
-        for (ViewerFilter f : viewer.getFilters()) {
-            if (!f.select(viewer, null, e)) {
-                return false;
-            }
-        }
-        return true;
-    }
+		Composite searchTabItemComp = new Composite(tabFolder, SWT.NONE);
+		searchTabItemComp.setLayoutData(new GridData(GridData.FILL_BOTH));
+		searchTabItemComp.setLayout(new GridLayout());
+		((GridLayout) searchTabItemComp.getLayout()).marginHeight = 0;
+		((GridLayout) searchTabItemComp.getLayout()).marginWidth = 0;
 
-    @Override
-    public String[] getTypesFilterTerms() {
-        return new String[]{BTSConstants.WLIST_ENTRY};
-    }
+		searchTab.setControl(searchTabItemComp);
+
+		TreeViewer searchTreeViewer = new TreeViewer(searchTabItemComp);
+		searchTreeViewer.getTree()
+				.setLayoutData(new GridData(GridData.FILL_BOTH));
+		searchTreeViewer.getTree().setLayout(new GridLayout());
+		searchTab.setData("tv", searchTreeViewer);
+		searchTabItemComp.layout();
+		tabFolder.setSelection(searchTab);
+		
+		TreeNodeWrapper searchRootNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+		prepareTreeViewer(searchTreeViewer, searchTabItemComp);
+		
+		// search
+		searchInput(searchTabItemComp, searchTreeViewer, searchRootNode, query, objects, searchTab);
+
+	}
+
+	private void searchInput(final Composite parentControl,
+			final TreeViewer treeViewer, final TreeNodeWrapper rootNode,
+			final BTSQueryRequest query, final List<BTSCorpusObject> objects, final CTabItem searchTab) {
+		try {
+			 IRunnableWithProgress op = new IRunnableWithProgress() {
+
+					@Override
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException, InterruptedException 
+					{
+						List<BTSLemmaEntry> obs;
+						if (objects != null && !objects.isEmpty())
+						{
+							obs = new Vector<BTSLemmaEntry>(objects.size());
+							for (BTSCorpusObject o : objects)
+							{
+								if (o instanceof BTSLemmaEntry)
+								{
+									obs.add((BTSLemmaEntry) o);
+								}
+							}
+						}
+						else
+						{
+							obs = lemmaNavigatorController
+								.getSearchEntries(query,
+										queryResultMap,
+										treeViewer,
+										rootNode,
+										BtsviewmodelPackage.Literals.TREE_NODE_WRAPPER__CHILDREN, monitor);
+						}
+						if (obs != null && obs.size() > 0)
+						{
+							storeIntoMap(obs, parentControl, true);
+							List<TreeNodeWrapper> nodes = lemmaNavigatorController.loadNodes(obs, monitor, true);
+							rootNode.getChildren().addAll(nodes);
+						}
+						else
+						{
+							TreeNodeWrapper emptyNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+							emptyNode.setLabel("Nothing found that matches your query");
+							rootNode.getChildren().add(emptyNode);
+						}
+						// If you want to update the UI
+						sync.asyncExec(new Runnable() {
+							@Override
+							public void run() {
+								loadTree(treeViewer, rootNode, parentControl);
+								treeViewer.addFilter(getDeletedFilter(false));
+								// register context menu on the table
+								menuService.registerContextMenu(
+										treeViewer.getControl(),
+										BTSPluginIDs.POPMENU_LEMMA_NAVIGATOR_TREE_MENU);
+							}
+						});
+					}};
+		       new ProgressMonitorDialog(parentShell).run(true, true, op);
+		    } catch (InvocationTargetException e) {
+		       // handle exception
+		    } catch (InterruptedException e) {
+		       // handle cancelation
+		    }
+		
+	}
+
+	public void setInputList(List<BTSCorpusObject> objects, String queryName) {
+		if (objects == null)
+		{
+			return;
+		}
+		
+		// make new tab, with queryName if name != null
+		createNewSearchTab(null, queryName, objects);
+		
+	}
+
+	@Override
+	public void reloadViewerNodes(final StructuredViewer viewer) {
+		// get nodes
+		if (viewer == null) return;
+		final Control parent = viewer.getControl().getParent();
+		if (parent == null) return;
+		Object data = parent.getData("objs");
+		List<BTSLemmaEntry> objs = null;
+		if (data instanceof List<?>)
+		{
+			objs = (List<BTSLemmaEntry>) data;
+		}
+		if (objs == null) return;
+		// filter nodes
+		objs = filterObjects(objs, viewer);
+		// load nodes
+		final TreeNodeWrapper rootNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+		if (objs != null && objs.size() > 0)
+		{
+			List<TreeNodeWrapper> nodes = lemmaNavigatorController.loadNodes(objs, null, true);
+			rootNode.getChildren().addAll(nodes);
+		}
+		else
+		{
+			TreeNodeWrapper emptyNode = BtsviewmodelFactory.eINSTANCE.createTreeNodeWrapper();
+			emptyNode.setLabel("Nothing found that matches your filtering");
+			rootNode.getChildren().add(emptyNode);
+		}
+		// If you want to update the UI
+		sync.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				loadTree((TreeViewer) viewer, rootNode, parent);
+			}
+		});
+		
+	}
+
+	private List<BTSLemmaEntry> filterObjects(List<BTSLemmaEntry> objs,
+			StructuredViewer viewer) {
+		List<BTSLemmaEntry> filtered = new Vector<BTSLemmaEntry>();
+		for (BTSLemmaEntry e : objs)
+		{
+			if (isFiltered(e, viewer))
+			{
+				filtered.add(e);
+			}
+		}
+		return filtered;
+	}
+
+	private boolean isFiltered(BTSLemmaEntry e, StructuredViewer viewer) {
+		for (ViewerFilter f : viewer.getFilters())
+		{
+			if (!f.select(viewer, null, e))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	@Override
+	public String[] getTypesFilterTerms() {
+		return new String[]{BTSConstants.WLIST_ENTRY};
+	}
 }

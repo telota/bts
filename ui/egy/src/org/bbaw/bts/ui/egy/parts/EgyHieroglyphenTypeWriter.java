@@ -31,6 +31,7 @@ import jsesh.hieroglyphs.HieroglyphsManager;
 import jsesh.hieroglyphs.ManuelDeCodage;
 import jsesh.mdc.MDCSyntaxError;
 import jsesh.mdc.utils.MDCNormalizer;
+
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.commons.BTSPluginIDs;
@@ -91,461 +92,493 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
-        EventHandler {
-    private static final String MDC_MARKER = "\\red";
-    private static final String MDC_IGNORE = "\\\\i";
-    private static final String HTW_CONTEXT_ID = "org.bbaw.bts.ui.corpus.egy.bindingcontext.htw";
-    protected boolean validMdC;
-    @Inject
-    private UISynchronize sync;
-    @Inject
-    private BTSTextEditorController textEditorController;
-    // @Inject
-    // GraphicSelectionCounterService service;
-    @Inject
-    private EPartService partService;
-    @Inject
-    private EventBroker eventBroker;
-    @Inject
-    private HieroglyphTypeWriterController htwController;
-    @Inject
-    private EContextService contextService;
-    @Inject
-    private MDirtyable dirty;
-    @Inject
-    private EditingDomainController editingDomainController;
-    @Inject
-    private PermissionsAndExpressionsEvaluationController evaluationController;
-    @Inject
-    private BTSResourceProvider resourceProvider;
-    //	@Inject
+		EventHandler
+{
+	private static final String MDC_MARKER = "\\red";
+	private static final String MDC_IGNORE = "\\\\i";
+	private static final String HTW_CONTEXT_ID = "org.bbaw.bts.ui.corpus.egy.bindingcontext.htw";
+	@Inject
+	private UISynchronize sync;
+	@Inject
+	private BTSTextEditorController textEditorController;
+	// @Inject
+	// GraphicSelectionCounterService service;
+	@Inject
+	private EPartService partService;
+	@Inject
+	private EventBroker eventBroker;
+	@Inject
+	private HieroglyphTypeWriterController htwController;
+	@Inject
+	private EContextService contextService;
+	@Inject
+	private MDirtyable dirty;
+	@Inject
+	private EditingDomainController editingDomainController;
+
+	@Inject
+	private PermissionsAndExpressionsEvaluationController evaluationController;
+	
+	@Inject
+	private BTSResourceProvider resourceProvider;
+//	@Inject
 //	@Optional
 //	@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_TRANSCRIBE)
-    private Boolean userMayTranscribe = Boolean.FALSE;
-    // private WordOccurrence wordOccurrence;
-    // private JTextAsWordsEditorPanel ramsesEditor;
-    private Text hierotw_text;
-    private JMDCEditor jseshEditor;
-    private ManuelDeCodage basicManuelDeCodageManager = ManuelDeCodage.getInstance();
-    private HieroglyphsManager jSeshhieroglyphManager = new HieroglyphsManager(basicManuelDeCodageManager);
-    private JMDCEditor jseshEditorProposals;
-    private BTSWord currentWord;
-    private boolean loading = false;
-    private HieroglyphicFontManager fontManager = DefaultHieroglyphicFontManager.getInstance();
-    private ManuelDeCodage manuelDeCodage = ManuelDeCodage.instance;
-    private boolean selfSelecting;
-    private Button firstGlyph_Button;
-    private Button previousGlyph_Button;
-    private Button nextGlyph_Button;
-    private Button lastGlyph_Button;
-    private Spinner glyphOrder_spinner;
-    private Button ignoreGlyph_Button;
-    private EList<BTSGraphic> wordGraphics;
-    private MDCNormalizer mdcNormalizer;
-    private BTSGraphic selectedGlyphe;
-    private String beforeImageMdC;
-    private Map hieroglyphSelectionCounterCacheMap = new HashMap<URI, Object>();
-    private String htwProposals;
-    private BTSIdentifiableItem selectionObject;
-    // boolean if object is loaded into gui
-    private boolean loaded;
-    // boolean if gui is constructed
-    private boolean constructed;
-    // boolean if selection is cached and can be loaded when gui becomes visible or constructed
-    private boolean selectionCached;
-    private EditingDomain editingDomain;
-    private Set<Command> localCommandCacheSet = new HashSet<>();
-    private BTSCorpusObject corpusObject;
-    private CommandStackListener commandStackListener;
-    private MPart part;
-    private String suffix;
-    private String mdcProposals;
-    @Inject
-    private LemmaEditorController lemmaEditorController;
-    private boolean isDirty;
-    private BTSObject lastEvent;
-    private ControlDecoration errorDeco;
+	private Boolean userMayTranscribe = new Boolean(false);
+	
+	private Text hierotw_text;
+	// private WordOccurrence wordOccurrence;
+	// private JTextAsWordsEditorPanel ramsesEditor;
 
-    @Inject
-    public EgyHieroglyphenTypeWriter(EPartService partService) {
-        part = partService.findPart(BTSPluginIDs.PART_ID_HIEROGLYPH_TW);
-    }
+	private JMDCEditor jseshEditor;
+	private ManuelDeCodage basicManuelDeCodageManager = ManuelDeCodage.getInstance();
+	private HieroglyphsManager jSeshhieroglyphManager = new HieroglyphsManager(basicManuelDeCodageManager);
+	private JMDCEditor jseshEditorProposals;
+	private BTSWord currentWord;
 
-    /**
-     * Create contents of the view part.
-     */
-    @PostConstruct
-    public void createControls(Composite parent) {
-        eventBroker.subscribe(BTSUIConstants.EVENT_HTW_SHORTCUT, this);
-        mdcNormalizer = new MDCNormalizer();
-        parent.setLayout(new GridLayout(1, false));
-
-        if (partService != null) {
-            Collection<MPart> parts = partService.getParts();
-
-        }
-
-        Composite composite = new Composite(parent, SWT.NONE);
-        composite.setLayout(new GridLayout(2, false));
-        ((GridLayout) composite.getLayout()).marginHeight = 0;
-        ((GridLayout) composite.getLayout()).marginWidth = 0;
-
-        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	private boolean loading = false;
 
 
-        Label lblNewLabel = new Label(composite, SWT.NONE);
-        lblNewLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+	private HieroglyphicFontManager fontManager = DefaultHieroglyphicFontManager.getInstance();
 
-        lblNewLabel.setText("Type here");
-
-        hierotw_text = new Text(composite, SWT.BORDER);
-        hierotw_text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        ((GridData) hierotw_text.getLayoutData()).horizontalIndent = 12;
-        hierotw_text.addModifyListener(new ModifyListener() {
+	private ManuelDeCodage manuelDeCodage = ManuelDeCodage.instance;
 
 
-            @Override
-            public void modifyText(ModifyEvent e) {
+	private boolean selfSelecting;
+	private Button firstGlyph_Button;
+	private Button previousGlyph_Button;
+	private Button nextGlyph_Button;
+	private Button lastGlyph_Button;
+	private Spinner glyphOrder_spinner;
+	private Button ignoreGlyph_Button;
+	private EList<BTSGraphic> wordGraphics;
+	private MDCNormalizer mdcNormalizer;
+	private BTSGraphic selectedGlyphe;
+	private String beforeImageMdC;
+	private Map<URI, Object> hieroglyphSelectionCounterCacheMap = new HashMap<URI, Object>();
+	private String htwProposals;
+	private BTSIdentifiableItem selectionObject;
+	// boolean if object is loaded into gui
+	private boolean loaded;
 
-                if (!loading) {
-                    validMdC = validateHieroInput(hierotw_text.getText());
-                    showInvalidMessage(validMdC);
+	// boolean if gui is constructed
+	private boolean constructed;
 
-                    if (!validMdC) {
-                        return;
-                    }
+	// boolean if selection is cached and can be loaded when gui becomes visible or constructed
+	private boolean selectionCached;
+	private EditingDomain editingDomain;
+	private Set<Command> localCommandCacheSet = new HashSet<Command>();
+	private BTSCorpusObject corpusObject;
+	private CommandStackListener commandStackListener;
+	private MPart part;
+	
+	private String suffix;
+	private String mdcProposals;
+	
+	@Inject
+	private LemmaEditorController lemmaEditorController;
+	private boolean isDirty;
+	private BTSObject lastEvent;
+	private ControlDecoration errorDeco;
+	protected boolean validMdC;
 
-                    String[] arr = getInteralProSuffix(hierotw_text.getText());
-                    String internalSuffix = arr[1];
+	@Inject
+	public EgyHieroglyphenTypeWriter(EPartService partService)
+	{
+		part = partService.findPart(BTSPluginIDs.PART_ID_HIEROGLYPH_TW);
+	}
 
-                    if (internalSuffix.equals(suffix)) {
-                        return;
-                    }
-                    setDirty(true);
-                    suffix = internalSuffix;
-                    jseshEditorProposals.clearText();
-                    String normalizedMdC = suffix;
-                    try {
-                        normalizedMdC = mdcNormalizer.normalize(suffix);
-                    } catch (MDCSyntaxError ee) {
-                        ee.printStackTrace();
-                    }
-                    if (normalizedMdC != null && !"".equals(normalizedMdC)) {
+	/**
+	 * Create contents of the view part.
+	 */
+	@PostConstruct
+	public void createControls(Composite parent)
+	{
+		eventBroker.subscribe(BTSUIConstants.EVENT_HTW_SHORTCUT, this);
+		mdcNormalizer = new MDCNormalizer();
+		parent.setLayout(new GridLayout(1, false));
 
-                        mdcProposals = getHieroglypheProposals(normalizedMdC);
+		if (partService != null)
+		{
+			Collection<MPart> parts = partService.getParts();
 
-                        if (mdcProposals.length() > 1) {
-                            mdcProposals = mdcProposals.substring(1, mdcProposals.length());
-                            System.out.println(mdcProposals);
-                            jseshEditorProposals.setMDCText(mdcProposals);
-                        }
-                        setHiertTWText(arr[0]);
+		}
 
-                    }
+		Composite composite = new Composite(parent, SWT.NONE);
+		composite.setLayout(new GridLayout(2, false));
+		((GridLayout) composite.getLayout()).marginHeight = 0;
+		((GridLayout) composite.getLayout()).marginWidth = 0;
 
-
-                }
-
-            }
-        });
-        errorDeco = new ControlDecoration(hierotw_text, SWT.TOP | SWT.LEFT);
-
-        // re-use an existing image
-        // set description and image
-        errorDeco.setDescriptionText("This Manuel de Codage string is invalid.");
-        errorDeco.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_ERROR_TSK));
-        errorDeco.hide();
-
-        hierotw_text.addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) {
-                    shiftCaret(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT);
-                } else if (e.stateMask == SWT.CTRL && Character.isDigit(e.character)) {
-                    System.out.println(Character.getNumericValue(e.character));
-                    selectMdCProposal(Character.getNumericValue(e.character));
-                }
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 
-            }
-        });
-        Group manageGlyphs_composite = new Group(parent, SWT.NONE);
-        manageGlyphs_composite.setLayout(new GridLayout(8, false));
-        manageGlyphs_composite.setLayoutData(new GridData(SWT.FILL, SWT.TOP,
-                true, false, 1, 1));
+		Label lblNewLabel = new Label(composite, SWT.NONE);
+		lblNewLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 
-        manageGlyphs_composite.setText("Select Single Glyphs");
+		lblNewLabel.setText("Type here");
 
-        firstGlyph_Button = new Button(manageGlyphs_composite, SWT.NONE);
-        firstGlyph_Button.setText("|<");
-        firstGlyph_Button.addSelectionListener(new SelectionAdapter() {
+		hierotw_text = new Text(composite, SWT.BORDER);
+		hierotw_text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		((GridData)hierotw_text.getLayoutData()).horizontalIndent = 12;
+		hierotw_text.addModifyListener(new ModifyListener()
+		{
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                shiftGlyphSelection(-1000);
 
-            }
-        });
 
-        previousGlyph_Button = new Button(manageGlyphs_composite, SWT.NONE);
-        previousGlyph_Button.setText("<");
-        previousGlyph_Button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void modifyText(ModifyEvent e)
+			{
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                shiftGlyphSelection(-1);
+				if (!loading)
+				{
+					validMdC = validateHieroInput(hierotw_text.getText());
+					showInvalidMessage(validMdC);
 
-            }
-        });
-        nextGlyph_Button = new Button(manageGlyphs_composite, SWT.NONE);
-        nextGlyph_Button.setText(">");
-        nextGlyph_Button.addSelectionListener(new SelectionAdapter() {
+					if (!validMdC)
+					{
+						return;
+					}
+					
+					String[] arr = getInteralProSuffix(hierotw_text.getText());
+					String internalSuffix = arr[1];
+					
+					if (internalSuffix.equals(suffix))
+					{
+						return;
+					}
+					setDirty(true);
+					suffix = internalSuffix;
+					jseshEditorProposals.clearText();
+					String normalizedMdC = suffix;
+					try {
+						normalizedMdC = mdcNormalizer.normalize(suffix);
+					} catch (MDCSyntaxError ee) {
+						ee.printStackTrace();
+					}
+					if (normalizedMdC != null && !"".equals(normalizedMdC)) {
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                shiftGlyphSelection(1);
+						mdcProposals = getHieroglypheProposals(normalizedMdC);
 
-            }
-        });
-        lastGlyph_Button = new Button(manageGlyphs_composite, SWT.NONE);
-        lastGlyph_Button.setText(">|");
-        lastGlyph_Button.addSelectionListener(new SelectionAdapter() {
+						if (mdcProposals.length() > 1) {
+							mdcProposals = mdcProposals.substring(1, mdcProposals.length());
+							System.out.println(mdcProposals);
+							jseshEditorProposals.setMDCText(mdcProposals);
+						}
+						setHiertTWText(arr[0] );
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                shiftGlyphSelection(1000);
+					}
+					
+					
+				}
 
-            }
-        });
-        Label lblNewLabel_1 = new Label(manageGlyphs_composite, SWT.NONE);
-        lblNewLabel_1.setText("Order in Sentence");
+			}
+		});
+		errorDeco = new ControlDecoration(hierotw_text, SWT.TOP | SWT.LEFT);
 
-        glyphOrder_spinner = new Spinner(manageGlyphs_composite, SWT.BORDER);
-        glyphOrder_spinner.setMaximum(Integer.MAX_VALUE);
-        glyphOrder_spinner.addSelectionListener(new SelectionAdapter() {
+		// re-use an existing image
+		// set description and image
+		errorDeco.setDescriptionText("This Manuel de Codage string is invalid.");
+		errorDeco.setImage(resourceProvider.getImage(Display.getCurrent(), BTSResourceProvider.IMG_ERROR_TSK));
+		errorDeco.hide();
+		
+		hierotw_text.addKeyListener(new KeyListener() {
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                if (selectedGlyphe != null) {
-                    selectedGlyphe.setInnerSentenceOrder(glyphOrder_spinner
-                            .getSelection());
-                }
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
 
-            }
-        });
-        ignoreGlyph_Button = new Button(manageGlyphs_composite, SWT.CHECK);
-        ignoreGlyph_Button.setText("Ignore Glyph");
-        ignoreGlyph_Button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) {
+					shiftCaret(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT);
+				}
+				else if(e.stateMask == SWT.CTRL && Character.isDigit(e.character)){
+					System.out.println(Character.getNumericValue(e.character));
+					selectMdCProposal(Character.getNumericValue(e.character));
+			    }
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                setSelectedGlypheIgnored(ignoreGlyph_Button.getSelection());
 
-            }
-        });
-        Composite comEmbededProposals = new Composite(composite, SWT.EMBEDDED | SWT.NO_BACKGROUND | SWT.BORDER);
-        comEmbededProposals.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true,
-                true, 2, 1));
-        Frame frameProposals = SWT_AWT.new_Frame(comEmbededProposals);
+			}
+		});
+		Group manageGlyphs_composite = new Group(parent, SWT.NONE);
+		manageGlyphs_composite.setLayout(new GridLayout(8, false));
+		manageGlyphs_composite.setLayoutData(new GridData(SWT.FILL, SWT.TOP,
+				true, false, 1, 1));
 
-        jseshEditorProposals = new JMDCEditor();
-        // jseshEditor.setTextDirection(TextDirection.RIGHT_TO_LEFT);
-        // jseshEditor.setTextOrientation(TextOrientation.VERTICAL);
-        jseshEditorProposals.setPreferredSize(new Dimension(500, 40));
+		manageGlyphs_composite.setText("Select Single Glyphs");
 
-        frameProposals.add(jseshEditorProposals);
+		firstGlyph_Button = new Button(manageGlyphs_composite, SWT.NONE);
+		firstGlyph_Button.setText("|<");
+		firstGlyph_Button.addSelectionListener(new SelectionAdapter() {
 
-        comEmbededProposals.layout();
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shiftGlyphSelection(-1000);
 
-        Composite comEmbeded = new Composite(composite, SWT.EMBEDDED | SWT.NO_BACKGROUND | SWT.BORDER);
-        comEmbeded.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
-                2, 1));
+			}
+		});
 
-        // comEmbeded.setLayout(new FillLayout());
-        Frame frame = SWT_AWT.new_Frame(comEmbeded);
+		previousGlyph_Button = new Button(manageGlyphs_composite, SWT.NONE);
+		previousGlyph_Button.setText("<");
+		previousGlyph_Button.addSelectionListener(new SelectionAdapter() {
 
-        jseshEditor = new JMDCEditor();
-        // jseshEditor.setTextDirection(TextDirection.RIGHT_TO_LEFT);
-        // jseshEditor.setTextOrientation(TextOrientation.VERTICAL);
-        jseshEditor.setPreferredSize(new Dimension(500, 40));
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shiftGlyphSelection(-1);
 
-        frame.add(jseshEditor);
+			}
+		});
+		nextGlyph_Button = new Button(manageGlyphs_composite, SWT.NONE);
+		nextGlyph_Button.setText(">");
+		nextGlyph_Button.addSelectionListener(new SelectionAdapter() {
 
-        comEmbeded.layout();
-        constructed = true;
-        if (selectionCached) {
-            setSelectionInteral(currentWord);
-        }
-        setUserMayTranscribeInteral(userMayTranscribe);
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shiftGlyphSelection(1);
 
-    }
+			}
+		});
+		lastGlyph_Button = new Button(manageGlyphs_composite, SWT.NONE);
+		lastGlyph_Button.setText(">|");
+		lastGlyph_Button.addSelectionListener(new SelectionAdapter() {
 
-    protected void showInvalidMessage(boolean valid) {
-        if (valid) errorDeco.hide();
-        else errorDeco.show();
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shiftGlyphSelection(1000);
 
-    }
+			}
+		});
+		Label lblNewLabel_1 = new Label(manageGlyphs_composite, SWT.NONE);
+		lblNewLabel_1.setText("Order in Sentence");
 
-    protected boolean validateHieroInput(String text) {
-        System.out.println(text);
-        if (text.contains("--")) return false;
-        if (text.contains("-:")) return false;
-        if (text.contains(":-")) return false;
-        if (text.contains("-*")) return false;
-        if (text.contains("*-")) return false;
-        if (text.contains(":*")) return false;
-        if (text.contains("*:")) return false;
-        try {
-            if (text.endsWith(":") || text.endsWith("*"))
-                text = text.substring(0, text.length() - 2); // cut away : and *
-        } catch (Exception e) {
-            return false;
-        }
-        try {
-            String normalizedMdC = mdcNormalizer.normalize(text);
-        } catch (MDCSyntaxError ee) {
-            ee.printStackTrace();
-            return false;
-        }
+		glyphOrder_spinner = new Spinner(manageGlyphs_composite, SWT.BORDER);
+		glyphOrder_spinner.setMaximum(Integer.MAX_VALUE);
+		glyphOrder_spinner.addSelectionListener(new SelectionAdapter() {
+		
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (selectedGlyphe != null) {
+					selectedGlyphe.setInnerSentenceOrder(glyphOrder_spinner
+							.getSelection());
+				}
 
-        return true;
-    }
+			}
+		});
+		ignoreGlyph_Button = new Button(manageGlyphs_composite, SWT.CHECK);
+		ignoreGlyph_Button.setText("Ignore Glyph");
+		ignoreGlyph_Button.addSelectionListener(new SelectionAdapter() {
 
-    protected void setDirty(boolean dirty) {
-        this.isDirty = dirty;
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setSelectedGlypheIgnored(ignoreGlyph_Button.getSelection());
 
-    }
+			}
+		});
+		Composite comEmbededProposals = new Composite(composite, SWT.EMBEDDED | SWT.NO_BACKGROUND | SWT.BORDER);
+		comEmbededProposals.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true,
+				true, 2, 1));
+		Frame frameProposals = SWT_AWT.new_Frame(comEmbededProposals);
 
-    private String[] getInteralProSuffix(String hierotwText) {
-        String internalSuffix = "";
-        StringTokenizer tok = new StringTokenizer(hierotwText, ":-<>");
-        while (tok.hasMoreTokens()) {
-            internalSuffix = tok.nextToken();
-        }
-        String base = hierotwText.substring(0, hierotwText.length() - internalSuffix.length());
-        return new String[]{base, internalSuffix};
-    }
+		jseshEditorProposals = new JMDCEditor();
+		// jseshEditor.setTextDirection(TextDirection.RIGHT_TO_LEFT);
+		// jseshEditor.setTextOrientation(TextOrientation.VERTICAL);
+		jseshEditorProposals.setPreferredSize(new Dimension(500, 40));
 
-    private void setHiertTWText(String mdc) {
-        try {
-            System.out.println(mdc);
-            if (mdc.length() > 0 && (!(mdc.endsWith(":") || mdc.endsWith("-")
-                    || mdc.endsWith("<") || mdc.endsWith("*") || mdc
-                    .endsWith("[")))) {
+		frameProposals.add(jseshEditorProposals);
+
+		comEmbededProposals.layout();
+
+		Composite comEmbeded = new Composite(composite, SWT.EMBEDDED | SWT.NO_BACKGROUND | SWT.BORDER);
+		comEmbeded.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
+				2, 1));
+
+		// comEmbeded.setLayout(new FillLayout());
+		Frame frame = SWT_AWT.new_Frame(comEmbeded);
+
+		jseshEditor = new JMDCEditor();
+		// jseshEditor.setTextDirection(TextDirection.RIGHT_TO_LEFT);
+		// jseshEditor.setTextOrientation(TextOrientation.VERTICAL);
+		jseshEditor.setPreferredSize(new Dimension(500, 40));
+
+		frame.add(jseshEditor);
+
+		comEmbeded.layout();
+		constructed = true;
+		if (selectionCached)
+		{
+			setSelectionInteral(currentWord);
+		}
+		setUserMayTranscribeInteral(userMayTranscribe);
+
+	}
+
+	protected void showInvalidMessage(boolean valid) {
+		if (valid) errorDeco.hide();
+		else errorDeco.show();
+		
+	}
+
+	protected boolean validateHieroInput(String text) {
+		System.out.println(text);
+		if (text.contains("--")) return false;
+		if (text.contains("-:")) return false;
+		if (text.contains(":-")) return false;
+		if (text.contains("-*")) return false;
+		if (text.contains("*-")) return false;
+		if (text.contains(":*")) return false;
+		if (text.contains("*:")) return false;
+		try {
+			if (text.endsWith(":") || text.endsWith("*")) text = text.substring(0, text.length() -2); // cut away : and *
+		} catch (Exception e) {
+			return false;
+		}
+		try {
+			String normalizedMdC = mdcNormalizer.normalize(text);
+		} catch (MDCSyntaxError ee) {
+			ee.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+
+	protected void setDirty(boolean dirty) {
+		this.isDirty = dirty;
+		
+	}
+
+	private String[] getInteralProSuffix(String hierotwText) {
+		String internalSuffix = "";
+		StringTokenizer tok = new StringTokenizer(hierotwText, ":-<>");
+		while (tok.hasMoreTokens()) {
+			internalSuffix = tok.nextToken();
+		}
+		String base = hierotwText.substring(0, hierotwText.length() - internalSuffix.length());
+		return new String[]{base, internalSuffix};
+	}
+
+	private void setHiertTWText(String mdc) {
+		try
+		{
+			System.out.println(mdc);
+			if (mdc.length() > 0 && (!(mdc.endsWith(":") || mdc.endsWith("-")
+					|| mdc.endsWith("<") || mdc.endsWith("*") || mdc
+					.endsWith("[")))) {
 //				String c = mdc.substring(0,1).toUpperCase();
 //				if (mdc.length() > 1)
 //				{
 //					c += mdc.substring(1, mdc.length());
 //				}
-                jseshEditor.setMDCText(mdc);
-            } else if (mdc.length() == 0) {
-                jseshEditor.clearText();
-            }
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
+				jseshEditor.setMDCText(mdc);
+			}
+			else if (mdc.length() == 0)
+			{
+				jseshEditor.clearText();
+			}
+		} catch (Exception e1)
+		{
+			e1.printStackTrace();
+		}
+		
+	}
 
-    }
+	protected void selectMdCProposal(int index) {
+		int start = 0;
+		int end = mdcProposals.indexOf("\"" + index + "\"\\red");
+		if (index > 1)
+		{
+			int before = index - 1;
+			start = mdcProposals.indexOf("\"" + before + "\"\\red-");
+			start = start + 8;
+		}
+		String part = mdcProposals.substring(start, end);
+		if (part.contains("-"))
+		{
+			part = part.split("-")[0];
+		}
+		System.out.println(part);
+		jseshEditorProposals.clearText();
+		String mdc = hierotw_text
+				.getText();
+		String[] arr = getInteralProSuffix(hierotw_text.getText());
+		String internalSuffix = arr[1];
+		mdc = mdc.replace(internalSuffix, part);
+		hierotw_text.setText(mdc);
+		hierotw_text.setSelection(hierotw_text.getText().length());
+		setHiertTWText(mdc);
 
-    protected void selectMdCProposal(int index) {
-        int start = 0;
-        int end = mdcProposals.indexOf("\"" + index + "\"\\red");
-        if (index > 1) {
-            int before = index - 1;
-            start = mdcProposals.indexOf("\"" + before + "\"\\red-");
-            start = start + 8;
-        }
-        String part = mdcProposals.substring(start, end);
-        if (part.contains("-")) {
-            part = part.split("-")[0];
-        }
-        System.out.println(part);
-        jseshEditorProposals.clearText();
-        String mdc = hierotw_text
-                .getText();
-        String[] arr = getInteralProSuffix(hierotw_text.getText());
-        String internalSuffix = arr[1];
-        mdc = mdc.replace(internalSuffix, part);
-        hierotw_text.setText(mdc);
-        hierotw_text.setSelection(hierotw_text.getText().length());
-        setHiertTWText(mdc);
+	}
 
-    }
+	private String getHieroglypheProposals(String normalizedMdC) {
 
-    private String getHieroglypheProposals(String normalizedMdC) {
+		String proposals = htwController.getHieroglypheProposalsAsMdCString(
+				normalizedMdC,
+				hieroglyphSelectionCounterCacheMap);
+		htwProposals = proposals;
+		return proposals;
 
-        String proposals = htwController.getHieroglypheProposalsAsMdCString(
-                normalizedMdC,
-                hieroglyphSelectionCounterCacheMap);
-        htwProposals = proposals;
-        return proposals;
+	}
 
-    }
-
-    private void setSelectedGlypheIgnored(boolean selection) {
-        if (selectedGlyphe != null) {
-            Command c = SetCommand.create(editingDomain, selectedGlyphe,
-                    BtsCorpusModelPackage.BTS_GRAPHIC__IGNORED, selection);
-            editingDomain.getCommandStack().execute(c);
-            selectedGlyphe.setIgnored(selection);
-            int selectedGlypheIndex = selectedGlyphe != null ? wordGraphics
-                    .indexOf(selectedGlyphe) : 0;
-            String normalizedMdC = transformWordToMdCString(currentWord,
-                    selectedGlypheIndex);
-            MDCNormalizer d = new MDCNormalizer();
-            try {
-                normalizedMdC = d.normalize(normalizedMdC);
-            } catch (MDCSyntaxError e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+	private void setSelectedGlypheIgnored(boolean selection) {
+		if (selectedGlyphe != null) {
+			Command c = SetCommand.create(editingDomain, selectedGlyphe,
+					BtsCorpusModelPackage.BTS_GRAPHIC__IGNORED, selection);
+			editingDomain.getCommandStack().execute(c);
+			selectedGlyphe.setIgnored(selection);
+			int selectedGlypheIndex = selectedGlyphe != null ? wordGraphics
+					.indexOf(selectedGlyphe) : 0;
+			String normalizedMdC = transformWordToMdCString(currentWord,
+					selectedGlypheIndex);
+			MDCNormalizer d = new MDCNormalizer();
+			try {
+				normalizedMdC = d.normalize(normalizedMdC);
+			} catch (MDCSyntaxError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 //			String glypheSelectedMdC = setGlypheSelectionInMdC(normalizedMdC,
 //					selectedGlypheIndex);
 
-            hierotw_text.setText(normalizedMdC);
-            hierotw_text.setSelection(hierotw_text.getText().length());
-            jseshEditor.setMDCText(normalizedMdC);
-        }
+			hierotw_text.setText(normalizedMdC);
+			hierotw_text.setSelection(hierotw_text.getText().length());
+			jseshEditor.setMDCText(normalizedMdC);
+		}
 
-    }
+	}
 
-    private void shiftGlyphSelection(int i) {
-        BTSGraphic oldGlyphe = selectedGlyphe;
-        int newSelectedGlypheIndex = oldGlyphe != null ? wordGraphics
-                .indexOf(oldGlyphe) : 0;
-        if (i == 1000) // jump to end of line
-        {
-            newSelectedGlypheIndex = wordGraphics.size() - 1;
-        } else if (i == -1000) // jump to start of line
-        {
-            newSelectedGlypheIndex = 0;
-        } else if (oldGlyphe == null) {
-            newSelectedGlypheIndex = 0;
-        } else {
-            newSelectedGlypheIndex += i;
-            newSelectedGlypheIndex = newSelectedGlypheIndex > -1 ? newSelectedGlypheIndex
-                    : 0;
-            newSelectedGlypheIndex = newSelectedGlypheIndex < wordGraphics
-                    .size() ? newSelectedGlypheIndex : wordGraphics.size() - 1;
-        }
-        selectedGlyphe = wordGraphics.get(newSelectedGlypheIndex);
+	private void shiftGlyphSelection(int i) {
+		BTSGraphic oldGlyphe = selectedGlyphe;
+		int selectedGlypheIndex = oldGlyphe != null ? wordGraphics
+				.indexOf(oldGlyphe) : 0;
+		int newSelectedGlypheIndex = selectedGlypheIndex;
+		if (i == 1000) // jump to end of line
+		{
+			newSelectedGlypheIndex = wordGraphics.size() - 1;
+		} else if (i == -1000) // jump to start of line
+		{
+			newSelectedGlypheIndex = 0;
+		} else if (oldGlyphe == null) {
+			newSelectedGlypheIndex = 0;
+		} else {
+			newSelectedGlypheIndex += i;
+			newSelectedGlypheIndex = newSelectedGlypheIndex > -1 ? newSelectedGlypheIndex
+					: 0;
+			newSelectedGlypheIndex = newSelectedGlypheIndex < wordGraphics
+					.size() ? newSelectedGlypheIndex : wordGraphics.size() - 1;
+		}
+		selectedGlyphe = wordGraphics.get(newSelectedGlypheIndex);
+		
+		//ignore button
+		ignoreGlyph_Button.setSelection(selectedGlyphe.isIgnored());
+		glyphOrder_spinner.setSelection(selectedGlyphe.getInnerSentenceOrder());
 
-        //ignore button
-        ignoreGlyph_Button.setSelection(selectedGlyphe.isIgnored());
-        glyphOrder_spinner.setSelection(selectedGlyphe.getInnerSentenceOrder());
+		String glypheSelectedMdC = transformWordToMdCString(currentWord,
+				newSelectedGlypheIndex);
 
-        String glypheSelectedMdC = transformWordToMdCString(currentWord,
-                newSelectedGlypheIndex);
-
-        hierotw_text.setText(glypheSelectedMdC);
-        hierotw_text.setSelection(hierotw_text.getText().length());
-        jseshEditor.setMDCText(glypheSelectedMdC);
+		hierotw_text.setText(glypheSelectedMdC);
+		hierotw_text.setSelection(hierotw_text.getText().length());
+		jseshEditor.setMDCText(glypheSelectedMdC);
 
 //		Binding binding0 = bindingContext.bindValue(
 //				WidgetProperties.selection().observeDelayed(
@@ -561,149 +594,160 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
 //								.value(editingDomain,
 //										BtsCorpusModelPackage.Literals.BTS_GRAPHIC__INNER_SENTENCE_ORDER)
 //								.observe(selectedGlyphe), null, null);
-    }
+	}
 
-    private String setGlypheSelectionInMdC(String normalizedMdC,
-                                           int newSelectedGlypheIndex) {
-        String[] codes = textEditorController
-                .splitSignsKeepDelimeters(normalizedMdC);
-        if (codes.length > newSelectedGlypheIndex) {
-            String selectedCode = codes[newSelectedGlypheIndex];
-            codes[newSelectedGlypheIndex] = textEditorController
-                    .insertMarkerBehindSingleCode(selectedCode, MDC_MARKER);
-        }
-        normalizedMdC = "";
-        for (String s : codes) {
-            normalizedMdC += s;
-        }
-        System.out.println(normalizedMdC);
-        return normalizedMdC;
-    }
+	private String setGlypheSelectionInMdC(String normalizedMdC,
+			int newSelectedGlypheIndex) {
+		String[] codes = textEditorController
+				.splitSignsKeepDelimeters(normalizedMdC);
+		if (codes.length > newSelectedGlypheIndex) {
+			String selectedCode = codes[newSelectedGlypheIndex];
+			codes[newSelectedGlypheIndex] = textEditorController
+					.insertMarkerBehindSingleCode(selectedCode, MDC_MARKER);
+		}
+		normalizedMdC = "";
+		for (String s : codes) {
+			normalizedMdC += s;
+		}
+		System.out.println(normalizedMdC);
+		return normalizedMdC;
+	}
 
 
-    private void shiftCaret(String eventTopic) {
-        System.out.println(eventTopic);
-        saveMdCstring(currentWord);
-        eventBroker.post(eventTopic, eventTopic);
 
-    }
+	private void shiftCaret(String eventTopic) {
+		System.out.println(eventTopic);
+		saveMdCstring(currentWord);
+		eventBroker.post(eventTopic, eventTopic);
 
-    @PreDestroy
-    public void dispose() {
-    }
+	}
 
-    @Focus
-    public void setFocus() {
-        if (hierotw_text != null) {
-            hierotw_text.setFocus();
-        }
+	@PreDestroy
+	public void dispose()
+	{
+	}
+
+	@Focus
+	public void setFocus()
+	{
+		if (hierotw_text != null) {
+			hierotw_text.setFocus();
+		}
 //		contextService.activateContext(HTW_CONTEXT_ID);
-        evaluationController
-                .activateDBCollectionContext(BTSPluginIDs.PREF_MAIN_CORPUS_KEY);
-    }
+		evaluationController
+				.activateDBCollectionContext(BTSPluginIDs.PREF_MAIN_CORPUS_KEY);
+	}
 
-    @Inject
-    void setSelection(
-            @Optional
-            @Named(IServiceConstants.ACTIVE_SELECTION) BTSObject selection) {
-        if (selection == null) return;
-        if (selection.equals(lastEvent)) return;
-        lastEvent = selection;
-        if (part == null) {
-            part = partService.findPart(BTSPluginIDs.PART_ID_LEMMATIZER);
-        }
-        if (constructed) {
-            if (!selfSelecting) {
-                if (corpusObject == null || !selection.equals(corpusObject)) {
-                    if (corpusObject != null) {
-                        saveMdCstring(currentWord);
-                        saveText();
-                    }
-                    if (selection instanceof BTSText) {
-                        purgeAll();
-                        corpusObject = (BTSText) selection;
-                        part.setLabel(selection.getName());
-                        editingDomain = getEditingDomain(corpusObject);
-                        setUserMayTranscribeInteral(userMayTranscribe);
-                    } else if (selection instanceof BTSLemmaEntry) {
-                        purgeAll();
-                        corpusObject = (BTSLemmaEntry) selection;
-                        part.setLabel(selection.getName());
-                        editingDomain = getEditingDomain(corpusObject);
+	@Inject
+	void setSelection(
+			@Optional
+			@Named(IServiceConstants.ACTIVE_SELECTION) BTSObject selection) {
+		if (selection == null) return;
+		if (selection.equals(lastEvent)) return;
+		lastEvent = selection;
+		if (part == null)
+		{
+			part = partService.findPart(BTSPluginIDs.PART_ID_LEMMATIZER);
+		}
+ 		if (constructed) {
+			if (!selfSelecting) {
+				if (corpusObject == null || !selection.equals(corpusObject)) {
+					if (corpusObject != null) {
+						saveMdCstring(currentWord);
+						saveText();
+					}
+					if (selection instanceof BTSText) {
+						purgeAll();
+						corpusObject = (BTSText) selection;
+						part.setLabel(selection.getName());
+						editingDomain = getEditingDomain(corpusObject);
+						setUserMayTranscribeInteral(userMayTranscribe);
+					} else if (selection instanceof BTSLemmaEntry) {
+						purgeAll();
+						corpusObject = (BTSLemmaEntry) selection;
+						part.setLabel(((BTSLemmaEntry) selection).getName());
+						editingDomain = getEditingDomain(corpusObject);
 
-                    } else if (corpusObject != null) {
-                        corpusObject = null;
-                        corpusObject = null;
-                        part.setLabel("Hieroglyph Type Writer");
-                        purgeAll();
-                        loaded = false;
-                    }
-                }
-            } else {
-                selfSelecting = false;
-            }
-        } else if (!selection.equals(corpusObject)) {
-            if (selection instanceof BTSText) {
-                corpusObject = (BTSText) selection;
-                part.setLabel(selection.getName());
-                editingDomain = getEditingDomain(corpusObject);
+					} else if (corpusObject != null){
+						corpusObject = null;
+						corpusObject = null;
+						part.setLabel("Hieroglyph Type Writer");
+						purgeAll();
+						loaded = false;
+					}
+				} 
+			} else {
+				selfSelecting = false;
+			}
+		}
+ 		else if (!selection.equals(corpusObject)) {
+			if (selection instanceof BTSText) {
+				corpusObject = (BTSText) selection;
+				part.setLabel(selection.getName());
+				editingDomain = getEditingDomain(corpusObject);
 
-            } else if (selection instanceof BTSLemmaEntry) {
-                corpusObject = (BTSLemmaEntry) selection;
-                part.setLabel(selection.getName());
-                editingDomain = getEditingDomain(corpusObject);
+			} else if (selection instanceof BTSLemmaEntry) {
+				corpusObject = (BTSLemmaEntry) selection;
+				part.setLabel(selection.getName());
+				editingDomain = getEditingDomain(corpusObject);
 
-            } else if (corpusObject != null) {
-                corpusObject = null;
-                part.setLabel("Lemmatizer");
-                purgeAll();
-                loaded = false;
-            }
-        }
+			} 
+			else if (corpusObject != null){
+				corpusObject = null;
+				part.setLabel("Lemmatizer");
+				purgeAll();
+				loaded = false;
+			}
+		}
+ 		
+	}
 
-    }
-
-    @Inject
-    void setSelection(
-            @Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSTextSelectionEvent selection) {
-        if (selection == null) return;
-        if (constructed) {
-            if (!selfSelecting) {
-                if (selection == null) {
-                    /* implementation not shown */
-                } else if (!selection.getSelectedItems().isEmpty()) {
-                    if (selection.getSelectedItems().get(0) instanceof BTSWord) {
-
-                        // make sure the right text is set
-                        if (selection.getParentObject() != null && !selection.getParentObject().equals(corpusObject)) {
-                            setSelection(selection.getParentObject());
-                        }
-                        selectionObject = selection.getSelectedItems()
-                                .get(0);
-                        setSelectionInteral(selection
-                                .getSelectedItems().get(0));
-                        ignoreGlyph_Button.setSelection(false);
-                        loaded = true;
-                    } else if (loaded) {
-                        saveMdCstring(currentWord);
-                        currentWord = null;
-                        purgeAll();
-                        loaded = false;
-                        selectionCached = false;
-                    }
-                }
-            } else {
-                selfSelecting = false;
-            }
-        } else if (selection != null && selection.getSelectedItems() != null
-                && !selection.getSelectedItems().isEmpty() && selection.getSelectedItems().get(0) instanceof BTSWord) {
-            if (selection.getParentObject() != null && !selection.getParentObject().equals(corpusObject)) {
-                setSelection(selection.getParentObject());
-            }
-            currentWord = (BTSWord) selection.getSelectedItems().get(0);
-            selectionCached = true;
-        }
-        // FIXME old delete!
+	@Inject
+	void setSelection(
+			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSTextSelectionEvent selection) {
+		if (selection == null) return;
+		if (constructed) {
+			if (!selfSelecting) {
+				if (selection == null) {
+					/* implementation not shown */
+				} else if (!selection.getSelectedItems().isEmpty()) {
+					if (selection.getSelectedItems().get(0) instanceof BTSWord) {
+						
+						// make sure the right text is set
+						if (selection.getParentObject() != null && !selection.getParentObject().equals(corpusObject))
+						{
+							setSelection((BTSCorpusObject) selection.getParentObject());
+						}
+						selectionObject = (BTSIdentifiableItem) selection.getSelectedItems()
+								.get(0);
+						setSelectionInteral((BTSWord) selection
+								.getSelectedItems().get(0));
+						ignoreGlyph_Button.setSelection(false);
+						loaded = true;
+					} else if (loaded)
+					{
+						saveMdCstring(currentWord);
+						currentWord = null;
+						purgeAll();
+						loaded = false;
+						selectionCached = false;
+					}
+				}
+			} else {
+				selfSelecting = false;
+			}
+		}
+		else if (selection != null && selection.getSelectedItems() != null 
+				&& !selection.getSelectedItems().isEmpty() && selection.getSelectedItems().get(0) instanceof BTSWord)
+		{
+			if (selection.getParentObject() != null && !selection.getParentObject().equals(corpusObject))
+			{
+				setSelection((BTSCorpusObject) selection.getParentObject());
+			}
+			currentWord = (BTSWord) selection.getSelectedItems().get(0);
+			selectionCached = true;
+		}
+		// FIXME old delete!
 //		if (!selfSelecting) {
 //
 //			if (selection != null) {
@@ -737,374 +781,395 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
 //		} else {
 //			selfSelecting = false;
 //		}
-    }
+	}
+	
+	private void purgeAll() {
+		selectedGlyphe = null;
+		wordGraphics = null;
+		currentWord = null;
+		glyphOrder_spinner.setSelection(0);
+		if (editingDomain != null) {
+			editingDomain.getCommandStack().removeCommandStackListener(
+					commandStackListener);
+		}
+		editingDomain = null;
+		ignoreGlyph_Button.setSelection(false);
+		loaded = false;
+		hierotw_text.setText("");
+	}
 
-    private void purgeAll() {
-        selectedGlyphe = null;
-        wordGraphics = null;
-        currentWord = null;
-        glyphOrder_spinner.setSelection(0);
-        if (editingDomain != null) {
-            editingDomain.getCommandStack().removeCommandStackListener(
-                    commandStackListener);
-        }
-        editingDomain = null;
-        ignoreGlyph_Button.setSelection(false);
-        loaded = false;
-        hierotw_text.setText("");
-    }
+	private void setSelectionInteral(final Object selection)
+	{
+		System.out.println("hieroglyph tw selection received: " + selection);
 
-    private void setSelectionInteral(final Object selection) {
-        System.out.println("hieroglyph tw selection received: " + selection);
+		loading = true;
+		sync.asyncExec(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
+		
+					if (selection == null)
+					{
+					} else if (selection instanceof BTSWord)
+					{
+						BTSWord oldWord = currentWord;
+						if (oldWord != null)
+						{
+							saveMdCstring(oldWord);
+							updateGraphicSelectionCounter();
+						}
+						purgeAll();
+						currentWord = (BTSWord) selection;
+						editingDomain = getEditingDomain(currentWord);
+						editingDomain.getCommandStack().removeCommandStackListener(
+								commandStackListener);
+						editingDomain.getCommandStack().addCommandStackListener(
+								getCommandStackListener());
+						if (currentWord != null)
+						{
+							wordGraphics = currentWord.getGraphics();
+							String mdc = transformWordToMdCString(currentWord, -1);
+							loadMdCString(mdc);
+							beforeImageMdC = mdc;
+							loaded = true;
+						}
+					}
+				} finally
+				{
+					loading = false;
+				}
+			}
+		});
+		loading = false;
+	}
 
-        loading = true;
-        sync.asyncExec(new Runnable() {
-            public void run() {
-                try {
+	private EObject findRecursivelyParent(EObject object) {
+		if (object.eContainer() == null) {
+			return object;
+		} else {
+			if (object.eContainer() instanceof BTSText) {
+				return (BTSText) object.eContainer();
+			} else {
+				return findRecursivelyParent(object.eContainer());
+			}
+		}
+	}
+	
+	private CommandStackListener getCommandStackListener() {
+		if (commandStackListener == null) {
+			commandStackListener = new CommandStackListener() {
 
-                    if (selection == null) {
-                    } else if (selection instanceof BTSWord) {
-                        BTSWord oldWord = currentWord;
-                        if (oldWord != null) {
-                            saveMdCstring(oldWord);
-                            updateGraphicSelectionCounter();
-                        }
-                        purgeAll();
-                        currentWord = (BTSWord) selection;
-                        editingDomain = getEditingDomain(currentWord);
-                        editingDomain.getCommandStack().removeCommandStackListener(
-                                commandStackListener);
-                        editingDomain.getCommandStack().addCommandStackListener(
-                                getCommandStackListener());
-                        if (currentWord != null) {
-                            wordGraphics = currentWord.getGraphics();
-                            String mdc = transformWordToMdCString(currentWord, -1);
-                            loadMdCString(mdc);
-                            beforeImageMdC = mdc;
-                            loaded = true;
-                        }
-                    }
-                } finally {
-                    loading = false;
-                }
-            }
-        });
-        loading = false;
-    }
+				@Override
+				public void commandStackChanged(EventObject event) {
+					Command mostRecentCommand = editingDomain.getCommandStack()
+							.getMostRecentCommand();
+					if (mostRecentCommand != null) {
+						if (mostRecentCommand.equals(editingDomain
+								.getCommandStack().getUndoCommand())) {
+							localCommandCacheSet.add(mostRecentCommand);
+						} else {
+							localCommandCacheSet.remove(mostRecentCommand);
+						}
+					}
+					if (localCommandCacheSet.remove(mostRecentCommand)
+							&& localCommandCacheSet.isEmpty()) {
+						dirty.setDirty(false);
+					} else if (!dirty.isDirty()) {
+						dirty.setDirty(true);
+					}
 
-    private EObject findRecursivelyParent(EObject object) {
-        if (object.eContainer() == null) {
-            return object;
-        } else {
-            if (object.eContainer() instanceof BTSText) {
-                return object.eContainer();
-            } else {
-                return findRecursivelyParent(object.eContainer());
-            }
-        }
-    }
+				}
+			};
+		}
+		return commandStackListener;
+	}
 
-    private CommandStackListener getCommandStackListener() {
-        if (commandStackListener == null) {
-            commandStackListener = new CommandStackListener() {
+	private EditingDomain getEditingDomain(EObject editingObject) {
+		return editingDomainController.getEditingDomain(editingObject);
+	}
 
-                @Override
-                public void commandStackChanged(EventObject event) {
-                    Command mostRecentCommand = editingDomain.getCommandStack()
-                            .getMostRecentCommand();
-                    if (mostRecentCommand != null) {
-                        if (mostRecentCommand.equals(editingDomain
-                                .getCommandStack().getUndoCommand())) {
-                            localCommandCacheSet.add(mostRecentCommand);
-                        } else {
-                            localCommandCacheSet.remove(mostRecentCommand);
-                        }
-                    }
-                    if (localCommandCacheSet.remove(mostRecentCommand)
-                            && localCommandCacheSet.isEmpty()) {
-                        dirty.setDirty(false);
-                    } else if (!dirty.isDirty()) {
-                        dirty.setDirty(true);
-                    }
+	private void updateGraphicSelectionCounter() {
+		String newMdC = hierotw_text.getText();
+		if (beforeImageMdC == null || newMdC.equals(beforeImageMdC)) {
+			// no changes
+			return;
+		}
+		try {
+			htwController.updateGraphicSelectionCounter(beforeImageMdC, newMdC);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-                }
-            };
-        }
-        return commandStackListener;
-    }
+	}
 
-    private EditingDomain getEditingDomain(EObject editingObject) {
-        return editingDomainController.getEditingDomain(editingObject);
-    }
+	@Inject
+	@Optional
+	void eventReceivedHTWShortcutEvents(
+			@EventTopic("event_htw_shortcut/*") Object event) {
+		if (event instanceof String && event != null) {
+			int index = new Integer((String) event);
+			selectHieroglypheShortcut(index);
 
-    private void updateGraphicSelectionCounter() {
-        String newMdC = hierotw_text.getText();
-        if (beforeImageMdC == null || newMdC.equals(beforeImageMdC)) {
-            // no changes
-            return;
-        }
-        try {
-            htwController.updateGraphicSelectionCounter(beforeImageMdC, newMdC);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+		}
+	}
+	
+	@Inject
+	@Optional
+	void eventReceivedHTWClearHieroglyphsEvents(
+			@EventTopic(BTSEGYUIConstants.EVENT_CLEAR_TOKEN_DATA + "/*") Object event) {
+		if (event instanceof String && event != null && ((String)event).endsWith("hierotw")) {
+			sync.asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					removeHieroglyphs();
+				}
+			});
+		}
+	}
 
-    }
+	private void removeHieroglyphs() {
+		textEditorController.updateBTSWordFromMdCString(currentWord,
+				"", editingDomain);
+		hierotw_text.setText("");
+		setHiertTWText("");
+	}
 
-    @Inject
-    @Optional
-    void eventReceivedHTWShortcutEvents(
-            @EventTopic("event_htw_shortcut/*") Object event) {
-        if (event instanceof String && event != null) {
-            int index = new Integer((String) event);
-            selectHieroglypheShortcut(index);
+	private void selectHieroglypheShortcut(int index) {
+		String hiero = getProposedHieroglyphe(index);
+		String suffix = "";
+		StringTokenizer tok = new StringTokenizer(hierotw_text.getText(),
+				":-<>");
+		while (tok.hasMoreTokens()) {
+			suffix = tok.nextToken();
+		}
+		String codes = hierotw_text.getText().substring(0,
+				hierotw_text.getText().length() - suffix.length());
+		codes += hiero;
+		hierotw_text.setText(codes);
+		hierotw_text.setSelection(codes.length());
+		jseshEditorProposals.clearText();
+	}
 
-        }
-    }
+	private String getProposedHieroglyphe(int index) {
+		String code = "";
+		StringTokenizer tok = new StringTokenizer(htwProposals, "\\red-");
+		int i = 0;
+		while (tok.hasMoreTokens()) {
 
-    @Inject
-    @Optional
-    void eventReceivedHTWClearHieroglyphsEvents(
-            @EventTopic(BTSEGYUIConstants.EVENT_CLEAR_TOKEN_DATA + "/*") Object event) {
-        if (event instanceof String && event != null && ((String) event).endsWith("hierotw")) {
-            sync.asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    removeHieroglyphs();
-                }
-            });
-        }
-    }
-
-    private void removeHieroglyphs() {
-        textEditorController.updateBTSWordFromMdCString(currentWord,
-                "", editingDomain);
-        hierotw_text.setText("");
-        setHiertTWText("");
-    }
-
-    private void selectHieroglypheShortcut(int index) {
-        String hiero = getProposedHieroglyphe(index);
-        String suffix = "";
-        StringTokenizer tok = new StringTokenizer(hierotw_text.getText(),
-                ":-<>");
-        while (tok.hasMoreTokens()) {
-            suffix = tok.nextToken();
-        }
-        String codes = hierotw_text.getText().substring(0,
-                hierotw_text.getText().length() - suffix.length());
-        codes += hiero;
-        hierotw_text.setText(codes);
-        hierotw_text.setSelection(codes.length());
-        jseshEditorProposals.clearText();
-    }
-
-    private String getProposedHieroglyphe(int index) {
-        String code = "";
-        StringTokenizer tok = new StringTokenizer(htwProposals, "\\red-");
-        int i = 0;
-        while (tok.hasMoreTokens()) {
-
-            code = tok.nextToken().split("-")[0];
-            if (!code.startsWith("\"")) {
-                i++;
-            }
-            if (i == index) {
-                break;
-            }
-        }
+			code = tok.nextToken().split("-")[0];
+			if (!code.startsWith("\"")) {
+				i++;
+			}
+			if (i == index) {
+				break;
+			}
+		}
 
 
-        return code;
-    }
 
-    @Persist
-    public boolean saveText() {
-        if (dirty.isDirty()) {
-            if (corpusObject instanceof BTSText) {
-                textEditorController.save((BTSText) corpusObject);
-            } else if (corpusObject instanceof BTSLemmaEntry) {
-                lemmaEditorController.save((BTSLemmaEntry) corpusObject);
-            }
+		return code;
+	}
 
-            localCommandCacheSet.clear();
+	@Persist
+	public boolean saveText() {
+		if (dirty.isDirty()) {
+			if (corpusObject instanceof BTSText)
+			{
+				textEditorController.save((BTSText) corpusObject);
+			}
+			else if (corpusObject instanceof BTSLemmaEntry)
+			{
+				lemmaEditorController.save((BTSLemmaEntry) corpusObject);
+			}
+				
+			localCommandCacheSet.clear();
 
-            dirty.setDirty(false);
-        }
-        return true;
-    }
+			dirty.setDirty(false);
+		}
+		return true;
+	}
 
-    private void saveMdCstring(BTSWord word) {
-        if (isDirty && userMayTranscribe && word != null && validMdC) {
-            String normalizedMdC = hierotw_text.getText();
-            try {
-                normalizedMdC = mdcNormalizer.normalize(hierotw_text.getText());
-            } catch (MDCSyntaxError e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            if (ignoreGlyph_Button.getSelection()) {
-                normalizedMdC = normalizedMdC.replace("\\red", "\\i");
-            }
-            normalizedMdC = removeSelectionMarker(normalizedMdC);
+	private void saveMdCstring(BTSWord word)
+	{
+		if (isDirty && userMayTranscribe && word != null && validMdC) {
+			String normalizedMdC = hierotw_text.getText();
+			try {
+				normalizedMdC = mdcNormalizer.normalize(hierotw_text.getText());
+			} catch (MDCSyntaxError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (ignoreGlyph_Button.getSelection())
+			{
+				normalizedMdC = normalizedMdC.replace("\\red", "\\i");
+			}
+			normalizedMdC = removeSelectionMarker(normalizedMdC);
 
-            System.out.println("new mdc " + normalizedMdC + " ::: old "
-                    + beforeImageMdC);
-            beforeImageMdC = transformWordToMdCString(word, -1);
-            if (!normalizedMdC.equals(beforeImageMdC)) {
-                normalizedMdC = removeIgnoreMarker(normalizedMdC);
-                System.out.println("htw saveMdCString " + normalizedMdC);
-                textEditorController.updateBTSWordFromMdCString(word,
-                        normalizedMdC, editingDomain);
-                dirty.setDirty(true);
-            }
-            setDirty(false);
-        }
+			System.out.println("new mdc " + normalizedMdC + " ::: old "
+					+ beforeImageMdC);
+			beforeImageMdC = transformWordToMdCString(word, -1);
+			if (!normalizedMdC.equals(beforeImageMdC))
+			{
+				normalizedMdC = removeIgnoreMarker(normalizedMdC);
+				System.out.println("htw saveMdCString " + normalizedMdC);
+				textEditorController.updateBTSWordFromMdCString(word,
+						normalizedMdC, editingDomain);
+				dirty.setDirty(true);
+			}
+			setDirty(false);
+		}
 
-    }
+	}
 
-    private String removeSelectionMarker(String normalizedMdC) {
-        Pattern p = Pattern.compile("\\" + MDC_MARKER);
-        Matcher m = p.matcher(normalizedMdC);
-        return m.replaceAll("");
-    }
+	private String removeSelectionMarker(String normalizedMdC) {
+		Pattern p = Pattern.compile("\\" + MDC_MARKER);
+		Matcher m = p.matcher(normalizedMdC);
+		String result = m.replaceAll("");
+		return result;
+	}
 
-    private String removeIgnoreMarker(String normalizedMdC) {
-        Pattern p = Pattern.compile(MDC_IGNORE);
-        Matcher m = p.matcher(normalizedMdC);
-        return m.replaceAll("");
-    }
+	private String removeIgnoreMarker(String normalizedMdC) {
+		Pattern p = Pattern.compile(MDC_IGNORE);
+		Matcher m = p.matcher(normalizedMdC);
+		String result = m.replaceAll("");
+		return result;
+	}
 
-    private String transformWordToMdCString(BTSWord word, int selectedGlyphIndex) {
-        String mdc = "";
-        mdc = textEditorController.transformWordToMdCString(word,
-                selectedGlyphIndex);
-        return mdc;
-    }
+	private String transformWordToMdCString(BTSWord word, int selectedGlyphIndex)
+	{
+		String mdc = "";
+		mdc = textEditorController.transformWordToMdCString(word,
+				selectedGlyphIndex);
+		return mdc;
+	}
 
-    // @Inject
-    // @Optional
-    // void eventReceivedNew(
-    // @UIEventTopic("egySentenceItemSelection/*") Object selection)
-    // {
-    // if (!loading)
-    // {
-    // setSelectionInteral(selection);
-    // }
-    // }
+	// @Inject
+	// @Optional
+	// void eventReceivedNew(
+	// @UIEventTopic("egySentenceItemSelection/*") Object selection)
+	// {
+	// if (!loading)
+	// {
+	// setSelectionInteral(selection);
+	// }
+	// }
 
-    // private void saveMdCstring(final WordOccurrence word)
-    // {
-    // sync.asyncExec(new Runnable()
-    // {
-    // public void run()
-    // {
-    // if (word.getSpelling() == null)
-    // {
-    // word.setSpelling(new LightSpelling());
-    // }
-    // if (word.getSpelling().getMdC() != hierotw_text.getText() &&
-    // !"".equals(hierotw_text.getText()))
-    // {
-    // // word.getSpelling().setMdC();
-    // final String corpusObject = hierotw_text.getText();
-    //
-    // SwingUtilities.invokeLater(new Runnable()
-    // {
-    //
-    // @Override
-    // public void run()
-    // {
-    // LightSpelling oldSpelling = word.getSpelling();
-    // LightSpelling spelling = new LightSpelling(oldSpelling.getId() + 500,
-    // oldSpelling
-    // .getLabel(), corpusObject);
-    // word.setSpelling(spelling);
-    // if (ramsesEditor != null)
-    // {
-    // // RamsesWordEditionListener listener = ramsesEditor.g
-    // ramsesEditor.changeWordData(word.getWordAnalysis());
-    // }
-    //
-    // }
-    //
-    // });
-    // // hierotw_text.setText("");
-    //
-    // }
-    // }
-    // });
-    // }
+	// private void saveMdCstring(final WordOccurrence word)
+	// {
+	// sync.asyncExec(new Runnable()
+	// {
+	// public void run()
+	// {
+	// if (word.getSpelling() == null)
+	// {
+	// word.setSpelling(new LightSpelling());
+	// }
+	// if (word.getSpelling().getMdC() != hierotw_text.getText() &&
+	// !"".equals(hierotw_text.getText()))
+	// {
+	// // word.getSpelling().setMdC();
+	// final String corpusObject = hierotw_text.getText();
+	//
+	// SwingUtilities.invokeLater(new Runnable()
+	// {
+	//
+	// @Override
+	// public void run()
+	// {
+	// LightSpelling oldSpelling = word.getSpelling();
+	// LightSpelling spelling = new LightSpelling(oldSpelling.getId() + 500,
+	// oldSpelling
+	// .getLabel(), corpusObject);
+	// word.setSpelling(spelling);
+	// if (ramsesEditor != null)
+	// {
+	// // RamsesWordEditionListener listener = ramsesEditor.g
+	// ramsesEditor.changeWordData(word.getWordAnalysis());
+	// }
+	//
+	// }
+	//
+	// });
+	// // hierotw_text.setText("");
+	//
+	// }
+	// }
+	// });
+	// }
 
-    private void loadMdCString(final String mdC) {
+	private void loadMdCString(final String mdC) {
 
-        String normalizedMdC = mdC;
-        MDCNormalizer d = new MDCNormalizer();
-        try {
-            normalizedMdC = d.normalize(mdC);
-        } catch (MDCSyntaxError e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        if (normalizedMdC != null) {
-            try {
-                hierotw_text.setText(normalizedMdC);
-                hierotw_text.setSelection(hierotw_text.getText().length());
-                jseshEditor.setMDCText(normalizedMdC);
-                String[] codes = textEditorController
-                        .splitSignsKeepDelimeters(normalizedMdC);
-                for (String s : codes) {
-                    System.out.println(s);
-                }
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
+		String normalizedMdC = mdC;
+		MDCNormalizer d = new MDCNormalizer();
+		try {
+			normalizedMdC = d.normalize(mdC);
+		} catch (MDCSyntaxError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (normalizedMdC != null) {
+			try {
+				hierotw_text.setText(normalizedMdC);
+				hierotw_text.setSelection(hierotw_text.getText().length());
+				jseshEditor.setMDCText(normalizedMdC);
+				String[] codes = textEditorController
+						.splitSignsKeepDelimeters(normalizedMdC);
+				for (String s : codes) {
+					System.out.println(s);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
-    }
+	}
 
-    @Override
-    public List<Map> getScatteredCashMaps() {
-        final List<Map> maps = new Vector<>(1);
-        maps.add(hieroglyphSelectionCounterCacheMap);
-        return maps;
-    }
+	@Override
+	public List<Map> getScatteredCacheMaps() {
+		final List<Map> maps = new Vector<Map>(1);
+		maps.add(hieroglyphSelectionCounterCacheMap);
+		return maps;
+	}
 
-    @Override
-    public void handleEvent(Event arg0) {
+	@Override
+	public void handleEvent(Event arg0) {
 
-        eventReceivedHTWShortcutEvents(arg0.getProperty("org.eclipse.e4.data"));
+		eventReceivedHTWShortcutEvents(arg0.getProperty("org.eclipse.e4.data"));
 
-    }
+	}
+	
+	@Inject
+	@Optional
+	public void setUserMayTranscribe(
+			@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_TRANSCRIBE) final boolean userMayTranscribe) {
+		if(userMayTranscribe != this.userMayTranscribe)
+		{
+			sync.asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					setUserMayTranscribeInteral(userMayTranscribe);
+				}
+			});
+			
+		}
+	}
+	
+	protected void setUserMayTranscribeInteral(boolean mayTranscribe) {
+		if (constructed)
+		{
+			hierotw_text.setEditable(mayTranscribe);
+			glyphOrder_spinner.setEnabled(mayTranscribe);
+			firstGlyph_Button.setEnabled(mayTranscribe);
+			previousGlyph_Button.setEnabled(mayTranscribe);
+			nextGlyph_Button.setEnabled(mayTranscribe);
+			ignoreGlyph_Button.setEnabled(mayTranscribe);
+			this.userMayTranscribe = mayTranscribe;
 
-    @Inject
-    @Optional
-    public void setUserMayTranscribe(
-            @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_TRANSCRIBE) final boolean userMayTranscribe) {
-        if (userMayTranscribe != this.userMayTranscribe) {
-            sync.asyncExec(new Runnable() {
-                @Override
-                public void run() {
-                    setUserMayTranscribeInteral(userMayTranscribe);
-                }
-            });
-
-        }
-    }
-
-    protected void setUserMayTranscribeInteral(boolean mayTranscribe) {
-        if (constructed) {
-            hierotw_text.setEditable(mayTranscribe);
-            glyphOrder_spinner.setEnabled(mayTranscribe);
-            firstGlyph_Button.setEnabled(mayTranscribe);
-            previousGlyph_Button.setEnabled(mayTranscribe);
-            nextGlyph_Button.setEnabled(mayTranscribe);
-            ignoreGlyph_Button.setEnabled(mayTranscribe);
-            this.userMayTranscribe = mayTranscribe;
-
-        }
-
-    }
+		}
+		
+	}
 }

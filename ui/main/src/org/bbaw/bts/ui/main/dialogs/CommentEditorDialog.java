@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BtsmodelPackage;
+import org.bbaw.bts.core.commons.BTSCoreConstants;
 import org.bbaw.bts.core.controller.generalController.CommentController;
 import org.bbaw.bts.core.controller.generalController.EditingDomainController;
 import org.bbaw.bts.core.controller.generalController.PermissionsAndExpressionsEvaluationController;
@@ -46,259 +48,276 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class CommentEditorDialog extends TitleAreaDialog {
-    @Inject
-    protected PermissionsAndExpressionsEvaluationController permissionsController;
-    private Text txtCommenttxt;
-    @Inject
-    private BTSComment comment;
-    @Inject
-    private IEclipseContext context;
-    private Composite compositeRelations;
-    @Inject
-    private BTSResourceProvider resourceProvider;
-    @Inject
-    private EditingDomainController editingDomainController;
-    @Inject
-    private CommentController commentController;
-    private EditingDomain editingDomain;
-    private CompoundRelationsEditorComposite relationsEditor;
-    private Text txtCommentId;
-    private Text txtTitletxt;
-    private CommandStackListener commandStackListener;
-    private Set<Command> localCommandCacheSet = new HashSet<>();
-    private boolean dirty;
-    private Composite container;
-    private Composite innerCompositeRelations;
-    private boolean editable;
+	private Text txtCommenttxt;
 
-    /**
-     * Create the dialog.
-     *
-     * @param parentShell
-     */
-    @Inject
-    public CommentEditorDialog(Shell parentShell) {
-        super(parentShell);
-    }
+	@Inject
+	private BTSComment comment;
+	
+	@Inject
+	private IEclipseContext context;
+	private Composite compositeRelations;
+	
+	@Inject
+	private BTSResourceProvider resourceProvider;
+	
+	@Inject
+	private EditingDomainController editingDomainController;
+	
+	@Inject
+	private CommentController commentController;
+	
+	@Inject
+	protected PermissionsAndExpressionsEvaluationController permissionsController;
 
-    /**
-     * Create contents of the dialog.
-     *
-     * @param parent
-     */
-    protected Control createDialogArea(Composite parent) {
-        Composite area = (Composite) super.createDialogArea(parent);
-        container = new Composite(area, SWT.NONE);
-        container.setLayout(new GridLayout(1, false));
-        container.setLayoutData(new GridData(GridData.FILL_BOTH));
+	private EditingDomain editingDomain;
+	private CompoundRelationsEditorComposite relationsEditor;
+	private Text txtCommentId;
+	private Text txtTitletxt;
+	private CommandStackListener commandStackListener;
+	private Set<Command> localCommandCacheSet = new HashSet<Command>();
+	private boolean dirty;
+	private Composite container;
+	private Composite innerCompositeRelations;
 
-        Label lblTitelText = new Label(container, SWT.NONE);
-        lblTitelText.setText("Comment Title");
+	@Inject
+	@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
+	private boolean editable;
 
-        txtTitletxt = new Text(container, SWT.BORDER);
-        txtTitletxt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        txtTitletxt.setFocus();
+	/**
+	 * Create the dialog.
+	 * @param parentShell
+	 */
+	@Inject
+	public CommentEditorDialog(Shell parentShell) {
+		super(parentShell);
+	}
 
-        Composite labelRow = new Composite(container, SWT.NONE);
-        labelRow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        labelRow.setLayout(new GridLayout(3, false));
+	/**
+	 * Create contents of the dialog.
+	 * @param parent
+	 */
+	protected Control createDialogArea(Composite parent) {
+		Composite area = (Composite) super.createDialogArea(parent);
+		container = new Composite(area, SWT.NONE);
+		container.setLayout(new GridLayout(1, false));
+		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-        Label lblCommentText = new Label(labelRow, SWT.NONE);
-        lblCommentText.setText("Comment Text");
-        lblCommentText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
+		Label lblTitelText = new Label(container, SWT.NONE);
+		lblTitelText.setText("Comment Title");
 
-        Label lblCommentId = new Label(labelRow, SWT.NONE);
-        lblCommentId.setText("ID:");
-        lblCommentId.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
+		txtTitletxt = new Text(container, SWT.BORDER);
+		txtTitletxt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		txtTitletxt.setFocus();
+		
+		Composite labelRow = new Composite(container, SWT.NONE);
+		labelRow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		labelRow.setLayout(new GridLayout(3, false));
+		
+		Label lblCommentText = new Label(labelRow, SWT.NONE);
+		lblCommentText.setText("Comment Text");
+		lblCommentText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
 
-        txtCommentId = new Text(labelRow, SWT.NONE);
-        txtCommentId.setLayoutData(new GridData(SWT.END, SWT.FILL, false, false));
-        txtCommentId.setEditable(false);
-        txtCommentId.setEnabled(false);
-        txtCommentId.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
-        txtCommentId.setDoubleClickEnabled(true);
-        labelRow.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseDoubleClick(MouseEvent e) {
-                txtCommentId.setEnabled(true);
-                super.mouseDoubleClick(e);
-            }
-        });
+		Label lblCommentId = new Label(labelRow, SWT.NONE);
+		lblCommentId.setText("ID:");
+		lblCommentId.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
 
-        txtCommenttxt = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        gd.widthHint = 480;
-        gd.heightHint = 640;
-        txtCommenttxt.setLayoutData(gd);
+		txtCommentId = new Text(labelRow, SWT.NONE);
+		txtCommentId.setLayoutData(new GridData(SWT.END, SWT.FILL, false, false));
+		txtCommentId.setEditable(false);
+		txtCommentId.setEnabled(false);
+		txtCommentId.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_FOREGROUND));
+		txtCommentId.setDoubleClickEnabled(true);
+		labelRow.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				txtCommentId.setEnabled(true);
+				super.mouseDoubleClick(e);
+			}
+		});
+		
+		txtCommenttxt = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd.widthHint = 480;
+		gd.heightHint = 640;
+		txtCommenttxt.setLayoutData(gd);
 
-        compositeRelations = new Composite(container, SWT.NONE);
-        compositeRelations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        compositeRelations.setLayout(new GridLayout(1, false));
-        loadInput();
-        setTitle("Comment Editor");
-        setMessage("Please create or edit comment.");
-        return area;
-    }
+		compositeRelations = new Composite(container, SWT.NONE);
+		compositeRelations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		compositeRelations.setLayout(new GridLayout(1, false));
+		loadInput();
+		setTitle("Comment Editor");
+		setMessage("Please create or edit comment.");
+		return area;
+	}
 
-    private void loadInput() {
+	private void loadInput() {
 
-        editingDomain = editingDomainController.getEditingDomain(comment);
-        DataBindingContext bindingContext = new DataBindingContext();
+		editingDomain = editingDomainController.getEditingDomain(comment);
+		DataBindingContext bindingContext = new DataBindingContext();
 
-        EMFUpdateValueStrategy us = null;
-        us = new EMFUpdateValueStrategy();
-        us.setBeforeSetValidator(new StringNotEmptyValidator());
+		EMFUpdateValueStrategy us = null;
+		us = new EMFUpdateValueStrategy();
+		us.setBeforeSetValidator(new StringNotEmptyValidator());
+		
+		// title
+		Binding binding_t = bindingContext.bindValue(
+				WidgetProperties.text(SWT.Modify).observeDelayed(
+						BTSUIConstants.DELAY, txtTitletxt),
+				EMFEditProperties.value(editingDomain,
+						BtsmodelPackage.Literals.BTS_NAMED_TYPED_OBJECT__NAME)
+						.observe(comment), us, null);
+		
+		// ID
+		txtCommentId.setText(comment.get_id());
+		
+		// comment
+		Binding binding = bindingContext.bindValue(
+				WidgetProperties.text(SWT.Modify).observeDelayed(
+						BTSUIConstants.DELAY, txtCommenttxt),
+				EMFEditProperties.value(editingDomain,
+						BtsmodelPackage.Literals.BTS_COMMENT__COMMENT)
+						.observe(comment), us, null);
+		editingDomain.getCommandStack().addCommandStackListener(
+				getCommandStackListener());
+		
+		loadRelations();
 
-        // title
-        Binding binding_t = bindingContext.bindValue(
-                WidgetProperties.text(SWT.Modify).observeDelayed(
-                        BTSUIConstants.DELAY, txtTitletxt),
-                EMFEditProperties.value(editingDomain,
-                        BtsmodelPackage.Literals.BTS_NAMED_TYPED_OBJECT__NAME)
-                        .observe(comment), us, null);
+		// comment can be modified if user is in its updaters list
+		// this will only work if permission to comment text/corpus object
+		// has been put into context under CORE_EXPRESSIONS_MAY_COMMENT
+		setEditable(editable);
+		
+	}
 
-        // ID
-        txtCommentId.setText(comment.get_id());
+	/**
+	 * Set editable flag and update controls accordingly.
+	 * @param editable
+	 */
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+		txtTitletxt.setEditable(editable);
+		txtCommenttxt.setEditable(editable);
+		relationsEditor.setEnabled(editable);
+		try {
+			this.getButton(IDialogConstants.OK_ID).setEnabled(editable);
+		} catch (Exception e) {}
+	}
 
-        // comment
-        Binding binding = bindingContext.bindValue(
-                WidgetProperties.text(SWT.Modify).observeDelayed(
-                        BTSUIConstants.DELAY, txtCommenttxt),
-                EMFEditProperties.value(editingDomain,
-                        BtsmodelPackage.Literals.BTS_COMMENT__COMMENT)
-                        .observe(comment), us, null);
-        editingDomain.getCommandStack().addCommandStackListener(
-                getCommandStackListener());
+	private CommandStackListener getCommandStackListener() {
+		if (commandStackListener == null) {
+			commandStackListener = new CommandStackListener() {
 
-        loadRelations();
-        checkRightsAndSetEditable();
+				@Override
+				public void commandStackChanged(EventObject event) {
+					Command mostRecentCommand = editingDomain.getCommandStack()
+							.getMostRecentCommand();
+					if (mostRecentCommand != null) {
+						if (mostRecentCommand.equals(editingDomain
+								.getCommandStack().getUndoCommand())) {
+							// normal command or redo executed
+							localCommandCacheSet.add(mostRecentCommand);
+							if (localCommandCacheSet.isEmpty()) {
+								setDirty(false);
+							} else if (!isDirty()) {
+								setDirty(true);
+							}
+							// if redo, check if reload required
+							checkAndReload(mostRecentCommand);
+						} else {
+							// undo executed
+							if (localCommandCacheSet.remove(mostRecentCommand)
+									&& localCommandCacheSet.isEmpty()) {
+								setDirty(false);
+							} else if (!isDirty()) {
+								setDirty(true);
+							}
+							checkAndReload(mostRecentCommand);
+						}
+					}
 
-    }
+				}
+			};
+		}
+		return commandStackListener;
+	}
+	protected void checkAndReload(Command command) {
+		if (command instanceof DeleteCommand
+				|| command instanceof CompoundCommand
+				|| command instanceof AddCommand
+				|| command instanceof RemoveCommand) {
+			loadRelations();
 
-    private void checkRightsAndSetEditable() {
-        editable = permissionsController.userMayEditObject(
-                permissionsController.getAuthenticatedUser(), comment);
-        txtTitletxt.setEditable(editable);
-        txtCommenttxt.setEditable(editable);
-        relationsEditor.setEnabled(editable);
-    }
+		}
 
-    private CommandStackListener getCommandStackListener() {
-        if (commandStackListener == null) {
-            commandStackListener = new CommandStackListener() {
+		
+	}
 
-                @Override
-                public void commandStackChanged(EventObject event) {
-                    Command mostRecentCommand = editingDomain.getCommandStack()
-                            .getMostRecentCommand();
-                    if (mostRecentCommand != null) {
-                        if (mostRecentCommand.equals(editingDomain
-                                .getCommandStack().getUndoCommand())) {
-                            // normal command or redo executed
-                            localCommandCacheSet.add(mostRecentCommand);
-                            if (localCommandCacheSet.isEmpty()) {
-                                setDirty(false);
-                            } else if (!isDirty()) {
-                                setDirty(true);
-                            }
-                            // if redo, check if reload required
-                            checkAndReload(mostRecentCommand);
-                        } else {
-                            // undo executed
-                            if (localCommandCacheSet.remove(mostRecentCommand)
-                                    && localCommandCacheSet.isEmpty()) {
-                                setDirty(false);
-                            } else if (!isDirty()) {
-                                setDirty(true);
-                            }
-                            checkAndReload(mostRecentCommand);
-                        }
-                    }
+	private void loadRelations() {
+		if (innerCompositeRelations != null)
+		{
+			innerCompositeRelations.dispose();
+			innerCompositeRelations = null;
+		}
+		System.out.println("contains is disposed " + container.isDisposed());
+		innerCompositeRelations = new Composite(compositeRelations, SWT.NONE);
+		innerCompositeRelations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		innerCompositeRelations.setLayout(new GridLayout(1, false));
 
-                }
-            };
-        }
-        return commandStackListener;
-    }
-
-    protected void checkAndReload(Command command) {
-        if (command instanceof DeleteCommand
-                || command instanceof CompoundCommand
-                || command instanceof AddCommand
-                || command instanceof RemoveCommand) {
-            loadRelations();
-
-        }
-
-
-    }
-
-    private void loadRelations() {
-        if (innerCompositeRelations != null) {
-            innerCompositeRelations.dispose();
-            innerCompositeRelations = null;
-        }
-        System.out.println("contains is disposed " + container.isDisposed());
-        innerCompositeRelations = new Composite(compositeRelations, SWT.NONE);
-        innerCompositeRelations.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        innerCompositeRelations.setLayout(new GridLayout(1, false));
-
-        IEclipseContext child = context.createChild("relations");
-        child.set(Composite.class, innerCompositeRelations);
-        child.set(EditingDomain.class, editingDomain);
-        child.set(BTSObject.class, comment);
-        child.set(BTSResourceProvider.class, resourceProvider);
+		IEclipseContext child = context.createChild("relations");
+		child.set(Composite.class, innerCompositeRelations);
+		child.set(EditingDomain.class, editingDomain);
+		child.set(BTSObject.class, comment);
+		child.set(BTSResourceProvider.class, resourceProvider);
 
 
-        relationsEditor = ContextInjectionFactory
-                .make(CompoundRelationsEditorComposite.class, child);
-        compositeRelations.layout();
-        container.layout();
-    }
+		relationsEditor = ContextInjectionFactory
+				.make(CompoundRelationsEditorComposite.class, child);
+		compositeRelations.layout();
+		container.layout();
+	}
 
-    public boolean isDirty() {
-        return dirty;
-    }
+	protected void setDirty(boolean dirty) {
+		this.dirty = dirty;
+		
+	}
+	public boolean isDirty()
+	{
+		return dirty;
+	}
 
-    protected void setDirty(boolean dirty) {
-        this.dirty = dirty;
+	/**
+	 * Create contents of the button bar.
+	 * @param parent
+	 */
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		createButton(parent, IDialogConstants.OK_ID, "Save",
+				true);
+		createButton(parent, IDialogConstants.CANCEL_ID,
+				IDialogConstants.CANCEL_LABEL, false);
+		this.getButton(IDialogConstants.OK_ID).setEnabled(editable);
+	}
 
-    }
-
-    /**
-     * Create contents of the button bar.
-     *
-     * @param parent
-     */
-    @Override
-    protected void createButtonsForButtonBar(Composite parent) {
-        createButton(parent, IDialogConstants.OK_ID, "Save",
-                true);
-        createButton(parent, IDialogConstants.CANCEL_ID,
-                IDialogConstants.CANCEL_LABEL, false);
-        this.getButton(IDialogConstants.OK_ID).setEnabled(editable);
-    }
-
-    @Override
-    protected void okPressed() {
-        if (isDirty()) {
-            commentController.save(comment);
-        }
-        editingDomain.getCommandStack().removeCommandStackListener(
-                getCommandStackListener());
-        super.okPressed();
-    }
-
-    /**
-     * Return the initial size of the dialog.
-     */
-    @Override
-    protected Point getInitialSize() {
-        return new Point(500, 600);
-    }
-
-    @Override
-    protected boolean isResizable() {
-        return true;
-    }
+	@Override
+	protected void okPressed() {
+		if (isDirty())
+		{
+			commentController.save(comment);
+		}
+		editingDomain.getCommandStack().removeCommandStackListener(
+				getCommandStackListener());
+		super.okPressed();
+	}
+	/**
+	 * Return the initial size of the dialog.
+	 */
+	@Override
+	protected Point getInitialSize() {
+		return new Point(500, 600);
+	}
+	
+	@Override
+	protected boolean isResizable() {
+		return true;
+	}
 }
