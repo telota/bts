@@ -214,7 +214,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.app:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.app:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.app/3.1.0-SNAPSHOT/org.bbaw.bts.app-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -304,7 +304,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.services:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.services:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.services/3.1.0-SNAPSHOT/org.bbaw.bts.core.services-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -313,7 +313,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.controller:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.controller:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.controller/3.1.0-SNAPSHOT/org.bbaw.bts.core.controller-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -376,7 +376,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons/3.1.0-SNAPSHOT/org.bbaw.bts.commons-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -385,7 +385,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.fsaccess:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.fsaccess:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons.fsaccess/3.1.0-SNAPSHOT/org.bbaw.bts.commons.fsaccess-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -403,7 +403,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:target/lib/commons-net.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:target/lib/commons-net.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.core.commons-3.1.0-SNAPSHOT.jar/target/lib/commons-net.jar!/" />
         </CLASSES>
@@ -412,7 +412,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.commons/3.1.0-SNAPSHOT/org.bbaw.bts.core.commons-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -421,7 +421,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model/3.1.0-SNAPSHOT/org.bbaw.bts.model-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -520,7 +520,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.dao:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.dao:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.dao/3.1.0-SNAPSHOT/org.bbaw.bts.core.dao-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -583,7 +583,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.eclipselabs.emfjson/0.6.1-SNAPSHOT/org.bbaw.bts.eclipselabs.emfjson-0.6.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -592,7 +592,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons.libs.elasticsearch/3.1.0-SNAPSHOT/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -601,7 +601,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/elasticsearch.jar!/" />
         </CLASSES>
@@ -610,7 +610,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/jts.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/jts.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/jts.jar!/" />
         </CLASSES>
@@ -619,7 +619,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/log4j.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/log4j.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/log4j.jar!/" />
         </CLASSES>
@@ -628,7 +628,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-analyzers-common.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-analyzers-common.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-analyzers-common.jar!/" />
         </CLASSES>
@@ -637,7 +637,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-core.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-core.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-core.jar!/" />
         </CLASSES>
@@ -646,7 +646,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-expressions.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-expressions.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-expressions.jar!/" />
         </CLASSES>
@@ -655,7 +655,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-grouping.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-grouping.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-grouping.jar!/" />
         </CLASSES>
@@ -664,7 +664,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-highlighter.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-highlighter.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-highlighter.jar!/" />
         </CLASSES>
@@ -673,7 +673,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-join.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-join.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-join.jar!/" />
         </CLASSES>
@@ -682,7 +682,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-memory.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-memory.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-memory.jar!/" />
         </CLASSES>
@@ -691,7 +691,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-misc.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-misc.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-misc.jar!/" />
         </CLASSES>
@@ -700,7 +700,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queries.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queries.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-queries.jar!/" />
         </CLASSES>
@@ -709,7 +709,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queryparser.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queryparser.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-queryparser.jar!/" />
         </CLASSES>
@@ -718,7 +718,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-sandbox.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-sandbox.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-sandbox.jar!/" />
         </CLASSES>
@@ -727,7 +727,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-spatial.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-spatial.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-spatial.jar!/" />
         </CLASSES>
@@ -736,7 +736,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-suggest.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-suggest.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-suggest.jar!/" />
         </CLASSES>
@@ -745,7 +745,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/spatial4j.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/spatial4j.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/spatial4j.jar!/" />
         </CLASSES>
@@ -754,7 +754,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch-river-couchdb.jar:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch-river-couchdb.jar:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/elasticsearch-river-couchdb.jar!/" />
         </CLASSES>
@@ -763,7 +763,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.dao.couchDB:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.dao.couchDB:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.dao.couchDB/3.1.0-SNAPSHOT/org.bbaw.bts.core.dao.couchDB-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -799,7 +799,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-codec.jar:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-codec.jar:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/commons-codec.jar!/" />
         </CLASSES>
@@ -808,7 +808,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-logging.jar:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-logging.jar:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/commons-logging.jar!/" />
         </CLASSES>
@@ -817,7 +817,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/gson.jar:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/gson.jar:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/gson.jar!/" />
         </CLASSES>
@@ -826,7 +826,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/httpclient.jar:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/httpclient.jar:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/httpclient.jar!/" />
         </CLASSES>
@@ -835,7 +835,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/httpcore.jar:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/httpcore.jar:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/httpcore.jar!/" />
         </CLASSES>
@@ -844,7 +844,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-io.jar:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-io.jar:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/commons-io.jar!/" />
         </CLASSES>
@@ -853,7 +853,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/sardine.jar:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/sardine.jar:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/sardine.jar!/" />
         </CLASSES>
@@ -862,7 +862,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/slf4j-api.jar:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/slf4j-api.jar:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/slf4j-api.jar!/" />
         </CLASSES>
@@ -871,7 +871,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:0.6.1.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:0.6.1.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.lightcouch/0.6.1-SNAPSHOT/org.lightcouch-0.6.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -907,7 +907,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson.couchdb:2.0.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson.couchdb:2.0.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.eclipselabs.emfjson.couchdb/2.0.0-SNAPSHOT/org.bbaw.bts.eclipselabs.emfjson.couchdb-2.0.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -988,7 +988,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.resources:3.1.0.201708021322">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.resources:3.1.0.201708250915">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.resources/3.1.0-SNAPSHOT/org.bbaw.bts.ui.resources-3.1.0-SNAPSHOT.jar!/" />
         </CLASSES>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.bbaw.bts.model/src" modelPluginID="org.bbaw.bts.model"
+    modelName="BTSViewModel" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    tableProviders="true" colorProviders="true" fontProviders="true" operationReflection="true"
+    importOrganizing="true" styleProviders="true">
+  <foreignModel>BTSViewModel.ecore</foreignModel>
+  <genPackages prefix="Btsviewmodel" basePackage="org.bbaw.bts" disposableProviderFactory="true"
+      childCreationExtenders="true" ecorePackage="BTSViewModel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BTSViewModel.ecore#//MessageType">
+      <genEnumLiterals ecoreEnumLiteral="BTSViewModel.ecore#//MessageType/ERROR"/>
+      <genEnumLiterals ecoreEnumLiteral="BTSViewModel.ecore#//MessageType/WARNING"/>
+      <genEnumLiterals ecoreEnumLiteral="BTSViewModel.ecore#//MessageType/LOCKED"/>
+      <genEnumLiterals ecoreEnumLiteral="BTSViewModel.ecore#//MessageType/NO_EDITING_RIGHTS"/>
+      <genEnumLiterals ecoreEnumLiteral="BTSViewModel.ecore#//MessageType/FILTERED"/>
+      <genEnumLiterals ecoreEnumLiteral="BTSViewModel.ecore#//MessageType/UPDATE"/>
+      <genEnumLiterals ecoreEnumLiteral="BTSViewModel.ecore#//MessageType/INFORMATION"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="BTSViewModel.ecore#//BTSObject"/>
+    <genDataTypes ecoreDataType="BTSViewModel.ecore#//PropertyChangeSupport"/>
+    <genDataTypes ecoreDataType="BTSViewModel.ecore#//PropertyChangeListener"/>
+    <genDataTypes ecoreDataType="BTSViewModel.ecore#//PropertyChangeEvent"/>
+    <genClasses ecoreClass="BTSViewModel.ecore#//TreeNodeWrapper">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BTSViewModel.ecore#//TreeNodeWrapper/parent"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference BTSViewModel.ecore#//TreeNodeWrapper/children"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//TreeNodeWrapper/object"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//TreeNodeWrapper/propertyChangeSupport"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//TreeNodeWrapper/childrenLoaded"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//TreeNodeWrapper/label"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//TreeNodeWrapper/parentObject"/>
+      <genOperations ecoreOperation="BTSViewModel.ecore#//TreeNodeWrapper/addPropertyChangeListener">
+        <genParameters ecoreParameter="BTSViewModel.ecore#//TreeNodeWrapper/addPropertyChangeListener/propertyChangeListener"/>
+      </genOperations>
+      <genOperations ecoreOperation="BTSViewModel.ecore#//TreeNodeWrapper/removePropertyChangeListener">
+        <genParameters ecoreParameter="BTSViewModel.ecore#//TreeNodeWrapper/removePropertyChangeListener/propertyChangeListener"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="BTSViewModel.ecore#//StatusMessage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//StatusMessage/message"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//StatusMessage/creationTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//StatusMessage/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//StatusMessage/messageType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BTSViewModel.ecore#//StatusMessage/children"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BTSViewModel.ecore#//BTSObjectTypeTreeNode">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BTSViewModel.ecore#//BTSObjectTypeTreeNode/children"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BTSViewModel.ecore#//BTSObjectTypeTreeNode/referencedTypesPath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//BTSObjectTypeTreeNode/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BTSViewModel.ecore#//BTSObjectTypeTreeNode/selected"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
