@@ -14,7 +14,7 @@
         <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.ui.commons</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
         <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.ui.resources</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
         <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.ramo.klevis.p2.core.service</artifactId> <version>1.0.0-SNAPSHOT</version> </dependency>
-        <!--dependency>
+        <dependency>
             <groupId>org.bbaw.bts</groupId>
             <artifactId>thirdparty.opal</artifactId>
             <version>1.0</version>
@@ -27,7 +27,7 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.build.directory}/lib/rcptoolbox.jar</systemPath>
-        </dependency-->
+        </dependency>
     </dependencies>
     <parent>
         <groupId>org.bbaw.bts</groupId>
@@ -65,6 +65,9 @@
                             </url>
                             <outputFileName>opal.jar</outputFileName>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <md5>Maven is Great! Just Download This File, Please!</md5>
+                            <checkSignature>true</checkSignature> <!-- Way to go! -->
+                            <failOnError>false</failOnError> <!-- Thank god for these options -->
                         </configuration>
                     </execution>
                     <execution>
@@ -80,6 +83,9 @@
                             </url>
                             <outputFileName>rcptoolbox.jar</outputFileName>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <md5>Maven is Great! Just Download This File, Please!</md5>
+                            <checkSignature>true</checkSignature> <!-- Way to go! -->
+                            <failOnError>false</failOnError> <!-- Thank god for these options -->
                         </configuration>
                     </execution>
                 </executions>
