@@ -79,7 +79,7 @@
       <module name="org.bbaw.bts.app" target="1.7" />
       <module name="org.bbaw.bts.app.feature" target="1.7" />
       <module name="org.bbaw.bts.app.login" target="1.7" />
-      <module name="org.bbaw.bts.app.product" target="1.5" />
+      <module name="org.bbaw.bts.app.product" target="1.7" />
       <module name="org.bbaw.bts.commons" target="1.7" />
       <module name="org.bbaw.bts.commons.fsaccess" target="1.7" />
       <module name="org.bbaw.bts.commons.libs.elasticsearch" target="1.7" />

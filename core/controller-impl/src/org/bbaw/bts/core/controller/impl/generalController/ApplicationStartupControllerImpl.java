@@ -319,13 +319,8 @@ public class ApplicationStartupControllerImpl implements
 			}
 		}
 
-		try {
-			splashController.setMessage("Prepare Database...");
-
-			dbManager.prepareDB();
-		} catch (URISyntaxException e1) {
-			e1.printStackTrace();
-		}
+        splashController.setMessage("Prepare Database...");
+        dbManager.prepareDB();
 
 		try {
 			projects = projectService.list(BTSConstants.OBJECT_STATE_ACTIVE,
@@ -853,21 +848,19 @@ public class ApplicationStartupControllerImpl implements
 	}
 
 	@Override
-	public void setRemoteDBConnection(String url, String user, String password)
-			throws MalformedURLException {
+	public void setRemoteDBConnection(String url, String user, String password) {
 		prefs.put(BTSPluginIDs.PREF_REMOTE_DB_URL, url);
 		prefs.put(BTSPluginIDs.PREF_AUTHENTICATED_USER, user);
 		prefs.put(BTSPluginIDs.PREF_AUTHENTICATED_USER_PASSWORD, password);
-		try {
-			prefs.flush();
-		} catch (BackingStoreException e) {
-			e.printStackTrace();
-		}
+        try {
+            prefs.flush();
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+        }
 	}
 
 	@Override
-	public List<BTSProject> loadRemoteProjects(String username, String password)
-			throws MalformedURLException {
+	public List<BTSProject> loadRemoteProjects(String username, String password) {
 		return projectService.listRemoteProjects(username, password);
 	}
 

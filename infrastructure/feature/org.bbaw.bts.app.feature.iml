@@ -37,7 +37,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:com.opcoach.e4.preferences:1.0.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:com.opcoach.e4.preferences:1.0.0.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/com.opcoach.e4.preferences/1.0.0-SNAPSHOT/com.opcoach.e4.preferences-1.0.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -271,15 +271,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.app:3.1.0.201708250915">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.app/3.1.0-SNAPSHOT/org.bbaw.bts.app-3.1.0-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Maven: p2.eclipse-plugin:org.eclipse.e4.ui.workbench:1.4.0.v20160517-1624">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.e4.ui.workbench/1.4.0.v20160517-1624/org.eclipse.e4.ui.workbench-1.4.0.v20160517-1624.jar!/" />
@@ -307,18 +298,18 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.services:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.services:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.services/3.1.0-SNAPSHOT/org.bbaw.bts.core.services-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.services/3.1.1-SNAPSHOT/org.bbaw.bts.core.services-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.controller:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.controller:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.controller/3.1.0-SNAPSHOT/org.bbaw.bts.core.controller-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.controller/3.1.1-SNAPSHOT/org.bbaw.bts.core.controller-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -364,6 +355,15 @@
       <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.gtk.linux.x86_64:3.105.3.v20170228-0512">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.gtk.linux.x86_64/3.105.3.v20170228-0512/org.eclipse.swt.gtk.linux.x86_64-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.app:3.1.1.201710110749">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.app/3.1.1-SNAPSHOT/org.bbaw.bts.app-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -442,27 +442,27 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model/3.1.0-SNAPSHOT/org.bbaw.bts.model-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model/3.1.1-SNAPSHOT/org.bbaw.bts.model-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:target/lib/commons-net.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:target/lib/commons-net.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.core.commons-3.1.0-SNAPSHOT.jar/target/lib/commons-net.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.core.commons-3.1.1-SNAPSHOT.jar/target/lib/commons-net.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.commons/3.1.0-SNAPSHOT/org.bbaw.bts.core.commons-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.commons/3.1.1-SNAPSHOT/org.bbaw.bts.core.commons-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -478,9 +478,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.dao:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.dao:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.dao/3.1.0-SNAPSHOT/org.bbaw.bts.core.dao-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.dao/3.1.1-SNAPSHOT/org.bbaw.bts.core.dao-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -505,180 +505,180 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons.libs.elasticsearch/3.1.0-SNAPSHOT/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons.libs.elasticsearch/3.1.1-SNAPSHOT/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/elasticsearch.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/elasticsearch.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/jts.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/jts.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/jts.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/jts.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/log4j.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/log4j.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/log4j.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/log4j.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-analyzers-common.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-analyzers-common.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-analyzers-common.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-analyzers-common.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-core.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-core.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-core.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-core.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-expressions.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-expressions.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-expressions.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-expressions.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-grouping.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-grouping.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-grouping.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-grouping.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-highlighter.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-highlighter.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-highlighter.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-highlighter.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-join.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-join.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-join.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-join.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-memory.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-memory.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-memory.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-memory.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-misc.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-misc.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-misc.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-misc.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queries.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queries.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-queries.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-queries.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queryparser.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-queryparser.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-queryparser.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-queryparser.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-sandbox.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-sandbox.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-sandbox.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-sandbox.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-spatial.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-spatial.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-spatial.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-spatial.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-suggest.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/lucene-suggest.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/lucene-suggest.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/lucene-suggest.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/spatial4j.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/spatial4j.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/spatial4j.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/spatial4j.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch-river-couchdb.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.libs.elasticsearch:target/lib/elasticsearch-river-couchdb.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.0-SNAPSHOT.jar/target/lib/elasticsearch-river-couchdb.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.commons.libs.elasticsearch-3.1.1-SNAPSHOT.jar/target/lib/elasticsearch-river-couchdb.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.remote.dao:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.remote.dao:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.remote.dao/3.1.0-SNAPSHOT/org.bbaw.bts.core.remote.dao-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.remote.dao/3.1.1-SNAPSHOT/org.bbaw.bts.core.remote.dao-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -757,9 +757,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.resources:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.resources:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.resources/3.1.0-SNAPSHOT/org.bbaw.bts.ui.resources-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.resources/3.1.1-SNAPSHOT/org.bbaw.bts.ui.resources-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -775,27 +775,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.commons:3.1.0.201707261212">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.commons:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.commons/3.1.0-SNAPSHOT/org.bbaw.bts.ui.commons-3.1.0-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.commons:target/lib/opal.jar:3.1.0.201707261212">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.commons-3.1.0-SNAPSHOT.jar/target/lib/opal.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.commons:target/lib/rcptoolbox.jar:3.1.0.201707261212">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.commons-3.1.0-SNAPSHOT.jar/target/lib/rcptoolbox.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.commons/3.1.1-SNAPSHOT/org.bbaw.bts.ui.commons-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -829,7 +811,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.ramo.klevis.p2.core.service:1.0.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.ramo.klevis.p2.core.service:1.0.0.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.ramo.klevis.p2.core.service/1.0.0-SNAPSHOT/org.ramo.klevis.p2.core.service-1.0.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -1243,124 +1225,124 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.app.login:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.app.login:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.app.login/3.1.0-SNAPSHOT/org.bbaw.bts.app.login-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.app.login/3.1.1-SNAPSHOT/org.bbaw.bts.app.login-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons/3.1.0-SNAPSHOT/org.bbaw.bts.commons-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons/3.1.1-SNAPSHOT/org.bbaw.bts.commons-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model.edit:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model.edit:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model.edit/3.1.0-SNAPSHOT/org.bbaw.bts.model.edit-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model.edit/3.1.1-SNAPSHOT/org.bbaw.bts.model.edit-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.controller.impl:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.controller.impl:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.controller.impl/3.1.0-SNAPSHOT/org.bbaw.bts.core.controller.impl-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.controller.impl/3.1.1-SNAPSHOT/org.bbaw.bts.core.controller.impl-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.dao.couchDB:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.dao.couchDB:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.dao.couchDB/3.1.0-SNAPSHOT/org.bbaw.bts.core.dao.couchDB-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.dao.couchDB/3.1.1-SNAPSHOT/org.bbaw.bts.core.dao.couchDB-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.remote.dao.couchDB:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.remote.dao.couchDB:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.remote.dao.couchDB/3.1.0-SNAPSHOT/org.bbaw.bts.core.remote.dao.couchDB-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.remote.dao.couchDB/3.1.1-SNAPSHOT/org.bbaw.bts.core.remote.dao.couchDB-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.services.impl:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.services.impl:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.services.impl/3.1.0-SNAPSHOT/org.bbaw.bts.core.services.impl-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.services.impl/3.1.1-SNAPSHOT/org.bbaw.bts.core.services.impl-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.db:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.db:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.db/3.1.0-SNAPSHOT/org.bbaw.bts.db-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.db/3.1.1-SNAPSHOT/org.bbaw.bts.db-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.db.couchdb:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.db.couchdb:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.db.couchdb/3.1.0-SNAPSHOT/org.bbaw.bts.db.couchdb-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.db.couchdb/3.1.1-SNAPSHOT/org.bbaw.bts.db.couchdb-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.font:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.font:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.font/3.1.0-SNAPSHOT/org.bbaw.bts.ui.font-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.font/3.1.1-SNAPSHOT/org.bbaw.bts.ui.font-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.main:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.main:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.main/3.1.0-SNAPSHOT/org.bbaw.bts.ui.main-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.main/3.1.1-SNAPSHOT/org.bbaw.bts.ui.main-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.main:target/lib/rcptoolbox.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.main:target/lib/rcptoolbox.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.main-3.1.0-SNAPSHOT.jar/target/lib/rcptoolbox.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.main-3.1.1-SNAPSHOT.jar/target/lib/rcptoolbox.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.main:target/lib/opal.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.main:target/lib/opal.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.main-3.1.0-SNAPSHOT.jar/target/lib/opal.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.main-3.1.1-SNAPSHOT.jar/target/lib/opal.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.eclipselabs.emfjson/0.6.1-SNAPSHOT/org.bbaw.bts.eclipselabs.emfjson-0.6.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -1369,7 +1351,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-codec.jar:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-codec.jar:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/commons-codec.jar!/" />
         </CLASSES>
@@ -1378,7 +1360,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-logging.jar:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-logging.jar:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/commons-logging.jar!/" />
         </CLASSES>
@@ -1387,7 +1369,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/gson.jar:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/gson.jar:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/gson.jar!/" />
         </CLASSES>
@@ -1396,7 +1378,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/httpclient.jar:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/httpclient.jar:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/httpclient.jar!/" />
         </CLASSES>
@@ -1405,7 +1387,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/httpcore.jar:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/httpcore.jar:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/httpcore.jar!/" />
         </CLASSES>
@@ -1414,7 +1396,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-io.jar:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/commons-io.jar:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/commons-io.jar!/" />
         </CLASSES>
@@ -1423,7 +1405,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/sardine.jar:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/sardine.jar:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/sardine.jar!/" />
         </CLASSES>
@@ -1432,7 +1414,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/slf4j-api.jar:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:target/lib/slf4j-api.jar:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.lightcouch-0.6.1-SNAPSHOT.jar/target/lib/slf4j-api.jar!/" />
         </CLASSES>
@@ -1441,7 +1423,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.lightcouch:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.lightcouch:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.lightcouch/0.6.1-SNAPSHOT/org.lightcouch-0.6.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -1558,7 +1540,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson.couchdb:2.0.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson.couchdb:2.0.0.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.eclipselabs.emfjson.couchdb/2.0.0-SNAPSHOT/org.bbaw.bts.eclipselabs.emfjson.couchdb-2.0.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -1567,7 +1549,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.eclipse.e4.ui.workbench.perspectiveswitcher:1.0.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.e4.ui.workbench.perspectiveswitcher:1.0.0.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.eclipse.e4.ui.workbench.perspectiveswitcher/1.0.0-SNAPSHOT/org.eclipse.e4.ui.workbench.perspectiveswitcher-1.0.0-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -1576,144 +1558,144 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.resources.impl:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.resources.impl:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.resources.impl/3.1.0-SNAPSHOT/org.bbaw.bts.ui.resources.impl-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.resources.impl/3.1.1-SNAPSHOT/org.bbaw.bts.ui.resources.impl-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/bcmail-jdk16.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/bcmail-jdk16.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/bcmail-jdk16.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/bcmail-jdk16.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/bcprov-jdk16.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/bcprov-jdk16.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/bcprov-jdk16.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/bcprov-jdk16.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-cupruntime.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-cupruntime.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-cupruntime.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-cupruntime.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/forms.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/forms.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/forms.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/forms.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/swing-layout.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/swing-layout.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/swing-layout.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/swing-layout.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/Quaqua.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/Quaqua.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/Quaqua.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/Quaqua.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-itext.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-itext.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-itext.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-itext.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jhotdrawfw.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jhotdrawfw.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-jhotdrawfw.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-jhotdrawfw.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jsesh.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jsesh.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-jsesh.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-jsesh.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshAppli.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshAppli.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-jseshAppli.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-jseshAppli.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshDoc.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshDoc.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-jseshDoc.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-jseshDoc.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshGlyphs.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshGlyphs.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-jseshGlyphs.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-jseshGlyphs.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jvectClipboard.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jvectClipboard.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-jvectClipboard.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-jvectClipboard.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-miglayout.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-miglayout.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-miglayout.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-miglayout.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-qenherkhopeshefUtils.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-qenherkhopeshefUtils.jar:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.0-SNAPSHOT.jar/target/lib/jsesh-libs-qenherkhopeshefUtils.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.ui.corpus.egy.commons-3.1.1-SNAPSHOT.jar/target/lib/jsesh-libs-qenherkhopeshefUtils.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -1765,9 +1747,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.fsaccess:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons.fsaccess:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons.fsaccess/3.1.0-SNAPSHOT/org.bbaw.bts.commons.fsaccess-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons.fsaccess/3.1.1-SNAPSHOT/org.bbaw.bts.commons.fsaccess-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -2551,6 +2533,60 @@
       <library name="Maven: p2.eclipse-plugin:org.eclipse.xtext.common.types.edit:2.4.3.v201309030823">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.xtext.common.types.edit/2.4.3.v201309030823/org.eclipse.xtext.common.types.edit-2.4.3.v201309030823.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.win32.win32.x86:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.win32.win32.x86/3.105.3.v20170228-0512/org.eclipse.swt.win32.win32.x86-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.equinox.security.win32.x86:1.0.300.v20130327-1442">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.equinox.security.win32.x86/1.0.300.v20130327-1442/org.eclipse.equinox.security.win32.x86-1.0.300.v20130327-1442.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.win32.win32.x86_64:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.win32.win32.x86_64/3.105.3.v20170228-0512/org.eclipse.swt.win32.win32.x86_64-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.equinox.security.win32.x86_64:1.0.100.v20130327-1442">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.equinox.security.win32.x86_64/1.0.100.v20130327-1442/org.eclipse.equinox.security.win32.x86_64-1.0.100.v20130327-1442.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.cocoa.macosx.x86_64:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.cocoa.macosx.x86_64/3.105.3.v20170228-0512/org.eclipse.swt.cocoa.macosx.x86_64-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.equinox.security.macosx:1.100.200.v20130327-1442">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.equinox.security.macosx/1.100.200.v20130327-1442/org.eclipse.equinox.security.macosx-1.100.200.v20130327-1442.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -39,15 +39,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.0.201708250915">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons/3.1.0-SNAPSHOT/org.bbaw.bts.commons-3.1.0-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Maven: p2.eclipse-plugin:org.eclipse.e4.core.services:2.0.100.v20160509-1032">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.e4.core.services/2.0.100.v20160509-1032/org.eclipse.e4.core.services-2.0.100.v20160509-1032.jar!/" />
@@ -84,9 +75,18 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model/3.1.0-SNAPSHOT/org.bbaw.bts.model-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons/3.1.1-SNAPSHOT/org.bbaw.bts.commons-3.1.1-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.1.201710110749">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model/3.1.1-SNAPSHOT/org.bbaw.bts.model-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -111,7 +111,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.eclipselabs.emfjson/0.6.1-SNAPSHOT/org.bbaw.bts.eclipselabs.emfjson-0.6.1-SNAPSHOT.jar!/" />
         </CLASSES>

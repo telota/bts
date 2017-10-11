@@ -106,11 +106,11 @@ public class DefaultLinkedPositionGroupCalculator implements ILinkedPositionGrou
         IRenameStrategy.Provider strategyProvider = globalServiceProvider.findService(targetElement,
                 IRenameStrategy.Provider.class);
         IRenameStrategy renameStrategy = null;
-        try {
+        //try {
             renameStrategy = strategyProvider.get(targetElement, renameElementContext);
-        } catch (NoSuchStrategyException exc) {
+        //} catch (NoSuchStrategyException exc) {
             // handle in next line
-        }
+        //}
         if (renameStrategy == null)
             throw new IllegalArgumentException("Cannot find a rename strategy for "
                     + notNull(renameElementContext.getTargetElementURI()));

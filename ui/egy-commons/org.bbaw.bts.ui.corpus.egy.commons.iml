@@ -145,15 +145,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.0.201708250915">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons/3.1.0-SNAPSHOT/org.bbaw.bts.commons-3.1.0-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Maven: p2.eclipse-plugin:org.eclipse.e4.core.services:2.0.100.v20160509-1032">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.e4.core.services/2.0.100.v20160509-1032/org.eclipse.e4.core.services-2.0.100.v20160509-1032.jar!/" />
@@ -190,18 +181,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:target/lib/commons-net.jar:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.core.commons-3.1.0-SNAPSHOT.jar/target/lib/commons-net.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:3.1.0.201708250915">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.commons/3.1.0-SNAPSHOT/org.bbaw.bts.core.commons-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons/3.1.1-SNAPSHOT/org.bbaw.bts.commons-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -217,9 +199,9 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.0.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.1.201710110749">
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model/3.1.0-SNAPSHOT/org.bbaw.bts.model-3.1.0-SNAPSHOT.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model/3.1.1-SNAPSHOT/org.bbaw.bts.model-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -298,7 +280,25 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201708250915">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:target/lib/commons-net.jar:3.1.1.201710110749">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.core.commons-3.1.1-SNAPSHOT.jar/target/lib/commons-net.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:3.1.1.201710110749">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.commons/3.1.1-SNAPSHOT/org.bbaw.bts.core.commons-3.1.1-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201710110749">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.eclipselabs.emfjson/0.6.1-SNAPSHOT/org.bbaw.bts.eclipselabs.emfjson-0.6.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -352,7 +352,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/bcmail-jdk16.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/bcmail-jdk16.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/bcmail-jdk16.jar!/" />
         </CLASSES>
@@ -361,7 +361,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/bcprov-jdk16.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/bcprov-jdk16.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/bcprov-jdk16.jar!/" />
         </CLASSES>
@@ -370,7 +370,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-cupruntime.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-cupruntime.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-cupruntime.jar!/" />
         </CLASSES>
@@ -379,7 +379,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/forms.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/forms.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/forms.jar!/" />
         </CLASSES>
@@ -388,7 +388,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/swing-layout.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/swing-layout.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/swing-layout.jar!/" />
         </CLASSES>
@@ -397,7 +397,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/Quaqua.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/Quaqua.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/Quaqua.jar!/" />
         </CLASSES>
@@ -406,7 +406,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-itext.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-itext.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-itext.jar!/" />
         </CLASSES>
@@ -415,7 +415,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jhotdrawfw.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jhotdrawfw.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-jhotdrawfw.jar!/" />
         </CLASSES>
@@ -424,7 +424,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jsesh.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jsesh.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-jsesh.jar!/" />
         </CLASSES>
@@ -433,7 +433,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshAppli.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshAppli.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-jseshAppli.jar!/" />
         </CLASSES>
@@ -442,7 +442,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshDoc.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshDoc.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-jseshDoc.jar!/" />
         </CLASSES>
@@ -451,7 +451,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshGlyphs.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jseshGlyphs.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-jseshGlyphs.jar!/" />
         </CLASSES>
@@ -460,7 +460,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jvectClipboard.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-jvectClipboard.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-jvectClipboard.jar!/" />
         </CLASSES>
@@ -469,7 +469,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-miglayout.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-miglayout.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-miglayout.jar!/" />
         </CLASSES>
@@ -478,7 +478,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-qenherkhopeshefUtils.jar:3.1.0.qualifier">
+      <library name="Maven: org.bbaw.bts:org.bbaw.bts.ui.corpus.egy.commons:target/lib/jsesh-libs-qenherkhopeshefUtils.jar:3.1.1.qualifier">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/target/lib/jsesh-libs-qenherkhopeshefUtils.jar!/" />
         </CLASSES>
@@ -625,6 +625,33 @@
       <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.gtk.linux.x86_64:3.105.3.v20170228-0512">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.gtk.linux.x86_64/3.105.3.v20170228-0512/org.eclipse.swt.gtk.linux.x86_64-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.win32.win32.x86:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.win32.win32.x86/3.105.3.v20170228-0512/org.eclipse.swt.win32.win32.x86-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.win32.win32.x86_64:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.win32.win32.x86_64/3.105.3.v20170228-0512/org.eclipse.swt.win32.win32.x86_64-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.cocoa.macosx.x86_64:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.cocoa.macosx.x86_64/3.105.3.v20170228-0512/org.eclipse.swt.cocoa.macosx.x86_64-3.105.3.v20170228-0512.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

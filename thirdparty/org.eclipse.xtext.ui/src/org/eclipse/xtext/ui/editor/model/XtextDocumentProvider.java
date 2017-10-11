@@ -317,11 +317,11 @@ public class XtextDocumentProvider extends FileDocumentProvider {
             URIInfo info = (URIInfo) getElementInfo(element);
             if (info != null) {
                 if (info.updateCache) {
-                    try {
+                    //try {
                         updateCache((IURIEditorInput) element);
-                    } catch (CoreException x) {
-                        handleCoreException(x, "XtextDocumentProvider.isModifiable");
-                    }
+                    //} catch (CoreException x) {
+                        //handleCoreException(x, "XtextDocumentProvider.isModifiable");
+                    //}
                 }
                 return info.isModifiable;
             }
@@ -335,11 +335,11 @@ public class XtextDocumentProvider extends FileDocumentProvider {
             URIInfo info = (URIInfo) getElementInfo(element);
             if (info != null) {
                 if (info.updateCache) {
-                    try {
+                    //try {
                         updateCache((IURIEditorInput) element);
-                    } catch (CoreException x) {
-                        handleCoreException(x, "XtextDocumentProvider.isReadOnly");
-                    }
+                    //} catch (CoreException x) {
+                        //handleCoreException(x, "XtextDocumentProvider.isReadOnly");
+                    //}
                 }
                 return info.isReadOnly;
             }
@@ -416,7 +416,11 @@ public class XtextDocumentProvider extends FileDocumentProvider {
                 IStatus s = new Status(IStatus.ERROR, Activator.PLUGIN_ID, IResourceStatus.FAILED_WRITE_LOCAL, message, null);
                 throw new CoreException(s);
             } finally {
-                Closeables.closeQuietly(stream);
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    // ignore
+                }
             }
             return;
         }

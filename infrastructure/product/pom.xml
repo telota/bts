@@ -3,8 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bbaw.bts</groupId>
 	<artifactId>org.bbaw.bts.app.product</artifactId>
-	<version>3.1.1-SNAPSHOT</version>
 	<packaging>eclipse-repository</packaging>
+
+    <parent>
+        <artifactId>aaew-bts</artifactId>
+        <groupId>org.bbaw.bts</groupId>
+        <version>3.1.1-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
+    </parent>
 
 	<properties>
 		<tycho.version>0.19.0</tycho.version>

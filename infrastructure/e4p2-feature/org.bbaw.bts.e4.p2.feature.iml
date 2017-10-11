@@ -91,15 +91,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.e4.p2:3.1.0">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.e4.p2/3.1.0/org.bbaw.bts.e4.p2-3.1.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Maven: p2.eclipse-plugin:org.eclipse.equinox.p2.core:2.4.100.v20160419-0834">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.equinox.p2.core/2.4.100.v20160419-0834/org.eclipse.equinox.p2.core-2.4.100.v20160419-0834.jar!/" />
@@ -202,6 +193,15 @@
       <library name="Maven: p2.eclipse-plugin:org.eclipse.equinox.common:3.8.0.v20160509-1230">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.equinox.common/3.8.0.v20160509-1230/org.eclipse.equinox.common-3.8.0.v20160509-1230.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.e4.p2:3.1.1.201710110749">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.e4.p2/3.1.1-SNAPSHOT/org.bbaw.bts.e4.p2-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -913,6 +913,33 @@
       <library name="Maven: p2.eclipse-plugin:org.w3c.dom.smil:1.0.1.v200903091627">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.w3c.dom.smil/1.0.1.v200903091627/org.w3c.dom.smil-1.0.1.v200903091627.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.win32.win32.x86:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.win32.win32.x86/3.105.3.v20170228-0512/org.eclipse.swt.win32.win32.x86-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.win32.win32.x86_64:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.win32.win32.x86_64/3.105.3.v20170228-0512/org.eclipse.swt.win32.win32.x86_64-3.105.3.v20170228-0512.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: p2.eclipse-plugin:org.eclipse.swt.cocoa.macosx.x86_64:3.105.3.v20170228-0512">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/p2/osgi/bundle/org.eclipse.swt.cocoa.macosx.x86_64/3.105.3.v20170228-0512/org.eclipse.swt.cocoa.macosx.x86_64-3.105.3.v20170228-0512.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

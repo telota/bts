@@ -68,8 +68,8 @@
       <import plugin="org.eclipse.jface.databinding" version="1.6.200" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.databinding.property" version="1.4.200" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jface.text" version="3.8.101" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.ui" version="2.4.4" match="perfect"/>
-      <import plugin="org.eclipse.xtext" version="2.4.3" match="equivalent"/>
+      <import plugin="org.eclipse.xtext.ui" version="2.10.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext" version="2.10.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.ui.model.workbench" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.bbaw.bts.ui.resources" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.e4.core.commands" version="0.10.2" match="greaterOrEqual"/>
@@ -78,11 +78,11 @@
       <import plugin="org.eclipse.equinox.p2.engine" version="2.3.0" match="greaterOrEqual"/>
       <import plugin="com.opcoach.e4.preferences" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.runtime" version="3.9.100" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.util" version="2.4.4" match="perfect"/>
+      <import plugin="org.eclipse.xtext.util" version="2.10.0" match="greaterOrEqual"/>
       <import plugin="org.ramo.klevis.p2.core.service" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.bbaw.bts.app" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.workbench.texteditor" version="3.4.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.builder" version="2.4.3" match="equivalent"/>
+      <import plugin="org.eclipse.xtext.builder" version="2.10.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.swt" version="3.7.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.runtime" version="3.10.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.runtime" version="3.11.0" match="compatible"/>

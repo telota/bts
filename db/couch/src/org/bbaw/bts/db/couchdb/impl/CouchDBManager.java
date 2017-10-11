@@ -1101,7 +1101,7 @@ public class CouchDBManager implements DBManager {
 	}
 
 	@Override
-	public boolean prepareDB() throws URISyntaxException {
+	public boolean prepareDB() {
 		// database should be installed
 		// should be running
 

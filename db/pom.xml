@@ -14,9 +14,6 @@
 
     <modules>
         <module>couch</module>
-        <module>couch-mac</module>
-        <module>couch-win32</module>
-        <module>couch-win64</module>
         <module>dao</module>
         <module>dao-corpus</module>
         <module>dao-corpus-couch</module>

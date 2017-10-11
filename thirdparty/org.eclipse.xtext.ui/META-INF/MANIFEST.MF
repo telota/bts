@@ -87,7 +87,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.4.0";visibility:=reex
  org.eclipse.xtext.xbase.lib;bundle-version="2.4.3",
  org.eclipse.jdt.annotation;bundle-version="1.0.0";resolution:=optional,
  org.eclipse.ui.forms;bundle-version="3.4.1",
- org.eclipse.e4.core.di
+ org.eclipse.e4.core.di,
+ org.bbaw.bts.core.commons
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: target/lib/guava.jar

@@ -1,72 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.model</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.core.commons</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.core.controller</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.core.corpus.controller</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.model.corpus</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.ui.commons</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.ui.main</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.ui.resources</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.core.commons.corpus</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.ui.main</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bbaw.bts</groupId>
-            <artifactId>org.bbaw.bts.ui.commons.corpus</artifactId>
-            <version>3.1.1-SNAPSHOT</version>
-        </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.core.commons.corpus</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.core.commons</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.core.controller</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.core.corpus.controller</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.model.corpus</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.model</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.ui.commons.corpus</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.ui.commons</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.ui.main</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
+        <dependency> <groupId>org.bbaw.bts</groupId> <artifactId>org.bbaw.bts.ui.resources</artifactId> <version>3.1.1-SNAPSHOT</version> </dependency>
     </dependencies>
     <parent>
         <groupId>org.bbaw.bts</groupId>
         <artifactId>aaew-bts</artifactId>
         <version>3.1.1-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
     </parent>
     <artifactId>org.bbaw.bts.ui.corpus</artifactId>
-    <version>3.1.1-SNAPSHOT</version>
     <packaging>eclipse-plugin</packaging>
 
     <properties>
@@ -96,6 +51,9 @@
                             </url>
                             <outputFileName>opal.jar</outputFileName>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <md5>Maven is Great! Just Download This File, Please!</md5>
+                            <checkSignature>true</checkSignature> <!-- Way to go! -->
+                            <failOnError>false</failOnError> <!-- Thank god for these options -->
                         </configuration>
                     </execution>
                     <execution>
@@ -111,6 +69,9 @@
                             </url>
                             <outputFileName>rcptoolbox.jar</outputFileName>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <md5>Maven is Great! Just Download This File, Please!</md5>
+                            <checkSignature>true</checkSignature> <!-- Way to go! -->
+                            <failOnError>false</failOnError> <!-- Thank god for these options -->
                         </configuration>
                     </execution>
                 </executions>

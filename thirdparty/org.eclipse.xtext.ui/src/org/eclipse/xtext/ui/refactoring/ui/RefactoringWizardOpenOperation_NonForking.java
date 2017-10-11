@@ -138,7 +138,7 @@ public class RefactoringWizardOpenOperation_NonForking {
                 Method disposeMethod = refactoringContext.getClass().getMethod("dispose");
                 disposeMethod.invoke(refactoringContext);
             }
-        } catch (NoSuchFieldException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
             // ignore
         }
     }
@@ -191,7 +191,7 @@ public class RefactoringWizardOpenOperation_NonForking {
             Field flagsField = getPrivateField(wizard.getClass(), "fFlags");
             flagsField.setAccessible(true);
             return ((Integer) flagsField.get(wizard) & RefactoringWizard.WIZARD_BASED_USER_INTERFACE) != 0;
-        } catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException | SecurityException e) {
+        } catch (IllegalAccessException | IllegalArgumentException | SecurityException e) {
             // ignore
         }
         return true;

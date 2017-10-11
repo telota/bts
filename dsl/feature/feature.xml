@@ -19,7 +19,7 @@
 
    <requires>
       <import plugin="org.eclipse.jface.text" version="3.8.101" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.ui" version="2.4.4" match="perfect"/>
+      <import plugin="org.eclipse.xtext.ui" version="2.10.0" match="greaterOrEqual"/>
       <import plugin="org.bbaw.bts.model"/>
       <import plugin="org.eclipse.emf.edit"/>
       <import plugin="org.eclipse.swt"/>
@@ -86,16 +86,16 @@
       <import plugin="org.eclipse.compare.core" version="3.5.0" match="compatible"/>
       <import plugin="org.eclipse.core.expressions" version="3.4.100" match="compatible"/>
       <import plugin="org.eclipse.emf.ecore.xmi" version="2.9.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.util" version="2.4.4" match="perfect"/>
-      <import plugin="org.eclipse.xtext" version="2.4.3" match="equivalent"/>
-      <import plugin="org.eclipse.xtext.xbase.lib" version="2.4.3" match="equivalent"/>
-      <import plugin="org.eclipse.xtext.common.types" version="2.4.3" match="equivalent"/>
+      <import plugin="org.eclipse.xtext.util" version="2.10.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext" version="2.10.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.xbase.lib" version="2.10.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.common.types" version="2.10.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.resources" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.search" version="3.5.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ltk.ui.refactoring" version="3.4.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.ui.codetemplates" version="2.4.3" match="equivalent"/>
-      <import plugin="org.eclipse.xtext.ui.shared" version="2.4.3" match="equivalent"/>
-      <import plugin="org.eclipse.xtext.builder" version="2.4.3" match="equivalent"/>
+      <import plugin="org.eclipse.xtext.ui.codetemplates" version="2.10.0" match="equivalent"/>
+      <import plugin="org.eclipse.xtext.ui.shared" version="2.10.0" match="equivalent"/>
+      <import plugin="org.eclipse.xtext.builder" version="2.10.0" match="equivalent"/>
       <import plugin="org.eclipse.ui.workbench.texteditor" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.expressions" version="3.4.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.navigator" version="3.4.1" match="greaterOrEqual"/>
@@ -332,7 +332,7 @@
          id="org.eclipse.xtext.ui"
          download-size="0"
          install-size="0"
-         version="2.4.4"
+         version="2.10.0"
          unpack="false"/>
 
    <plugin
