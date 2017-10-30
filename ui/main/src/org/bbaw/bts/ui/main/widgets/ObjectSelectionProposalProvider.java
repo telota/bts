@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
+import java.text.Collator;
+
+import javax.inject.Inject;
 
 import org.bbaw.bts.btsmodel.BTSConfig;
 import org.bbaw.bts.btsmodel.BTSConfigItem;
@@ -13,20 +16,31 @@ import org.eclipse.jface.fieldassist.ContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 
-public class ObjectSelectionProposalProvider implements
-        IContentProposalProvider {
+public class ObjectSelectionProposalProvider implements IContentProposalProvider {
 
-    private GeneralBTSObjectController gernalObjectController;
+    private final GeneralBTSObjectController generalObjectController;
     private BTSConfig configItem;
     private List<BTSObject> list;
-    private Comparator<IContentProposal> comparator;
-    private BTSObject object;
+    @Inject
+    private Comparator<IContentProposal> comparator = new Comparator<IContentProposal>() {
+            @Override
+            public int compare(IContentProposal left, IContentProposal right) {
+                if (left == null || right == null)
+                    return 0;
+                String labelLeft = left.getLabel();
+                if (labelLeft == null)
+                    return 0;
+                return left.getLabel().compareTo(right.getLabel());
+            }
+        };
+
+    private final BTSObject object;
 
     public ObjectSelectionProposalProvider(
             GeneralBTSObjectController passportEditorController,
             BTSConfig configItem,
             BTSObject object) {
-        this.gernalObjectController = passportEditorController;
+        this.generalObjectController = passportEditorController;
         this.setConfigItem(configItem);
         this.object = object;
     }
@@ -48,39 +62,15 @@ public class ObjectSelectionProposalProvider implements
                 }
             }
 
-            Collections.sort(partialList, getComparator());
+            Collections.sort(partialList, comparator);
         }
         return partialList.toArray(new IContentProposal[partialList.size()]);
     }
 
-    private Comparator<IContentProposal> getComparator() {
-        if (comparator == null) {
-            comparator = new Comparator<IContentProposal>() {
-
-                @Override
-                public int compare(IContentProposal p1, IContentProposal p2) {
-                    if (p1 != null && p2 != null) {
-                        if (p1.getLabel() != null) {
-                            return p1.getLabel().compareTo(p2.getLabel());
-                        }
-                    }
-                    return 0;
-                }
-
-            };
-        }
-        return comparator;
-    }
-
     private List<BTSObject> loadList(final String contents) {
-
-        return gernalObjectController.getObjectProposalsFor(
+        return generalObjectController.getObjectProposalsFor(
                 (BTSConfigItem) configItem, contents, object, null);
 
-    }
-
-    public BTSConfig getConfigItem() {
-        return configItem;
     }
 
     public void setConfigItem(BTSConfig configItem) {
