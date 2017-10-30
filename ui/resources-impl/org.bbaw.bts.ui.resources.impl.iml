@@ -87,7 +87,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.1.201710110749">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.commons:3.1.1.201710281222">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.commons/3.1.1-SNAPSHOT/org.bbaw.bts.commons-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -105,7 +105,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.1.201710110749">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.model:3.1.1.201710281222">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.model/3.1.1-SNAPSHOT/org.bbaw.bts.model-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -186,7 +186,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:target/lib/commons-net.jar:3.1.1.201710110749">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:target/lib/commons-net.jar:3.1.1.201710281222">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/.cache/tycho/org.bbaw.bts.core.commons-3.1.1-SNAPSHOT.jar/target/lib/commons-net.jar!/" />
         </CLASSES>
@@ -195,7 +195,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:3.1.1.201710110749">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.core.commons:3.1.1.201710281222">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.core.commons/3.1.1-SNAPSHOT/org.bbaw.bts.core.commons-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -204,7 +204,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201710110749">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.eclipselabs.emfjson:0.6.1.201710281222">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.eclipselabs.emfjson/0.6.1-SNAPSHOT/org.bbaw.bts.eclipselabs.emfjson-0.6.1-SNAPSHOT.jar!/" />
         </CLASSES>
@@ -276,7 +276,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.resources:3.1.1.201710110749">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.resources:3.1.1.201710281222">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.resources/3.1.1-SNAPSHOT/org.bbaw.bts.ui.resources-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>

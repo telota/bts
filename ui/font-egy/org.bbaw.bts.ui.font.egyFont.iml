@@ -110,7 +110,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.font:3.1.1.201710110749">
+      <library name="Maven: p2.eclipse-plugin:org.bbaw.bts.ui.font:3.1.1.201710281222">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/org/bbaw/bts/org.bbaw.bts.ui.font/3.1.1-SNAPSHOT/org.bbaw.bts.ui.font-3.1.1-SNAPSHOT.jar!/" />
         </CLASSES>
