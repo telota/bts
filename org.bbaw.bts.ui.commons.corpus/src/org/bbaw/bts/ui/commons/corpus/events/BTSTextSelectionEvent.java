@@ -3,6 +3,7 @@ package org.bbaw.bts.ui.commons.corpus.events;
 import java.util.List;
 import java.util.Vector;
 
+import org.bbaw.bts.ui.commons.corpus.text.BTSModelAnnotation;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
@@ -16,7 +17,7 @@ import org.eclipse.swt.widgets.Event;
 public class BTSTextSelectionEvent extends Event {
 	
 	private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
-	private List<Annotation> textAnnotations = new Vector<Annotation>(4);
+	private List<BTSModelAnnotation> textAnnotations = new Vector<BTSModelAnnotation>(4);
 	
 	private List<BTSInterTextReference> interTextReferences = new Vector<BTSInterTextReference>(4);
 	
@@ -57,11 +58,11 @@ public class BTSTextSelectionEvent extends Event {
 		this.relatingObjects = relatingObjects;
 	}
 
-	public List<Annotation> getTextAnnotations() {
+	public List<BTSModelAnnotation> getTextAnnotations() {
 		return textAnnotations;
 	}
 
-	public void setTextAnnotations(List<Annotation> textAnnotations) {
+	public void setTextAnnotations(List<BTSModelAnnotation> textAnnotations) {
 		this.textAnnotations = textAnnotations;
 	}
 
