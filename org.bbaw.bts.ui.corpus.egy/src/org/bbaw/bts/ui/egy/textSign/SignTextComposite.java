@@ -73,6 +73,7 @@ import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.TypedEvent;
@@ -156,7 +157,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 	private MouseMotionListener mouseMotionListener;
 	private KeyListener keyListener;
 	private FigureCanvas canvas;
-	private Map<String, List<BTSInterTextReference>> relatingObjectsMap;
+	private Map<String, List<BTSInterTextReference>> relatingObjectsMap = new HashMap<String, List<BTSInterTextReference>>();
 	private List<BTSObject> continuingRelatingObjects;
 	private HashMap<String, List<ElementFigure>> relatingObjectFigureMap;
 	private BTSTextContent textContent;
@@ -548,8 +549,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 			IProgressMonitor monitor, Object localSelectedTextItem) {
 		this.textContent = textContent;
 		this.btsObject = btsObject;
-		this.relatingObjectsMap =  textEditorController
-				.fillRelatingObjectsMap(relatingObjects);
+		this.relatingObjectsMap =  textEditorController.fillRelatingObjectsMap(relatingObjects);
 		if (textContent != null) {
 			loadText();
 			this.layout();
@@ -605,56 +605,15 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 
 		wordMap = new HashMap<String, IFigure>();
 		for (BTSTextItems item : textContent.getTextItems()) {
-			if (item instanceof BTSSenctence) {
-				BTSSenctence sentence = (BTSSenctence) item;
+			if (!(item instanceof BTSSenctence))
+				continue;
+			BTSSenctence sentence = (BTSSenctence) item;
 
-				// insert start Sentence
-				ElementFigure sentenceStart = makeSentenceStartFigure(sentence);
-				appendFigure(sentenceStart);
-				for (BTSSentenceItem senItem : sentence.getSentenceItems()) {
-					ElementFigure itemFigure = null;
-					if (senItem instanceof BTSWord) {
-						BTSWord word = (BTSWord) senItem;
-						itemFigure = makeWordFigure(word);
-						// appendWord(word);
-					}
-					else if (senItem instanceof BTSMarker) {
-						BTSMarker marker = (BTSMarker) senItem;
-						itemFigure = makeMarkerFigure(marker);
-						appendFigure(itemFigure);
-
-					}
-					else if (senItem instanceof BTSAmbivalence) {
-						BTSAmbivalence ambivalence = (BTSAmbivalence) senItem;
-						itemFigure = makeAmbivalenceFigure(ambivalence);
-
-					}
-					
-					if (itemFigure != null) {
-						if (relatingObjectsMap != null && relatingObjectsMap.containsKey(senItem.get_id()))
-						{
-							List<BTSInterTextReference> list = relatingObjectsMap.get(senItem.get_id());
-							processReferences(itemFigure, list, senItem);
-						}
-						if (!continuingRelatingObjects.isEmpty())
-						{
-							for (BTSObject o : continuingRelatingObjects)
-							{
-								itemFigure.addRelatingObject(o);
-								processStylingAnnotations(itemFigure, o);
-								updateRelatingObjectFigureMap(o.get_id(), itemFigure);
-							}
-							//add continuing relating objects to figure!
-						}
-					// process relating Objects
-					}
-
-				}
-				ElementFigure sentenceEnd = makeSentenceEndFigure(sentence);
-				appendFigure(sentenceEnd);
-
-			}
+			appendFigure(makeSentenceStartFigure(sentence));
+			loadSentenceItems(sentence.getSentenceItems(), null);
+			appendFigure(makeSentenceEndFigure(sentence));
 		}
+
 		lineIndex = 0;
 		currentLineFigure = lineMap.get(lineIndex);
 		// firstLine.add(cursor);
@@ -671,133 +630,117 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		parentComposite.layout();
 	}
 
-	private void processReferences(ElementFigure itemFigure,
-			List<BTSInterTextReference> list, BTSSentenceItem senItem) {
-			// FIXME ende einer annotation berechnen!!!!!!!!
-			for (BTSInterTextReference ref : list)
-			{
-				BTSObject relatingObject = null;
-				if (ref.eContainer() != null && ref.eContainer() instanceof BTSRelation && ref.eContainer().eContainer() != null)
-				{
-					relatingObject = (BTSObject) ref.eContainer().eContainer();
-				}
-				else
-				{
-					continue;
-				}
-				if (ref.getBeginId() == null || ref.getEndId() == null || ref.getBeginId().equals(ref.getEndId()))
-				{
-					//1) ref referenziert nur ein Item
-					itemFigure.addRelatingObject(relatingObject);
-					processStylingAnnotations(itemFigure, relatingObject);
-					updateRelatingObjectFigureMap(relatingObject.get_id(), itemFigure);
+	private void loadSentenceItems(Iterable items, BTSAmbivalence ambivalence) {
+		for (Object item : items) {
+			if (item instanceof BTSAmbivalence) {
+				makeAmbivalenceFigure((BTSAmbivalence) item);
+				continue;
+			}
 
-				}
-				else if (ref.getBeginId().equals(senItem.get_id())) {
+			ElementFigure fig = null;
+			if (item instanceof BTSWord)
+				fig = makeWordFigure((BTSWord) item);
+			else if (item instanceof BTSMarker)
+				fig = makeMarkerFigure((BTSMarker) item);
+			else continue;
+			/* At this point item is either a BTSWord or a BTSMarker and thus a BTSSentenceItem */
+
+			appendFigure(fig);
+			processReferences(fig, (BTSSentenceItem)item);
+			if (ambivalence != null)
+				processReferences(fig, ambivalence);
+
+			for (BTSObject o : continuingRelatingObjects) {
+				fig.addRelatingObject(o);
+				processStylingAnnotations(fig, o);
+				updateRelatingObjectFigureMap(o.get_id(), fig);
+			}
+		}
+	}
+
+	private void makeAmbivalenceFigure(BTSAmbivalence ambivalence) {
+		appendFigure(makeAmbivalenceStartFigure(ambivalence));
+
+		for (BTSLemmaCase lemmaCase : ambivalence.getCases()) {
+			appendFigure(makeCaseFigure(lemmaCase));
+			loadSentenceItems(lemmaCase.getScenario(), ambivalence);
+		}
+
+		appendFigure(makeAmbivalenceEndFigure(ambivalence));
+	}
+
+	private void processReferences(ElementFigure fig, BTSSentenceItem item) {
+		if (!relatingObjectsMap.containsKey(item.get_id()))
+			return;
+
+		for (BTSInterTextReference ref : relatingObjectsMap.get(item.get_id())) {
+			EObject cont = ref.eContainer();
+			if (!(cont instanceof BTSRelation) || cont.eContainer() == null)
+				continue;
+			BTSObject relatingObject = (BTSObject)cont.eContainer();
+
+			String beginId = ref.getBeginId();
+			String endId = ref.getEndId();
+			String itemId = item.get_id();
+
+			/* FIXME SPEC are one-legged references (beginId == null || endId == null) valid? */
+			if (beginId == null || endId == null || beginId.equals(endId)) {
+				//1) ref referenziert nur ein Item
+				fig.addRelatingObject(relatingObject);
+				processStylingAnnotations(fig, relatingObject);
+				updateRelatingObjectFigureMap(relatingObject.get_id(), fig);
+
+			} else if (beginId.equals(itemId)) {
 				// 2) ref ist start
 				// annotation erzeugen
-					itemFigure.addRelatingObject(relatingObject);
-					processStylingAnnotations(itemFigure, relatingObject);
-					continuingRelatingObjects.add(relatingObject);
-					updateRelatingObjectFigureMap(relatingObject.get_id(), itemFigure);
+				fig.addRelatingObject(relatingObject);
+				processStylingAnnotations(fig, relatingObject);
+				continuingRelatingObjects.add(relatingObject);
+				updateRelatingObjectFigureMap(relatingObject.get_id(), fig);
 				// annotation und start position cachen
-				
-				}
-				else if (ref.getEndId().equals(senItem.get_id())){
+			
+			} else if (endId.equals(itemId)){
 				// 3) ref ist end
 				// annotation aus cache holen - wie?
-					itemFigure.addRelatingObject(relatingObject);
-					processStylingAnnotations(itemFigure, relatingObject);
-					continuingRelatingObjects.remove(relatingObject);
-					updateRelatingObjectFigureMap(relatingObject.get_id(), itemFigure);
-				}
-			}
-		
-	}
-
-	/** processes rubra and possible other annotations that concern styling of wordfigure.
-	 * @param itemFigure
-	 * @param relatingObject
-	 */
-	private void processStylingAnnotations(ElementFigure itemFigure,
-			BTSObject relatingObject) {
-		if (relatingObject instanceof BTSAnnotation && "rubrum".equals(relatingObject.getType()) 
-				&& itemFigure instanceof WordFigure)
-		{
-			for (Object fig : itemFigure.getChildren()) {
-				if (fig instanceof TypedLabel && ((TypedLabel)fig).getType() == TypedLabel.TRANSLITATION) {
-					 ((TypedLabel)fig).setForegroundColor(BTSUIConstants.COLOR_RUBRUM);
-				}
+				fig.addRelatingObject(relatingObject);
+				processStylingAnnotations(fig, relatingObject);
+				continuingRelatingObjects.remove(relatingObject);
+				updateRelatingObjectFigureMap(relatingObject.get_id(), fig);
 			}
 		}
-		
 	}
 
-	private void updateRelatingObjectFigureMap(String relatingObjectID,
-			ElementFigure itemFigure) {
+	/** processes rubra and possible other annotations that concern styling of wordfigure. */
+	private void processStylingAnnotations(ElementFigure fig, BTSObject relatingObject) {
+		if (!(relatingObject instanceof BTSAnnotation))
+			return;
+		if (!"rubrum".equals(relatingObject.getType()))
+			return;
+		if (!(fig instanceof WordFigure))
+			return;
+
+		for (Object child : fig.getChildren()) {
+			if (!(child instanceof TypedLabel))
+				continue;
+			
+			TypedLabel label = (TypedLabel)child;
+			if (label.getType() != TypedLabel.TRANSLITATION)
+				label.setForegroundColor(BTSUIConstants.COLOR_RUBRUM);
+		}
+	}
+
+	private void updateRelatingObjectFigureMap(String relatingObjectID, ElementFigure fig) {
 		if (relatingObjectFigureMap == null)
-		{
 			relatingObjectFigureMap = new HashMap<String, List<ElementFigure>>();
-		}
+
 		List<ElementFigure> list = relatingObjectFigureMap.get(relatingObjectID);
-		if (list == null)
-		{
+		if (list == null) {
 			list = new Vector<ElementFigure>(4);
 			relatingObjectFigureMap.put(relatingObjectID, list);
 		}
-		if (!list.contains(itemFigure))
-		{
-			list.add(itemFigure);
-		}
-	}
 
-	private ElementFigure makeAmbivalenceFigure(BTSAmbivalence ambivalence) {
-
-		ElementFigure ambivalenceStart = makeAmbivalenceStartFigure(ambivalence);
-		appendFigure(ambivalenceStart);
-
-		for (BTSLemmaCase lemmaCase : ambivalence.getCases()) {
-			ElementFigure caseFigure = makeCaseFigure(lemmaCase);
-			appendFigure(caseFigure);
-
-			for (BTSAmbivalenceItem amItem : lemmaCase.getScenario()) {
-				ElementFigure itemFigure = null;
-				if (amItem instanceof BTSWord) {
-					BTSWord word = (BTSWord) amItem;
-					itemFigure = makeWordFigure(word);
-					// appendWord(word);
-				} else if (amItem instanceof BTSMarker) {
-					BTSMarker marker = (BTSMarker) amItem;
-					itemFigure = makeMarkerFigure(marker);
-					appendFigure(itemFigure);
-				}
-				if (itemFigure != null && amItem instanceof BTSSentenceItem) {
-					BTSSentenceItem  senItem = (BTSSentenceItem) amItem;
-
-					if (relatingObjectsMap != null && relatingObjectsMap.containsKey(senItem.get_id()))
-					{
-						List<BTSInterTextReference> list = relatingObjectsMap.get(senItem.get_id());
-						processReferences(itemFigure, list, senItem);
-					}
-					if (!continuingRelatingObjects.isEmpty())
-					{
-						for (BTSObject o : continuingRelatingObjects)
-						{
-							itemFigure.addRelatingObject(o);
-							processStylingAnnotations(itemFigure, o);
-							updateRelatingObjectFigureMap(o.get_id(), itemFigure);
-						}
-						//add continuing relating objects to figure!
-					}
-				// process relating Objects
-				}
-			}
-
-		}
-		ElementFigure ambivalenceEnd = makeAmbivalenceEndFigure(ambivalence);
-		appendFigure(ambivalenceEnd);
-
-		return null;
+		if (!list.contains(fig))
+			list.add(fig);
 	}
 
 	private ElementFigure makeCaseFigure(BTSLemmaCase lemmaCase) {
@@ -1077,7 +1020,6 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		});
 		rect.addMouseListener(elementSelectionListener);
 		rect.setLayoutManager(tl);
-		appendFigure(rect);
 
 		if (!word.eAdapters().contains(notifier)) {
 			word.eAdapters().add(notifier);
@@ -1134,7 +1076,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 			currentLineFigure.add(figure);
 		} else if (currentLineFigure.getSpaceLength() + len <= max_line_length) {
 			currentLineFigure.add(figure);
-		} else   {
+		} else	 {
 			currentLineFigure = makeLineFigure();
 			currentLineFigure.add(figure);
 		}
