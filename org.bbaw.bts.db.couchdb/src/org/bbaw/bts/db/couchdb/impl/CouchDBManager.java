@@ -1063,7 +1063,6 @@ public class CouchDBManager implements DBManager {
 
 								@Override
 								protected IStatus run(IProgressMonitor monitor) {
-									System.out.println("sleep");
 									return Status.OK_STATUS;
 								}
 
@@ -1076,7 +1075,6 @@ public class CouchDBManager implements DBManager {
 								eee.printStackTrace();
 							}
 
-							System.out.println("slept");
 						}
 						return Status.OK_STATUS;
 					}
@@ -1469,7 +1467,6 @@ public class CouchDBManager implements DBManager {
 
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
-					System.out.println("sleep");
 					return Status.OK_STATUS;
 				}
 
@@ -1482,7 +1479,6 @@ public class CouchDBManager implements DBManager {
 				e.printStackTrace();
 			}
 
-			System.out.println("slept");
 		}
 
 		logger.info("DB Erlang started");
@@ -1648,7 +1644,6 @@ public class CouchDBManager implements DBManager {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				System.out.println("sleep");
 				return Status.OK_STATUS;
 			}
 
@@ -1672,8 +1667,6 @@ public class CouchDBManager implements DBManager {
 				}
 			}
 		}
-
-		System.out.println("slept");
 
 		return success;
 	}
