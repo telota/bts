@@ -1388,34 +1388,26 @@ public class CouchDBManager implements DBManager {
 	}
 
 	@Override
-	public boolean startDatabase(String dbInsallationDir, String localDBUrl)
-			throws IOException, InterruptedException {
+	public boolean startDatabase(String dbInsallationDir, String localDBUrl) throws IOException, InterruptedException {
+        String url = localDBUrl;
+        if (url == null || url.equals(""))
+            url = connectionProvider.getLocalDBURL();
 
 		try {
-			if (localDBUrl != null && !"".equals(localDBUrl)) {
-				if (checkDBRunning(localDBUrl)) {
-					return true;
-				}
-			} else {
-				if (checkDBRunning(connectionProvider.getLocalDBURL())) {
-					return true;
-				}
-			}
-		} catch (Exception e) {
-			logger.error(e);
-		}
+            if (checkDBRunning(url)) {
+                logger.info("CouchDB already started, using running instance.");
+                return true;
+            }
+		} catch (Exception e) {}
+
 		boolean showeConsole = false;
 		Object o = appContext.getArguments().get("application.args");
 		if (o != null && o instanceof String[]) {
 			String[] args = (String[]) o;
 			for (String s : args) {
 				logger.info("application.args: " + s);
-				if (s != null
-						&& (s.startsWith("eclipse.log.level") || s
-								.startsWith("-eclipse.log.level"))
-						&& s.endsWith("DEBUG")) {
+				if (s != null && (s.startsWith("eclipse.log.level") || s.startsWith("-eclipse.log.level")) && s.endsWith("DEBUG"))
 					showeConsole = true;
-				}
 			}
 		}
 
@@ -1426,244 +1418,83 @@ public class CouchDBManager implements DBManager {
 		// show console if log level = ERROR
 		logger.error("Start Database, show Console: " + showeConsole);
 
-		if (showeConsole) {
+		if (showeConsole)
 			commands = new String[] { runFileName };
-		} else {
+		else
 			commands = new String[] { runFileName, "-detached" };
-		}
 		process = Runtime.getRuntime().exec(commands);
 		context.set(DB_RUNTIME_PROCESS, process);
 
-		// // get the error stream of the process and print it
-		// InputStream error = process.getErrorStream();
-		// for (int i = 0; i < error.available(); i++) {
-		// logger.info("DB Erlang error: " + error.read());
-		// }
 		// check if db is up and running
-		logger.info("Checking and waiting if DB Erlang started successfully");
+		logger.info("Waiting for CouchDB to start...");
 		for (int i = 0; i < 20; i++) {
 			try {
-				if (localDBUrl != null && !"".equals(localDBUrl)) {
-					if (checkConnection(localDBUrl, username, password)) {
-						logger.info("DB Erlang started");
-						return true;
-					} else if (checkConnection(
-							connectionProvider.getLocalDBURL(), username,
-							password)) {
-						logger.info("DB Erlang started");
-						return true;
-					}
-				} else {
-					if (checkConnection(connectionProvider.getLocalDBURL(),
-							username, password)) {
-						logger.info("DB Erlang started");
-						return true;
-					}
-				}
-			} catch (Exception e) {
-				logger.error(e);
-			}
-			Job sleeper = new Job("sleeper") {
+                if (checkConnection(localDBUrl, username, password)) {
+                    logger.info("CouchDB started successfully.");
+                    return true;
+                }
+			} catch (CouchDbException e) {}
 
-				@Override
-				protected IStatus run(IProgressMonitor monitor) {
-					return Status.OK_STATUS;
-				}
-
-			};
-			sleeper.schedule(1000);
-			try {
-				sleeper.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+            Thread.sleep(1000);
 		}
 
-		logger.info("DB Erlang started");
-
-		return true;
+		logger.error("CouchDB failed to start.");
+		return false;
 	}
 
-	private String getOSCouchDBStartUpFileName(String dbInsallationDir,
-			boolean showeConsole) throws FileNotFoundException {
-		String runFileName = dbInsallationDir + BTSContstantsPlatformSpecific.FS
-				+ DB_ARCHIVE_NAME;
+	private String getOSCouchDBStartUpFileName(String dbInsallationDir, boolean showeConsole) throws FileNotFoundException {
+		String runFileName = dbInsallationDir + BTSContstantsPlatformSpecific.FS + DB_ARCHIVE_NAME;
 		if (OSValidator.isWindows()) {
-			if (!showeConsole) {
-				return runFileName + BTSContstantsPlatformSpecific.FS + "bin" + BTSContstantsPlatformSpecific.FS
-						+ "couchdb-d.bat";
-			}
-			return runFileName + BTSContstantsPlatformSpecific.FS + "bin" + BTSContstantsPlatformSpecific.FS
-					+ "couchdb.bat";
-		} else if (OSValidator.isMac()) {
+			if (!showeConsole)
+				return runFileName + BTSContstantsPlatformSpecific.FS + "bin" + BTSContstantsPlatformSpecific.FS + "couchdb-d.bat";
+			return runFileName + BTSContstantsPlatformSpecific.FS + "bin" + BTSContstantsPlatformSpecific.FS + "couchdb.bat";
+		}
+        if (OSValidator.isMac()) {
 			// FIXME
 			return runFileName + BTSContstantsPlatformSpecific.FS + "Apache CouchDB.app"
 					+ BTSContstantsPlatformSpecific.FS + "Contents" + BTSContstantsPlatformSpecific.FS + "MacOS"
 					+ BTSContstantsPlatformSpecific.FS + "Apache CouchDB";
-		} else if (OSValidator.isUnix()) {
+		}
+        if (OSValidator.isUnix()) {
 			return runFileName + BTSContstantsPlatformSpecific.FS + "bin" + BTSContstantsPlatformSpecific.FS
 					+ "couchdb.sh";
 		}
 
-		// File dir = new File(runFileName);
-		// File ertsDir = null;
-		// if (dir.exists() && dir.isDirectory())
-		// {
-		// for (File child : dir.listFiles())
-		// {
-		// if (child.isDirectory() && child.getName().startsWith("erts"))
-		// {
-		// ertsDir = child;
-		// break;
-		// }
-		// }
-		// if (ertsDir != null)
-		// {
-		// logger.info("ertsDir " + ertsDir.getAbsolutePath());
-		// runFileName = ertsDir.getAbsolutePath() + BTSContstantsPlatformSpecific.FS + "bin" +
-		// BTSContstantsPlatformSpecific.FS;
-		// if (OSValidator.isWindows())
-		// {
-		// return runFileName + "erl.exe";
-		// }
-		// else if (OSValidator.isMac())
-		// {
-		// //FIXME
-		// return runFileName + "couchdb.bat";
-		// }
-		// else if (OSValidator.isUnix())
-		// {
-		// return runFileName + "couchdb.sh";
-		// }
-		// }
-		// }
-
-		throw new FileNotFoundException(
-				"CouchDB Erlang startup executable not found");
+		throw new FileNotFoundException("Error starting CouchDB: Unknown operating system.");
 	}
 
 	@Override
-	public boolean synchronizeRemoteProjects(String mainProject,
-			List<String> projecsToSync, String serverurl, String localDBUrl)
-			throws Exception {
-
-		boolean required = true;
+	public boolean synchronizeRemoteProjects(String mainProject, List<String> projecsToSync, String serverurl, String localDBUrl) throws Exception {
 		boolean success = true;
 
 		Map<String, ReplicatorDocument> replicationMap = loadReplicationMap();
-
 		// make sure that user context roles are set in _replicator collection
-		if (!replicationMap.isEmpty()) {
+		if (!replicationMap.isEmpty())
 			checkAndSetSecurityContextOnReplicator();
-		}
-		BTSDBConnection dbConnection = BtsmodelFactory.eINSTANCE
-				.createBTSDBConnection();
 
+		BTSDBConnection dbConnection = BtsmodelFactory.eINSTANCE.createBTSDBConnection();
 		dbConnection.setMasterServer(serverurl);
-		if (checkAndSetSyncToRemote("admin", dbConnection, replicationMap)
-				&& checkAndSetSyncFromRemote("admin", dbConnection,
-						replicationMap)) {
-			// fine
-		} else {
+
+		if (!checkAndSetSyncToRemote("admin", dbConnection, replicationMap))
 			success = false;
-		}
 
-		// sync users
-		if (checkAndSetSyncToRemote("_users", dbConnection, replicationMap)
-				&& checkAndSetSyncFromRemote("_users", dbConnection,
-						replicationMap)) {
-			// fine
-		} else {
+		if (!checkAndSetSyncFromRemote("admin", dbConnection, replicationMap))
 			success = false;
-		}
-		// try {
-		// docs = getStartupReplicatorDocuments("admin", localDBUrl);
-		// if (docs != null && !docs.isEmpty()) {
-		// for (ReplicatorDocument doc : docs) {
-		// if (doc.getSource().equals(serverurl + "/" + "admin")) {
-		// required = false;
-		// }
-		// }
-		// }
-		// } catch (MalformedURLException e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		//
-		// if (required) {
-		// ReplicatorDocument doc = connectionProvider.getDBClient(
-		// CouchDbClient.class, localDBUrl,
-		// "admin").replicator().replicatorDocId("admin"
-		// + DaoConstants.REPLICATOR_SUFFIX_FROM_REMOTE).find();
-		// Replicator replicator2 = connectionProvider.getDBClient(
-		// CouchDbClient.class, localDBUrl, "admin").replicator();
-		// replicator2.target("admin");
-		// replicator2.source(serverurl + "/" + "admin");
-		// replicator2.continuous(true);
-		// replicator2.replicatorDocId("admin"
-		// + DaoConstants.REPLICATOR_SUFFIX_FROM_REMOTE);
-		// replicator2.save(); // triggers a replication
-		// }
-		//
-		// // replication to remote
-		// required = true;
-		// try {
-		// docs = getStartupReplicatorDocuments("admin", localDBUrl);
-		//
-		// docs = connectionProvider.getDBClient(CouchDbClient.class,
-		// localDBUrl, "admin")
-		// .replicator().findAll();
-		// if (docs != null && !docs.isEmpty()) {
-		// for (ReplicatorDocument doc : docs) {
-		// if (doc.getTarget().equals(serverurl + "/" + "admin")) {
-		// required = false;
-		// }
-		// }
-		// }
-		// } catch (NoDocumentException e) {
-		//
-		// } catch (MalformedURLException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		//
-		// if (required) {
-		// Replicator replicator = connectionProvider.getDBClient(
-		// CouchDbClient.class, localDBUrl, "admin").replicator();
-		// replicator.source("admin");
-		// replicator.target(serverurl + "/" + "admin");
-		// replicator.continuous(true);
-		// replicator.createTarget(true);
-		// replicator.replicatorDocId("admin"
-		// + DaoConstants.REPLICATOR_SUFFIX_TO_REMOTE);
-		// replicator.save(); // triggers a replication
-		// }
-		Job sleeper = new Job("sleeper") {
 
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				return Status.OK_STATUS;
-			}
+		if (!checkAndSetSyncToRemote("_users", dbConnection, replicationMap))
+			success = false;
 
-		};
-		sleeper.schedule(1000);
-		try {
-			sleeper.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (BTSProject project : projectDao.list("admin",
-				BTSConstants.OBJECT_STATE_ACTIVE)) {
+        if (!checkAndSetSyncFromRemote("_users", dbConnection, replicationMap))
+			success = false;
+
+        Thread.sleep(1000);
+
+		for (BTSProject project : projectDao.list("admin", BTSConstants.OBJECT_STATE_ACTIVE)) {
 			if (project.getDbConnection() != null) {
 				try {
 					prepareDBSynchronization(project);
 				} catch (Exception e) {
-					logger.error(e,
-							"Error while synchronizing remote projects. project name "
-									+ project.getName());
+					logger.error(e, "Error while synchronizing remote projects. project name "+project.getName());
 				}
 			}
 		}
@@ -1671,24 +1502,19 @@ public class CouchDBManager implements DBManager {
 		return success;
 	}
 
-	private List<ReplicatorDocument> getStartupReplicatorDocuments(
-			String collectionName, String localDBUrl)
-			throws MalformedURLException {
-		List<ReplicatorDocument> docs = null;
-		CouchDbClient client = connectionProvider.getDBClient(
-				CouchDbClient.class, localDBUrl, collectionName);
+	private List<ReplicatorDocument> getStartupReplicatorDocuments(String collectionName, String localDBUrl) throws MalformedURLException {
+		CouchDbClient client = connectionProvider.getDBClient(CouchDbClient.class, localDBUrl, collectionName);
+
 		try {
-			docs = client.replicator().findAll();
-			return docs;
+			return client.replicator().findAll();
 		} catch (NoDocumentException e) {
 			client.context().createDB(DaoConstants.REPLICATOR);
+            try {
+                return client.replicator().findAll();
+            } catch (NoDocumentException e) {
+                return null;
+            }
 		}
-		try {
-			docs = client.replicator().findAll();
-			return docs;
-		} catch (NoDocumentException e) {
-		}
-		return null;
 	}
 
 	@Override
@@ -1700,24 +1526,24 @@ public class CouchDBManager implements DBManager {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
 		try {
 			logger.info("Shutdown DB, process: " + process);
 			process = (Process) context.get(DB_RUNTIME_PROCESS);
 			if (process != null) {
-
 				logger.info("Shutdown DB, process: " + process);
-
 				logger.info("Shutdown DB, stop listening to CouchDB changes");
 				backend2ClientUpdateDao.stopListening();
 				process.destroy();
 				// presuming that when process is not null the couchdb process
 				// was startedd by bts
 				// and shall then be killed by bts
-				
 			}
 		} catch (Exception e) {
 			logger.info("Shutdown DB failed: " + process, e);
 		}
+
+        /* FIXME after trying not to kill everything above it's killing everything after all below. */
 		try {
 			if (OSValidator.isWindows()) {
 				try {
@@ -1749,38 +1575,32 @@ public class CouchDBManager implements DBManager {
 			e.printStackTrace();
 		}
 
-		CouchDbClient dbClient = connectionProvider.getDBClient(
-				CouchDbClient.class, DaoConstants.NOTIFICATION);
+		CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, DaoConstants.NOTIFICATION);
 		try {
 			dbClient.context().compact();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		dbClient = connectionProvider.getDBClient(
-				CouchDbClient.class, DaoConstants.REPLICATOR);
+		dbClient = connectionProvider.getDBClient(CouchDbClient.class, DaoConstants.REPLICATOR);
 		try {
 			dbClient.context().compact();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		dbClient.shutdown();
 
+		dbClient.shutdown();
 	}
 
 	@Override
-	public boolean checkAndCreateDBCollection(BTSProject project,
-			BTSProjectDBCollection collection, String dbCollectionName,
-			boolean index, boolean synchronize) {
+	public boolean checkAndCreateDBCollection(BTSProject project, BTSProjectDBCollection collection, String dbCollectionName, boolean index, boolean synchronize) {
 		if (dbCollectionName == null)
 			return false;
-		CouchDbClient dbClient = null;
 
 		boolean success = true;
 		try {
-			dbClient = connectionProvider.getDBClient(CouchDbClient.class,
-					dbCollectionName);
+            CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, dbCollectionName);
 			dbClient.context().createDB(dbCollectionName);
 			Map<String, ReplicatorDocument> replicationMap = loadReplicationMap();
 
@@ -1793,6 +1613,7 @@ public class CouchDBManager implements DBManager {
 					}
 				}
 			}
+
 			if (collection == null) {
 				collection = BtsmodelFactory.eINSTANCE
 						.createBTSProjectDBCollection();
@@ -1801,67 +1622,58 @@ public class CouchDBManager implements DBManager {
 				collection.setSynchronized(synchronize);
 				collAdded = true;
 			}
+
 			if (project != null && collAdded) {
 				project.getDbCollections().add(collection);
 				projectDao.add(project, "admin");
 			}
+
 			if (synchronize && project != null && collection != null) {
-				if (checkAndSetSyncToRemote(collection.getCollectionName(),
-						project.getDbConnection(), replicationMap)
-						&& checkAndSetSyncFromRemote(
-								collection.getCollectionName(),
-								project.getDbConnection(), replicationMap)) {
-				} else {
+				if (!checkAndSetSyncToRemote(collection.getCollectionName(), project.getDbConnection(), replicationMap))
 					success = false;
-				}
+                if (!checkAndSetSyncFromRemote(collection.getCollectionName(), project.getDbConnection(), replicationMap))
+					success = false;
 			}
 
 			if (index) {
-				if (!checkIndex(collection.getCollectionName(), esClient, null)) {
-					success = createIndex(collection.getCollectionName(),
-							getClient(), null);
-				}
+				if (!checkIndex(collection.getCollectionName(), esClient, null)
+					&& !createIndex(collection.getCollectionName(), getClient(), null))
+                    success = false;
 			}
 			checkAndAddAuthentication(collection);
 		} catch (Exception e) {
 			logger.error(e);
+            success = false;
 		}
-		return success;
 
+		return success;
 	}
 
 	@Override
 	public boolean checkUserIsDBAdmin(String userName, String password) {
-		CouchDbClient dbClient = null;
-		boolean success = true;
 		try {
-			dbClient = connectionProvider.getDBClient(CouchDbClient.class,
-					"_users");
+            CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, "_users");
 			dbClient.design().getFromDb("_all_docs");
+            return true;
 		} catch (Exception e) {
-			success = false;
+            return false;
 		}
-		return success;
 	}
 
 	@Override
 	public boolean dbCollectionExists(String dbCollectionName) {
-		CouchDbClient dbClient = null;
-		boolean exists = true;
 		try {
-			dbClient = connectionProvider.getDBClient(CouchDbClient.class,
-					dbCollectionName);
+            CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, dbCollectionName);
 			dbClient.context().info().getDocCount();
+            return true;
 		} catch (Exception e) {
-			exists = false;
+            return false;
 		}
-		return exists;
 	}
 
 	@Override
 	public boolean optimizationRequired() {
 		// check if storage is very large
-
 		// check for all db collection if compact is recommended
 		return false;
 	}
@@ -1884,10 +1696,8 @@ public class CouchDBManager implements DBManager {
 	}
 
 	@Override
-	public List<DBCollectionStatusInformation> getDBCollectionStatusInformations(
-			IProgressMonitor monitor) {
-		CouchDbClient dbClient = connectionProvider.getDBClient(
-				CouchDbClient.class, "admin");
+	public List<DBCollectionStatusInformation> getDBCollectionStatusInformations(IProgressMonitor monitor) {
+		CouchDbClient dbClient = connectionProvider.getDBClient(CouchDbClient.class, "admin");
 		try {
 			Client esClient = getClient();
 		} catch (URISyntaxException e) {
@@ -2020,48 +1830,37 @@ public class CouchDBManager implements DBManager {
 			// RefreshRequestBuilder
 			IndicesAdminClient iac = esClient.admin().indices();
 			iac.prepareRefresh("_river").execute().actionGet();
-			GetResponse lastSeqGetResponse = esClient
-					.prepareGet("_river", db, "_seq").execute().actionGet();
+			GetResponse lastSeqGetResponse = esClient.prepareGet("_river", db, "_seq").execute().actionGet();
 			if (lastSeqGetResponse.isExists()) {
-				Map<String, Object> couchdbState = (Map<String, Object>) lastSeqGetResponse
-						.getSourceAsMap().get("couchdb");
+				Map<String, Object> couchdbState = (Map<String, Object>) lastSeqGetResponse.getSourceAsMap().get("couchdb");
 				if (couchdbState != null) {
-					String lastSeq = couchdbState.get("last_seq").toString(); // we
-																				// know
-																				// its
-																				// always
-																				// a
-																				// string
+					String lastSeq = couchdbState.get("last_seq").toString(); // we know its always a string
 					info.setIndexUpdateSeq(lastSeq);
 				}
 			}
-		} catch (ElasticsearchParseException e) {
-			logger.error(e,
-					"Error loading last_seq value from _river of index " + db);
-		} catch (ElasticsearchException e) {
-			logger.error(e,
-					"Error loading last_seq value from _river of index " + db);
 		} catch (Exception e) {
 			logger.error(e,
 					"Error loading last_seq value from _river of index " + db);
 		}
+
 		int dbSeq = 0;
 		try {
-			dbSeq = new Integer(info.getDbUpdateSeq());
+			dbSeq = Integer.parseInt(info.getDbUpdateSeq());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		int indexSeq = 0;
 		if (info.getIndexUpdateSeq() != null) {
 			try {
-				indexSeq = new Integer(info.getIndexUpdateSeq());
+				indexSeq = Integer.parseInt(info.getIndexUpdateSeq());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+
 		// berechne index status
-		if (cachedInfo != null
-				&& cachedInfo.getIndexDocCount() < info.getIndexDocCount()) {
+		if (cachedInfo != null && cachedInfo.getIndexDocCount() < info.getIndexDocCount()) {
 			info.setIndexStatus("INDEXING...");
 		} else if (info.getIndexDocCount() == -1
 				|| info.getDbDocCount() - info.getIndexDocCount() > 20
@@ -2082,25 +1881,20 @@ public class CouchDBManager implements DBManager {
 		return reIndexDBCollection(dbCollectionName, monitor);
 	}
 
-	private boolean reIndexDBCollection(String dbCollectionName,
-			IProgressMonitor monitor) {
+	private boolean reIndexDBCollection(String dbCollectionName, IProgressMonitor monitor) {
 		// remove index
 		removeIndex(dbCollectionName, monitor);
 
 		// recreate index
 		try {
 			esClient = connectionProvider.getSearchClient(Client.class);
-
 			createIndex(dbCollectionName, esClient, monitor);
 			return true;
-
-		} catch (ElasticsearchException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return false;
 	}
 
@@ -2111,13 +1905,10 @@ public class CouchDBManager implements DBManager {
 			boolean deleted = esClient.admin().indices()
 					.delete(new DeleteIndexRequest(dbCollectionName))
 					.actionGet().isAcknowledged();
-		} catch (IndexMissingException e) {
-			// index non-existing, do nothing
-		} catch (ElasticsearchException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		// remove river
 		try {
 			DeleteResponse responseRiver = esClient
@@ -2128,10 +1919,6 @@ public class CouchDBManager implements DBManager {
 						.prepareDelete("_river", dbCollectionName, "_meta")
 						.execute().actionGet();
 			}
-		} catch (IndexMissingException e) {
-			// index non-existing, do nothing
-		} catch (ElasticsearchException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2146,10 +1933,6 @@ public class CouchDBManager implements DBManager {
 						.prepareDelete("_river", dbCollectionName, "_seq")
 						.execute().actionGet();
 			}
-		} catch (IndexMissingException e) {
-			// index non-existing, do nothing
-		} catch (ElasticsearchException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
