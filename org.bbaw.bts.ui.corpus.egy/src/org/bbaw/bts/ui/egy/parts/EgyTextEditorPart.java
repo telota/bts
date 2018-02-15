@@ -140,11 +140,14 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IPainter;
 import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.AnnotationModel;
 import org.eclipse.jface.text.source.AnnotationModelEvent;
@@ -196,7 +199,6 @@ import com.google.inject.Injector;
 
 public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEditor, EventHandler {
 
-	private static final int SELECTION_EVENT_PROCESSING_DELAY_MS = 700;
 	private static final int EDITOR_PREFIX_LENGTH = 1;
 	private static final int LINE_SPACE = 8;
 
@@ -266,9 +268,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	@Inject @Preference(value = BTSEGYUIConstants.PREF_TRANSLITERATION_EDITOR_SHOW_LINE_NUMBER_RULER, nodePath = "org.bbaw.bts.ui.corpus.egy")
 	private boolean show_line_number_ruler;
 	private BTSModelAnnotation highlightedSentenceAnnotation;
-	private BTSTextSelectionEvent lastSelectionEvent;
-	private long lastSelectionTimeStamp = 0;
-	private Job delaySelectionJob;
+    private boolean deepCopyEnabled = false;
 
 
 	@Inject
@@ -279,37 +279,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			logger.warn("Part Service couldn't find "+BTSPluginIDs.PART_ID_EGY_TEXTEDITOR);
 			e.printStackTrace();
 		}
-
-		/* This jobs is used to schedule selection->item resolution.
-		 *
-		 * Selection and cursor events tend to occur in large clusters when the user is moving the cursor with the arrow
-		 * keys or selecting text by dragging their mouse. Since resolving selection offsets or cursor positions to
-		 * xtext annotations and bts items is too slow to be done on every individual event we ended up with this job.
-		 * The basic idea is that on every event, the event is cached and this job is rescheduled a short while into the
-		 * future. When no events arrive for SELECTION_EVENT_PROCESSING_DELAY_MS, this job executes and the last
-		 * selection event is processed.
-		 *
-		 * This means any cursor/selection event will have a delay of SELECTION_EVENT_PROCESSING_DELAY_MS before
-		 * manifesting in other parts of the UI, such as the highlighted comments on the right.
-		 */
-		this.delaySelectionJob = new Job("delay_selection_processing"){
-			private EgyTextEditorPart outer = EgyTextEditorPart.this;
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				sync.asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						BTSTextSelectionEvent evt = outer.lastSelectionEvent;
-						populateAnnotations(evt);
-						outer.processSelection(evt.getTextAnnotations(), false, evt);
-
-						selectionService.setSelection(evt);
-					}
-				});
-				return Status.OK_STATUS;
-			}
-		};
 	}
 
 	@SuppressWarnings("restriction")
@@ -496,7 +465,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 		embeddedEditor.getViewer().getTextWidget().addCaretListener(new CaretListener() {
 			@Override public void caretMoved(CaretEvent event) {
-				processTextSelection(event);
 				/* get char right of caret and show Unicode code point in status line */
 				if (event.caretOffset < embeddedEditor.getViewer().getTextWidget().getText().length()) {
 					String sign = embeddedEditor.getViewer().getTextWidget().getText(event.caretOffset, event.caretOffset);
@@ -509,50 +477,51 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			}
 		});
 
-		embeddedEditor.getViewer().getTextWidget().addSelectionListener(new SelectionListener() {
-			@Override public void widgetDefaultSelected(SelectionEvent e) {}
-			@Override public void widgetSelected(SelectionEvent event) {
-				processTextSelection(event);
-			}
-		});
-
 		embeddedEditor.getDocument().addDocumentListener(new IDocumentListener() {
-			@Override public void documentAboutToBeChanged(DocumentEvent event) {}
-			@Override public void documentChanged(DocumentEvent event) {
+			public void documentAboutToBeChanged(DocumentEvent event) {}
+			public void documentChanged(DocumentEvent event) {
 				if (!loading)
 					setDirtyInternal();
 			}
 		});
 
-		final Menu menu = embeddedEditor.getViewer().getTextWidget().getMenu();
+		Menu menu = embeddedEditor.getViewer().getTextWidget().getMenu();
 		menu.addMenuListener(new MenuListener() {
-			@Override public void menuHidden(MenuEvent e) {}
-			@Override public void menuShown(MenuEvent e) {
-				if (!checkTransliterationHasNoErrors(text)) {
-					MenuItem itemCollectionFolder = new MenuItem((Menu) menu, SWT.NONE);
-					itemCollectionFolder.setText("Correct Errors before Copy/Paste!" );
+			public void menuHidden(MenuEvent e) {}
+			public void menuShown(MenuEvent e) {
+				if (!checkTransliterationHasNoErrors(text))
+                    return;
 
-				} else {
-					if (!lastSelectionEvent.getSelectedItems().isEmpty()) {
-						MenuItem itemCopy = new MenuItem((Menu) menu, SWT.NONE);
-						itemCopy.setText("Copy with Lemmata" );
-						itemCopy.addSelectionListener(new SelectionAdapter() {
-							@Override public void widgetSelected(SelectionEvent e) {
-								copyTextWithLemmata();
-							}
-						});
-					}
+                Menu menu = embeddedEditor.getViewer().getTextWidget().getMenu();
+                MenuItem itemPaste;
+                itemPaste = new MenuItem(menu, SWT.NONE);
+                itemPaste.setText("Paste with Lemmata");
+                itemPaste.setEnabled(deepCopyCache != null);
+                itemPaste.addSelectionListener(new SelectionAdapter() {
+                    public void widgetSelected(SelectionEvent e) {
+                        pasteTextWithLemmata();
+                    }
+                });
 
-					if (deepCopyCache != null) {
-						MenuItem itemPaste = new MenuItem((Menu) menu, SWT.NONE);
-						itemPaste.setText("Paste with Lemmata");
-						itemPaste.addSelectionListener(new SelectionAdapter() {
-							@Override public void widgetSelected(SelectionEvent e) {
-								pasteTextWithLemmata();
-							}
-						});
-					}
-				}
+                MenuItem itemCopy;
+                itemCopy = new MenuItem(embeddedEditor.getViewer().getTextWidget().getMenu(), SWT.NONE);
+                itemCopy.setText("Copy with Lemmata" );
+                itemCopy.setEnabled(deepCopyEnabled);
+                itemCopy.addSelectionListener(new SelectionAdapter() {
+                    public void widgetSelected(SelectionEvent e) {
+                        copyTextWithLemmata();
+                    }
+                });
+			}
+		});
+
+		embeddedEditor.getViewer().addPostSelectionChangedListener(new ISelectionChangedListener() {
+			public void selectionChanged(SelectionChangedEvent e) {
+                BTSTextSelectionEvent evt = new BTSTextSelectionEvent((TextSelection)e.getSelection(), text);
+                populateAnnotations(evt);
+                processSelection(evt.getTextAnnotations(), evt);
+                selectionService.setSelection(evt);
+                deepCopyEnabled = !evt.getSelectedItems().isEmpty();
 			}
 		});
 
@@ -617,7 +586,14 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		// action: set local copy text
 		// design:
 		// if all is selected: copy whole textContent
-		this.deepCopyCache = this.lastSelectionEvent;
+        /* TODO this implementation is very poor. This should just use the regular system keyboard and a sane
+         * serialization of the selected objects.
+          */
+        BTSTextSelectionEvent evt = new BTSTextSelectionEvent((TextSelection)embeddedEditor.getViewer().getSelection(), text);
+        populateAnnotations(evt);
+        processSelection(evt.getTextAnnotations(), evt);
+        selectionService.setSelection(evt);
+		this.deepCopyCache = evt;
 		// else if sentence and sentence items
 		// dont copy comments, annotations, rubra or any other relating object
 
@@ -820,15 +796,14 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 	protected void loadInputJSesh(BTSText text2, List<BTSObject> localRelatingObjects) {
 		String jseshMdc = textEditorController.transformTextToJSeshMdCString(text2);
-		System.out.println(jseshMdc);
 		try {
 			jseshEditor.setMDCText(jseshMdc + "-!"); // add line break
 		} catch (Exception e) {
 			logger.error(e);
 		}
+
 		try {
 			java.awt.Rectangle r = jseshEditor.getBounds();
-			System.out.println("rectangle r.width,	r.height " + r.width+ " " + r.height);
 			scrolledCompJSesh.getContent().setSize(r.width,	r.height + 50);
 			scrolledCompJSesh.setMinSize(r.width, r.height + 50);
 			scrolledCompJSesh.layout();
@@ -839,8 +814,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 	@SuppressWarnings({ "rawtypes", "restriction" })
 	protected void loadInputTranscription(BTSText localtext, List<BTSObject> localRelatingObjects, IProgressMonitor monitor) {
-		this.delaySelectionJob.cancel();
-
 		text = localtext;
 		loading = true;
 		lemmaAnnotationMap = new HashMap<String, List<Object>>();
@@ -983,19 +956,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		eventBroker.post("status_info/current_text_code", sm);
 	}
 
-	protected void processTextSelection(TypedEvent typed) {
-		this.lastSelectionTimeStamp = System.nanoTime();
-		BTSTextSelectionEvent evt = new BTSTextSelectionEvent(typed, this.text);
-		evt.data = this.text;
-		this.lastSelectionEvent = evt;
-
-		/* FIXME previously, this job would be scheduled at now+400ms, then wait another 300ms. Is this still
-		 * correct now? */
-		this.delaySelectionJob.cancel();
-		this.delaySelectionJob.schedule(SELECTION_EVENT_PROCESSING_DELAY_MS);
-	}
-
-	protected void processSelection(List<BTSModelAnnotation> annotations, boolean postSelection, BTSTextSelectionEvent btsEvent) {
+	protected void processSelection(List<BTSModelAnnotation> annotations, BTSTextSelectionEvent btsEvent) {
 		List<BTSModelAnnotation> relatingObjectsAnnotations = new Vector<BTSModelAnnotation>(annotations.size());
 		AnnotationModelEvent ev_trans = null;
 		if (!annotations.isEmpty()) {
@@ -1392,7 +1353,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 				selectedTextItem = selection;
 			}
 			if (selection instanceof BTSWord) {
-				System.out.println("text editor received word/sent item selection!");
 				setSentenceTranslation((BTSWord) selection);
 			} else if (selection instanceof BTSSenctence) 
 				if (this.selectedSentence == null || !this.selectedSentence.equals(selection))
@@ -1601,8 +1561,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	private void loadInput(BTSCorpusObject o) {
 		setSentenceTranslationActive(false);
 		// wipe latest text selection event in order to avoid leak
-		this.lastSelectionEvent = new BTSTextSelectionEvent(new TypedEvent(this), o);
-		selectionService.setSelection(lastSelectionEvent);
+		selectionService.setSelection(new BTSTextSelectionEvent(new TypedEvent(this), o));
 
 		if (tabFolder != null && o instanceof BTSText) {
 			this.text = (BTSText) o;
@@ -1879,7 +1838,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
             }
 
             if (!annotations.isEmpty())
-                processSelection(annotations, false, null);
+                processSelection(annotations, null);
         }
     }
 

@@ -9,6 +9,7 @@ import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSSentenceItem;
 import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.TextSelection;
 import org.eclipse.swt.custom.CaretEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TypedEvent;
@@ -30,25 +31,33 @@ public class BTSTextSelectionEvent extends Event {
 	
 	private BTSObject parentObject;
 
-	public BTSTextSelectionEvent(TypedEvent event, BTSObject parentObject) {
-		this.setOriginalEvent(event);
-		this.display = event.display;
-		this.widget = event.widget;
-		this.time = event.time;
-		if (event instanceof CaretEvent)
-		{
-			this.x = ((CaretEvent)event).caretOffset;
-			this.y = ((CaretEvent)event).caretOffset;
-		}
-		else if (event instanceof SelectionEvent)
-		{
-			this.x = ((SelectionEvent)event).x;
-			this.y = ((SelectionEvent)event).y;
-			this.text = ((SelectionEvent)event).text;
-			
-		}
-		this.setParentObject(parentObject);
+    public BTSTextSelectionEvent(CaretEvent evt, BTSObject parent) {
+        this((TypedEvent)evt, parent);
+        x = evt.caretOffset;
+        y = evt.caretOffset;
+    }
+
+    public BTSTextSelectionEvent(SelectionEvent evt, BTSObject parent) {
+        this((TypedEvent)evt, parent);
+        x = evt.x;
+        y = evt.y;
+        text = evt.text;
+    }
+
+    public BTSTextSelectionEvent(TextSelection sel, BTSObject parent) {
+		parentObject = parent;
+        x = sel.getOffset();
+        y = x + sel.getLength();
+        text = sel.getText();
 	}
+
+	public BTSTextSelectionEvent(TypedEvent evt, BTSObject parent) {
+		originalEvent = evt;
+		display = evt.display;
+		widget = evt.widget;
+		time = evt.time;
+		parentObject = parent;
+    }
 
 	public List<BTSObject> getRelatingObjects() {
 		return relatingObjects;
