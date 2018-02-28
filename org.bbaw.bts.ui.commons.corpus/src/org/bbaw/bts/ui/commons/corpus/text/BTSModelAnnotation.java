@@ -78,10 +78,13 @@ public class BTSModelAnnotation extends XtextAnnotation
 		this.relatingObject = relatingObject;
 	}
 
-	public void setHighlighted(boolean highlighted)
-	{
+	public void setHighlighted(boolean highlighted) {
 		this.highlighted = highlighted;
 	}
+
+	public boolean getHighlighted() {
+		return highlighted;
+    }
 	
 	@Override
 	public String getType() {

@@ -39,6 +39,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -205,11 +206,10 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	protected int counter;
 	protected boolean loading;
 	protected int tabSelection;
-	protected Object selectedTextItem;
 	protected boolean isDocUpdating;
 	protected String queryId;
 	protected int cachedCursor;
-	protected Object deepCopyCache;
+	protected BTSTextSelectionEvent deepCopyCache;
 
 	@Optional @Inject private MDirtyable dirty;
 	@Inject private BTSTextEditorController textEditorController;
@@ -252,7 +252,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	private List<BTSObject> relatingObjects;
 	@SuppressWarnings("restriction")
 	@Inject private Logger logger;
-	private List<BTSModelAnnotation> highlightedAnnotations = new Vector<BTSModelAnnotation>(4);
 	private Map<EObject, List<BTSModelAnnotation>> relatingObjectsAnnotationMap = new HashMap<EObject, List<BTSModelAnnotation>>();
 	private Map<String, List<BTSInterTextReference>> relatingObjectsMap;
 	private EgyLineNumberRulerColumn lineNumberRulerColumn;
@@ -347,24 +346,20 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 										contextService.activateContext("org.eclipse.xtext.ui.embeddedTextEditorScope");
 										loadInputTranscription(text, relatingObjects, monitor);
 
-										if (selectedTextItem != null) {
-											Annotation an = modelAnnotationMap.get(((BTSIdentifiableItem) selectedTextItem).get_id());
-											if (an != null) {
-												Position pos = annotationModel.getPosition(an);
-												try {
-													embeddedEditor.getViewer().getTextWidget().setCaretOffset(pos.getOffset());
-													embeddedEditor.getViewer().revealRange(pos.getOffset(), pos.getLength());
-												} catch (Exception e) {}
-											}
-										} else {
-											try {
-												embeddedEditor.getViewer().getTextWidget().setCaretOffset(cachedCursor);
-											} catch (Exception e) {}
-										}
+                                        /* FIXME - Sebastian: Sync selection from hieroglyph editor
+                                        Annotation an = modelAnnotationMap.get(((BTSIdentifiableItem) selectedTextItem).get_id());
+                                        if (an != null) {
+                                            Position pos = annotationModel.getPosition(an);
+                                            try {
+                                                embeddedEditor.getViewer().getTextWidget().setCaretOffset(pos.getOffset());
+                                                embeddedEditor.getViewer().revealRange(pos.getOffset(), pos.getLength());
+                                            } catch (Exception e) {}
+                                        }
+                                        */
 										break;
 
 									case 1:
-										loadInputSignText(text, relatingObjects, relatingObjectsMap, monitor, selectedTextItem);
+										loadInputSignText(text, relatingObjects, relatingObjectsMap, monitor, getSelectedSentenceItem());
 										break;
 
 									case 2:
@@ -495,11 +490,21 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 Menu menu = embeddedEditor.getViewer().getTextWidget().getMenu();
                 MenuItem itemPaste;
                 itemPaste = new MenuItem(menu, SWT.NONE);
-                itemPaste.setText("Paste with Lemmata");
+                itemPaste.setText("Paste items with Lemmata");
                 itemPaste.setEnabled(deepCopyCache != null);
                 itemPaste.addSelectionListener(new SelectionAdapter() {
                     public void widgetSelected(SelectionEvent e) {
-                        pasteTextWithLemmata();
+                        pasteItems();
+                    }
+                });
+
+                MenuItem sentPaste;
+                sentPaste = new MenuItem(menu, SWT.NONE);
+                sentPaste.setText("Paste sentences with Lemmata");
+                sentPaste.setEnabled(deepCopyCache != null);
+                sentPaste.addSelectionListener(new SelectionAdapter() {
+                    public void widgetSelected(SelectionEvent e) {
+                        pasteSentences();
                     }
                 });
 
@@ -517,11 +522,9 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 		embeddedEditor.getViewer().addPostSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent e) {
-                BTSTextSelectionEvent evt = new BTSTextSelectionEvent((TextSelection)e.getSelection(), text);
-                populateAnnotations(evt);
-                processSelection(evt.getTextAnnotations(), evt);
-                selectionService.setSelection(evt);
+                BTSTextSelectionEvent evt = fireTextSelectionEvent((TextSelection)e.getSelection());
                 deepCopyEnabled = !evt.getSelectedItems().isEmpty();
+                System.err.println("SelectionChangedEvent: "+evt.toString());
 			}
 		});
 
@@ -583,142 +586,106 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	}
 
 	private void copyTextWithLemmata() {
-		// action: set local copy text
-		// design:
-		// if all is selected: copy whole textContent
         /* TODO this implementation is very poor. This should just use the regular system keyboard and a sane
-         * serialization of the selected objects.
-          */
-        BTSTextSelectionEvent evt = new BTSTextSelectionEvent((TextSelection)embeddedEditor.getViewer().getSelection(), text);
-        populateAnnotations(evt);
-        processSelection(evt.getTextAnnotations(), evt);
+         * serialization of the selected objects. */
+		deepCopyCache = probeCurrentTextSelection();
+        System.err.println("Setting deepCopyCache: "+deepCopyCache);
+	}
+
+    private BTSTextSelectionEvent probeCurrentTextSelection(TextSelection selection) {
+        return probeTextSelectionEvent((TextSelection)embeddedEditor.getViewer().getSelection());
+    }
+
+    private BTSTextSelectionEvent probeTextSelection(TextSelection selection) {
+        BTSTextSelectionEvent evt = new BTSTextSelectionEvent(selection, text);
+        populateSelectionEvent(evt);
+    }
+
+    private BTSTextSelectionEvent fireTextSelectionEvent(TextSelection selection) {
+        BTSTextSelectionEvent evt = probeTextSelection(selection);
+        highlightAnnotations(evt.getTextAnnotations());
+        updateSentenceTranslation(evt);
         selectionService.setSelection(evt);
-		this.deepCopyCache = evt;
-		// else if sentence and sentence items
-		// dont copy comments, annotations, rubra or any other relating object
+        return evt;
+    }
 
-		// if local copy text set: deep paste action
-		// insert design:
+    private void updateSentenceTranslation(BTSTextSelectionEvent evt) {
+        if (evt.getSelectedItems().isEmpty()) {
+            setSentenceTranslationActive(false);
+            return;
+        }
+
+        for (BTSIdentifiableItem o : evt.getSelectedItems()) {
+            if (o instanceof BTSSenctence) {
+                setSentenceTranslation((BTSSenctence)o, true);
+                return;
+            }
+        }
+
+        setSentenceTranslation(evt.getSelectedItems().get(0));
+    }
+
+    /* Note that this does not copy comments, annotations, rubra or other related objects */
+	private void pasteItems() {
+        BTSTextSelectionEvent copied = deepCopyCache;
+        if (!copied || copied.getSelectedItems().isEmpty())
+            return;
+
+        updateModelFromTranscription();
+
+        /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to the
+         * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if their
+         * sentences were concatenated. */
+        Collection<BTSSentenceItems> copies = textEditorController.copySentenceItems(now.getSelectedItems());
+
+		BTSTextSelectionEvent now = probeCurrentTextSelection();
+
+        BTSSentenceItem first = now.getSelectedItems(0);
+        /* Since selectedItems does not contain any items within BTSAmbivalences all items have the sentence as their
+         * container. */
+        BTSSenctence sentence = (BTSSenctence)first.eContainer();
+        int insertOffset = sentence.getSentenceItems().indexOf(first);
+
+        if (!now.isCursorEvent()) {
+            /* Delete current selection */
+            for (BTSSenctence sent : now.getSelectedSentences())
+                EcoreUtil.delete(sent, false); /* Do not recurse as we will delete the items below */
+            for (BTSTextItem item : now.getSelectedItems())
+                EcoreUtil.delete(item, true); /* Recurse to handle ambivalences */
+        }
+
+        sentence.getSentenceItems().add(insertOffset, copies);
+        /* FIXME loadInputTranscription(text, relatingObjects, monitor); */
+        /* FIXME fixup cursor */
 	}
 
-	private void pasteTextWithLemmata() {
-		if (deepCopyCache instanceof BTSTextSelectionEvent) {
-			BTSTextSelectionEvent ev = (BTSTextSelectionEvent) deepCopyCache;
-			if (ev.getSelectedItems().isEmpty())
-				return; // nothing to paste
+    /* Note that this does not copy comments, annotations, rubra or other related objects */
+	private void pasteSentences() {
+        BTSTextSelectionEvent copied = deepCopyCache;
+        if (!copied || copied.getSelectedItems().isEmpty())
+            return;
 
-			cachedCursor = embeddedEditor.getViewer().getTextWidget().getCaretOffset();
-			final int len = ev.y - ev.x;
-			updateModelFromTranscription();
+        updateModelFromTranscription();
 
-			// if copyitems begin with Sentence -> add sentence after selectedItem
-			// if copyItems begin with SentenceItem -> add new Sentence with sentenceItems
-			if (selectedTextItem instanceof BTSSentenceItem) {
-				// if copyItems begin with SentenceItem -> add items after selected sentenceItems
-				if (ev.getSelectedItems().get(0) instanceof BTSSentenceItem) {
-					if (((BTSSentenceItem) selectedTextItem).eContainer() instanceof BTSSenctence) {
-						BTSSenctence targetSentence = (BTSSenctence) ((BTSSentenceItem) selectedTextItem).eContainer();
-						int index = targetSentence.getSentenceItems().indexOf(selectedTextItem);
-						for (BTSIdentifiableItem copyItem : ev.getSelectedItems()) {
-							if (copyItem instanceof BTSSentenceItem) {
-								BTSSentenceItem copiedItem = copySentenceItem((BTSSentenceItem) copyItem);
-								if (copiedItem != null) {
-									index = index + 1;
-									targetSentence.getSentenceItems().add(index, copiedItem);
-									setDirtyInternal();
-								}
-							}
-						}
-					}
-				} else if (ev.getSelectedItems().get(0) instanceof BTSSenctence) {
-					// ignore the fact that copied elements begin with sentence, treat as first case
-					if (((BTSSentenceItem) selectedTextItem).eContainer() instanceof BTSSenctence) {
-						BTSSenctence targetSentence = (BTSSenctence) ((BTSSentenceItem) selectedTextItem).eContainer();
-						int index = targetSentence.getSentenceItems().indexOf(selectedTextItem);
-						for (BTSIdentifiableItem copyItem : ev.getSelectedItems()) {
-							if (copyItem instanceof BTSSentenceItem) {
-								BTSSentenceItem copiedItem = copySentenceItem((BTSSentenceItem) copyItem);
-								if (copiedItem != null) {
-									index = index + 1;
-									targetSentence.getSentenceItems().add(index, copiedItem);
-									setDirtyInternal();
-								}
-							}
-						}
-					}
+        /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to the
+         * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if their
+         * sentences were concatenated. */
+        Collection<BTSSentenceItems> copies = textEditorController.copy(now.getSelectedItems());
 
-				}
-			} else if (selectedTextItem instanceof BTSSenctence) {
-				// if copyItems begin with SentenceItem -> add items after selected sentenceItems
-				if (ev.getSelectedItems().get(0) instanceof BTSSentenceItem) {
-					BTSSenctence sourceSentence = (BTSSenctence) selectedTextItem;
-					BTSTextContent targettextcontent = (BTSTextContent) (sourceSentence).eContainer();
-					int index = targettextcontent.getTextItems().indexOf(sourceSentence);
-					Set<BTSSenctence> copySentences = new HashSet<BTSSenctence>();
-					for (BTSIdentifiableItem copyItem : ev.getSelectedItems()) {
-						if (copyItem instanceof BTSSenctence && !copySentences.contains(copyItem)) {
-							copySentences.add((BTSSenctence) copyItem);
-							BTSSenctence copiedItem = copySentence((BTSSenctence) copyItem);
-							if (copiedItem != null) {
-								index = index + 1;
-								targettextcontent.getTextItems().add(index, copiedItem);
-								setDirtyInternal();
-							}
-						}
-					}
-				} else if (ev.getSelectedItems().get(0) instanceof BTSSenctence) {
-					BTSSenctence sourceSentence = (BTSSenctence) selectedTextItem;
-					BTSTextContent targettextcontent = (BTSTextContent) (sourceSentence).eContainer();
-					int index = targettextcontent.getTextItems().indexOf(sourceSentence);
-					Set<BTSSenctence> copySentences = new HashSet<BTSSenctence>();
-					for (BTSIdentifiableItem copyItem : ev.getSelectedItems()) {
-						if (copyItem instanceof BTSSenctence && !copySentences.contains(copyItem)) {
-							copySentences.add((BTSSenctence) copyItem);
-							BTSSenctence copiedItem = copySentence((BTSSenctence) copyItem);
-							if (copiedItem != null) {
-								index = index + 1;
-								targettextcontent.getTextItems().add(index, copiedItem);
-								setDirtyInternal();
-							}
-						}
-					}
-				}
-			}
+		BTSTextSelectionEvent now = probeCurrentTextSelection();
 
-			// update
-			try {
-				// load updated model into selected editor
-				IRunnableWithProgress op = new IRunnableWithProgress() {
-					@Override public void run(final IProgressMonitor monitor)
-							throws InvocationTargetException, InterruptedException {
-						sync.asyncExec(new Runnable() {
-							public void run() {
-								loadInputTranscription(text, relatingObjects, monitor);
-								try {
-									embeddedEditor.getViewer().getTextWidget().setCaretOffset(cachedCursor);
-									embeddedEditor.getViewer().revealRange(cachedCursor, len);
-								} catch (Exception e) {
-								}
-							}
+        BTSSenctence first = now.getSelectedSentences(0);
+        BTSTextContent textContent = (BTSTextContent)first.eContainer();
+        int insertOffset = textContent.getTextItems().indexOf(first);
 
-						});
-					}
-				};
-				new ProgressMonitorDialog(new Shell()).run(true, true, op);
-			} catch (InvocationTargetException ee) {
-				// handle exception
-			} catch (InterruptedException ee) {
-				// handle cancelation
-			}
-		}
-	}
+        if (!now.isCursorEvent()) {
+            /* Delete current selection */
+            for (BTSSenctence sent : now.getSelectedSentences())
+                EcoreUtil.delete(sent, false); /* Do not recurse as we will delete the items below */
+        }
 
-	private BTSSenctence copySentence(BTSSenctence copyItem) {
-		return textEditorController.copySentence(copyItem);
-	}
-
-	private BTSSentenceItem copySentenceItem(BTSSentenceItem copyItem) {
-		return textEditorController.copySentenceItem(copyItem);
+        textContent.getTextItems().add(insertOffset, copies);
+        /* FIXME see above in pasteItems */
 	}
 
 	@SuppressWarnings("restriction")
@@ -956,109 +923,41 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		eventBroker.post("status_info/current_text_code", sm);
 	}
 
-	protected void processSelection(List<BTSModelAnnotation> annotations, BTSTextSelectionEvent btsEvent) {
-		List<BTSModelAnnotation> relatingObjectsAnnotations = new Vector<BTSModelAnnotation>(annotations.size());
-		AnnotationModelEvent ev_trans = null;
-		if (!annotations.isEmpty()) {
-			BTSSenctence sentence = null;
-			for (BTSModelAnnotation ma : annotations) {
-				BTSIdentifiableItem item = ma.getModel();
+	protected void highlightAnnotations(List<BTSModelAnnotation> annotations) {
+		IAnnotationModel amodel = embeddedEditor.getViewer().getAnnotationModel();
+        final AnnotationModelEvent ev = new AnnotationModelEvent(annotationModel);
+		for (Iterator<Annotation> it = amodel.getAnnotationIterator(); it.hasNext();) {
+            Annotation a = it.next();
 
-				if (ma instanceof BTSLemmaAnnotation
-						&& item instanceof BTSObject
-						&& !item.equals(selectedTextItem)) {
-					if (item instanceof BTSWord)
-						setSentenceTranslation((BTSWord) item);
-					else if (item instanceof BTSSenctence)
-						sentence = (BTSSenctence) item;
-					selectedTextItem = item;
+			if (! (a instanceof BTSModelAnnotation))
+				continue;
+            BTSModelAnnotation ma = (BTSModelAnnotation)a;
 
-				} else if (ma instanceof BTSAnnotationAnnotation ||
-						ma instanceof BTSCommentAnnotation ||
-						ma instanceof BTSSubtextAnnotation) {
-					relatingObjectsAnnotations.add(ma);
-					if (btsEvent != null)
-						btsEvent.getInterTextReferences().add(ma.getInterTextReference());
+            boolean old = ma.getHighlighted();
+            boolean now;
+            if (annotations.contains(ma))
+                now = true;
+            else
+                now = false;
 
-				} else {
-					if (item instanceof BTSSenctence)
-						sentence = (BTSSenctence) item;
-					if (!item.equals(selectedTextItem))
-						selectedTextItem = item;
-				}
-			}
+			ma.setHighlighted(now);
+            if (old != now)
+                ev.annotationChanged(a);
+        }
 
-			if (sentence != null)
-				ev_trans = setSentenceTranslation(sentence, true);
-
-		} else {
-			setSentenceTranslationActive(false);
-		}
-
-		List<BTSModelAnnotation> deHighlightedAnnotations = new Vector<BTSModelAnnotation>(
-				highlightedAnnotations.size());
-		List<BTSModelAnnotation> toBeHighlightedAnnotations = new Vector<BTSModelAnnotation>(
-				relatingObjectsAnnotations.size());
-		// substract annotations that are already highlighted from those the selected annotations
-		toBeHighlightedAnnotations.addAll(relatingObjectsAnnotations);
-		toBeHighlightedAnnotations.removeAll(highlightedAnnotations);
-
-		// substract annotations the selected annotations those that are to be de-highlighted 
-		deHighlightedAnnotations.addAll(highlightedAnnotations);
-		deHighlightedAnnotations.removeAll(relatingObjectsAnnotations);
-
-		boolean modelChanged = (!deHighlightedAnnotations.isEmpty() || !toBeHighlightedAnnotations.isEmpty());
-		modelChanged |= (ev_trans != null && !ev_trans.isEmpty());
-
-		highlightAnnotations(deHighlightedAnnotations, false);
-		highlightAnnotations(toBeHighlightedAnnotations, true);
-		toBeHighlightedAnnotations.add(highlightedSentenceAnnotation);
-
-		highlightedAnnotations.clear();
-		highlightedAnnotations.addAll(relatingObjectsAnnotations);
-
-		if (modelChanged) {
-			final AnnotationModelEvent ev = new AnnotationModelEvent(annotationModel);
-			// apply model changes from sentence translation highlighting
-			if (ev_trans != null)
-				for (Annotation a : ev_trans.getChangedAnnotations())
-					if (a != null) ev.annotationChanged(a);
-			for (Annotation a : deHighlightedAnnotations)
-				if (a != null) ev.annotationChanged(a);
-			for (Annotation a : toBeHighlightedAnnotations)
-				if (a != null) ev.annotationChanged(a);
-
-			sync.asyncExec(new Runnable() {
-				public void run() {
-					// TODO this can be improved in order to reduce work load repainting large texts					
-					painter.modelChanged(ev);
-					painter.paint(IPainter.INTERNAL);
-					ruler.update();
-					ruler.relayout();
-					oruler.update();
-					embeddedEditor.getViewer().getTextWidget().redraw();
-				}
-			});
-		}
-
-		// calculate event data
-		if (!relatingObjectsAnnotations.isEmpty()) {
-			List<BTSObject> relSelObjects = new Vector<BTSObject>(
-					annotations.size());
-			for (BTSModelAnnotation a : relatingObjectsAnnotations) {
-				if (a instanceof BTSAnnotationAnnotation)
-					relSelObjects.add(((BTSAnnotationAnnotation)a).getRelatingObject());
-				else if (a instanceof BTSCommentAnnotation)
-					relSelObjects.add(((BTSCommentAnnotation)a).getComment());
-				else if (a instanceof BTSSubtextAnnotation)
-					relSelObjects.add(((BTSSubtextAnnotation)a).getRelatingObject());
-			}
-
-			if (btsEvent != null)
-				btsEvent.setRelatingObjects(new ArrayList<BTSObject>(relSelObjects));
-			else
-				revealAnnotation(relatingObjectsAnnotations, true);
-		}
+        if (!ev.isEmpty()) {
+            sync.asyncExec(new Runnable() {
+                public void run() {
+                    // TODO this can be improved in order to reduce work load repainting large texts
+                    painter.modelChanged(ev);
+                    painter.paint(IPainter.INTERNAL);
+                    ruler.update();
+                    ruler.relayout();
+                    oruler.update();
+                    embeddedEditor.getViewer().getTextWidget().redraw();
+                }
+            });
+        }
 	}
 
 	private void revealAnnotation(List<BTSModelAnnotation> relatingObjectsAnnotations, final boolean force) {
@@ -1094,17 +993,14 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		}		
 	}
 
-	private void highlightAnnotations(List<BTSModelAnnotation> relatingObjectsAnnotations, boolean highlighted) {
-		for (BTSModelAnnotation a : relatingObjectsAnnotations)
-			a.setHighlighted(highlighted);
-	}
-
 	protected void setDirtyInternal() {
-		if (permissionsController.userMayEditObject(permissionsController.getAuthenticatedUser(), text)) {
-			if (text != null && dirty != null && !dirty.isDirty()) {
-				dirty.setDirty(true);
-			}
-		}
+		if (!permissionsController.userMayEditObject(permissionsController.getAuthenticatedUser(), text))
+            return;
+
+        if (text == null || dirty == null)
+            return;
+        
+        dirty.setDirty(true);
 	}
 
 	/** 
@@ -1114,32 +1010,33 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	 * constructed from a cursor or selection event, then this is called to map the base event's offset(s) to
 	 * Annotations in xtext and BTSSentenceItems in the model.
 	 */
-	private BTSTextSelectionEvent populateAnnotations(BTSTextSelectionEvent evt) {
+	private BTSTextSelectionEvent populateSelectionEvent(BTSTextSelectionEvent evt) {
 		BTSSentenceItem minItem = null, maxItem = null;
 		int min_l = Integer.MAX_VALUE, max_r = -1;
-		/* We're offsetting the event's positions since xtext seems to use one-based indexing for annotation offsets
-		 * while the selection's offset is zero-based. In xtext, an annotation at the location left of the first
-		 * character has the index 1. The corresponding selection has the start offset ("x") 0. Internally, we use
-		 * xtext's frame of reference here since we're handling lots of xtext offsets and only one selection.
-		 *
-		 * TODO I don't quite understand just *why* things are this way. - Sebastian
-		 */
-		int sel_l = evt.x+1, sel_r = evt.y+1;
-
-		ArrayList<BTSModelAnnotation> annotations = new ArrayList<BTSModelAnnotation>(128);
-		ArrayList<BTSIdentifiableItem> items = new ArrayList<BTSIdentifiableItem>(128);
+		int sel_l = evt.x, sel_r = evt.y;
 
 		IAnnotationModel amodel = embeddedEditor.getViewer().getAnnotationModel();
+        List<Annotation> annos = new ArrayList<Annotation>();
 		for (Iterator<Annotation> it = amodel.getAnnotationIterator(); it.hasNext();) {
-			Annotation a = it.next();
+			annos.add(it.next());
 
+        /* Sort by offset. Xtext's wonderful getAnnotationIterator apart from being an iterator returns its elements in
+         * a random order, which obviously is what you want in most cases. not. 8*/
+        Collections.sort(annos, new Comparator<Annotation>() {
+            public int compare(Annotation a, Annotation b) {
+                return a.getOffset() - b.getOffset();
+            }
+
+            public boolean equals(Annotation a, Annotation b) {
+                return a.getOffset() == b.getOffset();
+            }
+        });
+
+        for (Annotation a : annos) {
 			if (! (a instanceof BTSModelAnnotation))
 				continue;
-
-			BTSIdentifiableItem iitem = ((BTSModelAnnotation)a).getModel();
-			if (! (iitem instanceof BTSSentenceItem)) /* FIXME This check should be redundant */
-				continue;
-			BTSSentenceItem item = (BTSSentenceItem)iitem;
+            BTSModelAnnotation ma = (BTSModelAnnotation)a;
+			BTSIdentifiableItem iitem = ma.getModel();
 
 			Position pos = amodel.getPosition(a);
 			int ano_l = pos.getOffset(), ano_r = pos.getOffset() + pos.getLength();
@@ -1150,8 +1047,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			/* Check if annotation interval [ano_l, ano_r] is contained within selection interval [sel_l, sel_r] */
 			boolean sel_contains_ano = sel_l <= ano_l && ano_r <= sel_r;
 
-			/* Dirty but simplest way of doing this */
-			boolean is_cursor_event = sel_l == sel_r;
+            boolean item_within_ambivalence = item.eContainer() instanceof BTSLemmaCase;
 
 			/* For cursor events, add all items that the cursor is placed inside. This includes e.g. a containing
 			 * ambivalence.  This is done so that when the cursor is placed somewhere, all comments that include that
@@ -1160,8 +1056,18 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			 * For selection events, only add items that are *fully contained* in the selection. This is done so you can
 			 * place comments on parts of larger items, such as some words in one case of an ambivalence.
 			 */
-			if ((is_cursor_event && intervals_overlap)
-					|| (!is_cursor_event && sel_contains_ano)) {
+			if ((evt.isCursorEvent() && intervals_overlap)
+					|| (!evt.isCursorEvent() && sel_contains_ano)) {
+
+                if (iitem instanceof BTSSenctence) {
+                    evt.getSelectedSentences().add((BTSSenctence)iitem);
+                    continue;
+                }
+
+                if (! (iitem instanceof BTSSentenceItem)) /* item might also be e.g. a (BTS) annotation for annotationannotations */
+                    continue;
+                BTSSentenceItem item = (BTSSentenceItem)iitem;
+
 				/* Store leftmost and rightmost selected item */
 				if (ano_l <= min_l) {
 					minItem = (BTSSentenceItem)item;
@@ -1172,19 +1078,41 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 					max_r = ano_r;
 				}
 				/* Store annotation and item in range. */
-				annotations.add((BTSModelAnnotation)a);
-				items.add(item);
+				evt.getTextAnnotations().add((BTSModelAnnotation)a);
+
+                /* Do not add items within ambivalences, only add whole ambivalences. This is to prevent the ambiguity
+                 * inherent in a selection starting inside an ambivalence's first LemmaCase and spanning its second
+                 * LemmaCase.
+                 *
+                 * TODO Add special case for selections starting in an Ambivalence's *last* LemmaCase.
+                 * TODO Add special case for selections entirely within a single LemmaCase. Fixup paste stuff in that
+                 * instance.
+                 *
+                 * LemmaCases themselves do not need special handling here as they will be filtered out above since they
+                 * are no SentenceItems.
+                 *
+                 * See also doc on BTSTextSelectionEvent#getSelectedItems */
+                if (!item_within_ambivalence)
+                    evt.getSelectedItems().add(item);
+
+                if (ma instanceof BTSAnnotationAnnotation
+                 || ma instanceof BTSCommentAnnotation
+                 || ma instanceof BTSSubtextAnnotation) {
+                    evt.getRelatedObjectAnnotations().add(ma);
+                    evt.getRelatingObjects().add(ma.getRelatingObject());
+                    evt.getInterTextReferences().add(ma.getInterTextReference());
+                }
 			}
 		}
 
 		/* The selected items may well be empty, e.g. if the cursor is placed right at the start or end of a document.
 		 * We're only looking at certain types of items here, and that excludes e.g. sentence delimiters. */
+        evt.setStart(minItem);
+        evt.setEnd(maxItem);
 		if (minItem != null)
 			evt.setStartId(minItem.get_id());
 		if (maxItem != null)
 			evt.setEndId(maxItem.get_id());
-		evt.setTextAnnotations(annotations);
-		evt.setSelectedItems(items);
 
 		return evt;
 	}
@@ -1303,62 +1231,67 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	}
 
 	@Inject
-	public void setSelection(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSIdentifiableItem selection) {
-		if (selection == null || parent == null || parent.isDisposed()) {
-			// do nothing
+	public void setSelection(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSIdentifiableItem selection) {
+        /* This method is called when the selection is changed from the outside. This is the case when the
+         * cursor jumps to the block a user selected in the hieroglyph viewer.
+         *
+         * This method also performs the totally unrelated function of loading the text that is selected in the
+         * object tree viewer on the left. */
+
+        System.out.println("ETE.p:setSelection: "+selection.toString());
+		if (selection == null || parent == null || parent.isDisposed())
 			return;
-		} else if (selection != null && !selection.equals(selectedTextItem)) {
 
-			if (selection instanceof BTSCorpusObject) // concered by selection event
-			{
-				if (selection.equals(text)) return;
+		if (selectedTextItem == selection)
+            return;
 
-				BTSCorpusObject btsObject = (BTSCorpusObject) selection;
-				if (constructed) // gui constructed
-				{
-					// TODO save configurable this is autosave!!!
-					if (loaded && text != null) {
-						save();
-					}
+        if (selection instanceof BTSWord) {
+            setSentenceTranslation((BTSWord) selection);
+            return;
+        }
 
-					if (selection instanceof BTSText) { // requires load
-						purgeCacheAndEditingDomain();
-						if (part != null) {
-							part.setLabel(btsObject.getName());
-						}
-						makePartActive(true);
-						//						bringPartToFront(true);
-						loadInput((BTSCorpusObject) selection);
-						editingDomain = editingDomainController.getEditingDomain(text);
-						editingDomain.getCommandStack().addCommandStackListener(getCommandStackListener());
+        if (selection instanceof BTSSenctence) {
+            if (selectedSentence != selection)
+                setSentenceTranslation((BTSSenctence) selection, false);
+            return;
+        }
 
-					} else if (loaded) { // requires clear
-						purgeCacheAndEditingDomain();
-						loadInput(null);
-						if (part != null) {
-							part.setLabel("Text Editor");
-						}
-						text = null;
-						selectionCached = false;
-						makePartActive(false);
-					}
-				}
-				else if (selection instanceof BTSText)	// not constructed, cache selection
-				{
-					text = (BTSText) selection;
-					selectionCached = true;
-				}
+        if (!(selection instanceof BTSCorpusObject))
+            return;
 
-				selectedTextItem = selection;
-			}
-			if (selection instanceof BTSWord) {
-				setSentenceTranslation((BTSWord) selection);
-			} else if (selection instanceof BTSSenctence) 
-				if (this.selectedSentence == null || !this.selectedSentence.equals(selection))
-					setSentenceTranslation((BTSSenctence) selection, false);
+        if (selection == text)
+            return;
 
-		}
+        BTSCorpusObject btsObject = (BTSCorpusObject) selection;
+        if (!constructed && selection instanceof BTSText) {
+            // not constructed, cache selection
+            text = (BTSText) selection;
+            selectionCached = true;
+            return;
+        }
+
+        // TODO save configurable this is autosave!!!
+        if (loaded && text != null)
+            save();
+
+        purgeCacheAndEditingDomain();
+
+        if (selection instanceof BTSText) { // requires load
+            if (part != null)
+                part.setLabel(btsObject.getName());
+            makePartActive(true);
+            loadInput((BTSCorpusObject) selection);
+            editingDomain = editingDomainController.getEditingDomain(text);
+            editingDomain.getCommandStack().addCommandStackListener(getCommandStackListener());
+
+        } else if (loaded) { // requires clear
+            loadInput(null);
+            if (part != null)
+                part.setLabel("Text Editor");
+            text = null;
+            selectionCached = false;
+            makePartActive(false);
+        }
 	}
 
 	@SuppressWarnings("restriction")
@@ -1471,63 +1404,64 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		// i.e. create method setSentenceTranslation(List<BTSSentence>) which gets passed
 		// a Collection containing all sentences detected within a BTSTextSelectionEvent
 		final AnnotationModelEvent ev = new AnnotationModelEvent(annotationModel);
-		if (sentence != null && !sentence.equals(selectedSentence)) {
-			selectedSentence = sentence;
-			if (selectedSentence.getTranslation() == null) {
-				Command command = AddCommand.create(editingDomain, selectedSentence,
-						BtsCorpusModelPackage.BTS_SENCTENCE__TRANSLATION,
-						BtsmodelFactory.eINSTANCE
-						.createBTSTranslations());
-				editingDomain.getCommandStack().execute(command);
-			}
-			sentenceTranslate_Editor.setEnabled(userMayEdit);
-			sentenceTranslate_Editor.load(selectedSentence.getTranslation(), editingDomain, false);
+		if (sentence == null || sentence == selectedSentence)
+            return null;
 
-			BTSModelAnnotation am = modelAnnotationMap.get(sentence.get_id());
-			if (am != null) {
-				if (!am.equals(highlightedSentenceAnnotation) || !am.getType().endsWith(".highlighted")) {
-					// highlight current translation
-					am.setHighlighted(true);
-					ev.annotationChanged(am);
-					// remove previous highlight
-					if (highlightedSentenceAnnotation != null) { 
-						highlightedSentenceAnnotation.setHighlighted(false);
-						ev.annotationChanged(highlightedSentenceAnnotation);
-					}
-					highlightedSentenceAnnotation = am;
-				}
-				if (!postSelection) {
-					// make sure annotation is visible in text editor 
-					Position pos = annotationModel.getPosition(am);
-					if (pos != null)
-						embeddedEditor.getViewer().revealRange(pos.getOffset(), pos.length);
+        selectedSentence = sentence;
+        if (selectedSentence.getTranslation() == null) {
+            Command command = AddCommand.create(editingDomain, selectedSentence,
+                    BtsCorpusModelPackage.BTS_SENCTENCE__TRANSLATION,
+                    BtsmodelFactory.eINSTANCE
+                    .createBTSTranslations());
+            editingDomain.getCommandStack().execute(command);
+        }
+        sentenceTranslate_Editor.setEnabled(userMayEdit);
+        sentenceTranslate_Editor.load(selectedSentence.getTranslation(), editingDomain, false);
 
-					// In order to limit workload, only repaint text editor (including highlight of line(s)
-					// containing this sentence) if method call seems to come from selection listener
-					// in EgyTextTranslationPart. This is indicated by postSelection being false. 
-					// (if postSelection is true, repaint has most likely already been invoked in processSelection)
-					sync.asyncExec(new Runnable() {
-						public void run() {
-							// TODO this can be improved in order to reduce work load repainting large texts
+        BTSModelAnnotation am = modelAnnotationMap.get(sentence.get_id());
+        if (am != null) {
+            if (!am.equals(highlightedSentenceAnnotation) || !am.getType().endsWith(".highlighted")) {
+                // highlight current translation
+                am.setHighlighted(true);
+                ev.annotationChanged(am);
+                // remove previous highlight
+                if (highlightedSentenceAnnotation != null) { 
+                    highlightedSentenceAnnotation.setHighlighted(false);
+                    ev.annotationChanged(highlightedSentenceAnnotation);
+                }
+                highlightedSentenceAnnotation = am;
+            }
+            if (!postSelection) {
+                // make sure annotation is visible in text editor 
+                Position pos = annotationModel.getPosition(am);
+                if (pos != null)
+                    embeddedEditor.getViewer().revealRange(pos.getOffset(), pos.length);
 
-							if (painter == null || embeddedEditor.getViewer().getTextWidget().isDisposed()) return;
-							painter.modelChanged(ev);
-							painter.paint(IPainter.INTERNAL);
-							ruler.update();
-							ruler.relayout();
-							oruler.update();
-							embeddedEditor.getViewer().getTextWidget().redraw();
-						}
-					});
-					return null;
-				}
-			}
+                /* In order to limit workload, only repaint text editor (including highlight of line(s) containing
+                 * this sentence) if method call seems to come from selection listener in EgyTextTranslationPart.
+                 * This is indicated by postSelection being false.  (if postSelection is true, repaint has most
+                 * likely already been invoked in highlightAnnotations) */
+                sync.asyncExec(new Runnable() {
+                    public void run() {
+                        // TODO this can be improved in order to reduce work load repainting large texts
+                        if (painter == null || embeddedEditor.getViewer().getTextWidget().isDisposed())
+                            return;
 
-			if (postSelection)
-				selectionService.setSelection(sentence);
-			return ev;
-		}
-		return null;
+                        painter.modelChanged(ev);
+                        painter.paint(IPainter.INTERNAL);
+                        ruler.update();
+                        ruler.relayout();
+                        oruler.update();
+                        embeddedEditor.getViewer().getTextWidget().redraw();
+                    }
+                });
+                return null;
+            }
+        }
+
+        if (postSelection)
+            selectionService.setSelection(sentence);
+        return ev;
 	}
 
 	private void setSentenceTranslation(BTSSentenceItem sentenceItem) {
@@ -1541,7 +1475,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			sentence = (BTSSenctence) sentenceItem.eContainer();
 		} else if (sentenceItem.eContainer() instanceof BTSLemmaCase) {
 			EObject container = sentenceItem.eContainer();
-			if (sentenceItem.eContainer() instanceof BTSAmbivalence) {
+			if (container.eContainer() instanceof BTSAmbivalence) {
 				EObject containerParent = container.eContainer();
 				if (containerParent.eContainer() instanceof BTSSenctence)
 					sentence = (BTSSenctence) containerParent.eContainer();
@@ -1590,9 +1524,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 										break;
 									}
 									case 1: {
-										loadInputSignText(text,
-												relatingObjects,
-												relatingObjectsMap, monitor, selectedTextItem);
+										loadInputSignText(text, relatingObjects, relatingObjectsMap, monitor, selectedTextItem);
 										break;
 									}
 									case 2: {
@@ -1754,61 +1686,49 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 	@Override
 	public void setEditorSelection(final Object selection) {
-		if (selection != null) {
-			sync.asyncExec(new Runnable() {
-				public void run() {
-					// workaround because selection service requires iniating
-					// part to be the active part
-					// see some bug of e4
-					MPart p = null;
-					MPart activePart = null;
-					try {
-						p = partService.findPart("org.bbaw.bts.ui.corpus.egy.part.textEditor");
-						activePart = partService.getActivePart();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					boolean workaround = activePart != null && !activePart.equals(p);
+		if (selection == null)
+            return;
 
-					if (workaround)
-						partService.activate(p);
+        sync.asyncExec(new Runnable() {
+            public void run() {
+                // workaround because selection service requires iniating
+                // part to be the active part
+                // see some bug of e4
+                MPart p = null;
+                MPart activePart = null;
+                try {
+                    p = partService.findPart("org.bbaw.bts.ui.corpus.egy.part.textEditor");
+                    activePart = partService.getActivePart();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                boolean workaround = activePart != null && !activePart.equals(p);
 
-					if (selection instanceof BTSTextSelectionEvent
-							&& ((BTSTextSelectionEvent) selection).data instanceof EObject) {
-						BTSTextSelectionEvent event = (BTSTextSelectionEvent) selection;
-						// remove listener from old editingDomain
-						if (editingDomain != null) {
-							editingDomain.getCommandStack()
-							.removeCommandStackListener(
-									commandStackListener);
-						}
-						// get selected item, add listener to domain
-						if (!event.getSelectedItems().isEmpty()) {
-							editingDomain = getEditingDomain((EObject) event.getSelectedItems().get(0));
-							editingDomain.getCommandStack()
-							.addCommandStackListener(
-									getCommandStackListener());
-							if (event.getSelectedItems().get(0) instanceof BTSSenctence) {
-								setSentenceTranslation((BTSSenctence) event.getSelectedItems().get(0), true);
+                if (workaround)
+                    partService.activate(p);
 
-							} else if (event.getSelectedItems().get(0) instanceof BTSSentenceItem) {
-								setSentenceTranslation((BTSSentenceItem) event.getSelectedItems().get(0));
-								if (!event.getSelectedItems().get(0).equals(selectedTextItem)) {
-									selectedTextItem = event.getSelectedItems().get(0);
-								} 
-							}  
-						}
+                if (selection instanceof BTSTextSelectionEvent
+                        && ((BTSTextSelectionEvent) selection).data instanceof EObject) {
+                    BTSTextSelectionEvent event = (BTSTextSelectionEvent) selection;
+                    // remove listener from old editingDomain
+                    if (editingDomain != null)
+                        editingDomain.getCommandStack().removeCommandStackListener(commandStackListener);
 
-
-					}
-					selectionService.setSelection(selection);
-
-					// processEditorSelection(selection);
-					if (workaround)
-						partService.activate(activePart);
-				}
-			});
-		}
+                    // get selected item, add listener to domain
+                    if (!event.getSelectedItems().isEmpty()) {
+                        editingDomain = getEditingDomain((EObject) event.getSelectedItems().get(0));
+                        editingDomain.getCommandStack().addCommandStackListener(getCommandStackListener());
+                        if (event.getSelectedItems().get(0) instanceof BTSSenctence)
+                            setSentenceTranslation((BTSSenctence) event.getSelectedItems().get(0), true);
+                        else if (event.getSelectedItems().get(0) instanceof BTSSentenceItem)
+                            setSentenceTranslation((BTSSentenceItem) event.getSelectedItems().get(0));
+                    }
+                }
+                selectionService.setSelection(selection);
+                if (workaround)
+                    partService.activate(activePart);
+            }
+        });
 	}
 
 	private EditingDomain getEditingDomain(EObject editingObject) {
@@ -1838,7 +1758,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
             }
 
             if (!annotations.isEmpty())
-                processSelection(annotations, null);
+                highlightAnnotations(annotations);
         }
     }
 

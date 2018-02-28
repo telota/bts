@@ -1,6 +1,7 @@
 package org.bbaw.bts.ui.commons.corpus.text;
 
 import org.apache.commons.lang.WordUtils;
+import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
@@ -27,6 +28,10 @@ public class BTSCommentAnnotation extends BTSModelAnnotation {
 	public BTSComment getComment() {
 		return comment;
 	}
+
+    public BTSObject getRelatingObject() {
+        return comment;
+    }
 
 	public void setComment(BTSComment comment) {
 		this.comment = comment;

@@ -1,6 +1,7 @@
 package org.bbaw.bts.core.services.corpus;
 
 import java.util.List;
+import java.util.Collection;
 
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSGraphic;
@@ -20,9 +21,10 @@ public interface BTSTextService extends GenericCorpusObjectService<BTSText, Stri
 
 	BTSGraphic createNewGraphic();
 
-	BTSSentenceItem copySentenceItem(BTSSentenceItem copyItem);
-
-	BTSSenctence copySentence(BTSSenctence copyItem);
+	BTSSentenceItem copySentenceItem(BTSSentenceItem item);
+	Collection<BTSSentenceItem> copySentenceItems(Collection<BTSSentenceItem> items);
+	BTSSenctence copySentence(BTSSenctence item);
+    Collection<BTSSenctence> copySentences(Collection<BTSSenctence> sents);
 
 	List<WordFormOccurrenceGroup> queryForWordFormOccurrenceGroups(BTSQueryRequest query, IProgressMonitor monitor);
 	

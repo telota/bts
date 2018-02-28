@@ -236,48 +236,51 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
 	}
 
 	@Override
-	public BTSSentenceItem copySentenceItem(BTSSentenceItem copyItem) {
-		BTSSentenceItem newItem = null;
-		if (copyItem instanceof BTSWord)
-		{
-			newItem = EcoreUtil.copy(copyItem);
-			newItem.set_id(idService.createId(null));
-//			((BTSWord)newItem).getGraphics().addAll(EcoreUtil.copyAll(((BTSWord) copyItem).getGraphics()));
-//			((BTSWord)newItem).setTranslation(EcoreUtil.copy(((BTSWord) copyItem).getTranslation()));
+	public BTSSentenceItem copySentenceItem(BTSSentenceItem item) {
+        BTSSentenceItem newItem = EcoreUtil.copy(copyItem);
+        createIds(newItem);
+        return newItem;
+	}
 
-		}
-		else if (copyItem instanceof BTSMarker)
-		{
-			newItem = EcoreUtil.copy(copyItem);
-			newItem.set_id(idService.createId(null));
-		}
-		return newItem;
+    @Override
+    public Collection<BTSSentenceItem> copySentenceItems(Collection<BTSSentenceItem> items) {
+        Collection<BTSSentenceItem> newItems = EcoreUtil.copyAll(items);
+        for (BTSSentenceItem item : newItems)
+            createIds(item);
+        return newItems;
+    }
+
+	private void createIds(BTSIdentifiableItem item) {
+		newItem.set_id(idService.createId(null));
+
+        if (item instanceof BTSSentence) {
+            for (BTSSentenceItem item : newItem.getSentenceItems())
+                createIds(item);
+		} else if (item instanceof BTSAmbivalence) {
+            for (BTSLemmaCase lcase : ((BTSAmbivalence)item).getCases()) {
+                lcase.set_id(idService.createId(null));
+                for (BTSAmbivalenceItem amItem : lcase.getScenario())
+                    amItem.set_id(idService.createId(null));
+            }
+        }
+    }
+
+	@Override
+	public BTSSenctence copySentence(BTSSenctence item) {
+		BTSSenctence newItem = EcoreUtil.copy(item);
+        createIds(newItem);
+        return newItem;
 	}
 
 	@Override
-	public BTSSenctence copySentence(BTSSenctence copyItem) {
-		BTSSenctence newItem = null;
-		newItem = EcoreUtil.copy(copyItem);
-		newItem.set_id(idService.createId(null));
-		for (BTSSentenceItem item : newItem.getSentenceItems())
-		{
-			item.set_id(idService.createId(null));
-			if (item instanceof BTSAmbivalence)
-			{
-				 for (BTSLemmaCase lcase : ((BTSAmbivalence)item).getCases())
-				 {
-					 lcase.set_id(idService.createId(null));
-					 for (BTSAmbivalenceItem amItem : lcase.getScenario())
-					 {
-						 amItem.set_id(idService.createId(null));
-					 }
-				 }
-			}
-		}
-		return newItem;
-	}
+    public Collection<BTSSenctence> copySentences(Collection<BTSSenctence> sents) {
+        Collection<BTSSenctence> newSents = EcoreUtil.copyAll(sents);
+        for (BTSSenctence sent: newSents)
+            createIds(sent);
+        return newSents;
+    }
 
-	/* (non-Javadoc)
+    /* (non-Javadoc)
 	 * @see org.bbaw.bts.core.services.corpus.BTSTextService#queryForWordFormOccurrences(org.bbaw.bts.core.dao.util.BTSQueryRequest, org.eclipse.core.runtime.IProgressMonitor)
 	 */
 	@Override
