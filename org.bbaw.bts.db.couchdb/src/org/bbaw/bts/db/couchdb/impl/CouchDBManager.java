@@ -1511,7 +1511,7 @@ public class CouchDBManager implements DBManager {
 			client.context().createDB(DaoConstants.REPLICATOR);
             try {
                 return client.replicator().findAll();
-            } catch (NoDocumentException e) {
+            } catch (NoDocumentException e2) {
                 return null;
             }
 		}

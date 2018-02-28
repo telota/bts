@@ -1725,8 +1725,6 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 		return textService.copySentenceItem(copyItem);
 	}
 
-
-
 	@Override
 	public BTSSenctence copySentence(BTSSenctence copyItem) {
 		return textService.copySentence(copyItem);
