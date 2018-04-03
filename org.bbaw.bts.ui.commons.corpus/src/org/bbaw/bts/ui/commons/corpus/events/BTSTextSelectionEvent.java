@@ -8,6 +8,7 @@ import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSSentenceItem;
+import org.bbaw.bts.corpus.btsCorpusModel.BTSSenctence;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.swt.custom.CaretEvent;
@@ -32,12 +33,13 @@ public class BTSTextSelectionEvent extends Event {
 
     public BTSTextSelectionEvent(CaretEvent evt, BTSObject parent) {
         this((TypedEvent)evt, parent);
-		/* We're offsetting the event's positions since xtext seems to use one-based indexing for annotation offsets
-		 * while the selection's offset is zero-based. In xtext, an annotation at the location left of the first
-		 * character has the index 1. The corresponding selection has the start offset ("x") 0. Internally, we use
-		 * xtext's frame of reference here since we're handling lots of xtext offsets and only one selection.
+        /* We're offsetting the event's positions since xtext seems to use one-based indexing for annotation
+         * offsets while the selection's offset is zero-based. In xtext, an annotation at the location left of the
+         * first character has the index 1. The corresponding selection has the start offset ("x") 0. Internally,
+         * we use xtext's frame of reference here since we're handling lots of xtext offsets and only one
+         * selection.
 		 *
-		 * TODO I don't quite understand just *why* things are this way. - Sebastian
+         * TODO I don't quite understand just *why* things are this way. - Sebastian
 		 */
         x = evt.caretOffset+1;
         y = evt.caretOffset+1;
@@ -45,13 +47,7 @@ public class BTSTextSelectionEvent extends Event {
 
     public BTSTextSelectionEvent(SelectionEvent evt, BTSObject parent) {
         this((TypedEvent)evt, parent);
-		/* We're offsetting the event's positions since xtext seems to use one-based indexing for annotation offsets
-		 * while the selection's offset is zero-based. In xtext, an annotation at the location left of the first
-		 * character has the index 1. The corresponding selection has the start offset ("x") 0. Internally, we use
-		 * xtext's frame of reference here since we're handling lots of xtext offsets and only one selection.
-		 *
-		 * TODO I don't quite understand just *why* things are this way. - Sebastian
-		 */
+        /* See above constructor for comment on offset */
         x = evt.x+1;
         y = evt.y+1;
         text = evt.text;

@@ -38,6 +38,7 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.EventObject;
@@ -136,6 +137,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -200,12 +202,11 @@ import com.google.inject.Injector;
 
 public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEditor, EventHandler {
 
-	private static final int EDITOR_PREFIX_LENGTH = 1;
-	private static final int LINE_SPACE = 8;
+	public static final int EDITOR_PREFIX_LENGTH = 1;
+	public static final int LINE_SPACE = 8;
 
 	protected int counter;
 	protected boolean loading;
-	protected int tabSelection;
 	protected boolean isDocUpdating;
 	protected String queryId;
 	protected int cachedCursor;
@@ -224,6 +225,10 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 	private BTSText text;
 	private CTabFolder tabFolder;
+    private CTabItem textTab;
+    private CTabItem signTab;
+    private CTabItem jseshTab;
+
 	private JMDCEditor jseshEditor;
 	private Document document;
 	private IAnnotationModel annotationModel;
@@ -247,7 +252,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	private StyleRange[] preSelectionRanges;
 	private TranslationEditorComposite sentenceTranslate_Editor;
 	private EditingDomain editingDomain;
-	private CommandStackListener commandStackListener;
 	private MPart part;
 	private List<BTSObject> relatingObjects;
 	@SuppressWarnings("restriction")
@@ -268,6 +272,39 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	private boolean show_line_number_ruler;
 	private BTSModelAnnotation highlightedSentenceAnnotation;
     private boolean deepCopyEnabled = false;
+
+	private CommandStackListener commandStackListener = new CommandStackListener() {
+        @Override
+        public void commandStackChanged(EventObject event) {
+            if (editingDomain == null) {
+                if (text == null)
+                    return;
+                else
+                    editingDomain = getEditingDomain(text);
+            }
+
+            Command mostRecentCommand = editingDomain.getCommandStack().getMostRecentCommand();
+            if (mostRecentCommand == null)
+                return;
+
+            if (mostRecentCommand.equals(editingDomain.getCommandStack().getUndoCommand())) {
+                // normal command or redo executed
+                localCommandCacheSet.add(mostRecentCommand);
+                if (dirty != null && localCommandCacheSet.isEmpty())
+                    dirty.setDirty(false);
+                else
+                    setDirtyInternal();
+
+            } else {
+                // undo executed
+                if (localCommandCacheSet.remove(mostRecentCommand)
+                        && localCommandCacheSet.isEmpty() && dirty != null)
+                    dirty.setDirty(false);
+                else
+                    setDirtyInternal();
+            }
+        }
+    };
 
 
 	@Inject
@@ -310,82 +347,49 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		tabFolder.setSimple(false);
 		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
 		tabFolder.addSelectionListener(new SelectionAdapter() {
+            private CTabItem oldSelection = null;
+
 			@Override public void widgetSelected(SelectionEvent e) {
-				int oldSelection = tabSelection;
-				tabSelection = tabFolder.getSelectionIndex();
-				boolean canSwitch = true;
-				if (tabSelection == oldSelection)
+				if (oldSelection == e.item)
 					return;
 
 				// update model from old selection editor
-				switch (oldSelection) {
-				case 0:
+				if (oldSelection == textTab) {
+                    /* Cancel selection if necessary FIXME: test this */
+					if (!updateModelFromTranscription()) {
+                        e.doit = false;
+                        return;
+                    }
+
 					cachedCursor = embeddedEditor.getViewer().getTextWidget().getCaretOffset();
-					canSwitch = updateModelFromTranscription();
-					break;
-				case 1:
-					signTextEditor.clearContent();
-					break;
-				}
 
-				// reset selection if switching selection is not permitted!
-				if (!canSwitch) {
-					tabFolder.setSelection(oldSelection);
-					tabSelection = oldSelection;
-					return;
-				}
+                }
 
-				try {
-					// load updated model into selected editor
-					IRunnableWithProgress op = new IRunnableWithProgress() {
-						@Override public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-							sync.asyncExec(new Runnable() {
-								public void run() {
-									switch (tabSelection) {
-									case 0:
-										contextService.activateContext("org.eclipse.xtext.ui.embeddedTextEditorScope");
-										loadInputTranscription(text, relatingObjects, monitor);
+                if (e.item != textTab) {
+                    loadTab(null);
+                    return;
+                }
 
-                                        /* FIXME - Sebastian: Sync selection from hieroglyph editor
-                                        Annotation an = modelAnnotationMap.get(((BTSIdentifiableItem) selectedTextItem).get_id());
-                                        if (an != null) {
-                                            Position pos = annotationModel.getPosition(an);
-                                            try {
-                                                embeddedEditor.getViewer().getTextWidget().setCaretOffset(pos.getOffset());
-                                                embeddedEditor.getViewer().revealRange(pos.getOffset(), pos.getLength());
-                                            } catch (Exception e) {}
-                                        }
-                                        */
-										break;
+                contextService.activateContext("org.eclipse.xtext.ui.embeddedTextEditorScope");
+                loadInputTranscription(null);
 
-									case 1:
-										loadInputSignText(text, relatingObjects, relatingObjectsMap, monitor, getSelectedSentenceItem());
-										break;
+                if (oldSelection == signTab)
+                    revealItem(signTextEditor.getSelectedItem());
 
-									case 2:
-										loadInputJSesh(text, relatingObjects);
-										break;
-									}
-								}
-							});
-						}
-					};
-					new ProgressMonitorDialog(new Shell()).run(true, true, op);
-				} catch (InvocationTargetException ee) {
-				} catch (InterruptedException ee) {
-				}				
+                oldSelection = (CTabItem)e.item;
 			}
 		});
 
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
-		CTabItem tbtmPlaintext2 = new CTabItem(tabFolder, SWT.NONE);
-		tbtmPlaintext2.setText("Transliteration");
 
 		embeddedEditorParentComp = new Composite(tabFolder, SWT.NONE | SWT.BORDER);
 		embeddedEditorParentComp.setLayout(new GridLayout());
 		((GridLayout) embeddedEditorParentComp.getLayout()).marginHeight = 0;
 		((GridLayout) embeddedEditorParentComp.getLayout()).marginWidth = 0;
-		tbtmPlaintext2.setControl(embeddedEditorParentComp);
+
+		textTab = new CTabItem(tabFolder, SWT.NONE);
+		textTab.setText("Transliteration");
+		textTab.setControl(embeddedEditorParentComp);
 
 		embeddedEditorParentComp.addDisposeListener(new DisposeListener() {
 			@Override
@@ -393,7 +397,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 				// remove translit editor contents (including annotation model)
 				// before xtext HighlightingHelper gets a chance
 				// to clog main thread with its painful editor dismantling.
-				loadInputTranscription(null, relatingObjects, null);
+				loadInputTranscription(null);
 			}
 		});
 
@@ -456,7 +460,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		context.set(XtextSourceViewer.class, embeddedEditor.getViewer());
 		BTSE4ToGuiceXtextSourceViewerProvider.setContext(context);
 
-		loadInputTranscription(null, relatingObjects, null);
+		loadInputTranscription(null);
 
 		embeddedEditor.getViewer().getTextWidget().addCaretListener(new CaretListener() {
 			@Override public void caretMoved(CaretEvent event) {
@@ -528,13 +532,13 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			}
 		});
 
-		CTabItem signTextTab = new CTabItem(tabFolder, SWT.NONE);
-		signTextTab.setText("Sign Text Editor");
+		signTab = new CTabItem(tabFolder, SWT.NONE);
+		signTab.setText("Sign Text Editor");
 		Composite plainTextComp = new Composite(tabFolder, SWT.NONE | SWT.BORDER);
 		plainTextComp.setLayout(new GridLayout());
 		((GridLayout) plainTextComp.getLayout()).marginHeight = 0;
 		((GridLayout) plainTextComp.getLayout()).marginWidth = 0;
-		signTextTab.setControl(plainTextComp);
+		signTab.setControl(plainTextComp);
 		IEclipseContext child = context.createChild();
 		child.set(Composite.class, plainTextComp);
 		child.set(IBTSEditor.class, EgyTextEditorPart.this);
@@ -543,14 +547,14 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		plainTextComp.layout();
 		plainTextComp.pack();
 
-		CTabItem tbtm5 = new CTabItem(tabFolder, SWT.NONE);
-		tbtm5.setText("JSesh View");
+		jseshTab = new CTabItem(tabFolder, SWT.NONE);
+		jseshTab.setText("JSesh View");
 		scrolledCompJSesh = new ScrolledComposite(tabFolder, SWT.HORIZONTAL | SWT.VERTICAL);
 		scrolledCompJSesh.setMinWidth(800);
 		scrolledCompJSesh.setMinHeight(400);
 		scrolledCompJSesh.setExpandHorizontal(true);
 		scrolledCompJSesh.setExpandVertical(true);
-		tbtm5.setControl(scrolledCompJSesh);
+		jseshTab.setControl(scrolledCompJSesh);
 
 		final Composite comEmbeded = new Composite(scrolledCompJSesh, SWT.EMBEDDED | SWT.NO_BACKGROUND | SWT.BORDER);
 		scrolledCompJSesh.setContent(comEmbeded);
@@ -592,13 +596,14 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         System.err.println("Setting deepCopyCache: "+deepCopyCache);
 	}
 
-    private BTSTextSelectionEvent probeCurrentTextSelection(TextSelection selection) {
-        return probeTextSelectionEvent((TextSelection)embeddedEditor.getViewer().getSelection());
+    private BTSTextSelectionEvent probeCurrentTextSelection() {
+        return probeTextSelection((TextSelection)embeddedEditor.getViewer().getSelection());
     }
 
     private BTSTextSelectionEvent probeTextSelection(TextSelection selection) {
         BTSTextSelectionEvent evt = new BTSTextSelectionEvent(selection, text);
         populateSelectionEvent(evt);
+        return evt;
     }
 
     private BTSTextSelectionEvent fireTextSelectionEvent(TextSelection selection) {
@@ -607,6 +612,17 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         updateSentenceTranslation(evt);
         selectionService.setSelection(evt);
         return evt;
+    }
+
+    private void revealItem(BTSIdentifiableItem item) {
+        Annotation an = modelAnnotationMap.get(item.get_id());
+        if (an == null)
+            return;
+
+        Position pos = annotationModel.getPosition(an);
+        XtextSourceViewer viewer = embeddedEditor.getViewer();
+        viewer.getTextWidget().setCaretOffset(pos.getOffset());
+        viewer.revealRange(pos.getOffset(), pos.getLength());
     }
 
     private void updateSentenceTranslation(BTSTextSelectionEvent evt) {
@@ -628,19 +644,18 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
     /* Note that this does not copy comments, annotations, rubra or other related objects */
 	private void pasteItems() {
         BTSTextSelectionEvent copied = deepCopyCache;
-        if (!copied || copied.getSelectedItems().isEmpty())
+        if (copied == null || copied.getSelectedItems().isEmpty())
             return;
 
         updateModelFromTranscription();
 
-        /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to the
-         * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if their
-         * sentences were concatenated. */
-        Collection<BTSSentenceItems> copies = textEditorController.copySentenceItems(now.getSelectedItems());
-
 		BTSTextSelectionEvent now = probeCurrentTextSelection();
+        /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to the
+         * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if
+         * their sentences were concatenated. */
+        Collection<BTSSentenceItem> copies = textEditorController.copySentenceItems(now.getSelectedItems());
 
-        BTSSentenceItem first = now.getSelectedItems(0);
+        BTSSentenceItem first = now.getSelectedItems().get(0);
         /* Since selectedItems does not contain any items within BTSAmbivalences all items have the sentence as their
          * container. */
         BTSSenctence sentence = (BTSSenctence)first.eContainer();
@@ -650,41 +665,41 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
             /* Delete current selection */
             for (BTSSenctence sent : now.getSelectedSentences())
                 EcoreUtil.delete(sent, false); /* Do not recurse as we will delete the items below */
-            for (BTSTextItem item : now.getSelectedItems())
+            for (BTSSentenceItem item : now.getSelectedItems())
                 EcoreUtil.delete(item, true); /* Recurse to handle ambivalences */
         }
 
-        sentence.getSentenceItems().add(insertOffset, copies);
-        /* FIXME loadInputTranscription(text, relatingObjects, monitor); */
+        sentence.getSentenceItems().addAll(insertOffset, copies);
+        loadInputTranscription(null);
         /* FIXME fixup cursor */
 	}
 
     /* Note that this does not copy comments, annotations, rubra or other related objects */
 	private void pasteSentences() {
         BTSTextSelectionEvent copied = deepCopyCache;
-        if (!copied || copied.getSelectedItems().isEmpty())
+        if (copied == null || copied.getSelectedSentences().isEmpty())
             return;
 
         updateModelFromTranscription();
 
+        BTSTextSelectionEvent now = probeCurrentTextSelection();
         /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to the
-         * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if their
-         * sentences were concatenated. */
-        Collection<BTSSentenceItems> copies = textEditorController.copy(now.getSelectedItems());
+         * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if
+         * their sentences were concatenated. */
+        Collection<BTSSenctence> copies = textEditorController.copySentences(now.getSelectedSentences());
 
-		BTSTextSelectionEvent now = probeCurrentTextSelection();
-
-        BTSSenctence first = now.getSelectedSentences(0);
+        BTSSenctence first = now.getSelectedSentences().get(0);
         BTSTextContent textContent = (BTSTextContent)first.eContainer();
         int insertOffset = textContent.getTextItems().indexOf(first);
 
+        /* TODO decide what to do with partially selected sentences here at start/end of selection */
         if (!now.isCursorEvent()) {
             /* Delete current selection */
             for (BTSSenctence sent : now.getSelectedSentences())
-                EcoreUtil.delete(sent, false); /* Do not recurse as we will delete the items below */
+                EcoreUtil.delete(sent, true);
         }
 
-        textContent.getTextItems().add(insertOffset, copies);
+        textContent.getTextItems().addAll(insertOffset, copies);
         /* FIXME see above in pasteItems */
 	}
 
@@ -761,8 +776,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		return true;
 	}
 
-	protected void loadInputJSesh(BTSText text2, List<BTSObject> localRelatingObjects) {
-		String jseshMdc = textEditorController.transformTextToJSeshMdCString(text2);
+	protected void loadInputJSesh() {
+		String jseshMdc = textEditorController.transformTextToJSeshMdCString(text);
 		try {
 			jseshEditor.setMDCText(jseshMdc + "-!"); // add line break
 		} catch (Exception e) {
@@ -780,17 +795,17 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	}
 
 	@SuppressWarnings({ "rawtypes", "restriction" })
-	protected void loadInputTranscription(BTSText localtext, List<BTSObject> localRelatingObjects, IProgressMonitor monitor) {
-		text = localtext;
+	protected void loadInputTranscription(IProgressMonitor monitor) {
 		loading = true;
+
 		lemmaAnnotationMap = new HashMap<String, List<Object>>();
 		annotationModel = embeddedEditor.getViewer().getAnnotationModel();
 
 		if (monitor != null)
 			monitor.beginTask("Load text into Transliteration-Editor.", IProgressMonitor.UNKNOWN);
 
-		if (this.document == null)
-			this.document = embeddedEditor.getDocument();
+		if (document == null)
+			document = embeddedEditor.getDocument();
 
 		embeddedEditorModelAccess.updateModel("\r", "§§", "\r");
 		// remove old annotations
@@ -805,16 +820,14 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		}
 
 		AnnotationModel tempAnnotationModel = new AnnotationModel();
-		if (localtext == null) {
+
+		if (text == null) {
 			document.set("§§");
-			if (relatingObjectsMap != null)
-				relatingObjectsMap.clear();
+			relatingObjectsMap = null;
 
 		} else {
-			if (localtext.getTextContent() == null) {
-				localtext.setTextContent(BtsCorpusModelFactory.eINSTANCE
-						.createBTSTextContent());
-			}
+			if (text.getTextContent() == null)
+				text.setTextContent(BtsCorpusModelFactory.eINSTANCE.createBTSTextContent());
 
 			int fontSize = 12;
 			try {
@@ -825,9 +838,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			}
 
 			int lineWith = embeddedEditor.getViewer().getTextWidget().getSize().x / fontSize;
-			textEditorController.transformToDocument(
-					localtext.getTextContent(), document, tempAnnotationModel,
-					localRelatingObjects, relatingObjectsMap, lemmaAnnotationMap, monitor, lineWith);
+			textEditorController.transformToDocument(getTextContent(), document, tempAnnotationModel,
+					relatingObjects, relatingObjectsMap, lemmaAnnotationMap, monitor, lineWith);
 		}
 
 		String textString = document.get();
@@ -961,36 +973,34 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	}
 
 	private void revealAnnotation(List<BTSModelAnnotation> relatingObjectsAnnotations, final boolean force) {
-		try {
-			// TODO annotations should be sorted based on startpos?
-			Annotation anno = relatingObjectsAnnotations.get(0);
-			final Position pos = annotationModel.getPosition(anno);
+        /* FIXME where to hook this into? */
+        int minPos = Integer.MAX_VALUE;
+        int maxPos = Integer.MIN_VALUE;
 
-			if (pos != null) {
-				sync.asyncExec(new Runnable() {
-					@SuppressWarnings("restriction")
-					public void run() {
-						XtextSourceViewer viewer = embeddedEditor.getViewer();
-						if (!force) {
-							int topLine = viewer.getTopIndex();
-							int botLine = viewer.getBottomIndex();
-							int caretPos = viewer.getTextWidget().getCaretOffset();
-							int curLine = viewer.getTextWidget().getLineAtOffset(caretPos);
-							int annoLineTop = viewer.getTextWidget().getLineAtOffset(pos.offset);
-							int annoLineBot = viewer.getTextWidget().getLineAtOffset(pos.offset+pos.length);
-							// consider changing displayed range if annotation exceeds current range
-							// only jump if cursor would likely remain in visible range
-							if ((topLine > annoLineTop) || (botLine < annoLineBot))
-								if (botLine - curLine >= topLine - annoLineTop)
-									viewer.revealRange(pos.getOffset(), pos.length);
-						} else // jump regardless of cursor position
-							viewer.revealRange(pos.getOffset(), pos.length);
-					}
-				});	
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
+        for (Annotation anno : relatingObjectsAnnotations) {
+            final Position pos = annotationModel.getPosition(anno);
+            if (pos == null)
+                continue;
+
+            int start = pos.getOffset();
+            int end = start + pos.getLength();
+            
+            if (start < minPos)
+                minPos = start;
+
+            if (end > maxPos)
+                maxPos = end;
+        }
+
+        if (minPos != Integer.MAX_VALUE) {
+            final int off = minPos, len = maxPos - minPos;
+            sync.asyncExec(new Runnable() {
+                @SuppressWarnings("restriction")
+                public void run() {
+                    embeddedEditor.getViewer().revealRange(off, len);
+                }
+            });	
+        }
 	}
 
 	protected void setDirtyInternal() {
@@ -1015,20 +1025,25 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		int min_l = Integer.MAX_VALUE, max_r = -1;
 		int sel_l = evt.x, sel_r = evt.y;
 
-		IAnnotationModel amodel = embeddedEditor.getViewer().getAnnotationModel();
+		final IAnnotationModel amodel = embeddedEditor.getViewer().getAnnotationModel();
         List<Annotation> annos = new ArrayList<Annotation>();
-		for (Iterator<Annotation> it = amodel.getAnnotationIterator(); it.hasNext();) {
+		for (Iterator<Annotation> it = amodel.getAnnotationIterator(); it.hasNext();)
 			annos.add(it.next());
 
         /* Sort by offset. Xtext's wonderful getAnnotationIterator apart from being an iterator returns its elements in
          * a random order, which obviously is what you want in most cases. not. 8*/
         Collections.sort(annos, new Comparator<Annotation>() {
             public int compare(Annotation a, Annotation b) {
-                return a.getOffset() - b.getOffset();
+                Position posa = amodel.getPosition(a), posb = amodel.getPosition(b);
+                int oa = posa.getOffset(), ob = posb.getOffset();
+                if (oa != ob)
+                    return oa - ob;
+                return posa.getLength() - posb.getLength();
             }
 
             public boolean equals(Annotation a, Annotation b) {
-                return a.getOffset() == b.getOffset();
+                Position posa = amodel.getPosition(a), posb = amodel.getPosition(b);
+                return posa.getOffset() == posb.getOffset() && posa.getLength() == posb.getLength();
             }
         });
 
@@ -1047,7 +1062,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			/* Check if annotation interval [ano_l, ano_r] is contained within selection interval [sel_l, sel_r] */
 			boolean sel_contains_ano = sel_l <= ano_l && ano_r <= sel_r;
 
-            boolean item_within_ambivalence = item.eContainer() instanceof BTSLemmaCase;
+            boolean item_within_ambivalence = iitem.eContainer() instanceof BTSLemmaCase;
 
 			/* For cursor events, add all items that the cursor is placed inside. This includes e.g. a containing
 			 * ambivalence.  This is done so that when the cursor is placed somewhere, all comments that include that
@@ -1196,18 +1211,15 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	@Optional
 	void eventReceivedCaretEvents(@EventTopic("event_text_selection/*") final Object event) {
 		if (text != null && event instanceof String) {
-			switch (tabFolder.getSelectionIndex()) { /* the what?! - Sebastian */
-			case 0:
+            if (tabFolder.getSelection() == textTab)
 				setTextSelectionEvent((String) event);
-				break;
-			case 1: // signtextEditor
+            else if(tabFolder.getSelection() == signTab) {
 				sync.asyncExec(new Runnable() {
 					public void run() {
 						signTextEditor.setTextSelectionEvent((String) event);
 					}
 				});
-				break;
-			}
+            }
 		}
 	}
 
@@ -1225,9 +1237,12 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	public void setInputObjectDirect(BTSText object) {
 		purgeCacheAndEditingDomain();
 		text = object;
-		if (object != null)loadInput(object);
+
+		if (object != null)
+            loadInput(object);
+
 		editingDomain = editingDomainController.getEditingDomain(text);
-		editingDomain.getCommandStack().addCommandStackListener(getCommandStackListener());
+		editingDomain.getCommandStack().addCommandStackListener(commandStackListener);
 	}
 
 	@Inject
@@ -1238,15 +1253,12 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
          * This method also performs the totally unrelated function of loading the text that is selected in the
          * object tree viewer on the left. */
 
-        System.out.println("ETE.p:setSelection: "+selection.toString());
 		if (selection == null || parent == null || parent.isDisposed())
 			return;
+        System.out.println("ETE.p:setSelection: "+selection.toString());
 
-		if (selectedTextItem == selection)
-            return;
-
-        if (selection instanceof BTSWord) {
-            setSentenceTranslation((BTSWord) selection);
+        if (selection instanceof BTSSentenceItem) {
+            setSentenceTranslation((BTSSentenceItem) selection);
             return;
         }
 
@@ -1282,7 +1294,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
             makePartActive(true);
             loadInput((BTSCorpusObject) selection);
             editingDomain = editingDomainController.getEditingDomain(text);
-            editingDomain.getCommandStack().addCommandStackListener(getCommandStackListener());
+            editingDomain.getCommandStack().addCommandStackListener(commandStackListener);
 
         } else if (loaded) { // requires clear
             loadInput(null);
@@ -1322,48 +1334,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		}
 
 	}
-
-	private CommandStackListener getCommandStackListener() {
-		if (commandStackListener == null) {
-			commandStackListener = new CommandStackListener() {
-
-				@Override
-				public void commandStackChanged(EventObject event) {
-					if (editingDomain == null)
-					{
-						if (text == null)
-							return;
-						else
-							editingDomain = getEditingDomain(text);
-					}
-					Command mostRecentCommand = editingDomain.getCommandStack()
-							.getMostRecentCommand();
-					if (mostRecentCommand != null) {
-						if (mostRecentCommand.equals(editingDomain.getCommandStack().getUndoCommand())) {
-							// normal command or redo executed
-							localCommandCacheSet.add(mostRecentCommand);
-							if (dirty != null && localCommandCacheSet.isEmpty()) {
-								dirty.setDirty(false);
-							} else  {
-								setDirtyInternal();
-							}
-						} else {
-							// undo executed
-							if (localCommandCacheSet.remove(mostRecentCommand)
-									&& localCommandCacheSet.isEmpty() && dirty != null) {
-								dirty.setDirty(false);
-							} else  {
-								setDirtyInternal();
-							}
-						}
-					}
-
-				}
-			};
-		}
-		return commandStackListener;
-	}
-
 
 	@SuppressWarnings("restriction")
 	private void setSentenceItemSelected(BTSSentenceItem selectedItem) {
@@ -1492,113 +1462,89 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		sentenceTranslate_Editor.setEnabled(active && userMayEdit);
 	}
 
+    private void loadTab(IProgressMonitor monitor) {
+        if (tabFolder == null)
+            return;
+
+        CTabItem tab = tabFolder.getSelection();
+        if (tab ==  textTab) loadInputTranscription(monitor);
+        if (tab ==  signTab) loadInputSignText(monitor);
+        if (tab == jseshTab) loadInputJSesh();
+    }
+
 	private void loadInput(BTSCorpusObject o) {
 		setSentenceTranslationActive(false);
 		// wipe latest text selection event in order to avoid leak
 		selectionService.setSelection(new BTSTextSelectionEvent(new TypedEvent(this), o));
 
-		if (tabFolder != null && o instanceof BTSText) {
-			this.text = (BTSText) o;
-
-			if (text != null) {
-				try {
-					IRunnableWithProgress op = new IRunnableWithProgress() {
-
-						@Override
-						public void run(final IProgressMonitor monitor)
-								throws InvocationTargetException,
-								InterruptedException {
-							monitor.beginTask("Load relating objects (comments, annotations, glosses).", 100);
-							relatingObjects = textEditorController
-									.getRelatingObjects(text, monitor);
-							relatingObjectsMap = textEditorController
-									.fillRelatingObjectsMap(relatingObjects);
-							queryId = "relations.objectId-" + text.get_id();
-
-							sync.asyncExec(new Runnable() {
-								public void run() {
-									switch (tabFolder.getSelectionIndex()) {
-									case 0: {
-										loadInputTranscription(text,
-												relatingObjects, monitor);
-										break;
-									}
-									case 1: {
-										loadInputSignText(text, relatingObjects, relatingObjectsMap, monitor, selectedTextItem);
-										break;
-									}
-									case 2: {
-										loadInputJSesh(text, relatingObjects);
-										break;
-									}
-									}
-									setUserMayEditInteral(userMayEdit);
-									loaded = true;
-								}
-							});
-
-							Job job = new Job("post_relating_objects")
-							{
-
-								@Override
-								protected IStatus run(IProgressMonitor monitor) {
-									BTSRelatingObjectsLoadingEvent event = new BTSRelatingObjectsLoadingEvent(
-											text);
-									event.setRelatingObjects(relatingObjects);
-									eventBroker
-									.post(BTSUIConstants.EVENT_TEXT_RELATING_OBJECTS_LOADED,
-											event);
-									return Status.OK_STATUS;
-								}
-
-							};
-							job.schedule(1000);
-
-						}
-					};
-					new ProgressMonitorDialog(new Shell()).run(true, true, op);
-				} catch (InvocationTargetException e) {
-					// handle exception
-				} catch (InterruptedException e) {
-					// handle cancelation
-				}
-			}
-			// plainTextEditor.setText(((BTSText) o).getCode());
-		} else if (tabFolder != null && o == null) {
+        if (o == null) {
 			this.text = null;
-			loaded = false;
+			this.relatingObjects = null;
+            this.relatingObjectsMap = null;
+			this.loaded = false;
 
-			relatingObjects = null;
-			switch (tabFolder.getSelectionIndex()) {
-			case 0: {
-				loadInputTranscription(null, relatingObjects, null);
-				break;
-			}
-			case 1: {
-				loadInputSignText(null, relatingObjects, relatingObjectsMap, null, selectedTextItem);
-				break;
-			}
-			case 2: {
-				loadInputJSesh(null, relatingObjects);
-				break;
-			}
-			}
-		}
+            loadTab(null);
+            return;
+        }
+
+		if (!(o instanceof BTSText))
+            return;
+
+        this.text = (BTSText) o;
+
+        IRunnableWithProgress op = new IRunnableWithProgress() {
+            @Override
+            public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+                monitor.beginTask("Load relating objects (comments, annotations, glosses).", 100);
+                relatingObjects = textEditorController.getRelatingObjects(text, monitor);
+                relatingObjectsMap = textEditorController.fillRelatingObjectsMap(relatingObjects);
+                queryId = "relations.objectId-" + text.get_id();
+
+                sync.asyncExec(new Runnable() {
+                    public void run() {
+                        loadTab(null);
+                        setUserMayEditInteral(userMayEdit);
+                        loaded = true;
+                    }
+                });
+
+                Job job = new Job("post_relating_objects") {
+                    @Override
+                    protected IStatus run(IProgressMonitor monitor) {
+                        eventBroker.post(BTSUIConstants.EVENT_TEXT_RELATING_OBJECTS_LOADED,
+                                new BTSRelatingObjectsLoadingEvent(text, relatingObjects));
+                        return Status.OK_STATUS;
+                    }
+                };
+                job.schedule(1000);
+            }
+        };
+        try {
+            new ProgressMonitorDialog(new Shell()).run(true, true, op);
+        } catch (InvocationTargetException | InterruptedException e) {
+            // handle cancelation
+        }
 	}
 
-	private void loadInputSignText(
-			BTSText localText,
-			List<BTSObject> localRelatingObjects,
-			Map<String, List<BTSInterTextReference>> relatingObjectsMap2,
-			IProgressMonitor monitor,
-			Object localSelectedTextItem) {
+	private void loadInputSignText(IProgressMonitor monitor) {
 		if (monitor != null)
 			monitor.setTaskName("Load relating text into Sign-Text-Editor.");
-		if (localText != null)
-			signTextEditor.setInput(localText, localText.getTextContent(), localRelatingObjects, monitor, localSelectedTextItem);
-		else
-			signTextEditor.setInput(null, null, localRelatingObjects, monitor, localSelectedTextItem);
+
+        signTextEditor.clearContent();
+
+		BTSTextSelectionEvent sel = probeCurrentTextSelection();
+        BTSSentenceItem selItem = null;
+        if (sel.getSelectedItems().size() > 0)
+            selItem = sel.getSelectedItems().get(0);
+
+        signTextEditor.setInput(text, getTextContent(), relatingObjects, monitor, selItem);
 	}
+
+    private BTSTextContent getTextContent() {
+        if (text == null)
+            return null;
+        return text.getTextContent();
+    }
 
 	private BTSText createMockUp(BTSText text2) {
 		if (text2 == null)
@@ -1643,17 +1589,11 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 		// now set focus on specific editor pane
 		if (tabFolder != null && text != null) {
-			switch (tabFolder.getSelectionIndex()) {
-			case 0:
+			if (tabFolder.getSelection() == textTab)
 				embeddedEditor.getViewer().getControl().setFocus();
-				break;
-			case 1:
-				signTextEditor.setFocus();
-				break;
-			case 2:
-				break;
-			}
 
+			if (tabFolder.getSelection() == signTab)
+				signTextEditor.setFocus();
 		}
 
 		permissionsController.activateDBCollectionContext(BTSPluginIDs.PREF_MAIN_CORPUS_KEY);
@@ -1668,7 +1608,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 				!permissionsController.userMayEditObject(permissionsController.getAuthenticatedUser(), this.text))
 			return false;
 
-		if (tabFolder.getSelectionIndex() == 0 && !updateModelFromTranscription())
+		if (tabFolder.getSelection() == textTab && !updateModelFromTranscription())
 			return false;
 
 		localCommandCacheSet.clear();
@@ -1686,6 +1626,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 	@Override
 	public void setEditorSelection(final Object selection) {
+        /* This method is called by the annotations thingy and the sign text editor when the user selects something. */
 		if (selection == null)
             return;
 
@@ -1717,7 +1658,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                     // get selected item, add listener to domain
                     if (!event.getSelectedItems().isEmpty()) {
                         editingDomain = getEditingDomain((EObject) event.getSelectedItems().get(0));
-                        editingDomain.getCommandStack().addCommandStackListener(getCommandStackListener());
+                        editingDomain.getCommandStack().addCommandStackListener(commandStackListener);
                         if (event.getSelectedItems().get(0) instanceof BTSSenctence)
                             setSentenceTranslation((BTSSenctence) event.getSelectedItems().get(0), true);
                         else if (event.getSelectedItems().get(0) instanceof BTSSentenceItem)
@@ -1899,7 +1840,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                             @Override public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
                                 sync.asyncExec(new Runnable() {
                                     public void run() {
-                                        loadInputTranscription(text, relatingObjects, monitor);
+                                        loadInputTranscription(monitor);
                                         try {
                                             embeddedEditor.getViewer().getTextWidget().setCaretOffset(cachedCursor);
                                             embeddedEditor.getViewer().revealRange(cachedCursor, 0);
@@ -1932,15 +1873,12 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 }
             }
 
-            switch (tabFolder.getSelectionIndex()) {
-            case 0:
+            if (tabFolder.getSelection() == textTab) {
                 addAnnotationToTranscription(notification);
                 addAnnotationToSignText(notification);
-                break;
-            case 1:
+            } else if (tabFolder.getSelection() == signTab) {
                 addAnnotationToTranscription(notification);
                 addAnnotationToSignText(notification);
-                break;
             }
         }
     }

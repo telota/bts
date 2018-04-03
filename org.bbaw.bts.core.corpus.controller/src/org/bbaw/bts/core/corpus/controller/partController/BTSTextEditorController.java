@@ -4,23 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import java.util.Collection;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
@@ -40,68 +24,41 @@ import org.eclipse.swt.graphics.Image;
 
 import com.google.inject.Injector;
 
-public interface BTSTextEditorController
-{
-
+public interface BTSTextEditorController {
+	boolean save(BTSText text);
 	void transformToDocument(BTSTextContent textContent, Document doc, IAnnotationModel model, 
 			List<BTSObject> relatingObjects, Map<String, List<BTSInterTextReference>> relatingObjectsMap, 
 			Map<String, List<Object>> lemmaAnnotationMap, IProgressMonitor monitor, int lineLength);
-
-//	BTSText updateTextFromDocument(BTSText text, Document document, IAnnotationModel annotationModel,
-//			TextViewer textViewer);
-
-	boolean save(BTSText text);
-
-	// TextModel transformToRamsesTextModel(BTSText text, TextModel textModel,
-	// Map<Object, BTSSentenceItem> ramsesTextModelMap);
-
-	// BTSText updateTextFromRamsesModel(BTSText text, TextModel textModel,
-	// Map<Object, BTSSentenceItem> ramsesTextModelMap);
+	void updateBTSWordFromMdCString(BTSWord word, String mdc, EditingDomain editingDomain);
+	String transformTextToJSeshMdCString(BTSText text);
+	BTSTextContent updateModelFromTextContent(BTSTextContent textContent, EObject eo, IAnnotationModel am);
 
 	String transformWordToMdCString(BTSWord word, int selectedGlypheIndex);
-
-	void updateBTSWordFromMdCString(BTSWord word, String mdc,
-			EditingDomain editingDomain);
-
-	String transformTextToJSeshMdCString(BTSText text);
-
 	String[] splitSignsKeepDelimeters(String mdC);
-
 	String insertMarkerBehindSingleCode(String mdcString, String marker);
 	
 	List<BTSObject> getRelatingObjects(BTSText text, IProgressMonitor monitor);
-	
+	HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects);
 	BTSText createNewText(BTSCorpusObject parentObject);
 	
 	Image transformToSWT(BufferedImage bufferedImage);
-	
 	BufferedImage getImageData(String topItemList) throws Exception;
-	
 	BufferedImage getImageData(String topItemList, int height, int width) throws Exception;
 	
-	HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects);
-
-	BTSTextContent updateModelFromTextContent(BTSTextContent textContent,
-			EObject eo, IAnnotationModel am);
-	
-	BTSLemmaEntry findLemmaEntry(String lemmaId, IProgressMonitor monitor);
-
 	boolean checkAndFullyLoad(BTSCorpusObject object, boolean checkForConflicts);
-	
 	boolean testTextValidAgainstGrammar(BTSTextContent textContent, BTSObject object);
+	int[] checkTextCompleteness(BTSText text);
 
 	Injector findEgyDslInjector();
 
-
+	BTSLemmaEntry findLemmaEntry(String lemmaId, IProgressMonitor monitor);
 	List<BTSText> listAllTexts(IProgressMonitor monitor);
-
 	List<BTSText> listInAllInvalidTexts(IProgressMonitor monitor);
-
-	int[] checkTextCompleteness(BTSText text);
-
 	List<BTSText> listInAllInCompleteTexts(IProgressMonitor monitor);
 
-	BTSSentenceItem copySentenceItem(BTSSentenceItem copyItem);
-
-	BTSSenctence copySentence(BTSSenctence copyItem);
+    /* TODO consolidate this crap to something overloaded */
+	BTSSentenceItem copySentenceItem(BTSSentenceItem item);
+	Collection<BTSSentenceItem> copySentenceItems(Collection<BTSSentenceItem> items);
+	BTSSenctence copySentence(BTSSenctence item);
+    Collection<BTSSenctence> copySentences(Collection<BTSSenctence> sents);
 }

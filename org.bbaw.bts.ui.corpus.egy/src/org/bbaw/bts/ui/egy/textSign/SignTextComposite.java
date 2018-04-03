@@ -89,20 +89,25 @@ import org.eclipse.swt.widgets.Event;
 
 public class SignTextComposite extends Composite implements IBTSEditor {
 
-	private static final Color COLOR_WORD_DESELECTED = ColorConstants.white;
-	private static final Color COLOR_WORD_SELECTED = ColorConstants.yellow;
-	private static final Color COLOR_MARKER_DESELECTED = BTSUIConstants.COLOR_BACKGROUND_DISABLED;
-	private static final Color COLOR_MARKER_SELECTED = ColorConstants.yellow;
-	private static final Color COLOR_CANVAS_BACKGROUND = ColorConstants.white;
+	public static final Color COLOR_WORD_DESELECTED = ColorConstants.white;
+	public static final Color COLOR_WORD_SELECTED = ColorConstants.yellow;
+	public static final Color COLOR_MARKER_DESELECTED = BTSUIConstants.COLOR_BACKGROUND_DISABLED;
+	public static final Color COLOR_MARKER_SELECTED = ColorConstants.yellow;
+	public static final Color COLOR_CANVAS_BACKGROUND = ColorConstants.white;
 
-	@Inject
-	private BTSTextEditorController textEditorController;
-	@Inject
-	private IBTSEditor parentEditor;
-	@Inject
-	private UISynchronize sync;
-	@Inject
-	private BTSResourceProvider resourceProvider;
+	public static final String VERS_FRONTER_MARKER = "\uDB80\uDC81"; //mv
+	public static final String VERS_BREAK_MARKER = "\uDB80\uDC80"; //v
+	public static final String BROKEN_VERS_MARKER = "\uDB80\uDC82";
+	public static final String DISPUTALBE_VERS_MARKER = "\u2E2E\uDB80\uDC80?";
+	public static final String DELETED_VERS_MARKER = "{\uDB80\uDC80}";
+	public static final String DESTROYED_VERS_MARKER = "[\uDB80\uDC80]";
+	public static final String MISSING_VERS_MARKER = "\u2329\uDB80\uDC80\u232A";
+	public static final int MAX_IMAGE_SIZE = 200;
+
+	@Inject private BTSTextEditorController textEditorController;
+	@Inject private IBTSEditor parentEditor;
+	@Inject private UISynchronize sync;
+	@Inject private BTSResourceProvider resourceProvider;
 	
 	@Inject
 	@Preference(value = BTSEGYUIConstants.SIGN_TEXT_SHOW_HIEROGLYPHS, nodePath = "org.bbaw.bts.ui.corpus.egy")
@@ -144,7 +149,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 	private LineFigure currentLineFigure;
 	private int lineIndex = 1;
 	private Map<Integer, LineFigure> lineMap = new HashMap<>();
-	private MouseListener elementSelectionListener;
+
 	private int cachedIndex;
 	private KeyListener keyListener;
 	private FigureCanvas canvas;
@@ -159,14 +164,26 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 	private List<Image> imageList = new Vector<Image>(1000);
 	private boolean enabled;
 
-	private static final String VERS_FRONTER_MARKER = "\uDB80\uDC81"; //mv
-	private static final String VERS_BREAK_MARKER = "\uDB80\uDC80"; //v
-	private static final String BROKEN_VERS_MARKER = "\uDB80\uDC82";
-	private static final String DISPUTALBE_VERS_MARKER = "\u2E2E\uDB80\uDC80?";
-	private static final String DELETED_VERS_MARKER = "{\uDB80\uDC80}";
-	private static final String DESTROYED_VERS_MARKER = "[\uDB80\uDC80]";
-	private static final String MISSING_VERS_MARKER = "\u2329\uDB80\uDC80\u232A";
-	private static final int MAX_IMAGE_SIZE = 200;
+	private MouseListener elementSelectionListener = new MouseListener() {
+        @Override
+        public void mousePressed(MouseEvent me) {
+            if (me.getSource() instanceof ElementFigure) {
+                ElementFigure figure = (ElementFigure) me.getSource();
+                if (figure.getParent() instanceof LineFigure
+                        && figure.getParent() != currentLineFigure) {
+                    lineIndex = container.getChildren().indexOf(
+                            figure.getParent());
+                }
+                handleSelection(figure);
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent me) {}
+
+        @Override
+        public void mouseDoubleClicked(MouseEvent me) {}
+    };
 
 	@Inject
 	public SignTextComposite(Composite parent) {
@@ -238,8 +255,6 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		container.setLayoutManager(layout);
 		container.setBackgroundColor(COLOR_CANVAS_BACKGROUND);
 
-		elementSelectionListener = makeElementSelectionListener();
-
 		keyListener = new KeyListener() {
 			@Override
 			public void keyReleased(KeyEvent ev) {}
@@ -294,18 +309,12 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 			currentLineFigure = lineMap.get(newLineIndex);
 			lineIndex = newLineIndex;
 			if (currentIndex < currentLineFigure.getChildren().size()) {
-//				ElementFigure figure = (ElementFigure) currentLineFigure
-//						.getChildren().get(currentIndex);
 				cachedIndex = -1;
 				shiftSelection(currentIndex, true);
 
-//				setSelectionInternal(figure);
 			} else {
 				cachedIndex = currentIndex;
 				currentIndex = currentLineFigure.getChildren().size() - 1;
-//				ElementFigure figure = (ElementFigure) currentLineFigure
-//						.getChildren().get(currentIndex);
-//				setSelectionInternal(figure);
 				shiftSelection(currentIndex, true);
 
 			}
@@ -315,22 +324,11 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 	}
 
 	private void shiftSelection(int shift, boolean forward) {
-		int currentIndex = currentLineFigure.getChildren().indexOf(
-				selectedElement);
-		int newIndex = currentIndex + shift;
-		// Integer i = null;
-		// System.out.println(i.toString());
-		// System.out.println("currentIndex " + currentIndex + " shift " + shift
-		// + " newIndex " + newIndex + " currentLine " + lineIndex);
-		// check if current Selection at line end
-		
-		// refactored so that next figure is a WordFigure
-		ElementFigure figure = findWordFigure(newIndex, forward);
+		int currentIndex = currentLineFigure.getChildren().indexOf(selectedElement);
+		ElementFigure figure = findWordFigure(currentIndex + shift, forward);
 		
 		if (figure != null)
-		{
-			setSelectionInternal(figure);
-		}
+			handleSelection(figure);
 	}
 
 	private ElementFigure findWordFigure(int newIndex, boolean forward) {
@@ -445,30 +443,6 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		return figure;
 	}
 
-	private MouseListener makeElementSelectionListener() {
-		MouseListener listener = new MouseListener() {
-			@Override
-			public void mousePressed(MouseEvent me) {
-				if (me.getSource() instanceof ElementFigure) {
-					ElementFigure figure = (ElementFigure) me.getSource();
-					if (figure.getParent() instanceof LineFigure
-							&& figure.getParent() != currentLineFigure) {
-						lineIndex = container.getChildren().indexOf(
-								figure.getParent());
-					}
-					setSelectionInternal(figure);
-				}
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent me) {}
-
-			@Override
-			public void mouseDoubleClicked(MouseEvent me) {}
-		};
-		return listener;
-	}
-
 	protected void updateFigureFromWord(Notification notification) {
 		BTSWord word = null;
 		if (notification.getNotifier() instanceof BTSWord) {
@@ -483,29 +457,29 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		}
 	}
 
-	public void setInput(BTSObject btsObject, BTSTextContent textContent, List<BTSObject> relatingObjects,
-			IProgressMonitor monitor, Object localSelectedTextItem) {
+	public void setInput(BTSObject btsObject, BTSTextContent textContent, List<BTSObject> relatingObjects, IProgressMonitor monitor, Object localSelectedTextItem) {
 		this.textContent = textContent;
 		this.btsObject = btsObject;
 		this.relatingObjectsMap =  textEditorController.fillRelatingObjectsMap(relatingObjects);
-		if (textContent != null) {
-			loadText();
-			this.layout();
-			if (localSelectedTextItem != null && localSelectedTextItem instanceof BTSWord)
-			{
-				IFigure figure = wordMap.get(((BTSIdentifiableItem) localSelectedTextItem).get_id());
-				if (figure != null && figure instanceof ElementFigure)
-				{
-					setSelectionInternal((ElementFigure) figure);
-					reveal(figure);
-				}
-			}
-		}
-		else {
+
+		if (textContent == null) {
 			purgeAll();
 			this.layout();
 			parentComposite.layout();
-		}
+            return;
+        }
+
+        loadText();
+        this.layout();
+
+        if (localSelectedTextItem instanceof BTSWord) {
+            IFigure figure = wordMap.get(((BTSIdentifiableItem) localSelectedTextItem).get_id());
+            if (!(figure instanceof ElementFigure))
+                return;
+
+            handleSelection((ElementFigure) figure);
+            reveal(figure);
+        }
 	}
 
 
@@ -717,9 +691,6 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 			case BTSConstants.DESTROYED_VERS_MARKER:				mType = DESTROYED_VERS_MARKER;										break;
 			case BTSConstants.DELETED_VERS_MARKER:					mType = DELETED_VERS_MARKER;										break;
 			case BTSConstants.MISSING_VERS_MARKER:					mType = MISSING_VERS_MARKER;										break;
-			//case BTSConstants.DESTROYEDVERSMARKER:					mType = BTSConstants.DESTROYEDVERSMARKER_SIGN;						break;
-			//case BTSConstants.DELETEDVERSMARKER:					mType = BTSConstants.DELETEDVERSMARKER_SIGN;						break;
-			//case BTSConstants.DISPUTABLEVERSMARKER:					mType = BTSConstants.DISPUTABLEVERSMARKER_SIGN;						break;
 			case BTSConstants.RESTORATIONOVERRASURMARKER:			mType = BTSConstants.RESTORATIONOVERRASURMARKER_SIGN;				break;
 			case BTSConstants.ANCIENTEXPANDEDMARKER:				mType = BTSConstants.ANCIENTEXPANDEDMARKER_SIGN;					break;
 			case BTSConstants.RASURMARKER:							mType = BTSConstants.RASURMARKER_SIGN;								break;
@@ -996,20 +967,17 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 			}
 			figure.repaint();
 		}
-
 	}
 
-
-	private void setSelectionInternal(ElementFigure figure) {
-		setSelectionInternal(figure, 0);
+	private void handleSelection(ElementFigure figure) {
+		handleSelection(figure, 0);
 	}
 
-	private void setSelectionInternal(ElementFigure figure, int eventType) {
-		if (figure.getParent() instanceof LineFigure) {
-			if (figure.getParent() != currentLineFigure) {
+	private void handleSelection(ElementFigure figure, int eventType) {
+		if (figure.getParent() instanceof LineFigure &&
+			figure.getParent() != currentLineFigure)
 				currentLineFigure = (LineFigure) figure.getParent();
-			}
-		}
+
 		if (figure != selectedElement) {
 			ElementFigure oldSelection = selectedElement;
 			setDeselected(oldSelection, eventType);
@@ -1019,8 +987,8 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
+
 		if (figure instanceof WordFigure) {
 			// check if mdc image is loaded
 			WordFigure wordFigure = (WordFigure)figure;
@@ -1041,33 +1009,36 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		}else if (figure instanceof AmbivalenceStartFigure || figure instanceof AmbivalenceEndFigure) {
 			figure.setBackgroundColor(COLOR_MARKER_SELECTED);
 		}
+
 		figure.repaint();
-		// else if (figure instanceof WordFigure) {
-		// figure.setBackgroundColor(COLOR_WORD_SELECTED);
-		// }
 
 		if (parentEditor != null) {
-			
 			Event e = new Event();
 			e.widget = this;
 			TypedEvent ev = new TypedEvent(e);
 			BTSTextSelectionEvent event = new BTSTextSelectionEvent(ev, btsObject);
 			event.type = eventType;
 			event.data = textContent.eContainer();
-			event.getRelatingObjects().addAll(((ElementFigure)figure).getRelatingObjects());
+			event.getRelatingObjects().addAll(figure.getRelatingObjects());
 			BTSIdentifiableItem item = (BTSIdentifiableItem) figure.getModelObject();
-			event.getSelectedItems().add(item);
 
-			if (item instanceof BTSSentenceItem)
-			{
+			if (item instanceof BTSSentenceItem) {
 				event.setEndId(item.get_id());
 				event.setStartId(item.get_id());
+                event.getSelectedItems().add((BTSSentenceItem)item);
 			}
 			
-			event.getInterTextReferences().addAll(((ElementFigure)figure).getInterTextReferences());
+			event.getInterTextReferences().addAll(figure.getInterTextReferences());
 			parentEditor.setEditorSelection(event);
 		}
 	}
+
+    public BTSIdentifiableItem getSelectedItem() {
+        if (selectedElement == null)
+            return null;
+
+        return (BTSIdentifiableItem)selectedElement.getModelObject();
+    }
 
 	public void reveal(IFigure target) {
 		Viewport port = canvas.getViewport();
@@ -1216,17 +1187,17 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNLEMMATIZED)) {
 			ElementFigure figure = findUnprocessedWordFigure(currentIndex +1, 0);
 			if (figure != null)
-				setSelectionInternal(figure, 1);
+				handleSelection(figure, 1);
 		}
 		else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNHIEROGLYPHED)) {
 			ElementFigure figure = findUnprocessedWordFigure(currentIndex +1, 1);
 			if (figure != null)
-				setSelectionInternal(figure, 1);
+				handleSelection(figure, 1);
 		}
 		else if (event.equals(BTSUIConstants.EVENT_TEXT_SELECTION_NEXT_UNFLEXIONED)) {
 			ElementFigure figure = findUnprocessedWordFigure(currentIndex +1, 2);
 			if (figure != null)
-				setSelectionInternal(figure, 1);
+				handleSelection(figure, 1);
 		}
 		
 

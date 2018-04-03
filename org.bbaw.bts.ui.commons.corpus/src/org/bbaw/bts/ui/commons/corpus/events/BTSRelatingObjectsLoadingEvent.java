@@ -7,12 +7,21 @@ import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 
 public class BTSRelatingObjectsLoadingEvent {
-	private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
-	
 	private BTSCorpusObject object;
+	private List<BTSObject> relatingObjects;
+
+	public BTSRelatingObjectsLoadingEvent() {
+        this.relatingObjects = new Vector<BTSObject>(4);
+    }
 
 	public BTSRelatingObjectsLoadingEvent(BTSCorpusObject object) {
+        this();
 		this.object = object;
+	}
+
+	public BTSRelatingObjectsLoadingEvent(BTSCorpusObject object, List<BTSObject> relatingObjects) {
+		this.object = object;
+        this.relatingObjects = relatingObjects;
 	}
 
 	public List<BTSObject> getRelatingObjects() {
@@ -30,5 +39,4 @@ public class BTSRelatingObjectsLoadingEvent {
 	public void setObject(BTSCorpusObject object) {
 		this.object = object;
 	}
-
 }

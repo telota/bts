@@ -1,12 +1,5 @@
 package org.bbaw.bts.core.corpus.controller.impl.partController;
 
-//import grammaticalBase.model.light.LightInflexion;
-//import grammaticalBase.model.light.LightLemma;
-//import grammaticalBase.model.light.LightSpelling;
-//import grammaticalBase.model.text.TextModel;
-//import grammaticalBase.model.text.WordAnalysis;
-//import grammaticalBase.model.text.WordOccurrence;
-
 import java.awt.image.BufferedImage;
 import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
@@ -17,6 +10,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -79,16 +73,6 @@ import org.eclipse.e4.core.services.log.Logger;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
-//import org.eclipse.emf.compare.Comparison;
-//import org.eclipse.emf.compare.EMFCompare;
-//import org.eclipse.emf.compare.match.DefaultComparisonFactory;
-//import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory;
-//import org.eclipse.emf.compare.match.DefaultMatchEngine;
-//import org.eclipse.emf.compare.match.IComparisonFactory;
-//import org.eclipse.emf.compare.match.IMatchEngine;
-//import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
-//import org.eclipse.emf.compare.scope.IComparisonScope;
-//import org.eclipse.emf.compare.utils.UseIdentifiers;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -115,9 +99,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 
 import com.google.inject.Injector;
 
-public class BTSTextEditorControllerImpl implements BTSTextEditorController
-{
-
+public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	private static final String MDC_DELIMETERS = ":-<>*";
 	private static final String SENTENCE_SIGN = "\u00A7";
 	private static final String AMBIVALENCE_START_SIGN = "\u0025";
@@ -129,8 +111,6 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 	private static final String MARKER_START_SIGN = "\u0023";
 	private static final String MARKER_END_SIGN = "\u0023";
 	
-	
-
 //	private static final String MARKER_VERS_SIGN = "\u0040";
 	private static final String MARKER_INTERFIX = ": ";
 	private static final String MDC_IGNORE = "\\i";
@@ -143,132 +123,93 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 	
 	private DrawingSpecification drawingSpecifications = new DrawingSpecificationsImplementation();
 	
-	@Inject
-	private BTSTextService textService;
-	
-	@Inject
-	private Logger logger;
-	
-	@Inject
-	private IEclipseContext context;
-	
-	
+	@Inject private BTSTextService textService;
+	@Inject private Logger logger; 
+	@Inject private IEclipseContext context; 
 	private int idcounter = 0;
 	private Comparator<? super Object> glyphsStringComparator;
-	
-	@Inject
-	private CorpusObjectService corpusObjectService;
+	@Inject private CorpusObjectService corpusObjectService;
 	private Map<BTSInterTextReference, AnnotationCache> annotationRangeMap;
-	
-	@Inject
-	private BTSCommentService commentService;
-	
-	@Inject
-	private BTSLemmaEntryService lemmaService;
-	
+	@Inject private BTSCommentService commentService; 
+	@Inject private BTSLemmaEntryService lemmaService; 
 	private int counter;
 	
-
 	@Override
 	public void transformToDocument(BTSTextContent textContent, Document doc, IAnnotationModel model, 
 			List<BTSObject> relatingObjects, Map<String, List<BTSInterTextReference>> relatingObjectsMap, 
 			Map<String, List<Object>> lemmaAnnotationMap, IProgressMonitor monitor, int lineLength)
 	{
-//		if (textContent == null)
-//		{
-//			throw new NullPointerException("TextContent may not be null.");
-//		}
 		if (lineLength == 0)
-		{
 			lineLength = DEFAULT_LINE_LENGTH;
-		}
+
 		annotationRangeMap = new HashMap<BTSInterTextReference, AnnotationCache>();
-		if (relatingObjects != null && ! relatingObjects.isEmpty())// && (relatingObjectsMap == null || relatingObjectsMap.isEmpty()))
-		{
+		if (relatingObjects != null && ! relatingObjects.isEmpty())
 			relatingObjectsMap = fillRelatingObjectsMap(relatingObjects);
-		}
-		
 			
 		StringBuilder stringBuilder = new StringBuilder();
-		if (textContent == null)
-		{
+		if (textContent == null) {
 			doc.set(stringBuilder.toString());
 			return;
 		}
-		for (BTSTextItems textItems : textContent.getTextItems())
-		{
-			if (textItems instanceof BTSSenctence)
-			{
-				BTSSenctence sentence = (BTSSenctence) textItems;
-				int start = stringBuilder.length();
-//				logger.info("BTSTextEditorController before sentence sign added: " + stringBuilder.toString());
 
-				stringBuilder.append(SENTENCE_SIGN);
-//				logger.info("BTSTextEditorController sentence sign: " + SENTENCE_SIGN);
-
-//				logger.info("BTSTextEditorController after sentence sign added: " + stringBuilder.toString());
-
-				BTSModelAnnotation ma = new BTSSentenceAnnotation(BTSSentenceAnnotation.TYPE,sentence);
-				int len = stringBuilder.length();
-				int loopLen = stringBuilder.length();
-				int lineLoop = stringBuilder.length();
-				boolean lineBreak = false;
-				for (BTSSentenceItem sentenceItem : sentence.getSentenceItems())
-				{
-					appendToStringBuilder(sentenceItem, model, stringBuilder, relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
-					if (stringBuilder.length() > loopLen)
-					{
-						stringBuilder.append(WS);
-						loopLen = stringBuilder.length();
-						lineBreak = false;
-					}
-					
-					// calcualte 
-					if (loopLen - lineLoop > lineLength)
-					{
-						stringBuilder.append("\n");
-						loopLen = stringBuilder.length();
-						lineLoop = stringBuilder.length();
-						lineBreak = true;
-					}
-					if (monitor != null)
-					{
-						if (monitor.isCanceled()) return;
-						monitor.worked(1);
-					}
-				}
-				
-				// check whether sentence items were added
-				if (stringBuilder.length() > len && lineBreak) // linebreak just appended
-				{
-					stringBuilder.replace(stringBuilder.length() - 2,stringBuilder.length(), SENTENCE_SIGN);
-				} else if (stringBuilder.length() > len) // linebreak, remove only WS
-				{
-					stringBuilder.replace(stringBuilder.length() - 1,stringBuilder.length(), SENTENCE_SIGN);
-				}
-				else // nothing appended, add only sentence sign
-				{
-					stringBuilder.append(SENTENCE_SIGN);
-				}
-						
-				stringBuilder.append("\n");
-				int length = stringBuilder.length() - start;
-				// shorten sentence annotation to avoid mixing it with next sentence
-				Position pos = new Position(start, length-1); 
-				if (model != null) model.addAnnotation(ma, pos);
-			} else
-			{
+		for (BTSTextItems textItems : textContent.getTextItems()) {
+			if (!(textItems instanceof BTSSenctence)) {
 				appendToStringBuilder(textItems, model, stringBuilder, relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
-			}
+                continue;
+            }
+
+            BTSSenctence sentence = (BTSSenctence) textItems;
+            int start = stringBuilder.length();
+            stringBuilder.append(SENTENCE_SIGN);
+
+            BTSModelAnnotation ma = new BTSSentenceAnnotation(BTSSentenceAnnotation.TYPE,sentence);
+            int len = stringBuilder.length();
+            int loopLen = stringBuilder.length();
+            int lineLoop = stringBuilder.length();
+            boolean lineBreak = false;
+            for (BTSSentenceItem sentenceItem : sentence.getSentenceItems()) {
+                appendToStringBuilder(sentenceItem, model, stringBuilder, relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
+                if (stringBuilder.length() > loopLen) {
+                    stringBuilder.append(WS);
+                    loopLen = stringBuilder.length();
+                    lineBreak = false;
+                }
+                
+                if (loopLen - lineLoop > lineLength) {
+                    stringBuilder.append("\n");
+                    loopLen = stringBuilder.length();
+                    lineLoop = stringBuilder.length();
+                    lineBreak = true;
+                }
+
+                if (monitor != null) {
+                    if (monitor.isCanceled())
+                        return;
+                    monitor.worked(1);
+                }
+            }
+            
+            // check whether sentence items were added
+            if (stringBuilder.length() > len && lineBreak) // linebreak just appended
+                stringBuilder.replace(stringBuilder.length() - 2,stringBuilder.length(), SENTENCE_SIGN);
+            else if (stringBuilder.length() > len) // linebreak, remove only WS
+                stringBuilder.replace(stringBuilder.length() - 1,stringBuilder.length(), SENTENCE_SIGN);
+            else // nothing appended, add only sentence sign
+                stringBuilder.append(SENTENCE_SIGN);
+                    
+            stringBuilder.append("\n");
+            int length = stringBuilder.length() - start;
+            // shorten sentence annotation to avoid mixing it with next sentence
+            Position pos = new Position(start, length-1); 
+            if (model != null)
+                model.addAnnotation(ma, pos);
 		}
+
 		if (stringBuilder.length() > 0)
-		{
 			stringBuilder.deleteCharAt(stringBuilder.length() -1);
-		}
 		logger.info("BTSTextEditorController text as string egydsl: " + stringBuilder.toString());
 		
-		doc.set(stringBuilder.toString());// + BTSConstants.EOF);
-
+		doc.set(stringBuilder.toString());
 	}
 
 	
@@ -277,30 +218,23 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 		HashMap<String, List<BTSInterTextReference>> relatingObjectsMap = new HashMap<String, List<BTSInterTextReference>>();
 		counter = 0;
 		if (relatingObjects == null) return relatingObjectsMap;
-		for (BTSObject o : relatingObjects)
-		{
+		for (BTSObject o : relatingObjects) {
 			o.setTempSortKey(-1);
-			for (BTSRelation rel : o.getRelations())
-			{
-				if (rel.getParts() != null && !rel.getParts().isEmpty())
-				{
-					for (BTSInterTextReference part : rel.getParts())
-					{
-						if (part.getBeginId() != null)
-						{
+			for (BTSRelation rel : o.getRelations()) {
+				if (rel.getParts() != null && !rel.getParts().isEmpty()) {
+					for (BTSInterTextReference part : rel.getParts()) {
+						if (part.getBeginId() != null) {
 							List<BTSInterTextReference> parts = relatingObjectsMap.get(part.getBeginId());
-							if (parts == null)
-							{
+							if (parts == null) {
 								parts = new Vector<BTSInterTextReference>(4);
 								relatingObjectsMap.put(part.getBeginId(), parts);
 							}
 							parts.add(part);
 						}
-						if (part.getEndId() != null && !part.getEndId().equals(part.getBeginId()))
-						{
+
+						if (part.getEndId() != null && !part.getEndId().equals(part.getBeginId())) {
 							List<BTSInterTextReference> parts = relatingObjectsMap.get(part.getEndId());
-							if (parts == null)
-							{
+							if (parts == null) {
 								parts = new Vector<BTSInterTextReference>(4);
 								relatingObjectsMap.put(part.getEndId(), parts);
 							}
@@ -311,7 +245,6 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 			}
 		}
 		return relatingObjectsMap;
-		
 	}
 
 	private void appendToStringBuilder(BTSIdentifiableItem item, IAnnotationModel model, 
@@ -320,17 +253,16 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 			Map<String, List<Object>> lemmaAnnotationMap)
 	{
 		Position pos = null;
-		if (item instanceof BTSWord)
-		{
+		if (item instanceof BTSWord) {
 			BTSWord word = (BTSWord) item;
 			pos = appendWordToStringBuilder(word, stringBuilder);
 			appendWordToModel(word, model, pos, lemmaAnnotationMap);
 
-		} else if (item instanceof BTSMarker)
-		{
+		} else if (item instanceof BTSMarker) {
 			BTSMarker marker = (BTSMarker) item;
 			pos = appendMarkerToStringBuilder(marker, stringBuilder);
 			appendMarkerToModel(marker, model, pos);
+
 		} else if (item instanceof BTSAmbivalence) {
 			BTSAmbivalence ambivalence = (BTSAmbivalence) item;
 			pos = appendAmbivalenceToStringBuilder(ambivalence, stringBuilder,
@@ -338,53 +270,47 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 			appendAmbivalenceToModel(ambivalence, model, pos);
 
 		}
-		// check if there are comments, annotations or subtext pointing to this
-		// item
-		// pointer can either be start or end positions!
+
+		/* Check if there are comments, annotations or subtext pointing to this item. */
+		/* "pointer" can either be start or end positions! */
 		if (item != null && relatingObjectsMap != null && pos != null && relatingObjectsMap.containsKey(item.get_id()))
 		{
 			createAnnotations(item, model, pos, relatingObjectsMap.get(item.get_id()));
 		}
-
-
 	}
 
 	private void createAnnotations(BTSIdentifiableItem item, IAnnotationModel model, Position pos, List<BTSInterTextReference> list) {
 		// FIXME ende einer annotation berechnen!!!!!!!!
-		if (model == null) return; 
-		for (BTSInterTextReference ref : list)
-		{
-			if (ref.getBeginId() == null || ref.getEndId() == null || ref.getBeginId().equals(ref.getEndId()))
-			{
+		if (model == null)
+            return; 
+
+		for (BTSInterTextReference ref : list) {
+			if (ref.getBeginId() == null || ref.getEndId() == null || ref.getBeginId().equals(ref.getEndId())) {
 				//1) ref referenziert nur ein Item
 				BTSModelAnnotation modelAnnotation = createAnnotation(item, model, pos, ref);
 				model.addAnnotation(modelAnnotation, pos);
 
-			}
-			else if (ref.getBeginId().equals(item.get_id())) {
-			// 2) ref ist start
-			// annotation erzeugen
+			} else if (ref.getBeginId().equals(item.get_id())) {
+                // 2) ref ist start
+                // annotation erzeugen
 				BTSModelAnnotation modelAnnotation = createAnnotation(item, model, pos, ref);
 				AnnotationCache cache = new AnnotationCache(modelAnnotation, pos.getOffset());
 				annotationRangeMap.put(ref, cache);
-			// annotation und start position cachen
+                // annotation und start position cachen
 			
-			}
-			else if (ref.getEndId().equals(item.get_id())){
-			// 3) ref ist end
-			// annotation aus cache holen - wie?
+			} else if (ref.getEndId().equals(item.get_id())){
+                // 3) ref ist end
+                // annotation aus cache holen - wie?
 				AnnotationCache cache = annotationRangeMap.get(ref);
-				if (cache != null)
-				{
+				if (cache != null) {
 					Position pos2 = new Position(cache.getStart());
 					pos2.setLength((pos.offset - pos2.getOffset()) + pos.getLength());
-				// end position
-				// position und anno zu modell adden
+                    // end position
+                    // position und anno zu modell adden
 					model.addAnnotation(cache.getAnnotation(), pos2);
 					annotationRangeMap.remove(ref);
-				}
-				else
-				{// begin element not found, only end element
+
+				} else {// begin element not found, only end element
 					BTSModelAnnotation modelAnnotation = createAnnotation(item, model, pos, ref);
 					model.addAnnotation(modelAnnotation, pos);
 				}
@@ -476,9 +402,8 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 			Map<String, List<Object>> lemmaAnnotationMap) {
 		Position pos = new Position(stringBuilder.length());
 		stringBuilder.append(LEMMA_CASE_TERMIAL + WS);
-		if (amCase.getName() != null) {
+		if (amCase.getName() != null)
 			stringBuilder.append(amCase.getName());
-		}
 		stringBuilder.append(LEMMA_CASE_INTERFIX);
 
 		if (amCase.getScenario() != null) {
@@ -495,8 +420,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 		// append to model
 		if (model == null) return;
 
-		BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN,
-				(BTSIdentifiableItem) amCase);
+		BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN, (BTSIdentifiableItem) amCase);
 
 		model.addAnnotation(annotation, pos);
 		return;
@@ -512,25 +436,21 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 			BTSWord word = (BTSWord) item;
 			pos = appendWordToStringBuilder(word, stringBuilder);
 			appendWordToModel(word, model, pos, lemmaAnnotationMap);
+
 		} else if (item instanceof BTSMarker) {
 			BTSMarker marker = (BTSMarker) item;
 			pos = appendMarkerToStringBuilder(marker, stringBuilder);
 			appendMarkerToModel(marker, model, pos);
 		}
+
 		if (item != null && relatingObjectsMap != null && pos != null && relatingObjectsMap.containsKey(item.get_id()))
-		{
 			createAnnotations(item, model, pos, relatingObjectsMap.get(item.get_id()));
-		}
 
 	}
 
-	private void appendMarkerToModel(BTSMarker marker, IAnnotationModel model,
-			Position pos)
-	{
+	private void appendMarkerToModel(BTSMarker marker, IAnnotationModel model, Position pos) {
 		if (model == null) return;
-		BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN,
-				(BTSIdentifiableItem) marker);
-
+		BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN, (BTSIdentifiableItem) marker);
 		model.addAnnotation(annotation, pos);
 
 	}
@@ -565,10 +485,7 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 					BTSConstants.MISSING_VERS_MARKER)) {
 				stringBuilder.append(BTSConstants.MISSING_VERS_MARKER_SIGN);
 				
-			}
-			
-			
-			else if (marker.getType().equals(
+			}else if (marker.getType().equals(
 					BTSConstants.DESTROYEDVERSMARKER)) {
 				stringBuilder.append(BTSConstants.DESTROYEDVERSMARKER_SIGN);
 				
@@ -616,14 +533,11 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 					BTSConstants.DISPUTABLEDESTROYEDVERSMARKER)) {
 				stringBuilder.append(BTSConstants.DISPUTABLEDESTROYEDVERSMARKER_SIGN);
 				
-			}
-			
-			else if (marker.getType().equals(
+			}else if (marker.getType().equals(
 					BTSConstants.DELETEDDISPUTABLEVERSMARKER)) {
 				stringBuilder.append(BTSConstants.DELETEDDISPUTABLEVERSMARKER_SIGN);
 				
-			}
-			else if (marker.getType().equals(
+			}else if (marker.getType().equals(
 					BTSConstants.MISSINGDISPUTABLEVERSMARKER)) {
 				stringBuilder.append(BTSConstants.MISSINGDISPUTABLEVERSMARKER_SIGN);
 				
@@ -643,19 +557,11 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 					BTSConstants.DELETEDDESTROYEDVERSMARKER)) {
 				stringBuilder.append(BTSConstants.DELETEDDESTROYEDVERSMARKER_SIGN);
 				
-			}
-			
-			
-			
-			
-			
-			
-			else if (marker.getType().equals(
+			}else if (marker.getType().equals(
 					BTSConstants.DESTRUCTION_MARKER)) {
 //				stringBuilder.append(MARKER_VERS_SIGN);
 				stringBuilder.append("--" + marker.getName() + "--");
-			}  
-			else {
+			}else {
 				pos.setOffset(pos.getOffset() +1);
 				stringBuilder.append(MARKER_START_SIGN);
 				stringBuilder.append(marker.getType());
@@ -669,142 +575,43 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 
 		pos.setLength(stringBuilder.length() - pos.getOffset());
 		return pos;
-
 	}
 
-	private void appendWordToModel(BTSWord word, IAnnotationModel model, Position position, Map<String, List<Object>> lemmaAnnotationMap)
-	{
-		if (model == null) return;
+	private void appendWordToModel(BTSWord word, IAnnotationModel model, Position position, Map<String, List<Object>> lemmaAnnotationMap) {
+		if (model == null)
+            return;
 
 		BTSModelAnnotation annotation;
 		if (word.getLKey() != null && !"".equals(word.getLKey())) {
-
 			annotation = new BTSLemmaAnnotation(BTSLemmaAnnotation.TYPE, word);
 			if (lemmaAnnotationMap != null)
-			{
 				add2LemmaAnnotationMap(word.getLKey(), annotation, lemmaAnnotationMap);
-			}
-			
+
 		} else {
-			annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN,
-					(BTSIdentifiableItem) word);
+			annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN, (BTSIdentifiableItem) word);
 		}
 		model.addAnnotation(annotation, position);
-
 	}
 
 	private void add2LemmaAnnotationMap(String lemmaId, BTSModelAnnotation annotation, Map<String, List<Object>> lemmaAnnotationMap) {
 		List<Object> list = lemmaAnnotationMap.get(lemmaId);
-		if (list == null)
-		{
+		if (list == null) {
 			list = new Vector<Object>(4);
 			lemmaAnnotationMap.put(lemmaId, list);
 		}
 		list.add(annotation);
 	}
 
-	private Position appendWordToStringBuilder(BTSWord word, StringBuilder stringBuilder)
-	{
+	private Position appendWordToStringBuilder(BTSWord word, StringBuilder stringBuilder) {
 		Position pos = new Position(stringBuilder.length());
-		if (word.getWChar() != null && !"".equals(word.getWChar().trim()))
-		{
+		if (word.getWChar() != null && !"".equals(word.getWChar().trim())) {
 			stringBuilder.append(word.getWChar().trim());
 			pos.setLength(word.getWChar().trim().length());
 		}
 		return pos;
 	}
 
-//	@Override
-//	public BTSText updateTextFromDocument(BTSText text, Document document, IAnnotationModel annotationModel,
-//			TextViewer textViewer)
-//	{
-//		BTSEgySourceViewerConfiguration configuration = new BTSEgySourceViewerConfiguration();
-//		RuleBasedScanner scanner = configuration.getScanner();
-//		scanner.setRange(document, 0, document.getLength());
-//		IToken token = scanner.nextToken();
-//		int length = document.getLength();
-//		Iterator annotationIterator = annotationModel.getAnnotationIterator();
-//		StringBuffer buffer = new StringBuffer(length);
-//		//		StringTokenizer tokenizer= new StringTokenizer(document.get(), "\n\r><", true); //$NON-NLS-1$
-//		//		while (tokenizer.hasMoreTokens()){
-//		//
-//		//			String token = tokenizer.nextToken();
-//		//		}
-//
-//		int pos;
-//		int len;
-//		int annotationOffset = 0;
-//		String content = null;
-//		boolean hasToken = token != null;
-//		BTSModelAnnotation annotation = null;
-//		BTSSenctence sentence;
-//
-//		if (!text.getTextContent().getTextItems().isEmpty())
-//		{
-//			sentence = (BTSSenctence) text.getTextContent().getTextItems().get(0);
-//			sentence.getSentenceItems().clear();
-//		} else
-//		{
-//			sentence = textService.createNewSentence();
-//			text.getTextContent().getTextItems().add(sentence);
-//		}
-//		BTSWord word = null;
-//		int innerSentencePosition = 0;
-//		while (hasToken)
-//		{
-//
-//			pos = scanner.getTokenOffset();
-//			len = scanner.getTokenLength();
-//			Object o = token.getData();
-//			//			annotationModel.
-//			logger.info("BTSTextEditorController token " + token + " offset: " + pos + " token length: " + len);
-//			try
-//			{
-//				content = document.get(pos, len);
-//			} catch (BadLocationException e)
-//			{
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			if (content != null)
-//			{
-//
-//				boolean wordFound = false;
-//				if (annotationOffset <= pos)
-//				{
-//					annotation = getAnnotation(annotation, annotationIterator, annotationModel, content, pos, len);
-//					Position position = annotationModel.getPosition(annotation);
-//					if (position != null)
-//					{
-//						annotationOffset = position.getOffset();
-//					}
-//					if (annotation != null && annotationOffset == pos && position.getLength() == len)
-//					{
-//						word = (BTSWord) annotation.getModel();
-//						word.setWChar(content);
-//						sentence.getSentenceItems().add(innerSentencePosition, word);
-//						wordFound = true;
-//						innerSentencePosition++;
-//					}
-//				}
-//				if (!wordFound)
-//				{
-//					word = createNewWord(content);
-//					sentence.getSentenceItems().add(innerSentencePosition, word);
-//					innerSentencePosition++;
-//				}
-//
-//				content = null;
-//			}
-//
-//			token = scanner.nextToken();
-//			hasToken = token != null && scanner.getTokenLength() > 0;
-//		}
-//		return text;
-//	}
-
-	private BTSWord createNewWord(String content)
-	{
+	private BTSWord createNewWord(String content) {
 		BTSWord word = textService.createNewWord();
 		word.setWChar(content);
 		return word;
@@ -814,160 +621,60 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 			Iterator annotationIterator,
 			IAnnotationModel annotationModel, String content, int pos, int len)
 	{
-		if (annotation != null)
-		{
+		if (annotation != null) {
 			Position position = annotationModel.getPosition(annotation);
-			if (position != null)
-			{
-				if (position.getOffset() > pos)
-				{
-					return (BTSModelAnnotation) annotation;
-				}
-			}
+			if (position != null && position.getOffset() > pos)
+                return (BTSModelAnnotation) annotation;
 		}
 
-		boolean forward = annotationIterator.hasNext();
-		while (forward)
-		{
+		while (annotationIterator.hasNext()) {
 			Object o = annotationIterator.next();
 			annotation = (Annotation) o;
 			if (!(annotation instanceof BTSModelAnnotation))
-			{
 				continue;
-			}
-			Position position = annotationModel.getPosition(annotation);
-			if (position != null)
-			{
-				if (position.getOffset() >= pos)
-				{
-					return (BTSModelAnnotation) annotation;
-				}
 
-			}
-			forward = annotationIterator.hasNext();
+			Position position = annotationModel.getPosition(annotation);
+			if (position != null && position.getOffset() >= pos)
+                return (BTSModelAnnotation) annotation;
 		}
+
 		if (annotation instanceof BTSModelAnnotation)
-		{
 			return (BTSModelAnnotation) annotation;
-		}
+
 		return null;
 	}
 
 	@Override
-	public boolean save(BTSText text)
-	{
+	public boolean save(BTSText text) {
 		return textService.save(text);
 	}
 
-	// @Override
-	// public TextModel transformToRamsesTextModel(BTSText text, TextModel
-	// textModel,
-	// Map<Object, BTSSentenceItem> ramsesTextModelMap)
-	// {
-	// ramsesTextModelMap.clear();
-	// textModel.clear();
-	// if (text != null && !text.getTextContent().getTextItems().isEmpty())
-	// {
-	// return transformToRamsesTextModelInteral(text, textModel,
-	// ramsesTextModelMap);
-	// }
-	// return textModel;
-	//
-	// }
-	//
-	// private TextModel transformToRamsesTextModelInteral(BTSText text,
-	// TextModel textModel,
-	// Map<Object, BTSSentenceItem> ramsesTextModelMap)
-	// {
-	// for (BTSTextItems item : text.getTextContent().getTextItems())
-	// {
-	// if (item instanceof BTSSenctence && !((BTSSenctence)
-	// item).getSentenceItems().isEmpty())
-	// {
-	// for (BTSSentenceItem sentenceItem : ((BTSSenctence)
-	// item).getSentenceItems())
-	// {
-	// addSentenceItemToTextModel(sentenceItem, textModel, ramsesTextModelMap);
-	// }
-	// }
-	// }
-	// return textModel;
-	// }
-
-	// private void addSentenceItemToTextModel(BTSSentenceItem sentenceItem,
-	// TextModel textModel,
-	// Map<Object, BTSSentenceItem> ramsesTextModelMap)
-	// {
-	// if (sentenceItem instanceof BTSWord)
-	// {
-	// BTSWord word = (BTSWord) sentenceItem;
-	// WordOccurrence modelElement = new WordOccurrence();
-	// LightSpelling ls = new LightSpelling(idcounter++, word.getWChar(),
-	// transformWordToMdCString(word));
-	// // ls.setEncodedOrder<ingTranslitteration(word.getWChar());
-	//
-	// ls.setLabel(word.getWChar() + " " + idcounter);
-	// ls.setTranslitteration(word.getWChar());
-	// modelElement.setSpelling(ls);
-	// modelElement.setFreeTranslitteration(word.getWChar());
-	// WordAnalysis wordAnalysis = new WordAnalysis();
-	// wordAnalysis.setSpelling(ls);
-	// LightLemma lightLemma = new LightLemma();
-	// lightLemma.setTranslitteration("hhhh");
-	// LightInflexion lightInflexion = new LightInflexion();
-	// lightInflexion.setInflexionName("hihihi");
-	// wordAnalysis.addInflexion(lightLemma, lightInflexion);
-	// modelElement.setWordAnalysis(wordAnalysis);
-	// textModel.add(modelElement);
-	//
-	// ramsesTextModelMap.put(modelElement, word);
-	// }
-	//
-	// }
-
-	public String transformWordToMdCString(BTSWord word, int selectedGlypheIndex)
-	{
+	public String transformWordToMdCString(BTSWord word, int selectedGlypheIndex) {
 		String mdc = "";
-		if (!word.getGraphics().isEmpty())
-		{
+		if (!word.getGraphics().isEmpty()) {
 			int i = 0;
-			for (BTSGraphic graphic : word.getGraphics())
-			{
+			for (BTSGraphic graphic : word.getGraphics()) {
+				if (graphic.getCode() == null)
+                    continue;
 
-				if (graphic.getCode() != null)
-				{
-					if (!"".equals(mdc))
-					{
-						if (!(mdc.endsWith("-")
-								|| mdc.endsWith(":")
-								|| mdc.endsWith("*"))
-								)
-						{
-							if (!"".equals(graphic.getCode()))
-							{
-								if (!(graphic.getCode().startsWith("-")
-										|| graphic.getCode().startsWith(":")
-										|| graphic.getCode().startsWith("*"))
-										)
-								{
-									mdc += "-";// add standard mdc separator
-								}
-							}
-						}
-					}
-				mdc += graphic.getCode();
-					if (i == selectedGlypheIndex) {
-						mdc = insertMarkerBehindSingleCode(mdc, MDC_SELECTION);
-					} else if (graphic.isIgnored()) {
-						mdc = insertMarkerBehindSingleCode(mdc, MDC_IGNORE);
-					}
-					i++;
-				}
+                if (!"".equals(mdc))
+                if (!(mdc.endsWith("-") || mdc.endsWith(":") || mdc.endsWith("*")))
+                if (!"".equals(graphic.getCode()))
+                if (!(graphic.getCode().startsWith("-")
+                    || graphic.getCode().startsWith(":")
+                    || graphic.getCode().startsWith("*")))
+                    mdc += "-";// add standard mdc separator
+
+                mdc += graphic.getCode();
+
+                if (i == selectedGlypheIndex)
+                    mdc = insertMarkerBehindSingleCode(mdc, MDC_SELECTION);
+                else if (graphic.isIgnored())
+                    mdc = insertMarkerBehindSingleCode(mdc, MDC_IGNORE);
+
+                i++;
 			}
 		}
-
-		// XXX mockup
-		// mdc = "s-t-n";
 		return mdc;
 	}
 
@@ -1083,76 +790,60 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 	}
 
 	private int calculateSentenceOrder(BTSWord word) {
-		if (word.eContainer() instanceof BTSSenctence) {
-			BTSSenctence sentence = (BTSSenctence) word.eContainer();
-			int i = sentence.getSentenceItems().indexOf(word);
-			if (i <= 0) {
-				return 0; // no sibbling, first word
-			} else {
-				BTSSentenceItem leftSibbling = null;
-				boolean found = false;
-				while (!found) {
-					leftSibbling = sentence.getSentenceItems().get(i - 1);
-					if (leftSibbling instanceof BTSWord)
-					{
-						if (!((BTSWord) leftSibbling).getGraphics().isEmpty())
-						{
-							BTSGraphic last = ((BTSWord) leftSibbling).getGraphics().get(((BTSWord) leftSibbling).getGraphics().size()- 1);
-							if (last != null)
-							{
-								return last.getInnerSentenceOrder();
-							}
-						}
-					}
-					else if (leftSibbling instanceof BTSAmbivalence) {
-						if (!((BTSAmbivalence) leftSibbling).getCases().isEmpty())
-						{
-							int biggest = 0;
-							for (BTSLemmaCase c : ((BTSAmbivalence) leftSibbling).getCases())
-							{
-								if (!c.getScenario().isEmpty())
-								{
-									for (BTSAmbivalenceItem item : c.getScenario())
-									{
-										if (item instanceof BTSWord)
-										{
-											// FIXME  org.bbaw.bts.corpus.btsCorpusModel.impl.BTSAmbivalenceImpl cannot be cast to org.bbaw.bts.corpus.btsCorpusModel.BTSWord
-											// Ambivalence fälle bedenken!!!
-											if (leftSibbling instanceof BTSWord && !((BTSWord) leftSibbling).getGraphics().isEmpty())
-											{
-												BTSGraphic last = ((BTSWord) leftSibbling).getGraphics().get(((BTSWord) leftSibbling).getGraphics().size()- 1);
-												if (last != null)
-												{
-													biggest = last.getInnerSentenceOrder() > biggest ? last.getInnerSentenceOrder() : biggest;
-												}
-											}
-										}
-									}
-								}
-							}
-							if (biggest > 0) {
-								return biggest;
-							}
-						}
-					}
-					i--;
-					if (i <= 0) {
-						return 0; // no sibbling, first word
-					}
-				}
-				return 0; // no valid sibbling found
-			}
-		}
-		return 0;
+		if (!(word.eContainer() instanceof BTSSenctence))
+            return 0;
+
+        BTSSenctence sentence = (BTSSenctence) word.eContainer();
+        for (int i=sentence.getSentenceItems().indexOf(word); i>0; i--) {
+            BTSSentenceItem leftSibbling = sentence.getSentenceItems().get(i-1);
+            if (leftSibbling instanceof BTSWord) {
+                if (!((BTSWord) leftSibbling).getGraphics().isEmpty()) {
+                    BTSGraphic last = ((BTSWord) leftSibbling).getGraphics().get(((BTSWord) leftSibbling).getGraphics().size()- 1);
+                    if (last != null)
+                        return last.getInnerSentenceOrder();
+                }
+
+            } else if (leftSibbling instanceof BTSAmbivalence) {
+                if (!((BTSAmbivalence) leftSibbling).getCases().isEmpty()) {
+
+                    int biggest = 0;
+                    for (BTSLemmaCase c : ((BTSAmbivalence) leftSibbling).getCases()) {
+                        if (c.getScenario().isEmpty())
+                            continue;
+
+                        for (BTSAmbivalenceItem item : c.getScenario()) {
+                            if (!(item instanceof BTSWord))
+                                continue;
+
+                            // FIXME  org.bbaw.bts.corpus.btsCorpusModel.impl.BTSAmbivalenceImpl cannot be cast to org.bbaw.bts.corpus.btsCorpusModel.BTSWord
+                            // Ambivalence fälle bedenken!!!
+                            if (!(leftSibbling instanceof BTSWord))
+                                continue;
+
+                            if (((BTSWord) leftSibbling).getGraphics().isEmpty())
+                                continue;
+
+                            BTSGraphic last = ((BTSWord) leftSibbling).getGraphics().get(((BTSWord) leftSibbling).getGraphics().size()- 1);
+                            if (last == null)
+                                continue;
+
+                            biggest = last.getInnerSentenceOrder() > biggest ? last.getInnerSentenceOrder() : biggest;
+                        }
+                    }
+                    if (biggest > 0)
+                        return biggest;
+                }
+            }
+        }
+        return 0; //no sibbling, first word
 	}
 
 	@Override
 	public String transformTextToJSeshMdCString(BTSText text) {
 		String result = "";
-		if (text == null || text.getTextContent() == null
-				|| text.getTextContent().getTextItems().isEmpty()) {
-			return result;
-		}
+		if (text == null || text.getTextContent() == null || text.getTextContent().getTextItems().isEmpty())
+            return "";
+
 		for (BTSTextItems s : text.getTextContent().getTextItems()) {
 			if (s instanceof BTSSenctence) {
 				BTSSenctence sentence = (BTSSenctence) s;
@@ -1171,75 +862,54 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 						m = m.replace("]", ")");
 
 						if (m.contains("lc"))
-						{
 							glyphs.add("-!");
-						}
 						glyphs.add(new String("\"" + m + "\""));
 
 					}
+
 					Collections.sort(glyphs, getGlyphsStringComparator());
+
 					int lineLength = 0;
 					boolean inBracket = false;
 					for (int i = 0; i < glyphs.size(); i++) {
 						Object o = glyphs.get(i);
 						String mdc = "";
-						if (o instanceof BTSGraphic) {
+						if (o instanceof BTSGraphic)
 							mdc = ((BTSGraphic) o).getCode();
-						} else {
+						else
 							mdc = (String) o;
-//							if (i == 0 && mdc.startsWith("-!"))
-//							{
-//								mdc = mdc.substring(2);
-//							}
-						}
-						if (mdc == null) continue;
+
+						if (mdc == null)
+                            continue;
 						
 						if (result.length() == 0 || result.endsWith("-") || mdc.startsWith("-") || mdc.startsWith(":"))
-						{
 							result += mdc;
-						}
 						else
-						{
 							result += "-" + mdc;
-						}
+
 						if (mdc.contains("<") && !mdc.contains(">"))
-						{
 							inBracket = true;
-						}
 						else if (mdc.contains(">") && !mdc.contains("<"))
-						{
 							inBracket = false;
-						}
 						
 						lineLength = lineLength + mdc.length();
-						if (result.endsWith("-!"))
-						{
+						if (result.endsWith("-!")) {
 							lineLength = 0;
-						}
-						else if (!inBracket && lineLength > 40)
-						{
+                        } else if (!inBracket && lineLength > 40) {
 							if (!result.endsWith("-!"))
-							{
 								result += "-!";
-							}
 							lineLength = 0;
 						}
-						// if (!"".equals(mdc) && !mdc.endsWith(":")
-						// && !mdc.endsWith("*") && !mdc.endsWith("<")
-						// && !mdc.endsWith("[")) {
-						// result += "-";
-						// }
 					}
-
 				}
 				result += "-O-!";
 			}
 		}
+
 		result = result.replace("-!-!", "-!");
 		if (result.startsWith("-!"))
-		{
 			result = result.substring(2);
-		}
+
 		return result;
 	}
 
@@ -1336,80 +1006,32 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 		return corpusObjectService.checkAndFullyLoad(object, checkForConflicts);
 	}
 	
-	private class AnnotationCache {
-		
-		public AnnotationCache(BTSModelAnnotation modelAnnotation, int start) {
-			this.setAnnotation(modelAnnotation);
-			this.setStart(start);
-		}
-
-		public BTSModelAnnotation getAnnotation() {
-			return annotation;
-		}
-
-		public void setAnnotation(BTSModelAnnotation annotation) {
-			this.annotation = annotation;
-		}
-
-		public int getStart() {
-			return start;
-		}
-
-		public void setStart(int start) {
-			this.start = start;
-		}
-
-		public int getEnd() {
-			return end;
-		}
-
-		public void setEnd(int end) {
-			this.end = end;
-		}
-
-		private BTSModelAnnotation annotation;
-		
-		private int start;
-		
-		private int end;
-		
-		
-	}
-	
 	@Override
-	public BTSText createNewText(BTSCorpusObject parentObject)
-	{
-		BTSText text = textService.createNewRelationPartOf(parentObject);
-		return text;
+	public BTSText createNewText(BTSCorpusObject parentObject) {
+		return textService.createNewRelationPartOf(parentObject);
 	}
 
 	@Override
 	public Image transformToSWT(BufferedImage bufferedImage)
 	{
 
-		if (bufferedImage.getColorModel() instanceof DirectColorModel)
-		{
+		if (bufferedImage.getColorModel() instanceof DirectColorModel) {
 			DirectColorModel colorModel = (DirectColorModel) bufferedImage.getColorModel();
-			PaletteData palette = new PaletteData(colorModel.getRedMask(), colorModel.getGreenMask(),
-					colorModel.getBlueMask());
-			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(),
-					colorModel.getPixelSize(), palette);
-			for (int y = 0; y < data.height; y++)
-			{
-				for (int x = 0; x < data.width; x++)
-				{
+			PaletteData palette = new PaletteData(colorModel.getRedMask(), colorModel.getGreenMask(), colorModel.getBlueMask());
+			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(), colorModel.getPixelSize(), palette);
+			for (int y = 0; y < data.height; y++) {
+				for (int x = 0; x < data.width; x++) {
 					int rgb = bufferedImage.getRGB(x, y);
 					int pixel = palette.getPixel(new RGB((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF));
 					data.setPixel(x, y, pixel);
 					if (colorModel.hasAlpha())
-					{
 						data.setAlpha(x, y, (rgb >> 24) & 0xFF);
-					}
 				}
 			}
+
 			return new Image(Display.getCurrent(), data);
-		} else if (bufferedImage.getColorModel() instanceof IndexColorModel)
-		{
+
+		} else if (bufferedImage.getColorModel() instanceof IndexColorModel) {
 			IndexColorModel colorModel = (IndexColorModel) bufferedImage.getColorModel();
 			int size = colorModel.getMapSize();
 			byte[] reds = new byte[size];
@@ -1420,49 +1042,42 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 			colorModel.getBlues(blues);
 			RGB[] rgbs = new RGB[size];
 			for (int i = 0; i < rgbs.length; i++)
-			{
 				rgbs[i] = new RGB(reds[i] & 0xFF, greens[i] & 0xFF, blues[i] & 0xFF);
-			}
+
 			PaletteData palette = new PaletteData(rgbs);
 			ImageData data = new ImageData(bufferedImage.getWidth(), bufferedImage.getHeight(),
 					colorModel.getPixelSize(), palette);
 			data.transparentPixel = colorModel.getTransparentPixel();
 			WritableRaster raster = bufferedImage.getRaster();
 			int[] pixelArray = new int[1];
-			for (int y = 0; y < data.height; y++)
-			{
-				for (int x = 0; x < data.width; x++)
-				{
+			for (int y = 0; y < data.height; y++) {
+				for (int x = 0; x < data.width; x++) {
 					raster.getPixel(x, y, pixelArray);
 					data.setPixel(x, y, pixelArray[0]);
 				}
 			}
-			return new Image(Display.getCurrent(), data);
-		}
-		return null;
 
+			return new Image(Display.getCurrent(), data);
+
+		} else return null;
 	}
-	public BufferedImage getImageData(String topItemList, int height, int width) throws MDCSyntaxError
-	{
-		BufferedImage result = null;
-		{
-			MDCDrawingFacade facade = new MDCDrawingFacade();
-			facade.setDrawingSpecifications(drawingSpecifications);
-			facade.setMaxSize(200, 45);
-			facade.setCadratHeight(30);
-			try {
-				result = facade.createImage(topItemList);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println(topItemList);
-			}
-		}
-		return result;
+
+	public BufferedImage getImageData(String topItemList, int height, int width) throws MDCSyntaxError {
+        MDCDrawingFacade facade = new MDCDrawingFacade();
+        facade.setDrawingSpecifications(drawingSpecifications);
+        facade.setMaxSize(200, 45);
+        facade.setCadratHeight(30);
+        try {
+            return facade.createImage(topItemList);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            System.out.println(topItemList);
+            return null;
+        }
 	}
 	
-	public BufferedImage getImageData(String topItemList) throws MDCSyntaxError
-	{
+	public BufferedImage getImageData(String topItemList) throws MDCSyntaxError {
 		return getImageData(topItemList, 200, 45);
 	}
 
@@ -1471,29 +1086,9 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 			BTSTextContent textContent, EObject eo, IAnnotationModel am) {
 		BTSTextContent result = textModelHelper.updateModelFromTextContent(textContent, eo, am);
 		
-		
 		// testing
 		EcoreUtil.EqualityHelper h = new EcoreUtil.EqualityHelper();
-		System.out.println("BTSTextEditorController.updateModelFromTextContent Model is structurally equal to original: "
-		+ h.equals(textContent, result));
-		
-//		// Configure EMF Compare
-//		IEObjectMatcher matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
-//		IComparisonFactory comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
-//		IMatchEngine matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);
-////	        IMatchEngine.Factory.Registry matchEngineRegistry = EMFCompareRCPPlugin.getDefault().getMatchEngineFactoryRegistry();
-////	    IPostProcessor.Descriptor.Registry<String> postProcessorRegistry = EMFCompareRCPPlugin.getDefault().getPostProcessorRegistry();
-//		EMFCompare comparator = EMFCompare.builder()
-////	                                           .setMatchEngineFactoryRegistry(matchEngineRegistry)
-////	                                           .setPostProcessorRegistry(postProcessorRegistry)
-//	                                           .build();
-//
-//		// Compare the two models
-//		IComparisonScope scope =EMFCompare.createDefaultScope(textContent, textContent);
-//		Comparison comparison = comparator.compare(scope);
-//		
-//		System.out.println("BTSTextEditorController.updateModelFromTextContent Model differs from original: " +
-//		!comparison.getDifferences().isEmpty());
+		System.out.println("BTSTextEditorController.updateModelFromTextContent Model is structurally equal to original: " + h.equals(textContent, result));
 		
 		return result;
 	}
@@ -1508,58 +1103,47 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 
 
 	@Override
-	public boolean testTextValidAgainstGrammar(BTSTextContent textContent, BTSObject object) {
-		try {
-			Document doc = new Document();
-			transformToDocument(textContent, doc, null, null, null, null, null, DEFAULT_LINE_LENGTH);
-			Injector injector = findEgyDslInjector();
-			 XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
-			 resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-			 Resource resource = resourceSet.createResource(URI.createURI("dummy:/" + object.get_id() + ".egydsl"));
-			 InputStream in = new ByteArrayInputStream(doc.get().getBytes(Charset.forName("UTF-8")));
-			 try {
-				resource.load(in, resourceSet.getLoadOptions());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 boolean valid = resource.getErrors().isEmpty();
-			 System.out.println("testTextValidAgainstGrammar valid " + valid);
-			return valid;
-		} catch (Exception e) {
-			return false;
-		}
-	}
+    public boolean testTextValidAgainstGrammar(BTSTextContent textContent, BTSObject object) {
+        try {
+            Document doc = new Document();
+            transformToDocument(textContent, doc, null, null, null, null, null, DEFAULT_LINE_LENGTH);
+            Injector injector = findEgyDslInjector();
+            XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+            Resource resource = resourceSet.createResource(URI.createURI("dummy:/" + object.get_id() + ".egydsl"));
+            InputStream in = new ByteArrayInputStream(doc.get().getBytes(Charset.forName("UTF-8")));
+            try {
+                resource.load(in, resourceSet.getLoadOptions());
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            boolean valid = resource.getErrors().isEmpty();
+            System.out.println("testTextValidAgainstGrammar valid " + valid);
+            return valid;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 
 	@Override
 	public Injector findEgyDslInjector() {
 		Object o = context.get(BTSEGYUIConstants.EGYDSL_INJECTOR);
-		Injector injector;
-		if (o != null && o instanceof Injector)
-		{
-			injector = (Injector) o;
-		}
-		else
-		{
-			EgyDslActivator activator = EgyDslActivator.getInstance();
-//			new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
+		if (o instanceof Injector)
+			return (Injector) o;
 
-			injector = activator
-					.getInjector(EgyDslActivator.ORG_BBAW_BTS_CORPUS_TEXT_EGY_EGYDSL);
-			context.set(BTSEGYUIConstants.EGYDSL_INJECTOR, injector);
-		}
+        EgyDslActivator activator = EgyDslActivator.getInstance();
+        Injector injector = activator.getInjector(EgyDslActivator.ORG_BBAW_BTS_CORPUS_TEXT_EGY_EGYDSL);
+        context.set(BTSEGYUIConstants.EGYDSL_INJECTOR, injector);
 		return injector;
 	}
-
-
 
 	@Override
 	public List<BTSText> listAllTexts(IProgressMonitor monitor) {
 		return textService.list(BTSConstants.OBJECT_STATE_ACTIVE, monitor);
 	}
-
-
 
 	@Override
 	public List<BTSText> listInAllInvalidTexts(IProgressMonitor monitor) {
@@ -1595,14 +1179,10 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 		return invalidtexts;
 	}
 
-
-
 	private boolean testTextValidAgainstGrammar(BTSText t) {
 		if (t.getTextContent() == null || t.getTextContent().getTextItems().isEmpty()) return true;
 		return testTextValidAgainstGrammar(t.getTextContent(), t);
 	}
-
-
 
 	@Override
 	public int[] checkTextCompleteness(BTSText text) {
@@ -1611,122 +1191,145 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController
 		int hiero = 0;
 		int wordTrans = 0;
 		int sentTrans = 0;
-		int [] results= new int[5];
-		
 		int wordCount = 0;
-		int SentenceCount = 0;
+		int sentenceCount = 0;
+
 		if (text.getTextContent() == null)
-		{
-			return results;
-		}
+			return new int[]{100,100,100,100,100};
+
 		for (BTSTextItems textItems : text.getTextContent().getTextItems())
 		{
-			if (textItems instanceof BTSSenctence)
-			{
-				BTSSenctence sentence = (BTSSenctence) textItems;
-				SentenceCount++;
-				if (sentence.getTranslation() != null && sentence.getTranslation().getTranslation(null) != null)
-				{
-					sentTrans++;
-				}
-				for (BTSSentenceItem sentenceItem : sentence.getSentenceItems())
-				{
-					if (sentenceItem instanceof BTSWord)
-					{
-						wordCount++;
-						BTSWord w = (BTSWord) sentenceItem;
-						if (w.getLKey() != null && !"".equals(w.getLKey()))
-						{
-							lemma++;
-						}
-						
-						if (w.getFlexCode() != null && !"".equals(w.getFlexCode()))
-						{
-							flex++;
-						}
-						
-						if (w.getGraphics() != null && !w.getGraphics().isEmpty())
-						{
-							hiero++;
-						}
-						
-						if (w.getTranslation() != null && w.getTranslation().getTranslation(null) != null)
-						{
-							wordTrans++;
-						}
-					}
-				}
-			}
+			if (!(textItems instanceof BTSSenctence))
+                continue;
+
+            BTSSenctence sentence = (BTSSenctence) textItems;
+            sentenceCount++;
+            if (sentence.getTranslation() != null && sentence.getTranslation().getTranslation(null) != null)
+                sentTrans++;
+
+            for (BTSSentenceItem sentenceItem : sentence.getSentenceItems())
+            {
+                if (!(sentenceItem instanceof BTSWord))
+                    continue;
+                wordCount++;
+
+                BTSWord w = (BTSWord) sentenceItem;
+                if (w.getLKey() != null && !"".equals(w.getLKey()))
+                    lemma++;
+                
+                if (w.getFlexCode() != null && !"".equals(w.getFlexCode()))
+                    flex++;
+                
+                if (w.getGraphics() != null && !w.getGraphics().isEmpty())
+                    hiero++;
+                
+                if (w.getTranslation() != null && w.getTranslation().getTranslation(null) != null)
+                    wordTrans++;
+            }
 		}
+
 		if (wordCount == 0)
-		{
 			return new int[]{100,100,100,100,100};
-		}
-		results[0] = (lemma * 100) / wordCount ;
-		results[1] = (flex * 100) / wordCount;
-		results[2] = (hiero * 100) / wordCount;
-		results[3] = (wordTrans * 100) / wordCount;
-		
-		results[4] = (sentTrans * 100) / SentenceCount;
-		return results;
+
+        return new int[]{
+		    (lemma      * 100) / wordCount,
+		    (flex       * 100) / wordCount,
+		    (hiero      * 100) / wordCount,
+		    (wordTrans  * 100) / wordCount,
+		    (sentTrans  * 100) / sentenceCount};
 	}
-
-
 
 	@Override
 	public List<BTSText> listInAllInCompleteTexts(IProgressMonitor monitor) {
-			String[] params = new String[3];
-			List<BTSText> invalidtexts = new Vector<BTSText>();
-			String[] active_corpora= textService.getActive_corpora(null);
-			for (String active_corpus : active_corpora)
-			{
-				try {
-					do
-					{
-						List<BTSText> texts = textService.listChunks(100, params, active_corpus, BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-						if (texts == null) break;
-						for (BTSText t : texts)
-						{
-							if (monitor.isCanceled()) break;
-							checkAndFullyLoad(t, false);
-							monitor.worked(1);
-							if (!testTextComplete(t))
-							{
-								invalidtexts.add(t);
-							}
-							monitor.worked(1);
-						}
-						 params = new String[]{params[1], params[2], null};
-					}
-					while(params[1] != null);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			return invalidtexts;
+        String[] params = new String[3];
+        List<BTSText> invalidtexts = new Vector<BTSText>();
+        String[] active_corpora= textService.getActive_corpora(null);
+        for (String active_corpus : active_corpora) {
+            try {
+                do {
+                    List<BTSText> texts = textService.listChunks(100, params, active_corpus, BTSConstants.OBJECT_STATE_ACTIVE, monitor);
+                    if (texts == null)
+                        break;
+
+                    for (BTSText t : texts) {
+                        if (monitor.isCanceled())
+                            break;
+                        checkAndFullyLoad(t, false);
+                        monitor.worked(1);
+
+                        if (!testTextComplete(t))
+                            invalidtexts.add(t);
+                        monitor.worked(1);
+                    }
+                     params = new String[]{params[1], params[2], null};
+                } while(params[1] != null);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return invalidtexts;
 	}
-
-
 
 	private boolean testTextComplete(BTSText t) {
 		int[] completeness = checkTextCompleteness(t);
 		for (int i : completeness)
-		{
 			if (i < 100) return false;
-		}
 		return true;
 	}
 
-
-
 	@Override
-	public BTSSentenceItem copySentenceItem(BTSSentenceItem copyItem) {
-		return textService.copySentenceItem(copyItem);
+	public BTSSentenceItem copySentenceItem(BTSSentenceItem item) {
+		return textService.copySentenceItem(item);
 	}
 
 	@Override
-	public BTSSenctence copySentence(BTSSenctence copyItem) {
-		return textService.copySentence(copyItem);
+	public BTSSenctence copySentence(BTSSenctence item) {
+		return textService.copySentence(item);
+	}
+
+	@Override
+	public Collection<BTSSentenceItem> copySentenceItems(Collection<BTSSentenceItem> items) {
+		return textService.copySentenceItems(items);
+	}
+
+	@Override
+	public Collection<BTSSenctence> copySentences(Collection<BTSSenctence> sents) {
+		return textService.copySentences(sents);
+    }
+
+	private class AnnotationCache {
+		private BTSModelAnnotation annotation;
+		private int start;
+		private int end;
+		
+		public AnnotationCache(BTSModelAnnotation modelAnnotation, int start) {
+			this.setAnnotation(modelAnnotation);
+			this.setStart(start);
+		}
+
+		public BTSModelAnnotation getAnnotation() {
+			return annotation;
+		}
+
+		public void setAnnotation(BTSModelAnnotation annotation) {
+			this.annotation = annotation;
+		}
+
+		public int getStart() {
+			return start;
+		}
+
+		public void setStart(int start) {
+			this.start = start;
+		}
+
+		public int getEnd() {
+			return end;
+		}
+
+		public void setEnd(int end) {
+			this.end = end;
+		}
 	}
 }
