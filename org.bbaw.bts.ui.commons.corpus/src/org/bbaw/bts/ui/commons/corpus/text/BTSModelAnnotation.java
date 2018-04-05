@@ -14,7 +14,6 @@ public class BTSModelAnnotation extends XtextAnnotation
 {
 
 	public static final String HIGHLIGHTED = ".highlighted";
-
 	public static final String TOKEN = "token";
 
 	protected IResourceProviderService resourceProvider = (IResourceProviderService) StaticAccessController.getResourceProvider();

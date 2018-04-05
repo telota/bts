@@ -10,4 +10,12 @@ public class BTSLemmaAnnotation extends BTSModelAnnotation {
 		super(type, model);
 	}
 
+	public BTSLemmaAnnotation(BTSIdentifiableItem model) {
+		super(TYPE, model);
+	}
+
+	public BTSLemmaAnnotation(BTSIdentifiableItem model, BTSLemmaEntry lemma) {
+		super(model);
+        setRelatingObject(lemma);
+	}
 }

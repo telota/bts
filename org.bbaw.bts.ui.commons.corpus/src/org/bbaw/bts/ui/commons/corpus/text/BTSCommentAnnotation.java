@@ -13,7 +13,7 @@ public class BTSCommentAnnotation extends BTSModelAnnotation {
 
 	private BTSComment comment;
 
-	public BTSCommentAnnotation(BTSIdentifiableItem model, BTSComment comment, BTSInterTextReference interTextReference) {
+	public BTSCommentAnnotation(BTSIdentifiableItem model, BTSInterTextReference interTextReference, BTSComment comment) {
 		super(model, interTextReference, comment);
 		this.setComment(comment);
 	}

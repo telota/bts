@@ -11,9 +11,11 @@ public class BTSAnnotationAnnotation extends BTSModelAnnotation {
 
 	
 	public BTSAnnotationAnnotation(IXtextDocument document, Issue issue,
-			BTSIdentifiableItem modelObject, BTSAnnotation btsAnnotation) {
-		super(CorpusUtils.getTypeIdentifier(btsAnnotation), document, issue, modelObject);
-		this.setRelatingObject(btsAnnotation);
+			BTSIdentifiableItem modelObject, BTSAnnotation anno) {
+		super(CorpusUtils.getTypeIdentifier(anno), document, issue, modelObject);
+		setRelatingObject(anno);
+        if ("rubrum".equalsIgnoreCase(anno.getType()))
+            setText("org.bbaw.bts.ui.text.modelAnnotation.annotation.rubrum");
 	}
 
 	public BTSAnnotationAnnotation(BTSIdentifiableItem item,
@@ -25,6 +27,4 @@ public class BTSAnnotationAnnotation extends BTSModelAnnotation {
 	public String getType() {
 		return super.getType();
 	}
-	
-	
 }

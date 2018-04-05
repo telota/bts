@@ -26,12 +26,8 @@ import com.google.inject.Injector;
 
 public interface BTSTextEditorController {
 	boolean save(BTSText text);
-	void transformToDocument(BTSTextContent textContent, Document doc, IAnnotationModel model, 
-			List<BTSObject> relatingObjects, Map<String, List<BTSInterTextReference>> relatingObjectsMap, 
-			Map<String, List<Object>> lemmaAnnotationMap, IProgressMonitor monitor, int lineLength);
 	void updateBTSWordFromMdCString(BTSWord word, String mdc, EditingDomain editingDomain);
 	String transformTextToJSeshMdCString(BTSText text);
-	BTSTextContent updateModelFromTextContent(BTSTextContent textContent, EObject eo, IAnnotationModel am);
 
 	String transformWordToMdCString(BTSWord word, int selectedGlypheIndex);
 	String[] splitSignsKeepDelimeters(String mdC);

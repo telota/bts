@@ -206,7 +206,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	public static final int LINE_SPACE = 8;
 
 	protected int counter;
-	protected boolean loading;
+	protected boolean loading; /* TODO get rid of this */
 	protected boolean isDocUpdating;
 	protected String queryId;
 	protected int cachedCursor;
@@ -231,7 +231,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 	private JMDCEditor jseshEditor;
 	private Document document;
-	private IAnnotationModel annotationModel;
+	private AnnotationModel annotationModel;
 	private SignTextComposite signTextEditor;
 
 	@SuppressWarnings("restriction")
@@ -356,7 +356,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 				// update model from old selection editor
 				if (oldSelection == textTab) {
                     /* Cancel selection if necessary FIXME: test this */
-					if (!updateModelFromTranscription()) {
+					if (!synchronizeToModel()) {
                         e.doit = false;
                         return;
                     }
@@ -528,7 +528,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 			public void selectionChanged(SelectionChangedEvent e) {
                 BTSTextSelectionEvent evt = fireTextSelectionEvent((TextSelection)e.getSelection());
                 deepCopyEnabled = !evt.getSelectedItems().isEmpty();
-                System.err.println("SelectionChangedEvent: "+evt.toString());
 			}
 		});
 
@@ -592,8 +591,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 	private void copyTextWithLemmata() {
         /* TODO this implementation is very poor. This should just use the regular system keyboard and a sane
          * serialization of the selected objects. */
+        /* TODO But first, create copies here instead of just caching the selection event */
 		deepCopyCache = probeCurrentTextSelection();
-        System.err.println("Setting deepCopyCache: "+deepCopyCache);
 	}
 
     private BTSTextSelectionEvent probeCurrentTextSelection() {
@@ -608,7 +607,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
     private BTSTextSelectionEvent fireTextSelectionEvent(TextSelection selection) {
         BTSTextSelectionEvent evt = probeTextSelection(selection);
-        highlightAnnotations(evt.getTextAnnotations());
+        highlightAnnotations(evt.getRelatedObjectAnnotations());
         updateSentenceTranslation(evt);
         selectionService.setSelection(evt);
         return evt;
@@ -643,22 +642,41 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
     /* Note that this does not copy comments, annotations, rubra or other related objects */
 	private void pasteItems() {
+        /* TODO here and below in pasteSentences the dirty flag might have to be set */
+        /* TODO fixup cursor */
         BTSTextSelectionEvent copied = deepCopyCache;
         if (copied == null || copied.getSelectedItems().isEmpty())
             return;
 
-        updateModelFromTranscription();
+        /* FIXME */
+        cachedCursor = embeddedEditor.getViewer().getTextWidget().getCaretOffset();
+        if (!synchronizeToModel())
+            return;
+        loadInputTranscription(null);
+        try {
+            embeddedEditor.getViewer().getTextWidget().setCaretOffset(cachedCursor);
+            embeddedEditor.getViewer().revealRange(cachedCursor, 0);
+        } catch (Exception e) {
+        }
 
-		BTSTextSelectionEvent now = probeCurrentTextSelection();
+        /* FIXME
+        synchronizeToModel();
+        loadInputTranscription(null);
+        */
+
         /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to the
          * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if
          * their sentences were concatenated. */
-        Collection<BTSSentenceItem> copies = textEditorController.copySentenceItems(now.getSelectedItems());
+        Collection<BTSSentenceItem> copies = textEditorController.copySentenceItems(copied.getSelectedItems());
 
+		BTSTextSelectionEvent now = probeCurrentTextSelection();
+        System.out.println("paste: SELECTED:"+now.getSelectedItems());
+        System.out.println("now: "+now);
         BTSSentenceItem first = now.getSelectedItems().get(0);
         /* Since selectedItems does not contain any items within BTSAmbivalences all items have the sentence as their
          * container. */
         BTSSenctence sentence = (BTSSenctence)first.eContainer();
+        System.out.println("SENTENCE:"+sentence+" ITEMS:"+sentence.getSentenceItems());
         int insertOffset = sentence.getSentenceItems().indexOf(first);
 
         if (!now.isCursorEvent()) {
@@ -671,23 +689,26 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
         sentence.getSentenceItems().addAll(insertOffset, copies);
         loadInputTranscription(null);
-        /* FIXME fixup cursor */
 	}
 
     /* Note that this does not copy comments, annotations, rubra or other related objects */
 	private void pasteSentences() {
+        /* TODO see above in pasteItems */
         BTSTextSelectionEvent copied = deepCopyCache;
         if (copied == null || copied.getSelectedSentences().isEmpty())
             return;
 
-        updateModelFromTranscription();
+        /* FIXME
+        synchronizeToModel();
+        loadInputTranscription(null);
+        */
 
-        BTSTextSelectionEvent now = probeCurrentTextSelection();
         /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to the
          * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if
          * their sentences were concatenated. */
-        Collection<BTSSenctence> copies = textEditorController.copySentences(now.getSelectedSentences());
+        Collection<BTSSenctence> copies = textEditorController.copySentences(copied.getSelectedSentences());
 
+        BTSTextSelectionEvent now = probeCurrentTextSelection();
         BTSSenctence first = now.getSelectedSentences().get(0);
         BTSTextContent textContent = (BTSTextContent)first.eContainer();
         int insertOffset = textContent.getTextItems().indexOf(first);
@@ -700,21 +721,23 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         }
 
         textContent.getTextItems().addAll(insertOffset, copies);
-        /* FIXME see above in pasteItems */
 	}
 
 	@SuppressWarnings("restriction")
-	protected boolean updateModelFromTranscription() {
+	protected boolean synchronizeToModel() {
 		if (text != null) {
 			IAnnotationModel am = embeddedEditor.getViewer().getAnnotationModel();
 			IXtextDocument document = embeddedEditor.getDocument();
 
-			EList<EObject> objects = document.readOnly(new IUnitOfWork<EList<EObject>, XtextResource>() {
+			EObject eo = document.readOnly(new IUnitOfWork<EList<EObject>, XtextResource>() {
 				@Override public EList<EObject> exec(XtextResource state) throws Exception {
 					return state.getContents();
 				}
-			});
-			EObject eo = objects.get(0);
+			}).get(0);
+
+			if (!(eo instanceof TextContent))
+                return;
+
 			Resource resource = eo.eResource();
 			boolean valid = checkResourceErrors(resource);
 			if (!valid) {
@@ -730,10 +753,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 					return false;
 			}
 
-			if (eo instanceof TextContent) {
-				text.setTextContent(textEditorController.updateModelFromTextContent(
-						text.getTextContent(), eo, am));
-			}
+            new ModelUpdater(am).synchronize(text.getTextContent(), eo);
 		}
 		return true;
 	}
@@ -794,6 +814,10 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		}
 	}
 
+	protected void loadInputTranscription() {
+        loadInputTranscription(null);
+    }
+
 	@SuppressWarnings({ "rawtypes", "restriction" })
 	protected void loadInputTranscription(IProgressMonitor monitor) {
 		loading = true;
@@ -844,7 +868,54 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 		String textString = document.get();
 		// take care of empty input
-		if (textString.length() == 0)
+		if (textString.isEmpty())
+			textString = "§§";
+		embeddedEditorModelAccess.updateModel("\r", textString, "\r");
+
+		// remove painter so annotations are not painted individually
+		painter.deactivate(false);
+		loadAnnotations2Editor(annotationModel, tempAnnotationModel, monitor);
+		painter.paint(IPainter.INTERNAL);
+		painter.modelChanged(embeddedEditor.getViewer().getAnnotationModel());
+		embeddedEditorParentComp.layout();
+
+		// connect ruler to annotationModel
+		ruler.setModel(annotationModel);
+		ruler.update();
+		ruler.relayout();
+
+		// connect overview ruler to annotationModel
+		oruler.setModel(annotationModel);
+		oruler.update();
+
+		loading = false;
+	}
+
+    protected void updateModelAndAnnotations() {
+        if (text == null)
+            return; /*FIXME when would this happen? */
+
+		loading = true;
+
+		lemmaAnnotationMap = new HashMap<String, List<Object>>();
+		annotationModel = (AnnotationModel)embeddedEditor.getViewer().getAnnotationModel();
+
+		IXtextDocument document = embeddedEditor.getDocument();
+
+        annotationModel.removeAllAnnotations();
+
+		AnnotationModel tempAnnotationModel = new AnnotationModel();
+
+        if (text.getTextContent() == null)
+            text.setTextContent(BtsCorpusModelFactory.eINSTANCE.createBTSTextContent());
+
+        relatingObjectsMap = fillRelatingObjectsMap(relatingObjects);
+        textEditorController.transformToDocument(getTextContent(), document, tempAnnotationModel,
+                relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
+
+		String textString = document.get();
+		// take care of empty input
+		if (textString.isEmpty())
 			textString = "§§";
 		embeddedEditorModelAccess.updateModel("\r", textString, "\r");
 
@@ -1024,6 +1095,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		BTSSentenceItem minItem = null, maxItem = null;
 		int min_l = Integer.MAX_VALUE, max_r = -1;
 		int sel_l = evt.x, sel_r = evt.y;
+        System.out.print("Selection: "+sel_l+"/"+sel_r);
 
 		final IAnnotationModel amodel = embeddedEditor.getViewer().getAnnotationModel();
         List<Annotation> annos = new ArrayList<Annotation>();
@@ -1047,7 +1119,10 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
             }
         });
 
+        System.out.println("Annotations:");
         for (Annotation a : annos) {
+            System.out.println();
+            System.out.printf("    %s:%s", a.getType(), a.getText());
 			if (! (a instanceof BTSModelAnnotation))
 				continue;
             BTSModelAnnotation ma = (BTSModelAnnotation)a;
@@ -1064,6 +1139,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
             boolean item_within_ambivalence = iitem.eContainer() instanceof BTSLemmaCase;
 
+            System.out.print(" "+ano_l+"/"+ano_r+" "+iitem);
+
 			/* For cursor events, add all items that the cursor is placed inside. This includes e.g. a containing
 			 * ambivalence.  This is done so that when the cursor is placed somewhere, all comments that include that
 			 * cursor position are highlighted.
@@ -1076,6 +1153,22 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
                 if (iitem instanceof BTSSenctence) {
                     evt.getSelectedSentences().add((BTSSenctence)iitem);
+                    continue;
+                }
+
+				/* Store annotation and item in range. */
+                System.out.print(" ###SELECTED");
+
+                if (ma instanceof BTSAnnotationAnnotation
+                 || ma instanceof BTSCommentAnnotation
+                 || ma instanceof BTSSubtextAnnotation) {
+                    evt.getRelatedObjectAnnotations().add(ma);
+                    evt.getRelatingObjects().add(ma.getRelatingObject());
+                    evt.getInterTextReferences().add(ma.getInterTextReference());
+                    /* Only add items from their primary annotations below. If we'd fall through here, any item with
+                     * e.g. a comment annotation would appear twice: Once from the comment annotation and once from its
+                     * primary annotation. These primary annotations are a mix of ModelAnnotations and LemmaAnnotations.
+                     * The above CommentAnnotation et al. are unfortunately direct subclasses of BTSModelAnnotation. */
                     continue;
                 }
 
@@ -1092,8 +1185,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 					maxItem = (BTSSentenceItem)item;
 					max_r = ano_r;
 				}
-				/* Store annotation and item in range. */
-				evt.getTextAnnotations().add((BTSModelAnnotation)a);
+                /* At this point, only the one linkage annotation for each sentence item remains to be processed. */
 
                 /* Do not add items within ambivalences, only add whole ambivalences. This is to prevent the ambiguity
                  * inherent in a selection starting inside an ambivalence's first LemmaCase and spanning its second
@@ -1109,16 +1201,9 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                  * See also doc on BTSTextSelectionEvent#getSelectedItems */
                 if (!item_within_ambivalence)
                     evt.getSelectedItems().add(item);
-
-                if (ma instanceof BTSAnnotationAnnotation
-                 || ma instanceof BTSCommentAnnotation
-                 || ma instanceof BTSSubtextAnnotation) {
-                    evt.getRelatedObjectAnnotations().add(ma);
-                    evt.getRelatingObjects().add(ma.getRelatingObject());
-                    evt.getInterTextReferences().add(ma.getInterTextReference());
-                }
 			}
 		}
+        System.out.println();
 
 		/* The selected items may well be empty, e.g. if the cursor is placed right at the start or end of a document.
 		 * We're only looking at certain types of items here, and that excludes e.g. sentence delimiters. */
@@ -1255,7 +1340,6 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
 		if (selection == null || parent == null || parent.isDisposed())
 			return;
-        System.out.println("ETE.p:setSelection: "+selection.toString());
 
         if (selection instanceof BTSSentenceItem) {
             setSentenceTranslation((BTSSentenceItem) selection);
@@ -1608,7 +1692,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 				!permissionsController.userMayEditObject(permissionsController.getAuthenticatedUser(), this.text))
 			return false;
 
-		if (tabFolder.getSelection() == textTab && !updateModelFromTranscription())
+		if (tabFolder.getSelection() == textTab && !synchronizeToModel())
 			return false;
 
 		localCommandCacheSet.clear();
@@ -1833,7 +1917,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         sync.asyncExec(new Runnable() {
             public void run() {
                 cachedCursor = embeddedEditor.getViewer().getTextWidget().getCaretOffset();
-                if (updateModelFromTranscription()) {
+                if (synchronizeToModel()) {
                     try {
                         // load updated model into selected editor
                         IRunnableWithProgress op = new IRunnableWithProgress() {

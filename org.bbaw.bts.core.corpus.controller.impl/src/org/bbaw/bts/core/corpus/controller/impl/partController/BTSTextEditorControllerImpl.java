@@ -34,7 +34,7 @@ import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSRelation;
 import org.bbaw.bts.commons.BTSConstants;
-import org.bbaw.bts.core.corpus.controller.impl.partController.support.TextModelHelper;
+import org.bbaw.bts.core.corpus.controller.impl.partController.support.ModelUpdater;
 import org.bbaw.bts.core.corpus.controller.partController.BTSTextEditorController;
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.core.services.BTSCommentService;
@@ -64,6 +64,7 @@ import org.bbaw.bts.ui.commons.corpus.text.BTSAnnotationAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSCommentAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSLemmaAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSModelAnnotation;
+import org.bbaw.bts.ui.commons.corpus.text.BTSLinkageAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSSentenceAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSSubtextAnnotation;
 import org.bbaw.bts.ui.commons.corpus.util.BTSEGYUIConstants;
@@ -115,11 +116,6 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	private static final String MARKER_INTERFIX = ": ";
 	private static final String MDC_IGNORE = "\\i";
 	private static final String MDC_SELECTION = "\\red";
-	private static final int GAP = 10;
-	private static final int DEFAULT_LINE_LENGTH = 70;
-	
-	protected TextModelHelper textModelHelper = new TextModelHelper();
-
 	
 	private DrawingSpecification drawingSpecifications = new DrawingSpecificationsImplementation();
 	
@@ -129,519 +125,41 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	private int idcounter = 0;
 	private Comparator<? super Object> glyphsStringComparator;
 	@Inject private CorpusObjectService corpusObjectService;
-	private Map<BTSInterTextReference, AnnotationCache> annotationRangeMap;
 	@Inject private BTSCommentService commentService; 
 	@Inject private BTSLemmaEntryService lemmaService; 
-	private int counter;
 	
-	@Override
-	public void transformToDocument(BTSTextContent textContent, Document doc, IAnnotationModel model, 
-			List<BTSObject> relatingObjects, Map<String, List<BTSInterTextReference>> relatingObjectsMap, 
-			Map<String, List<Object>> lemmaAnnotationMap, IProgressMonitor monitor, int lineLength)
-	{
-		if (lineLength == 0)
-			lineLength = DEFAULT_LINE_LENGTH;
-
-		annotationRangeMap = new HashMap<BTSInterTextReference, AnnotationCache>();
-		if (relatingObjects != null && ! relatingObjects.isEmpty())
-			relatingObjectsMap = fillRelatingObjectsMap(relatingObjects);
-			
-		StringBuilder stringBuilder = new StringBuilder();
-		if (textContent == null) {
-			doc.set(stringBuilder.toString());
-			return;
-		}
-
-		for (BTSTextItems textItems : textContent.getTextItems()) {
-			if (!(textItems instanceof BTSSenctence)) {
-				appendToStringBuilder(textItems, model, stringBuilder, relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
-                continue;
-            }
-
-            BTSSenctence sentence = (BTSSenctence) textItems;
-            int start = stringBuilder.length();
-            stringBuilder.append(SENTENCE_SIGN);
-
-            BTSModelAnnotation ma = new BTSSentenceAnnotation(BTSSentenceAnnotation.TYPE,sentence);
-            int len = stringBuilder.length();
-            int loopLen = stringBuilder.length();
-            int lineLoop = stringBuilder.length();
-            boolean lineBreak = false;
-            for (BTSSentenceItem sentenceItem : sentence.getSentenceItems()) {
-                appendToStringBuilder(sentenceItem, model, stringBuilder, relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
-                if (stringBuilder.length() > loopLen) {
-                    stringBuilder.append(WS);
-                    loopLen = stringBuilder.length();
-                    lineBreak = false;
-                }
-                
-                if (loopLen - lineLoop > lineLength) {
-                    stringBuilder.append("\n");
-                    loopLen = stringBuilder.length();
-                    lineLoop = stringBuilder.length();
-                    lineBreak = true;
-                }
-
-                if (monitor != null) {
-                    if (monitor.isCanceled())
-                        return;
-                    monitor.worked(1);
-                }
-            }
-            
-            // check whether sentence items were added
-            if (stringBuilder.length() > len && lineBreak) // linebreak just appended
-                stringBuilder.replace(stringBuilder.length() - 2,stringBuilder.length(), SENTENCE_SIGN);
-            else if (stringBuilder.length() > len) // linebreak, remove only WS
-                stringBuilder.replace(stringBuilder.length() - 1,stringBuilder.length(), SENTENCE_SIGN);
-            else // nothing appended, add only sentence sign
-                stringBuilder.append(SENTENCE_SIGN);
-                    
-            stringBuilder.append("\n");
-            int length = stringBuilder.length() - start;
-            // shorten sentence annotation to avoid mixing it with next sentence
-            Position pos = new Position(start, length-1); 
-            if (model != null)
-                model.addAnnotation(ma, pos);
-		}
-
-		if (stringBuilder.length() > 0)
-			stringBuilder.deleteCharAt(stringBuilder.length() -1);
-		logger.info("BTSTextEditorController text as string egydsl: " + stringBuilder.toString());
-		
-		doc.set(stringBuilder.toString());
-	}
-
-	
-
-	public HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects) {
+    public HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects) {
 		HashMap<String, List<BTSInterTextReference>> relatingObjectsMap = new HashMap<String, List<BTSInterTextReference>>();
-		counter = 0;
-		if (relatingObjects == null) return relatingObjectsMap;
-		for (BTSObject o : relatingObjects) {
-			o.setTempSortKey(-1);
-			for (BTSRelation rel : o.getRelations()) {
-				if (rel.getParts() != null && !rel.getParts().isEmpty()) {
-					for (BTSInterTextReference part : rel.getParts()) {
-						if (part.getBeginId() != null) {
-							List<BTSInterTextReference> parts = relatingObjectsMap.get(part.getBeginId());
-							if (parts == null) {
-								parts = new Vector<BTSInterTextReference>(4);
-								relatingObjectsMap.put(part.getBeginId(), parts);
-							}
-							parts.add(part);
-						}
+		if (relatingObjects == null)
+            return relatingObjectsMap;
 
-						if (part.getEndId() != null && !part.getEndId().equals(part.getBeginId())) {
-							List<BTSInterTextReference> parts = relatingObjectsMap.get(part.getEndId());
-							if (parts == null) {
-								parts = new Vector<BTSInterTextReference>(4);
-								relatingObjectsMap.put(part.getEndId(), parts);
-							}
-							parts.add(part);
-						}
-					}
-				}
+		for (BTSObject o : relatingObjects) {
+			for (BTSRelation rel : o.getRelations()) {
+				if (rel.getParts() == null || rel.getParts().isEmpty())
+                    continue;
+
+                for (BTSInterTextReference part : rel.getParts()) {
+                    if (part.getBeginId() != null) {
+                        List<BTSInterTextReference> parts = relatingObjectsMap.get(part.getBeginId());
+                        if (parts == null) {
+                            parts = new Vector<BTSInterTextReference>(4);
+                            relatingObjectsMap.put(part.getBeginId(), parts);
+                        }
+                        parts.add(part);
+                    }
+
+                    if (part.getEndId() != null && !part.getEndId().equals(part.getBeginId())) {
+                        List<BTSInterTextReference> parts = relatingObjectsMap.get(part.getEndId());
+                        if (parts == null) {
+                            parts = new Vector<BTSInterTextReference>(4);
+                            relatingObjectsMap.put(part.getEndId(), parts);
+                        }
+                        parts.add(part);
+                    }
+                }
 			}
 		}
 		return relatingObjectsMap;
-	}
-
-	private void appendToStringBuilder(BTSIdentifiableItem item, IAnnotationModel model, 
-			StringBuilder stringBuilder, List<BTSObject> relatingObjects, 
-			Map<String, List<BTSInterTextReference>> relatingObjectsMap, 
-			Map<String, List<Object>> lemmaAnnotationMap)
-	{
-		Position pos = null;
-		if (item instanceof BTSWord) {
-			BTSWord word = (BTSWord) item;
-			pos = appendWordToStringBuilder(word, stringBuilder);
-			appendWordToModel(word, model, pos, lemmaAnnotationMap);
-
-		} else if (item instanceof BTSMarker) {
-			BTSMarker marker = (BTSMarker) item;
-			pos = appendMarkerToStringBuilder(marker, stringBuilder);
-			appendMarkerToModel(marker, model, pos);
-
-		} else if (item instanceof BTSAmbivalence) {
-			BTSAmbivalence ambivalence = (BTSAmbivalence) item;
-			pos = appendAmbivalenceToStringBuilder(ambivalence, stringBuilder,
-					model, relatingObjectsMap, lemmaAnnotationMap);
-			appendAmbivalenceToModel(ambivalence, model, pos);
-
-		}
-
-		/* Check if there are comments, annotations or subtext pointing to this item. */
-		/* "pointer" can either be start or end positions! */
-		if (item != null && relatingObjectsMap != null && pos != null && relatingObjectsMap.containsKey(item.get_id()))
-		{
-			createAnnotations(item, model, pos, relatingObjectsMap.get(item.get_id()));
-		}
-	}
-
-	private void createAnnotations(BTSIdentifiableItem item, IAnnotationModel model, Position pos, List<BTSInterTextReference> list) {
-		// FIXME ende einer annotation berechnen!!!!!!!!
-		if (model == null)
-            return; 
-
-		for (BTSInterTextReference ref : list) {
-			if (ref.getBeginId() == null || ref.getEndId() == null || ref.getBeginId().equals(ref.getEndId())) {
-				//1) ref referenziert nur ein Item
-				BTSModelAnnotation modelAnnotation = createAnnotation(item, model, pos, ref);
-				model.addAnnotation(modelAnnotation, pos);
-
-			} else if (ref.getBeginId().equals(item.get_id())) {
-                // 2) ref ist start
-                // annotation erzeugen
-				BTSModelAnnotation modelAnnotation = createAnnotation(item, model, pos, ref);
-				AnnotationCache cache = new AnnotationCache(modelAnnotation, pos.getOffset());
-				annotationRangeMap.put(ref, cache);
-                // annotation und start position cachen
-			
-			} else if (ref.getEndId().equals(item.get_id())){
-                // 3) ref ist end
-                // annotation aus cache holen - wie?
-				AnnotationCache cache = annotationRangeMap.get(ref);
-				if (cache != null) {
-					Position pos2 = new Position(cache.getStart());
-					pos2.setLength((pos.offset - pos2.getOffset()) + pos.getLength());
-                    // end position
-                    // position und anno zu modell adden
-					model.addAnnotation(cache.getAnnotation(), pos2);
-					annotationRangeMap.remove(ref);
-
-				} else {// begin element not found, only end element
-					BTSModelAnnotation modelAnnotation = createAnnotation(item, model, pos, ref);
-					model.addAnnotation(modelAnnotation, pos);
-				}
-			}
-		}
-
-		
-	}
-
-	private BTSModelAnnotation createAnnotation(BTSIdentifiableItem item, IAnnotationModel model,
-			Position pos, BTSInterTextReference reference) {
-		BTSModelAnnotation modelAnnotation = null;
-		if (reference.eContainer() != null && reference.eContainer() instanceof BTSRelation && reference.eContainer().eContainer() != null)
-		{
-			if (reference.eContainer().eContainer() instanceof BTSAnnotation)
-			{
-				// annotation
-				BTSAnnotation anno = (BTSAnnotation) reference.eContainer().eContainer();
-				if (anno.getTempSortKey() < 0)
-				{
-					anno.setTempSortKey(counter + GAP);
-				}
-				modelAnnotation = new BTSAnnotationAnnotation(item, reference, anno);
-				if (anno.getType() != null && anno.getType().equalsIgnoreCase("rubrum"))
-				{
-					modelAnnotation.setText( "org.bbaw.bts.ui.text.modelAnnotation.annotation.rubrum");
-				}
-			}
-			else if (reference.eContainer().eContainer() instanceof BTSText)
-			{
-				// subtext
-				BTSText text = (BTSText) reference.eContainer().eContainer();
-				if (text.getTempSortKey() < 0)
-				{
-					text.setTempSortKey(counter + GAP);
-				}
-				modelAnnotation = new BTSSubtextAnnotation(item, reference, text);
-			}
-			else if (reference.eContainer().eContainer() instanceof BTSComment)
-			{
-				// comment
-				BTSComment comment = (BTSComment) reference.eContainer().eContainer();
-				if (comment.getTempSortKey() < 0)
-				{
-					comment.setTempSortKey(counter + GAP);
-				}
-				modelAnnotation = new BTSCommentAnnotation(item, comment, reference);
-			}
-			counter = counter + GAP;
-		}
-		return modelAnnotation;
-		
-	}
-
-	private void appendAmbivalenceToModel(BTSAmbivalence ambivalence,
-			IAnnotationModel model, Position pos) {
-		if (model == null) return;
-
-		BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN,
-				(BTSIdentifiableItem) ambivalence);
-
-		model.addAnnotation(annotation, pos);
-
-	}
-
-	private Position appendAmbivalenceToStringBuilder(
-			BTSAmbivalence ambivalence, StringBuilder stringBuilder,
-			IAnnotationModel model, Map<String, List<BTSInterTextReference>> relatingObjectsMap, 
-			Map<String, List<Object>> lemmaAnnotationMap) {
-		Position pos = new Position(stringBuilder.length());
-		stringBuilder.append(AMBIVALENCE_START_SIGN);
-		if (ambivalence.getCases() != null) {
-			for (BTSLemmaCase amCase : ambivalence.getCases()) {
-				appendLemmaCase(amCase, ambivalence, stringBuilder, model, relatingObjectsMap, lemmaAnnotationMap);
-				stringBuilder.append(LEMMA_CASE_SEPARATOR);
-			}
-		}
-		stringBuilder.replace(
-				stringBuilder.length() - LEMMA_CASE_SEPARATOR.length(),
-				stringBuilder.length(), AMBIVALENCE_END_SIGN);
-		pos.setLength(stringBuilder.length() - pos.getOffset());
-
-		return pos;
-	}
-
-	private void appendLemmaCase(BTSLemmaCase amCase,
-			BTSAmbivalence ambivalence, StringBuilder stringBuilder,
-			IAnnotationModel model, Map<String, List<BTSInterTextReference>> relatingObjectsMap,
-			Map<String, List<Object>> lemmaAnnotationMap) {
-		Position pos = new Position(stringBuilder.length());
-		stringBuilder.append(LEMMA_CASE_TERMIAL + WS);
-		if (amCase.getName() != null)
-			stringBuilder.append(amCase.getName());
-		stringBuilder.append(LEMMA_CASE_INTERFIX);
-
-		if (amCase.getScenario() != null) {
-			for (BTSAmbivalenceItem item : amCase.getScenario()) {
-				appendAmbivalenceItem((BTSIdentifiableItem) item, amCase, ambivalence, stringBuilder,
-						model, relatingObjectsMap, lemmaAnnotationMap);
-				stringBuilder.append(WS);
-			}
-		}
-		stringBuilder.replace(stringBuilder.length() - 1,
-				stringBuilder.length(), "");
-		pos.setLength(stringBuilder.length() - pos.getOffset());
-
-		// append to model
-		if (model == null) return;
-
-		BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN, (BTSIdentifiableItem) amCase);
-
-		model.addAnnotation(annotation, pos);
-		return;
-
-	}
-
-	private void appendAmbivalenceItem(BTSIdentifiableItem item,
-			BTSLemmaCase amCase, BTSAmbivalence ambivalence,
-			StringBuilder stringBuilder, IAnnotationModel model, 
-			Map<String, List<BTSInterTextReference>> relatingObjectsMap, Map<String, List<Object>> lemmaAnnotationMap) {
-		Position pos = null;
-		if (item instanceof BTSWord) {
-			BTSWord word = (BTSWord) item;
-			pos = appendWordToStringBuilder(word, stringBuilder);
-			appendWordToModel(word, model, pos, lemmaAnnotationMap);
-
-		} else if (item instanceof BTSMarker) {
-			BTSMarker marker = (BTSMarker) item;
-			pos = appendMarkerToStringBuilder(marker, stringBuilder);
-			appendMarkerToModel(marker, model, pos);
-		}
-
-		if (item != null && relatingObjectsMap != null && pos != null && relatingObjectsMap.containsKey(item.get_id()))
-			createAnnotations(item, model, pos, relatingObjectsMap.get(item.get_id()));
-
-	}
-
-	private void appendMarkerToModel(BTSMarker marker, IAnnotationModel model, Position pos) {
-		if (model == null) return;
-		BTSModelAnnotation annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN, (BTSIdentifiableItem) marker);
-		model.addAnnotation(annotation, pos);
-
-	}
-
-	private Position appendMarkerToStringBuilder(BTSMarker marker,
-			StringBuilder stringBuilder)
-	{
-		Position pos = new Position(stringBuilder.length());
-		if (marker.getType() != null) {
-			if (marker.getType().equals(BTSConstants.TEXT_VERS_FRONTIER_MARKER)) {
-				stringBuilder.append(BTSConstants.VERS_FRONTER_MARKER_SIGN);
-			} else if (marker.getType().equals(
-					BTSConstants.TEXT_VERS_BREAK_MARKER)) {
-				stringBuilder.append(BTSConstants.VERS_BREAK_MARKER_SIGN);
-			} else if (marker.getType().equals(
-					BTSConstants.BROKEN_VERS_MARKER)) {
-				stringBuilder.append(BTSConstants.BROKEN_VERS_MARKER_SIGN);
-				
-			} else if (marker.getType().equals(
-					BTSConstants.DESTROYED_VERS_MARKER)) {
-				stringBuilder.append(BTSConstants.DESTROYED_VERS_MARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DELETED_VERS_MARKER)) {
-				stringBuilder.append(BTSConstants.DELETED_VERS_MARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DISPUTABLE_VERS_MARKER)) {
-				stringBuilder.append(BTSConstants.DISPUTALBE_VERS_MARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.MISSING_VERS_MARKER)) {
-				stringBuilder.append(BTSConstants.MISSING_VERS_MARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DESTROYEDVERSMARKER)) {
-				stringBuilder.append(BTSConstants.DESTROYEDVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DELETEDVERSMARKER)) {
-				stringBuilder.append(BTSConstants.DELETEDVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DISPUTABLEVERSMARKER)) {
-				stringBuilder.append(BTSConstants.DISPUTABLEVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.RESTORATIONOVERRASURMARKER)) {
-				stringBuilder.append(BTSConstants.RESTORATIONOVERRASURMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.ANCIENTEXPANDEDMARKER)) {
-				stringBuilder.append(BTSConstants.ANCIENTEXPANDEDMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.RASURMARKER)) {
-				stringBuilder.append(BTSConstants.RASURMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.EMENDATIONVERSMARKER)) {
-				stringBuilder.append(BTSConstants.EMENDATIONVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DESTROYEDVERSFRONTIERMARKER)) {
-				stringBuilder.append(BTSConstants.DESTROYEDVERSFRONTIERMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.PARTIALDESTROYEDVERSMARKER)) {
-				stringBuilder.append(BTSConstants.PARTIALDESTROYEDVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.PARTIALDESTROYEDDISPUTABLEVERSMARKER)) {
-				stringBuilder.append(BTSConstants.PARTIALDESTROYEDDISPUTABLEVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DESTROYEDDISPUTABLEVERSFRONTIERMARKER)) {
-				stringBuilder.append(BTSConstants.DESTROYEDDISPUTABLEVERSFRONTIERMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DISPUTABLEDESTROYEDVERSMARKER)) {
-				stringBuilder.append(BTSConstants.DISPUTABLEDESTROYEDVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DELETEDDISPUTABLEVERSMARKER)) {
-				stringBuilder.append(BTSConstants.DELETEDDISPUTABLEVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.MISSINGDISPUTABLEVERSMARKER)) {
-				stringBuilder.append(BTSConstants.MISSINGDISPUTABLEVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DISPUTABLEDELETEDVERSMARKER)) {
-				stringBuilder.append(BTSConstants.DISPUTABLEDELETEDVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.PARTIALDESTROYEDDELETEDVERSMARKER)) {
-				stringBuilder.append(BTSConstants.PARTIALDESTROYEDDELETEDVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DESTROYEDDELETEDVERSMARKER)) {
-				stringBuilder.append(BTSConstants.DESTROYEDDELETEDVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DELETEDDESTROYEDVERSMARKER)) {
-				stringBuilder.append(BTSConstants.DELETEDDESTROYEDVERSMARKER_SIGN);
-				
-			}else if (marker.getType().equals(
-					BTSConstants.DESTRUCTION_MARKER)) {
-//				stringBuilder.append(MARKER_VERS_SIGN);
-				stringBuilder.append("--" + marker.getName() + "--");
-			}else {
-				pos.setOffset(pos.getOffset() +1);
-				stringBuilder.append(MARKER_START_SIGN);
-				stringBuilder.append(marker.getType());
-				if (marker.getName() != null && !"".equals(marker.getName())) {
-					stringBuilder.append(MARKER_INTERFIX);
-					stringBuilder.append(marker.getName());
-				}
-				stringBuilder.append(MARKER_END_SIGN);
-			}
-		}
-
-		pos.setLength(stringBuilder.length() - pos.getOffset());
-		return pos;
-	}
-
-	private void appendWordToModel(BTSWord word, IAnnotationModel model, Position position, Map<String, List<Object>> lemmaAnnotationMap) {
-		if (model == null)
-            return;
-
-		BTSModelAnnotation annotation;
-		if (word.getLKey() != null && !"".equals(word.getLKey())) {
-			annotation = new BTSLemmaAnnotation(BTSLemmaAnnotation.TYPE, word);
-			if (lemmaAnnotationMap != null)
-				add2LemmaAnnotationMap(word.getLKey(), annotation, lemmaAnnotationMap);
-
-		} else {
-			annotation = new BTSModelAnnotation(BTSModelAnnotation.TOKEN, (BTSIdentifiableItem) word);
-		}
-		model.addAnnotation(annotation, position);
-	}
-
-	private void add2LemmaAnnotationMap(String lemmaId, BTSModelAnnotation annotation, Map<String, List<Object>> lemmaAnnotationMap) {
-		List<Object> list = lemmaAnnotationMap.get(lemmaId);
-		if (list == null) {
-			list = new Vector<Object>(4);
-			lemmaAnnotationMap.put(lemmaId, list);
-		}
-		list.add(annotation);
-	}
-
-	private Position appendWordToStringBuilder(BTSWord word, StringBuilder stringBuilder) {
-		Position pos = new Position(stringBuilder.length());
-		if (word.getWChar() != null && !"".equals(word.getWChar().trim())) {
-			stringBuilder.append(word.getWChar().trim());
-			pos.setLength(word.getWChar().trim().length());
-		}
-		return pos;
-	}
-
-	private BTSWord createNewWord(String content) {
-		BTSWord word = textService.createNewWord();
-		word.setWChar(content);
-		return word;
-	}
-
-	private BTSModelAnnotation getAnnotation(Annotation annotation,
-			Iterator annotationIterator,
-			IAnnotationModel annotationModel, String content, int pos, int len)
-	{
-		if (annotation != null) {
-			Position position = annotationModel.getPosition(annotation);
-			if (position != null && position.getOffset() > pos)
-                return (BTSModelAnnotation) annotation;
-		}
-
-		while (annotationIterator.hasNext()) {
-			Object o = annotationIterator.next();
-			annotation = (Annotation) o;
-			if (!(annotation instanceof BTSModelAnnotation))
-				continue;
-
-			Position position = annotationModel.getPosition(annotation);
-			if (position != null && position.getOffset() >= pos)
-                return (BTSModelAnnotation) annotation;
-		}
-
-		if (annotation instanceof BTSModelAnnotation)
-			return (BTSModelAnnotation) annotation;
-
-		return null;
 	}
 
 	@Override
@@ -1082,31 +600,15 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	}
 
 	@Override
-	public BTSTextContent updateModelFromTextContent(
-			BTSTextContent textContent, EObject eo, IAnnotationModel am) {
-		BTSTextContent result = textModelHelper.updateModelFromTextContent(textContent, eo, am);
-		
-		// testing
-		EcoreUtil.EqualityHelper h = new EcoreUtil.EqualityHelper();
-		System.out.println("BTSTextEditorController.updateModelFromTextContent Model is structurally equal to original: " + h.equals(textContent, result));
-		
-		return result;
-	}
-
-
-
-	@Override
 	public BTSLemmaEntry findLemmaEntry(String lemmaId, IProgressMonitor monitor) {
 		return lemmaService.find(lemmaId, monitor);
 	}
-
-
 
 	@Override
     public boolean testTextValidAgainstGrammar(BTSTextContent textContent, BTSObject object) {
         try {
             Document doc = new Document();
-            transformToDocument(textContent, doc, null, null, null, null, null, DEFAULT_LINE_LENGTH);
+            transformToDocument(textContent, doc, null, null, null, null, null);
             Injector injector = findEgyDslInjector();
             XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
             resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
@@ -1126,7 +628,6 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
             return false;
         }
     }
-
 
 	@Override
 	public Injector findEgyDslInjector() {
@@ -1297,39 +798,4 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	public Collection<BTSSenctence> copySentences(Collection<BTSSenctence> sents) {
 		return textService.copySentences(sents);
     }
-
-	private class AnnotationCache {
-		private BTSModelAnnotation annotation;
-		private int start;
-		private int end;
-		
-		public AnnotationCache(BTSModelAnnotation modelAnnotation, int start) {
-			this.setAnnotation(modelAnnotation);
-			this.setStart(start);
-		}
-
-		public BTSModelAnnotation getAnnotation() {
-			return annotation;
-		}
-
-		public void setAnnotation(BTSModelAnnotation annotation) {
-			this.annotation = annotation;
-		}
-
-		public int getStart() {
-			return start;
-		}
-
-		public void setStart(int start) {
-			this.start = start;
-		}
-
-		public int getEnd() {
-			return end;
-		}
-
-		public void setEnd(int end) {
-			this.end = end;
-		}
-	}
 }

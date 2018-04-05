@@ -811,36 +811,22 @@ public class BTSWordImpl extends BTSIdentifiableItemImpl implements BTSWord {
 		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", sortKey: ");
-		result.append(sortKey);
-		result.append(", subtype: ");
-		result.append(subtype);
-		result.append(", wType: ");
-		result.append(wType);
-		result.append(", lType: ");
-		result.append(lType);
-		result.append(", lKey: ");
-		result.append(lKey);
-		result.append(", flexCode: ");
-		result.append(flexCode);
-		result.append(", wChar: ");
-		result.append(wChar);
-		result.append(", value: ");
-		result.append(value);
+        result.append(" (");
+        if (name        != null) { result.append("name:\"");    result.append(name);    result.append("\" "); }
+        if (type        != null) { result.append("type:\"");    result.append(type);    result.append("\" "); }
+        if (sortKey     != 0)    { result.append("sortKey: ");  result.append(sortKey); result.append("\" "); }
+        if (subtype     != null) { result.append("subtype:\""); result.append(subtype); result.append("\" "); }
+        if (wType       != null) { result.append("wType:\"");   result.append(wType);   result.append("\" "); }
+        if (lType       != null) { result.append("lType:\"");   result.append(lType);   result.append("\" "); }
+        if (lKey        != null) { result.append("lKey:\"");    result.append(lKey);    result.append("\" "); }
+        if (flexCode    != null) { result.append("flexCode:\"");result.append(flexCode);result.append("\" "); }
+        if (wChar       != null) { result.append("wChar:\"");   result.append(wChar);   result.append("\" "); }
+        if (value       != null) { result.append("value:\"");   result.append(value);   result.append("\" "); }
 		result.append(')');
 		return result.toString();
 	}

@@ -16,6 +16,13 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Event;
 
+/** Text selection wrapper
+ *
+ * This class has triple purpose.
+ * * It is used to encapsulate text selection events in the EgyTextEditor
+ * * It is also used to encapsulate cursor events in the EgyTextEditor (as zero-length selections)
+ * * ...finally, it is used to store the selection used for copy-pasting.
+ */
 public class BTSTextSelectionEvent extends Event {
 	
 	private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);

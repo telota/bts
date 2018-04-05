@@ -460,7 +460,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 	public void setInput(BTSObject btsObject, BTSTextContent textContent, List<BTSObject> relatingObjects, IProgressMonitor monitor, Object localSelectedTextItem) {
 		this.textContent = textContent;
 		this.btsObject = btsObject;
-		this.relatingObjectsMap =  textEditorController.fillRelatingObjectsMap(relatingObjects);
+		this.relatingObjectsMap = textEditorController.fillRelatingObjectsMap(relatingObjects);
 
 		if (textContent == null) {
 			purgeAll();
