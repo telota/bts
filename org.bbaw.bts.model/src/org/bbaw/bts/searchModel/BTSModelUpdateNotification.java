@@ -30,13 +30,15 @@
 package org.bbaw.bts.searchModel;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class BTSModelUpdateNotification
 {
 
 	private Object object;
 
-	private List<String> queryIds;
+	private List<String> queryIds = Collections.emptyList();
 
 	private boolean loaded;
 
@@ -44,38 +46,26 @@ public class BTSModelUpdateNotification
 
 	private boolean deleted;
 
-	/**
-	 * @return the object
-	 */
 	public Object getObject()
 	{
 		return object;
 	}
 
-	/**
-	 * @param object
-	 *            the object to set
-	 */
 	public void setObject(Object object)
 	{
 		this.object = object;
 	}
 
-	/**
-	 * @return the queryIds
-	 */
 	public List<String> getQueryIds()
 	{
 		return queryIds;
 	}
 
-	/**
-	 * @param queryIds
-	 *            the queryIds to set
-	 */
-	public void setQueryIds(List<String> queryIds)
-	{
-		this.queryIds = queryIds;
+	public void setQueryIds(List<String> queryIds) {
+        if (queryIds == null)
+            this.queryIds = Collections.emptyList();
+        else
+            this.queryIds = queryIds;
 	}
 
 	public boolean isLoaded()
@@ -107,5 +97,4 @@ public class BTSModelUpdateNotification
 	{
 		this.deleted = deleted;
 	}
-
 }

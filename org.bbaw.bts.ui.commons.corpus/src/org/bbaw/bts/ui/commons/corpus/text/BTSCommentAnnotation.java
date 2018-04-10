@@ -9,19 +9,18 @@ import org.bbaw.bts.core.commons.corpus.CorpusUtils;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.validation.Issue;
 
-public class BTSCommentAnnotation extends BTSModelAnnotation {
+public class BTSCommentAnnotation extends BTSReferenceAnnotation {
 
 	private BTSComment comment;
 
-	public BTSCommentAnnotation(BTSIdentifiableItem model, BTSInterTextReference interTextReference, BTSComment comment) {
-		super(model, interTextReference, comment);
-		this.setComment(comment);
+	public BTSCommentAnnotation(BTSIdentifiableItem item, BTSInterTextReference ref, BTSComment com) {
+		super(item, ref, com);
+		this.setComment(com);
 	}
 
-	public BTSCommentAnnotation(IXtextDocument document, Issue issue,
-			BTSIdentifiableItem modelObject, BTSComment btsComment) {
-		super(CorpusUtils.getTypeIdentifier(btsComment),document, issue, modelObject);
-		this.setComment(btsComment);
+	public BTSCommentAnnotation(IXtextDocument doc, Issue issue, BTSIdentifiableItem item, BTSComment com) {
+		super(CorpusUtils.getTypeIdentifier(com), doc, issue, item);
+		this.setComment(com);
 	}
 
 

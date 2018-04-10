@@ -3,6 +3,7 @@ package org.bbaw.bts.ui.egy.textSign.support;
 import java.util.List;
 
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
+import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.eclipse.draw2d.IFigure;
 
@@ -24,9 +25,9 @@ public interface ElementFigure extends IFigure {
 
 	public int getLength();
 
-	public Object getModelObject();
+	public BTSIdentifiableItem getModelObject();
 
-	public void setModelObject(Object modelObject);
+	public void setModelObject(BTSIdentifiableItem modelObject);
 
 	public String getType();
 

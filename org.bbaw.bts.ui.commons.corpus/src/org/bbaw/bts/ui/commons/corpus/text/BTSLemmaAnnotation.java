@@ -1,6 +1,7 @@
 package org.bbaw.bts.ui.commons.corpus.text;
 
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
+import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 
 public class BTSLemmaAnnotation extends BTSModelAnnotation {
 
@@ -15,7 +16,7 @@ public class BTSLemmaAnnotation extends BTSModelAnnotation {
 	}
 
 	public BTSLemmaAnnotation(BTSIdentifiableItem model, BTSLemmaEntry lemma) {
-		super(model);
+		super(TYPE, model);
         setRelatingObject(lemma);
 	}
 }

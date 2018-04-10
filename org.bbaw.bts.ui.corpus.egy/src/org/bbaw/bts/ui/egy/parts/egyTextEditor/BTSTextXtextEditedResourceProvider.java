@@ -15,10 +15,7 @@ public class BTSTextXtextEditedResourceProvider implements
 	public XtextResource createResource() {
 		try {
 			ResourceSet resourceSet = new ResourceSetImpl();
-			Resource resource = resourceSet.createResource(URI
-					.createURI(VIRTUAL_FILE_NAME));
-
-			return (XtextResource) resource;
+			return (XtextResource) resourceSet.createResource(URI.createURI(VIRTUAL_FILE_NAME));
 		} catch (Exception e) {
 			return null;
 		}

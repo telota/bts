@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Collection;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
+import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSCorpusObject;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSLemmaEntry;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSSenctence;
@@ -33,7 +34,7 @@ public interface BTSTextEditorController {
 	String[] splitSignsKeepDelimeters(String mdC);
 	String insertMarkerBehindSingleCode(String mdcString, String marker);
 	
-	List<BTSObject> getRelatingObjects(BTSText text, IProgressMonitor monitor);
+    List<BTSObject> queryReferences(BTSIdentifiableItem item, IProgressMonitor monitor);
 	HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects);
 	BTSText createNewText(BTSCorpusObject parentObject);
 	

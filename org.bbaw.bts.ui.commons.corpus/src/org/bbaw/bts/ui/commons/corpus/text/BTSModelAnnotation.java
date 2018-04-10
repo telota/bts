@@ -27,7 +27,6 @@ public class BTSModelAnnotation extends XtextAnnotation
 	
 	private boolean highlighted = false;
 
-	
 	public BTSModelAnnotation(String type, BTSIdentifiableItem model)
 	{
 		this(type, null, new Issue.IssueImpl(), model);

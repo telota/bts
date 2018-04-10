@@ -552,7 +552,6 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 		};
 		
 		processLemmaAnnotionsJob.schedule();		
-
 	}
 
 	protected void updateModelFromTranscription()
@@ -864,8 +863,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 	private void loadTranslation(BTSLemmaEntry selection) {
 		if (selection == null)
 		{
-			lemmaTranslate_Editor.load(null,
-					null, false);
+			lemmaTranslate_Editor.load((BTSTranslations)null, null, false);
 			return;
 		}
 		BTSTranslations translations = selection.getTranslations();
@@ -875,8 +873,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 			selection.setTranslations(translations);
 			if (dirty != null) dirty.setDirty(true);
 		}
-		lemmaTranslate_Editor.load(translations,
-				editingDomain, false);
+		lemmaTranslate_Editor.load(translations, editingDomain, false);
 		
 	}
 
@@ -956,7 +953,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 	}
 
 	@Override
-	public void setEditorSelection(final Object selection) {
+	public void childSelectionChanged(final BTSIdentifiableItem selection) {
 		if (selection != null) {
 			sync.asyncExec(new Runnable() {
 

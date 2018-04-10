@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.bbaw.bts.btsmodel.BTSObject;
+import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSTranslation;
 import org.bbaw.bts.btsmodel.BTSTranslations;
 import org.bbaw.bts.btsmodel.BtsmodelFactory;
@@ -645,9 +646,7 @@ public class EgyLemmatizerPart implements SearchViewer {
 		wordTranslate_Editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
 				true, true));
 		wordTranslate_Editor.layout();
-		wordTranslate_Editor
-				.addLanguageSelectionListener(new SelectionAdapter() {
-
+		wordTranslate_Editor.addLanguageSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
 						// language selection in wordTranslation editor changes.
@@ -713,9 +712,8 @@ public class EgyLemmatizerPart implements SearchViewer {
 		part = partService.findPart(BTSPluginIDs.PART_ID_LEMMATIZER);
 		setUserMayEditInteral(userMayEdit && currentWord != null && activateButton.getSelection());
 
-		if (selectionCached && selection instanceof BTSText) {
-			setSelection((BTSText) selection);
-		}
+		if (selectionCached && selection instanceof BTSText)
+			childSelectionChanged((BTSText) selection);
 	}
 
 	protected void loadChildren(final TreeNodeWrapper node, boolean b, String prefix) {
@@ -771,8 +769,7 @@ public class EgyLemmatizerPart implements SearchViewer {
 			// if chosen lemma has translations, pick those for language selected
 			// in translations editor
 			String lang = wordTranslate_Editor.getLanguage();
-			BTSTranslation trans = entry.getTranslations().getBTSTranslation(
-					lang);
+			BTSTranslation trans = entry.getTranslations().getBTSTranslation(lang);
 			// if none found for selected language, fallback to de or en
 			if (trans == null) {
 				trans = entry.getTranslations().getBTSTranslation("de");
@@ -826,8 +823,8 @@ public class EgyLemmatizerPart implements SearchViewer {
 	}
 
 	@Inject
-	void setSelection(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSCorpusObject selection) {
+	public void childSelectionChanged(
+			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSIdentifiableItem selection) {
 		if (selection == null)
 			return;
 		if (part == null) {
@@ -839,11 +836,11 @@ public class EgyLemmatizerPart implements SearchViewer {
 					if (selection instanceof BTSText
 							|| selection instanceof BTSLemmaEntry) {
 						clearAllInput();
-						corpusObject = selection;
+						corpusObject = (BTSCorpusObject)selection;
 						currentWord = null;
 
-						part.setLabel(selection.getName());
-						editingDomain = getEditingdomain(selection);
+						part.setLabel(corpusObject.getName());
+						editingDomain = getEditingdomain(corpusObject);
 //						setUserMayEdit(userMayEdit);
 					} else if (corpusObject != null) {
 						corpusObject = null;
@@ -859,10 +856,10 @@ public class EgyLemmatizerPart implements SearchViewer {
 		} else if (!selection.equals(corpusObject)) {
 			if (selection instanceof BTSText
 					|| selection instanceof BTSLemmaEntry) {
-				corpusObject = selection;
+				corpusObject = (BTSCorpusObject)selection;
 				currentWord = null;
-				part.setLabel(selection.getName());
-				editingDomain = getEditingdomain(selection);
+				part.setLabel(corpusObject.getName());
+				editingDomain = getEditingdomain(corpusObject);
 			} else if (corpusObject != null) {
 				corpusObject = null;
 				currentWord = null;
@@ -889,7 +886,7 @@ public class EgyLemmatizerPart implements SearchViewer {
 							if (event.getParentObject() != null
 									&& !event.getParentObject().equals(
 											corpusObject)) {
-								setSelection((BTSCorpusObject) event
+								childSelectionChanged((BTSCorpusObject) event
 										.getParentObject());
 							}
 							setSelectionInternal(w, event.type);
@@ -906,7 +903,7 @@ public class EgyLemmatizerPart implements SearchViewer {
 				} else if (w != null) {
 					if (event.getParentObject() != null
 							&& !event.getParentObject().equals(corpusObject))
-						setSelection((BTSCorpusObject) event.getParentObject());
+						childSelectionChanged((BTSCorpusObject) event.getParentObject());
 					currentWord = w;
 					selectionCached = true;
 				}
@@ -1128,7 +1125,7 @@ public class EgyLemmatizerPart implements SearchViewer {
 
 	private void loadTranslation(BTSWord word) {
 		if (word == null) {
-			wordTranslate_Editor.load(null, null, false);
+			wordTranslate_Editor.load((BTSTranslations)null, null, false);
 			return;
 		}
 		BTSTranslations translations = word.getTranslation();

@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
+import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.graphics.Color;
@@ -12,7 +13,7 @@ import org.eclipse.swt.graphics.Color;
 public class ElementFigureImpl extends RoundedRectangle implements
 		ElementFigure {
 
-	private Object modelObject;
+	private BTSIdentifiableItem modelObject;
 
 	private String type;
 	
@@ -28,11 +29,11 @@ public class ElementFigureImpl extends RoundedRectangle implements
 		return d.intValue();
 	}
 
-	public Object getModelObject() {
+	public BTSIdentifiableItem getModelObject() {
 		return modelObject;
 	}
 
-	public void setModelObject(Object modelObject) {
+	public void setModelObject(BTSIdentifiableItem modelObject) {
 		this.modelObject = modelObject;
 	}
 

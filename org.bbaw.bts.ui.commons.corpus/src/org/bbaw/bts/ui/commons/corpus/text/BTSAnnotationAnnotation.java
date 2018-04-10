@@ -7,7 +7,7 @@ import org.bbaw.bts.corpus.btsCorpusModel.BTSAnnotation;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.validation.Issue;
 
-public class BTSAnnotationAnnotation extends BTSModelAnnotation {
+public class BTSAnnotationAnnotation extends BTSReferenceAnnotation {
 
 	
 	public BTSAnnotationAnnotation(IXtextDocument document, Issue issue,

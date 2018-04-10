@@ -18,6 +18,7 @@ public interface LemmaEditorController {
 	void transformToDocument(BTSTextContent textContent, Document doc, IAnnotationModel model, List<BTSObject> relatingObjects, 
 			Map<String, List<BTSInterTextReference>> relatingObjectsMap,
 			Map<String, List<Object>> lemmaAnnotationMap);
+    BTSTextContent updateModelFromTextContent(BTSTextContent textContent, EObject eo, IAnnotationModel am);
 	boolean save(BTSLemmaEntry lemmaEntry);
 	BTSLemmaEntry findLemmaEntry(String lemmaId, IProgressMonitor monitor);
 	List<BTSLemmaEntry> listInAllInvalidLemmata(IProgressMonitor monitor);

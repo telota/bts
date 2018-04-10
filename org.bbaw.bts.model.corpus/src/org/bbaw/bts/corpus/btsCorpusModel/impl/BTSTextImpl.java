@@ -32,6 +32,7 @@ package org.bbaw.bts.corpus.btsCorpusModel.impl;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSText;
 import org.bbaw.bts.corpus.btsCorpusModel.BTSTextContent;
 import org.bbaw.bts.corpus.btsCorpusModel.BtsCorpusModelPackage;
+import org.bbaw.bts.commons.BTSConstants;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -87,6 +88,8 @@ public class BTSTextImpl extends BTSCorpusObjectImpl implements BTSText {
 	 * @generated
 	 */
 	public BTSTextContent getTextContent() {
+        if (textContent == null)
+            this.textContent = new BTSTextContentImpl();
 		return textContent;
 	}
 

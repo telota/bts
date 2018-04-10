@@ -87,7 +87,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 
-public class SignTextComposite extends Composite implements IBTSEditor {
+public class SignTextComposite extends Composite {
+    /* FIXME implement enabled logic */
 
 	public static final Color COLOR_WORD_DESELECTED = ColorConstants.white;
 	public static final Color COLOR_WORD_SELECTED = ColorConstants.yellow;
@@ -105,7 +106,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 	public static final int MAX_IMAGE_SIZE = 200;
 
 	@Inject private BTSTextEditorController textEditorController;
-	@Inject private IBTSEditor parentEditor;
+	@Inject private IBTSEditor parentPart;
 	@Inject private UISynchronize sync;
 	@Inject private BTSResourceProvider resourceProvider;
 	
@@ -162,7 +163,6 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 	private BTSTextContent textContent;
 	private BTSObject btsObject;
 	private List<Image> imageList = new Vector<Image>(1000);
-	private boolean enabled;
 
 	private MouseListener elementSelectionListener = new MouseListener() {
         @Override
@@ -1011,33 +1011,14 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		}
 
 		figure.repaint();
-
-		if (parentEditor != null) {
-			Event e = new Event();
-			e.widget = this;
-			TypedEvent ev = new TypedEvent(e);
-			BTSTextSelectionEvent event = new BTSTextSelectionEvent(ev, btsObject);
-			event.type = eventType;
-			event.data = textContent.eContainer();
-			event.getRelatingObjects().addAll(figure.getRelatingObjects());
-			BTSIdentifiableItem item = (BTSIdentifiableItem) figure.getModelObject();
-
-			if (item instanceof BTSSentenceItem) {
-				event.setEndId(item.get_id());
-				event.setStartId(item.get_id());
-                event.getSelectedItems().add((BTSSentenceItem)item);
-			}
-			
-			event.getInterTextReferences().addAll(figure.getInterTextReferences());
-			parentEditor.setEditorSelection(event);
-		}
+        parentPart.childSelectionChanged(figure.getModelObject());
 	}
 
     public BTSIdentifiableItem getSelectedItem() {
         if (selectedElement == null)
             return null;
 
-        return (BTSIdentifiableItem)selectedElement.getModelObject();
+        return selectedElement.getModelObject();
     }
 
 	public void reveal(IFigure target) {
@@ -1139,12 +1120,6 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 
 	private String transformWordToMdCString(BTSWord word) {
 		return textEditorController.transformWordToMdCString(word, -1);
-	}
-
-	@Override
-	public void setEditorSelection(Object selection) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void setTextSelectionEvent(String event) {
@@ -1267,7 +1242,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 	private boolean unprocessedWord(ElementFigure figure, int type ) {
 		if (!(figure instanceof WordFigure))
 			return false;
-		Object o = ((WordFigure)figure).getModelObject();
+		BTSIdentifiableItem o = ((WordFigure)figure).getModelObject();
 
 		if (!(o instanceof BTSWord))
 			return false;
@@ -1300,7 +1275,7 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 			return;
 
 		WordFigure wf = (WordFigure) figure;
-		Object o = wf.getModelObject();
+		BTSIdentifiableItem o = wf.getModelObject();
 		if (word == null && o instanceof BTSWord)
 			word = (BTSWord) o;
 
@@ -1356,12 +1331,9 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		return true;
 	}
 
-	public void addRelatingObjectNotification(BTSModelUpdateNotification notification) {
-		if (!(notification.getObject() instanceof BTSObject))
-			return;
+	public void addRelatingObjectNotification(BTSObject object) {
 		if (relatingObjectFigureMap == null)
 			return;
-		BTSObject object = (BTSObject) notification.getObject();
 
 		// remove old annotations
 		List<ElementFigure> figures = relatingObjectFigureMap.get(object.get_id());
@@ -1403,12 +1375,9 @@ public class SignTextComposite extends Composite implements IBTSEditor {
 		}
 	}
 
-	public void clearContent() {
-		canvas.redraw();
-	}
-	
 	@Override
 	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
+        Color c = enabled ? BTSUIConstants.COLOR_WIHTE : BTSUIConstants.COLOR_BACKGROUND_DISABLED;
+        setBackground(c);
 	}
 }

@@ -1,7 +1,9 @@
 package org.bbaw.bts.ui.commons.corpus.interfaces;
 
+import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
+
 public interface IBTSEditor {
 
-	void setEditorSelection(Object selection);
+	void childSelectionChanged(BTSIdentifiableItem selection);
 
 }

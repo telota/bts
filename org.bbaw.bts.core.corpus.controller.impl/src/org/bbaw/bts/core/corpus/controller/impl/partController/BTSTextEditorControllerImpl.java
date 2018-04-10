@@ -28,13 +28,13 @@ import jsesh.mdcDisplayer.draw.MDCDrawingFacade;
 import jsesh.mdcDisplayer.preferences.DrawingSpecification;
 import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
 
+import org.bbaw.bts.ui.egy.parts.TextUpdater;
 import org.bbaw.bts.btsmodel.BTSComment;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
 import org.bbaw.bts.btsmodel.BTSInterTextReference;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSRelation;
 import org.bbaw.bts.commons.BTSConstants;
-import org.bbaw.bts.core.corpus.controller.impl.partController.support.ModelUpdater;
 import org.bbaw.bts.core.corpus.controller.partController.BTSTextEditorController;
 import org.bbaw.bts.core.dao.util.BTSQueryRequest;
 import org.bbaw.bts.core.services.BTSCommentService;
@@ -102,18 +102,6 @@ import com.google.inject.Injector;
 
 public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	private static final String MDC_DELIMETERS = ":-<>*";
-	private static final String SENTENCE_SIGN = "\u00A7";
-	private static final String AMBIVALENCE_START_SIGN = "\u0025";
-	private static final String AMBIVALENCE_END_SIGN = "\u0025";
-	private static final String LEMMA_CASE_TERMIAL = "case";
-	private static final String LEMMA_CASE_SEPARATOR = "| ";
-	private static final String WS = " ";
-	private static final String LEMMA_CASE_INTERFIX = ": ";
-	private static final String MARKER_START_SIGN = "\u0023";
-	private static final String MARKER_END_SIGN = "\u0023";
-	
-//	private static final String MARKER_VERS_SIGN = "\u0040";
-	private static final String MARKER_INTERFIX = ": ";
 	private static final String MDC_IGNORE = "\\i";
 	private static final String MDC_SELECTION = "\\red";
 	
@@ -127,6 +115,28 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	@Inject private CorpusObjectService corpusObjectService;
 	@Inject private BTSCommentService commentService; 
 	@Inject private BTSLemmaEntryService lemmaService; 
+	
+
+	@Override
+	public List<BTSObject> queryReferences(BTSIdentifiableItem item, IProgressMonitor monitor) {
+        /* TODO directly query for relations here and access .eContainer instead of querying for the container and then
+         * fiddling out the relation */
+		BTSQueryRequest query = new BTSQueryRequest();
+		query.setQueryBuilder(QueryBuilders.matchQuery("relations.objectId", item.get_id()));
+		query.setQueryId("relations.objectId-" + item.get_id());
+
+		List<BTSCorpusObject> obs = corpusObjectService.query(query, BTSConstants.OBJECT_STATE_ACTIVE, monitor);
+		List<BTSObject> result = new Vector<BTSObject>(obs);
+
+		if (monitor != null) {
+			if (monitor.isCanceled())
+                return result;
+			monitor.beginTask("Load comments", IProgressMonitor.UNKNOWN);
+		}
+
+		result.addAll(commentService.query(query, BTSConstants.OBJECT_STATE_ACTIVE, true, monitor));
+		return result;
+	}
 	
     public HashMap<String, List<BTSInterTextReference>> fillRelatingObjectsMap(List<BTSObject> relatingObjects) {
 		HashMap<String, List<BTSInterTextReference>> relatingObjectsMap = new HashMap<String, List<BTSInterTextReference>>();
@@ -496,29 +506,6 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	}
 
 	@Override
-	public List<BTSObject> getRelatingObjects(BTSText text, IProgressMonitor monitor) {
-		BTSQueryRequest query = new BTSQueryRequest();
-		query.setQueryBuilder(QueryBuilders.matchQuery("relations.objectId",
-				text.get_id()));
-		query.setQueryId("relations.objectId-" + text.get_id());
-		System.out.println(query.getQueryId());
-		List<BTSObject> children = new Vector<BTSObject>();
-		List<BTSCorpusObject> obs = corpusObjectService.query(query,
-				BTSConstants.OBJECT_STATE_ACTIVE, monitor);
-		for (BTSCorpusObject o : obs)
-		{
-			children.add(o);
-		}
-		if (monitor != null)
-		{
-			if (monitor.isCanceled()) return children;
-			monitor.beginTask("Load comments", IProgressMonitor.UNKNOWN);
-		}
-		children.addAll(commentService.query(query, BTSConstants.OBJECT_STATE_ACTIVE, true, monitor));
-		return children;
-	}
-	
-	@Override
 	public boolean checkAndFullyLoad(BTSCorpusObject object, boolean checkForConflicts)
 	{
 		return corpusObjectService.checkAndFullyLoad(object, checkForConflicts);
@@ -607,13 +594,14 @@ public class BTSTextEditorControllerImpl implements BTSTextEditorController {
 	@Override
     public boolean testTextValidAgainstGrammar(BTSTextContent textContent, BTSObject object) {
         try {
-            Document doc = new Document();
-            transformToDocument(textContent, doc, null, null, null, null, null);
+            TextUpdater upd = new TextUpdater(lemmaService);
+            upd.generateFromModel(textContent);
+
             Injector injector = findEgyDslInjector();
             XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
             resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
             Resource resource = resourceSet.createResource(URI.createURI("dummy:/" + object.get_id() + ".egydsl"));
-            InputStream in = new ByteArrayInputStream(doc.get().getBytes(Charset.forName("UTF-8")));
+            InputStream in = new ByteArrayInputStream(upd.getContent().getBytes(Charset.forName("UTF-8")));
             try {
                 resource.load(in, resourceSet.getLoadOptions());
             } catch (IOException e) {

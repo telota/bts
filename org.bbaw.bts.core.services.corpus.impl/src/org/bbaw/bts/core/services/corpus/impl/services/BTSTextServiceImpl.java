@@ -84,14 +84,12 @@ public class BTSTextServiceImpl extends AbstractCorpusObjectServiceImpl<BTSText,
 	public void update(BTSText entity)
 	{
 		textDao.update(entity, entity.getDBCollectionKey());
-
 	}
 
 	@Override
 	public void remove(BTSText entity)
 	{
 		textDao.remove(entity, entity.getDBCollectionKey());
-
 	}
 
 	@Override

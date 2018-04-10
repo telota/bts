@@ -74,8 +74,7 @@ public class Backend2ClientUpdateServiceImpl implements Backend2ClientUpdateServ
 				// might match
 				if (notification.isLoaded())
 				{
-					if (notification.getQueryIds() != null)
-					{
+					if (!notification.getQueryIds().isEmpty()) {
 						List<String> queryIds = updateDao.fingQueryIds(notification.getObject(),
 								((BTSDBBaseObject) notification.getObject()).get_id(), notification.getDbCollection());
 						notification.setQueryIds(queryIds);

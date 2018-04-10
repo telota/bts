@@ -1,6 +1,7 @@
 package org.bbaw.bts.ui.commons.corpus.text;
 import org.bbaw.bts.ui.resources.BTSResourceProvider;
 import org.bbaw.bts.btsmodel.BTSIdentifiableItem;
+import org.bbaw.bts.corpus.btsCorpusModel.BTSSenctence;
 import org.eclipse.jface.text.source.ImageUtilities;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -17,6 +18,14 @@ public class BTSSentenceAnnotation extends BTSModelAnnotation {
 	public BTSSentenceAnnotation(String type, BTSIdentifiableItem model) {
 		super(type, model);
 	}
+
+	public BTSSentenceAnnotation(BTSSenctence model) {
+		super(TYPE, model);
+	}
+
+    public BTSSenctence getModel() {
+        return (BTSSenctence)getModel();
+    }
 	
 	@Override
 	public void paint(GC gc, Canvas canvas, Rectangle bounds) {

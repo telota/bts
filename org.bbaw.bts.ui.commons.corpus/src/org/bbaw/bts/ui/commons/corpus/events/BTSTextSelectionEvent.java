@@ -1,6 +1,7 @@
 package org.bbaw.bts.ui.commons.corpus.events;
 
 import java.util.List;
+import java.util.Collection;
 import java.util.Vector;
 
 import org.bbaw.bts.ui.commons.corpus.text.BTSModelAnnotation;
@@ -28,8 +29,8 @@ public class BTSTextSelectionEvent extends Event {
 	private List<BTSObject> relatingObjects = new Vector<BTSObject>(4);
 	private List<BTSModelAnnotation> textAnnotations = new Vector<BTSModelAnnotation>(4);
 	private List<BTSInterTextReference> interTextReferences = new Vector<BTSInterTextReference>(4);
-	private List<BTSSentenceItem> selectedItems = new Vector<BTSSentenceItem>(4);
-	private List<BTSSenctence> selectedSentences = new Vector<BTSSenctence>(4);
+	private Collection<BTSSentenceItem> selectedItems = new Vector<BTSSentenceItem>(4);
+	private Collection<BTSSenctence> selectedSentences = new Vector<BTSSenctence>(4);
     private List<BTSModelAnnotation> relatedObjectAnnotations = new Vector<BTSModelAnnotation>(4);
 	private String startId;
 	private String endId;
@@ -99,8 +100,7 @@ public class BTSTextSelectionEvent extends Event {
 		return interTextReferences;
 	}
 
-	public void setInterTextReferences(
-			List<BTSInterTextReference> interTextReferences) {
+	public void setInterTextReferences(List<BTSInterTextReference> interTextReferences) {
 		this.interTextReferences = interTextReferences;
 	}
 
@@ -112,20 +112,20 @@ public class BTSTextSelectionEvent extends Event {
      * in: [foo, Ambivalence(case1=foo !bar, case2=bar baz), frob, Ambivalence(case1=frob, case2=narf) blep! frob]
      * out: [frob Ambivalence(case1=frob, case2=narf) blep]
      */
-	public List<BTSSentenceItem> getSelectedItems() {
+	public Collection<BTSSentenceItem> getSelectedItems() {
 		return selectedItems;
 	}
 
-	public void setSelectedItems(List<BTSSentenceItem> selectedItems) {
+	public void setSelectedItems(Collection<BTSSentenceItem> selectedItems) {
 		this.selectedItems = selectedItems;
 	}
 
     /* Returns the sentences selected in this event. */
-    public List<BTSSenctence> getSelectedSentences() {
+    public Collection<BTSSenctence> getSelectedSentences() {
 		return selectedSentences;
 	}
 
-	public void setSelectedSentences(List<BTSSenctence> selectedSentences) {
+	public void setSelectedSentences(Collection<BTSSenctence> selectedSentences) {
 		this.selectedSentences = selectedSentences;
 	}
 
@@ -178,10 +178,6 @@ public class BTSTextSelectionEvent extends Event {
 	public void setParentObject(BTSObject parentObject) {
 		this.parentObject = parentObject;
 	}
-
-    public List<BTSModelAnnotation> getRelatedObjectAnnotations() {
-        return relatedObjectAnnotations;
-    }
 
     public void setRelatedObjectAnnotations(List<BTSModelAnnotation> foo) {
         relatedObjectAnnotations = foo;
