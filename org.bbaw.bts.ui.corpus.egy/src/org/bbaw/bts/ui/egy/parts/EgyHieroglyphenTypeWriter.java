@@ -703,25 +703,25 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
 	}
 
 	@Inject
-	void setSelection(
-			@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSTextSelectionEvent selection) {
-		if (selection == null) return;
+	void setSelection(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) BTSTextSelectionEvent selection) {
+		if (selection == null)
+            return;
+
 		if (constructed) {
 			if (!selfSelecting) {
 				if (selection == null) {
 					/* implementation not shown */
 				} else if (!selection.getSelectedItems().isEmpty()) {
-					if (selection.getSelectedItems().get(0) instanceof BTSWord) {
+                    Object first = selection.getSelectedItems().iterator().next();
+					if (first instanceof BTSWord) {
 						
 						// make sure the right text is set
 						if (selection.getParentObject() != null && !selection.getParentObject().equals(corpusObject))
 						{
 							setSelection((BTSCorpusObject) selection.getParentObject());
 						}
-						selectionObject = (BTSIdentifiableItem) selection.getSelectedItems()
-								.get(0);
-						setSelectionInteral((BTSWord) selection
-								.getSelectedItems().get(0));
+						selectionObject = (BTSIdentifiableItem) first;
+						setSelectionInteral((BTSWord) first);
 						ignoreGlyph_Button.setSelection(false);
 						loaded = true;
 					} else if (loaded)
@@ -736,51 +736,20 @@ public class EgyHieroglyphenTypeWriter implements ScatteredCachingPart,
 			} else {
 				selfSelecting = false;
 			}
+            return;
 		}
-		else if (selection != null && selection.getSelectedItems() != null 
-				&& !selection.getSelectedItems().isEmpty() && selection.getSelectedItems().get(0) instanceof BTSWord)
-		{
+
+		if (selection != null && selection.getSelectedItems() != null && !selection.getSelectedItems().isEmpty()) {
+            Object first = selection.getSelectedItems().iterator().next();
+            if (!(first instanceof BTSWord))
+                return;
+
 			if (selection.getParentObject() != null && !selection.getParentObject().equals(corpusObject))
-			{
 				setSelection((BTSCorpusObject) selection.getParentObject());
-			}
-			currentWord = (BTSWord) selection.getSelectedItems().get(0);
+
+			currentWord = (BTSWord) first;
 			selectionCached = true;
 		}
-		// FIXME old delete!
-//		if (!selfSelecting) {
-//
-//			if (selection != null) {
-//
-//				if (!selection.getSelectedItems().isEmpty()
-//						&& !selection.getSelectedItems().get(0)
-//								.equals(selectionObject)
-//						&& (selection.getSelectedItems().get(0) instanceof BTSSentenceItem 
-//								|| selection.getSelectedItems().get(0) instanceof BTSLemmaCase)) {
-//
-//					if (selectionObject == null || !selectionObject.equals(selection.getSelectedItems()
-//							.get(0)))
-//					{
-//						saveMdCstring(currentWord);
-//						selectionObject = (BTSObject) selection.getSelectedItems()
-//								.get(0);
-//						if (selection.getSelectedItems().get(0) instanceof BTSWord && loaded) {
-//							setSelectionInteral(selection.getSelectedItems().get(0));
-//							ignoreGlyph_Button.setSelection(false);
-//						}
-////						else if (loaded) loadMdCString("");
-//					}
-//				}
-//				else
-//				{
-//					selectionObject = null;
-////					loadMdCString("");
-//				}
-//
-//			}
-//		} else {
-//			selfSelecting = false;
-//		}
 	}
 	
 	private void purgeAll() {

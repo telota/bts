@@ -980,7 +980,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 						// get selected item, add listener to domain
 						if (!((BTSTextSelectionEvent)selection).getSelectedItems().isEmpty())
 						{
-							editingDomain = getEditingDomain((EObject)  ((BTSTextSelectionEvent)selection).getSelectedItems().get(0));
+							editingDomain = getEditingDomain((EObject)  ((BTSTextSelectionEvent)selection).getSelectedItems().iterator().next());
 							editingDomain.getCommandStack().addCommandStackListener(
 									getCommandStackListener());
 						}

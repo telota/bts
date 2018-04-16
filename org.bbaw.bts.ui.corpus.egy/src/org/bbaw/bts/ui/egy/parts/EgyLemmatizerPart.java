@@ -876,9 +876,10 @@ public class EgyLemmatizerPart implements SearchViewer {
 		if (event != null && !event.equals(lastEvent)) {
 			lastEvent = event;
 			if (!event.getSelectedItems().isEmpty()) {
+                Object o = event.getSelectedItems().iterator().next();
 				BTSWord w = null;
-				if (event.getSelectedItems().get(0) instanceof BTSWord)
-					w = (BTSWord)event.getSelectedItems().get(0);
+				if (o instanceof BTSWord)
+					w = (BTSWord)o;
 				if (constructed) {
 					if (!selfSelecting) {
 						if (w != null) {

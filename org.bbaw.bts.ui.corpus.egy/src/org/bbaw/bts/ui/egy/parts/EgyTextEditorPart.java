@@ -470,7 +470,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 
                 MenuItem itemCopy = new MenuItem(menu, SWT.NONE);
                 itemCopy.setText("Copy with Lemmata" );
-                sentPaste.setEnabled(!syntaxErrors);
+                itemCopy.setEnabled(!syntaxErrors);
                 itemCopy.addSelectionListener(new SelectionAdapter() {
                     public void widgetSelected(SelectionEvent e) {
                         copyTextWithLemmata();
@@ -550,11 +550,11 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
     private BTSTextSelectionEvent probeCurrentTextSelection() {
         TextSelection selection = (TextSelection)embeddedEditor.getViewer().getSelection();
         BTSTextSelectionEvent evt = new BTSTextSelectionEvent(selection, text);
-        evt.setSelectedItems(getSelectedItems());
-        evt.setSelectedSentences(getSelectedSentences());
+        evt.setSelectedItems(getSelectedItems(/*completeOverlapOnly*/false));
+        evt.setSelectedSentences(getSelectedSentences(/*completeOverlapOnly*/true));
         /* FIXME */
         for (BTSReferenceAnnotation anno : getSelectedReferences()) {
-            evt.getInterTextReferences().add(anno.getInterTextReference();
+            evt.getInterTextReferences().add(anno.getInterTextReference());
             evt.getRelatingObjects().add(anno.getRelatingObject());
         }
         return evt;
@@ -574,70 +574,121 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
     /* Note that this does not copy links to comments, annotations, rubra or other related objects */
 	private void pasteItems() {
         /* TODO here and below in pasteSentences the dirty flag might have to be set */
-        /* TODO fixup cursor */
+        /* TODO fixup cursor afterwards */
+
+        /* === Find out what to paste === */
         BTSTextSelectionEvent copied = deepCopyCache;
+        /* copied.getSelectedItems().isEmpty() implies copied.getSelectedSentences().isEmpty() */
         if (copied == null || copied.getSelectedItems().isEmpty())
             return;
 
+        /* === Synchronize any pending changes to model === */
         if (!userConfirmsSyntaxErrors())
             return;
         syncToModel();
 
-        /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to the
-         * offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated as if
-         * their sentences were concatenated. */
-        Collection<BTSSentenceItem> copies = textEditorController.copySentenceItems(copied.getSelectedItems());
-
         TextSelection sel = (TextSelection)embeddedEditor.getViewer().getSelection();
-        boolean emptySelection = sel.getLength() == 0;
+        int offx = sel.getOffset(), len = sel.getLength();
 
-        BTSSentence behind = getSentenceBehindCursor(sel);
-        if (behind != null) {
+        /* === Check for sentence paste === */
+		Iterator<Annotation> it = linkageData.amSentence.getAnnotationIterator(offx, len,
+                /*canStartBefore*/true, /*canEndAfter*/true);
+        /* The cursor must always be either within a sentence or on a sentence boundary. */
+        Assert.isTrue(it.hasNext());
+
+        BTSSentenceAnnotation sanno = (BTSSentenceAnnotation)it.next();
+        BTSSenctence          sent  = sanno.getModel();
+        Position              spos  = linkageData.amSentence.getPosition(sanno);
+
+        /* The cursor must never be on two sentences at once. Note that sentences are separated by a newline
+         * character per grammar and thus a cursor between two sentences is always after the one xor in front of
+         * the other. */
+        Assert.isTrue(!it.hasNext());
+
+        /* Check whether the cursor is right in front of or behind a sentence. This has to work both at the
+         * beginning and at the end of a text. */
+        boolean atBeginning = offx == spos.getOffset(),
+                atEnd       = offx == spos.getOffset()+spos.getLength();
+        if (atBeginning || atEnd) {
+            if (copied.getSelectedSentences().isEmpty())
+                return;
+
+            EList l = ((BTSTextContent)sent.eContainer()).getTextItems();
+            int idx = l.indexOf(sent);
+            Assert.isTrue(idx >= 0);
+
             /* The cursor is between sentences or the selection starts between sentences. */
             Collection<BTSSenctence> copies = textEditorController.copySentences(copied.getSelectedSentences());
-            int insertPos = textContent.getTextItems().indexOf(behind);
 
-            if (!emptySelection) {
-                /* Delete all fully selected sentences */
-                for (BTSSenctence sent : getSelectedSentences(/*completeOverlapOnly*/true))
-                    EcoreUtil.delete(sent, true);
-            }
+            /* Delete all fully selected sentences */
+            for (BTSSenctence foo : getSelectedSentences(/*completeOverlapOnly*/true))
+                EcoreUtil.delete(foo, true);
 
-            textContent.getTextItems().addAll(insertPos, copies);
+            /* paste behind sentence if cursor is at eos */
+            l.addAll(atEnd ? idx+1 : idx, copies);
         } else {
-            BTSTextItem itemBehind = getItemBehindCursor(sel);
+            /* === Check for item paste === */
+            it = linkageData.amLinkage.getAnnotationIterator(offx, len, /*canStartBefore*/true, /*canEndAfter*/true);
 
-            /* The cursor/selection start is not on a sentence boundary */
-            if (item == null) {
-                logger.warn("Cannot resolve character offset locate logical insertion position in model.");
-                return;
+            BTSLinkageAnnotation ianno = null;
+            BTSSentenceItem      item  = null;
+            BTSLinkageAnnotation aanno = null;
+            BTSAmbivalence       ambi  = null;
+
+            while (it.hasNext()) {
+                BTSLinkageAnnotation anno = (BTSLinkageAnnotation)it.next();
+                BTSIdentifiableItem foo = ianno.getModel();
+
+                if (foo instanceof BTSLemmaCase)
+                    continue; /* will lead to the outer ambivalence being chosen */
+
+                if (foo instanceof BTSAmbivalence) {
+                    ambi = (BTSAmbivalence)foo;
+                    aanno = anno;
+                    continue;
+                }
+
+                Assert.isTrue(foo instanceof BTSSentenceItem);
+                Assert.isTrue(item == null);
+                item = (BTSSentenceItem)foo;
+                ianno = anno;
             }
-            BTSSenctence sentence = (BTSSenctence)itemBehind.eContainer();
 
-            Collection<BTSSentenceItem>  items = getSelectedItems();
+            /* The cursor must always be either on an ambivalence or on another sentence item. */
+            Assert.isTrue(ambi != null || item != null);
 
-            if (!emptySelection) {
+            /* Insert in front/behind the ambivalence if the cursor is somewhere in the middle of a case label */
+            if (item == null)
+                item = ambi;
+
+            Position ipos = linkageData.amLinkage.getPosition(ianno);
+            atBeginning   = offx == ipos.getOffset();
+            atEnd         = offx == ipos.getOffset()+ipos.getLength();
+            if (atBeginning || atEnd) {
+                EObject cont = item.eContainer();
+                EList l = ambi == null ? ((BTSSenctence)cont).getSentenceItems() : ((BTSLemmaCase)cont).getScenario();
+                int idx = l.indexOf(item);
+                Assert.isTrue(idx >= 0);
+
+                /* Note that this might include ambivalences, and will even span any whole sentences selected. Due to
+                 * the offsetting logic in populateSelectionEvent the items of consecutive sentences will be treated
+                 * as if their sentences were concatenated. */
+                Collection<BTSSentenceItem> copies = textEditorController.copySentenceItems(
+                        copied.getSelectedItems());
+
                 /* Delete all fully selected things */
-                for (BTSSenctence sent : getSelectedSentences(/*completeOverlapOnly*/true))
-                    EcoreUtil.delete(sent, true);
-                for (BTSSenctenceItem item : getSelectedItems(/*completeOverlapOnly*/true))
-                    EcoreUtil.delete(sent, true);
+                for (BTSSenctence foo : getSelectedSentences(/*completeOverlapOnly*/true))
+                    EcoreUtil.delete(foo, false); /* do not recurse, delete items below. */
+                for (BTSSentenceItem foo : getSelectedItems(/*completeOverlapOnly*/true))
+                    EcoreUtil.delete(foo, true);
                 /* TODO Maybe deal with now-empty lemma cases here? */
-            }
 
-            System.out.println("SENTENCE:"+sentence+" ITEMS:"+sentence.getSentenceItems());
-            int insertOffset = sentence.getSentenceItems().indexOf(first);
-
-            if (!now.isCursorEvent()) {
-                /* Delete current selection */
-                for (BTSSenctence sent : now.getSelectedSentences())
-                    EcoreUtil.delete(sent, false); /* Do not recurse as we will delete the items below */
-                for (BTSSentenceItem item : now.getSelectedItems())
-                    EcoreUtil.delete(item, true); /* Recurse to handle ambivalences */
+                /* paste behind sentence if cursor is at eos */
+                l.addAll(atEnd ? idx+1 : idx, copies);
             }
-            sentence.getSentenceItems().addAll(insertOffset, copies);
         }
 
+        /* === Re-load text from model === */
         syncFromModel();
 	}
 
@@ -650,7 +701,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
     }
 
 	protected void syncToModel() {
-        ModelUpdater mu = new ModelUpdater((AnnotationModel)embeddedEditor.getViewer().getAnnotationModel());
+        ModelUpdater mu = new ModelUpdater(linkageData);
         mu.synchronize(text.getTextContent(), parseDocument());
 	}
 
@@ -720,30 +771,42 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         return null;
     }
 
-	private void loadInput(BTSText text) {
-        if (this.text == text) /* We already (un)loaded this. `text` may be null.  */
+	public void loadInput(BTSText text) {
+        System.out.println("Loading input "+text);
+        if (this.text == text) { /* We already (un)loaded this. `text` may be null.  */
+            System.out.println("Already loaded.");
             return;
+        }
 
         /* TODO Make this autosave configurable. */
         if (text != null)
             save();
 
         purgeCacheAndEditingDomain();
-        editingDomain = editingDomainController.getEditingDomain(text);
-        editingDomain.getCommandStack().addCommandStackListener(commandStackListener);
 		// wipe latest text selection event in order to avoid leak FIXME wat?
 		selectionService.setSelection(null);
-
         this.text = text;
-
         part.setLabel(text == null ? "Text Editor" : text.getName());
+
         if (text != null) {
+            editingDomain = editingDomainController.getEditingDomain(text);
+            editingDomain.getCommandStack().addCommandStackListener(commandStackListener);
+
             syncFromModel();
             if (tabFolder != null && tabFolder.getSelection() != textTab)
                 loadTab(null);
+
+            part.setLabel(text.getName());
+
+            setEnabled(true);
+            setEditable(editable);
+
+        } else {
+            part.setLabel("Text Editor");
+
+            setEnabled(false);
+            setEditable(editable);
         }
-        setEnabled(text != null);
-        setEditable(editable);
 	}
 
 	private void loadInputSignText(IProgressMonitor monitor) {
@@ -867,130 +930,25 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         dirty.setDirty(true);
 	}
 
-	private Collection<BTSInterTextReference> getSelectedReferences() {
+    /* Helper methods for querying things selected */
+	private Collection<BTSReferenceAnnotation> getSelectedReferences() {
         return getSelectedReferences((TextSelection)embeddedEditor.getViewer().getSelection());
     }
 
-	private Collection<BTSInterTextReference> getSelectedReferences(TextSelection sel) {
+	private Collection<BTSReferenceAnnotation> getSelectedReferences(TextSelection sel) {
         /* Create a sorted collection of all sentence items that overlap with the current selection. */
         HashSet<BTSReferenceAnnotation> annos = new HashSet<>();
 		Iterator<Annotation> it = linkageData.amReference.getAnnotationIterator(
                 sel.getOffset(), sel.getLength(), /*canStartBefore*/true, /*canStartAfter*/true);
         while (it.hasNext())
-            annos.put((BTSReferenceAnnotation)it.next());
+            annos.add((BTSReferenceAnnotation)it.next());
 
         return annos;
     }
 
-    private class PastePosition {
-        BTSSenctence sent;
-        BTSSentenceItem item;
-        boolean pasteSentence;
-        public PastePosition(BTSSenctence sent, BTSSentenceItem item, boolean pasteSentence) {
-            this.sent = sent;
-            this.item = item;
-            this,pasteSentence = pasteSentence;
-        }
-    }
-
-    /** Return sentence and item index where to paste things. */
-    private PastePosition getPasteIndex(TextSelection sel) {
-        int offx = sel.getOffset(), len = sel.getLength();
-
-        /* === Check for sentence paste === */
-		Iterator<Annotation> it = linkageData.amSentence.getAnnotationIterator(offx, len);
-        /* The cursor must always be either within a sentence or on a sentence boundary. */
-        Assert.isTrue(it.hasNext());
-
-        BTSSentenceAnnotation sanno = (BTSSentenceAnnotation)it.next();
-        BTSSenctence          sent  = sanno.getModel();
-        Position              spos  = linkageData.amSentence.getPosition(sanno);
-
-        /* The cursor must never be on two sentences at once. Note that sentences are separated by a newline
-         * character per grammar and thus a cursor between two sentences is always after the one xor in front of
-         * the other. */
-        Assert.isTrue(!it.hasNext());
-
-        /* Check whether the cursor is right in front of or behind a sentence. This has to work both at the
-         * beginning and at the end of a text. */
-        boolean atBeginning = offx == spos.getOffset(),
-                atEnd       = offx == spos.getOffset()+spos.getLength();
-        if (atBeginning || atEnd) {
-            EList l = ((BTSTextContent)sent.eContainer()).getTextItems();
-            int idx = l.indexOf(sent);
-            Assert.isTrue(idx >= 0);
-
-            /* paste behind sentence if cursor is at eos */
-            l.addAll(atEnd ? idx+1 : idx, getSentencesToPaste());
-        }
-
-        /* === Check for item paste === */
-        Iterator<Annotation> it = linkageData.amLinkage.getAnnotationIterator(offx, len);
-
-        BTSLinkageAnnotation ianno = null;
-        BTSTextItems         item  = null;
-        BTSLinkageAnnotation aanno = null;
-        BTSAmbivalence       ambi  = null;
-
-        while (it.hasNext()) {
-            BTSLinkageAnnotation anno = (BTSLinkageAnnotation)it.next();
-            BTSIdentifiableItem foo = ianno.getModel();
-
-            if (foo instanceof BTSLemmaCase)
-                continue; /* will lead to the outer ambivalence being chosen */
-
-            if (foo instanceof BTSAmbivalence) {
-                ambi = (BTSAmbivalence)foo;
-                aanno = anno;
-                continue;
-            }
-
-            Assert.isTrue(foo instanceof BTSSentenceItem);
-            Assert.isTrue(item == null);
-            item = (BTSSentenceItem)foo;
-            ianno = anno;
-        }
-
-        /* The cursor must always be either on an ambivalence or on another sentence item. */
-        Assert.isTrue(ambi != null || item != null);
-
-        /* Insert in front/behind the ambivalence if the cursor is somewhere in the middle of a case label */
-        if (item == null)
-            item = ambi;
-
-        Position ipos = linkageData.amLinkage.getPosition(ianno);
-        atBeginning   = offx == ipos.getOffset();
-        atEnd         = offx == ipos.getOffset()+ipos.getLength();
-        if (atBeginning || atEnd) {
-            EObject cont = item.eContainer();
-            EList l = ambi == null ? ((BTSSentence)cont).getSentenceItems() : ((BTSLemmaCase)cont).getScenario(); int idx = l.indexOf(item);
-            Assert.isTrue(idx >= 0);
-
-            /* paste behind sentence if cursor is at eos */
-            l.addAll(atEnd ? idx+1 : idx, getItemsToPaste());
-        }
-    }
-
-    private BTSSenctence getSentenceBehindCursor() {
-        return getSentenceBehindCursor((TextSelection)embeddedEditor.getViewer().getSelection());
-    }
-
-    /** Return the sentence starting behind the cursor if the cursor or start of selection is between sentences.
-     * 
-     * Otherwise return null. */
-	private BTSSenctence getSentenceBehindCursor(TextSelection sel) {
-        int offx = sel.getOffset();
-
-        for (Map.Entry<BTSSentence, BTSSentenceAnnotation> e : linkageData.smap.entrySet()) {
-            int soffx = linkageData.amSentence.getPosition(e.getValue()).getOffset();
-            if (offx == soffx || offx+1 == soffx) /* Ignore newline between sentences */
-                return e.getKey();
-        }
-        return null;
-    }
-
 	private Collection<BTSSenctence> getSelectedSentences(boolean completeOverlapOnly) {
-        return getSelectedSentences((TextSelection)embeddedEditor.getViewer().getSelection());
+        TextSelection sel = (TextSelection)embeddedEditor.getViewer().getSelection();
+        return getSelectedSentences(sel, completeOverlapOnly);
     }
 
 	private Collection<BTSSenctence> getSelectedSentences(TextSelection sel, boolean completeOverlapOnly) {
@@ -1002,14 +960,15 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 /*canStartBefore*/!completeOverlapOnly, /*canStartAfter*/!completeOverlapOnly);
         while (it.hasNext()) {
             BTSSentenceAnnotation a = (BTSSentenceAnnotation)it.next();
-            annos.add(linkageData.amSentence.getPosition(a).getOffset(), a.getModel());
+            annos.put(linkageData.amSentence.getPosition(a).getOffset(), a.getModel());
         }
 
         return annos.values();
     }
 
 	private Collection<BTSSentenceItem> getSelectedItems(boolean completeOverlapOnly) {
-        return getSelectedItems((TextSelection)embeddedEditor.getViewer().getSelection());
+        TextSelection sel = (TextSelection)embeddedEditor.getViewer().getSelection();
+        return getSelectedItems(sel, completeOverlapOnly);
     }
 
 	private Collection<BTSSentenceItem> getSelectedItems(TextSelection sel, boolean completeOverlapOnly) {
@@ -1039,23 +998,23 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 else
                     foundLemmaCases.add(item);
             } else {
-                annos.add(linkageData.amLinkage.getPosition(a).getOffset(), (BTSSentenceItem)item);
+                annos.put(linkageData.amLinkage.getPosition(a).getOffset(), (BTSSentenceItem)item);
             }
         }
 
         /* Remove all items that belong to ambivalences that are to be included whole and remove all ambivalences
          * that are to be included only partially (but keep the items of those around) */
-        Iterator<BTSSentenceItem> it = annos.values().iterator();
-        while (it.hasNext()) {
-            BTSIdentifiableItem item = it.next();
+        Iterator<BTSSentenceItem> it2 = annos.values().iterator();
+        while (it2.hasNext()) {
+            BTSIdentifiableItem item = it2.next();
             EObject caseOrSent = item.eContainer();
             if ((caseOrSent instanceof BTSLemmaCase) && includedAmbivalences.contains(caseOrSent.eContainer()))
-                it.remove();
+                it2.remove();
             if ((caseOrSent instanceof BTSAmbivalence) && !includedAmbivalences.contains(caseOrSent))
-                it.remove();
+                it2.remove();
         }
 
-		return anno.values();
+		return annos.values();
 	}
 
 	@SuppressWarnings("restriction")
@@ -1078,9 +1037,10 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		if (selection == null || parent == null || parent.isDisposed() || !constructed)
 			return;
 
+        System.out.println(String.format("EgyTextEditorPart received selection: %s", selection.toString()));
         if (selection instanceof BTSText)
             loadInput((BTSText) selection);
-        else
+        else if (selection instanceof BTSCorpusObject) /* Something was selected in the corpus navigator */
             loadInput(null);
 	}
 

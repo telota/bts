@@ -44,6 +44,7 @@ import org.bbaw.bts.corpus.text.egy.egyDsl.VersFrontierMarker;
 import org.bbaw.bts.corpus.text.egy.egyDsl.VersbreakMarker;
 import org.bbaw.bts.corpus.text.egy.egyDsl.Word;
 import org.bbaw.bts.ui.commons.corpus.text.BTSModelAnnotation;
+import org.bbaw.bts.ui.commons.corpus.text.BTSSentenceAnnotation;
 import org.bbaw.bts.ui.commons.corpus.text.BTSLinkageAnnotation;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -78,6 +79,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
  *
  * Fourth and lastly, any BTSLinkageAnnotations that have become superfluous are removed.
  *
+ * FIXME Update this doc
  * TODO rework all of this to use plain jface document positions instead of annotations. Positions provide all that is
  * needed here since linkage annotations are never rendered anyway.
  */
@@ -87,16 +89,18 @@ public class ModelUpdater {
 
     /* Note: Position is a misnomer. It is rather a range of format (offx, length) */
 	private HashMap<Position, BTSLinkageAnnotation> amap = new HashMap<>(100);
-    private AnnotationModel am;
+	private HashMap<Position, BTSSentenceAnnotation> smap = new HashMap<>(10);
+    private TextUpdater.LinkageData ld;
 
-    public ModelUpdater(AnnotationModel am) {
-        this.am = am;
+    public ModelUpdater(TextUpdater.LinkageData ld) {
+        this.ld = ld;
     }
 
 	public void synchronize(BTSTextContent target, TextContent parsed) {
         /* Cache annotations from am to amap. In the process remove any obvious inconsistencies (zero-length and
          * duplicate annotations with the same offset and length) */
-		cacheObjects(am);
+		cacheObjects(ld.amLinkage, amap);
+		cacheObjects(ld.amSentence, smap);
 
         /* Re-use the target object to keep its ID and other fields, but re-construct the object tree contained by it. */
         target.getTextItems().clear();
@@ -123,7 +127,7 @@ public class ModelUpdater {
                 if (emptySentence) /* TODO why? */
                     continue;
                 msent = BtsCorpusModelFactory.eINSTANCE.createBTSSenctence();
-                link(gsent, msent);
+                linkSentence(gsent, msent);
             }
 
             /* Same as above for target, keep the object but re-construct the content tree. */
@@ -138,9 +142,11 @@ public class ModelUpdater {
         /* Remove any annotations that were not used during reconstruction of the object tree. The objects they contain
          * have already been unlinked from the object tree above.
          *
-         * amap is updated in fetchObjectForNode. */
+         * amap and smap are updated in fetchObjectForNode. */
         for (BTSLinkageAnnotation a : amap.values())
-            am.removeAnnotation(a);
+            ld.amLinkage.removeAnnotation(a);
+        for (BTSSentenceAnnotation a : smap.values())
+            ld.amSentence.removeAnnotation(a);
 	}
 
 	private BTSSentenceItem updateItem(SentenceItem item) {
@@ -241,17 +247,17 @@ public class ModelUpdater {
 		return mmark;
 	}
 
-    /* Populate amap with linkage annotations and positions from the annotation model. If two or more linkage
-     * annotations with the same position (offset and length) are found, keep the first and remove the rest. Remove any
-     * zero-length linkage annotations from the model.
+    /* Cache linkage or sentence annotations and positions from an annotation model. If two or more annotations with the
+     * same position (offset and length) are found, keep the first and remove the rest. Remove any zero-length
+     * annotations from the model.
      */
-	private void cacheObjects(AnnotationModel am) {
+	private <E extends BTSModelAnnotation> void cacheObjects(AnnotationModel am, HashMap<Position, E> outmap) {
 		Iterator<Annotation> it = am.getAnnotationIterator();
 		while (it.hasNext()) {
 			Annotation a = it.next();
 			if (!(a instanceof BTSLinkageAnnotation))
                 continue;
-            BTSLinkageAnnotation an = (BTSLinkageAnnotation)a;
+            E an = (E)a;
 
             BTSIdentifiableItem mod = an.getModel();
             Position pos = am.getPosition(an);
@@ -263,15 +269,15 @@ public class ModelUpdater {
             if ((mod instanceof BTSSenctence) && pos.getOffset() == 1)
                 pos = new Position(0, pos.getLength());
 
-            if (amap.containsKey(pos))
+            if (outmap.containsKey(pos))
                 am.removeAnnotation(an);
             else
-                amap.put(pos, an);
+                outmap.put(pos, an);
 		}
 	}
 
     /* Lookup whether an object is cached in an annotation for the given position. The annotation is removed from amap
-     * to mark it "used".
+     * or smap to mark it "used".
      *
      * If no object is found or what is found is of the wrong type, return null.
      */
@@ -279,16 +285,25 @@ public class ModelUpdater {
         INode node = NodeModelUtils.getNode(grammarObj);
 		int offx = node.getOffset(), len = node.getLength();
 		Position pos = new Position(offx, len);
-		BTSLinkageAnnotation found = amap.get(pos);
+
+		BTSModelAnnotation found = amap.get(pos);
         amap.remove(pos);
+
+        if (found == null)
+            found = smap.get(pos);
+        smap.remove(pos);
+
+        if (found == null)
+            return null;
 
         /* FIXME the following should not be used as a fallback */
         /* FIXME should this be here at all? */
-		if (found == null && (grammarObj instanceof Marker)) // cut away Marker beginnings and endings
-            found = amap.get(new Position(offx+1, len-1));
+		//if (found == null && (grammarObj instanceof Marker)) // cut away Marker beginnings and endings
+        //    found = amap.get(new Position(offx+1, len-1));
 
-        if (clazz.isInstance(found))
-            return (E)found;
+        Object obj = found.getModel();
+        if (clazz.isInstance(obj))
+            return (E)obj;
         return null;
 	}
 
@@ -302,7 +317,13 @@ public class ModelUpdater {
          * any inter-text reference including this text location would already have grown due to the magic of jface.
          */
         INode node = NodeModelUtils.getNode(grammarObj);
-        am.addAnnotation(new BTSLinkageAnnotation(item), new Position(node.getOffset(), node.getLength()));
+        ld.amLinkage.addAnnotation(new BTSLinkageAnnotation(item), new Position(node.getOffset(), node.getLength()));
+    }
+
+    private void linkSentence(EObject grammarObj, BTSSenctence sent) {
+        /* Same as link, but for sentence annotations */
+        INode node = NodeModelUtils.getNode(grammarObj);
+        ld.amSentence.addAnnotation(new BTSSentenceAnnotation(sent), new Position(node.getOffset(), node.getLength()));
     }
 
 	private String extractLemmaCaseName(String name) {

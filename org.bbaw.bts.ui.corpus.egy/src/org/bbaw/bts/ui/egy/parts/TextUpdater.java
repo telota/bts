@@ -120,7 +120,7 @@ public class TextUpdater {
 
         /* Output foo */
         protected StringBuilder sb = new StringBuilder();
-        protected LinkageData ld;
+        protected LinkageData ld = new LinkageData();
 
         /* Context */
         protected Map<String, List<BTSInterTextReference>> romap;
@@ -161,10 +161,16 @@ public class TextUpdater {
             return new TextBuilder(this, updater, romap, sep, lastPos);
         }
 
-        public void finalize(BTSIdentifiableItem item) {
+        public void finalizeItem(BTSIdentifiableItem item) {
             /* Transfer text content */
             parent.appendSeparated(getContent());
-            parent.link(item);
+            parent.linkItem(item);
+        }
+
+        public void finalizeSentence(BTSSenctence sent) {
+            /* Transfer text content */
+            parent.appendSeparated(getContent());
+            parent.linkSentence(sent);
         }
         /* End of hierarchy stuff. */
 
@@ -191,11 +197,23 @@ public class TextUpdater {
          *
          * This produces a linkage annotation and creates or updates any reference annotations if necessary.
          */
-        public void link(BTSIdentifiableItem item) {
+        public void linkItem(BTSIdentifiableItem item) {
             BTSLinkageAnnotation la = new BTSLinkageAnnotation(item);
             ld.amLinkage.addAnnotation(la, lastPosition());
             ld.amap.put(item, la);
 
+            linkReferences(item);
+        }
+
+        public void linkSentence(BTSSenctence sent) {
+            BTSSentenceAnnotation sa = new BTSSentenceAnnotation(sent);
+            ld.amSentence.addAnnotation(sa, lastPosition());
+            ld.smap.put(sent, sa);
+
+            linkReferences(sent);
+        }
+
+        private void linkReferences(BTSIdentifiableItem item) {
             /* Check if there are comments, annotations or subtext pointing to this item. "pointer" can either be start
              * or end positions. */
             String id = item.get_id();
@@ -242,12 +260,6 @@ public class TextUpdater {
             }
         } 
         
-        public void linkSentence(BTSSenctence sent) {
-            BTSSentenceAnnotation sa = new BTSSentenceAnnotation(sent);
-            ld.amSentence.addAnnotation(sa, lastPosition());
-            ld.smap.put(sent, sa);
-        }
-
         /** Link the last token added before this method was called to a lemma entry by lemma ID.
          *
          * Lemma entries are cached for performance. If the lemma entry ID cannot be found, still create an annotation
@@ -341,24 +353,24 @@ public class TextUpdater {
             for (BTSSentenceItem sitem : sentence.getSentenceItems())
                 appendAndLink(sub, sitem);
             sub.append(SENTENCE_SIGN);
-            sub.finalize(sentence);
+            sub.finalizeSentence(sentence);
 		}
 	}
 
-	private void appendAndLink(TextBuilder tb, BTSIdentifiableItem item){
+	private void appendAndLink(TextBuilder tb, BTSSentenceItem item){
 		if (item instanceof BTSWord) {
             BTSWord word = (BTSWord)item;
 			tb.appendSeparated(stringify(word));
             String lkey = word.getLKey();
             if (lkey != null && !lkey.isEmpty())
                 tb.lemmatize(word, lkey);
-            tb.link(item);
+            tb.linkItem(item);
             return;
         }
 
         if (item instanceof BTSMarker) {
 			tb.appendSeparated(stringify((BTSMarker)item));
-            tb.link(item);
+            tb.linkItem(item);
             return;
         }
 
@@ -377,14 +389,14 @@ public class TextUpdater {
 
                     if (amCase.getScenario() != null)
                         for (BTSAmbivalenceItem citem : amCase.getScenario())
-                            appendAndLink(caseb, citem);
+                            appendAndLink(caseb, (BTSSentenceItem)citem);
 
-                    caseb.finalize(amCase);
+                    caseb.finalizeItem(amCase);
                 }
             }
 
             ambb.append(AMBIVALENCE_END_SIGN);
-            ambb.finalize(item);
+            ambb.finalizeItem(item);
             return;
         }
 	}

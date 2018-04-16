@@ -77,7 +77,7 @@ public class BTSTextSelectionEvent extends Event {
     }
 
     public String toString() {
-        return String.format("<BTSTextSelectionEvent parent=%s, x=%d, y=%d, start=%s, end=%s, text=\"%s\">", parentObject.toString(), x, y, startId, endId, text);
+        return String.format("<BTSTextSelectionEvent parent=<%s \"%s\">, x=%d, y=%d, start=%s, end=%s, text=\"%s\">", parentObject.get_id(), parentObject.getName(), x, y, startId, endId, text);
     }
 
 	public List<BTSObject> getRelatingObjects() {

@@ -689,7 +689,7 @@ public class BTSEvaluationServiceImpl implements BTSEvaluationService
 					info = client.getTime(hostAddr);
 					break;
 				} catch (IOException ioe) {
-					logger.error(ioe, "Inaccessable host address: " + hostAddr);
+					logger.warn("Host for time synchronization cannot be resolved: " + hostAddr);
 				}
 			}
 		} catch (SocketException e) {

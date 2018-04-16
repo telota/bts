@@ -49,9 +49,9 @@ public class CompareViewerEgyTextImpl implements CompareViewer{
 			this.rightObject = (BTSObject) rightObject;
 			this.righEditable = rightEditable;
 
-			leftTextEditor.setInputObjectDirect((BTSText) leftObject);
+			leftTextEditor.loadInput((BTSText) leftObject);
 			leftTextEditor.setUserMayEdit(leftEditable);
-			rightTextEditor.setInputObjectDirect((BTSText) rightObject);
+			rightTextEditor.loadInput((BTSText) rightObject);
 			rightTextEditor.setUserMayEdit(rightEditable);
 		}
 		return false;
