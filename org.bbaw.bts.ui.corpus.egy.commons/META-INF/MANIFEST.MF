@@ -25,9 +25,7 @@ Export-Package: jsesh.editor,
  jsesh.mdc,
  jsesh.mdc.utils,
  jsesh.mdcDisplayer.draw,
- jsesh.mdcDisplayer.preferences,
- org.bbaw.bts.ui.corpus.egy.commons,
- org.bbaw.bts.ui.corpus.egy.commons.comparator
+ jsesh.mdcDisplayer.preferences
 Require-Bundle: org.bbaw.bts.model,
  org.bbaw.bts.core.commons,
  org.eclipse.jface,

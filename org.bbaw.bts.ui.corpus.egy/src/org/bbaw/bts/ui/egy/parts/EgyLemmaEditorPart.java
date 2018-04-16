@@ -534,7 +534,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 			EObject eo = objects.get(0);
 			if (eo instanceof TextContent) {
                 ModelUpdater mu = new ModelUpdater(this.linkageData);
-                mu.synchronize(textContent, eo);
+                mu.synchronize(textContent, (TextContent)eo);
 			}
 		}
 

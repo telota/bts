@@ -247,8 +247,8 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
     private Set<Command> localCommandCacheSet = new HashSet<Command>();
 	private Composite embeddedEditorParentComp;
     private Composite parent;
-	private CompositeRuler ruler;
-	private OverviewRuler oruler;
+	//private CompositeRuler ruler;
+	//private OverviewRuler oruler;
     private TextUpdater.LinkageData linkageData = new TextUpdater.LinkageData();
 	private List<BTSObject> relatingObjects = new Vector<BTSObject>(0);
     private Map<String, List<BTSInterTextReference>> relatingObjectsMap = new HashMap<>(0);
@@ -409,14 +409,14 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
 		v.getTextWidget().setLineSpacing(LINE_SPACE);
 
 
-		ruler = EmbeddedEditorFactory.getCpAnnotationRuler();
-		oruler = EmbeddedEditorFactory.getOverViewRuler();
+		//ruler = EmbeddedEditorFactory.getCpAnnotationRuler();
+		//oruler = EmbeddedEditorFactory.getOverViewRuler();
 
 		painter = new AnnotationPainter(v, null);
 		v.addTextPresentationListener(painter);
 		v.addPainter(painter);
 
-		configureEditorDrawingStrategies(oruler);
+		configureEditorDrawingStrategies(null);//oruler);
 		if (show_line_number_ruler) {
 			lineNumberRulerColumn = new EgyLineNumberRulerColumn(LINE_SPACE);
 			v.addVerticalRulerColumn(lineNumberRulerColumn);
@@ -1068,9 +1068,9 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
         /* TODO find out what of this is actually needed */
         painter.modelChanged(ev);
         painter.paint(painter.INTERNAL);
-        ruler.update();
-        ruler.relayout();
-        oruler.update();
+        //ruler.update();
+        //ruler.relayout();
+        //oruler.update();
         embeddedEditor.getViewer().getTextWidget().redraw();
     }
 
@@ -1235,7 +1235,7 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
             sync.asyncExec(new Runnable() {
                 @Override public void run() {
                     AnnotationToolbarItemCreator.processAndUpateToolbarItemsAnnotationShortcut(part, getAnnotationPreferences());
-                    configureEditorDrawingStrategies(oruler);
+                    configureEditorDrawingStrategies(null);//oruler);
                 }
             });
 
@@ -1291,11 +1291,11 @@ public class EgyTextEditorPart extends AbstractTextEditorLogic implements IBTSEd
                 if (e.getValue()) {
                     painter.addAnnotationType(typeId+suffix, strategyId+suffix);
                     painter.setAnnotationTypeColor(typeId+suffix, getBackgroundColorTypePath(strategyId));
-                    oruler.addAnnotationType(typeId+suffix);
+                    //oruler.addAnnotationType(typeId+suffix);
 
                 } else {
                     painter.removeAnnotationType(typeId+suffix);
-                    oruler.removeAnnotationType(typeId+suffix);
+                    //oruler.removeAnnotationType(typeId+suffix);
                 }
             }
             painter.paint(IPainter.INTERNAL);
