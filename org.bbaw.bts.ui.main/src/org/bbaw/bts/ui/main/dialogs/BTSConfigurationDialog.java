@@ -286,8 +286,7 @@ public class BTSConfigurationDialog extends TitleAreaDialog {
 
 		config_ToolUndo = new ToolItem(config_toolbar, SWT.NONE);
 		config_ToolUndo.setText("Undo");
-		config_ToolUndo.setImage(resourceProvider
-.getImage(
+		config_ToolUndo.setImage(resourceProvider.getImage(
 				Display.getDefault(), BTSResourceProvider.IMG_UNDO));
 		config_ToolUndo.addSelectionListener(new SelectionAdapter() {
 

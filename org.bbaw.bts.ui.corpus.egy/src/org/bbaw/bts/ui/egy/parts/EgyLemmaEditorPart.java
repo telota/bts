@@ -104,74 +104,41 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import com.google.inject.Injector;
+import org.bbaw.bts.core.services.corpus.BTSLemmaEntryService;
 
 public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSEditor, EventHandler {
 	private static final int LINE_SPACE = 8;
 	private static final int EDITOR_PREFIX_LENGTH = 1;
 
-	@Inject
-	private IEclipseContext context;
-
-	@Inject
-	private EventBroker eventBroker;
-
-	@Inject
-	private EPartService partService;
-
-	@Inject
-	protected LemmaEditorController lemmaEditorController;
-
-	@Optional
-	@Inject
-	private MDirtyable dirty;
-	
-	@Inject
-	private ESelectionService selectionService;
-	
-	@Inject
-	private UISynchronize sync;
+	@Inject private IEclipseContext context;
+	@Inject private EventBroker eventBroker;
+	@Inject private EPartService partService;
+	@Inject private BTSLemmaEntryService lemmaService;
+	@Inject protected LemmaEditorController lemmaEditorController;
+	@Optional @Inject private MDirtyable dirty;
+	@Inject private ESelectionService selectionService;
+	@Inject private UISynchronize sync;
+	@Inject private EContextService contextService;
+	@Inject private Logger logger;
+	@Inject @Optional @Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT) private Boolean userMayEdit;
+	@Inject private EditingDomainController editingDomainController;
 	
 	private EmbeddedEditorFactory embeddedEditorFactory;
-
 	private SignTextComposite signTextEditor;
-
 	private BTSLemmaEntry selectedLemmaEntry;
-
 	private MPart part;
-
 	private List<BTSObject> relatingObjects;
-	@Inject
-	private EContextService contextService;
-	
-	@Inject
-	private Logger logger;
-	
-	@Inject
-	@Optional
-	@Named(BTSCoreConstants.CORE_EXPRESSION_MAY_EDIT)
-	private Boolean userMayEdit;
-
 	private Map<EObject, List<BTSModelAnnotation>> relatingObjectsAnnotationMap;
-
 	private Composite embeddedEditorComp;
-
 	private Group grpTransliteration;
-
 	private EmbeddedEditorModelAccess embeddedEditorModelAccess;
-
-	private IAnnotationModel annotationModel;
-
 	private Map<String, List<BTSInterTextReference>> relatingObjectsMap;
-
 	private BTSTextXtextEditedResourceProvider xtextResourceProvider = new BTSTextXtextEditedResourceProvider();
 	private Map<String, BTSModelAnnotation> modelAnnotationMap;
 	private BTSTextContent textContent;
 	private List<BTSModelAnnotation> highlightedAnnotations = new Vector<BTSModelAnnotation>(4);
 	protected String queryId;
-	
 	protected Object selectedTextItem;
-	@Inject
-	private EditingDomainController editingDomainController;
 	protected EditingDomain editingDomain;
 	private CommandStackListener commandStackListener;
 	private Set<Command> localCommandCacheSet = new HashSet<Command>();
@@ -188,6 +155,8 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 
 	// boolean if selection is cached and can be loaded when gui becomes visible or constructed
 	private boolean selectionCached;
+
+    private TextUpdater.LinkageData linkageData = new TextUpdater.LinkageData();
 
 	@Inject
 	private PermissionsAndExpressionsEvaluationController permissionsController;
@@ -478,35 +447,30 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 	}
 
 	private void loadTransliteration(BTSLemmaEntry lemma) {
-//		if (lemma == null)
-//		{
-//			if (embeddedEditor != null)
-//			{
-//				embeddedEditorModelAccess.updateModel("\r",
-//						"", "\r");
-////				embeddedEditor.getViewer().setDocument(null);
-//			}
-//			return;
-//		}
 		modelAnnotationMap = new HashMap<String, BTSModelAnnotation>();
 		relatingObjectsAnnotationMap = new HashMap<EObject, List<BTSModelAnnotation>>();
 		Document doc = new Document();
 		AnnotationModel tempAnnotationModel = new AnnotationModel();
 		lemmaAnnotationMap = new HashMap<String, List<Object>>();
-		lemmaEditorController.transformToDocument(textContent, doc, tempAnnotationModel, relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
+		// FIXME lemmaEditorController.transformToDocument(textContent, doc, tempAnnotationModel, relatingObjects, relatingObjectsMap, lemmaAnnotationMap);
 
-		String textString = doc.get();
-		// take care of empty input
-		if (textString.length() == 0)
-		{
-			textString = "§§";
-		}
-		embeddedEditorModelAccess.updateModel("\r",
-				textString, "\r");
-		annotationModel = embeddedEditor.getViewer().getAnnotationModel();
+        TextUpdater upd = new TextUpdater(lemmaService, relatingObjectsMap);
+        upd.generateFromModel(textContent);
+		embeddedEditorModelAccess.updateModel("\r", upd.getContent(), "\r");
 
-		loadAnnotations2Editor(annotationModel, tempAnnotationModel);
+        this.linkageData = upd.getLinkageData();
 
+        AnnotationModel am = (AnnotationModel)embeddedEditor.getViewer().getAnnotationModel();
+        am.removeAnnotationModel("bts_items");
+        am.removeAnnotationModel("bts_sentences");
+        am.removeAnnotationModel("bts_lemmatized");
+        am.removeAnnotationModel("bts_references");
+        am.addAnnotationModel("bts_items", linkageData.amLinkage);
+        am.addAnnotationModel("bts_sentences", linkageData.amSentence);
+        am.addAnnotationModel("bts_lemmatized", linkageData.amLemma);
+        am.addAnnotationModel("bts_references", linkageData.amReference);
+
+		loadAnnotations2Editor(am, tempAnnotationModel);
 		processLemmaAnnotions(lemmaAnnotationMap);
 	}
 
@@ -557,8 +521,6 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 	protected void updateModelFromTranscription()
 	{
 		if (selectedLemmaEntry != null) {
-			IAnnotationModel am = embeddedEditor.getViewer()
-					.getAnnotationModel();
 			IXtextDocument document = embeddedEditor.getDocument();
 
 			EList<EObject> objects = document
@@ -571,8 +533,8 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 					});
 			EObject eo = objects.get(0);
 			if (eo instanceof TextContent) {
-				textContent = lemmaEditorController.updateModelFromTextContent(textContent, eo, am);
-				
+                ModelUpdater mu = new ModelUpdater(this.linkageData);
+                mu.synchronize(textContent, eo);
 			}
 		}
 
@@ -676,7 +638,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 //					BTSUIConstants.EVENT_TEXT_RELATING_OBJECTS_SELECTED,
 //					null);
 //		}
-		painter.modelChanged(annotationModel);
+		painter.modelChanged(embeddedEditor.getViewer().getAnnotationModel());
 	}
 	
 	private void highlightAnnotations(
@@ -742,8 +704,7 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 		return annotations;
 	}
 
-	private void loadAnnotations2Editor(IAnnotationModel editorModel,
-			IAnnotationModel model) {
+	private void loadAnnotations2Editor(IAnnotationModel editorModel, IAnnotationModel model) {
 		Iterator i = model.getAnnotationIterator();
 		Issue issue;
 		issue = new Issue.IssueImpl();
@@ -751,10 +712,9 @@ public class EgyLemmaEditorPart extends AbstractTextEditorLogic implements IBTSE
 			Object a = i.next();
 			Position pos = model.getPosition((Annotation) a);
 			loadSingleAnnotation2Editor(editorModel, (BTSModelAnnotation) a, pos, issue);
-			
 		}
-
 	}
+
 	@SuppressWarnings("restriction")
 	protected void loadSingleAnnotation2Editor(IAnnotationModel editorModel,
 			 BTSModelAnnotation a, Position pos, Issue issue) {

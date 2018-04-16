@@ -37,7 +37,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.Vector;
 
-import org.apache.lucene.queryParser.QueryParser;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -230,7 +229,9 @@ public class BTSQueryRequest {
 	public String escapeSearchString() {
 		// Anführungszeichen und * nicht escapen!!!
 		this.wildcardQuery = this.searchString.contains("*") || this.searchString.contains("?");
-		String escapedString = QueryParser.escape(this.searchString);
+		String escapedString = this.searchString;
+        for (char c : "\\+-!():^[]\"{}~*?|&".toCharArray())
+            escapedString = escapedString.replaceAll(""+c, "\\"+c);
 		escapedString = escapedString.replaceAll("\\\\([\"*?])", "$1");
 		System.out.println("\nresulting query string: "+escapedString);
 		return escapedString;

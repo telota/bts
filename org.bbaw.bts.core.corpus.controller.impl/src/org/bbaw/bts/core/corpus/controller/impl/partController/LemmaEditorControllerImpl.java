@@ -56,23 +56,8 @@ public class LemmaEditorControllerImpl implements LemmaEditorController{
 	}
 
 	@Override
-	public void transformToDocument(BTSTextContent textContent, Document doc,
-			IAnnotationModel model, List<BTSObject> relatingObjects,
-			Map<String, List<BTSInterTextReference>> relatingObjectsMap,
-			Map<String, List<Object>> lemmaAnnotationMap) {
-		textEditorController.transformToDocument(textContent, doc, model, relatingObjects, relatingObjectsMap, lemmaAnnotationMap, null, 1000);
-		
-	}
-
-	@Override
 	public boolean save(BTSLemmaEntry lemmaEntry) {
 		return lemmaService.save(lemmaEntry);
-	}
-
-	@Override
-	public BTSTextContent updateModelFromTextContent(
-			BTSTextContent textContent, EObject eo, IAnnotationModel am) {
-		return textEditorController.updateModelFromTextContent(textContent, eo, am);
 	}
 
 	@Override

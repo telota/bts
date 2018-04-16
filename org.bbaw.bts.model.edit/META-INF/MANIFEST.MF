@@ -14,9 +14,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.edit;visibility:=reexport,
  org.eclipse.emf.ecore.edit,
  org.eclipse.e4.core.di.extensions,
- org.eclipse.emf.ecore,
- org.eclipse.e4.tools.services;bundle-version="0.12.0",
- org.eclipse.e4.core.contexts;bundle-version="1.3.0"
+ org.eclipse.emf.ecore
 Bundle-ActivationPolicy: lazy
 Import-Package: javax.inject,
  org.bbaw.bts.commons,
@@ -26,5 +24,6 @@ Import-Package: javax.inject,
  org.bbaw.bts.core.services,
  org.bbaw.bts.ui.resources,
  org.eclipse.swt.graphics,
- org.eclipse.swt.widgets
+ org.eclipse.swt.widgets,
+ org.eclipse.e4.core.contexts
 Bundle-Version: 3.1.1.qualifier

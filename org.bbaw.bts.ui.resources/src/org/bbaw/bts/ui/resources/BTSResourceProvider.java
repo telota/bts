@@ -32,6 +32,8 @@ package org.bbaw.bts.ui.resources;
 import javax.inject.Named;
 
 import org.eclipse.e4.tools.services.IResourceProviderService;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * The Interface BTSResourceProvider provides static resource string ids.
@@ -637,6 +639,6 @@ public interface BTSResourceProvider extends IResourceProviderService {
 	
 	public static final String IMG_ROOT = "IMG_ROOT";
 
-	
+	public Image getImage(Display display, String key);
 
 }

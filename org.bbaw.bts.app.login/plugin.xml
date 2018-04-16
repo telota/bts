@@ -10,4 +10,5 @@
       </theme>
    </extension>
    -->
+      <extension-point id="btsAppLogin" name="extensionBtsAppLogin"/>
 </plugin>

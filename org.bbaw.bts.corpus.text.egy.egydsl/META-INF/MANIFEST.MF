@@ -21,7 +21,7 @@ Require-Bundle: org.eclipse.xtext;visibility:=reexport,
 Import-Package: org.apache.log4j,
  org.bbaw.bts.corpus.text.egy.validation,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.bbaw.bts.corpus.text.egy,
  org.bbaw.bts.corpus.text.egy.services,
  org.bbaw.bts.corpus.text.egy.egyDsl,

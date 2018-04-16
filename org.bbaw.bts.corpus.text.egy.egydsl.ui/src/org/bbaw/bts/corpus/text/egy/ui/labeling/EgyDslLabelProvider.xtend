@@ -5,8 +5,6 @@ package org.bbaw.bts.corpus.text.egy.ui.labeling
 
 import com.google.inject.Inject
 import org.bbaw.bts.corpus.text.egy.egyDsl.Word
-import org.bbaw.bts.corpus.text.egy.egyDsl.WordMiddle
-import org.bbaw.bts.corpus.text.egy.egyDsl.WordPart
 import org.bbaw.bts.corpus.text.egy.egyDsl.Chars
 
 /**

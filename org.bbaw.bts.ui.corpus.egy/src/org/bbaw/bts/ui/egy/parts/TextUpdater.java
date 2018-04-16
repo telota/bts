@@ -293,6 +293,10 @@ public class TextUpdater {
         this.lemmaService = lemmaService;
     }
 
+    public TextUpdater() { /* For generating text without relating object annotations or lemma lookups */
+        this(null);
+    }
+
     public TextUpdater(BTSLemmaEntryService lemmaService, Map<String, List<BTSInterTextReference>> relatingObjectsMap) {
         this.tb = new TextBuilder(this, relatingObjectsMap, "\n");
         this.lemmaService = lemmaService;
@@ -310,10 +314,13 @@ public class TextUpdater {
     public LinkageData getLinkageData() { return tb.getLinkageData(); }
 
     protected BTSLemmaEntry findLemma(String lemmaId) {
+        if (lemmaService == null)
+            return null;
+
         if (lemmaCache.containsKey(lemmaId))
             return lemmaCache.get(lemmaId);
 
-        BTSLemmaEntry entry = lemmaService.find(lemmaId, /*montior*/null);
+        BTSLemmaEntry entry = lemmaService.find(lemmaId, /*monitor*/null);
         lemmaCache.put(lemmaId, entry);
         return entry;
     }

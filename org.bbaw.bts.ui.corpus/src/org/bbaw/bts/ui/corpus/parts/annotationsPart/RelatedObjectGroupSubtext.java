@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import javax.inject.Inject;
 
+import org.bbaw.bts.ui.egy.parts.TextUpdater;
 import org.bbaw.bts.btsmodel.BTSObject;
 import org.bbaw.bts.btsmodel.BTSRevision;
 import org.bbaw.bts.core.corpus.controller.partController.BTSTextEditorController;
@@ -58,12 +59,9 @@ public class RelatedObjectGroupSubtext extends RelatedObjectGroup {
 		BTSObject o = getObject();
 		if (o instanceof BTSText)
 		{
-			Document doc = new Document();
-
-			AnnotationModel model = new AnnotationModel();
-
-			textController.transformToDocument(((BTSText) getObject()).getTextContent(), doc, model, null, null, null, null, 1000);
-			transcriptionText.setText(doc.get());
+            TextUpdater upd = new TextUpdater();
+            upd.generateFromModel(((BTSText) o).getTextContent());
+			transcriptionText.setText(upd.getContent());
 		}
 		String mdc = textController.transformTextToJSeshMdCString((BTSText) getObject());
 		if (mdc != null)
