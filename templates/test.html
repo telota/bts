@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<style type="text/css">
+body {
+    counter-reset: linenum;
+    font-family: sans-serif;
+}
+
+.content {
+}
+
+.line {
+    display: flex;
+}
+
+.line:first-child .line-items-container {
+    border-top: 0.6em solid;
+    border-color: #bfe2ca;
+}
+
+.line-items-container {
+    flex-grow: 1;
+    border-bottom: 0.6em solid;
+    border-color: #bfe2ca;
+}
+
+.line-items {
+    display: flex;
+    flex-flow: row wrap;
+    border-top: 1px solid #8eb099;
+    border-left: 1px solid #8eb099;
+}
+
+.line-number {
+    font-weight: bold;
+    color: #60806b;
+}
+
+.line-number::before {
+    counter-increment: linenum;
+    content: counter(linenum);
+    display: block;
+    margin: 1em 0.5em 0em 0.5em;
+}
+
+.word-block {
+    flex-grow: 1;
+    vertical-align: top;
+    border-right: 1px solid #8eb099;
+    border-bottom: 1px solid #8eb099;
+}
+
+.mdc-row, .transliteration-row, .translation-row {
+    text-align: center;
+}
+
+.hieroglyph-row {
+    height: 3em;
+    padding: 0.5em;
+    text-align: center;
+    border-bottom: 1px solid #8eb099;
+}
+
+.hieroglyph-render {
+    object-fit: contain;
+    height: 100%;
+    width: auto;
+}
+
+.mdc-row {
+    height: 2em;
+    border-bottom: 1px solid #8eb099;
+}
+
+.transliteration-row {
+    height: 1.5em;
+    border-bottom: 1px solid #8eb099;
+}
+
+.translation-row {
+    height: 1.5em;
+}
+
+.sentence-translation{
+    border-left: 1px solid #8eb099;
+    border-right: 1px solid #8eb099;
+    border-bottom: 1px solid #8eb099;
+}
+
+</style>
+    </head>
+    <body>
+        <div class="content">
+            {% for sentence in sentences %} <div class="line">
+                <div class="line-number"></div>
+                <div class="line-items-container">
+                    <div class="line-items">
+                        {% for item in sentence['items'] %}<div class="word-block">
+                            <div class="hieroglyph-row">
+                                <object class="hieroglyph-render" type="image/svg+xml" data="static/svgs/{{item['render_filename']}}"></object>
+                            </div>
+                            <div class="mdc-row">{{item['mdc']}}</div>
+                            <div class="transliteration-row">{{item['transliteration']}}</div>
+                            <div class="translation-row">{{item['translation']}}</div>
+                        </div>{% endfor %}
+                    </div>
+                    <div class="sentence-translation">
+                        {{sentence['translation']}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

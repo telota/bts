@@ -1,0 +1,993 @@
+{
+  "_id": "245VEEN26ZGLDMAWVKX6QSU23A",
+  "_rev": "1-6524d2c20671b538b153c6bf1de00ceb",
+  "eClass": "http://btsCorpusModel/1.0#//BTSText",
+  "state": "active",
+  "revisionState": "published",
+  "visibility": "public",
+  "revisions": [
+    "0@2015-06-26T16:52:59@MJIFZX6BFFCVFDQQSHJ745B5A4",
+    "1@2015-06-26T17:09:14@74cb6b70ab6b58566bfadc664b00282d"
+  ],
+  "updaters": [
+    "altaegyptwb",
+    "Grunert"
+  ],
+  "name": "Opferformel",
+  "type": "Text",
+  "corpusPrefix": "bbawgrabinschriften",
+  "relations": [
+    {
+      "eClass": "http://btsmodel/1.0#//BTSRelation",
+      "_id": "IBUBdzqwWhg0ikRosNGEQqH3sPw",
+      "objectId": "DEWGLPPSIFDGLOPNNQJ3JGGFMA",
+      "type": "partOf"
+    }
+  ],
+  "passport": {
+    "eClass": "http://btsCorpusModel/1.0#//BTSPassport",
+    "children": [
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+        "_id": "IBUBd7a0lQ9QR0SPiiRBWYgc36g",
+        "type": "definition",
+        "children": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+            "_id": "IBUBdwCCV6iTlUBTm76hx2cYwhk",
+            "type": "main_group",
+            "children": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "definition",
+                "value": "PM III 159"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "comment"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "folder"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "protocol",
+                "value": "erfaßt September 2006"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+        "_id": "IBUBdzgWU7Ieak98m6f04YPFiwQ",
+        "type": "bibliography",
+        "children": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+            "type": "bibliographical_text_field",
+            "value": "H. Junker, Giza VII, Wien-Leipzig 1944, 163-166, Abb. 69, Taf. XXXV a (links);\nLD II 85 b"
+          }
+        ]
+      },
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+        "_id": "IBUBd2uKWY5wpUK4gDTFXhx0bSE",
+        "type": "object",
+        "children": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+            "_id": "IBUBd3etGyhqaUv3rFeN20ZM8uQ",
+            "type": "description_of_object",
+            "children": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "component",
+                "value": "IGXF5ZVEI5ALPHRZKHMJFUA2FQ"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+        "_id": "IBUBd0QXU8n9Wk0YjyKKXLlQtjQ",
+        "type": "find_spot",
+        "children": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+            "_id": "IBUBdwRF8Bp9PkG0rVamFSfRB68",
+            "type": "find_spot",
+            "children": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+                "_id": "IBUBdWPZLtilV0kHmNczvSltcZI",
+                "type": "place",
+                "children": [
+                  {
+                    "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                    "type": "place",
+                    "value": "TZ7HFSUO3ZCLLAAXX3AEWXALIE"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+        "_id": "IBUBd7JbmLvMd0HQuNfYH3FbQE0",
+        "type": "text",
+        "children": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+            "_id": "IBUBd62cgoYVPUnSquf7K3FWlVM",
+            "type": "textual_metadata",
+            "children": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "egyTextName",
+                "value": "Thesaurus Linguae Aegyptiae, Gisa, West Field , Mastaba des Kai-sedjau (G 5340), Opferkammer, Westwand, Scheintür-Architrav, Opferformel"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "script",
+                "value": "TYXKD55ZDRB5NAWUTC7YWWJQRQ"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "texttype",
+                "value": "S6TT23BYFJAWBEURQQIZYVRFXI"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+        "_id": "IBUBd67UqnU2ZEvKgTV7LTOphGY",
+        "type": "date",
+        "children": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryGroup",
+            "_id": "IBUBd4TBhTra90gwms9EzKZJskU",
+            "type": "date",
+            "children": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "date",
+                "value": "RI3TSGKXUFCE3HV43BX2N2MJVE"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSPassportEntryItem",
+                "type": "comment"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "textContent": {
+    "eClass": "http://btsCorpusModel/1.0#//BTSTextContent",
+    "textItems": [
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSSenctence",
+        "_id": "IBUBd9DY2b2vlkJcoPvpbhqMaMQ",
+        "state": "active",
+        "revisions": [
+          "0@2015-06-26T16:52:59@MJIFZX6BFFCVFDQQSHJ745B5A4"
+        ],
+        "type": "HS",
+        "sentenceItems": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSMarker",
+            "_id": "IBUBd1zWQsfSaEWOhUnhaIIFHFM",
+            "type": "lc: [1]",
+            "state": "active"
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd6ckLPEwIEIqsmVYViTJmrQ",
+            "lKey": "400156",
+            "flexCode": "3",
+            "wChar": "ḥtp-ḏi̯",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Ein Opfer, das (König/Gott NN) gibt",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "X8"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-R4"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBdzNV65ivUUoftzrCEDaBCec",
+            "lKey": "88040",
+            "flexCode": "3",
+            "wChar": "nswt",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "König",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "M23"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X1"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBdxTKOwDypkXGtzAqQgNW9nM",
+            "lKey": "400156",
+            "flexCode": "3",
+            "wChar": "〈〈ḥtp-ḏi̯〉〉",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Ein Opfer, das (König/Gott NN) gibt",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "[&"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X8"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-R4"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-&]"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd02q2MClL0p6uUWvo52wG3U",
+            "lKey": "27360",
+            "flexCode": "3",
+            "wChar": "Jnp,w",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Anubis",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "E15"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBdwkRYwt30UTSuQlNP7yIlXk",
+            "lKey": "119260",
+            "flexCode": "3",
+            "wChar": "ḫnt,(j)-zḥ-nṯr",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "der vor der Gotteshalle ist (Anubis, Osiris)",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "W17"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X1"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-R8"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-O21"
+              }
+            ]
+          }
+        ],
+        "translation": {
+          "eClass": "http://btsmodel/1.0#//BTSTranslations",
+          "translations": [
+            {
+              "eClass": "http://btsmodel/1.0#//BTSTranslation",
+              "value": "Ein Opfer, das der König gibt, 〈〈ein Opfer〉〉, das Anubis, der vor der Gotteshalle ist, 〈〈gibt〉〉:",
+              "lang": "de"
+            }
+          ]
+        }
+      },
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSSenctence",
+        "_id": "IBUBdx8byAqAIkQ3lBUl8wJ17ws",
+        "state": "active",
+        "revisions": [
+          "0@2015-06-26T16:52:59@MJIFZX6BFFCVFDQQSHJ745B5A4"
+        ],
+        "type": "HS",
+        "sentenceItems": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBdW8NDdk9hEKDoGSAOIwjoa4",
+            "lKey": "161940",
+            "flexCode": "20040",
+            "wChar": "qrs(.w)",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "bestatten",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "N29"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-D21"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-Q6"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-S29"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd44W4v6ZtkQ0n2Tu9z0QKWk",
+            "lKey": "400007",
+            "flexCode": "3",
+            "wChar": "m",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "[lokal]",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "G17"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBdyyodDRZPELJnSSWQl1PM3g",
+            "lKey": "134780",
+            "flexCode": "3",
+            "wChar": "z(my,)t",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Begräbnisstätte",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "O34"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X1"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-N25"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBdwHQ4WAGIUeripFtE6djebk",
+            "lKey": "26150",
+            "flexCode": "71020",
+            "wChar": "jmn,tj.t",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "westlich",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "[?"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-R13"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-?]"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X1"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X1"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBdzeBxCRqZ0smqOp7Q0DU7vk",
+            "lKey": "20480",
+            "flexCode": "20040",
+            "wChar": "jꜣwi̯(.w)",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "alt sein",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "A19"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd4vcfLkk9E1KvKd6CVa9TVc",
+            "lKey": "400458",
+            "flexCode": "3",
+            "wChar": "nfr",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "schön",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "F35"
+              }
+            ]
+          }
+        ],
+        "translation": {
+          "eClass": "http://btsmodel/1.0#//BTSTranslations",
+          "translations": [
+            {
+              "eClass": "http://btsmodel/1.0#//BTSTranslation",
+              "value": "Er möge bestattet sein in der westlichen Begräbnisstätte, indem er schön alt ist.",
+              "lang": "de"
+            }
+          ]
+        }
+      },
+      {
+        "eClass": "http://btsCorpusModel/1.0#//BTSSenctence",
+        "_id": "IBUBdQUrNoi3V0a2vhzku0dZml8",
+        "state": "active",
+        "revisions": [
+          "0@2015-06-26T16:52:59@MJIFZX6BFFCVFDQQSHJ745B5A4"
+        ],
+        "type": "HS",
+        "sentenceItems": [
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSMarker",
+            "_id": "IBUBdwae7kgWM02TmCUl6KmxWCQ",
+            "type": "lc: [2]",
+            "state": "active"
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd0BHSj3rv0c1g7Xu43ljMuo",
+            "lKey": "850238",
+            "flexCode": "3",
+            "wChar": "pr-ḫrw",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Totenopfer",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "O3"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X6"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd8sZVWxJx0qhrFCxEh45AxQ",
+            "lKey": "400055",
+            "flexCode": "93004",
+            "wChar": "n",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "für (jmd.)",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "N35"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd2MOmonjZEHOhqZXuPovPGY",
+            "lKey": "10050",
+            "flexCode": "3",
+            "wChar": "=f",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "[Suffix Pron. sg.3.m.]",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "I9"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd5Jjf0RETE0UpUSxvPIqX4c",
+            "lKey": "64365",
+            "flexCode": "3",
+            "wChar": "(m)",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "[temporal]",
+                  "lang": "de"
+                }
+              ]
+            }
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd6wou1TIkUgrhTEpBgUi3cw",
+            "lKey": "45600",
+            "flexCode": "3",
+            "wChar": "Wpi̯-rnp,t",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Neujahrstag (Fest)",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "F13"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-M4"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-T8"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-M4"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd5XacFULPkOPuYsrtk8QS74",
+            "lKey": "185300",
+            "flexCode": "3",
+            "wChar": "Ḏḥw,t(y)t",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Thot-Fest",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "G192"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X1"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X1"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-D37"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-O32A"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd9nH3BYslEpQvT2SHr8B43o",
+            "lKey": "43510",
+            "flexCode": "3",
+            "wChar": "Wꜣg",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Wag-Fest (Totenfest)",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "V4"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-W11"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-W24"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-W24"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-W24"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-D39"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd2enDe4X5EsQkCAsaDLji6E",
+            "lKey": "450444",
+            "flexCode": "3",
+            "wChar": "Tp,j-ꜣbd,w",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Erster des Monats (Fest zum Monatsanfang)",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "D1"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-N11"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-N14"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd4P8svkDgEZcqZ2u7VmAPU8",
+            "lKey": "450445",
+            "flexCode": "3",
+            "wChar": "Tp,j-smd,t",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Tepi-Semdet (Halbmonatsfest am 15. Tag des Monats)",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "D1"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-N13"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd2hiXy8ZbEtvse2OLz24hkw",
+            "lKey": "400055",
+            "flexCode": "3",
+            "wChar": "n",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "für (jmd.)",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "N35"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBdxmDbVlDLE0QiijhRwgZ2Kg",
+            "lKey": "450645",
+            "flexCode": "3",
+            "wChar": "(j)m(,j)-rʾ-wpw,wt",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Vorsteher der Aufträge",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "G17"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-D21"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-F13"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-Q3"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-X1"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-Y2"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-Y2"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-Y2"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd4elBeSJoEdEl2sUOCRhu0Q",
+            "lKey": "853131",
+            "flexCode": "3",
+            "wChar": "mdw-kꜣ-ḥḏ",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Hüter des weißen Stieres",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "S43"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-D28"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-D52"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-T3"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-E1"
+              }
+            ]
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSMarker",
+            "_id": "IBUBd5gj0QTSV0ixu7hM5582tXE",
+            "type": "lc: [3]",
+            "state": "active"
+          },
+          {
+            "eClass": "http://btsCorpusModel/1.0#//BTSWord",
+            "_id": "IBUBd3cIQOPYxEXQu2THMy9XbQI",
+            "lKey": "707708",
+            "flexCode": "3",
+            "wChar": "Kꜣ(≡j)-sḏꜣ,w",
+            "translation": {
+              "eClass": "http://btsmodel/1.0#//BTSTranslations",
+              "translations": [
+                {
+                  "eClass": "http://btsmodel/1.0#//BTSTranslation",
+                  "value": "Kai-sedjau",
+                  "lang": "de"
+                }
+              ]
+            },
+            "graphics": [
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "D28"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-S29"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-U29"
+              },
+              {
+                "eClass": "http://btsCorpusModel/1.0#//BTSGraphic",
+                "code": "-G1"
+              }
+            ]
+          }
+        ],
+        "translation": {
+          "eClass": "http://btsmodel/1.0#//BTSTranslations",
+          "translations": [
+            {
+              "eClass": "http://btsmodel/1.0#//BTSTranslation",
+              "value": "Ein Totenopfer für ihn am Neujahrstag (Fest), Thot-Fest, Wag-Fest (Totenfest), Erster des Monats (Fest zum Monatsanfang), Tepi-Semdet (Halbmonatsfest am 15. Tag des Monats) für den Vorsteher der Aufträge und Hüter des weißen Stieres Kai-sedjau.",
+              "lang": "de"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
