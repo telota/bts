@@ -13,8 +13,9 @@ def minify_svg(svg):
     cleaner = CleanSVG(svgstring=svg)
     w, h = cleaner.root.attrib.pop('width'), cleaner.root.attrib.pop('height')
     cleaner.root.attrib['viewBox'] = '0 0 {} {}'.format(w, h)
+    #cleaner.removeAttribute('style')
     cleaner.setDecimalPlaces(4)
-    return str(cleaner)
+    return str(cleaner).replace('fill:#000000', 'fill:#254048')
 
 def get_svg(mdc):
     import sqlite3

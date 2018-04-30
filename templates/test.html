@@ -8,21 +8,15 @@ body {
 }
 
 .content {
+    background: #bfe2ca;
 }
 
 .line {
     display: flex;
 }
 
-.line:first-child .line-items-container {
-    border-top: 0.6em solid;
-    border-color: #bfe2ca;
-}
-
 .line-items-container {
     flex-grow: 1;
-    border-bottom: 0.6em solid;
-    border-color: #bfe2ca;
 }
 
 .line-items {
@@ -35,6 +29,7 @@ body {
 .line-number {
     font-weight: bold;
     color: #60806b;
+    background: #fff;
 }
 
 .line-number::before {
@@ -44,11 +39,22 @@ body {
     margin: 1em 0.5em 0em 0.5em;
 }
 
-.word-block {
-    flex-grow: 1;
-    vertical-align: top;
+.sentence-translation{
+    margin-bottom: 50px;
+    border-left: 1px solid #8eb099;
     border-right: 1px solid #8eb099;
     border-bottom: 1px solid #8eb099;
+    /*color: #254048;*/
+    color: #74573a;
+    background: #fff7f0;
+}
+
+.word-block {
+    flex-grow: 1;
+    margin-bottom: 10px;
+    border-right: 1px solid #8eb099;
+    border-bottom: 1px solid #8eb099;
+    background: #fff;
 }
 
 .mdc-row, .transliteration-row, .translation-row {
@@ -66,26 +72,24 @@ body {
     object-fit: contain;
     height: 100%;
     width: auto;
+    stroke: none;
 }
 
 .mdc-row {
     height: 2em;
     border-bottom: 1px solid #8eb099;
+    color: #73ae85;
 }
 
 .transliteration-row {
     height: 1.5em;
     border-bottom: 1px solid #8eb099;
+    color: #254048;
 }
 
 .translation-row {
     height: 1.5em;
-}
-
-.sentence-translation{
-    border-left: 1px solid #8eb099;
-    border-right: 1px solid #8eb099;
-    border-bottom: 1px solid #8eb099;
+    color: #73ae85;
 }
 
 </style>
