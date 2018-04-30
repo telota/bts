@@ -5,6 +5,8 @@
 body {
     counter-reset: linenum;
     font-family: sans-serif;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .content {
@@ -20,6 +22,7 @@ body {
 }
 
 .line-items {
+    margin-top: 10px;
     display: flex;
     flex-flow: row wrap;
     border-top: 1px solid #8eb099;
@@ -51,14 +54,23 @@ body {
 
 .word-block {
     flex-grow: 1;
+    display: flex;
+    flex-flow: column;
     margin-bottom: 10px;
     border-right: 1px solid #8eb099;
     border-bottom: 1px solid #8eb099;
     background: #fff;
 }
 
-.mdc-row, .transliteration-row, .translation-row {
+.mdc-row, .transliteration-row, .translation-row, .lemma-row {
     text-align: center;
+    vertical-align: middle;
+}
+
+.input-field:focus {
+    outline: none;
+    background: #fdd4d7;
+    color: #ac2e37;
 }
 
 .hieroglyph-row {
@@ -76,25 +88,71 @@ body {
 }
 
 .mdc-row {
-    height: 2em;
+    height: 1.6em;
+    line-height: 1.6em;
     border-bottom: 1px solid #8eb099;
     color: #73ae85;
 }
 
 .transliteration-row {
-    height: 1.5em;
+    height: 1.6em;
+    line-height: 1.6em;
     border-bottom: 1px solid #8eb099;
     color: #254048;
 }
 
 .translation-row {
-    height: 1.5em;
+    height: 1.6em;
+    line-height: 1.6em;
+    border-bottom: 1px solid #8eb099;
     color: #73ae85;
+}
+
+.lemma-row {
+    height: 1.6em;
+    line-height: 1.6em;
+    color: #73ae85;
+}
+
+input {
+    border: none;
+}
+
+#control-bar-pad {
+    height: 2em;
+}
+
+#control-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border-bottom: 5px solid #ff943b;
+    width: 100%;
+    height: 2em;
+}
+
+.title {
+    color: #b65403;
 }
 
 </style>
     </head>
     <body>
+        <div id="control-bar-pad"></div>
+        <div id="control-bar">
+            <input type=checkbox checked id=check_mdc onchange="setVisible('mdc-row', this.checked);"/>
+            <label for=check_mdc>MDC</label>
+            <input type=checkbox checked id=check_xliteration onchange="setVisible('transliteration-row', this.checked);"/>
+            <label for=check_xliteration>Transliteration</label>
+            <input type=checkbox checked id=check_xlation onchange="setVisible('translation-row', this.checked);"/>
+            <label for=check_xlation>Translation</label>
+            <input type=checkbox checked id=check_lemma onchange="setVisible('lemma-row', this.checked);"/>
+            <label for=check_lemma>Lemmatization</label>
+        </div>
+        <div class="title">
+            <h1>Opferformel</h1>
+        </div>
         <div class="content">
             {% for sentence in sentences %} <div class="line">
                 <div class="line-number"></div>
@@ -102,14 +160,15 @@ body {
                     <div class="line-items">
                         {% for item in sentence['items'] %}<div class="word-block">
                             <div class="hieroglyph-row">
-                                <object class="hieroglyph-render" type="image/svg+xml" data="static/svgs/{{item['render_filename']}}"></object>
+                                <object tabindex=-1 class="hieroglyph-render" type="image/svg+xml" data="static/svgs/{{item['render_filename']}}"></object>
                             </div>
-                            <div class="mdc-row">{{item['mdc']}}</div>
-                            <div class="transliteration-row">{{item['transliteration']}}</div>
-                            <div class="translation-row">{{item['translation']}}</div>
+                            <div contenteditable=true class="input-field mdc-row">{{item['mdc']}}</div>
+                            <div contenteditable=true class="input-field transliteration-row">{{item['transliteration']}}</div>
+                            <div contenteditable=true class="input-field translation-row">{{item['translation']}}</div>
+                            <div contenteditable=true class="input-field lemma-row">{{item['lemma']}}</div>
                         </div>{% endfor %}
                     </div>
-                    <div class="sentence-translation">
+                    <div contenteditable=true class="input-field sentence-translation">
                         {{sentence['translation']}}
                     </div>
                 </div>
@@ -117,4 +176,39 @@ body {
             {% endfor %}
         </div>
     </body>
+
+<script type="text/javascript">
+var tabIdx = 1;
+for (let classname of ["mdc-row", "transliteration-row", "translation-row"]) {
+    for (let elem of document.getElementsByClassName(classname)) {
+        elem.tabIndex = tabIdx++;
+    }
+}
+
+for (let elem of document.getElementsByClassName("line")) {
+    elem.onclick = function(event) {
+        if (event.target.className.includes('input-field'))
+            return;
+        if (event.target.className.includes('hieroglyph-row'))
+            return;
+        elem.getElementsByClassName("input-field")[0].focus();
+    };
+
+    elem.onkeydown = function(event) {
+        var sib;
+        if (event.keyCode == 38 /* arrow up */) {
+            sib = event.target.previousElementSibling;
+        } else if (event.keyCode == 40 /* arrow down */) {
+            sib = event.target.nextElementSibling;
+        } else return;
+        if (sib != null && sib.className.includes('input-field'))
+            sib.focus();
+    };
+}
+
+function setVisible(classname, visible) {
+    for (var elem of document.getElementsByClassName(classname))
+        elem.style.display = visible ? 'block' : 'none';
+}
+</script> 
 </html>
