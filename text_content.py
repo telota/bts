@@ -35,30 +35,31 @@ def get_svg(mdc):
         return minify_svg(out)
 
 def get_mdc(item):
-    return ''.join(graph['code'] for graph in item.get('graphics', ()))
+    return ''.join(graph['code'] for graph in item.get('graphics', ()) if 'code' in graph)
 
 def get_tl(item):
     foo = item.get('translation')
-    bar = foo.get('translations') if foo is not None else []
-    tls = { tl['lang']: tl['value'] for tl in bar }
+    bar = foo.get('translations', []) if foo is not None else []
+    tls = { tl['lang']: tl['value'] for tl in bar if tl.get('value') }
     return tls.get('de')
 
-def extract(data):
-    for sentence in data['textContent']['textItems']:
+def extract(data, render_mdc=False):
+    for sentence in data.get('textContent', {}).get('textItems', ()):
         yield {'translation': get_tl(sentence),
-                'items': list(extract_sentence(sentence))}
+                'items': list(extract_sentence(sentence, render_mdc))}
 
-def extract_sentence(sentence):
-    for item in sentence['sentenceItems']:
+def extract_sentence(sentence, render_mdc=False):
+    for item in sentence.get('sentenceItems', []):
         if 'BTSWord' in item['eClass']:
             mdc = get_mdc(item)
-            yield {'type': 'word',
-                    'lemma': item.get('lKey'),
-                    'transliteration': item.get('wChar'),
-                    'translation': get_tl(item),
-                    'mdc': mdc,
-                    'svg': get_svg(mdc),
-                    'render_filename': svg_filename(mdc)}
+            d = {'type': 'word',
+                 'lemma': item.get('lKey'),
+                 'transliteration': item.get('wChar'),
+                 'translation': get_tl(item),
+                 'mdc': mdc}
+            if render_mdc:
+                d.update({'svg': get_svg(mdc), 'mdc_render_filename': svg_filename(mdc)})
+            yield d
 
 if __name__ == '__main__':
     from os import path
@@ -70,11 +71,11 @@ if __name__ == '__main__':
 
     with open(args.json_file) as f:
         data = json.load(f)
-        for i, sentence in enumerate(extract(data)):
+        for i, sentence in enumerate(extract(data, render_mdc=True)):
             print('Sentence', i, sentence['translation'])
             for j, word in enumerate(sentence['items']):
                 print('Word', j, { k: v for k, v in word.items() if not k == 'svg' })
                 if args.svg_dir:
-                    with open(path.join(args.svg_dir, word['render_filename']), 'w') as f:
+                    with open(path.join(args.svg_dir, word['mdc_render_filename']), 'w') as f:
                         f.write(word['svg'])
 

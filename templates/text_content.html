@@ -62,6 +62,16 @@ body {
     background: #fff;
 }
 
+.line-filler {
+    flex-grow: 100;
+    display: flex;
+    flex-flow: column;
+    margin-bottom: 10px;
+    border-right: 1px solid #8eb099;
+    border-bottom: 1px solid #8eb099;
+    background: #fff;
+}
+
 .mdc-row, .transliteration-row, .translation-row, .lemma-row {
     text-align: center;
     vertical-align: middle;
@@ -136,9 +146,11 @@ input {
     height: 2em;
 }
 
+/*
 .title {
     color: #b65403;
 }
+*/
 
 </style>
     </head>
@@ -154,9 +166,6 @@ input {
             <input type=checkbox checked id=check_lemma onchange="setVisible('lemma-row', this.checked);"/>
             <label for=check_lemma>Lemmatization</label>
         </div>
-        <div class="title">
-            <h1>Opferformel</h1>
-        </div>
         <div class="content">
             {% for sentence in sentences %} <div class="line">
                 <div class="line-number"></div>
@@ -164,13 +173,15 @@ input {
                     <div class="line-items">
                         {% for item in sentence['items'] %}<div class="word-block">
                             <div class="hieroglyph-row">
-                                <object tabindex=-1 class="hieroglyph-render" type="image/svg+xml" data="static/svgs/{{item['render_filename']}}"></object>
+                                <object tabindex=-1 class="hieroglyph-render" type="image/svg+xml"
+                                         data="{{url_for('render_mdc', mdc=item['mdc'])}}"></object>
                             </div>
                             <div contenteditable=true class="input-field mdc-row">{{item['mdc']}}</div>
                             <div contenteditable=true class="input-field transliteration-row">{{item['transliteration']}}</div>
                             <div contenteditable=true class="input-field translation-row">{{item['translation']}}</div>
                             <div contenteditable=true class="input-field lemma-row">{{item['lemma']}}</div>
                         </div>{% endfor %}
+                        <div class="line-filler"><!-- fill remaining space --> </div>
                     </div>
                     <div contenteditable=true class="input-field sentence-translation">
                         {{sentence['translation']}}
