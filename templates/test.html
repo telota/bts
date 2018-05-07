@@ -114,6 +114,10 @@ body {
     color: #73ae85;
 }
 
+.block-selected {
+    background: #fff7f0;
+}
+
 input {
     border: none;
 }
@@ -209,6 +213,21 @@ for (let elem of document.getElementsByClassName("line")) {
 function setVisible(classname, visible) {
     for (var elem of document.getElementsByClassName(classname))
         elem.style.display = visible ? 'block' : 'none';
+}
+
+var selectionStart = null;
+for (let elem of document.getElementsByClassName("word-block")) {
+    elem.onmousedown = function(event) {
+        selectionStart = event.currentTarget;
+        selectionStart.classList.add('block-selected');
+    };
+}
+
+function blockSelectionDragHandler(event) {
+    var selected = false;
+    for (var cur: event.currentTarget.parentElement.childNodes) {
+
+    }
 }
 </script> 
 </html>
