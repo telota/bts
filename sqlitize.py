@@ -28,15 +28,7 @@ TYPE_DICT = {
         'Arrangement':  ObjectType.ARRANGEMENT
         }
 
-def format_passport(entry):
-    return { child.get('type', '<unnamed group>'):
-            format_passport(child) if 'children' in child else child['value']
-            for child in entry.get('children', [])
-            if child.get('children') or child.get('value') }
-
-def import_json(db, documents, collection_name):
-    project_name, _, corpus_name = collection_name.partition('_corpus_')
-
+def ensure_tables_exist(db):
     db.execute('''
         CREATE TABLE IF NOT EXISTS corpus_object(
             oid INTEGER PRIMARY KEY,
@@ -53,27 +45,6 @@ def import_json(db, documents, collection_name):
     db.execute('CREATE UNIQUE INDEX IF NOT EXISTS corpus_object_couchid ON corpus_object(couch_id)')
 
     db.execute('''
-        INSERT OR IGNORE INTO corpus_object(oid, name, type, parent) VALUES (
-            0, "Database root object", 0, null
-        )
-    ''')
-
-    db.execute('''
-        INSERT INTO corpus_object(name, type, parent)
-        SELECT ?1, 0, 0 WHERE NOT EXISTS (SELECT * FROM corpus_object WHERE parent=0 AND name=?1)
-    ''', (project_name,))
-    
-    project_id, = db.execute('SELECT oid FROM corpus_object WHERE parent=0 AND name=?', (project_name,)).fetchone()
-
-    db.execute('''
-        INSERT INTO corpus_object(name, type, parent)
-        SELECT ?2, 0, ?1
-        WHERE NOT EXISTS (SELECT * FROM corpus_object WHERE parent=?1 AND name=?2)
-    ''', (project_id, corpus_name))
-
-    corpus_id, = db.execute('SELECT oid FROM corpus_object WHERE parent=0 AND name=?', (project_name,)).fetchone()
-
-    db.execute('''
         CREATE TABLE IF NOT EXISTS text_content(
             oid INTEGER PRIMARY KEY,
             corpus_object INTEGER,
@@ -82,63 +53,105 @@ def import_json(db, documents, collection_name):
         )
     ''')
 
-    with db as connection:
-        # Import all objects into corpus_object table
-        for doc in documents:
-            if 'eClass' not in doc: # doc is a design document
-                continue
+def get_etype(doc):
+    _1, _2, etype = doc.get('eClass', '').rpartition('//')
+    return etype
 
-            _1, _2, etype = doc['eClass'].rpartition('//')
-            if etype == 'BTSTCObject':
-                doc_type = doc.get('type')
-                sql_type = TYPE_DICT.get(doc_type)
-                if sql_type is None:
-                    warn(f'Object {doc["_id"]} has unhandled corpus object type "{doc_type}". Defaulting to OBJECT.')
-                    sql_type = ObjectType.OBJECT
-            elif etype == 'BTSText':
-                sql_type = ObjectType.TEXT
-            else:
-                warn(f'Object {doc["_id"]} has unhandled eClass "{etype}"')
-                continue
-            
-            # Initialize parent with corpus object by default.
-            cursor = db.execute(
-                    'INSERT OR REPLACE INTO corpus_object(couch_id, name, type, parent, metadata) VALUES (?, ?, ?, ?, ?)',
-                    (doc['_id'],
-                     doc.get('name', '<Unnamed Object>'),
-                     sql_type.value,
-                     corpus_id,
-                     json.dumps(format_passport(doc))))
+def ensure_corpus_object_exists(db, parent_id, name, couch_id=None):
+    db.execute('''
+        INSERT INTO corpus_object(name, type, parent, couch_id)
+        SELECT ?1, 0, ?2, ?3 WHERE NOT EXISTS (SELECT * FROM corpus_object WHERE name=?1 AND parent=?2)
+    ''', (name, parent_id, couch_id))
+    
+    oid, = db.execute('SELECT oid FROM corpus_object WHERE name=?1 AND parent=?2', (name, parent_id)).fetchone()
+    return oid
 
-            if etype == 'BTSText':
-                cursor.execute('INSERT INTO text_content (corpus_object, content_json) VALUES (?, ?)',
-                        (cursor.lastrowid, json.dumps(list(text_content.extract(doc, render_mdc=False)))))
+def ensure_corpus_exists(db, project_name, corpus_name, couch_id=None):
+    ensure_corpus_object_exists(db, 0, "Database root object")
+    project_id = ensure_corpus_object_exists(db, 0, project_name)
+    corpus_id = ensure_corpus_object_exists(db, project_id, corpus_name, couch_id=couch_id)
+    orphans_id = ensure_corpus_object_exists(db, corpus_id, "Orphaned Objects")
+    return corpus_id, orphans_id
 
-        # Link imported objects into parent/child tree
-        for doc in documents:
-            rels = doc.get('relations', [])
-            if not rels:
-                continue
+def import_objects(db, documents, project_name, corpus_name):
+    corpus_id, orphans_id = ensure_corpus_exists(db, project_name, corpus_name)
+    """ Import all objects into corpus_object table """
+    objects_to_insert, texts_to_insert = [], []
+    for doc in documents:
+        if 'eClass' not in doc: # doc is a design document
+            continue
 
-            if len(rels) > 1:
-                warn(f'Too many relations on document {doc["_id"]}')
-                continue
+        etype = get_etype(doc)
+        if etype == 'BTSTCObject':
+            doc_type = doc.get('type')
+            sql_type = TYPE_DICT.get(doc_type)
+            if sql_type is None:
+                warn(f'Object {doc["_id"]} has unhandled corpus object type "{doc_type}". Defaulting to OBJECT.')
+                sql_type = ObjectType.OBJECT
+        elif etype == 'BTSText':
+            sql_type = ObjectType.TEXT
+        else:
+            warn(f'Object {doc["_id"]} has unhandled eClass "{etype}"')
+            continue
+        
+        # Initialize parent with corpus object by default.
+        objects_to_insert.append(
+                (doc['_id'],
+                 doc.get('name', '<Unnamed Object>'),
+                 sql_type.value,
+                 orphans_id,
+                 json.dumps(format_passport(doc))))
 
-            reltype = rels[0].get('type')
-            if reltype != 'partOf':
-                warn(f'Unhandled relation type {reltype} on document {doc["_id"]}')
-                continue
+        if etype == 'BTSText':
+            texts_to_insert.append(
+                (doc['_id'], json.dumps(list(text_content.extract(doc, render_mdc=False)))))
+    db.executemany('''
+            INSERT OR REPLACE INTO corpus_object(couch_id, name, type, parent, metadata) VALUES (?, ?, ?, ?, ?)
+            ''', objects_to_insert)
+    db.executemany('''
+            INSERT INTO text_content (corpus_object, content_json)
+            VALUES ((SELECT oid FROM corpus_object WHERE couch_id=?), ?)
+            ''', texts_to_insert)
 
-            target = rels[0].get('objectId')
-            if not target:
-                warn(f'Empty partOf relation on document {doc["_id"]}')
-                continue
+def import_hierarchy(db, documents):
+    """ Link imported objects into parent/child tree """
+    to_insert = []
+    for doc in documents:
+        rels = doc.get('relations', [])
+        if not rels:
+            continue
 
-            parent = db.execute('SELECT oid FROM corpus_object WHERE couch_id=?', (target,)).fetchone()
-            if parent:
-                db.execute('''UPDATE corpus_object SET parent=?  WHERE couch_id=?''', (parent[0], doc['_id']))
-            else:
-                warn(f'Cannot find parent {target} for object {doc["_id"]}')
+        if len(rels) > 1:
+            warn(f'Too many relations on document {doc["_id"]}')
+
+        reltype = rels[0].get('type')
+        if reltype != 'partOf':
+            warn(f'Unhandled relation type {reltype} on document {doc["_id"]}')
+            continue
+
+        target = rels[0].get('objectId')
+        if not target:
+            warn(f'Empty partOf relation on document {doc["_id"]}')
+            continue
+
+        to_insert.append((target, doc['_id']))
+
+    db.executemany('''
+            UPDATE corpus_object
+            SET parent=coalesce((SELECT oid FROM corpus_object WHERE couch_id=?), parent)
+            WHERE couch_id=?''',
+            to_insert)
+
+def format_passport(entry):
+    return { child.get('type', '<unnamed group>'):
+            format_passport(child) if 'children' in child else child['value']
+            for child in entry.get('children', [])
+            if child.get('children') or child.get('value') }
+
+def import_corpora(db, docs, project_name):
+    for doc in docs:
+        if get_etype(doc) == 'BTSTextCorpus':
+            ensure_corpus_exists(db, project_name, doc['name'], couch_id=doc['_id'])
 
 if __name__ == '__main__':
     import argparse
@@ -147,12 +160,27 @@ if __name__ == '__main__':
             'BTS couchDB backup directory with one JSON file per collection named [collection name].json')
     parser.add_argument('sqlite_file', help='Output sqlite database file name')
     args = parser.parse_args()
+    json_dir = Path(args.json_dir)
+    corpus_files = list(json_dir.glob('*_corpus_*.json'))
 
     db = sqlite3.connect(args.sqlite_file)
+    with db as conn:
+        ensure_tables_exist(conn)
 
-    for fn in Path(args.json_dir).glob('*_corpus_*.json'):
-        with open(fn) as f:
-            import_json(db, json.load(f)['docs'], collection_name=fn.stem)
+        for fn in json_dir.glob('*_corpus.json'):
+            project_name,_1,_2 = fn.stem.partition('_')
+            with open(fn) as f:
+                import_corpora(conn, json.load(f)['docs'], project_name)
 
-    # TODO Add corpus passport data
+        # Import objects and hierarchy information in two steps, since hierarchical relationships may exist across
+        # collections.
+        for fn in corpus_files:
+            project_name, _, corpus_name = fn.stem.partition('_corpus_')
+
+            with open(fn) as f:
+                import_objects(conn, json.load(f)['docs'], project_name, corpus_name)
+
+        for fn in corpus_files:
+            with open(fn) as f:
+                import_hierarchy(conn, json.load(f)['docs'])
 

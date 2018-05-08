@@ -7,7 +7,7 @@ import re
 from cleanSVG import CleanSVG
 import requests
 import flask
-from flask import Flask, render_template, redirect, abort, url_for, Response, request
+from flask import Flask, render_template, redirect, abort, url_for, Response, request, jsonify
 
 # FIXME Development-only. For production, use simple HTTP caching in front of the render_mdc endpoint.
 from werkzeug.contrib.cache import SimpleCache
@@ -33,7 +33,7 @@ def close_connection(_exception):
 
 @app.route('/couch/<string:couch_id>/')
 def redirect_corpus_couch_id(couch_id):
-    results = get_db().execute('SELECT oid FROM corpus_objects WHERE couch_id=?', (couch_id,)).fetchall()
+    results = get_db().execute('SELECT oid FROM corpus_object WHERE couch_id=?', (couch_id,)).fetchall()
     if not results:
         abort(404)
 
@@ -47,8 +47,8 @@ def render_text(oid):
             SELECT parent.type AS parent_type, parent.name AS parent_name,
                    obj.type, obj.name, obj.metadata,
                    content.content_json
-            FROM corpus_objects obj
-            JOIN corpus_objects parent ON obj.parent = parent.oid
+            FROM corpus_object obj
+            JOIN corpus_object parent ON obj.parent = parent.oid
             LEFT JOIN text_content content ON content.corpus_object = obj.oid
             WHERE obj.oid = ?''', (oid,)).fetchall()
 
@@ -94,22 +94,22 @@ def render_mdc():
     return resp
 
 def parents(oid):
-    results = get_db().execute('''
-            WITH RECURSIVE
-                object_tree(oid) AS ( VALUES(?) UNION
-                    SELECT oid FROM corpus_objects WHERE corpus_objects.parent = object_tree.oid)
-            SELECT oid, type, name
-            FROM corpus_objects parent WHERE
-            WHERE parent.oid = ? ''', (cur,)).fetchall()
-    raise ValueError('Maximum object tree depth exceeded')
+    return get_db().execute('''
+            WITH RECURSIVE tree(parent) AS ( VALUES(?) UNION
+            SELECT corpus_object.parent FROM corpus_object, tree
+            WHERE oid=tree.parent)
+            SELECT oid, type, name FROM corpus_object JOIN tree ON oid=tree.parent
+            ''', (oid,)).fetchall()
 
 def children(oid):
+    return get_db().execute('SELECT oid, type, name FROM corpus_object WHERE parent=?',
+            (oid,)).fetchall()
 
 @app.route('/api/v1/corpus/<int:oid>/children')
 def list_children(oid):
-    return list(children(oid))
+    return jsonify([dict(e) for e in children(oid)])
 
 @app.route('/api/v1/corpus/<int:oid>/parents')
 def list_parents(oid):
-    return list(parents(oid))
+    return json.dumps([dict(e) for e in parents(oid)][::-1])
 
