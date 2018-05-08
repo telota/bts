@@ -93,3 +93,23 @@ def render_mdc():
     resp.headers['Content-Type'] = 'image/svg+xml'
     return resp
 
+def parents(oid):
+    results = get_db().execute('''
+            WITH RECURSIVE
+                object_tree(oid) AS ( VALUES(?) UNION
+                    SELECT oid FROM corpus_objects WHERE corpus_objects.parent = object_tree.oid)
+            SELECT oid, type, name
+            FROM corpus_objects parent WHERE
+            WHERE parent.oid = ? ''', (cur,)).fetchall()
+    raise ValueError('Maximum object tree depth exceeded')
+
+def children(oid):
+
+@app.route('/api/v1/corpus/<int:oid>/children')
+def list_children(oid):
+    return list(children(oid))
+
+@app.route('/api/v1/corpus/<int:oid>/parents')
+def list_parents(oid):
+    return list(parents(oid))
+

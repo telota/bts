@@ -38,7 +38,7 @@ def import_json(db, documents, collection_name):
     project_name, _, corpus_name = collection_name.partition('_corpus_')
 
     db.execute('''
-        CREATE TABLE IF NOT EXISTS corpus_objects(
+        CREATE TABLE IF NOT EXISTS corpus_object(
             oid INTEGER PRIMARY KEY,
             couch_id TEXT DEFAULT null, -- CouchDB object ID
             name TEXT,
@@ -46,35 +46,44 @@ def import_json(db, documents, collection_name):
                           -- Corpus(0), Object(1), Part(2), Caption(3), Scene(4), Group(5), Arrangement(6), Text(7)
             parent INTEGER,
             metadata TEXT DEFAULT "{}", -- JSON passport data
-            FOREIGN KEY (parent) REFERENCES corpus_objects(oid) ON DELETE CASCADE
+            FOREIGN KEY (parent) REFERENCES corpus_object(oid) ON DELETE CASCADE
         )
     ''')
 
+    db.execute('CREATE UNIQUE INDEX IF NOT EXISTS corpus_object_couchid ON corpus_object(couch_id)')
+
     db.execute('''
-        INSERT OR IGNORE INTO corpus_objects(oid, name, type, parent) VALUES (
+        INSERT OR IGNORE INTO corpus_object(oid, name, type, parent) VALUES (
             0, "Database root object", 0, null
         )
     ''')
 
-    db.execute('INSERT OR IGNORE INTO corpus_objects(name, type, parent) VALUES (?, 0, 0)', (project_name,))
+    db.execute('''
+        INSERT INTO corpus_object(name, type, parent)
+        SELECT ?1, 0, 0 WHERE NOT EXISTS (SELECT * FROM corpus_object WHERE parent=0 AND name=?1)
+    ''', (project_name,))
+    
+    project_id, = db.execute('SELECT oid FROM corpus_object WHERE parent=0 AND name=?', (project_name,)).fetchone()
 
     db.execute('''
-        INSERT INTO corpus_objects(name, type, parent) VALUES (
-            ?, 0, (SELECT oid FROM corpus_objects WHERE parent=0 AND name=?)
-        ) 
-    ''', (corpus_name, project_name))
+        INSERT INTO corpus_object(name, type, parent)
+        SELECT ?2, 0, ?1
+        WHERE NOT EXISTS (SELECT * FROM corpus_object WHERE parent=?1 AND name=?2)
+    ''', (project_id, corpus_name))
+
+    corpus_id, = db.execute('SELECT oid FROM corpus_object WHERE parent=0 AND name=?', (project_name,)).fetchone()
 
     db.execute('''
         CREATE TABLE IF NOT EXISTS text_content(
             oid INTEGER PRIMARY KEY,
             corpus_object INTEGER,
             content_json TEXT,
-            FOREIGN KEY (corpus_object) REFERENCES corpus_objects(oid) ON DELETE CASCADE
+            FOREIGN KEY (corpus_object) REFERENCES corpus_object(oid) ON DELETE CASCADE
         )
     ''')
 
-    # Import all objects into corpus_objects table
     with db as connection:
+        # Import all objects into corpus_object table
         for doc in documents:
             if 'eClass' not in doc: # doc is a design document
                 continue
@@ -92,15 +101,44 @@ def import_json(db, documents, collection_name):
                 warn(f'Object {doc["_id"]} has unhandled eClass "{etype}"')
                 continue
             
+            # Initialize parent with corpus object by default.
             cursor = db.execute(
-                    'INSERT INTO corpus_objects(couch_id, name, type, parent, metadata) VALUES (?, ?, ?, ?, ?)',
-                    (doc['_id'], doc.get('name', '<Unnamed Object>'), sql_type.value, 0, json.dumps(format_passport(doc))))
+                    'INSERT OR REPLACE INTO corpus_object(couch_id, name, type, parent, metadata) VALUES (?, ?, ?, ?, ?)',
+                    (doc['_id'],
+                     doc.get('name', '<Unnamed Object>'),
+                     sql_type.value,
+                     corpus_id,
+                     json.dumps(format_passport(doc))))
 
             if etype == 'BTSText':
                 cursor.execute('INSERT INTO text_content (corpus_object, content_json) VALUES (?, ?)',
                         (cursor.lastrowid, json.dumps(list(text_content.extract(doc, render_mdc=False)))))
 
-    # Link imported objects into parent/child tree
+        # Link imported objects into parent/child tree
+        for doc in documents:
+            rels = doc.get('relations', [])
+            if not rels:
+                continue
+
+            if len(rels) > 1:
+                warn(f'Too many relations on document {doc["_id"]}')
+                continue
+
+            reltype = rels[0].get('type')
+            if reltype != 'partOf':
+                warn(f'Unhandled relation type {reltype} on document {doc["_id"]}')
+                continue
+
+            target = rels[0].get('objectId')
+            if not target:
+                warn(f'Empty partOf relation on document {doc["_id"]}')
+                continue
+
+            parent = db.execute('SELECT oid FROM corpus_object WHERE couch_id=?', (target,)).fetchone()
+            if parent:
+                db.execute('''UPDATE corpus_object SET parent=?  WHERE couch_id=?''', (parent[0], doc['_id']))
+            else:
+                warn(f'Cannot find parent {target} for object {doc["_id"]}')
 
 if __name__ == '__main__':
     import argparse
