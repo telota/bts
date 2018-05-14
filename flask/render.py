@@ -42,6 +42,14 @@ def close_connection(_exception):
         flask.g._database.close()
 
 
+@app.route('/')
+def root():
+    return redirect(url_for('index'))
+
+@app.route('/index.html')
+def index():
+    return render_template('index.html')
+
 @app.route('/couch/<string:couch_id>/')
 def redirect_corpus_couch_id(couch_id):
     results = get_db().execute('SELECT oid FROM corpus_object WHERE couch_id=?', (couch_id,)).fetchall()

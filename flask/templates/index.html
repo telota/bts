@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quick Berlin Text System Renderer</title>
+    </head>
+    <body>
+        <div class="container">
+        <h1>Quick Berlin Text System Renderer</h1>
+
+        <form id="couchdb_form">
+            <label for="couchdb_id_input"><strong>CouchDB ID</strong></label>
+            <input type=text id="couchdb_id_input">
+            <input type=submit>
+        </form>
+
+        <form id="render_form">
+            <label for="render_id_input"><strong>Render ID</strong></label>
+            <input type=text id="render_id_input">
+            <input type=submit>
+        </form>
+
+        This server exposes the following functions:
+        <table>
+            <tr><th>URL</th><th>Function</th></tr>
+            <tr><td>/render_mdc?mdc=...</td><td>Render MDC to SVG.</td></tr>
+            <tr><td>/couch/&lt;CouchDB document ID&gt;/</td><td>Redirect to /corpus/... for the render database ID for this CouchDB document ID.</td></tr>
+            <tr><td>/text/&lt;Render database ID&gt;/</td><td>Render a nice, human-readable web page of this text.</td></tr>
+            <tr><td>/corpus/&lt;Render database ID&gt;/</td><td>Render a nice, human-readable web page of this database object with a navigation tree.</td></tr>
+            <tr><td>/api/v1/corpus/&lt;Render database ID&gt;/</td><td>Produce a JSON description of this database object.</td></tr>
+        </table>
+        </div>
+    </body>
+    <script type="text/javascript">
+        function redirect_couchdb_id(event) {
+            event.preventDefault();
+            var couch_id = document.getElementById("couchdb_id_input").value;
+            window.open("/couch/"+couch_id, "_top");
+        }
+        document.getElementById("couchdb_form").onsubmit = redirect_couchdb_id;
+
+        function redirect_render_id(event) {
+            event.preventDefault();
+            var render_id = document.getElementById("render_id_input").value;
+            window.open("/corpus/"+render_id, "_top");
+        }
+        document.getElementById("render_form").onsubmit = redirect_render_id;
+    </script>
+</html>
