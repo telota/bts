@@ -1,5 +1,7 @@
 [Unit]
 Description=BTS backup one-shot service
+Requires=bts-render-export.service
+Before=bts-render-export.service
 
 [Service]
 Type=oneshot

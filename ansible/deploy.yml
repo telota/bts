@@ -78,10 +78,10 @@
       dest: /etc/systemd/system/bts-render-export.service
   - name: Copy systemd export timer config
     copy:
-      src: bts-render-export.timer
-      dest: /etc/systemd/system/bts-render-export.timer
+      src: bts-backup.timer
+      dest: /etc/systemd/system/bts-backup.timer
   - name: Enable systemd backup and export timer
-    systemd: name=bts-render-export.timer enabled=yes daemon_reload=yes
+    systemd: name=bts-backup.timer enabled=yes daemon_reload=yes
 
 - hosts: webservers
   become: yes

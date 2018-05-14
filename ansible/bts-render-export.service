@@ -1,8 +1,5 @@
 [Unit]
 Description=BTS renderer database export one-shot service
-After=bts-backup.service
-Conflicts=bts-backup.service
-Wants=bts-backup.service
 
 [Service]
 Type=oneshot
