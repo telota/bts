@@ -1,2 +1,3 @@
 *.class
 __pycache__
+ansible/couchdb_netrc

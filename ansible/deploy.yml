@@ -1,80 +1,132 @@
-# Ansible playbook for deploying a Flask app
-
 ---
 # Install system apt packages
 - hosts: webservers
   become: yes
   become_method: sudo
   tasks:
-  - name: update cache
+  - name: Update cache
     apt: name=python-software-properties state=present update_cache=yes cache_valid_time=43200
-  - name: disable lighttpd
-    systemd: name=lighttpd state=stopped enabled=no  # To avoid conflicts with nginx
-  - name: install packages
-    apt: name={{item}} state=installed
+  - name: Install packages
+    apt: name={{item}} state=present
     with_items:
-      - tree         # Optional
-      - python-pip   # Optional
-      - python-dev   # Optional
       - python3-pip
       - python3-dev
+      - python3-venv
       - nginx
+      - jq
+      - default-jre
 
-# Install the app, note: don't do these tasks with become sudo
 - hosts: webservers
+  become: yes
+  become_method: sudo
   tasks:
-  - name: clone repo
-    git:
-      repo: 'https://github.com/{{ github_user }}/{{ app_name }}.git'
-      dest: /home/{{ ansible_ssh_user }}/{{ app_name }}
-      update: yes  # Does a git pull if the repo already exists
-  - name: install modules in a virtualenv
+  - name: Create lib dir
+    file: path=/var/lib/btsrender state=directory
+  - name: Create data dir
+    file: path=/var/cache/btsrender state=directory
+  - name: Create backup dir
+    file: path=/var/cache/btsrender/backup state=directory group=btsbackup mode=0770
+  - name: Create database dir
+    file: path=/var/cache/btsrender/db state=directory group=www-data mode=0775
+  - name: Create run dir
+    file: path=/var/lib/btsrender/run state=directory group=www-data mode=0775
+  - name: Create config dir
+    file: path=/etc/btsrender state=directory group=www-data mode=0755
+  - name: Copy app
+    synchronize:
+      src: "{{playbook_dir}}/../flask"
+      dest: /var/lib/btsrender/
+  - name: Set app dir permissions
+    file:
+      path: /var/lib/btsrender/flask
+      owner: root
+      group: www-data
+      mode: u=rwX,g=rX,o=rX
+      recurse: yes
+  - name: Copy app config
+    copy:
+      src: btsrender.cfg
+      dest: /etc/btsrender/btsrender.cfg
+      owner: root
+      mode: 0644
+  - name: Install flask and other requirements into virtualenv
     pip:
-      requirements: /home/{{ ansible_ssh_user }}/{{ app_name }}/requirements.txt
-      virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
-      virtualenv_python: python3.5
+      requirements: /var/lib/btsrender/flask/requirements.txt
+      virtualenv: /var/lib/btsrender/env
+
+- hosts: webservers
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Create backup group
+    group: name=btsbackup state=present
+  - name: Create backup user
+    user: name=btsbackup comment="BTS Backup User" group=btsbackup groups=www-data shell=/usr/sbin/nologin
+  - name: Install couchdb backup scripts 1/2
+    copy: src="{{playbook_dir}}/../resource/couchdb-dump/couchdb-backup.sh" dest=/var/lib/btsrender/couchdb-backup.sh mode=0755
+  - name: Install couchdb backup scripts 2/2
+    copy: src=backup_all_collections.sh dest=/var/lib/btsrender/backup_all_collections.sh mode=0755
+  - name: Install couchdb netrc
+    copy: src=couchdb_netrc dest=/etc/btsrender/couchdb_netrc owner=root group=btsbackup mode=0640
+  - name: Copy systemd backup service config
+    copy:
+      src: bts-backup.service
+      dest: /etc/systemd/system/bts-backup.service
+  - name: Copy systemd export service config
+    copy:
+      src: bts-render-export.service
+      dest: /etc/systemd/system/bts-render-export.service
+  - name: Copy systemd export timer config
+    copy:
+      src: bts-render-export.timer
+      dest: /etc/systemd/system/bts-render-export.timer
+  - name: Enable systemd backup and export timer
+    systemd: name=bts-render-export.timer enabled=yes daemon_reload=yes
+
+- hosts: webservers
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Create MDC renderer dir
+    file: path=/var/lib/btsrender/mdc_render state=directory
+  - name: Copy MDC renderer
+    synchronize: src="{{playbook_dir}}/../flask/class/" dest=/var/lib/btsrender/mdc_render
+  - name: Copy JSesh data
+    synchronize: src="{{playbook_dir}}/../bin/JSesh-6.5.5/" dest=/var/lib/btsrender/mdc_render/JSesh/
+  - name: Copy systemd mdc render service config
+    copy: src=mdc-render.service dest=/etc/systemd/system/mdc-render.service
+  - name: Enable systemd mdc render service
+    systemd: name=mdc-render.service enabled=yes state=restarted daemon_reload=yes
 
 # Configure app systemd service and nginx
 - hosts: webservers
   become: yes
   become_method: sudo
   tasks:
-  - name: template systemd service config
+  - name: Create nginx cache dir
+    file: path=/var/cache/nginx/btsrender state=directory group=www-data mode=0750
+  - name: Copy systemd app service config
     copy:
-      src: .service
-      dest: /etc/systemd/system/{{ app_name }}.service
+      src: btsrender.service
+      dest: /etc/systemd/system/btsrender.service
   - name: start systemd app service
-    systemd: name={{ app_name }}.service state=restarted enabled=yes
+    systemd: name=btsrender.service state=restarted enabled=yes daemon_reload=yes
   - name: template nginx site config
     template:
-      src: .nginx
-      dest: /etc/nginx/sites-available/{{ app_name }}
+      src: nginx.conf
+      dest: /etc/nginx/sites-available/btsrender.conf
   - name: remove default nginx site config
     file: path=/etc/nginx/sites-enabled/default state=absent
-  # - command: mv /etc/nginx/sites-enabled/default /tmp/nginx.sites-enabled.default
   - name: enable nginx site
     file:
-      src: /etc/nginx/sites-available/{{ app_name }}
-      dest: /etc/nginx/sites-enabled/default
+      src: /etc/nginx/sites-available/btsrender.conf
+      dest: /etc/nginx/sites-enabled/btsrender.conf
       state: link
       force: yes
   - name: restart nginx
-    systemd: name=nginx state=restarted enabled=yes
+    systemd: name=nginx state=reloaded enabled=yes
   - name: open firewall for nginx
     ufw:
       rule: allow
       name: Nginx Full
 
-# Run a quick test to verify the site is working
-- hosts: webservers
-  tasks:
-  - name: get url
-    get_url:
-      url: http://{{inventory_hostname}}
-      dest: /tmp/index.html
-  - name: read html
-    shell: cat /tmp/index.html
-    register: html_contents
-  - name: check for string in html
-    when: html_contents.stdout.find('hello') != -1
-    debug: msg="success!"

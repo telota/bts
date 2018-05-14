@@ -86,12 +86,13 @@ def import_objects(db, documents, project_name, corpus_name):
             doc_type = doc.get('type')
             sql_type = TYPE_DICT.get(doc_type)
             if sql_type is None:
-                warn(f'Object {doc["_id"]} has unhandled corpus object type "{doc_type}". Defaulting to OBJECT.')
+                warn('Object {_id} has unhandled corpus object type "{doc_type}". Defaulting to OBJECT.'.format(
+                    _id=doc.get('_id'), doc_type=doc_type))
                 sql_type = ObjectType.OBJECT
         elif etype == 'BTSText':
             sql_type = ObjectType.TEXT
         else:
-            warn(f'Object {doc["_id"]} has unhandled eClass "{etype}"')
+            warn('Object {_id} has unhandled eClass "{etype}"'.format(_id=doc.get('_id'), etype=etype))
             continue
         
         # Initialize parent with corpus object by default.
@@ -122,16 +123,16 @@ def import_hierarchy(db, documents):
             continue
 
         if len(rels) > 1:
-            warn(f'Too many relations on document {doc["_id"]}')
+            warn('Too many relations on document {_id}'.format(_id=doc.get('_id')))
 
         reltype = rels[0].get('type')
         if reltype != 'partOf':
-            warn(f'Unhandled relation type {reltype} on document {doc["_id"]}')
+            warn('Unhandled relation type {reltype} on document {_id}'.format(reltype=reltype, _id=doc.get('_id')))
             continue
 
         target = rels[0].get('objectId')
         if not target:
-            warn(f'Empty partOf relation on document {doc["_id"]}')
+            warn('Empty partOf relation on document {_id}'.format(_id=doc.get('_id')))
             continue
 
         to_insert.append((target, doc['_id']))
@@ -174,7 +175,7 @@ if __name__ == '__main__':
 
         for fn in json_dir.glob('*_corpus.json'):
             project_name,_1,_2 = fn.stem.partition('_')
-            with open(fn) as f:
+            with fn.open() as f:
                 import_corpora(conn, json.load(f)['docs'], project_name)
 
         # Import objects and hierarchy information in two steps, since hierarchical relationships may exist across
@@ -182,10 +183,10 @@ if __name__ == '__main__':
         for fn in corpus_files:
             project_name, _, corpus_name = fn.stem.partition('_corpus_')
 
-            with open(fn) as f:
+            with fn.open() as f:
                 import_objects(conn, json.load(f)['docs'], project_name, corpus_name)
 
         for fn in corpus_files:
-            with open(fn) as f:
+            with fn.open() as f:
                 import_hierarchy(conn, json.load(f)['docs'])
 

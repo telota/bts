@@ -1,0 +1,3 @@
+[submodule "resource/couchdb-dump"]
+	path = resource/couchdb-dump
+	url = https://github.com/danielebailo/couchdb-dump

@@ -1,0 +1,13 @@
+[Unit]
+Description=BTS renderer database export one-shot service
+After=bts-backup.service
+Conflicts=bts-backup.service
+Wants=bts-backup.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/var/cache/btsrender/backup
+ExecStart=/var/lib/btsrender/flask/sqlitize.py latest ../db/corpus.sqlite3
+User=btsbackup
+Group=btsbackup
+

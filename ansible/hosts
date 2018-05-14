@@ -1,0 +1,5 @@
+[webservers]
+tladev.bbaw.de
+
+[webservers:vars]
+ansible_ssh_user=sgoette

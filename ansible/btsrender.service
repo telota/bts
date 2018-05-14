@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn instance to serve btsrender
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/lib/btsrender/flask
+Environment="PATH=/var/lib/btsrender/env/bin"
+Environment="BTSRENDER_SETTINGS=/etc/btsrender/btsrender.cfg"
+ExecStart=/var/lib/btsrender/env/bin/gunicorn --workers 2 --bind unix:/var/lib/btsrender/run/btsrender.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=BTS backup one-shot service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/var/cache/btsrender/backup
+ExecStart=/var/lib/btsrender/backup_all_collections.sh
+User=btsbackup
+Group=btsbackup
+

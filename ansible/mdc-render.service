@@ -1,0 +1,12 @@
+[Unit]
+Description=MDC renderer java service
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/lib/btsrender/mdc_render
+ExecStart=/bin/sh -c 'env "CLASSPATH=$$(echo JSesh/libJSesh/*.jar|tr " " :):." /usr/bin/java JSeshServer'
+
+[Install]
+WantedBy=multi-user.target

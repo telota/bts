@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup the BTS database and export renderer data daily
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
