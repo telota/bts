@@ -1,0 +1,51 @@
+<style type="text/css">
+ul.tree {
+    list-style: none;
+    padding: 0 0 0 1em;
+}
+
+ul.tree li {
+    padding: 1mm 0 0 0;
+}
+
+ul.tree a:hover {
+    font-weight: bold;
+}
+
+ul.tree li.tree-icon::before {
+    background-size: 1em 1em;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    content: "";
+}
+
+ul.tree li.tree-icon-corpus     ::before { background-image: url('/static/images/1f4da.png'); }
+ul.tree li.tree-icon-object     ::before { background-image: url('/static/images/1f4d5.png'); }
+ul.tree li.tree-icon-part       ::before { background-image: url('/static/images/1f5bc.png'); }
+ul.tree li.tree-icon-caption    ::before { background-image: url('/static/images/1f4d6.png'); }
+ul.tree li.tree-icon-scene      ::before { background-image: url('/static/images/1f4d6.png'); }
+ul.tree li.tree-icon-group      ::before { background-image: url('/static/images/1f4d6.png'); }
+ul.tree li.tree-icon-arrangement::before { background-image: url('/static/images/1f4d6.png'); }
+ul.tree li.tree-icon-text       ::before { background-image: url('/static/images/1f4d6.png'); }
+
+ul.tree a {
+    text-decoration: none;
+    color: #74573a;
+}
+</style>
+
+<ul class="tree">
+    {% for item in children(ROOT_OID) recursive %}
+    <li class="tree-icon tree-icon-{{ObjectType(item['type']).name.lower()}} {{ 'selected' if item['oid'] == obj['oid'] else '' }}">
+        <a href="{{url_for('render_corpus_object', oid=item['oid'])}}">{{ item['name'] }}</a>
+        {% if item['oid'] in obj['parent_oids'] %}
+        <ul class="tree">
+            {{ loop(children(item['oid'])) }}
+        </ul>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+<script type="text/javascript">
+</script> 

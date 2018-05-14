@@ -100,7 +100,7 @@ def import_objects(db, documents, project_name, corpus_name):
                  doc.get('name', '<Unnamed Object>'),
                  sql_type.value,
                  orphans_id,
-                 json.dumps(format_passport(doc))))
+                 json.dumps(format_passport(doc.get('passport', {})))))
 
         if etype == 'BTSText':
             texts_to_insert.append(
@@ -143,10 +143,15 @@ def import_hierarchy(db, documents):
             to_insert)
 
 def format_passport(entry):
-    return { child.get('type', '<unnamed group>'):
+    # TODO: Possibly fix up find_spot, date. Their hierarchy is b0rked in the source data.
+    # TODO: Fix up couchDB references in some fields such as date.
+    # TODO: Fix up list handling
+    d = { child.get('type', '<unnamed group>'):
             format_passport(child) if 'children' in child else child['value']
             for child in entry.get('children', [])
             if child.get('children') or child.get('value') }
+    # Filter out empty subtrees
+    return { k: v for k, v in d.items() if v }
 
 def import_corpora(db, docs, project_name):
     for doc in docs:

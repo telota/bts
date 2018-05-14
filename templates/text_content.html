@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html>
-    <head>
 <style type="text/css">
 body {
     counter-reset: linenum;
@@ -9,7 +6,7 @@ body {
     margin-top: 0;
 }
 
-.content {
+.text-backdrop {
     background: #bfe2ca;
 }
 
@@ -145,52 +142,42 @@ input {
     width: 100%;
     height: 2em;
 }
-
-/*
-.title {
-    color: #b65403;
-}
-*/
-
 </style>
-    </head>
-    <body>
-        <div id="control-bar-pad"></div>
-        <div id="control-bar">
-            <input type=checkbox checked id=check_mdc onchange="setVisible('mdc-row', this.checked);"/>
-            <label for=check_mdc>MDC</label>
-            <input type=checkbox checked id=check_xliteration onchange="setVisible('transliteration-row', this.checked);"/>
-            <label for=check_xliteration>Transliteration</label>
-            <input type=checkbox checked id=check_xlation onchange="setVisible('translation-row', this.checked);"/>
-            <label for=check_xlation>Translation</label>
-            <input type=checkbox checked id=check_lemma onchange="setVisible('lemma-row', this.checked);"/>
-            <label for=check_lemma>Lemmatization</label>
-        </div>
-        <div class="content">
-            {% for sentence in sentences %} <div class="line">
-                <div class="line-number"></div>
-                <div class="line-items-container">
-                    <div class="line-items">
-                        {% for item in sentence['items'] %}<div class="word-block">
-                            <div class="hieroglyph-row">
-                                <object tabindex=-1 class="hieroglyph-render" type="image/svg+xml"
-                                         data="{{url_for('render_mdc', mdc=item['mdc'])}}"></object>
-                            </div>
-                            <div contenteditable=true class="input-field mdc-row">{{item['mdc']}}</div>
-                            <div contenteditable=true class="input-field transliteration-row">{{item['transliteration']}}</div>
-                            <div contenteditable=true class="input-field translation-row">{{item['translation']}}</div>
-                            <div contenteditable=true class="input-field lemma-row">{{item['lemma']}}</div>
-                        </div>{% endfor %}
-                        <div class="line-filler"><!-- fill remaining space --> </div>
+
+<div id="control-bar">
+    <input type=checkbox checked id=check_mdc onchange="setVisible('mdc-row', this.checked);"/>
+    <label for=check_mdc>MDC</label>
+    <input type=checkbox checked id=check_xliteration onchange="setVisible('transliteration-row', this.checked);"/>
+    <label for=check_xliteration>Transliteration</label>
+    <input type=checkbox checked id=check_xlation onchange="setVisible('translation-row', this.checked);"/>
+    <label for=check_xlation>Translation</label>
+    <input type=checkbox checked id=check_lemma onchange="setVisible('lemma-row', this.checked);"/>
+    <label for=check_lemma>Lemmatization</label>
+</div>
+<div class="text-backdrop">
+    {% for sentence in obj['content'] %} <div class="line">
+        <div class="line-number"></div>
+        <div class="line-items-container">
+            <div class="line-items">
+                {% for item in sentence['items'] %}<div class="word-block">
+                    <div class="hieroglyph-row">
+                        <object tabindex=-1 class="hieroglyph-render" type="image/svg+xml"
+                                 data="{{url_for('render_mdc', mdc=item['mdc'])}}"></object>
                     </div>
-                    <div contenteditable=true class="input-field sentence-translation">
-                        {{sentence['translation']}}
-                    </div>
-                </div>
+                    <div contenteditable=true class="input-field mdc-row">{{item['mdc']}}</div>
+                    <div contenteditable=true class="input-field transliteration-row">{{item['transliteration']}}</div>
+                    <div contenteditable=true class="input-field translation-row">{{item['translation']}}</div>
+                    <div contenteditable=true class="input-field lemma-row">{{item['lemma']}}</div>
+                </div>{% endfor %}
+                <div class="line-filler"><!-- fill remaining space --> </div>
             </div>
-            {% endfor %}
+            <div contenteditable=true class="input-field sentence-translation">
+                {{sentence['translation']}}
+            </div>
         </div>
-    </body>
+    </div>
+    {% endfor %}
+</div>
 
 <script type="text/javascript">
 var tabIdx = 1;
@@ -225,20 +212,4 @@ function setVisible(classname, visible) {
     for (var elem of document.getElementsByClassName(classname))
         elem.style.display = visible ? 'block' : 'none';
 }
-
-var selectionStart = null;
-for (let elem of document.getElementsByClassName("word-block")) {
-    elem.onmousedown = function(event) {
-        selectionStart = event.currentTarget;
-        selectionStart.classList.add('block-selected');
-    };
-}
-
-function blockSelectionDragHandler(event) {
-    var selected = false;
-    for (var cur: event.currentTarget.parentElement.childNodes) {
-
-    }
-}
 </script> 
-</html>

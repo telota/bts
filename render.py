@@ -3,6 +3,7 @@ import sqlite3
 import json
 import hashlib
 import re
+from enum import Enum
 
 from cleanSVG import CleanSVG
 import requests
@@ -17,6 +18,17 @@ render_mdc_cache = SimpleCache()
 DATABASE = 'corpus.sqlite3'
 
 app = Flask(__name__)
+
+
+class ObjectType(Enum):
+    CORPUS      = 0
+    OBJECT      = 1
+    PART        = 2
+    CAPTION     = 3
+    SCENE       = 4
+    GROUP       = 5
+    ARRANGEMENT = 6
+    TEXT        = 7
 
 
 def get_db():
@@ -63,7 +75,11 @@ def render_text(oid):
 
 @app.route('/corpus/<int:oid>/')
 def render_corpus_object(oid):
-    return 'Not implemented.'
+    return render_template('corpus_object.html',
+            obj=load_corpus_object(oid),
+            ObjectType=ObjectType,
+            ROOT_OID=0,
+            children=children)
 
 def svg_filename(mdc):
     return '{:.12}-{:.32}.svg'.format(
@@ -93,23 +109,59 @@ def render_mdc():
     resp.headers['Content-Type'] = 'image/svg+xml'
     return resp
 
+def corpus_url(oid):
+    return url_for('get_corpus_object', oid=oid)
+
 def parents(oid):
-    return get_db().execute('''
+    return [dict(row, url=corpus_url(row['oid'])) for row in get_db().execute('''
             WITH RECURSIVE tree(parent) AS ( VALUES(?) UNION
             SELECT corpus_object.parent FROM corpus_object, tree
             WHERE oid=tree.parent)
             SELECT oid, type, name FROM corpus_object JOIN tree ON oid=tree.parent
-            ''', (oid,)).fetchall()
+            ''', (oid,)).fetchall() ][::-1]
 
 def children(oid):
-    return get_db().execute('SELECT oid, type, name FROM corpus_object WHERE parent=?',
-            (oid,)).fetchall()
+    return [dict(row, url=corpus_url(row['oid'])) for row in get_db().execute(
+            'SELECT oid, type, name FROM corpus_object WHERE parent=? ORDER BY name COLLATE NOCASE',
+            (oid,)).fetchall()]
 
 @app.route('/api/v1/corpus/<int:oid>/children')
 def list_children(oid):
-    return jsonify([dict(e) for e in children(oid)])
+    return jsonify(children(oid))
 
 @app.route('/api/v1/corpus/<int:oid>/parents')
 def list_parents(oid):
-    return json.dumps([dict(e) for e in parents(oid)][::-1])
+    return json.dumps(parents(oid))
+
+@app.route('/api/v1/corpus/<int:oid>')
+def get_corpus_object(oid):
+    obj = load_corpus_object(oid)
+    if not obj:
+        abort(404)
+    return jsonify(obj)
+
+def load_corpus_object(oid):
+    results = get_db().execute('''
+            SELECT corpus_object.oid, couch_id, name, type, metadata, content_json FROM corpus_object
+            LEFT JOIN text_content ON corpus_object.oid=text_content.corpus_object
+            WHERE corpus_object.oid=?
+            ''', (oid,)).fetchall()
+    if not results:
+        return None
+    row, = results
+    otype = ObjectType(row['type'])
+    lineage, descendants = parents(oid), children(oid)
+
+    d = {   'oid':      row['oid'],
+            'couch_id': row['couch_id'],
+            'name':     row['name'],
+            'type':     otype.name,
+            'metadata': json.loads(row['metadata']),
+            'parents':  lineage,
+            'parent_oids': [elem['oid'] for elem in lineage],
+            'child_oids': [elem['oid'] for elem in descendants],
+            'children': descendants}
+    if otype is ObjectType.TEXT:
+        d['content'] = json.loads(row['content_json'])
+    return d
 
