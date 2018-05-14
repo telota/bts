@@ -15,9 +15,8 @@ from werkzeug.contrib.cache import SimpleCache
 render_mdc_cache = SimpleCache()
 
 
-DATABASE = 'corpus.sqlite3'
-
 app = Flask(__name__)
+app.config.from_envvar('BTSRENDER_SETTINGS')
 
 
 class ObjectType(Enum):
@@ -33,7 +32,7 @@ class ObjectType(Enum):
 
 def get_db():
     if not hasattr(flask.g, '_database'):
-        flask.g._database = sqlite3.connect(DATABASE)
+        flask.g._database = sqlite3.connect(app.config['DATABASE_SQLITE_FILE'])
         flask.g._database.row_factory = sqlite3.Row
     return flask.g._database
 
