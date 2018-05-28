@@ -8,14 +8,20 @@
         <h1>Quick Berlin Text System Renderer</h1>
 
         <form id="couchdb_form">
-            <label for="couchdb_id_input"><strong>CouchDB ID</strong></label>
+            <label for="couchdb_id_input"><strong>Go to CouchDB ID</strong></label>
             <input type=text id="couchdb_id_input">
             <input type=submit>
         </form>
 
         <form id="render_form">
-            <label for="render_id_input"><strong>Render ID</strong></label>
+            <label for="render_id_input"><strong>Go to Render ID</strong></label>
             <input type=text id="render_id_input">
+            <input type=submit>
+        </form>
+
+        <form id="search_form">
+            <label for="search_input"><strong>Search</strong></label>
+            <input type=text id="search_input">
             <input type=submit>
         </form>
 
@@ -44,5 +50,12 @@
             window.open("/corpus/"+render_id, "_top");
         }
         document.getElementById("render_form").onsubmit = redirect_render_id;
+
+        function redirect_search(event) {
+            event.preventDefault();
+            var search_term = document.getElementById("search_input").value;
+            window.open("/search?query="+encodeURI(search_term), "_top");
+        }
+        document.getElementById("search_form").onsubmit = redirect_search;
     </script>
 </html>

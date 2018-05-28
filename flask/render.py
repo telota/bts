@@ -3,7 +3,9 @@ import sqlite3
 import json
 import hashlib
 import re
+import html
 from enum import Enum
+from time import time
 
 from cleanSVG import CleanSVG
 import requests
@@ -32,8 +34,8 @@ class ObjectType(Enum):
 
 def get_db():
     if not hasattr(flask.g, '_database'):
-        flask.g._database = sqlite3.connect(app.config['DATABASE_SQLITE_FILE'])
-        flask.g._database.row_factory = sqlite3.Row
+        db = flask.g._database = sqlite3.connect(app.config['DATABASE_SQLITE_FILE'])
+        db.row_factory = sqlite3.Row
     return flask.g._database
 
 @app.teardown_appcontext
@@ -146,6 +148,85 @@ def get_corpus_object(oid):
     if not obj:
         abort(404)
     return jsonify(obj)
+
+@app.route('/search')
+def search_results():
+    query = request.args['query']
+    offset = request.args.get('offset', 0)
+
+    t_rec, matches = perform_fts(query, offset)
+
+    def format_snippet(val):
+        ' Escape HTML except for <b> and </b> tags to allow sqlite to highlight the search result span in the snippet. '
+        return html.escape(val.replace('<b>', '\x1e').replace('</b>', '\x1f')).replace('\x1e', '<b>').replace('\x1f', '</b>')
+
+    return render_template('search_results.html',
+            matches=matches,
+            query_times=t_rec,
+            ObjectType=ObjectType,
+            format_snippet=format_snippet,
+            default_searchtype=sorted([ (len(vals), stype) for stype, vals in matches.items() ])[-1][1],
+            SEARCH_TYPE_DESCRIPTIONS=SEARCH_TYPE_DESCRIPTIONS)
+
+@app.route('/api/v1/search')
+def search():
+    query = request.args['query']
+    offset = request.args.get('offset', 0)
+
+    t_rec, matches = perform_fts(query, offset)
+
+    return jsonify({'query_times': t_rec,
+        'results': {k: [dict(e) for e in vs] for k, vs in matches.items()}})
+
+SEARCH_TYPE_DESCRIPTIONS = {
+    'exact': 'Exact ID',
+    'corpus_name': 'Object name',
+    'corpus_passport_values': 'Passport value',
+    'text_lemmata': 'Lemmata',
+    'text_mdc': 'MDC',
+    'text_transliteration': 'Transliteration',
+    'text_translation': 'Translation'
+}
+
+def perform_fts(query, offset):
+    # FTS4 SQLite full text search extension search table schemata:
+    # CREATE VIRTUAL TABLE text_fts   USING fts4(mdc, transliteration, lemmata, translation)
+    # CREATE VIRTUAL TABLE corpus_fts USING fts4(name, passport_values)
+
+    cur = get_db().cursor()
+    matches = {}
+
+    t0, t_rec = time(), {}
+    def timestamp(name):
+        nonlocal t0, t_rec
+        t1 = time()
+        t_rec[name] = t1 - t0
+        t0 = t1
+
+    obj = cur.execute('SELECT oid AS id, name, type, ?1 AS snippet FROM corpus_object WHERE couch_id=?1 OR oid=?1', (query,)).fetchone()
+    matches['exact'] = cur.fetchall()
+    timestamp('exact_match')
+
+    for col in 'name', 'passport_values':
+        cur.execute(f'''
+                SELECT corpus_fts.oid AS id, corpus_object.name, corpus_object.type, snippet(corpus_fts) AS snippet FROM corpus_fts
+                LEFT JOIN corpus_object ON corpus_object.oid=corpus_fts.oid
+                WHERE corpus_fts.{col} MATCH ?
+                LIMIT ? OFFSET ?
+                ''', (query, app.config['MAX_SEARCH_RESULTS'], offset))
+        matches[f'corpus_{col}'] = cur.fetchall()
+        timestamp(f'corpus_match_{col}')
+
+    for col in 'mdc', 'transliteration', 'lemmata', 'translation':
+        cur.execute(f'''
+                SELECT docid AS id, corpus_object.name, corpus_object.type, snippet(text_fts) AS snippet FROM text_fts
+                LEFT JOIN corpus_object ON corpus_object.oid=text_fts.oid
+                WHERE text_fts.{col} match ?
+                LIMIT ? OFFSET ?
+                ''', (query, app.config['MAX_SEARCH_RESULTS'], offset))
+        matches[f'text_{col}'] = cur.fetchall()
+        timestamp(f'text_match_{col}')
+    return t_rec, matches
 
 def load_corpus_object(oid):
     results = get_db().execute('''

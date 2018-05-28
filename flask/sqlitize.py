@@ -53,6 +53,11 @@ def ensure_tables_exist(db):
         )
     ''')
 
+    db.execute('CREATE VIRTUAL TABLE IF NOT EXISTS text_fts USING fts4(mdc, transliteration, lemmata, translation)')
+    db.execute('CREATE VIRTUAL TABLE IF NOT EXISTS corpus_fts USING fts4(name, passport_values)')
+    db.execute('DELETE FROM text_fts')
+    db.execute('DELETE FROM corpus_fts')
+
 def get_etype(doc):
     _1, _2, etype = doc.get('eClass', '').rpartition('//')
     return etype
@@ -76,7 +81,7 @@ def ensure_corpus_exists(db, project_name, corpus_name, couch_id=None):
 def import_objects(db, documents, project_name, corpus_name):
     corpus_id, orphans_id = ensure_corpus_exists(db, project_name, corpus_name)
     """ Import all objects into corpus_object table """
-    objects_to_insert, texts_to_insert = [], []
+    objects_to_insert, texts_to_insert, corpus_fts_data_to_insert, text_fts_data_to_insert = [], [], [], []
     for doc in documents:
         if 'eClass' not in doc: # doc is a design document
             continue
@@ -95,17 +100,35 @@ def import_objects(db, documents, project_name, corpus_name):
             warn('Object {_id} has unhandled eClass "{etype}"'.format(_id=doc.get('_id'), etype=etype))
             continue
         
+        passport = doc.get('passport', {})
+
         # Initialize parent with corpus object by default.
         objects_to_insert.append(
                 (doc['_id'],
                  doc.get('name', '<Unnamed Object>'),
                  sql_type.value,
                  orphans_id,
-                 json.dumps(format_passport(doc.get('passport', {})))))
+                 json.dumps(format_passport(passport))))
+
+        corpus_fts_data_to_insert.append(
+                (doc['_id'],
+                 doc.get('name', '<Unnamed Object>'),
+                 dump_passport_values(passport)))
 
         if etype == 'BTSText':
+            text_data = list(text_content.extract(doc, render_mdc=False))
             texts_to_insert.append(
-                (doc['_id'], json.dumps(list(text_content.extract(doc, render_mdc=False)))))
+                (doc['_id'], json.dumps(text_data)))
+            text_fts_data_to_insert.append((
+                    doc['_id'],
+                    ' '.join(item['mdc'].replace('-', ' ').replace(':', ' ')
+                            for sentence in text_data for item in sentence['items'] if item['mdc']),
+                    ' '.join(item['lemma']
+                            for sentence in text_data for item in sentence['items'] if item['lemma']),
+                    ' '.join(item['transliteration']
+                            for sentence in text_data for item in sentence['items'] if item['transliteration']),
+                    ' '.join(sentence['translation']
+                            for sentence in text_data if sentence['translation'])))
     db.executemany('''
             INSERT OR REPLACE INTO corpus_object(couch_id, name, type, parent, metadata) VALUES (?, ?, ?, ?, ?)
             ''', objects_to_insert)
@@ -113,6 +136,16 @@ def import_objects(db, documents, project_name, corpus_name):
             INSERT INTO text_content (corpus_object, content_json)
             VALUES ((SELECT oid FROM corpus_object WHERE couch_id=?), ?)
             ''', texts_to_insert)
+    db.executemany('''
+            INSERT INTO corpus_fts(docid, name, passport_values) VALUES (
+            (SELECT rowid FROM corpus_object WHERE couch_id=?),
+            ?, ?)
+            ''', corpus_fts_data_to_insert)
+    db.executemany('''
+            INSERT INTO text_fts(docid, mdc, transliteration, lemmata, translation) VALUES (
+            (SELECT rowid FROM corpus_object WHERE couch_id=?),
+            ?, ?, ?, ?)
+            ''', text_fts_data_to_insert)
 
 def import_hierarchy(db, documents):
     """ Link imported objects into parent/child tree """
@@ -153,6 +186,13 @@ def format_passport(entry):
             if child.get('children') or child.get('value') }
     # Filter out empty subtrees
     return { k: v for k, v in d.items() if v }
+
+def dump_passport_values(entry):
+    ''' Dump all passport values to a flat, space-separated string for full-text search '''
+
+    return ' '.join(dump_passport_values(child) if 'children' in child else child['value']
+            for child in entry.get('children', [])
+            if child.get('children') or child.get('value'))
 
 def import_corpora(db, docs, project_name):
     for doc in docs:

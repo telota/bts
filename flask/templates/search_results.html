@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<style type="text/css">
+body {
+    font-family: sans-serif;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 20em auto;
+    grid-template-areas:
+        "searchbar searchbar"
+        "resulttypes main";
+}
+
+.searchbar {
+    grid-area: searchbar;
+}
+
+.resulttypes {
+    grid-area: resulttypes;
+    background-color: #fff7f0;
+}
+
+.results {
+    grid-area: main;
+}
+
+.title {
+    color: #b65403;
+}
+
+a.resulttype {
+    display: block;
+    font-size: 20px;
+    height: 2em;
+    vertical-align: middle;
+}
+
+span.resultcount {
+    color: #b65403;
+}
+
+a.resulttype:hover {
+    background: #b65403;
+    color: white;
+}
+
+div.result-name {
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+a.single-result-entry {
+    display: block;
+    color: black;
+    text-decoration: none;
+    margin-top: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid black;
+}
+
+div.query-stats {
+    color: #aaa;
+    font-family: monospace;
+    font-weight: bold;
+}
+</style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="searchbar">
+				<form id="search_form">
+					<label for="search_input"><strong>Search</strong></label>
+					<input type=text id="search_input">
+					<input type=submit>
+				</form>
+            </div>
+            <div class="resulttypes">
+                <h4>Search by</h4>
+                {% for type, desc in SEARCH_TYPE_DESCRIPTIONS.items() %}
+                <a class="resulttype" data-searchtype="{{ type }}">
+                    <span class="label">{{ desc }}</span> <span class="resultcount">{{ matches[type] | length }}<span>
+                </a>
+                {% endfor %}
+            </div>
+            <div class="results">
+                {% for searchtype, results in matches.items() %}
+                <div class="results-pane" id="results-pane-{{ searchtype }}">
+                    <div class="title"><h1>Showing {{ results | length }} results for {{ SEARCH_TYPE_DESCRIPTIONS[searchtype] }} search</h1></div>
+                    <div class="result-entries">
+                        {% for result in results %}
+                        <a class="single-result-entry result-type-{{ ObjectType(result.type or 0).name.lower() }}" href="{{url_for('render_corpus_object', oid=result.id)}}">
+                            <div class="result-name">{{ result.name }}</div>
+                            <div class="result-snippet">{{ format_snippet(result.snippet) | safe }}</div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="query-stats">Query times:
+                {% for k, v in query_times.items() %}
+                    {{ k }}={{ '%.3f' | format(v*1000) }}ms
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+<script type="text/javascript">
+function redirectSearch(event) {
+    event.preventDefault();
+    var search_term = document.querySelector("#search_input").value;
+    window.open("/search?query="+encodeURI(search_term), "_top");
+}
+document.querySelector("#search_form").onsubmit = redirectSearch;
+
+function showResultPane(searchtype) {
+    for (var pane of document.querySelectorAll(".results-pane"))
+        pane.style.display = "none";
+    document.querySelector("#results-pane-"+searchtype).style.display = "block";
+}
+
+function toggleSearchtype(event) {
+    var searchtype = event.currentTarget.attributes["data-searchtype"].value;
+    console.log('Switching to', searchtype);
+    showResultPane(searchtype)
+}
+
+for (var elem of document.querySelectorAll(".resulttypes > a")) {
+    elem.onclick = toggleSearchtype
+}
+
+showResultPane("{{ default_searchtype }}");
+</script> 
+</html>

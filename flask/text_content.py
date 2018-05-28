@@ -49,6 +49,7 @@ def extract(data, render_mdc=False):
                 'items': list(extract_sentence(sentence, render_mdc))}
 
 def extract_sentence(sentence, render_mdc=False):
+    # TODO extract markers, too
     for item in sentence.get('sentenceItems', []):
         if 'BTSWord' in item['eClass']:
             mdc = get_mdc(item)
