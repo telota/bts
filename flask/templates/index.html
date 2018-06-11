@@ -1,56 +1,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Quick Berlin Text System Renderer</title>
+        <title>Berlin Text System Renderer</title>
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+<style type="text/css">
+.container {
+	margin: auto;
+	display: grid;
+}
+
+#filler_bottom {
+	height: 15em;
+}
+</style>
     </head>
     <body>
         <div class="container">
-        <h1>Quick Berlin Text System Renderer</h1>
-
-        <form id="couchdb_form">
-            <label for="couchdb_id_input"><strong>Go to CouchDB ID</strong></label>
-            <input type=text id="couchdb_id_input">
-            <input type=submit>
-        </form>
-
-        <form id="render_form">
-            <label for="render_id_input"><strong>Go to Render ID</strong></label>
-            <input type=text id="render_id_input">
-            <input type=submit>
-        </form>
-
-        <form id="search_form">
-            <label for="search_input"><strong>Search</strong></label>
-            <input type=text id="search_input">
-            <input type=submit>
-        </form>
-
-        This server exposes the following functions:
-        <table>
-            <tr><th>URL</th><th>Function</th></tr>
-            <tr><td>/render_mdc?mdc=...</td><td>Render MDC to SVG.</td></tr>
-            <tr><td>/couch/&lt;CouchDB document ID&gt;/</td><td>Redirect to /corpus/... for the render database ID for this CouchDB document ID.</td></tr>
-            <tr><td>/text/&lt;Render database ID&gt;/</td><td>Render a nice, human-readable web page of this text.</td></tr>
-            <tr><td>/corpus/&lt;Render database ID&gt;/</td><td>Render a nice, human-readable web page of this database object with a navigation tree.</td></tr>
-            <tr><td>/api/v1/corpus/&lt;Render database ID&gt;/</td><td>Produce a JSON description of this database object.</td></tr>
-        </table>
-        </div>
+			<div class="logo">
+				<div class="c-blue">Ä</div><div class="c-green">g</div><div class="c-red">y</div><div class="c-yellow">y</div><div class="c-blue">g</div><div class="c-green">l</div><div class="c-red">e</div>
+			</div>
+			<div class="searchbar">
+				<form id="search_form" class="hero">
+					<input type=text id="search_input" autofocus><br>
+					<input type=submit id="submit_button" value="Search">
+				</form>
+			</div>
+			<div id="filler_bottom"></div>
+		</div>
     </body>
     <script type="text/javascript">
-        function redirect_couchdb_id(event) {
-            event.preventDefault();
-            var couch_id = document.getElementById("couchdb_id_input").value;
-            window.open("/couch/"+couch_id, "_top");
-        }
-        document.getElementById("couchdb_form").onsubmit = redirect_couchdb_id;
-
-        function redirect_render_id(event) {
-            event.preventDefault();
-            var render_id = document.getElementById("render_id_input").value;
-            window.open("/corpus/"+render_id, "_top");
-        }
-        document.getElementById("render_form").onsubmit = redirect_render_id;
-
         function redirect_search(event) {
             event.preventDefault();
             var search_term = document.getElementById("search_input").value;

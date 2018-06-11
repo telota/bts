@@ -9,6 +9,8 @@ from warnings import warn
 
 import text_content
 
+MAX_PREVIEW_CHARS = 250
+
 class ObjectType(Enum):
     CORPUS      = 0
     OBJECT      = 1
@@ -49,6 +51,7 @@ def ensure_tables_exist(db):
             oid INTEGER PRIMARY KEY,
             corpus_object INTEGER,
             content_json TEXT,
+            preview TEXT,
             FOREIGN KEY (corpus_object) REFERENCES corpus_object(oid) ON DELETE CASCADE
         )
     ''')
@@ -77,6 +80,11 @@ def ensure_corpus_exists(db, project_name, corpus_name, couch_id=None):
     corpus_id = ensure_corpus_object_exists(db, project_id, corpus_name, couch_id=couch_id)
     orphans_id = ensure_corpus_object_exists(db, corpus_id, "Orphaned Objects")
     return corpus_id, orphans_id
+
+def format_preview(content):
+    foo, _, bar = ' '.join(sentence['translation'] for sentence in content[:3] if
+            sentence['translation'])[:MAX_PREVIEW_CHARS].rpartition(' ')
+    return foo
 
 def import_objects(db, documents, project_name, corpus_name):
     corpus_id, orphans_id = ensure_corpus_exists(db, project_name, corpus_name)
@@ -118,7 +126,7 @@ def import_objects(db, documents, project_name, corpus_name):
         if etype == 'BTSText':
             text_data = list(text_content.extract(doc, render_mdc=False))
             texts_to_insert.append(
-                (doc['_id'], json.dumps(text_data)))
+                (doc['_id'], json.dumps(text_data), format_preview(text_data)))
             text_fts_data_to_insert.append((
                     doc['_id'],
                     ' '.join(item['mdc'].replace('-', ' ').replace(':', ' ')
@@ -133,8 +141,8 @@ def import_objects(db, documents, project_name, corpus_name):
             INSERT OR REPLACE INTO corpus_object(couch_id, name, type, parent, metadata) VALUES (?, ?, ?, ?, ?)
             ''', objects_to_insert)
     db.executemany('''
-            INSERT INTO text_content (corpus_object, content_json)
-            VALUES ((SELECT oid FROM corpus_object WHERE couch_id=?), ?)
+            INSERT INTO text_content (corpus_object, content_json, preview)
+            VALUES ((SELECT oid FROM corpus_object WHERE couch_id=?), ?, ?)
             ''', texts_to_insert)
     db.executemany('''
             INSERT INTO corpus_fts(docid, name, passport_values) VALUES (

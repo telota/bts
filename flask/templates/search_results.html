@@ -1,48 +1,59 @@
 <!DOCTYPE html>
 <html>
     <head>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
 <style type="text/css">
-body {
-    font-family: sans-serif;
-    margin-bottom: 0;
-    margin-top: 0;
-}
-
 .container {
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: 3em 3em auto;
     grid-template-columns: 20em auto;
     grid-template-areas:
-        "searchbar searchbar"
-        "resulttypes main";
+        "logo searchbar"
+		"logo searchtabs"
+        ".    main";
+}
+
+#search_form > input {
+	display: inline-block;
+}
+
+.logo-container {
+	grid-area: logo;
+	background-color: #fafafa;
+	width: 100%;
+	text-align: right;
+	border-bottom: 1px solid #eee;
 }
 
 .searchbar {
     grid-area: searchbar;
+	background-color: #fafafa;
 }
 
-.resulttypes {
-    grid-area: resulttypes;
-    background-color: #fff7f0;
+#searchtabs {
+    grid-area: searchtabs;
+	background-color: #f8f8f8;
+	border-bottom: 1px solid #eee;
+	display: none;
+	flex-wrap: nowrap;
+	align-items: stretch;
+}
+
+a.searchtab {
+	margin: 1em 0 0 0;
+    padding: 0.2em 0.5em 0.5em 0.5em;
+	font-size: 10pt;
+	color: #555;
+	border-bottom: 3pt solid transparent;
+	align-self: flex-end;
+}
+
+a.searchtab.active {
+	border-bottom: 3pt solid #00a;
 }
 
 .results {
     grid-area: main;
-}
-
-.title {
-    color: #b65403;
-}
-
-a.resulttype {
-    display: block;
-    font-size: 20px;
-    height: 2em;
-    vertical-align: middle;
-}
-
-span.resultcount {
-    color: #b65403;
 }
 
 a.resulttype:hover {
@@ -51,65 +62,102 @@ a.resulttype:hover {
 }
 
 div.result-name {
+	color: #00a;
+	margin-bottom: 0.2em;
     font-weight: bold;
-    font-size: 16pt;
+    font-size: 12pt;
+}
+
+div.result-path {
+	color: #0a0;
+}
+
+div.result-preview {
+	color: #888;
+}
+
+div.result-snippet {
 }
 
 a.single-result-entry {
     display: block;
-    color: black;
+    color: #333;
     text-decoration: none;
-    margin-top: 1em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid black;
+    margin-top: 2em;
+    padding-bottom: 2em;
+    border-bottom: 1px solid #aaa;
+	font-size: 10pt;
 }
 
 div.query-stats {
     color: #aaa;
-    font-family: monospace;
+	font-size: 10pt;
     font-weight: bold;
 }
+
+
+.tab-resultcount {
+	color: #aaa;
+	font-size: 10pt;
+	vertical-align: middle;
+}
+
+.resultcount {
+	color: #aaa;
+	font-size: 10pt;
+	padding-top: 0.5em;
+}
+
+#submit_button {
+	background-color: white;
+	color: #00a;
+}
 </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="searchbar">
-				<form id="search_form">
-					<label for="search_input"><strong>Search</strong></label>
-					<input type=text id="search_input">
-					<input type=submit>
-				</form>
-            </div>
-            <div class="resulttypes">
-                <h4>Search by</h4>
-                {% for type, desc in SEARCH_TYPE_DESCRIPTIONS.items() %}
-                <a class="resulttype" data-searchtype="{{ type }}">
-                    <span class="label">{{ desc }}</span> <span class="resultcount">{{ matches[type] | length }}<span>
-                </a>
-                {% endfor %}
-            </div>
-            <div class="results">
-                {% for searchtype, results in matches.items() %}
-                <div class="results-pane" id="results-pane-{{ searchtype }}">
-                    <div class="title"><h1>Showing {{ results | length }} results for {{ SEARCH_TYPE_DESCRIPTIONS[searchtype] }} search</h1></div>
-                    <div class="result-entries">
-                        {% for result in results %}
-                        <a class="single-result-entry result-type-{{ ObjectType(result.type or 0).name.lower() }}" href="{{url_for('render_corpus_object', oid=result.id)}}">
-                            <div class="result-name">{{ result.name }}</div>
-                            <div class="result-snippet">{{ format_snippet(result.snippet) | safe }}</div>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-                <div class="query-stats">Query times:
-                {% for k, v in query_times.items() %}
-                    {{ k }}={{ '%.3f' | format(v*1000) }}ms
-                {% endfor %}
-                </div>
-            </div>
-        </div>
-    </body>
+</head>
+<body>
+<div class="container">
+	<div class="logo-container">
+		<div class="logo-small">
+			<div class="c-blue">Ä</div><div class="c-green">g</div><div class="c-red">y</div><div class="c-yellow">y</div><div class="c-blue">g</div><div class="c-green">l</div><div class="c-red">e</div>
+		</div>
+	</div>
+    <div class="searchbar">
+		<form id="search_form">
+			<input type=text id="search_input" autofocus value="{{query}}">
+			<input type=submit id="submit_button" value="Search">
+		</form>
+    </div>
+    <div id="searchtabs">
+	{% for type, desc in SEARCH_TYPE_DESCRIPTIONS.items() %}
+		<a class="searchtab" id="searchtab-{{type}}" data-searchtype="{{ type }}">
+			<span class="label">{{ desc }}</span> <span class="tab-resultcount">{{ matches[type] | length }}<span>
+		</a>
+	{% endfor %}
+    </div>
+    <div class="results">
+	{% for searchtype, results in matches.items() %}
+	<div class="results-pane" id="results-pane-{{ searchtype }}">
+	    <div class="resultcount">{{ results | length }} results</div>
+	    <div class="result-entries">
+		{% for result in results %}
+		<a class="single-result-entry result-type-{{ ObjectType(result.type or 0).name.lower() }}" href="{{url_for('render_corpus_object', oid=result.id)}}">
+		    <div class="result-name">{{ result.name }}</div>
+		    <div class="result-path">{{ result.path }}</div>
+		    <div class="result-preview">{{ result.preview }}</div>
+		    <div class="result-snippet">{{ format_snippet(result.snippet) | safe }}</div>
+		</a>
+		{% endfor %}
+	    </div>
+	</div>
+	{% endfor %}
+	<div class="query-stats">Query times:
+	{% for k, v in query_times.items() %}
+	    {{ k }}={{ '%.3f' | format(v*1000) }}ms
+	{% endfor %}
+	</div>
+    </div>
+</div>
+</body>
 <script type="text/javascript">
 function redirectSearch(event) {
     event.preventDefault();
@@ -119,9 +167,13 @@ function redirectSearch(event) {
 document.querySelector("#search_form").onsubmit = redirectSearch;
 
 function showResultPane(searchtype) {
+    document.querySelector("#searchtabs").style.display = "flex";
     for (var pane of document.querySelectorAll(".results-pane"))
         pane.style.display = "none";
     document.querySelector("#results-pane-"+searchtype).style.display = "block";
+	for (var tab of document.querySelectorAll(".searchtab"))
+		tab.classList.remove("active");
+	document.querySelector("#searchtab-"+searchtype).classList.add("active");
 }
 
 function toggleSearchtype(event) {
@@ -130,7 +182,7 @@ function toggleSearchtype(event) {
     showResultPane(searchtype)
 }
 
-for (var elem of document.querySelectorAll(".resulttypes > a")) {
+for (var elem of document.querySelectorAll("#searchtabs > a")) {
     elem.onclick = toggleSearchtype
 }
 

@@ -158,10 +158,11 @@ def search_results():
 
     def format_snippet(val):
         ' Escape HTML except for <b> and </b> tags to allow sqlite to highlight the search result span in the snippet. '
-        return html.escape(val.replace('<b>', '\x1e').replace('</b>', '\x1f')).replace('\x1e', '<b>').replace('\x1f', '</b>')
+        return html.escape(val.replace('<b>', '\x1e').replace('</b>', '\x1f')).replace('\x1e', '<b>').replace('\x1f', '</b>').replace('<b>...</b>', '...')
 
     return render_template('search_results.html',
             matches=matches,
+            query=query,
             query_times=t_rec,
             ObjectType=ObjectType,
             format_snippet=format_snippet,
@@ -188,6 +189,16 @@ SEARCH_TYPE_DESCRIPTIONS = {
     'text_translation': 'Translation'
 }
 
+path_subquery = lambda colname: f'''(
+    WITH RECURSIVE parent_of(oid, parent, distance, path) AS (
+        SELECT oid, parent, 0, NULL FROM corpus_object WHERE oid={colname}
+        UNION ALL
+        SELECT parent_of.oid, corpus_object.parent, distance+1,
+            CASE WHEN path NOTNULL THEN corpus_object.name || "/" || path ELSE corpus_object.name END
+        FROM corpus_object JOIN parent_of ON corpus_object.oid = parent_of.parent
+    )
+    SELECT path FROM parent_of ORDER BY distance DESC LIMIT 1)'''
+
 def perform_fts(query, offset):
     # FTS4 SQLite full text search extension search table schemata:
     # CREATE VIRTUAL TABLE text_fts   USING fts4(mdc, transliteration, lemmata, translation)
@@ -209,8 +220,15 @@ def perform_fts(query, offset):
 
     for col in 'name', 'passport_values':
         cur.execute(f'''
-                SELECT corpus_fts.oid AS id, corpus_object.name, corpus_object.type, snippet(corpus_fts) AS snippet FROM corpus_fts
+                SELECT  corpus_fts.oid AS id,
+                        corpus_object.name,
+                        corpus_object.type,
+                        content.preview,
+                        snippet(corpus_fts) AS snippet,
+                        {path_subquery('docid')} AS path
+                FROM corpus_fts
                 LEFT JOIN corpus_object ON corpus_object.oid=corpus_fts.oid
+                LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
                 WHERE corpus_fts.{col} MATCH ?
                 LIMIT ? OFFSET ?
                 ''', (query, app.config['MAX_SEARCH_RESULTS'], offset))
@@ -219,8 +237,15 @@ def perform_fts(query, offset):
 
     for col in 'mdc', 'transliteration', 'lemmata', 'translation':
         cur.execute(f'''
-                SELECT docid AS id, corpus_object.name, corpus_object.type, snippet(text_fts) AS snippet FROM text_fts
+                SELECT  docid AS id,
+                        corpus_object.name,
+                        corpus_object.type,
+                        content.preview,
+                        snippet(text_fts) AS snippet,
+                        {path_subquery('docid')} AS path
+                FROM text_fts
                 LEFT JOIN corpus_object ON corpus_object.oid=text_fts.oid
+                LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
                 WHERE text_fts.{col} match ?
                 LIMIT ? OFFSET ?
                 ''', (query, app.config['MAX_SEARCH_RESULTS'], offset))
