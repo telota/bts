@@ -159,7 +159,7 @@ a.single-result-entry {
     </div>
     <div class="results">
 		<div class="results-pane">
-			<div class="resultcount">Showing {{ offset }}-{{ offset+limit }} of {{ result_counts[tab] }} results ({{ '%.6f' | format(query_time) }} seconds</div>
+			<div class="resultcount">Showing {{ offset }}-{{ offset+limit }} of {{ result_counts[tab] }} results ({{ '%.6f' | format(query_time) }} seconds)</div>
 			<div class="result-entries">
 			{% for result in results %}
 			<a class="single-result-entry result-type-{{ ObjectType(result.type or 0).name.lower() }}" href="{{url_for('render_corpus_object', oid=result.id)}}">
