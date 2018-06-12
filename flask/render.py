@@ -152,32 +152,45 @@ def get_corpus_object(oid):
 @app.route('/search')
 def search_results():
     query = request.args['query']
-    offset = request.args.get('offset', 0)
+    offset = int(request.args.get('offset', 0))
+    limit = min(int(request.args.get('limit', app.config['DEFAULT_SEARCH_RESULTS'])), int(app.config['MAX_SEARCH_RESULTS']))
 
-    t_rec, matches = perform_fts(query, offset)
+    t_rec, matches = perform_fts(query, offset, limit)
+
+    # Show tab given as request parameter. If none given, show tab with most results
+    tab = request.args.get('tab', sorted([ (cnt, stype) for stype, (cnt, _vals) in matches.items() ])[-1][1])
 
     def format_snippet(val):
         ' Escape HTML except for <b> and </b> tags to allow sqlite to highlight the search result span in the snippet. '
         return html.escape(val.replace('<b>', '\x1e').replace('</b>', '\x1f')).replace('\x1e', '<b>').replace('\x1f', '</b>').replace('<b>...</b>', '...')
 
     return render_template('search_results.html',
-            matches=matches,
+            matches      ={ tab: results  for tab, (_cnt,  results) in matches.items() },
+            result_counts={ tab: cnt      for tab, ( cnt, _results) in matches.items() },
+            min=min, max=max,
+            offset=offset,
+            limit=limit,
+            npagelinks=10,
             query=query,
             query_times=t_rec,
             ObjectType=ObjectType,
             format_snippet=format_snippet,
-            default_searchtype=sorted([ (len(vals), stype) for stype, vals in matches.items() ])[-1][1],
+            default_searchtype=tab,
             SEARCH_TYPE_DESCRIPTIONS=SEARCH_TYPE_DESCRIPTIONS)
 
 @app.route('/api/v1/search')
 def search():
     query = request.args['query']
     offset = request.args.get('offset', 0)
+    limit = min(request.args.get('limit', app.config['DEFAULT_SEARCH_RESULTS']), app.config['MAX_SEARCH_RESULTS'])
 
-    t_rec, matches = perform_fts(query, offset)
+    t_rec, matches = perform_fts(query, offset, limit)
 
     return jsonify({'query_times': t_rec,
-        'results': {k: [dict(e) for e in vs] for k, vs in matches.items()}})
+        'offset': offset,
+        'queries': {
+            k: {'result_count': cnt, 'results:': [dict(e) for e in vs]} for k, (cnt, vs) in matches.items()
+        }})
 
 SEARCH_TYPE_DESCRIPTIONS = {
     'exact': 'Exact ID',
@@ -189,7 +202,7 @@ SEARCH_TYPE_DESCRIPTIONS = {
     'text_translation': 'Translation'
 }
 
-path_subquery = lambda colname: f'''(
+path_subquery = lambda colname: '''(
     WITH RECURSIVE parent_of(oid, parent, distance, path) AS (
         SELECT oid, parent, 0, NULL FROM corpus_object WHERE oid={colname}
         UNION ALL
@@ -197,9 +210,9 @@ path_subquery = lambda colname: f'''(
             CASE WHEN path NOTNULL THEN corpus_object.name || "/" || path ELSE corpus_object.name END
         FROM corpus_object JOIN parent_of ON corpus_object.oid = parent_of.parent
     )
-    SELECT path FROM parent_of ORDER BY distance DESC LIMIT 1)'''
+    SELECT path FROM parent_of ORDER BY distance DESC LIMIT 1)'''.format(colname=colname)
 
-def perform_fts(query, offset):
+def perform_fts(query, offset, limit=app.config['DEFAULT_SEARCH_RESULTS']):
     # FTS4 SQLite full text search extension search table schemata:
     # CREATE VIRTUAL TABLE text_fts   USING fts4(mdc, transliteration, lemmata, translation)
     # CREATE VIRTUAL TABLE corpus_fts USING fts4(name, passport_values)
@@ -214,43 +227,50 @@ def perform_fts(query, offset):
         t_rec[name] = t1 - t0
         t0 = t1
 
-    obj = cur.execute('SELECT oid AS id, name, type, ?1 AS snippet FROM corpus_object WHERE couch_id=?1 OR oid=?1', (query,)).fetchone()
-    matches['exact'] = cur.fetchall()
+    obj = cur.execute(
+            'SELECT oid AS id, name, type, ?1 AS snippet FROM corpus_object WHERE couch_id=?1 OR oid=?1',
+            (query,)).fetchone()
+    exact_matches = cur.fetchall()
+    matches['exact'] = (len(exact_matches), exact_matches)
     timestamp('exact_match')
 
     for col in 'name', 'passport_values':
-        cur.execute(f'''
+        count, = cur.execute('SELECT COUNT(*) FROM corpus_fts WHERE {col} MATCH ?'.format(col=col), (query,)).fetchone()
+        cur.execute('''
                 SELECT  corpus_fts.oid AS id,
                         corpus_object.name,
                         corpus_object.type,
                         content.preview,
                         snippet(corpus_fts) AS snippet,
-                        {path_subquery('docid')} AS path
+                        {path_subquery} AS path
                 FROM corpus_fts
                 LEFT JOIN corpus_object ON corpus_object.oid=corpus_fts.oid
                 LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
                 WHERE corpus_fts.{col} MATCH ?
                 LIMIT ? OFFSET ?
-                ''', (query, app.config['MAX_SEARCH_RESULTS'], offset))
-        matches[f'corpus_{col}'] = cur.fetchall()
-        timestamp(f'corpus_match_{col}')
+                '''.format(col=col, path_subquery=path_subquery('docid')),
+                (query, limit, offset))
+        matches['corpus_{col}'.format(col=col)] = (count, cur.fetchall())
+        timestamp('corpus_match_{col}'.format(col=col))
 
     for col in 'mdc', 'transliteration', 'lemmata', 'translation':
-        cur.execute(f'''
+        count, = cur.execute('SELECT COUNT(*) FROM text_fts WHERE {col} MATCH ?'.format(col=col), (query,)).fetchone()
+        cur.execute('''
                 SELECT  docid AS id,
                         corpus_object.name,
                         corpus_object.type,
                         content.preview,
                         snippet(text_fts) AS snippet,
-                        {path_subquery('docid')} AS path
+                        {path_subquery} AS path
                 FROM text_fts
                 LEFT JOIN corpus_object ON corpus_object.oid=text_fts.oid
                 LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
                 WHERE text_fts.{col} match ?
                 LIMIT ? OFFSET ?
-                ''', (query, app.config['MAX_SEARCH_RESULTS'], offset))
-        matches[f'text_{col}'] = cur.fetchall()
-        timestamp(f'text_match_{col}')
+                '''.format(col=col, path_subquery=path_subquery('docid')),
+                (query, limit, offset))
+        matches['text_{col}'.format(col=col)] = (count, cur.fetchall())
+        timestamp('text_match_{col}'.format(col=col))
     return t_rec, matches
 
 def load_corpus_object(oid):

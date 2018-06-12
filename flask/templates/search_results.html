@@ -6,11 +6,11 @@
 .container {
     display: grid;
     grid-template-rows: 3em 3em auto;
-    grid-template-columns: 20em auto;
+    grid-template-columns: 20em 60em auto;
     grid-template-areas:
-        "logo searchbar"
-		"logo searchtabs"
-        ".    main";
+        "logo searchbar  searchbar"
+		"logo searchtabs searchtabs"
+        ".    main       .";
 }
 
 #search_form > input {
@@ -102,6 +102,11 @@ div.query-stats {
 	vertical-align: middle;
 }
 
+.results-pane {
+	display: flex;
+	flex-direction: column;
+}
+
 .resultcount {
 	color: #aaa;
 	font-size: 10pt;
@@ -111,6 +116,30 @@ div.query-stats {
 #submit_button {
 	background-color: white;
 	color: #00a;
+}
+
+.pagelinks > a {
+	text-decoration: none;
+}
+
+.pagelinks > a:visited {
+	text-decoration: none;
+}
+
+.single-pagelink, .current-pagelink {
+	display: inline-block;
+	width: 1.5em;
+	text-align: center;
+}
+
+.current-pagelink {
+	border-bottom: 3pt solid #00a;
+}
+
+.pagelinks {
+	align-self: center;
+	margin: 1em 0 1em 0;
+	font-size: 16pt;
 }
 </style>
 </head>
@@ -130,24 +159,39 @@ div.query-stats {
     <div id="searchtabs">
 	{% for type, desc in SEARCH_TYPE_DESCRIPTIONS.items() %}
 		<a class="searchtab" id="searchtab-{{type}}" data-searchtype="{{ type }}">
-			<span class="label">{{ desc }}</span> <span class="tab-resultcount">{{ matches[type] | length }}<span>
+			<span class="label">{{ desc }}</span> <span class="tab-resultcount">{{ result_counts[type] }}<span>
 		</a>
 	{% endfor %}
     </div>
     <div class="results">
-	{% for searchtype, results in matches.items() %}
-	<div class="results-pane" id="results-pane-{{ searchtype }}">
-	    <div class="resultcount">{{ results | length }} results</div>
+	{% for type, results in matches.items() %}
+	<div class="results-pane" id="results-pane-{{ type }}">
+		<div class="resultcount">Showing {{ offset }}-{{ offset+limit }} of {{ result_counts[type] }} results</div>
 	    <div class="result-entries">
 		{% for result in results %}
 		<a class="single-result-entry result-type-{{ ObjectType(result.type or 0).name.lower() }}" href="{{url_for('render_corpus_object', oid=result.id)}}">
 		    <div class="result-name">{{ result.name }}</div>
 		    <div class="result-path">{{ result.path }}</div>
-		    <div class="result-preview">{{ result.preview }}</div>
+		    <div class="result-preview">{{ result.preview }} ...</div>
 		    <div class="result-snippet">{{ format_snippet(result.snippet) | safe }}</div>
 		</a>
 		{% endfor %}
 	    </div>
+		<div class="pagelinks">
+			{% if offset > 0 %}
+				<a class="single-pagelink pagelink-prev" href="{{url_for('search_results', query=query, limit=limit, offset=max(0, offset-limit))}}">&#x25C0;</a>
+			{% endif %}
+			{% for page in range(max(0, offset//limit-npagelinks), min(offset//limit+npagelinks, -(-result_counts[type]//limit))) %}
+				{% if page != offset//limit %}
+					<a class="single-pagelink" href="{{url_for('search_results', query=query, limit=limit, offset=page*limit)}}">{{ page+1 }}</a>
+				{% else %}
+					<span class="current-pagelink">{{ page+1 }}</span>
+				{% endif %}
+			{% endfor %}
+			{% if offset+limit < result_counts[type] %}
+				<a class="single-pagelink pagelink-next" href="{{url_for('search_results', query=query, limit=limit, offset=offset+limit)}}">&#x25B6;</a>
+		   {% endif %}
+		</div>
 	</div>
 	{% endfor %}
 	<div class="query-stats">Query times:
@@ -170,7 +214,7 @@ function showResultPane(searchtype) {
     document.querySelector("#searchtabs").style.display = "flex";
     for (var pane of document.querySelectorAll(".results-pane"))
         pane.style.display = "none";
-    document.querySelector("#results-pane-"+searchtype).style.display = "block";
+    document.querySelector("#results-pane-"+searchtype).style.display = "flex";
 	for (var tab of document.querySelectorAll(".searchtab"))
 		tab.classList.remove("active");
 	document.querySelector("#searchtab-"+searchtype).classList.add("active");
