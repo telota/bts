@@ -155,27 +155,31 @@ def search_results():
     offset = int(request.args.get('offset', 0))
     limit = min(int(request.args.get('limit', app.config['DEFAULT_SEARCH_RESULTS'])), int(app.config['MAX_SEARCH_RESULTS']))
 
-    t_rec, matches = perform_fts(query, offset, limit)
+    result_counts = fts_count(query)
 
     # Show tab given as request parameter. If none given, show tab with most results
-    tab = request.args.get('tab', sorted([ (cnt, stype) for stype, (cnt, _vals) in matches.items() ])[-1][1])
+    tab = request.args.get('tab', sorted([ (cnt, stype) for stype, cnt in result_counts.items() ])[-1][1])
+
+    ts = time()
+    matches = perform_fts(tab, query, offset, limit)
+    te = time()
 
     def format_snippet(val):
         ' Escape HTML except for <b> and </b> tags to allow sqlite to highlight the search result span in the snippet. '
         return html.escape(val.replace('<b>', '\x1e').replace('</b>', '\x1f')).replace('\x1e', '<b>').replace('\x1f', '</b>').replace('<b>...</b>', '...')
 
     return render_template('search_results.html',
-            matches      ={ tab: results  for tab, (_cnt,  results) in matches.items() },
-            result_counts={ tab: cnt      for tab, ( cnt, _results) in matches.items() },
+            results=matches,
+            result_counts=result_counts,
             min=min, max=max,
             offset=offset,
             limit=limit,
             npagelinks=10,
             query=query,
-            query_times=t_rec,
+            query_time=te-ts,
             ObjectType=ObjectType,
             format_snippet=format_snippet,
-            default_searchtype=tab,
+            tab=tab,
             SEARCH_TYPE_DESCRIPTIONS=SEARCH_TYPE_DESCRIPTIONS)
 
 @app.route('/api/v1/search')
@@ -212,29 +216,48 @@ path_subquery = lambda colname: '''(
     )
     SELECT path FROM parent_of ORDER BY distance DESC LIMIT 1)'''.format(colname=colname)
 
-def perform_fts(query, offset, limit=app.config['DEFAULT_SEARCH_RESULTS']):
+def fts_count(query):
+    cur = get_db().cursor()
+    counts = {}
+
+    exact_count, = cur.execute('SELECT COUNT(*) FROM corpus_object WHERE couch_id=?1 OR oid=?1', (query,)).fetchone()
+    counts['exact'] = int(exact_count)
+
+    for col in ('name', 'passport_values'):
+        count, = cur.execute('SELECT COUNT(*) FROM corpus_fts WHERE {col} MATCH ?'.format(col=col), (query,)).fetchone()
+        counts['corpus_{col}'.format(col=col)] = int(count)
+
+    for col in ('mdc', 'transliteration', 'lemmata', 'translation'):
+        count, = cur.execute('SELECT COUNT(*) FROM text_fts WHERE {col} MATCH ?'.format(col=col), (query,)).fetchone()
+        counts['text_{col}'.format(col=col)] = int(count)
+
+    return counts
+
+def perform_fts(searchtype, query, offset, limit=app.config['DEFAULT_SEARCH_RESULTS']):
     # FTS4 SQLite full text search extension search table schemata:
     # CREATE VIRTUAL TABLE text_fts   USING fts4(mdc, transliteration, lemmata, translation)
     # CREATE VIRTUAL TABLE corpus_fts USING fts4(name, passport_values)
 
     cur = get_db().cursor()
-    matches = {}
 
-    t0, t_rec = time(), {}
-    def timestamp(name):
-        nonlocal t0, t_rec
-        t1 = time()
-        t_rec[name] = t1 - t0
-        t0 = t1
+    if searchtype == 'exact':
+        obj = cur.execute('''
+                SELECT  oid AS id,
+                        name,
+                        type,
+                        content.preview,
+                        ?1 AS snippet
+                FROM corpus_object
+                LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
+                WHERE corpus_object.couch_id=?1 OR corpus_object.oid=?1''', (query,))
+        return cur.fetchall()
 
-    obj = cur.execute(
-            'SELECT oid AS id, name, type, ?1 AS snippet FROM corpus_object WHERE couch_id=?1 OR oid=?1',
-            (query,)).fetchone()
-    exact_matches = cur.fetchall()
-    matches['exact'] = (len(exact_matches), exact_matches)
-    timestamp('exact_match')
+    table, _, col = searchtype.partition('_') 
 
-    for col in 'name', 'passport_values':
+    if table == 'corpus':
+        if col not in ('name', 'passport_values'):
+            return []
+
         count, = cur.execute('SELECT COUNT(*) FROM corpus_fts WHERE {col} MATCH ?'.format(col=col), (query,)).fetchone()
         cur.execute('''
                 SELECT  id,
@@ -255,10 +278,12 @@ def perform_fts(query, offset, limit=app.config['DEFAULT_SEARCH_RESULTS']):
                 LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
                 '''.format(col=col, path_subquery=path_subquery('id')),
                 (query, limit, offset))
-        matches['corpus_{col}'.format(col=col)] = (count, cur.fetchall())
-        timestamp('corpus_match_{col}'.format(col=col))
+        return cur.fetchall()
 
-    for col in 'mdc', 'transliteration', 'lemmata', 'translation':
+    if table == 'text':
+        if col not in ('mdc', 'transliteration', 'lemmata', 'translation'):
+            return []
+
         count, = cur.execute('SELECT COUNT(*) FROM text_fts WHERE {col} MATCH ?'.format(col=col), (query,)).fetchone()
         cur.execute('''
                 SELECT  id,
@@ -278,9 +303,9 @@ def perform_fts(query, offset, limit=app.config['DEFAULT_SEARCH_RESULTS']):
                 LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
                 '''.format(col=col, path_subquery=path_subquery('id')),
                 (query, limit, offset))
-        matches['text_{col}'.format(col=col)] = (count, cur.fetchall())
-        timestamp('text_match_{col}'.format(col=col))
-    return t_rec, matches
+        return cur.fetchall()
+
+    return []
 
 def load_corpus_object(oid):
     results = get_db().execute('''

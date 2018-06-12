@@ -34,7 +34,7 @@
     grid-area: searchtabs;
 	background-color: #f8f8f8;
 	border-bottom: 1px solid #eee;
-	display: none;
+	display: flex;
 	flex-wrap: nowrap;
 	align-items: stretch;
 }
@@ -89,13 +89,6 @@ a.single-result-entry {
 	font-size: 10pt;
 }
 
-div.query-stats {
-    color: #aaa;
-	font-size: 10pt;
-    font-weight: bold;
-}
-
-
 .tab-resultcount {
 	color: #aaa;
 	font-size: 10pt;
@@ -133,7 +126,8 @@ div.query-stats {
 }
 
 .current-pagelink {
-	border-bottom: 3pt solid #00a;
+	background-color: #00a;
+	color: #fff;
 }
 
 .pagelinks {
@@ -158,47 +152,40 @@ div.query-stats {
     </div>
     <div id="searchtabs">
 	{% for type, desc in SEARCH_TYPE_DESCRIPTIONS.items() %}
-		<a class="searchtab" id="searchtab-{{type}}" data-searchtype="{{ type }}">
+		<a class="searchtab" href="{{url_for('search_results', query=query, limit=limit, offset=0, tab=type)}}">
 			<span class="label">{{ desc }}</span> <span class="tab-resultcount">{{ result_counts[type] }}<span>
 		</a>
 	{% endfor %}
     </div>
     <div class="results">
-	{% for type, results in matches.items() %}
-	<div class="results-pane" id="results-pane-{{ type }}">
-		<div class="resultcount">Showing {{ offset }}-{{ offset+limit }} of {{ result_counts[type] }} results</div>
-	    <div class="result-entries">
-		{% for result in results %}
-		<a class="single-result-entry result-type-{{ ObjectType(result.type or 0).name.lower() }}" href="{{url_for('render_corpus_object', oid=result.id)}}">
-		    <div class="result-name">{{ result.name }}</div>
-		    <div class="result-path">{{ result.path }}</div>
-		    <div class="result-preview">{{ result.preview }} ...</div>
-		    <div class="result-snippet">{{ format_snippet(result.snippet) | safe }}</div>
-		</a>
-		{% endfor %}
-	    </div>
-		<div class="pagelinks">
-			{% if offset > 0 %}
-				<a class="single-pagelink pagelink-prev" href="{{url_for('search_results', query=query, limit=limit, offset=max(0, offset-limit))}}">&#x25C0;</a>
-			{% endif %}
-			{% for page in range(max(0, offset//limit-npagelinks), min(offset//limit+npagelinks, -(-result_counts[type]//limit))) %}
-				{% if page != offset//limit %}
-					<a class="single-pagelink" href="{{url_for('search_results', query=query, limit=limit, offset=page*limit)}}">{{ page+1 }}</a>
-				{% else %}
-					<span class="current-pagelink">{{ page+1 }}</span>
-				{% endif %}
+		<div class="results-pane">
+			<div class="resultcount">Showing {{ offset }}-{{ offset+limit }} of {{ result_counts[tab] }} results ({{ '%.6f' | format(query_time) }} seconds</div>
+			<div class="result-entries">
+			{% for result in results %}
+			<a class="single-result-entry result-type-{{ ObjectType(result.type or 0).name.lower() }}" href="{{url_for('render_corpus_object', oid=result.id)}}">
+				<div class="result-name">{{ result.name }}</div>
+				<div class="result-path">{{ result.path }}</div>
+				<div class="result-preview">{{ result.preview }} ...</div>
+				<div class="result-snippet">{{ format_snippet(result.snippet) | safe }}</div>
+			</a>
 			{% endfor %}
-			{% if offset+limit < result_counts[type] %}
-				<a class="single-pagelink pagelink-next" href="{{url_for('search_results', query=query, limit=limit, offset=offset+limit)}}">&#x25B6;</a>
-		   {% endif %}
+			</div>
+			<div class="pagelinks">
+				{% if offset > 0 %}
+					<a class="single-pagelink pagelink-prev" href="{{url_for('search_results', query=query, limit=limit, offset=max(0, offset-limit), tab=tab)}}">&#x25C0;</a>
+				{% endif %}
+				{% for page in range(max(0, offset//limit-npagelinks), min(offset//limit+npagelinks, -(-result_counts[tab]//limit))) %}
+					{% if page != offset//limit %}
+						<a class="single-pagelink" href="{{url_for('search_results', query=query, limit=limit, offset=page*limit, tab=tab)}}">{{ page+1 }}</a>
+					{% else %}
+						<span class="current-pagelink">{{ page+1 }}</span>
+					{% endif %}
+				{% endfor %}
+				{% if offset+limit < result_counts[tab] %}
+					<a class="single-pagelink pagelink-next" href="{{url_for('search_results', query=query, limit=limit, offset=offset+limit, tab=tab)}}">&#x25B6;</a>
+			   {% endif %}
+			</div>
 		</div>
-	</div>
-	{% endfor %}
-	<div class="query-stats">Query times:
-	{% for k, v in query_times.items() %}
-	    {{ k }}={{ '%.3f' | format(v*1000) }}ms
-	{% endfor %}
-	</div>
     </div>
 </div>
 </body>
@@ -209,27 +196,5 @@ function redirectSearch(event) {
     window.open("/search?query="+encodeURI(search_term), "_top");
 }
 document.querySelector("#search_form").onsubmit = redirectSearch;
-
-function showResultPane(searchtype) {
-    document.querySelector("#searchtabs").style.display = "flex";
-    for (var pane of document.querySelectorAll(".results-pane"))
-        pane.style.display = "none";
-    document.querySelector("#results-pane-"+searchtype).style.display = "flex";
-	for (var tab of document.querySelectorAll(".searchtab"))
-		tab.classList.remove("active");
-	document.querySelector("#searchtab-"+searchtype).classList.add("active");
-}
-
-function toggleSearchtype(event) {
-    var searchtype = event.currentTarget.attributes["data-searchtype"].value;
-    console.log('Switching to', searchtype);
-    showResultPane(searchtype)
-}
-
-for (var elem of document.querySelectorAll("#searchtabs > a")) {
-    elem.onclick = toggleSearchtype
-}
-
-showResultPane("{{ default_searchtype }}");
 </script> 
 </html>
