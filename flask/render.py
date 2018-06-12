@@ -237,18 +237,23 @@ def perform_fts(query, offset, limit=app.config['DEFAULT_SEARCH_RESULTS']):
     for col in 'name', 'passport_values':
         count, = cur.execute('SELECT COUNT(*) FROM corpus_fts WHERE {col} MATCH ?'.format(col=col), (query,)).fetchone()
         cur.execute('''
-                SELECT  corpus_fts.oid AS id,
+                SELECT  id,
                         corpus_object.name,
                         corpus_object.type,
                         content.preview,
-                        snippet(corpus_fts) AS snippet,
+                        snippet,
                         {path_subquery} AS path
-                FROM corpus_fts
-                LEFT JOIN corpus_object ON corpus_object.oid=corpus_fts.oid
+                FROM (
+                    SELECT
+                        corpus_fts.oid AS id,
+                        snippet(corpus_fts) AS snippet
+                    FROM corpus_fts
+                    WHERE corpus_fts.{col} MATCH ?
+                    LIMIT ? OFFSET ?
+                )
+                LEFT JOIN corpus_object ON corpus_object.oid=id
                 LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
-                WHERE corpus_fts.{col} MATCH ?
-                LIMIT ? OFFSET ?
-                '''.format(col=col, path_subquery=path_subquery('docid')),
+                '''.format(col=col, path_subquery=path_subquery('id')),
                 (query, limit, offset))
         matches['corpus_{col}'.format(col=col)] = (count, cur.fetchall())
         timestamp('corpus_match_{col}'.format(col=col))
@@ -256,18 +261,22 @@ def perform_fts(query, offset, limit=app.config['DEFAULT_SEARCH_RESULTS']):
     for col in 'mdc', 'transliteration', 'lemmata', 'translation':
         count, = cur.execute('SELECT COUNT(*) FROM text_fts WHERE {col} MATCH ?'.format(col=col), (query,)).fetchone()
         cur.execute('''
-                SELECT  docid AS id,
+                SELECT  id,
                         corpus_object.name,
                         corpus_object.type,
                         content.preview,
-                        snippet(text_fts) AS snippet,
+                        snippet,
                         {path_subquery} AS path
-                FROM text_fts
-                LEFT JOIN corpus_object ON corpus_object.oid=text_fts.oid
+                FROM (
+                    SELECT  docid AS id,
+                            snippet(text_fts) AS snippet
+                    FROM text_fts
+                    WHERE text_fts.{col} match ?
+                    LIMIT ? OFFSET ?
+                )
+                LEFT JOIN corpus_object ON corpus_object.oid=id
                 LEFT JOIN text_content content ON content.corpus_object = corpus_object.oid
-                WHERE text_fts.{col} match ?
-                LIMIT ? OFFSET ?
-                '''.format(col=col, path_subquery=path_subquery('docid')),
+                '''.format(col=col, path_subquery=path_subquery('id')),
                 (query, limit, offset))
         matches['text_{col}'.format(col=col)] = (count, cur.fetchall())
         timestamp('text_match_{col}'.format(col=col))
