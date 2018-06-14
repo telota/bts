@@ -80,11 +80,14 @@ def render_text(oid):
     if row['content_json'] is None:
         return redirect(url_for('render_corpus_object', oid=oid))
 
-    return render_template('text_content.html', sentences=json.loads(row['content_json']))
+    return render_template('text_content.html',
+            mdc_css=MDC_CSS(),
+            sentences=json.loads(row['content_json']))
 
 @app.route('/corpus/<int:oid>/')
 def render_corpus_object(oid):
     return render_template('corpus_object.html',
+            mdc_css=MDC_CSS(),
             obj=load_corpus_object(oid),
             ObjectType=ObjectType,
             ROOT_OID=0,
@@ -95,12 +98,31 @@ def svg_filename(mdc):
             hashlib.sha256(mdc.encode('ASCII')).hexdigest(),
             re.sub('[^a-zA-Z0-9]+', '-', mdc))
 
-@app.route('/render_mdc')
-def render_mdc():
-    if 'mdc' not in request.args:
-        abort(400)
-    mdc = request.args['mdc']
+class MDC_CSS:
+    def __init__(self):
+        self.css = ''
+        self._mdc_cache = {}
+        self._seq = 0
 
+    @staticmethod
+    def mdc_strip(mdc):
+        return re.match(r'^\W*(.*?)\W*$', mdc).group(1)
+
+    def render(self, mdc):
+        try:
+            if not mdc:
+                return ''
+
+            if mdc not in self._mdc_cache:
+                seq = self._seq = self._seq+1
+                self._mdc_cache[mdc] = seq
+                svg = query_svg_for_mdc(mdc).replace('"', "'")
+                self.css += '.img_hiero_{}::before {{ background: url("data:image/svg+xml;utf8,{}"); }}\n'.format(seq, svg)
+            return '<div class="img_hiero_{}"></div>'.format(self._mdc_cache[mdc])
+        except Exception as e:
+            return '' # FIXME return error image instead
+
+def query_svg_for_mdc(mdc):
     svg = render_mdc_cache.get(mdc)
     if svg is None:
         svg = requests.get('http://localhost:5001/render_mdc', params={'mdc': mdc}).text
@@ -112,8 +134,15 @@ def render_mdc():
         svg = str(cleaner).replace('fill:#000000', 'fill:#254048')
 
         render_mdc_cache.set(mdc, svg, timeout=86400)
+    return svg
 
-    resp = Response(svg)
+@app.route('/render_mdc')
+def render_mdc():
+    if 'mdc' not in request.args:
+        abort(400)
+    mdc = request.args['mdc']
+
+    resp = Response(mdc_to_svg(mdc))
     #resp.headers['Content-Disposition'] = 'attachment; filename={}'.format(svg_filename(mdc))
     resp.headers['Content-Type'] = 'image/svg+xml'
     return resp

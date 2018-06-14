@@ -87,10 +87,17 @@ body {
     border-bottom: 1px solid #8eb099;
 }
 
-.hieroglyph-render {
-    object-fit: contain;
+.hieroglyph-row > div {
     height: 100%;
-    width: auto;
+}
+
+.hieroglyph-row > div::before {
+	content: "";
+	background-size: contain;
+	background-repeat: no-repeat;
+	display: block;
+	background-position: center;
+    height: 100%;
     stroke: none;
 }
 
@@ -161,8 +168,7 @@ input {
             <div class="line-items">
                 {% for item in sentence['items'] %}<div class="word-block">
                     <div class="hieroglyph-row">
-                        <object tabindex=-1 class="hieroglyph-render" type="image/svg+xml"
-                                 data="{{url_for('render_mdc', mdc=item['mdc'])}}"></object>
+						{{ mdc_css.render(item['mdc']) | safe }}
                     </div>
                     <div contenteditable=true class="input-field mdc-row">{{item['mdc']}}</div>
                     <div contenteditable=true class="input-field transliteration-row">{{item['transliteration']}}</div>
@@ -213,3 +219,7 @@ function setVisible(classname, visible) {
         elem.style.display = visible ? 'block' : 'none';
 }
 </script> 
+
+<style type="text/css">
+{{ mdc_css.css | safe }}
+</style>
