@@ -206,6 +206,12 @@ SEARCH_TYPE_DESCRIPTIONS = {
     'text_translation': 'Translation'
 }
 
+# This recursive query looks terrible, but it performs really well in practice. Just make sure to not evaluate it for
+# *everything* (e.g. in a JOIN query), as that may take a second or two.
+# If this every turns out to be a problem, the result of this query could be cached inside the database using the SQL in
+# the "Object Path Caching" SQL script next to this file. This would incur another 3MB or so of storage cost, but would
+# also potentially increase the maintenance burden of the database since everytime an object moves or is renamed all the
+# cached paths would have to be recomputed.
 path_subquery = lambda colname: '''(
     WITH RECURSIVE parent_of(oid, parent, distance, path) AS (
         SELECT oid, parent, 0, NULL FROM corpus_object WHERE oid={colname}
