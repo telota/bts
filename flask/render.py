@@ -50,10 +50,15 @@ def root():
 
 @app.route('/index.html')
 def index():
+    ''' Produce a nice search home page. '''
     return render_template('index.html')
 
 @app.route('/couch/<string:couch_id>/')
 def redirect_corpus_couch_id(couch_id):
+    ''' Resolve a CouchDB object ID to the corresponding short SQLite object ID. Note that these SQLite object IDs are
+    stable within a single instance of this database, and do not change if CouchDB data is re-exported to this same
+    instance. They will, however, change if someone deletes the database and they will not be the same accross multiple
+    instances of this database. '''
     results = get_db().execute('SELECT oid FROM corpus_object WHERE couch_id=?', (couch_id,)).fetchall()
     if not results:
         abort(404)
@@ -63,6 +68,8 @@ def redirect_corpus_couch_id(couch_id):
 
 @app.route('/text/<int:oid>/')
 def render_text(oid):
+    ''' Produce a nice, human-readable rendered version of the given text. If the given oid points to an object that is
+    not a text, redirect to render_corpus_object. '''
     db = get_db()
     results = db.execute('''
             SELECT parent.type AS parent_type, parent.name AS parent_name,
@@ -86,6 +93,8 @@ def render_text(oid):
 
 @app.route('/corpus/<int:oid>/')
 def render_corpus_object(oid):
+    ''' Render the given corpus object. Produce a navigable tree thingy that can be used to explore other objects. If
+    the object is a text, also include the output of render_text. '''
     return render_template('corpus_object.html',
             mdc_css=MDC_CSS(),
             obj=load_corpus_object(oid),
@@ -94,19 +103,26 @@ def render_corpus_object(oid):
             children=children)
 
 def svg_filename(mdc):
+    ''' Generate a nice, unique, random-looking filename to be used with rendered hieroglyph images. '''
     return '{:.12}-{:.32}.svg'.format(
             hashlib.sha256(mdc.encode('ASCII')).hexdigest(),
             re.sub('[^a-zA-Z0-9]+', '-', mdc))
 
 class MDC_CSS:
+    ''' This class is a helper to render MDC hieroglyps as SVG via CSS classes for performance.
+
+    To render an MDC string, call render(mdc) and paste the returned HTML in your document. This will produce a div with
+    a class tied to this MDC sequence.
+
+    When you're done, paste this helper's .css attribute into a <style> tag to bind the rendered SVG hieroglyph
+    sequences to their corresponding CSS classes.
+
+    Only ever use one of these helpers in a single page as otherwise the CSS class names would clash.
+    '''
     def __init__(self):
         self.css = ''
         self._mdc_cache = {}
         self._seq = 0
-
-    @staticmethod
-    def mdc_strip(mdc):
-        return re.match(r'^\W*(.*?)\W*$', mdc).group(1)
 
     def render(self, mdc):
         try:
@@ -123,21 +139,30 @@ class MDC_CSS:
             return '' # FIXME return error image instead
 
 def query_svg_for_mdc(mdc):
+    ''' Query JSesh MDC rendering backend over HTTP and return cleaned-up SVG data.
+        
+        For performance, this uses an internal cache with one-day expiry time.
+
+        HACK: This hard-codes a replacement fill color. FIXME: Remove style="..." stuff altogether and style things from
+        outside using CSS.
+    '''
     svg = render_mdc_cache.get(mdc)
     if svg is None:
         svg = requests.get('http://localhost:5001/render_mdc', params={'mdc': mdc}).text
 
+        # Cleanup: set SVG elem viewbox for proper scaling, truncate decimals to save file size and set fill color.
         cleaner = CleanSVG(svgstring=svg)
         w, h = cleaner.root.attrib.pop('width'), cleaner.root.attrib.pop('height')
         cleaner.root.attrib['viewBox'] = '0 0 {} {}'.format(w, h)
         cleaner.setDecimalPlaces(4)
-        svg = str(cleaner).replace('fill:#000000', 'fill:#254048')
+        svg = re.sub('style="[^"]*"', 'style="stroke:none;fill:rgb(37,64,72);"', str(cleaner))
 
         render_mdc_cache.set(mdc, svg, timeout=86400)
     return svg
 
 @app.route('/render_mdc')
 def render_mdc():
+    ''' Render the given MDC to cleaned-up JSesh SVG '''
     if 'mdc' not in request.args:
         abort(400)
     mdc = request.args['mdc']
@@ -180,6 +205,11 @@ def get_corpus_object(oid):
 
 @app.route('/search')
 def search_results():
+    ''' Display a search result page for a given query, offset and limit.
+        
+        If a search type is given, display its search result page. If no search type is given, display results for the
+        search type with most results.
+    '''
     query = request.args['query']
     offset = int(request.args.get('offset', 0))
     limit = min(int(request.args.get('limit', app.config['DEFAULT_SEARCH_RESULTS'])), int(app.config['MAX_SEARCH_RESULTS']))
@@ -213,17 +243,27 @@ def search_results():
 
 @app.route('/api/v1/search')
 def search():
+    ''' Search the database using the given query and query type. '''
     query = request.args['query']
     offset = request.args.get('offset', 0)
+    searchtype = request.args['type']
     limit = min(request.args.get('limit', app.config['DEFAULT_SEARCH_RESULTS']), app.config['MAX_SEARCH_RESULTS'])
 
-    t_rec, matches = perform_fts(query, offset, limit)
+    ts = time()
+    matches = perform_fts(searchtype, query, offset, limit)
+    te = time()
 
-    return jsonify({'query_times': t_rec,
+    return jsonify({'query_time': te-ts,
         'offset': offset,
-        'queries': {
-            k: {'result_count': cnt, 'results:': [dict(e) for e in vs]} for k, (cnt, vs) in matches.items()
-        }})
+        'limit': limit, # Feed back as above it might have been clipped according to app config
+        'results:': matches
+        })
+
+@app.route('/api/v1/search/result_counts')
+def search_result_counts():
+    ''' Count search results for each available query type '''
+    query = request.args['query']
+    return jsonify(fts_count(query))
 
 SEARCH_TYPE_DESCRIPTIONS = {
     'exact': 'Exact ID',
@@ -252,6 +292,11 @@ path_subquery = lambda colname: '''(
     SELECT path FROM parent_of ORDER BY distance DESC LIMIT 1)'''.format(colname=colname)
 
 def fts_count(query):
+    ''' Count the search results for the given query for every available search type.
+
+        This might look inefficient as hell, but as it turns out we spend most time not on the actual full-text search
+        (which is lightning-fast) and this is a very convenient way to present result counts to the user.
+    '''
     cur = get_db().cursor()
     counts = {}
 
@@ -269,9 +314,25 @@ def fts_count(query):
     return counts
 
 def perform_fts(searchtype, query, offset, limit=app.config['DEFAULT_SEARCH_RESULTS']):
+    ''' Perform a search of the given type.
+
+        "exact" matches exact SQLite or CouchDB IDs.
+
+        The following queries perform full-text search:
+        "corpus_name" matches object names.
+        "corpus_passport" matches passport valuese.
+        "text_mdc", "text_translation" and "text_transliteration" match the respective text properties.
+        "text_lemmata" performs full-text search on the text's numeric lemma IDs.
+    '''
+
     # FTS4 SQLite full text search extension search table schemata:
     # CREATE VIRTUAL TABLE text_fts   USING fts4(mdc, transliteration, lemmata, translation)
     # CREATE VIRTUAL TABLE corpus_fts USING fts4(name, passport_values)
+
+    # During all fts queries below, be careful to perform full-text matching and result set slicing first, then
+    # "decorate" the results using JOINs and the object path subquery above. Otherwise, the JOIN and object path
+    # subquery are evaluated for every result up to the one at index OFFSET+LIMIT which at some point gets really
+    # boring.
 
     cur = get_db().cursor()
 
@@ -343,6 +404,9 @@ def perform_fts(searchtype, query, offset, limit=app.config['DEFAULT_SEARCH_RESU
     return []
 
 def load_corpus_object(oid):
+    ''' Load a corpus object or text from the database given its SQLite object ID. Return a dict sutiable for e.g. JSON
+        serialization containing a description of the object, including its ancestry and children.
+    '''
     results = get_db().execute('''
             SELECT corpus_object.oid, couch_id, name, type, metadata, content_json FROM corpus_object
             LEFT JOIN text_content ON corpus_object.oid=text_content.corpus_object
