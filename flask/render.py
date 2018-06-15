@@ -136,6 +136,8 @@ class MDC_CSS:
                 self.css += '.img_hiero_{}::before {{ background: url("data:image/svg+xml;utf8,{}"); }}\n'.format(seq, svg)
             return '<div class="img_hiero_{}"></div>'.format(self._mdc_cache[mdc])
         except Exception as e:
+            import sys
+            print(e, file=sys.stderr)
             return '' # FIXME return error image instead
 
 def query_svg_for_mdc(mdc):
@@ -155,7 +157,8 @@ def query_svg_for_mdc(mdc):
         w, h = cleaner.root.attrib.pop('width'), cleaner.root.attrib.pop('height')
         cleaner.root.attrib['viewBox'] = '0 0 {} {}'.format(w, h)
         cleaner.setDecimalPlaces(4)
-        svg = re.sub('style="[^"]*"', 'style="stroke:none;fill:rgb(37,64,72);"', str(cleaner))
+        svg = re.sub(r'style="[^"]*stroke:\s*none[^"]*"', 'style="stroke:none;fill:rgb(37,64,72);"', str(cleaner))
+        svg = re.sub(r'style="[^"]*fill:\s*none[^"]*"', 'style="fill:none;stroke:rgb(37,64,72);"', svg)
 
         render_mdc_cache.set(mdc, svg, timeout=86400)
     return svg
