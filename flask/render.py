@@ -5,6 +5,11 @@ import hashlib
 import re
 import uuid
 import html
+import atexit
+import tempfile
+import shutil
+from os import path
+import os
 from enum import Enum
 from time import time
 
@@ -14,9 +19,14 @@ import flask
 from flask import Flask, render_template, redirect, abort, url_for, Response, request, jsonify
 
 # FIXME Development-only. For production, use simple HTTP caching in front of the render_mdc endpoint.
-from werkzeug.contrib.cache import SimpleCache
-render_mdc_cache = SimpleCache()
-mdc_css_cache = SimpleCache()
+from werkzeug.contrib.cache import FileSystemCache
+cachedir = tempfile.mkdtemp(prefix='btsrender_cache')
+cache_svg, cache_css = path.join(cachedir, 'svg'), path.join(cachedir, 'css')
+atexit.register(lambda: shutil.rmtree(cachedir))
+os.mkdir(cache_svg)
+os.mkdir(cache_css)
+render_mdc_cache = FileSystemCache(cache_svg)
+mdc_css_cache = FileSystemCache(cache_css)
 
 
 app = Flask(__name__)
