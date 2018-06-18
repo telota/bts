@@ -3,6 +3,7 @@ import sqlite3
 import json
 import hashlib
 import re
+import uuid
 import html
 from enum import Enum
 from time import time
@@ -15,6 +16,7 @@ from flask import Flask, render_template, redirect, abort, url_for, Response, re
 # FIXME Development-only. For production, use simple HTTP caching in front of the render_mdc endpoint.
 from werkzeug.contrib.cache import SimpleCache
 render_mdc_cache = SimpleCache()
+mdc_css_cache = SimpleCache()
 
 
 app = Flask(__name__)
@@ -87,20 +89,40 @@ def render_text(oid):
     if row['content_json'] is None:
         return redirect(url_for('render_corpus_object', oid=oid))
 
-    return render_template('text_content.html',
-            mdc_css=MDC_CSS(),
+    css_wrapper = MDC_CSS()
+    css_uuid = str(uuid.uuid4())
+    out = render_template('text_content.html',
+            obj=load_corpus_object(oid),
+            mdc_css=css_wrapper,
+            css_uuid=css_uuid,
             sentences=json.loads(row['content_json']))
+    mdc_css_cache.set(css_uuid, css_wrapper, 300)
+    return out
+
+@app.route('/text/mdc_css/<uuid>/')
+def render_mdc_css(uuid):
+    css_wrapper = mdc_css_cache.get(uuid)
+    if not css_wrapper:
+        abort(404)
+
+    return Response(css_wrapper.render_css(), mimetype='text/css')
 
 @app.route('/corpus/<int:oid>/')
 def render_corpus_object(oid):
     ''' Render the given corpus object. Produce a navigable tree thingy that can be used to explore other objects. If
     the object is a text, also include the output of render_text. '''
-    return render_template('corpus_object.html',
-            mdc_css=MDC_CSS(),
+    css_wrapper = MDC_CSS()
+    css_uuid = str(uuid.uuid4())
+    mdc_css_cache.set(css_uuid, css_wrapper, 300)
+    out = render_template('corpus_object.html',
+            mdc_css=css_wrapper,
+            css_uuid=css_uuid,
             obj=load_corpus_object(oid),
             ObjectType=ObjectType,
             ROOT_OID=0,
             children=children)
+    mdc_css_cache.set(css_uuid, css_wrapper, 300)
+    return out
 
 def svg_filename(mdc):
     ''' Generate a nice, unique, random-looking filename to be used with rendered hieroglyph images. '''
@@ -120,7 +142,6 @@ class MDC_CSS:
     Only ever use one of these helpers in a single page as otherwise the CSS class names would clash.
     '''
     def __init__(self):
-        self.css = ''
         self._mdc_cache = {}
         self._seq = 0
 
@@ -132,13 +153,16 @@ class MDC_CSS:
             if mdc not in self._mdc_cache:
                 seq = self._seq = self._seq+1
                 self._mdc_cache[mdc] = seq
-                svg = query_svg_for_mdc(mdc).replace('"', "'")
-                self.css += '.img_hiero_{}::before {{ background: url("data:image/svg+xml;utf8,{}"); }}\n'.format(seq, svg)
             return '<div class="img_hiero_{}"></div>'.format(self._mdc_cache[mdc])
         except Exception as e:
             import sys
             print(e, file=sys.stderr)
             return '' # FIXME return error image instead
+
+    def render_css(self):
+        for mdc, seq in self._mdc_cache.items():
+            svg = query_svg_for_mdc(mdc).replace('"', "'")
+            yield '.img_hiero_{}::before {{ background: url("data:image/svg+xml;utf8,{}"); }}\n'.format(seq, svg)
 
 def query_svg_for_mdc(mdc):
     ''' Query JSesh MDC rendering backend over HTTP and return cleaned-up SVG data.

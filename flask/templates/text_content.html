@@ -219,6 +219,4 @@ function setVisible(classname, visible) {
 }
 </script> 
 
-<style type="text/css">
-{{ mdc_css.css | safe }}
-</style>
+<link href="{{ url_for('render_mdc_css', uuid=css_uuid) }}" rel="stylesheet" type="text/css">
