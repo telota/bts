@@ -167,7 +167,7 @@ input {
             <div class="line-items">
                 {% for item in sentence['items'] %}<div class="word-block">
                     <div class="hieroglyph-row">
-						{{ mdc_css.render(item['mdc']) | safe }}
+						<div class="{{ mdc_css.class_for_mdc(item['mdc']) }}"></div>
                     </div>
                     <div contenteditable=true class="input-field mdc-row">{{item['mdc']}}</div>
                     <div contenteditable=true class="input-field transliteration-row">{{item['transliteration']}}</div>
@@ -219,4 +219,4 @@ function setVisible(classname, visible) {
 }
 </script> 
 
-<link href="{{ url_for('render_mdc_css', uuid=css_uuid) }}" rel="stylesheet" type="text/css">
+<link href="{{ url_for('render_mdc_css', oid=obj['oid'], hash=mdc_css.content_hash()) }}" rel="stylesheet" type="text/css">

@@ -8,6 +8,7 @@ import html
 import atexit
 import tempfile
 import shutil
+import hashlib
 from os import path
 import os
 from enum import Enum
@@ -19,15 +20,8 @@ import flask
 from flask import Flask, render_template, redirect, abort, url_for, Response, request, jsonify
 
 # FIXME Development-only. For production, use simple HTTP caching in front of the render_mdc endpoint.
-from werkzeug.contrib.cache import FileSystemCache
-cachedir = tempfile.mkdtemp(prefix='btsrender_cache')
-cache_svg, cache_css = path.join(cachedir, 'svg'), path.join(cachedir, 'css')
-atexit.register(lambda: shutil.rmtree(cachedir))
-os.mkdir(cache_svg)
-os.mkdir(cache_css)
-render_mdc_cache = FileSystemCache(cache_svg)
-mdc_css_cache = FileSystemCache(cache_css)
-
+from werkzeug.contrib.cache import SimpleCache
+render_mdc_cache = SimpleCache()
 
 app = Flask(__name__)
 app.config.from_envvar('BTSRENDER_SETTINGS')
@@ -100,20 +94,25 @@ def render_text(oid):
         return redirect(url_for('render_corpus_object', oid=oid))
 
     css_wrapper = MDC_CSS()
-    css_uuid = str(uuid.uuid4())
     out = render_template('text_content.html',
             obj=load_corpus_object(oid),
             mdc_css=css_wrapper,
-            css_uuid=css_uuid,
             sentences=json.loads(row['content_json']))
-    mdc_css_cache.set(css_uuid, css_wrapper, 300)
     return out
 
-@app.route('/text/mdc_css/<uuid>/')
-def render_mdc_css(uuid):
-    css_wrapper = mdc_css_cache.get(uuid)
-    if not css_wrapper:
+@app.route('/text/mdc_css/<oid>/<hash>')
+def render_mdc_css(oid, hash):
+    obj = load_corpus_object(oid)
+    if not obj:
         abort(404)
+
+    css_wrapper = MDC_CSS()
+    for sentence in obj['content']:
+        for item in sentence['items']:
+            css_wrapper.class_for_mdc(item['mdc'])
+
+    if hash != css_wrapper.content_hash(): # The text content changed since it was rendered in the response
+        abort(412)
 
     return Response(css_wrapper.render_css(), mimetype='text/css')
 
@@ -122,16 +121,12 @@ def render_corpus_object(oid):
     ''' Render the given corpus object. Produce a navigable tree thingy that can be used to explore other objects. If
     the object is a text, also include the output of render_text. '''
     css_wrapper = MDC_CSS()
-    css_uuid = str(uuid.uuid4())
-    mdc_css_cache.set(css_uuid, css_wrapper, 300)
     out = render_template('corpus_object.html',
             mdc_css=css_wrapper,
-            css_uuid=css_uuid,
             obj=load_corpus_object(oid),
             ObjectType=ObjectType,
             ROOT_OID=0,
             children=children)
-    mdc_css_cache.set(css_uuid, css_wrapper, 300)
     return out
 
 def svg_filename(mdc):
@@ -143,36 +138,47 @@ def svg_filename(mdc):
 class MDC_CSS:
     ''' This class is a helper to render MDC hieroglyps as SVG via CSS classes for performance.
 
-    To render an MDC string, call render(mdc) and paste the returned HTML in your document. This will produce a div with
-    a class tied to this MDC sequence.
+    MDC rendering is done in two stages. In the first stage, this classes class_for_mdc method is used to resolve all
+    MDC fragments in a document to CSS classes numbered sequentially. A link to a CSS stylesheet resolving these classes
+    to their rendered SVG hieroglyphs is appended to the end of the document.
 
-    When you're done, paste this helper's .css attribute into a <style> tag to bind the rendered SVG hieroglyph
-    sequences to their corresponding CSS classes.
+    When this stylesheet is loaded, another instance of this class is created and the sentence items are again passed to
+    class_for_mdc, but this time the return value is ignored. This step builds up the same ID cache that was used in the
+    first step. Then, render_css generates the actual CSS rule definitions containing the hieroglyph SVGs.
+
+    Since the document might theoretically change in the database between these two invocations, in both runs a digest
+    is created of all the MDC rendered. If the digests don't match when the CSS should be rendered, a HTTP 412
+    "Precondition failed" error is returned.
 
     Only ever use one of these helpers in a single page as otherwise the CSS class names would clash.
     '''
     def __init__(self):
         self._mdc_cache = {}
         self._seq = 0
+        self._hash = hashlib.sha256()
 
-    def render(self, mdc):
-        try:
-            if not mdc:
-                return ''
+    def class_for_mdc(self, mdc):
+        ''' Return the cached CSS class name for this MDC string, and append the MDC string to the document MDC digest.
+        '''
+        self._hash.update(mdc.encode() + b'\n')
+        if not mdc:
+            return ''
 
-            if mdc not in self._mdc_cache:
-                seq = self._seq = self._seq+1
-                self._mdc_cache[mdc] = seq
-            return '<div class="img_hiero_{}"></div>'.format(self._mdc_cache[mdc])
-        except Exception as e:
-            import sys
-            print(e, file=sys.stderr)
-            return '' # FIXME return error image instead
+        if mdc not in self._mdc_cache:
+            seq = self._seq = self._seq+1
+            self._mdc_cache[mdc] = seq
+        return 'img_hiero_{}'.format(self._mdc_cache[mdc])
+
+    def content_hash(self):
+        return self._hash.hexdigest()
 
     def render_css(self):
         for mdc, seq in self._mdc_cache.items():
-            svg = query_svg_for_mdc(mdc).replace('"', "'")
-            yield '.img_hiero_{}::before {{ background: url("data:image/svg+xml;utf8,{}"); }}\n'.format(seq, svg)
+            try:
+                svg = query_svg_for_mdc(mdc).replace('"', "'")
+                yield '.img_hiero_{}::before {{ background: url("data:image/svg+xml;utf8,{}"); }}\n'.format(seq, svg)
+            except Exception as e:
+                pass # FIXME return image containing error message/symbol instead
 
 def query_svg_for_mdc(mdc):
     ''' Query JSesh MDC rendering backend over HTTP and return cleaned-up SVG data.
